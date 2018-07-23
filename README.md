@@ -1,3 +1,3 @@
-# jitws
+# Servicio Web JIT
 
-JIT Sistema de Gestion (Servicio Web)
+Sistema de Gestión
