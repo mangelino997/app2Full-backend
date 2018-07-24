@@ -17,17 +17,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BarrioController {
     
+    //Crea una instancia del servicio
     @Autowired
     BarrioService elementoService;
     
-    //Mapea el metodo con la url para listar
+    //Obtiene el siguiente id
+    @RequestMapping(value = "/barrio/obtenerSiguienteId")
+    @ResponseBody
+    public int obtenerSiguienteId() {
+        return elementoService.obtenerSiguienteId();
+    }
+    
+    //Obtiene la lista completa
     @RequestMapping(value = "/barrio")
     @ResponseBody
     public List<Barrio> listar() {
         return elementoService.listar();
     }
     
-    //Mapea el metedo con la url para listar por nombre
+    //Obtiene una lista por nombre
     @RequestMapping(value = "/barrio/listarPorNombre/{nombre}")
     @ResponseBody
     public List<Barrio> listarPorNombre(@PathVariable String nombre) {

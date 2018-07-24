@@ -1,0 +1,188 @@
+//Paquete al que pertenece la clase
+package ar.com.wecode.jitws.model;
+
+import java.math.BigDecimal;
+import java.sql.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+/**
+ * Clase Viaje Tercero Combustible
+ * Define el modelo (columnas) de la base de datos.
+ * @author blas
+ */
+
+@Entity
+@Table(name = "viajetercerocombustible")
+public class ViajeTerceroCombustible extends ObjetoGenerico {
+    
+    //Referencia a la clase Viaje Tercero
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idViajeTercero", nullable = true)
+    private ViajeTercero viajeTercero;
+    
+    //Referencia a la clase Reparto Tercero
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idRepartoTercero", nullable = true)
+    private RepartoTercero repartoTercero;
+    
+    //Referencia a la clase Proveedor
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idProveedor", nullable = false)
+    private Proveedor proveedor;
+    
+    //Referencia a la clase Sucursal
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idSucursal", nullable = false)
+    private Sucursal sucursal;
+    
+    //Referencia a la clase Usuario
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Usuario usuario;
+    
+    //Referencia a la clase Tipo Comprobante
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idTipoComprobante", nullable = false)
+    private TipoComprobante tipoComprobante;
+
+    //Define la fecha
+    @Column(name = "fecha", nullable = false)
+    private Date fecha;
+    
+    //Referencia a la clase Insumo
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idInsumo", nullable = false)
+    private Insumo insumo;
+    
+    //Define la cantidad
+    @Column(name = "cantidad", nullable = false)
+    private short cantidad;
+    
+    //Define el precio unitario
+    @Column(name = "precioUnitario", nullable = false)
+    private BigDecimal precioUnitario;
+    
+    //Define las observaciones
+    @Column(name = "observaciones", nullable = true)
+    private String observaciones;
+    
+    //Define si esta anulado
+    @Column(name = "estaAnulado", nullable = false)
+    private boolean estaAnulado;
+    
+    //Define las observaciones de anulacion
+    @Column(name = "observacionesAnulado", nullable = true)
+    private String observacionesAnulado;
+
+    //Getters y Setters de la clase
+
+    public ViajeTercero getViajeTercero() {
+        return viajeTercero;
+    }
+
+    public void setViajeTercero(ViajeTercero viajeTercero) {
+        this.viajeTercero = viajeTercero;
+    }
+
+    public RepartoTercero getRepartoTercero() {
+        return repartoTercero;
+    }
+
+    public void setRepartoTercero(RepartoTercero repartoTercero) {
+        this.repartoTercero = repartoTercero;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Insumo getInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(Insumo insumo) {
+        this.insumo = insumo;
+    }
+
+    public short getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(short cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public BigDecimal getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(BigDecimal precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public boolean getEstaAnulado() {
+        return estaAnulado;
+    }
+
+    public void setEstaAnulado(boolean estaAnulado) {
+        this.estaAnulado = estaAnulado;
+    }
+
+    public String getObservacionesAnulado() {
+        return observacionesAnulado;
+    }
+
+    public void setObservacionesAnulado(String observacionesAnulado) {
+        this.observacionesAnulado = observacionesAnulado;
+    }
+    
+}

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
     
+    public final String NOMBRE_TABLA = "usuario";
+    
     /**
      * Obtiene un usuario por username
      * @param username

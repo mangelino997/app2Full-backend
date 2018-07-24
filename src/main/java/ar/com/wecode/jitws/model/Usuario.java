@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,18 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "usuario")
 @Scope("session")
-public class Usuario implements UserDetails {
-    
-    //Define el id autoincremental, unico y not null
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = true)
-    private int id;
-    
-    //Define la version
-    @Version
-    @Column(name = "version", nullable = false)
-    private int version;
+public class Usuario extends ObjetoGenerico implements UserDetails {
     
     //Define el nombre
     @Column(name = "nombre", nullable = false)
@@ -50,22 +35,6 @@ public class Usuario implements UserDetails {
     private String password;
     
     //Getters y Setters de la clase
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
 
     public String getNombre() {
         return nombre;

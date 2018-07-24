@@ -17,6 +17,11 @@ public class BarrioService {
     @Autowired
     IBarrioDAO barrioDAO;
     
+    //Obtiene el siguiente id
+    public int obtenerSiguienteId() {
+        return barrioDAO.obtenerSiguienteId();
+    }
+    
     public List<Barrio> listar() {
         return barrioDAO.findAll();
     }
