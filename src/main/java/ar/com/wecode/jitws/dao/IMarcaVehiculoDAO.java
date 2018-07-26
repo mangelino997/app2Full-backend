@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.MarcaVehiculo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Marca de vehiculo
@@ -25,7 +24,6 @@ public interface IMarcaVehiculoDAO extends JpaRepository<MarcaVehiculo, Integer>
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM marcavehiculo b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<MarcaVehiculo> listarPorNombre(@Param("nom") String nom);
+    public List<MarcaVehiculo> findByNombreContaining(String nombre);
     
 }

@@ -1,9 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.wecode.jitws.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,12 +19,12 @@ import javax.persistence.Table;
 public class Tramo extends ObjetoGenerico {
     
     //Referencia a la clase OrigenDestino. Define el Origen
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrigen", nullable = false)
     private OrigenDestino origen;
     
     //Referencia a la clase OrigenDestino. Define el Destino
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idDestino", nullable = false)
     private OrigenDestino destino;
     

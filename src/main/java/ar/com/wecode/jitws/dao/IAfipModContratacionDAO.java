@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.AfipModContratacion;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Afip Modalidad contratacion
@@ -25,7 +24,6 @@ public interface IAfipModContratacionDAO extends JpaRepository<AfipModContrataci
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM afipmodcontratacion b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<AfipModContratacion> listarPorNombre(@Param("nom") String nom);
+    public List<AfipModContratacion> findByNombreContaining(String nombre);
     
 }

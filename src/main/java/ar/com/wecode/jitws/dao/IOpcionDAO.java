@@ -3,10 +3,11 @@ package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
 import ar.com.wecode.jitws.model.Opcion;
+import ar.com.wecode.jitws.model.Subopcion;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Opcion
@@ -25,10 +26,9 @@ public interface IOpcionDAO extends JpaRepository<Opcion, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene la lista de opciones de una subopcion
-    //public List<Opcion> listarPorIdSubopcion(int idSubopcion);
+    public List<Opcion> findBySubopcion(Optional<Subopcion> subopcion);
     
     //Obtiene un listado por nombre
-    @Query(value = "SELECT * FROM opcion b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Opcion> listarPorNombre(@Param("nom") String nom);
+    public List<Opcion> findByNombreContaining(String nombre);
     
 }

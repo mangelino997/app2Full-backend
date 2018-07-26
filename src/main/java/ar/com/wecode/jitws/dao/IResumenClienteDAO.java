@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.ResumenCliente;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Resumen cliente
@@ -25,7 +24,6 @@ public interface IResumenClienteDAO extends JpaRepository<ResumenCliente, Intege
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM resumencliente b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<ResumenCliente> listarPorNombre(@Param("nom") String nom);
+    public List<ResumenCliente> findByNombreContaining(String nombre);
     
 }

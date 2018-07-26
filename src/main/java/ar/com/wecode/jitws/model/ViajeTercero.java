@@ -2,9 +2,9 @@
 package ar.com.wecode.jitws.model;
 
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,17 +20,17 @@ import javax.persistence.Table;
 public class ViajeTercero extends ObjetoGenerico {
 
     //Referencia a la clase Empresa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresaEmision", nullable = false)
     private Empresa empresaEmision;
     
     //Referencia a la clase Sucursal
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
     
@@ -39,12 +39,12 @@ public class ViajeTercero extends ObjetoGenerico {
     private Date fecha;
     
     //Referencia a la clase Vehiculo Proveedor
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoProveedor", nullable = false)
     private VehiculoProveedor vehiculoProveedor;
     
     //Referencia a la clase Chofer Proveedor
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idChoferProveedor", nullable = false)
     private ChoferProveedor choferProveedor;
     
@@ -53,27 +53,27 @@ public class ViajeTercero extends ObjetoGenerico {
     private boolean esRemolquePropio;
     
     //Referencia a la clase Vehiculo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoRemolque", nullable = true)
     private Vehiculo vehiculoRemolque;
     
     //Referencia a la clase Vehiculo Proveedor
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoProveedorRemolque", nullable = true)
     private VehiculoProveedor vehiculoProveedorRemolque;
     
     //Referencia a la clase Proveedor
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProveedor", nullable = false)
     private Proveedor proveedor;
     
     //Referencia a la clase Proveedor
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProveedorRemolque", nullable = true)
     private Proveedor proveedorRemolque;
     
     //Referencia a la clase Condicion de Iva
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCondicionIva", nullable = false)
     private CondicionIva condicionIva;
     
@@ -86,22 +86,22 @@ public class ViajeTercero extends ObjetoGenerico {
     private Date fechaLiquidacion;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioLiquidacion", nullable = true)
     private Usuario usuarioLiquidacion;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioVehiculoAutorizado", nullable = true)
     private Usuario usuarioVehiculoAutorizado;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioVehiculoRemAutorizado", nullable = true)
     private Usuario usuarioVehiculoRemAutorizado;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioChoferAutorizado", nullable = true)
     private Usuario usuarioChoferAutorizado;
     

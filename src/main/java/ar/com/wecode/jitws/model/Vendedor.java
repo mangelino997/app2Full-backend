@@ -2,9 +2,9 @@
 package ar.com.wecode.jitws.model;
 
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -36,7 +36,7 @@ public class Vendedor extends ObjetoGenerico {
     private boolean estaActivo;
     
     //Define el usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = true)
     private Usuario usuarioAlta;
     

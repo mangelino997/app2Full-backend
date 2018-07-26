@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.SituacionCliente;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO SituacionCliente
@@ -25,7 +24,6 @@ public interface ISituacionClienteDAO extends JpaRepository<SituacionCliente, In
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM situacioncliente b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<SituacionCliente> listarPorNombre(@Param("nom") String nom);
+    public List<SituacionCliente> findByNombreContaining(String nombre);
     
 }

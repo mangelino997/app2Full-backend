@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.AfipActividad;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO AfipActividad
@@ -25,7 +24,6 @@ public interface IAfipActividadDAO extends JpaRepository<AfipActividad, Integer>
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM " + NOMBRE_TABLA + " b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<AfipActividad> listarPorNombre(@Param("nom") String nom);
+    public List<AfipActividad> findByNombreContaining(String nombre);
     
 }

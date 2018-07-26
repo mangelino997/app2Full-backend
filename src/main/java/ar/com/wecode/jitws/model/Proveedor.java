@@ -2,9 +2,9 @@
 package ar.com.wecode.jitws.model;
 
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -32,17 +32,17 @@ public class Proveedor extends ObjetoGenerico {
     private String domicilio;
     
     //Referencia a la clase Barrio
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBarrio", nullable = true)
     private Barrio barrio;
     
     //Referencia a la clase Localidad
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidad", nullable = false)
     private Localidad localidad;
     
     //Referencia a la clase Tipo de documento
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoDocumento", nullable = false)
     private TipoDocumento tipoDocumento;
     
@@ -63,27 +63,27 @@ public class Proveedor extends ObjetoGenerico {
     private String telefono;
     
     //Referencia a la clase Condicion de iva
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCondicionIva", nullable = false)
     private CondicionIva condicionIva;
     
     //Referencia a la clase Condicion de compra
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCondicionCompra", nullable = true)
     private CondicionCompra condicionCompra;
     
     //Referencia a la clase Usuario (Alta)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
     //Referencia a la clase Usuario (Baja)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
     
     //Referencia a la clase Usuario (Modificacion)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     
@@ -104,12 +104,12 @@ public class Proveedor extends ObjetoGenerico {
     private String notaImpresionOrdenPago;
     
     //Referencia a la clase Banco
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBanco", nullable = true)
     private Banco banco;
     
     //Referencia a la clase Tipo cuenta bancaria
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoCuentaBancaria", nullable = true)
     private TipoCuentaBancaria tipoCuentaBancaria;
     
@@ -130,7 +130,7 @@ public class Proveedor extends ObjetoGenerico {
     private String aliasCBU;
     
     //Referencia a la clase Tipo Proveedor
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoProveedor", nullable = false)
     private TipoProveedor tipoProveedor;
     

@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Pais;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Pais
@@ -25,7 +24,6 @@ public interface IPaisDAO extends JpaRepository<Pais, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM pais b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Pais> listarPorNombre(@Param("nom") String nom);
+    public List<Pais> findByNombreContaining(String nombre);
     
 }

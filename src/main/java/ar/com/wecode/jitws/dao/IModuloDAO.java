@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Modulo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Modulo
@@ -25,7 +24,6 @@ public interface IModuloDAO extends JpaRepository<Modulo, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene un listado por nombre
-    @Query(value = "SELECT * FROM modulo b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Modulo> listarPorNombre(@Param("nom") String nom);
+    public List<Modulo> findByNombreContaining(String nombre);
     
 }

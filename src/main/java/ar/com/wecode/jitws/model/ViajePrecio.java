@@ -2,9 +2,9 @@
 package ar.com.wecode.jitws.model;
 
 import java.math.BigDecimal;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,12 +20,12 @@ import javax.persistence.Table;
 public class ViajePrecio extends ObjetoGenerico {
 
     //Referencia a la clase Viaje Tipo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTipo", nullable = false)
     private ViajeTipo viajeTipo;
     
     //Referencia a la clase Viaje Tarifa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTarifa", nullable = false)
     private ViajeTarifa viajeTarifa;
     

@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Cliente;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Cliente
@@ -24,16 +23,13 @@ public interface IClienteDAO extends JpaRepository<Cliente, Integer> {
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene por numero de cuenta
-    //public Cliente obtenerPorNumeroCuenta(int numeroCuenta);
-    
-    @Query(value = "SELECT * FROM cliente b WHERE b.razonSocial like %:razon%", nativeQuery = true)
-    public List<Cliente> listarPorRazonSocial(@Param("razon") String razon);
+    //Obtiene una lista por razon social
+    public List<Cliente> findByRazonSocialContaining(String razonSocial);
     
     //Obtiene una lista por nombre de fantasia
-    //public List<Cliente> listarPorNombreFantasia(String nombreFantasia);
+    public List<Cliente> findByNombreFantasiaContaining(String nombreFantasia);
     
     //Obtiene una lista por numero de documento
-    //public List<Cliente> listarPorNumeroDocumento(String numeroDocumento);
+    public List<Cliente> findByNumeroDocumentoContaining(String numeroDocumento);
     
 }

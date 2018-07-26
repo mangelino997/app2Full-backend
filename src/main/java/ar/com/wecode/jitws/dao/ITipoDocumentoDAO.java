@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.TipoDocumento;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Tipo de documento
@@ -25,7 +24,6 @@ public interface ITipoDocumentoDAO extends JpaRepository<TipoDocumento, Integer>
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM tipodocumento b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<TipoDocumento> listarPorNombre(@Param("nom") String nom);
+    public List<TipoDocumento> findByNombreContaining(String nombre);
     
 }

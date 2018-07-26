@@ -3,10 +3,11 @@ package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
 import ar.com.wecode.jitws.model.ContactoProveedor;
+import ar.com.wecode.jitws.model.Proveedor;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ContactoProveedor
@@ -25,10 +26,9 @@ public interface IContactoProveedorDAO extends JpaRepository<ContactoProveedor, 
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM contactoproveedor b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<ContactoProveedor> listarPorNombre(@Param("nom") String nom);
+    public List<ContactoProveedor> findByNombreContaining(String nombre);
     
-    //Obtiene por id proveedor
-    //public ContactoProveedor obtenerPorIdProveedor(int idProveedor);
+    //Obtiene por proveedor
+    public ContactoProveedor findByProveedor(Optional<Proveedor> proveedor);
     
 }

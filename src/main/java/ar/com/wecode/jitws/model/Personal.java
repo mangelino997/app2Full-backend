@@ -4,9 +4,9 @@ package ar.com.wecode.jitws.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -34,7 +34,7 @@ public class Personal extends ObjetoGenerico {
     private String nombreCompleto;
     
     //Referencia a la clase Tipo de documento
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoDocumento", nullable = false)
     private TipoDocumento tipoDocumento;
     
@@ -47,22 +47,22 @@ public class Personal extends ObjetoGenerico {
     private String cuil;
     
     //Referencia a la clase Empresa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
     //Referencia a la clase Barrio
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBarrio", nullable = true)
     private Barrio barrio;
     
     //Referencia a la clase Localidad
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidad", nullable = false)
     private Localidad localidad;
     
     //Referencia a la clase Localidad (Nacimiento)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidadNacimiento", nullable = false)
     private Localidad localidadNacimiento;
     
@@ -79,7 +79,7 @@ public class Personal extends ObjetoGenerico {
     private String telefonoMovil;
     
     //Referencia a la clese Estado civil
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEstadoCivil", nullable = false)
     private EstadoCivil estadoCivil;
     
@@ -88,17 +88,17 @@ public class Personal extends ObjetoGenerico {
     private String correoelectronico;
     
     //Referencia a la clese Sexo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSexo", nullable = false)
     private Sexo sexo;
     
     //Referencia a la clese Sucursal
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
     //Referencia a la clese Area
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idArea", nullable = false)
     private Area area;
     
@@ -131,52 +131,52 @@ public class Personal extends ObjetoGenerico {
     private boolean esMensualizado;
     
     //Referencia a la clase Categoria
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
     
     //Referencia a la clase Obra social
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idObraSocial", nullable = false)
     private ObraSocial obraSocial;
     
     //Referencia a la clase Sindicato
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSindicato", nullable = false)
     private Sindicato sindicato;
     
     //Referencia a la clase Seguridad social
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguridadSocial", nullable = false)
     private SeguridadSocial seguridadSocial;
     
     //Referencia a la clase Afip Situacion
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipSituacion", nullable = false)
     private AfipSituacion afipSituacion;
     
     //Referencia a la clase Afip Condicion
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipCondicion", nullable = false)
     private AfipCondicion afipCondicion;
     
     //Referencia a la clase Afip Actividad
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipActividad", nullable = false)
     private AfipActividad afipActividad;
     
     //Referencia a la clase Afip Modalidad Contratacion
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipModContratacion", nullable = false)
     private AfipModContratacion afipModContratacion;
     
     //Referencia a la clase Afip Localidad
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipLocalidad", nullable = false)
     private AfipLocalidad afipLocalidad;
     
     //Referencia a la clase Afip Siniestrado
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipSiniestrado", nullable = false)
     private AfipSiniestrado afipSiniestrado;
     
@@ -225,17 +225,17 @@ public class Personal extends ObjetoGenerico {
     private short cuotasPrestamo;
     
     //Referencia a la clase Usuario (Alta)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
     //Referencia a la clase Usuario (Baja)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
     
     //Referencia a la clase Usuario (Modificacion)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     
@@ -256,22 +256,22 @@ public class Personal extends ObjetoGenerico {
     private Date vtoLibretaSanidad;
     
     //Referencia a la clase Usuario (Modificacion LC)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModLC", nullable = true)
     private Usuario usuarioModLC;
     
     //Referencia a la clase Usuario (Modificacion CNRT)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModCNRT", nullable = true)
     private Usuario usuarioModCNRT;
     
     //Referencia a la clase Usuario (Modificacion LNH)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModLNH", nullable = true)
     private Usuario usuarioModLNH;
     
     //Referencia a la clase Usuario (Modificacion LS)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModLS", nullable = true)
     private Usuario usuarioModLS;
     

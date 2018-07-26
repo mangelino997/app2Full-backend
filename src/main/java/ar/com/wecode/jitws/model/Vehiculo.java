@@ -2,9 +2,9 @@
 package ar.com.wecode.jitws.model;
 
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Vehiculo extends ObjetoGenerico {
     
     //Referencia a la clase Configuracion Vehiculo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idConfiguracionVehiculo", nullable = false)
     private ConfiguracionVehiculo configuracionVehiculo;
     
@@ -33,7 +33,7 @@ public class Vehiculo extends ObjetoGenerico {
     private String numeroInterno;
     
     //Referencia a la clase Localidad
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidad", nullable = false)
     private Localidad localidad;
     
@@ -50,22 +50,22 @@ public class Vehiculo extends ObjetoGenerico {
     private String numeroChasis;
     
     //Referencia a la clase Empresa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
     //Referencia a la clase Personal
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPersonal", nullable = true)
     private Personal personal;
     
     //Referencia a la clase Vehiculo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoRemolque", nullable = true)
     private Vehiculo vehiculoRemolque;
     
     //Referencia a la clase Compañia de seguro
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCompaniaSeguro", nullable = false)
     private CompaniaSeguro companiaSeguro;
     
@@ -98,7 +98,7 @@ public class Vehiculo extends ObjetoGenerico {
     private Date vtoHabBromatologica;
     
     //Referencia a la clase Usuario (Alta)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
@@ -107,7 +107,7 @@ public class Vehiculo extends ObjetoGenerico {
     private Date fechaAlta;
     
     //Referencia a la clase Usuario (Baja)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
     
@@ -116,7 +116,7 @@ public class Vehiculo extends ObjetoGenerico {
     private Date fechaBaja;
     
     //Referencia a la clase Usuario (Modificacion)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     

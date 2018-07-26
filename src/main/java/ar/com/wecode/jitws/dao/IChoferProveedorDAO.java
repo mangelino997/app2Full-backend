@@ -3,10 +3,11 @@ package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
 import ar.com.wecode.jitws.model.ChoferProveedor;
+import ar.com.wecode.jitws.model.Proveedor;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ChoferProveedor
@@ -25,10 +26,9 @@ public interface IChoferProveedorDAO extends JpaRepository<ChoferProveedor, Inte
     public int obtenerSiguienteId();
     
     //Obtiene una lista por id proveedor
-    //public List<ChoferProveedor> listarPorIdProveedor(int idProveedor);
+    public List<ChoferProveedor> findByProveedor(Optional<Proveedor> proveedor);
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM choferproveedor b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<ChoferProveedor> listarPorNombre(@Param("nom") String nom);
+    public List<ChoferProveedor> findByNombreContaining(String nombre);
     
 }

@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.ViajeRemito;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ViajeRemito
@@ -25,8 +24,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene la lista por numero
-    @Query(value = "SELECT * FROM viajeremito b WHERE b.numeroComprobante like %:numero%", nativeQuery = true)
-    public List<ViajeRemito> listarPorNumero(@Param("numero") String numero);
+    public List<ViajeRemito> findByNumeroComprobanteContaining(String numeroComprobante);
     
     //Obtiene una lista de pendientes por sucursal
     //public List<ViajeRemito> listarPendientesPorSucursal(int idSucursal);

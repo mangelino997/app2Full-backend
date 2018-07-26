@@ -22,20 +22,24 @@ public class BarrioService {
         return barrioDAO.obtenerSiguienteId();
     }
     
+    //Obtiene la lista completa
     public List<Barrio> listar() {
         return barrioDAO.findAll();
     }
+    
+    //Obtiene una lista por nombre
+    public List<Barrio> listarPorNombre(String nombre) {
+        return barrioDAO.findByNombreContaining(nombre);
+    }
 
+    //Agrega un registro
     public Barrio save(Barrio barrio) {
         return barrioDAO.saveAndFlush(barrio);
     }
 
+    //Actualiza un registro
     public Barrio update(Barrio barrio) {
         return barrioDAO.save(barrio);
-    }
-
-    public List<Barrio> listarPorNombre(String nombre) {
-        return barrioDAO.listarPorNombre(nombre);
     }
 
 }

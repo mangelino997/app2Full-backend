@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Sucursal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Sucursal
@@ -25,7 +24,6 @@ public interface ISucursalDAO extends JpaRepository<Sucursal, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM sucursal b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Sucursal> listarPorNombre(@Param("nom") String nom);
+    public List<Sucursal> findByNombreContaining(String nombre);
     
 }

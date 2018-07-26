@@ -1,9 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.wecode.jitws.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,12 +19,12 @@ import javax.persistence.Table;
 public class ContactoCompaniaSeguro extends ObjetoGenerico {
     
     //Referencia a la clase Compañia seguro
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCompaniaSeguro", nullable = false)
     private CompaniaSeguro companiaSeguro;
     
     //Referencia a la clase Tipo Contacto
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoContacto", nullable = false)
     private TipoContacto tipoContacto;
     
@@ -45,12 +45,12 @@ public class ContactoCompaniaSeguro extends ObjetoGenerico {
     private String correoelectronico;
     
     //Referencia a la clase Usuario (Alta)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
     //Referencia a la clase Usuario (Mod)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     

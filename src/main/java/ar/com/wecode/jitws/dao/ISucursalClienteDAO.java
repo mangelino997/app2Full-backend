@@ -2,11 +2,12 @@
 package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
+import ar.com.wecode.jitws.model.Cliente;
 import ar.com.wecode.jitws.model.SucursalCliente;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Area
@@ -25,10 +26,9 @@ public interface ISucursalClienteDAO extends JpaRepository<SucursalCliente, Inte
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM sucursalcliente b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<SucursalCliente> listarPorNombre(@Param("nom") String nom);
+    public List<SucursalCliente> findByNombreContaining(String nombre);
     
-    //Obtiene una lista por id cliente
-    //public List<SucursalCliente> listarPorIdCliente(int idCliente);
+    //Obtiene una lista por cliente
+    public List<SucursalCliente> findByCliente(Optional<Cliente> cliente);
     
 }

@@ -41,7 +41,7 @@ public class ProvinciaService {
     }
 
     public List<Provincia> listarPorNombre(String nombre) {
-        return elementoDAO.listarPorNombre(nombre);
+        return elementoDAO.findByNombreContaining(nombre);
     }
     
     public List<Provincia> listarPorPais(int id) {

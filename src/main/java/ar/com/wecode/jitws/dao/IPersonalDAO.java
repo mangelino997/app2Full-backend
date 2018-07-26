@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Personal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Personal
@@ -25,10 +24,9 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre completo
-    @Query(value = "SELECT * FROM personal b WHERE b.nombreCompleto like %:nom%", nativeQuery = true)
-    public List<Personal> listarPorNombreCompleto(@Param("nom") String nom);
+    public List<Personal> findByNombreCompletoContaining(String nombreCompleto);
     
-    //Obtiene una lista de choferes por nombre
-    //public List<Personal> listarChoferPorNombre(String nombre);
+    //Obtiene una lista por nombre completo y por esChofer
+    public List<Personal> findByNombreCompletoContainingAndEsChofer(String nombreCompleto, int esChofer);
     
 }

@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.MarcaProducto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 
 /**
@@ -26,7 +25,6 @@ public interface IMarcaProductoDAO extends JpaRepository<MarcaProducto, Integer>
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM marcaproducto b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<MarcaProducto> listarPorNombre(@Param("nom") String nom);
+    public List<MarcaProducto> findByNombreContaining(String nombre);
     
 }

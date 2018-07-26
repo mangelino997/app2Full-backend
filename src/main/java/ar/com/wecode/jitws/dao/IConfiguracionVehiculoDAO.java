@@ -3,7 +3,10 @@ package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
 import ar.com.wecode.jitws.model.ConfiguracionVehiculo;
+import ar.com.wecode.jitws.model.MarcaVehiculo;
+import ar.com.wecode.jitws.model.TipoVehiculo;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,6 +27,6 @@ public interface IConfiguracionVehiculoDAO extends JpaRepository<ConfiguracionVe
     public int obtenerSiguienteId();
     
     //Obtiene una lista por id tipo vehiculo y id marca vehiculo
-    //public List<ConfiguracionVehiculo> listarPorIdTipoVehiculoIdMarcaVehiculo(int idTipoVehiculo, int idMarcaVehiculo);
+    public List<ConfiguracionVehiculo> findByTipoVehiculoAndMarcaVehiculo(Optional<TipoVehiculo> TipoVehiculo, Optional<MarcaVehiculo> marcaVehiculo);
     
 }

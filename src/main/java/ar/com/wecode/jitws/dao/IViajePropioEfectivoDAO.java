@@ -2,8 +2,10 @@
 package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
+import ar.com.wecode.jitws.model.ViajePropio;
 import ar.com.wecode.jitws.model.ViajePropioEfectivo;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,6 +26,6 @@ public interface IViajePropioEfectivoDAO extends JpaRepository<ViajePropioEfecti
     public int obtenerSiguienteId();
     
     //Obtiene una lista por viaje propio
-    //public List<ViajePropioEfectivo> listarPorViajePropio(int idViajePropio);
+    public List<ViajePropioEfectivo> findByViajePropio(Optional<ViajePropio> viajePropio);
     
 }

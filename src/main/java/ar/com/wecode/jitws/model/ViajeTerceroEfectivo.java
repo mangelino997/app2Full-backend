@@ -3,9 +3,9 @@ package ar.com.wecode.jitws.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,32 +21,32 @@ import javax.persistence.Table;
 public class ViajeTerceroEfectivo extends ObjetoGenerico {
     
     //Referencia a la clase Viaje Tercero
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTercero", nullable = true)
     private ViajeTercero viajeTercero;
     
     //Referencia a la clase Reparto Tercero
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRepartoTercero", nullable = true)
     private RepartoTercero repartoTercero;
     
     //Referencia a la clase Empresa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
     //Referencia a la clase Sucursal
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
     
     //Referencia a la clase Tipo Comprobante
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
 

@@ -3,9 +3,9 @@ package ar.com.wecode.jitws.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,12 +21,12 @@ import javax.persistence.Table;
 public class ViajePropioTramo extends ObjetoGenerico {
 
     //Referencia a la clase Viaje
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajePropio", nullable = false)
     private ViajePropio viajePropio;
     
     //Referencia a la clase Tramo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTramo", nullable = false)
     private Tramo tramo;
     
@@ -43,7 +43,7 @@ public class ViajePropioTramo extends ObjetoGenerico {
     private Date fechaAlta;
     
     //Referencia a la clase Empresa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
@@ -52,7 +52,7 @@ public class ViajePropioTramo extends ObjetoGenerico {
     private short km;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
     
@@ -61,22 +61,22 @@ public class ViajePropioTramo extends ObjetoGenerico {
     private String observaciones;
     
     //Referencia a la clase Viaje Tipo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTipo", nullable = false)
     private ViajeTipo viajeTipo;
     
     //Referencia a la clase Viaje Tipo Carga
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTipoCarga", nullable = false)
     private ViajeTipoCarga viajeTipoCarga;
     
     //Referencia a la clase Viaje Tarifa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTarifa", nullable = false)
     private ViajeTarifa viajeTarifa;
     
     //Referencia a la clase Viaje Unidad Negocio
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeUnidadNegocio", nullable = false)
     private ViajeUnidadNegocio viajeUnidadNegocio;
     

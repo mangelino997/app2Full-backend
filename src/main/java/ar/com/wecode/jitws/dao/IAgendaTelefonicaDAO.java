@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.AgendaTelefonica;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Agenda telefonica
@@ -25,7 +24,6 @@ public interface IAgendaTelefonicaDAO extends JpaRepository<AgendaTelefonica, In
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM agendatelefonica b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<AgendaTelefonica> listarPorNombre(@Param("nom") String nom);
+    public List<AgendaTelefonica> findByNombreContaining(String nombre);
     
 }

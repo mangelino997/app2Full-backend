@@ -26,7 +26,7 @@ public interface ILocalidadDAO extends JpaRepository<Localidad, Integer> {
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene una lista por nombre //findByNombreContaining
+    //Obtiene una lista por nombre
     public List<Localidad> findByNombreContaining(String nombre);
     
     //Obtiene una lista por id provincia

@@ -3,10 +3,11 @@ package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
 import ar.com.wecode.jitws.model.OrigenDestino;
+import ar.com.wecode.jitws.model.Provincia;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO OrigenDestino
@@ -25,10 +26,9 @@ public interface IOrigenDestinoDAO extends JpaRepository<OrigenDestino, Integer>
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM origendestion b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<OrigenDestino> listarPorNombre(@Param("nom") String nom);
+    public List<OrigenDestino> findByNombreContaining(String nombre);
     
-    //Obtiene una lista por id provincia
-    //public List<OrigenDestino> listarPorIdProvincia(int idProvincia);
+    //Obtiene una lista por provincia
+    public List<OrigenDestino> findByProvincia(Optional<Provincia> provincia);
     
 }

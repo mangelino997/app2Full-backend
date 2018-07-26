@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Sexo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Sexo
@@ -25,7 +24,6 @@ public interface ISexoDAO extends JpaRepository<Sexo, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM sexo b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Sexo> listarPorNombre(@Param("nom") String nom);
+    public List<Sexo> findByNombreContaining(String nombre);
     
 }

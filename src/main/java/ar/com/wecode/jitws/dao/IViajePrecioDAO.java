@@ -3,6 +3,9 @@ package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
 import ar.com.wecode.jitws.model.ViajePrecio;
+import ar.com.wecode.jitws.model.ViajeTarifa;
+import ar.com.wecode.jitws.model.ViajeTipo;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,6 +26,6 @@ public interface IViajePrecioDAO extends JpaRepository<ViajePrecio, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene el costo por idViajeTipo y idViajeTarifa
-    //public ViajePrecio obtenerCosto(int idViajeTipo, int idViajeTarifa);
+    public ViajePrecio findByViajeTipoAndViajeTarifa(Optional<ViajeTipo> viajeTipo, Optional<ViajeTarifa> viajeTarifa);
     
 }

@@ -3,9 +3,9 @@ package ar.com.wecode.jitws.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,32 +21,32 @@ import javax.persistence.Table;
 public class ViajePropioInsumo extends ObjetoGenerico {
 
     //Referencia a la clase Viaje Propio
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajePropio", nullable = true)
     private ViajePropio viajePropio;
     
     //Referencia a la clase Reparto Propio
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRepartoPropio", nullable = true)
     private RepartoPropio repartoPropio;
     
     //Referencia a la clase Proveedor
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProveedor", nullable = false)
     private Proveedor proveedor;
     
     //Referencia a la clase Sucursal
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
     
     //Referencia a la clase Tipo Comprobante
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
 
@@ -55,7 +55,7 @@ public class ViajePropioInsumo extends ObjetoGenerico {
     private Date fecha;
     
     //Referencia a la clase Insumo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idInsumo", nullable = false)
     private Insumo insumo;
     

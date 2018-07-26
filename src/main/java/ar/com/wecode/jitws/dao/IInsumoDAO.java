@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Insumo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Insumo
@@ -25,13 +24,9 @@ public interface IInsumoDAO extends JpaRepository<Insumo, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM insumo b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Insumo> listarPorNombre(@Param("nom") String nom);
+    public List<Insumo> findByNombreContaining(String nombre);
     
-    //Obtiene una lista de insumos combustibles (esCombustible=1)
-    //public List<Insumo> listarCombustibles();
-    
-    //Obtiene una lista de insumos no combustibles (esCombustible=0)
-    //public List<Insumo> listarNoCombustibles();
+    //Obtiene una lista por opcion (EsCombustible=0 o EsCombustible=1) 
+    public List<Insumo> findByEsCombustible(int esCombustible);
     
 }

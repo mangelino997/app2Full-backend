@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Vehiculo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Vehiculo
@@ -25,12 +24,10 @@ public interface IVehiculoDAO extends JpaRepository<Vehiculo, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene un listado por dominio
-    @Query(value = "SELECT * FROM vehiculo b WHERE b.dominio like %:dom%", nativeQuery = true)
-    public List<Vehiculo> listarPorDominio(@Param("dom") String dom);
+    public List<Vehiculo> findByDominioContaining(String dominio);
     
     //Obtiene un listado por numero interno
-    @Query(value = "SELECT * FROM pestania b WHERE b.numeroInterno like %:numero%", nativeQuery = true)
-    public List<Vehiculo> listarPorNumeroInterno(@Param("numero") String numero);
+    public List<Vehiculo> findByNumeroInternoContaining(String numeroInterno);
     
     //Obtiene un listado por dominio filtrado por tipo de vehiculo remolque
     //public List<Vehiculo> listarPorDominioFiltroRemolque(String dominio);

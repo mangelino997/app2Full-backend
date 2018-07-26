@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.ViajeTipo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ViajeTipo
@@ -25,7 +24,6 @@ public interface IViajeTipoDAO extends JpaRepository<ViajeTipo, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM viajetipo b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<ViajeTipo> listarPorNombre(@Param("nom") String nom);
+    public List<ViajeTipo> findByNombreContaining(String nombre);
     
 }

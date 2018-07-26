@@ -1,9 +1,14 @@
 //Paquete al que pertenece la interfaz
 package ar.com.wecode.jitws.dao;
 
+import ar.com.wecode.jitws.model.Opcion;
+import ar.com.wecode.jitws.model.Rol;
 import ar.com.wecode.jitws.model.RolOpcion;
+import ar.com.wecode.jitws.model.Subopcion;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO RolOpcion
@@ -15,19 +20,21 @@ public interface IRolOpcionDAO extends JpaRepository<RolOpcion, Integer> {
     
     public final String NOMBRE_TABLA = "rolopcion";
     
-    //Obtiene una lista de opciones por idRol
-    //public List<RolOpcion> listarPorIdRol(int idRol);
+    //Obtiene una lista de opciones por rol
+    public List<RolOpcion> findByRol(Optional<Rol> rol);
     
-    //Obtiene una lista por idRol y idSubopcion
-    //public List<RolOpcion> listarPorIdRolIdSubopcion(int idRol, int idSubopcion);
+    //Obtiene una lista por rol y subopcion
+    public List<RolOpcion> findByRolAndOpcion_Subopcion(Optional<Rol> rol, Optional<Subopcion> subopcion);
     
-    //Obtiene por idRol + idOpcion
-    //public RolOpcion obtenerPorIdRolIdOpcion(int idRol, int idOpcion);
+    //Obtiene por rol y opcion
+    public RolOpcion findByRolAndOpcion(Optional<Rol> rol, Optional<Opcion> opcion);
     
     //Elimina todos los datos de la tabla
+    //@Query(value = "DELETE FROM rolopcion", nativeQuery = true)
     //public void eliminarTodo();
     
     //Reestablece autoincremental
-    //public void reestablecerAutoincremental();
+    @Query(value = "ALTER TABLE rolopcion AUTO_INCREMENT=1", nativeQuery = true)
+    public void reestablecerAutoincremental();
     
 }

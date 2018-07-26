@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.AfipCondicion;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO AfipCondicion
@@ -25,7 +24,6 @@ public interface IAfipCondicionDAO extends JpaRepository<AfipCondicion, Integer>
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM afipcondicion b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<AfipCondicion> listarPorNombre(@Param("nom") String nom);
+    public List<AfipCondicion> findByNombreContaining(String nombre);
     
 }

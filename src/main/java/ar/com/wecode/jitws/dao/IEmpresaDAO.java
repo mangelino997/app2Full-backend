@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Empresa;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Empresa
@@ -25,7 +24,6 @@ public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por razon social
-    @Query(value = "SELECT * FROM empresa b WHERE b.razonSocial like %:razon%", nativeQuery = true)
-    public List<Empresa> listarPorNombre(@Param("razon") String razon);
+    public List<Empresa> findByRazonSocialContaining(String razonSocial);
     
 }

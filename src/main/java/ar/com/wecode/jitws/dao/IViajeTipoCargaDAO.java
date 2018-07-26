@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.ViajeTipoCarga;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ViajeTipoCarga
@@ -25,7 +24,6 @@ public interface IViajeTipoCargaDAO extends JpaRepository<ViajeTipoCarga, Intege
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM viajetipocarga b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<ViajeTipoCarga> listarPorNombre(@Param("nom") String nom);
+    public List<ViajeTipoCarga> findByNombreContaining(String nombre);
     
 }

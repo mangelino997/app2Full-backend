@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.ViajeUnidadNegocio;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ViajeUnidadNegocio
@@ -25,7 +24,6 @@ public interface IViajeUnidadNegocioDAO extends JpaRepository<ViajeUnidadNegocio
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM viajeunidadnegocio b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<ViajeUnidadNegocio> listarPorNombre(@Param("nom") String nom);
+    public List<ViajeUnidadNegocio> findByNombreContaining(String nombre);
     
 }

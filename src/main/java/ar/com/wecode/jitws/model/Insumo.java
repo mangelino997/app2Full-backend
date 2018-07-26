@@ -2,9 +2,9 @@
 package ar.com.wecode.jitws.model;
 
 import java.math.BigDecimal;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,7 +24,7 @@ public class Insumo extends ObjetoGenerico {
     private String nombre;
     
     //Referenica a la clase Unidad Medida
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUnidadMedida", nullable = false)
     private UnidadMedida unidadMedida;
     
@@ -41,7 +41,7 @@ public class Insumo extends ObjetoGenerico {
     private boolean esCombustible;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
 

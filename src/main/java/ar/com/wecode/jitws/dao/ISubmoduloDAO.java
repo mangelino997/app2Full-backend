@@ -2,11 +2,12 @@
 package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
+import ar.com.wecode.jitws.model.Modulo;
 import ar.com.wecode.jitws.model.Submodulo;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Submodulo
@@ -24,11 +25,10 @@ public interface ISubmoduloDAO extends JpaRepository<Submodulo, Integer> {
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene un lista por idModulo
-    //public List<Submodulo> listarPorIdModulo(int idModulo);
+    //Obtiene un lista por modulo
+    public List<Submodulo> findByModulo(Optional<Modulo> modulo);
     
     //Obtiene un listado por nombre
-    @Query(value = "SELECT * FROM submodulo b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Submodulo> listarPorNombre(@Param("nom") String nom);
+    public List<Submodulo> findByNombreContaining(String nombre);
     
 }

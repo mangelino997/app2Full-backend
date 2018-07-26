@@ -3,9 +3,9 @@ package ar.com.wecode.jitws.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,17 +21,17 @@ import javax.persistence.Table;
 public class ViajeRemito extends ObjetoGenerico {
     
     //Referencia a la clase Empresa
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresaEmision", nullable = false)
     private Empresa empresaEmision;
     
     //Referencia a la clase Sucursal
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
     //Referencia a la clase Usuario
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
     
@@ -44,12 +44,12 @@ public class ViajeRemito extends ObjetoGenerico {
     private short numeroCamion;
     
     //Referencia a la clase Sucursal
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalDestino", nullable = false)
     private Sucursal sucursalDestino;
     
     //Referencia a la clase Afip Comprobante
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipComprobante", nullable = false)
     private AfipComprobante afipComprobante;
     
@@ -66,17 +66,17 @@ public class ViajeRemito extends ObjetoGenerico {
     private int numeroComprobante;
     
     //Referencia a la clase Cliente
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteRemitente", nullable = false)
     private Cliente clienteRemitente;
     
     //Referencia a la clase Cliente
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
     
     //Referencia a la clase Cliente
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDestinatarioSuc", nullable = true)
     private Cliente clienteDestinatarioSuc;
     
@@ -109,22 +109,22 @@ public class ViajeRemito extends ObjetoGenerico {
     private boolean estaPendiente;
     
     //Referencia a la clase Viaje Propio Tramo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajePropioTramo", nullable = true)
     private ViajePropioTramo viajePropioTramo;
     
     //Referencia a la clase Viaje Tercero Tramo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTerceroTramo", nullable = true)
     private ViajeTerceroTramo viajeTerceroTramo;
     
     //Referencia a la clase Reparto Propio
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRepartoPropio", nullable = true)
     private RepartoPropio repartoPropio;
 
     //Referencia a la clase Reparto Tercero
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRepartoTercero", nullable = true)
     private RepartoTercero repartoTercero;
     

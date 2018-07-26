@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Categoria;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Categoria
@@ -25,7 +24,6 @@ public interface ICategoriaDAO extends JpaRepository<Categoria, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM categoria b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Categoria> listarPorNombre(@Param("nom") String nom);
+    public List<Categoria> findByNombreContaining(String nombre);
     
 }

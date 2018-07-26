@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Sindicato;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Sindicato
@@ -25,7 +24,6 @@ public interface ISindicatoDAO extends JpaRepository<Sindicato, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM sindicato b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Sindicato> listarPorNombre(@Param("nom") String nom);
+    public List<Sindicato> findByNombreContaining(String nombre);
     
 }

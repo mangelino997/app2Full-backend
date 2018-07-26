@@ -2,11 +2,12 @@
 package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
+import ar.com.wecode.jitws.model.ViajePropioTramo;
 import ar.com.wecode.jitws.model.ViajePropioTramoCliente;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Viaje Propio Tramo Cliente
@@ -24,11 +25,7 @@ public interface IViajePropioTramoClienteDAO extends JpaRepository<ViajePropioTr
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM viajepropiotramocliente b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<ViajePropioTramoCliente> listarPorNombre(@Param("nom") String nom);
-    
     //Obtiene una lista por viaje propio tramo
-    //public List<ViajePropioTramoCliente> listarPorViajePropioTramo(int idViajePropioTramo);
+    public List<ViajePropioTramoCliente> findByViajePropioTramo(Optional<ViajePropioTramo> viajePropioTramo);
     
 }

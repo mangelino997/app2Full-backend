@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.Zona;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Zona
@@ -25,7 +24,6 @@ public interface IZonaDAO extends JpaRepository<Zona, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM zona b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<Zona> listarPorNombre(@Param("nom") String nom);
+    public List<Zona> findByNombreContaining(String nombre);
     
 }

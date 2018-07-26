@@ -2,8 +2,10 @@
 package ar.com.wecode.jitws.dao;
 
 import ar.com.wecode.jitws.constant.NombreConstant;
+import ar.com.wecode.jitws.model.Usuario;
 import ar.com.wecode.jitws.model.UsuarioEmpresa;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,13 +25,15 @@ public interface IUsuarioEmpresaDAO extends JpaRepository<UsuarioEmpresa, Intege
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene una lista por id usuario
-    //public List<UsuarioEmpresa> listarPorIdUsuario(int idUsuario);
+    //Obtiene una lista por usuario
+    public List<UsuarioEmpresa> findByUsuario(Optional<Usuario> usuario);
     
     //Elimina todos los datos de la tabla
+    //@Query(value = "DELETE FROM usuarioempresa", nativeQuery = true)
     //public void eliminarTodo();
     
     //Reestablece autoincremental
-    //public void reestablecerAutoincremental();
+    @Query(value = "ALTER TABLE usuarioempresa AUTO_INCREMENT=1", nativeQuery = true)
+    public void reestablecerAutoincremental();
     
 }

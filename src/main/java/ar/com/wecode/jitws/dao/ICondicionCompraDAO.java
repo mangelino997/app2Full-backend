@@ -6,7 +6,6 @@ import ar.com.wecode.jitws.model.CondicionCompra;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO CondicionCompra
@@ -25,7 +24,6 @@ public interface ICondicionCompraDAO extends JpaRepository<CondicionCompra, Inte
     public int obtenerSiguienteId();
     
     //Obtiene una lista por nombre
-    @Query(value = "SELECT * FROM condicioncompra b WHERE b.nombre like %:nom%", nativeQuery = true)
-    public List<CondicionCompra> listarPorNombre(@Param("nom") String nom);
+    public List<CondicionCompra> findByNombreContaining(String nombre);
     
 }

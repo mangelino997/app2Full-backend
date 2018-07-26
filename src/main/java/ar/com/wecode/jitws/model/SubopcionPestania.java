@@ -1,9 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.wecode.jitws.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,17 +19,17 @@ import javax.persistence.Table;
 public class SubopcionPestania extends ObjetoGenerico {
     
     //Referencia a la clase Rol
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRol", nullable = false)
     private Rol rol;
     
     //Referencia a la clase Submodulo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSubopcion", nullable = false)
     private Subopcion subopcion;
     
     //Referencia a la clase Pestania
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPestania", nullable = false)
     private Pestania pestania;
     

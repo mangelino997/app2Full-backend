@@ -1,9 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.wecode.jitws.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,12 +19,12 @@ import javax.persistence.Table;
 public class ConfiguracionVehiculo extends ObjetoGenerico {
 
     //Referencia a la clase TipoVehiculo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoVehiculo", nullable = false)
     private TipoVehiculo tipoVehiculo;
     
     //Referencia a la clase MarcaVehiculo
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMarcaVehiculo", nullable = false)
     private MarcaVehiculo marcaVehiculo;
     

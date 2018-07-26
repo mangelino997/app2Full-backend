@@ -24,6 +24,6 @@ public interface ITramoDAO extends JpaRepository<Tramo, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene un listado por origen
-    //public List<Tramo> listarPorOrigen(String origen);
+    public List<Tramo> findByOrigen_Nombre(String nombre);
     
 }
