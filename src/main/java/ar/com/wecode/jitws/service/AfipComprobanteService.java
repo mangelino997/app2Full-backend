@@ -1,21 +1,22 @@
 package ar.com.wecode.jitws.service;
 
-import ar.com.wecode.jitws.dao.IBarrioDAO;
-import ar.com.wecode.jitws.model.Barrio;
+import ar.com.wecode.jitws.dao.IAfipComprobanteDAO;
+import ar.com.wecode.jitws.model.AfipComprobante;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Servicio AfipComprobante
  * @author blas
  */
 
 @Service
-public class BarrioService {
-
+public class AfipComprobanteService {
+    
+    //Define el dao
     @Autowired
-    IBarrioDAO elementoDAO;
+    IAfipComprobanteDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -23,27 +24,32 @@ public class BarrioService {
     }
     
     //Obtiene la lista completa
-    public List<Barrio> listar() {
+    public List<AfipComprobante> listar() {
         return elementoDAO.findAll();
     }
     
     //Obtiene una lista por nombre
-    public List<Barrio> listarPorNombre(String nombre) {
+    public List<AfipComprobante> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
     }
-
+    
     //Agrega un registro
-    public Barrio save(Barrio barrio) {
-        return elementoDAO.saveAndFlush(barrio);
+    public void agregar(AfipComprobante elemento) {
+        elementoDAO.save(elemento);
     }
-
+    
     //Actualiza un registro
-    public Barrio update(Barrio barrio) {
-        return elementoDAO.save(barrio);
+    public void actualizar(AfipComprobante elemento) {
+        elementoDAO.save(elemento);
     }
-
+    
+    //Elimina un registro
+    public void eliminar(AfipComprobante elemento) {
+        elementoDAO.delete(elemento);
+    }
+    
 }

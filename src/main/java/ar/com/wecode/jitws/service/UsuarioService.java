@@ -2,35 +2,50 @@ package ar.com.wecode.jitws.service;
 
 import ar.com.wecode.jitws.dao.IUsuarioDAO;
 import ar.com.wecode.jitws.model.Usuario;
-import java.util.Optional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Servicio Usuario
  * @author blas
  */
 
 @Service
 public class UsuarioService {
 
+    //Define la referencia al dao
     @Autowired
-    IUsuarioDAO usuarioDAO;
-
-    public Usuario save(Usuario usuario) {
-        return usuarioDAO.saveAndFlush(usuario);
+    IUsuarioDAO elementoDAO;
+    
+    //Obtiene el siguiente id
+    public int obtenerSiguienteId() {
+        return elementoDAO.obtenerSiguienteId();
+    }
+    
+    //Obtiene una lista completa
+    public List<Usuario> listar() {
+        return elementoDAO.findAll();
+    }
+    
+    //Obtiene por username
+    public Usuario obtenerPorUsername(String username) {
+        return elementoDAO.findOneByUsername(username);
     }
 
-    public Usuario update(Usuario usuario) {
-        return usuarioDAO.save(usuario);
+    //Agrega un registro
+    public Usuario agregar(Usuario elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
-    public Usuario find(String username) {
-        return usuarioDAO.findOneByUsername(username);
+    //Actualiza un registro
+    public Usuario actualizar(Usuario elemento) {
+        return elementoDAO.save(elemento);
     }
-
-    public Optional<Usuario> find(int id) {
-        return usuarioDAO.findById(id);
+    
+    //Elimina un registro
+    public void eliminar(Usuario elemento) {
+        elementoDAO.delete(elemento);
     }
 
 }

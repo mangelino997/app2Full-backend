@@ -1,21 +1,22 @@
 package ar.com.wecode.jitws.service;
 
-import ar.com.wecode.jitws.dao.IBarrioDAO;
-import ar.com.wecode.jitws.model.Barrio;
+import ar.com.wecode.jitws.dao.IAreaDAO;
+import ar.com.wecode.jitws.model.Area;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Servicio Area
  * @author blas
  */
 
 @Service
-public class BarrioService {
-
+public class AreaService {
+    
+    //Define la referencia al dao
     @Autowired
-    IBarrioDAO elementoDAO;
+    IAreaDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -23,27 +24,32 @@ public class BarrioService {
     }
     
     //Obtiene la lista completa
-    public List<Barrio> listar() {
+    public List<Area> listar() {
         return elementoDAO.findAll();
     }
     
     //Obtiene una lista por nombre
-    public List<Barrio> listarPorNombre(String nombre) {
+    public List<Area> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
     }
-
+    
     //Agrega un registro
-    public Barrio save(Barrio barrio) {
-        return elementoDAO.saveAndFlush(barrio);
+    public void agregar(Area elemento) {
+        elementoDAO.save(elemento);
     }
-
+    
     //Actualiza un registro
-    public Barrio update(Barrio barrio) {
-        return elementoDAO.save(barrio);
+    public void actualizar(Area elemento) {
+        elementoDAO.save(elemento);
     }
-
+    
+    //Elimina un registro
+    public void eliminar(Area elemento) {
+        elementoDAO.delete(elemento);
+    }
+    
 }

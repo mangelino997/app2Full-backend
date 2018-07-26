@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SucursalBancoService {
     
+    //Define la referencia al dao
     @Autowired
     ISucursalBancoDAO elementoDAO;
     
@@ -35,6 +36,21 @@ public class SucursalBancoService {
     //Obtiene una lista por nombre de banco
     public List<SucursalBanco> listarPorNombreBanco(String nombreBanco) {
         return elementoDAO.findByBanco_NombreContaining(nombreBanco);
+    }
+    
+    //Agrega un registro
+    public void agregar(SucursalBanco elemento) {
+        elementoDAO.save(elemento);
+    }
+    
+    //Actualiza un registro
+    public void actualizar(SucursalBanco elemento) {
+        elementoDAO.save(elemento);
+    }
+    
+    //Elimina un registro
+    public void eliminar(SucursalBanco elemento) {
+        elementoDAO.delete(elemento);
     }
     
 }

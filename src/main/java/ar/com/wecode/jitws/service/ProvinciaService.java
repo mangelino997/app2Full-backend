@@ -10,16 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Servicio Provincia
  * @author blas
  */
 
 @Service
 public class ProvinciaService {
 
+    //Define la referencia al dao
     @Autowired
     IProvinciaDAO elementoDAO;
     
+    //Define la referencia al dao pais
     @Autowired
     IPaisDAO paisDAO;
     
@@ -28,25 +30,35 @@ public class ProvinciaService {
         return elementoDAO.obtenerSiguienteId();
     }
     
+    //Obtiene la lista completa
     public List<Provincia> listar() {
         return elementoDAO.findAll();
     }
-
-    public Provincia save(Provincia elemento) {
-        return elementoDAO.saveAndFlush(elemento);
-    }
-
-    public Provincia update(Provincia elemento) {
-        return elementoDAO.save(elemento);
-    }
-
+    
+    //Obtiene una lista por nombre
     public List<Provincia> listarPorNombre(String nombre) {
         return elementoDAO.findByNombreContaining(nombre);
     }
     
+    //Obtiene una lista por pais
     public List<Provincia> listarPorPais(int id) {
         Optional<Pais> p = paisDAO.findById(id);
         return elementoDAO.findByPais(p);
+    }
+
+    //Agrega un registro
+    public void agregar(Provincia elemento) {
+        elementoDAO.saveAndFlush(elemento);
+    }
+
+    //Actualiza un registro
+    public void actualizar(Provincia elemento) {
+        elementoDAO.save(elemento);
+    }
+    
+    //Elimina un registro
+    public void eliminar(Provincia elemento) {
+        elementoDAO.delete(elemento);
     }
 
 }
