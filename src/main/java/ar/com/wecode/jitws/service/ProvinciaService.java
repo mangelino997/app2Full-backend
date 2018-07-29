@@ -41,9 +41,8 @@ public class ProvinciaService {
     }
     
     //Obtiene una lista por pais
-    public List<Provincia> listarPorPais(int id) {
-        Optional<Pais> p = paisDAO.findById(id);
-        return elementoDAO.findByPais(p);
+    public List<Provincia> listarPorPais(Optional<Pais> pais) {
+        return elementoDAO.findByPais(pais);
     }
 
     //Agrega un registro

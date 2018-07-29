@@ -45,8 +45,7 @@ public class LocalidadService {
     }
     
     //Obtiene una lista por provincia
-    public List<Localidad> listarPorProvincia(int id) {
-        Optional<Provincia> provincia = provinciaDAO.findById(id);
+    public List<Localidad> listarPorProvincia(Optional<Provincia> provincia) {
         return elementoDAO.findByProvincia(provincia);
     }
 

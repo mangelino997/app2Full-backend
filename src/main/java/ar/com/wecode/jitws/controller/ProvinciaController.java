@@ -1,10 +1,13 @@
 package ar.com.wecode.jitws.controller;
 
+import ar.com.wecode.jitws.model.Pais;
 import ar.com.wecode.jitws.model.Provincia;
 import ar.com.wecode.jitws.service.ProvinciaService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,8 +48,8 @@ public class ProvinciaController {
     //Obtiene una lista por provincia
     @RequestMapping(value = "/provincia/listarPorPais/{id}")
     @ResponseBody
-    public List<Provincia> listarPorPais(@PathVariable int id) {
-        return elementoService.listarPorPais(id);
+    public List<Provincia> listarPorPais(@RequestBody Optional<Pais> pais) {
+        return elementoService.listarPorPais(pais);
     }
     
 }
