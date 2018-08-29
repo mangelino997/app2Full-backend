@@ -1,0 +1,55 @@
+package ar.com.wecoode.jitws.service;
+
+import ar.com.wecoode.jitws.dao.ICondicionIvaDAO;
+import ar.com.wecoode.jitws.model.CondicionIva;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * Servicio Condicion Iva
+ * @author blas
+ */
+
+@Service
+public class CondicionIvaService {
+    
+    //Define la referencia al dao
+    @Autowired
+    ICondicionIvaDAO elementoDAO;
+    
+    //Obtiene el siguiente id
+    public int obtenerSiguienteId() {
+        return elementoDAO.obtenerSiguienteId();
+    }
+    
+    //Obtiene la lista completa
+    public List<CondicionIva> listar() {
+        return elementoDAO.findAll();
+    }
+    
+    //Obtiene una lista por nombre
+    public List<CondicionIva> listarPorNombre(String nombre) {
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
+    }
+    
+    //Agrega un registro
+    public void agregar(CondicionIva elemento) {
+        elementoDAO.save(elemento);
+    }
+    
+    //Actualiza un registro
+    public void actualizar(CondicionIva elemento) {
+        elementoDAO.save(elemento);
+    }
+    
+    //Elimina un registro
+    public void eliminar(CondicionIva elemento) {
+        elementoDAO.delete(elemento);
+    }
+    
+}
