@@ -1,11 +1,11 @@
-package ar.com.wecoode.jitws.model;
+package ar.com.wecoode.jitws.dto;
 
 /**
- * Subopcion Menu
+ * Subopcion Menu DTO
  * @author blas
  */
 
-public class SubopcionMenu {
+public class SubopcionMenuDTO {
 
     //Define el id
     private int id;

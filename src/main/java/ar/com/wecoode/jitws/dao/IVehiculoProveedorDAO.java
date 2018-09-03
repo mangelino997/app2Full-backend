@@ -23,10 +23,10 @@ public interface IVehiculoProveedorDAO extends JpaRepository<VehiculoProveedor, 
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene un listado por dominio
-    public List<VehiculoProveedor> findByDominioContaining(String dominio);
+    //Obtiene un listado por alias
+    public List<VehiculoProveedor> findByAliasContaining(String alias);
     
-    //Obtiene un listado por dominio filtrado por tipo de vehiculo remolque
-    //public List<VehiculoProveedor> listarPorDominioFiltroRemolque(String dominio);
+    //Obtiene un listado por filtro remolque
+    public List<VehiculoProveedor> findByAliasContainingAndEsRemolqueTrue(String alias);
     
 }

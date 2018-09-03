@@ -2,11 +2,13 @@
 package ar.com.wecoode.jitws.model;
 
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -120,6 +122,22 @@ public class ViajeTercero extends ObjetoGenerico {
     //Define una observaciones
     @Column(name = "observaciones", nullable = true)
     private String observaciones;
+    
+    //Define la lista de tramos
+    @OneToMany(mappedBy = "viajetercero")
+    private List<ViajeTerceroTramo> viajeTerceroTramos;
+    
+    //Define la lista de ordenes de combustible
+    @OneToMany(mappedBy = "viajetercero")
+    private List<ViajeTerceroCombustible> viajeTerceroCombustibles;
+    
+    //Define la lista de adelantos de efectivo
+    @OneToMany(mappedBy = "viajetercero")
+    private List<ViajeTerceroEfectivo> viajeTerceroEfectivos;
+    
+    //Define la lista de ordenes de insumo
+    @OneToMany(mappedBy = "viajetercero")
+    private List<ViajeTerceroInsumo> viajeTerceroInsumos;
 
     //Getters y Setters de la clase
 
@@ -297,6 +315,38 @@ public class ViajeTercero extends ObjetoGenerico {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public List<ViajeTerceroTramo> getViajeTerceroTramos() {
+        return viajeTerceroTramos;
+    }
+
+    public void setViajeTerceroTramos(List<ViajeTerceroTramo> viajeTerceroTramos) {
+        this.viajeTerceroTramos = viajeTerceroTramos;
+    }
+
+    public List<ViajeTerceroCombustible> getViajeTerceroCombustibles() {
+        return viajeTerceroCombustibles;
+    }
+
+    public void setViajeTerceroCombustibles(List<ViajeTerceroCombustible> viajeTerceroCombustibles) {
+        this.viajeTerceroCombustibles = viajeTerceroCombustibles;
+    }
+
+    public List<ViajeTerceroEfectivo> getViajeTerceroEfectivos() {
+        return viajeTerceroEfectivos;
+    }
+
+    public void setViajeTerceroEfectivos(List<ViajeTerceroEfectivo> viajeTerceroEfectivos) {
+        this.viajeTerceroEfectivos = viajeTerceroEfectivos;
+    }
+
+    public List<ViajeTerceroInsumo> getViajeTerceroInsumos() {
+        return viajeTerceroInsumos;
+    }
+
+    public void setViajeTerceroInsumos(List<ViajeTerceroInsumo> viajeTerceroInsumos) {
+        this.viajeTerceroInsumos = viajeTerceroInsumos;
     }
     
 }

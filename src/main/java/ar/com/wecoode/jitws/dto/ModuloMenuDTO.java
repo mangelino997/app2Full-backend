@@ -1,19 +1,19 @@
-package ar.com.wecoode.jitws.model;
+package ar.com.wecoode.jitws.dto;
 
 import java.util.List;
 
 /**
- * Modulo Menu
+ * Modulo Menu DTO
  * @author blas
  */
 
-public class ModuloMenu {
+public class ModuloMenuDTO {
     
     //Define el nombre del modulo
     private String modulo;
     
     //Define la lista de submodulos del modulo
-    private List<SubmoduloMenu> submodulos;
+    private List<SubmoduloMenuDTO> submodulos;
     
     //Getters y Setters de la clase
 
@@ -25,11 +25,11 @@ public class ModuloMenu {
         this.modulo = modulo;
     }
 
-    public List<SubmoduloMenu> getSubmodulos() {
+    public List<SubmoduloMenuDTO> getSubmodulos() {
         return submodulos;
     }
 
-    public void setSubmodulos(List<SubmoduloMenu> submodulos) {
+    public void setSubmodulos(List<SubmoduloMenuDTO> submodulos) {
         this.submodulos = submodulos;
     }
     

@@ -3,11 +3,14 @@ package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -91,6 +94,14 @@ public class ViajePropioTramo extends ObjetoGenerico {
     //Define el importe
     @Column(name = "importe", nullable = false)
     private BigDecimal importe;
+    
+    //Define la lista de tramos de clientes
+    @OneToMany(mappedBy = "viajepropiotramo")
+    private Set<ViajePropioTramoCliente> viajePropioTramoClientes;
+    
+    //Define la lista de remitos
+    @OneToMany(mappedBy = "viajepropiotramo")
+    private List<ViajeRemito> viajeRemitos;
     
     //Getters y Setters de la clase
 
@@ -220,6 +231,22 @@ public class ViajePropioTramo extends ObjetoGenerico {
 
     public void setImporte(BigDecimal importe) {
         this.importe = importe;
+    }
+
+    public Set<ViajePropioTramoCliente> getViajePropioTramoClientes() {
+        return viajePropioTramoClientes;
+    }
+
+    public void setViajePropioTramoClientes(Set<ViajePropioTramoCliente> viajePropioTramoClientes) {
+        this.viajePropioTramoClientes = viajePropioTramoClientes;
+    }
+
+    public List<ViajeRemito> getViajeRemitos() {
+        return viajeRemitos;
+    }
+
+    public void setViajeRemitos(List<ViajeRemito> viajeRemitos) {
+        this.viajeRemitos = viajeRemitos;
     }
     
 }

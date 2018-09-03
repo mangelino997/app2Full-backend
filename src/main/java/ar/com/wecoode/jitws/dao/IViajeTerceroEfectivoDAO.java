@@ -2,7 +2,10 @@
 package ar.com.wecoode.jitws.dao;
 
 import ar.com.wecoode.jitws.constant.NombreConstant;
+import ar.com.wecoode.jitws.model.ViajeTercero;
 import ar.com.wecoode.jitws.model.ViajeTerceroEfectivo;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -21,5 +24,8 @@ public interface IViajeTerceroEfectivoDAO extends JpaRepository<ViajeTerceroEfec
             + "WHERE table_name='" + NOMBRE_TABLA +"'" + " AND table_schema='" 
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
+    
+    //Obtiene un listado por viaje tercero
+    public List<ViajeTerceroEfectivo> findByViajeTercero(Optional<ViajeTercero> viajeTercero);
     
 }

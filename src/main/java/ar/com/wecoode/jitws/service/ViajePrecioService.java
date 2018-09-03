@@ -1,0 +1,68 @@
+package ar.com.wecoode.jitws.service;
+
+import ar.com.wecoode.jitws.dao.IViajePrecioDAO;
+import ar.com.wecoode.jitws.dao.IViajeTarifaDAO;
+import ar.com.wecoode.jitws.dao.IViajeTipoDAO;
+import ar.com.wecoode.jitws.model.ViajePrecio;
+import ar.com.wecoode.jitws.model.ViajeTarifa;
+import ar.com.wecoode.jitws.model.ViajeTipo;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * Servicio ViajePrecio
+ * @author blas
+ */
+
+@Service
+public class ViajePrecioService {
+
+    //Define la referencia al dao
+    @Autowired
+    IViajePrecioDAO elementoDAO;
+    
+    //Defina la referencia al dao viaje tipo
+    @Autowired
+    IViajeTipoDAO viajeTipoDAO;
+    
+    //Define la referencia al dao viaje tarifa
+    @Autowired
+    IViajeTarifaDAO viajeTarifaDAO;
+    
+    //Obtiene el siguiente id
+    public int obtenerSiguienteId() {
+        return elementoDAO.obtenerSiguienteId();
+    }
+    
+    //Obtiene la lista completa
+    public List<ViajePrecio> listar() {
+        return elementoDAO.findAll();
+    }
+    
+    //Obtiene el costo
+    public ViajePrecio obtenerCosto(int idViajeTipo, int idViajeTarifa) {
+        //Obtiene el viaje tipo por id
+        Optional<ViajeTipo> viajeTipo = viajeTipoDAO.findById(idViajeTipo);
+        //Obtiene el viaje tarifa por id
+        Optional<ViajeTarifa> viajeTarifa = viajeTarifaDAO.findById(idViajeTipo);
+        return elementoDAO.findByViajeTipoAndViajeTarifa(viajeTipo, viajeTarifa);
+    }
+
+    //Agrega un registro
+    public void agregar(ViajePrecio elemento) {
+        elementoDAO.saveAndFlush(elemento);
+    }
+
+    //Actualiza un registro
+    public void actualizar(ViajePrecio elemento) {
+        elementoDAO.save(elemento);
+    }
+    
+    //Elimina un registro
+    public void eliminar(ViajePrecio elemento) {
+        elementoDAO.delete(elemento);
+    }
+
+}

@@ -1,19 +1,19 @@
-package ar.com.wecoode.jitws.model;
+package ar.com.wecoode.jitws.dto;
 
 import java.util.List;
 
 /**
- * Submodulo Menu
+ * Submodulo Menu DTO
  * @author blas
  */
 
-public class SubmoduloMenu {
+public class SubmoduloMenuDTO {
 
     //Define el nombre del submodulo
     private String submodulo;
     
     //Define la lista de subopciones del submodulo
-    private List<SubopcionMenu> subopciones;
+    private List<SubopcionMenuDTO> subopciones;
     
     //Getters y Setters de la clase
 
@@ -25,11 +25,11 @@ public class SubmoduloMenu {
         this.submodulo = submodulo;
     }
 
-    public List<SubopcionMenu> getSubopciones() {
+    public List<SubopcionMenuDTO> getSubopciones() {
         return subopciones;
     }
 
-    public void setSubopciones(List<SubopcionMenu> subopciones) {
+    public void setSubopciones(List<SubopcionMenuDTO> subopciones) {
         this.subopciones = subopciones;
     }
     

@@ -2,12 +2,12 @@ package ar.com.wecoode.jitws.service;
 
 import ar.com.wecoode.jitws.dao.IRolDAO;
 import ar.com.wecoode.jitws.dao.IRolSubopcionDAO;
-import ar.com.wecoode.jitws.model.Menu;
-import ar.com.wecoode.jitws.model.ModuloMenu;
+import ar.com.wecoode.jitws.dto.MenuDTO;
+import ar.com.wecoode.jitws.dto.ModuloMenuDTO;
+import ar.com.wecoode.jitws.dto.SubmoduloMenuDTO;
+import ar.com.wecoode.jitws.dto.SubopcionMenuDTO;
 import ar.com.wecoode.jitws.model.Rol;
 import ar.com.wecoode.jitws.model.RolSubopcion;
-import ar.com.wecoode.jitws.model.SubmoduloMenu;
-import ar.com.wecoode.jitws.model.SubopcionMenu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,10 +31,10 @@ public class MenuService {
     IRolDAO rolDAO;
     
     //Obtiene la lista completa
-    public Menu listar(int idRol) {
+    public MenuDTO listar(int idRol) {
         
         //Define un dto vacio
-        Menu menu = null;
+        MenuDTO menu = null;
         
         //Obtiene el rol por id
         Optional<Rol> rol = rolDAO.findById(idRol);
@@ -47,28 +47,28 @@ public class MenuService {
         }
         
         //Crea una instancia de menuDTO
-        menu = new Menu();
+        menu = new MenuDTO();
         
         //Define una lista de nombres de modulos
         List<String> modulosLista = new ArrayList<>();
         
         //Define un modulo dto vacio
-        ModuloMenu moduloMenu;
+        ModuloMenuDTO moduloMenu;
         
         //Define un submodulo dto vacio
-        SubmoduloMenu submoduloMenu;
+        SubmoduloMenuDTO submoduloMenu;
         
         //Define una lista de modulos vacia
-        List<ModuloMenu> modulos = new ArrayList<>();
+        List<ModuloMenuDTO> modulos = new ArrayList<>();
         
         //Define una lista de submodulos vacia
-        List<SubmoduloMenu> submodulos;
+        List<SubmoduloMenuDTO> submodulos;
         
         //Define una lista de subopciones vacia
-        List<SubopcionMenu> subopciones;
+        List<SubopcionMenuDTO> subopciones;
         
         //Define una SubopcionMenuDTO
-        SubopcionMenu subopcionMenuDTO;
+        SubopcionMenuDTO subopcionMenu;
         
         //Recorre la lista de rolSubopcion
         for(RolSubopcion rolSubopcion : rolSubopcionLista) {
@@ -87,22 +87,22 @@ public class MenuService {
                     //Agregar el nombre del modulo a la lista modulos
                     modulosLista.add(modulo);
                     //Crea una instancia de modulo dto
-                    moduloMenu = new ModuloMenu();
+                    moduloMenu = new ModuloMenuDTO();
                     //Establece el nombre del modulo
                     moduloMenu.setModulo(modulo);
                     //Crea una instancia de submodulo dto
-                    submoduloMenu = new SubmoduloMenu();
+                    submoduloMenu = new SubmoduloMenuDTO();
                     //Establece el nombre del submodulo
                     submoduloMenu.setSubmodulo(submodulo);
                     //Crea una lista de subopciones
                     subopciones = new ArrayList<>();
                     //Crea una instancia de SubopcionMenuDTO
-                    subopcionMenuDTO = new SubopcionMenu();
+                    subopcionMenu = new SubopcionMenuDTO();
                     //Establece los valores de la subopcion
-                    subopcionMenuDTO.setId(subopcionId);
-                    subopcionMenuDTO.setSubopcion(subopcionNombre);
+                    subopcionMenu.setId(subopcionId);
+                    subopcionMenu.setSubopcion(subopcionNombre);
                     //Agrega el dto subopcionMenuDTO a la lista
-                    subopciones.add(subopcionMenuDTO);
+                    subopciones.add(subopcionMenu);
                     //Establece la lista de subopciones al submodulo
                     submoduloMenu.setSubopciones(subopciones);
                     //Crea una instancia de lista de submodulos
@@ -120,51 +120,51 @@ public class MenuService {
                      * Si el modulo existe dentro de la lista modulos, recorre la
                      * lista de modulos
                      */
-                    for (ModuloMenu modulosDTO : menu.getModulos()) {
+                    for (ModuloMenuDTO modulosMenu : menu.getModulos()) {
                         //Verifica que modulo se esta tratando
-                        if (modulosDTO.getModulo().equals(modulo)) {
+                        if (modulosMenu.getModulo().equals(modulo)) {
                             /* 
                          * Define una variable auxiliar que determina si el submodulo
                          * existe dentro de la lista
                              */
                             int aux = 0;
                             //Recorre la lista de submodulos
-                            for (SubmoduloMenu submoduloDTO2 : modulosDTO.getSubmodulos()) {
+                            for (SubmoduloMenuDTO submodulosMenu : modulosMenu.getSubmodulos()) {
                                 //Verifica si el submodulo se encuentra en la lista de submodulos
-                                if (submoduloDTO2.getSubmodulo().equals(submodulo)) {
+                                if (submodulosMenu.getSubmodulo().equals(submodulo)) {
                                     /*
                                      * Establece la variable auxiliar en 1, el 
                                      * submodulo existe dentro de la lista
                                      */
                                     aux = 1;
                                     //Crea una instancia de subopcionMenuDTO
-                                    subopcionMenuDTO = new SubopcionMenu();
+                                    subopcionMenu = new SubopcionMenuDTO();
                                     //Establece los valores de subopcionMenuDTO
-                                    subopcionMenuDTO.setId(subopcionId);
-                                    subopcionMenuDTO.setSubopcion(subopcionNombre);
+                                    subopcionMenu.setId(subopcionId);
+                                    subopcionMenu.setSubopcion(subopcionNombre);
                                     //Agregue la subopcion al submodulo 
-                                    submoduloDTO2.getSubopciones().add(subopcionMenuDTO);
+                                    submodulosMenu.getSubopciones().add(subopcionMenu);
                                 }
                             }
                             //Si el submodulo no existe, lo agrega al modulo
                             if (aux == 0) {
                                 //Crea una instancia de submodulo dto
-                                submoduloMenu = new SubmoduloMenu();
+                                submoduloMenu = new SubmoduloMenuDTO();
                                 //Establece el nombre del submodulo
                                 submoduloMenu.setSubmodulo(submodulo);
                                 //Crea una lista de subopciones
                                 subopciones = new ArrayList<>();
                                 //Crea una instancia de subopcionMenuDTO
-                                subopcionMenuDTO = new SubopcionMenu();
+                                subopcionMenu = new SubopcionMenuDTO();
                                 //Establece los valores de subopcionMenuDTO
-                                subopcionMenuDTO.setId(subopcionId);
-                                subopcionMenuDTO.setSubopcion(subopcionNombre);
+                                subopcionMenu.setId(subopcionId);
+                                subopcionMenu.setSubopcion(subopcionNombre);
                                 //Establece la subopcion
-                                subopciones.add(subopcionMenuDTO);
+                                subopciones.add(subopcionMenu);
                                 //Establece la lista de subopciones al submodulo
                                 submoduloMenu.setSubopciones(subopciones);
                                 //Agrega el submoduloDTO a la lista de submodulos
-                                modulosDTO.getSubmodulos().add(submoduloMenu);
+                                modulosMenu.getSubmodulos().add(submoduloMenu);
                             }
                         }
                     }

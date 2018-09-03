@@ -27,8 +27,8 @@ public interface ISubopcionPestaniaDAO extends JpaRepository<SubopcionPestania, 
     public SubopcionPestania findBySubopcionAndPestania(Optional<Subopcion> subopcion, Optional<Pestania> pestania);
     
     //Elimina todos los datos de la tabla
-    //@Query(value = "DELETE FROM subopcionpestania", nativeQuery = true)
-    //public void eliminarTodo();
+    @Query(value = "DELETE FROM subopcionpestania", nativeQuery = true)
+    public void eliminarTodo();
     
     //Reestablece autoincremental
     @Query(value = "ALTER TABLE subopcionpestania AUTO_INCREMENT=1", nativeQuery = true)

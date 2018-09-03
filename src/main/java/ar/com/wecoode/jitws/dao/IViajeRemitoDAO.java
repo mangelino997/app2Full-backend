@@ -2,8 +2,11 @@
 package ar.com.wecoode.jitws.dao;
 
 import ar.com.wecoode.jitws.constant.NombreConstant;
+import ar.com.wecoode.jitws.model.Sucursal;
+import ar.com.wecoode.jitws.model.ViajePropioTramo;
 import ar.com.wecoode.jitws.model.ViajeRemito;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,15 +27,17 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public int obtenerSiguienteId();
     
     //Obtiene la lista por numero
-    public List<ViajeRemito> findByNumeroComprobanteContaining(String numeroComprobante);
+    public List<ViajeRemito> findByNumeroComprobanteContaining(int numeroComprobante);
     
     //Obtiene una lista de pendientes por sucursal
-    //public List<ViajeRemito> listarPendientesPorSucursal(int idSucursal);
+    public List<ViajeRemito> findBySucursalAndEstaPendienteTrue(Optional<Sucursal> sucursal);
     
     //Obtiene una lista de pendientes por filtro (sucursal, sucursalDestino y numero camion)
-    //public List<ViajeRemito> listarPendientesPorFiltro(int idSucursal, int idSucursalDestino, String numeroCamion);
+    public List<ViajeRemito> findBySucursalAndSucuralDestinoAndNumeroCamionAndEstaPendienteTrue(
+            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
     
     //Obtiene una lista de pendientes por filtro (sucursal, sucursalDestino, numero camion y viajePropioTramo)
-    //public List<ViajeRemito> listarAsignadosPorFiltro(int idSucursal, int idSucursalDestino, String numeroCamion, int idViajePropioTramo);
+    public List<ViajeRemito> findBySucursalAndSucuralDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
+            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion, Optional<ViajePropioTramo> viajePropioTramo);
     
 }

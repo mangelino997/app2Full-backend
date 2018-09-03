@@ -34,8 +34,8 @@ public interface IRolSubopcionDAO extends JpaRepository<RolSubopcion, Integer> {
     public RolSubopcion findByRolAndSubopcion(Optional<Rol> rol, Optional<Subopcion> subopcion);
     
     //Elimina todos los datos de la tabla
-    //@Query(value = "DELETE FROM rolsubopcion", nativeQuery = true)
-    //public void eliminarTodo();
+    @Query(value = "DELETE FROM rolsubopcion", nativeQuery = true)
+    public void eliminarTodo();
     
     //Reestablece autoincremental
     @Query(value = "ALTER TABLE rolsubopcion AUTO_INCREMENT=1", nativeQuery = true)

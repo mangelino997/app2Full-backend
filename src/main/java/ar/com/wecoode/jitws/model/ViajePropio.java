@@ -2,11 +2,14 @@
 package ar.com.wecoode.jitws.model;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -133,6 +136,30 @@ public class ViajePropio extends ObjetoGenerico {
     //Define una observaciones
     @Column(name = "observaciones", nullable = true)
     private String observaciones;
+    
+    //Define la lista de tramos
+    @OneToMany(mappedBy = "viajepropio")
+    private List<ViajePropioTramo> viajePropioTramos;
+    
+    //Define la lista de ordenes de combustible
+    @OneToMany(mappedBy = "viajepropio")
+    private List<ViajePropioCombustible> viajePropioCombustibles;
+    
+    //Define la lista de adelantos de efectivo
+    @OneToMany(mappedBy = "viajepropio")
+    private List<ViajePropioEfectivo> viajePropioEfectivos;
+    
+    //Define la lista de ordenes de insumo
+    @OneToMany(mappedBy = "viajepropio")
+    private List<ViajePropioInsumo> viajePropioInsumos;
+    
+    //Define la lista de gastos
+    @OneToMany(mappedBy = "viajepropio")
+    private List<ViajePropioGasto> viajePropioGastos;
+    
+    //Define la lista de peajes
+    @OneToMany(mappedBy = "viajepropio")
+    private List<ViajePropioPeaje> viajePropioPeajes;
 
     //Getters y Setters de la clase
 
@@ -334,6 +361,54 @@ public class ViajePropio extends ObjetoGenerico {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public List<ViajePropioTramo> getViajePropioTramos() {
+        return viajePropioTramos;
+    }
+
+    public void setViajePropioTramos(List<ViajePropioTramo> viajePropioTramos) {
+        this.viajePropioTramos = viajePropioTramos;
+    }
+
+    public List<ViajePropioCombustible> getViajePropioCombustibles() {
+        return viajePropioCombustibles;
+    }
+
+    public void setViajePropioCombustibles(List<ViajePropioCombustible> viajePropioCombustibles) {
+        this.viajePropioCombustibles = viajePropioCombustibles;
+    }
+
+    public List<ViajePropioEfectivo> getViajePropioEfectivos() {
+        return viajePropioEfectivos;
+    }
+
+    public void setViajePropioEfectivos(List<ViajePropioEfectivo> viajePropioEfectivos) {
+        this.viajePropioEfectivos = viajePropioEfectivos;
+    }
+
+    public List<ViajePropioInsumo> getViajePropioInsumos() {
+        return viajePropioInsumos;
+    }
+
+    public void setViajePropioInsumos(List<ViajePropioInsumo> viajePropioInsumos) {
+        this.viajePropioInsumos = viajePropioInsumos;
+    }
+
+    public List<ViajePropioGasto> getViajePropioGastos() {
+        return viajePropioGastos;
+    }
+
+    public void setViajePropioGastos(List<ViajePropioGasto> viajePropioGastos) {
+        this.viajePropioGastos = viajePropioGastos;
+    }
+
+    public List<ViajePropioPeaje> getViajePropioPeajes() {
+        return viajePropioPeajes;
+    }
+
+    public void setViajePropioPeajes(List<ViajePropioPeaje> viajePropioPeajes) {
+        this.viajePropioPeajes = viajePropioPeajes;
     }
     
 }

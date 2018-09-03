@@ -28,9 +28,12 @@ public interface IUsuarioEmpresaDAO extends JpaRepository<UsuarioEmpresa, Intege
     //Obtiene una lista por usuario
     public List<UsuarioEmpresa> findByUsuario(Optional<Usuario> usuario);
     
+    //Obtiene una lista por usuario
+    public List<UsuarioEmpresa> findByUsuarioAndMostrarTrue(Optional<Usuario> usuario);
+    
     //Elimina todos los datos de la tabla
-    //@Query(value = "DELETE FROM usuarioempresa", nativeQuery = true)
-    //public void eliminarTodo();
+    @Query(value = "DELETE FROM usuarioempresa", nativeQuery = true)
+    public void eliminarTodo();
     
     //Reestablece autoincremental
     @Query(value = "ALTER TABLE usuarioempresa AUTO_INCREMENT=1", nativeQuery = true)

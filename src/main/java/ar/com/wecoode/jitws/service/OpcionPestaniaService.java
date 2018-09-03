@@ -5,7 +5,6 @@ import ar.com.wecoode.jitws.dao.IOpcionDAO;
 import ar.com.wecoode.jitws.dao.IPestaniaDAO;
 import ar.com.wecoode.jitws.dao.IRolDAO;
 import ar.com.wecoode.jitws.dto.OpcionPestaniaDTO;
-import ar.com.wecoode.jitws.model.Moneda;
 import ar.com.wecoode.jitws.model.Opcion;
 import ar.com.wecoode.jitws.model.OpcionPestania;
 import ar.com.wecoode.jitws.model.Pestania;
@@ -15,8 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Moneda
@@ -55,10 +52,10 @@ public class OpcionPestaniaService {
         Optional<Opcion> opcion = opcionDAO.findById(idOpcion);
         
         //Obtiene la lista
-        List<OpcionPestania> opcionPestaniaLista = elementoDAO.findByRolAndOpcion(rol, opcion);
+        List<OpcionPestania> opcionesPestania = elementoDAO.findByRolAndOpcion(rol, opcion);
         
         //Verifica si la lista obtenida esta vacia
-        if(opcionPestaniaLista.isEmpty()) {
+        if(opcionesPestania.isEmpty()) {
             return pestanias;
         }
         
@@ -67,7 +64,7 @@ public class OpcionPestaniaService {
         //Define un DTO pestania vacio
         Pestania pestania;
         //Recorre la lista y asigna los valores obtenidos
-        for(OpcionPestania opcionPestania : opcionPestaniaLista) {
+        for(OpcionPestania opcionPestania : opcionesPestania) {
             /*
              * Verifica si la pestania debe mostrarse
              * 1 == Mostrar ; 0 = No mostrar
@@ -96,12 +93,12 @@ public class OpcionPestaniaService {
         Optional<Opcion> opcion = opcionDAO.findById(opcionPestaniaDTO.getIdOpcion());
         
         //Obtiene la lista de pestañas de la opcion
-        List<OpcionPestania> opcionPestaniaLista = elementoDAO.findByRolAndOpcion(rol, opcion);
+        List<OpcionPestania> opcionesPestania = elementoDAO.findByRolAndOpcion(rol, opcion);
         
         //Define un idPestania
         int idPestania;
         //Recorre la lista
-        for (OpcionPestania opcionPestania : opcionPestaniaLista) {
+        for (OpcionPestania opcionPestania : opcionesPestania) {
             //Establece el valor de idPestania
             idPestania = opcionPestania.getPestania().getId();
             /*

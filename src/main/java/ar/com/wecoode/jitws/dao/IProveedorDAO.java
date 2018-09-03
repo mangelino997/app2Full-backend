@@ -23,16 +23,7 @@ public interface IProveedorDAO extends JpaRepository<Proveedor, Integer> {
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene por numero de cuenta
-    public Proveedor findByNumeroCuenta(int numeroCuenta);
-    
-    //Obtiene una lista por razon social
-    public List<Proveedor> findByRazonSocialContaining(String razonSocial);
-    
-    //Obtiene una lista por nombre de fantasia
-    public List<Proveedor> findByNombreFantasiaContaining(String nombreFantasia);
-    
-    //Obtiene una lista por numero de documento
-    public List<Proveedor> findByNumeroDocumentoContaining(String numeroDocumento);
+    //Obtiene una lista por alias
+    public List<Proveedor> findByAliasContaining(String alias);
     
 }
