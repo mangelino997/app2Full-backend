@@ -27,6 +27,6 @@ public interface IVehiculoProveedorDAO extends JpaRepository<VehiculoProveedor, 
     public List<VehiculoProveedor> findByAliasContaining(String alias);
     
     //Obtiene un listado por filtro remolque
-    public List<VehiculoProveedor> findByAliasContainingAndEsRemolqueTrue(String alias);
+    public List<VehiculoProveedor> findByAliasContainingAndTipoVehiculo_EsRemolqueTrue(String alias);
     
 }

@@ -50,10 +50,10 @@ public class LocalidadController {
     }
     
     //Obtiene una lista por provincia
-    @RequestMapping(value = URL + "/listarPorProvincia/{id}")
+    @RequestMapping(value = URL + "/listarPorProvincia/{idProvincia}")
     @ResponseBody
-    public List<Localidad> listarPorProvincia(@RequestBody Optional<Provincia> provincia) {
-        return elementoService.listarPorProvincia(provincia);
+    public List<Localidad> listarPorProvincia(@PathVariable int idProvincia) {
+        return elementoService.listarPorProvincia(idProvincia);
     }
     
 }

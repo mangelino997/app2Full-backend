@@ -35,7 +35,7 @@ public class VehiculoService {
     
     //Obtiene una lista por alias filtrado por remolque
     public List<Vehiculo> listarPorAliasFiltroRemolque(String alias) {
-        return elementoDAO.findByAliasContainingAndEsRemolqueTrue(alias);
+        return elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(alias);
     }
     
     //Agrega un registro

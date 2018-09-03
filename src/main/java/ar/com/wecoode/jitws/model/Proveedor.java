@@ -138,6 +138,10 @@ public class Proveedor extends ObjetoGenerico {
     @Column(name = "estaActivo", nullable = false)
     private boolean estaActivo;
     
+    //Define el alias
+    @Column(name = "alias", nullable = true)
+    private String alias;
+    
     //Getters y Setters de la clase
 
     public String getRazonSocial() {
@@ -354,6 +358,14 @@ public class Proveedor extends ObjetoGenerico {
 
     public void setEstaActivo(boolean estaActivo) {
         this.estaActivo = estaActivo;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

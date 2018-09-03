@@ -8,6 +8,6 @@ package ar.com.wecoode.jitws.constant;
 public abstract class NombreConstant {
     
     //Define el nombre de la base de datos
-    public static final String NOMBRE_BASE_DATOS = "prueba";
+    public static final String NOMBRE_BASE_DATOS = "jitdb";
     
 }

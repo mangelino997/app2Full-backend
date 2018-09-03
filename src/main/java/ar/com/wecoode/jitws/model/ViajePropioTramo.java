@@ -4,7 +4,6 @@ package ar.com.wecoode.jitws.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -96,11 +95,11 @@ public class ViajePropioTramo extends ObjetoGenerico {
     private BigDecimal importe;
     
     //Define la lista de tramos de clientes
-    @OneToMany(mappedBy = "viajepropiotramo")
-    private Set<ViajePropioTramoCliente> viajePropioTramoClientes;
+    @OneToMany(mappedBy = "viajePropioTramo")
+    private List<ViajePropioTramoCliente> viajePropioTramoClientes;
     
     //Define la lista de remitos
-    @OneToMany(mappedBy = "viajepropiotramo")
+    @OneToMany(mappedBy = "viajePropioTramo")
     private List<ViajeRemito> viajeRemitos;
     
     //Getters y Setters de la clase
@@ -233,11 +232,11 @@ public class ViajePropioTramo extends ObjetoGenerico {
         this.importe = importe;
     }
 
-    public Set<ViajePropioTramoCliente> getViajePropioTramoClientes() {
+    public List<ViajePropioTramoCliente> getViajePropioTramoClientes() {
         return viajePropioTramoClientes;
     }
 
-    public void setViajePropioTramoClientes(Set<ViajePropioTramoCliente> viajePropioTramoClientes) {
+    public void setViajePropioTramoClientes(List<ViajePropioTramoCliente> viajePropioTramoClientes) {
         this.viajePropioTramoClientes = viajePropioTramoClientes;
     }
 

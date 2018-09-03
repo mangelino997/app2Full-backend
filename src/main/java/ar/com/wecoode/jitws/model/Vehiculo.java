@@ -66,16 +66,8 @@ public class Vehiculo extends ObjetoGenerico {
     
     //Referencia a la clase Compañia de seguro
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCompaniaSeguro", nullable = false)
-    private CompaniaSeguro companiaSeguro;
-    
-    //Define el numero de poliza
-    @Column(name = "numeroPoliza", nullable = false)
-    private String numeroPoliza;
-    
-    //Define el vencimiento de la poliza
-    @Column(name = "vtoPoliza", nullable = false)
-    private Date vtoPoliza;
+    @JoinColumn(name = "idCompaniaSeguroPoliza", nullable = false)
+    private CompaniaSeguroPoliza companiaSeguroPoliza;
     
     //Define el vencimiento del rto
     @Column(name = "vtoRTO", nullable = false)
@@ -123,6 +115,10 @@ public class Vehiculo extends ObjetoGenerico {
     //Define la fecha de ultima modificacion
     @Column(name = "fechaUltimaMod", nullable = true)
     private Date fechaUltimaMod;
+    
+    //Define el alias
+    @Column(name = "alias", nullable = true)
+    private String alias;
     
     //Getters y Setters de la clase
 
@@ -205,31 +201,15 @@ public class Vehiculo extends ObjetoGenerico {
     public void setVehiculoRemolque(Vehiculo vehiculoRemolque) {
         this.vehiculoRemolque = vehiculoRemolque;
     }
+
+    public CompaniaSeguroPoliza getCompaniaSeguroPoliza() {
+        return companiaSeguroPoliza;
+    }
+
+    public void setCompaniaSeguroPoliza(CompaniaSeguroPoliza companiaSeguroPoliza) {
+        this.companiaSeguroPoliza = companiaSeguroPoliza;
+    }
     
-    public CompaniaSeguro getCompaniaSeguro() {
-        return companiaSeguro;
-    }
-
-    public void setCompaniaSeguro(CompaniaSeguro companiaSeguro) {
-        this.companiaSeguro = companiaSeguro;
-    }
-
-    public String getNumeroPoliza() {
-        return numeroPoliza;
-    }
-
-    public void setNumeroPoliza(String numeroPoliza) {
-        this.numeroPoliza = numeroPoliza;
-    }
-
-    public Date getVtoPoliza() {
-        return vtoPoliza;
-    }
-
-    public void setVtoPoliza(Date vtoPoliza) {
-        this.vtoPoliza = vtoPoliza;
-    }
-
     public Date getVtoRTO() {
         return vtoRTO;
     }
@@ -316,6 +296,14 @@ public class Vehiculo extends ObjetoGenerico {
 
     public void setFechaUltimaMod(Date fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

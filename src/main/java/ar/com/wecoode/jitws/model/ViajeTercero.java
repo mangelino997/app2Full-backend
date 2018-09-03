@@ -124,19 +124,19 @@ public class ViajeTercero extends ObjetoGenerico {
     private String observaciones;
     
     //Define la lista de tramos
-    @OneToMany(mappedBy = "viajetercero")
+    @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroTramo> viajeTerceroTramos;
     
     //Define la lista de ordenes de combustible
-    @OneToMany(mappedBy = "viajetercero")
+    @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroCombustible> viajeTerceroCombustibles;
     
     //Define la lista de adelantos de efectivo
-    @OneToMany(mappedBy = "viajetercero")
+    @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroEfectivo> viajeTerceroEfectivos;
     
     //Define la lista de ordenes de insumo
-    @OneToMany(mappedBy = "viajetercero")
+    @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroInsumo> viajeTerceroInsumos;
 
     //Getters y Setters de la clase
