@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio SubopcionPestania
@@ -89,6 +90,7 @@ public class SubopcionPestaniaService {
     }
     
     //Actualiza
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(SubopcionPestaniaDTO subopcionPestaniaDTO) {
         
         //Obtiene el rol por id
@@ -123,6 +125,7 @@ public class SubopcionPestaniaService {
     }
     
     //Asigna todas las pestañas a cada una de las subopciones
+    @Transactional(rollbackFor = Exception.class)
     public void asignarPestaniasASubopciones() {
         
         //Obtiene la lista completa de roles
@@ -171,6 +174,7 @@ public class SubopcionPestaniaService {
      * Asigna todas las pestañas a cada una de las subopciones, eliminando todo los
      * datos y reestableciendo desde cero
      */
+    @Transactional(rollbackFor = Exception.class)
     public void reestablecerTablaDesdeCero() {
         
         //Elimina todos los datos de la tabla

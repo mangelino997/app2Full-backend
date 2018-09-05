@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Rol
@@ -47,6 +48,7 @@ public class RolService {
     }
 
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(Rol elemento) {
         Rol rol = elementoDAO.saveAndFlush(elemento);
         //Obtiene la lista completa de subopciones
@@ -65,11 +67,13 @@ public class RolService {
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(Rol elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(Rol elemento) {
         Optional<Rol> rol = elementoDAO.findById(elemento.getId());
         //Obtiene una lista de RolSubopcion por idRol

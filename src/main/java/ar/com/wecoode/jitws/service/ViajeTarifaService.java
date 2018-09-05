@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.ViajeTarifa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio ViajeTarifa
@@ -34,16 +35,19 @@ public class ViajeTarifaService {
     }
 
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(ViajeTarifa elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTarifa elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeTarifa elemento) {
         elementoDAO.delete(elemento);
     }

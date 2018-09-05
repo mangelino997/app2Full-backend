@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio ViajePropio
@@ -77,6 +78,7 @@ public class ViajeRemitoService {
     }
     
     //Asigna los remitos
+    @Transactional(rollbackFor = Exception.class)
     public void asignar(ViajePropioTramo elemento) {
         //Recorre la lista de remitos
         for(ViajeRemito viajeRemito : elemento.getViajeRemitos()) {
@@ -87,6 +89,7 @@ public class ViajeRemitoService {
     }
     
     //Quita los remitos
+    @Transactional(rollbackFor = Exception.class)
     public void quitar(ViajePropioTramo elemento) {
         //Recorre la lista de remitos
         for(ViajeRemito viajeRemito : elemento.getViajeRemitos()) {
@@ -97,16 +100,19 @@ public class ViajeRemitoService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(ViajeRemito elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeRemito elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeRemito elemento) {
         elementoDAO.delete(elemento);
     }

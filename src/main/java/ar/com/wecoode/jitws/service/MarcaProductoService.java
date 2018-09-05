@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.MarcaProducto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Marca Producto
@@ -38,16 +39,19 @@ public class MarcaProductoService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(MarcaProducto elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(MarcaProducto elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(MarcaProducto elemento) {
         elementoDAO.delete(elemento);
     }

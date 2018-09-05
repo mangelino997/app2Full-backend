@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.Tramo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Tramo
@@ -34,16 +35,19 @@ public class TramoService {
     }
 
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(Tramo elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(Tramo elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(Tramo elemento) {
         elementoDAO.delete(elemento);
     }

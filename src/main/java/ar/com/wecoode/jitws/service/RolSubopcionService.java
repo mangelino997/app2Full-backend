@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio RolSubopcion
@@ -140,6 +141,7 @@ public class RolSubopcionService {
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(RolSubopcionDTO elemento) {
         
         //Obtiene el rol por id
@@ -175,6 +177,7 @@ public class RolSubopcionService {
     }
     
     //Agrega una subopcion a todos los roles
+    @Transactional(rollbackFor = Exception.class)
     public void agregarSubopcionARoles(Subopcion subopcion) {
         
         //Agrega la subopcion
@@ -198,6 +201,7 @@ public class RolSubopcionService {
     }
     
     //Elimina una subopcion por id de todos los roles
+    @Transactional(rollbackFor = Exception.class)
     public void eliminarSubopcionDeRoles(int idSubopcion) {
         
         //Obtiene la lista completa de roles
@@ -226,6 +230,7 @@ public class RolSubopcionService {
      * Asigna todas las subopciones a cada uno de los roles, eliminando todo los
      * datos y reestableciendo desde cero
      */
+    @Transactional(rollbackFor = Exception.class)
     public void reestablecerTablaDesdeCero() {
         
         //Elimina todos los datos de la tabla

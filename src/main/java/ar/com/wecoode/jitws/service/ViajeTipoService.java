@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.ViajeTipo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio ViajeTipo
@@ -34,16 +35,19 @@ public class ViajeTipoService {
     }
 
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(ViajeTipo elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTipo elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeTipo elemento) {
         elementoDAO.delete(elemento);
     }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio SucursalCliente
@@ -48,16 +49,19 @@ public class SucursalClienteService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(SucursalCliente elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(SucursalCliente elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(SucursalCliente elemento) {
         elementoDAO.delete(elemento);
     }

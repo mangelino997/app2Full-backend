@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Provincia
@@ -46,16 +47,19 @@ public class ProvinciaService {
     }
 
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(Provincia elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(Provincia elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(Provincia elemento) {
         elementoDAO.delete(elemento);
     }

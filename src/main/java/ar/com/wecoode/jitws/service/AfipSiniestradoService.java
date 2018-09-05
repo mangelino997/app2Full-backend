@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.AfipSiniestrado;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio AfipSiniestrado
@@ -38,16 +39,19 @@ public class AfipSiniestradoService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(AfipSiniestrado elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipSiniestrado elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(AfipSiniestrado elemento) {
         elementoDAO.delete(elemento);
     }

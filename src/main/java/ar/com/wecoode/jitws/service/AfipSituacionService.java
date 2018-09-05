@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.AfipSituacion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio AfipSituacion
@@ -38,16 +39,19 @@ public class AfipSituacionService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(AfipSituacion elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipSituacion elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(AfipSituacion elemento) {
         elementoDAO.delete(elemento);
     }

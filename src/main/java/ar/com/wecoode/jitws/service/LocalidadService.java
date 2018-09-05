@@ -4,10 +4,12 @@ import ar.com.wecoode.jitws.dao.ILocalidadDAO;
 import ar.com.wecoode.jitws.dao.IProvinciaDAO;
 import ar.com.wecoode.jitws.model.Localidad;
 import ar.com.wecoode.jitws.model.Provincia;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Localidad
@@ -51,16 +53,19 @@ public class LocalidadService {
     }
 
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(Localidad elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(Localidad elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(Localidad elemento) {
         elementoDAO.delete(elemento);
     } 

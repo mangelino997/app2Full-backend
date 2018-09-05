@@ -106,6 +106,10 @@ public class ChoferProveedor extends ObjetoGenerico {
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
     
+    //Define el alias para las busquedas
+    @Column(name = "alias", nullable = true)
+    private String alias;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -266,6 +270,14 @@ public class ChoferProveedor extends ObjetoGenerico {
 
     public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

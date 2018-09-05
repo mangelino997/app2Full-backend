@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.ObraSocial;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio ObraSocial
@@ -38,16 +39,19 @@ public class ObraSocialService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(ObraSocial elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(ObraSocial elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(ObraSocial elemento) {
         elementoDAO.delete(elemento);
     }

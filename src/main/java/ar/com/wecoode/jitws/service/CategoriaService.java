@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.Categoria;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Categoria
@@ -38,16 +39,19 @@ public class CategoriaService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(Categoria elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(Categoria elemento) {
         elementoDAO.save(elemento);
     }
     
     //Eliminar un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(Categoria elemento) {
         elementoDAO.delete(elemento);
     }

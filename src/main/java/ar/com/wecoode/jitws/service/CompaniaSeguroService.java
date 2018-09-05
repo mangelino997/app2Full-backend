@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.CompaniaSeguro;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Compania Seguro
@@ -34,16 +35,19 @@ public class CompaniaSeguroService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(CompaniaSeguro elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(CompaniaSeguro elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(CompaniaSeguro elemento) {
         elementoDAO.delete(elemento);
     }

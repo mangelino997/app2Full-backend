@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio ViajePropio
@@ -83,6 +84,7 @@ public class ViajePropioService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(ViajePropio elemento) {
         //Agrega el viaje propio
         elementoDAO.saveAndFlush(elemento);
@@ -113,12 +115,14 @@ public class ViajePropioService {
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajePropio elemento) {
         //Actualiza el viaje propio
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajePropio elemento) {
         elementoDAO.delete(elemento);
     }

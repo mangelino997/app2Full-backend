@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.Caea;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Caea
@@ -29,16 +30,19 @@ public class CaeaService {
     }
     
     //Agrega un registro
-    public void agragar(Caea elemento) {
+    @Transactional(rollbackFor = Exception.class)
+    public void agregar(Caea elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(Caea elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(Caea elemento) {
         elementoDAO.delete(elemento);
     }

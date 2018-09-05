@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.CondicionIva;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Condicion Iva
@@ -38,16 +39,19 @@ public class CondicionIvaService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(CondicionIva elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(CondicionIva elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(CondicionIva elemento) {
         elementoDAO.delete(elemento);
     }

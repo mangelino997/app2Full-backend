@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.AgendaTelefonica;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Agenda Telefonica
@@ -39,16 +40,19 @@ public class AgendaTelefonicaService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(AgendaTelefonica elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(AgendaTelefonica elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(AgendaTelefonica elemento) {
         elementoDAO.delete(elemento);
     }

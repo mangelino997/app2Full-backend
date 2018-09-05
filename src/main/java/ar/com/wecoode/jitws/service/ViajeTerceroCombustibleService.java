@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.ViajeTerceroCombustible;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio ViajeTerceroCombustible
@@ -29,16 +30,19 @@ public class ViajeTerceroCombustibleService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(ViajeTerceroCombustible elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTerceroCombustible elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeTerceroCombustible elemento) {
         elementoDAO.delete(elemento);
     }

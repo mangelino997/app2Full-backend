@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.EstadoCivil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Estado Civil
@@ -38,16 +39,19 @@ public class EstadoCivilService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(EstadoCivil elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(EstadoCivil elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(EstadoCivil elemento) {
         elementoDAO.delete(elemento);
     }

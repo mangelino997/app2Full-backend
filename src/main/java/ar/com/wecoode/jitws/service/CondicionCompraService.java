@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.CondicionCompra;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Condicion Compra
@@ -38,16 +39,19 @@ public class CondicionCompraService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(CondicionCompra elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(CondicionCompra elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(CondicionCompra elemento) {
         elementoDAO.delete(elemento);
     }

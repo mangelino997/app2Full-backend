@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.Barrio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -37,13 +38,21 @@ public class BarrioService {
     }
 
     //Agrega un registro
-    public Barrio save(Barrio barrio) {
-        return elementoDAO.saveAndFlush(barrio);
+    @Transactional(rollbackFor = Exception.class)
+    public void agregar(Barrio elemento) {
+        elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
-    public Barrio update(Barrio barrio) {
-        return elementoDAO.save(barrio);
+    @Transactional(rollbackFor = Exception.class)
+    public void actualizar(Barrio elemento) {
+        elementoDAO.save(elemento);
+    }
+    
+    //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void eliminar(Barrio elemento) {
+        elementoDAO.delete(elemento);
     }
 
 }

@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.TipoProveedor;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio TipoProveedor
@@ -34,16 +35,19 @@ public class TipoProveedorService {
     }
 
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(TipoProveedor elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(TipoProveedor elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(TipoProveedor elemento) {
         elementoDAO.delete(elemento);
     }

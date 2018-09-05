@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio UsuarioEmpresa
@@ -56,11 +57,13 @@ public class UsuarioEmpresaService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(UsuarioEmpresa elemento) {
         elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(List<UsuarioEmpresa> elementos) {
         //Recorre la lista
         for(int i = 0 ; i < elementos.size() ; i++) {
@@ -70,6 +73,7 @@ public class UsuarioEmpresaService {
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(UsuarioEmpresa elemento) {
         elementoDAO.delete(elemento);
     }
@@ -78,6 +82,7 @@ public class UsuarioEmpresaService {
      * Asigna todas las empresas a cada uno de los usuarios, manteniendo el dato
      * 'Mostrar' de cada empresa
      */
+    @Transactional(rollbackFor = Exception.class)
     public List<UsuarioEmpresa> eliminarTabla() {
         
         //Obtiene el listado de rolsubopcion
@@ -97,6 +102,7 @@ public class UsuarioEmpresaService {
      * Asigna todas las empresas a cada uno de los usuarios, manteniendo el dato
      * 'Mostrar' de cada empresa
      */
+    @Transactional(rollbackFor = Exception.class)
     public void reestablecerTabla(List<UsuarioEmpresa> usuariosEmpresas) {
         
         //Obtiene la lista completa de roles
@@ -134,6 +140,7 @@ public class UsuarioEmpresaService {
      * Asigna todas las empresas a cada uno de los usuarios, eliminando todo los
      * datos y reestableciendo desde cero
      */
+    @Transactional(rollbackFor = Exception.class)
     public void reestablecerTablaDesdeCero() {
         
         //Elimina todos los datos de la tabla

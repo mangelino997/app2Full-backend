@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.model.AfipCondicion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio AfipCondicion
@@ -38,16 +39,19 @@ public class AfipCondicionService {
     }
     
     //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public void agregar(AfipCondicion elemento) {
         elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipCondicion elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
     public void eliminar(AfipCondicion elemento) {
         elementoDAO.delete(elemento);
     }
