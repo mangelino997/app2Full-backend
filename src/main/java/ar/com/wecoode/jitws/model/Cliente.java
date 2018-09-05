@@ -189,6 +189,10 @@ public class Cliente extends ObjetoGenerico {
     @Column(name = "fechaUltimaMod", nullable = true)
     private Date fechaUltimaMod;
     
+    //Define el alias para las busquedas
+    @Column(name = "alias", nullable = true)
+    private String alias;
+    
     //Getters y Setters de la clase
 
     public String getRazonSocial() {
@@ -485,6 +489,14 @@ public class Cliente extends ObjetoGenerico {
 
     public void setFechaUltimaMod(Date fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

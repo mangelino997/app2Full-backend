@@ -5,8 +5,8 @@ import ar.com.wecoode.jitws.exception.CodigoRespuesta;
 import ar.com.wecoode.jitws.exception.DuplicidadError;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
-import ar.com.wecoode.jitws.model.SucursalBanco;
-import ar.com.wecoode.jitws.service.SucursalBancoService;
+import ar.com.wecoode.jitws.model.Subopcion;
+import ar.com.wecoode.jitws.service.SubopcionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controlador Sucursal Banco
+ * Clase Subopcion Controller
  * @author blas
  */
 
 @RestController
-public class SucursalBancoController {
+public class SubopcionController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/sucursalbanco";
+    private final String URL = RutaConstant.URL_BASE + "/subopcion";
     
     //Crea una instancia del servicio
     @Autowired
-    SucursalBancoService elementoService;
+    SubopcionService elementoService;
     
     //Obtiene el siguiente id
     @RequestMapping(value = URL + "/obtenerSiguienteId")
@@ -47,27 +47,27 @@ public class SucursalBancoController {
     //Obtiene la lista completa
     @RequestMapping(value = URL)
     @ResponseBody
-    public List<SucursalBanco> listar() {
+    public List<Subopcion> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
     @RequestMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<SucursalBanco> listarPorNombre(@PathVariable String nombre) {
+    public List<Subopcion> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
     
-    //Obtiene una lista por nombre de banco
-    @RequestMapping(value = URL + "/listarPorNombreBanco/{nombreBanco}")
+    //Obtiene una lista por submodulo
+    @RequestMapping(value = URL + "/listarPorSubmodulo/{idSubmodulo}")
     @ResponseBody
-    public List<SucursalBanco> listarPorNombreBanco(@PathVariable String nombreBanco) {
-        return elementoService.listarPorNombreBanco(nombreBanco);
+    public List<Subopcion> listarPorSubmodulo(@PathVariable int idSubmodulo) {
+        return elementoService.listarPorSubmodulo(idSubmodulo);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> agregar(@RequestBody Subopcion elemento) {
         try {
             elementoService.agregar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CREADO, 
@@ -95,7 +95,7 @@ public class SucursalBancoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody Subopcion elemento) {
         try {
             elementoService.actualizar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
@@ -127,7 +127,7 @@ public class SucursalBancoController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody Subopcion elemento) {
         try {
             elementoService.eliminar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 

@@ -23,13 +23,7 @@ public interface IClienteDAO extends JpaRepository<Cliente, Integer> {
             + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
     public int obtenerSiguienteId();
     
-    //Obtiene una lista por razon social
-    public List<Cliente> findByRazonSocialContaining(String razonSocial);
-    
-    //Obtiene una lista por nombre de fantasia
-    public List<Cliente> findByNombreFantasiaContaining(String nombreFantasia);
-    
-    //Obtiene una lista por numero de documento
-    public List<Cliente> findByNumeroDocumentoContaining(String numeroDocumento);
+    //Obtiene una lista por alias
+    public List<Cliente> findByAliasContaining(String alias);
     
 }

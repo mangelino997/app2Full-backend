@@ -36,6 +36,11 @@ public class SubmoduloService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene una lista por nombre
+    public List<Submodulo> listarPorNombre(String nombre) {
+        return elementoDAO.findByNombreContaining(nombre);
+    }
+    
     //Obtiene una lista por modulo
     public List<Submodulo> listarPorModulo(int idModulo) {
         //Obtiene el modulo por id
@@ -43,11 +48,6 @@ public class SubmoduloService {
         return elementoDAO.findByModulo(modulo);
     }
     
-    //Obtiene una lista por nombre
-    public List<Submodulo> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
-    }
-
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public void agregar(Submodulo elemento) {

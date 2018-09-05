@@ -35,30 +35,12 @@ public class ClienteService {
         return elementoDAO.findById(id);
     }
     
-    //Obtiene una lista por razon social
-    public List<Cliente> listarPorRazonSocial(String razonSocial) {
-        if(razonSocial.equals("***")) {
+    //Obtiene una lista por alias
+    public List<Cliente> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByRazonSocialContaining(razonSocial);
-        }
-    }
-    
-    //Obtiene una lista por nombre de fantasia
-    public List<Cliente> listarPorNombreFantasia(String nombreFantasia) {
-        if(nombreFantasia.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreFantasiaContaining(nombreFantasia);
-        }
-    }
-    
-    //Obtiene una lista por numero de documento
-    public List<Cliente> listarPorNumeroDocumento(String numeroDocumento) {
-        if(numeroDocumento.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNumeroDocumentoContaining(numeroDocumento);
+            return elementoDAO.findByAliasContaining(alias);
         }
     }
     

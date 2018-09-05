@@ -35,7 +35,7 @@ public class PersonalService {
     }
     
     //Obtiene un chofer por nombre
-    public List<Personal> listarChoferPorNomber(String nombre) {
+    public List<Personal> listarChoferPorNombre(String nombre) {
         return elementoDAO.findByNombreCompletoContainingAndEsChofer(nombre, 1);
     }
 

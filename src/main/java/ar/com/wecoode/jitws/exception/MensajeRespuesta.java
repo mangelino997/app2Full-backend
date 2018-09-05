@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.wecoode.jitws.exception;
 
 /**
@@ -31,9 +26,9 @@ public class MensajeRespuesta {
     
     public static final String ERROR_INTERNO_SERVIDOR = "Error interno en el servidor";
     
-    public static final String ASIGNAR = "Registros asignados con éxito";
+    public static final String ASIGNADOS = "Registros asignados con éxito";
     
-    public static final String QUITAR = "Registros quitados con éxito";
+    public static final String QUITADOS = "Registros quitados con éxito";
     
     public static final String TRANSACCION_NO_ACTUALIZADA = "Registro actualizado por otra transaccion";
     

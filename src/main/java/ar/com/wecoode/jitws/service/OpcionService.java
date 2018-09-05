@@ -36,13 +36,6 @@ public class OpcionService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por subopcion
-    public List<Opcion> listarPorSubopcion(int idSubopcion) {
-        //Obtiene la subopcion por id
-        Optional<Subopcion> subopcion = subopcionDAO.findById(idSubopcion);
-        return elementoDAO.findBySubopcion(subopcion);
-    }
-    
     //Obtiene una lista por nombre
     public List<Opcion> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
@@ -50,6 +43,13 @@ public class OpcionService {
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
+    }
+    
+    //Obtiene una lista por subopcion
+    public List<Opcion> listarPorSubopcion(int idSubopcion) {
+        //Obtiene la subopcion por id
+        Optional<Subopcion> subopcion = subopcionDAO.findById(idSubopcion);
+        return elementoDAO.findBySubopcion(subopcion);
     }
     
     //Agrega un registro

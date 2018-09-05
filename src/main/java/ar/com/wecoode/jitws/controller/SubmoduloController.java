@@ -5,8 +5,8 @@ import ar.com.wecoode.jitws.exception.CodigoRespuesta;
 import ar.com.wecoode.jitws.exception.DuplicidadError;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
-import ar.com.wecoode.jitws.model.SucursalBanco;
-import ar.com.wecoode.jitws.service.SucursalBancoService;
+import ar.com.wecoode.jitws.model.Submodulo;
+import ar.com.wecoode.jitws.service.SubmoduloService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controlador Sucursal Banco
+ * Clase Submodulo Controller
  * @author blas
  */
 
 @RestController
-public class SucursalBancoController {
+public class SubmoduloController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/sucursalbanco";
+    private final String URL = RutaConstant.URL_BASE + "/submodulo";
     
     //Crea una instancia del servicio
     @Autowired
-    SucursalBancoService elementoService;
+    SubmoduloService elementoService;
     
     //Obtiene el siguiente id
     @RequestMapping(value = URL + "/obtenerSiguienteId")
@@ -47,27 +47,27 @@ public class SucursalBancoController {
     //Obtiene la lista completa
     @RequestMapping(value = URL)
     @ResponseBody
-    public List<SucursalBanco> listar() {
+    public List<Submodulo> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
     @RequestMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<SucursalBanco> listarPorNombre(@PathVariable String nombre) {
+    public List<Submodulo> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
     
-    //Obtiene una lista por nombre de banco
-    @RequestMapping(value = URL + "/listarPorNombreBanco/{nombreBanco}")
+    //Obtiene una lista por modulo
+    @RequestMapping(value = URL + "/listarPorModulo/{idModulo}")
     @ResponseBody
-    public List<SucursalBanco> listarPorNombreBanco(@PathVariable String nombreBanco) {
-        return elementoService.listarPorNombreBanco(nombreBanco);
+    public List<Submodulo> listarPorModulo(@PathVariable int idModulo) {
+        return elementoService.listarPorModulo(idModulo);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> agregar(@RequestBody Submodulo elemento) {
         try {
             elementoService.agregar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CREADO, 
@@ -79,8 +79,8 @@ public class SucursalBancoController {
             if(partes[3].equals(DuplicidadError.NOMBRE_UNICO)) {
                 //Retorna codigo y mensaje de error de dato duplicado
                 return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE, 
-                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"), 
-                        HttpStatus.INTERNAL_SERVER_ERROR);
+                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "-" + 
+                            elemento.getModulo().getNombre() + "'"), HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 //Retorna codigo y mensaje de error interno en el servidor
                 return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
@@ -95,7 +95,7 @@ public class SucursalBancoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody Submodulo elemento) {
         try {
             elementoService.actualizar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
@@ -107,8 +107,8 @@ public class SucursalBancoController {
             if(partes[3].equals(DuplicidadError.NOMBRE_UNICO)) {
                 //Retorna codigo y mensaje de error de dato duplicado
                 return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE, 
-                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"), 
-                        HttpStatus.INTERNAL_SERVER_ERROR);
+                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "-" + 
+                            elemento.getModulo().getNombre() + "'"), HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 //Retorna codigo y mensaje de error interno en el servidor
                 return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
@@ -127,7 +127,7 @@ public class SucursalBancoController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody Submodulo elemento) {
         try {
             elementoService.eliminar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 

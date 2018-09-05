@@ -50,7 +50,7 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
     
     //Define una respuesta de datos duplicados
-    public static final int DATO_DUPLICADO_USUARIO = 11005;
+    public static final int DATO_DUPLICADO_USERNAME = 11005;
     
     //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_RAZONSOCIAL = 11006;

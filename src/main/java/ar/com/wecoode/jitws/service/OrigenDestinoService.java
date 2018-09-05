@@ -36,13 +36,6 @@ public class OrigenDestinoService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene por provincia
-    public List<OrigenDestino> listarPorProvincia(int idProvincia) {
-        //Obtiene la provincia por id
-        Optional<Provincia> provincia = provinciaDAO.findById(idProvincia);
-        return elementoDAO.findByProvincia(provincia);
-    }
-    
     //Obtiene una lista por nombre
     public List<OrigenDestino> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
@@ -50,6 +43,13 @@ public class OrigenDestinoService {
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
+    }
+    
+    //Obtiene por provincia
+    public List<OrigenDestino> listarPorProvincia(int idProvincia) {
+        //Obtiene la provincia por id
+        Optional<Provincia> provincia = provinciaDAO.findById(idProvincia);
+        return elementoDAO.findByProvincia(provincia);
     }
     
     //Agrega un registro

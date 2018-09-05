@@ -2,14 +2,12 @@ package ar.com.wecoode.jitws.controller;
 
 import ar.com.wecoode.jitws.constant.RutaConstant;
 import ar.com.wecoode.jitws.exception.CodigoRespuesta;
-import ar.com.wecoode.jitws.exception.DuplicidadError;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
-import ar.com.wecoode.jitws.model.SucursalBanco;
-import ar.com.wecoode.jitws.service.SucursalBancoService;
+import ar.com.wecoode.jitws.model.UsuarioEmpresa;
+import ar.com.wecoode.jitws.service.UsuarioEmpresaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -23,19 +21,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controlador Sucursal Banco
+ * Clase UsuarioEmpresa Controller
  * @author blas
  */
 
 @RestController
-public class SucursalBancoController {
+public class UsuarioEmpresaController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/sucursalbanco";
+    private final String URL = RutaConstant.URL_BASE + "/usuarioempresa";
     
     //Crea una instancia del servicio
     @Autowired
-    SucursalBancoService elementoService;
+    UsuarioEmpresaService elementoService;
     
     //Obtiene el siguiente id
     @RequestMapping(value = URL + "/obtenerSiguienteId")
@@ -47,45 +45,31 @@ public class SucursalBancoController {
     //Obtiene la lista completa
     @RequestMapping(value = URL)
     @ResponseBody
-    public List<SucursalBanco> listar() {
+    public List<UsuarioEmpresa> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por nombre
-    @RequestMapping(value = URL + "/listarPorNombre/{nombre}")
+    //Obtiene una lista por usuario
+    @RequestMapping(value = URL + "/listarPorUsuario/{idUsuario}")
     @ResponseBody
-    public List<SucursalBanco> listarPorNombre(@PathVariable String nombre) {
-        return elementoService.listarPorNombre(nombre);
+    public List<UsuarioEmpresa> listarPorUsuario(@PathVariable int idUsuario) {
+        return elementoService.listarPorUsuario(idUsuario);
     }
     
-    //Obtiene una lista por nombre de banco
-    @RequestMapping(value = URL + "/listarPorNombreBanco/{nombreBanco}")
+    //Obtiene las empresas activas del usuario
+    @RequestMapping(value = URL + "/listarEmpresasActivasDeUsuario/{idUsuario}")
     @ResponseBody
-    public List<SucursalBanco> listarPorNombreBanco(@PathVariable String nombreBanco) {
-        return elementoService.listarPorNombreBanco(nombreBanco);
+    public List<UsuarioEmpresa> listarEmpresasActivasDeUsuario(@PathVariable int idUsuario) {
+        return elementoService.listarEmpresasActivasDeUsuario(idUsuario);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> agregar(@RequestBody UsuarioEmpresa elemento) {
         try {
             elementoService.agregar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO), HttpStatus.CREATED);
-        } catch(DataIntegrityViolationException e) {
-            //Obtiene mensaje de duplicidad de datos
-            String[] partes = e.getMostSpecificCause().getMessage().split("'");
-            //Determina que columna tiene el dato duplicado
-            if(partes[3].equals(DuplicidadError.NOMBRE_UNICO)) {
-                //Retorna codigo y mensaje de error de dato duplicado
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE, 
-                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"), 
-                        HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                //Retorna codigo y mensaje de error interno en el servidor
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                        MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
@@ -95,25 +79,11 @@ public class SucursalBancoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody List<UsuarioEmpresa> elemento) {
         try {
             elementoService.actualizar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
-        } catch(DataIntegrityViolationException dive) {
-            //Obtiene mensaje de duplicidad de datos
-            String[] partes = dive.getMostSpecificCause().getMessage().split("'");
-            //Determina que columna tiene el dato duplicado
-            if(partes[3].equals(DuplicidadError.NOMBRE_UNICO)) {
-                //Retorna codigo y mensaje de error de dato duplicado
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE, 
-                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"), 
-                        HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                //Retorna codigo y mensaje de error interno en el servidor
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                        MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
@@ -127,7 +97,7 @@ public class SucursalBancoController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody SucursalBanco elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody UsuarioEmpresa elemento) {
         try {
             elementoService.eliminar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
@@ -137,6 +107,36 @@ public class SucursalBancoController {
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR, 
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    /*
+     * Asigna todas las empresas a cada uno de los usuarios, manteniendo el dato
+     * 'Mostrar' de cada empresa
+     */
+    @RequestMapping(value = URL + "/eliminarTabla")
+    @ResponseBody
+    public List<UsuarioEmpresa> eliminarTabla() {
+        return elementoService.eliminarTabla();
+    }
+    
+    /*
+     * Asigna todas las empresas a cada uno de los usuarios, manteniendo el dato
+     * 'Mostrar' de cada empresa
+     */
+    @RequestMapping(value = URL + "/reestablecerTabla")
+    @ResponseBody
+    public void reestablecerTabla(@RequestBody List<UsuarioEmpresa> elemento) {
+        elementoService.reestablecerTabla(elemento);
+    }
+    
+    /*
+     * Asigna todas las empresas a cada uno de los usuarios, eliminando todo los
+     * datos y reestableciendo desde cero
+     */
+    @RequestMapping(value = URL + "/reestablecerTablaDesdeCero")
+    @ResponseBody
+    public void reestablecerTablaDesdeCero() {
+        elementoService.reestablecerTablaDesdeCero();
     }
     
 }
