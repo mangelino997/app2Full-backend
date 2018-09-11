@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.FuncionConstante;
 import ar.com.wecoode.jitws.dao.IPaisDAO;
 import ar.com.wecoode.jitws.model.Pais;
 import java.util.List;
@@ -21,7 +22,8 @@ public class PaisService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Pais pais = elementoDAO.findTopByOrderByIdDesc();
+        return pais.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -36,13 +38,16 @@ public class PaisService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Pais elemento) {
+    public Pais agregar(Pais elemento) {
+        elemento.setNombre(FuncionConstante.convertToTitleCase(elemento.getNombre().trim()));
         elementoDAO.saveAndFlush(elemento);
+        return elemento;
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Pais elemento) {
+        elemento.setNombre(FuncionConstante.convertToTitleCase(elemento.getNombre().trim()));
         elementoDAO.save(elemento);
     }
     

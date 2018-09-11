@@ -4,6 +4,7 @@ import ar.com.wecoode.jitws.constant.RutaConstant;
 import ar.com.wecoode.jitws.exception.CodigoRespuesta;
 import ar.com.wecoode.jitws.exception.DuplicidadError;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
+import ar.com.wecoode.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
 import ar.com.wecoode.jitws.model.Pais;
 import ar.com.wecoode.jitws.service.PaisService;
@@ -62,9 +63,9 @@ public class PaisController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Pais elemento) {
         try {
-            elementoService.agregar(elemento);
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CREADO, 
-                    MensajeRespuesta.AGREGADO), HttpStatus.CREATED);
+            Pais e = elementoService.agregar(elemento);
+            return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
+                    MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
         } catch(DataIntegrityViolationException e) {
             //Obtiene mensaje de duplicidad de datos
             String[] partes = e.getMostSpecificCause().getMessage().split("'");
