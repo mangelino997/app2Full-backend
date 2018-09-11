@@ -1,14 +1,12 @@
 package ar.com.wecoode.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Clase Usuario
@@ -19,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "usuario")
 @Scope("session")
-public class Usuario extends ObjetoGenerico implements UserDetails {
+public class Usuario extends ObjetoGenerico {
     
     //Define el nombre
     @Column(name = "nombre", nullable = false)
@@ -30,9 +28,22 @@ public class Usuario extends ObjetoGenerico implements UserDetails {
     private String username;
     
     //Define la contraseña
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", nullable = false)
     private String password;
+    
+    //Referencia a la clase rol
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idRol", nullable = false)
+    private Rol rol;
+    
+    //Define si la cuenta esta habilitada
+    @Column(name = "cuentaHabilitada", nullable = false)
+    private boolean cuentaHabilitada;
+    
+    //Referencia a la clase Sucursal
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idSucursal", nullable = false)
+    private Sucursal sucursal;
     
     //Getters y Setters de la clase
 
@@ -44,7 +55,6 @@ public class Usuario extends ObjetoGenerico implements UserDetails {
         this.nombre = nombre;
     }
     
-    @Override
     public String getUsername() {
         return username;
     }
@@ -53,7 +63,6 @@ public class Usuario extends ObjetoGenerico implements UserDetails {
         this.username = username;
     }
     
-    @Override
     public String getPassword() {
         return password;
     }
@@ -61,31 +70,29 @@ public class Usuario extends ObjetoGenerico implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        return authorities;
+
+    public Rol getRol() {
+        return rol;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public boolean isCuentaHabilitada() {
+        return cuentaHabilitada;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+    public void setCuentaHabilitada(boolean cuentaHabilitada) {
+        this.cuentaHabilitada = cuentaHabilitada;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
     
 }

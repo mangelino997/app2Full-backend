@@ -84,7 +84,7 @@ public class ViajeRemitoController {
     }
     
     //Asigna remitos
-    @PutMapping(value = URL)
+    @PutMapping(value = URL + "/asignar")
     public ResponseEntity<?> asignar(@RequestBody ViajePropioTramo elemento) {
         try {
             elementoService.asignar(elemento);
@@ -102,7 +102,7 @@ public class ViajeRemitoController {
     }
     
     //Quita remitos
-    @PutMapping(value = URL)
+    @PutMapping(value = URL + "/quitar")
     public ResponseEntity<?> quitar(@RequestBody ViajePropioTramo elemento) {
         try {
             elementoService.quitar(elemento);

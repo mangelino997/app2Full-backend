@@ -4,6 +4,7 @@ import ar.com.wecoode.jitws.constant.RutaConstant;
 import ar.com.wecoode.jitws.exception.CodigoRespuesta;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
+import ar.com.wecoode.jitws.model.Empresa;
 import ar.com.wecoode.jitws.model.UsuarioEmpresa;
 import ar.com.wecoode.jitws.service.UsuarioEmpresaService;
 import java.util.List;
@@ -59,7 +60,7 @@ public class UsuarioEmpresaController {
     //Obtiene las empresas activas del usuario
     @RequestMapping(value = URL + "/listarEmpresasActivasDeUsuario/{idUsuario}")
     @ResponseBody
-    public List<UsuarioEmpresa> listarEmpresasActivasDeUsuario(@PathVariable int idUsuario) {
+    public List<Empresa> listarEmpresasActivasDeUsuario(@PathVariable int idUsuario) {
         return elementoService.listarEmpresasActivasDeUsuario(idUsuario);
     }
     

@@ -4,6 +4,7 @@ import ar.com.wecoode.jitws.dao.IUsuarioDAO;
 import ar.com.wecoode.jitws.model.Usuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioService {
+    
+    //Define la encriptacion de la contrasenia
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //Define la referencia al dao
     @Autowired
@@ -37,6 +41,7 @@ public class UsuarioService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Usuario agregar(Usuario elemento) {
+        elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
         return elementoDAO.saveAndFlush(elemento);
     }
 

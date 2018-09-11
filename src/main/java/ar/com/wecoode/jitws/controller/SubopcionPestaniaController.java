@@ -7,8 +7,6 @@ import ar.com.wecoode.jitws.exception.EstadoRespuesta;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
 import ar.com.wecoode.jitws.model.Pestania;
 import ar.com.wecoode.jitws.model.SubopcionPestania;
-import ar.com.wecoode.jitws.model.Submodulo;
-import ar.com.wecoode.jitws.model.Subopcion;
 import ar.com.wecoode.jitws.service.SubopcionPestaniaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

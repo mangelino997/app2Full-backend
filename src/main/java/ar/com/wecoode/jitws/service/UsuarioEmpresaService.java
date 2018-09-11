@@ -6,6 +6,7 @@ import ar.com.wecoode.jitws.dao.IUsuarioEmpresaDAO;
 import ar.com.wecoode.jitws.model.Empresa;
 import ar.com.wecoode.jitws.model.Usuario;
 import ar.com.wecoode.jitws.model.UsuarioEmpresa;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,23 @@ public class UsuarioEmpresaService {
     }
     
     //Obtiene las empresas activas del usuario
-    public List<UsuarioEmpresa> listarEmpresasActivasDeUsuario(int idUsuario) {
+    public List<Empresa> listarEmpresasActivasDeUsuario(int idUsuario) {
+        //Define una empresa
+        Empresa empresa;
+        //Define una lista de empresas
+        List<Empresa> empresas = new ArrayList<>();
         //Obtiene el usuario por id
         Optional<Usuario> usuario = usuarioDAO.findById(idUsuario);
-        return elementoDAO.findByUsuarioAndMostrarTrue(usuario);
+        List<UsuarioEmpresa> usuarioEmpresas = elementoDAO.findByUsuarioAndMostrarTrue(usuario);
+        for(UsuarioEmpresa elemento : usuarioEmpresas) {
+            empresa = new Empresa();
+            empresa.setId(elemento.getEmpresa().getId());
+            empresa.setRazonSocial(elemento.getEmpresa().getRazonSocial());
+            empresa.setAbreviatura(elemento.getEmpresa().getAbreviatura());
+            empresa.setCuit(elemento.getEmpresa().getCuit());
+            empresas.add(empresa);
+        }
+        return empresas;
     }
     
     //Agrega un registro
