@@ -21,7 +21,8 @@ public class PuntoVentaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        PuntoVenta elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,8 +32,8 @@ public class PuntoVentaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(PuntoVenta elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public PuntoVenta agregar(PuntoVenta elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IEstadoCivilDAO;
 import ar.com.wecoode.jitws.model.EstadoCivil;
 import java.util.List;
@@ -21,7 +22,8 @@ public class EstadoCivilService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        EstadoCivil elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class EstadoCivilService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(EstadoCivil elemento) {
-        elementoDAO.save(elemento);
+    public EstadoCivil agregar(EstadoCivil elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(EstadoCivil elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,12 @@ public class EstadoCivilService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(EstadoCivil elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private EstadoCivil formatearStrings(EstadoCivil elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

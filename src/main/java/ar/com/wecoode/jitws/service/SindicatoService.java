@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ISindicatoDAO;
 import ar.com.wecoode.jitws.model.Sindicato;
 import java.util.List;
@@ -21,7 +22,8 @@ public class SindicatoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Sindicato elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class SindicatoService {
     
     //Obtiene una lista por nombre
     public List<Sindicato> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Sindicato elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Sindicato agregar(Sindicato elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Sindicato elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,13 @@ public class SindicatoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Sindicato elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Sindicato formatearStrings(Sindicato elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
+        return elemento;
     }
 
 }

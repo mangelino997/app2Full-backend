@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ICondicionIvaDAO;
 import ar.com.wecoode.jitws.model.CondicionIva;
 import java.util.List;
@@ -21,7 +22,8 @@ public class CondicionIvaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        CondicionIva elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class CondicionIvaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(CondicionIva elemento) {
-        elementoDAO.save(elemento);
+    public CondicionIva agregar(CondicionIva elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(CondicionIva elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,12 @@ public class CondicionIvaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(CondicionIva elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private CondicionIva formatearStrings(CondicionIva elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

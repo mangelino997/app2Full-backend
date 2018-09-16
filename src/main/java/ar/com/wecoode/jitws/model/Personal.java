@@ -383,6 +383,10 @@ public class Personal extends ObjetoGenerico {
     @Column(name = "observaciones", nullable = true)
     private String observaciones;
     
+    //Define el alias para las busquedas
+    @Column(name = "alias", nullable = true)
+    private String alias;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -1055,6 +1059,14 @@ public class Personal extends ObjetoGenerico {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

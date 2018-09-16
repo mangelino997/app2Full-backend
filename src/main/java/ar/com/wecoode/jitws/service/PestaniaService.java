@@ -20,7 +20,8 @@ public class PestaniaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Pestania elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa

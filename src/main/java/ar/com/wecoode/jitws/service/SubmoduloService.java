@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IModuloDAO;
 import ar.com.wecoode.jitws.dao.ISubmoduloDAO;
 import ar.com.wecoode.jitws.model.Modulo;
@@ -28,7 +29,8 @@ public class SubmoduloService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Submodulo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -38,7 +40,11 @@ public class SubmoduloService {
     
     //Obtiene una lista por nombre
     public List<Submodulo> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
     
     //Obtiene una lista por modulo
@@ -50,13 +56,15 @@ public class SubmoduloService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Submodulo elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Submodulo agregar(Submodulo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Submodulo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -64,6 +72,12 @@ public class SubmoduloService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Submodulo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Submodulo formatearStrings(Submodulo elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

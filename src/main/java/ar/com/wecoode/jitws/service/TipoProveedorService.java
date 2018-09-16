@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ITipoProveedorDAO;
 import ar.com.wecoode.jitws.model.TipoProveedor;
 import java.util.List;
@@ -21,7 +22,8 @@ public class TipoProveedorService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        TipoProveedor elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class TipoProveedorService {
     
     //Obtiene una lista por nombre
     public List<TipoProveedor> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(TipoProveedor elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public TipoProveedor agregar(TipoProveedor elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TipoProveedor elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class TipoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(TipoProveedor elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private TipoProveedor formatearStrings(TipoProveedor elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

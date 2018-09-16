@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IVehiculoProveedorDAO;
 import ar.com.wecoode.jitws.model.VehiculoProveedor;
 import java.util.List;
@@ -21,7 +22,8 @@ public class VehiculoProveedorService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        VehiculoProveedor elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -41,13 +43,17 @@ public class VehiculoProveedorService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(VehiculoProveedor elemento) {
+    public VehiculoProveedor agregar(VehiculoProveedor elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.saveAndFlush(elemento);
+        elemento.setAlias(elemento.getDominio());
+        return elementoDAO.save(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(VehiculoProveedor elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -55,6 +61,16 @@ public class VehiculoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(VehiculoProveedor elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private VehiculoProveedor formatearStrings(VehiculoProveedor elemento) {
+        elemento.setDominio(elemento.getDominio().trim());
+        elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
+        elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+        elemento.setNumeroPoliza(elemento.getNumeroPoliza().trim());
+        elemento.setNumeroRuta(elemento.getNumeroRuta().trim());
+        return elemento;
     }
 
 }

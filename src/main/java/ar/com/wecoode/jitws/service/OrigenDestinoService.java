@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IOrigenDestinoDAO;
 import ar.com.wecoode.jitws.dao.IProvinciaDAO;
 import ar.com.wecoode.jitws.model.OrigenDestino;
@@ -28,7 +29,8 @@ public class OrigenDestinoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        OrigenDestino elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -54,13 +56,15 @@ public class OrigenDestinoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(OrigenDestino elemento) {
-        elementoDAO.save(elemento);
+    public OrigenDestino agregar(OrigenDestino elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(OrigenDestino elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -68,6 +72,12 @@ public class OrigenDestinoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(OrigenDestino elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private OrigenDestino formatearStrings(OrigenDestino elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

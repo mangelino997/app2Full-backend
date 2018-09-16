@@ -21,7 +21,8 @@ public class RepartoTerceroService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        RepartoTercero elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,8 +32,8 @@ public class RepartoTerceroService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(RepartoTercero elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public RepartoTercero agregar(RepartoTercero elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

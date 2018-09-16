@@ -21,7 +21,8 @@ public class ViajeTerceroTramoClienteService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajeTerceroTramoCliente elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,8 +32,8 @@ public class ViajeTerceroTramoClienteService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajeTerceroTramoCliente elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajeTerceroTramoCliente agregar(ViajeTerceroTramoCliente elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

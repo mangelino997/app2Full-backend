@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IViajePropioCombustibleDAO;
 import ar.com.wecoode.jitws.dao.IViajePropioDAO;
 import ar.com.wecoode.jitws.dao.IViajePropioEfectivoDAO;
@@ -85,9 +86,10 @@ public class ViajePropioService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajePropio elemento) {
+    public ViajePropio agregar(ViajePropio elemento) {
+        elemento = formatearStrings(elemento);
         //Agrega el viaje propio
-        elementoDAO.saveAndFlush(elemento);
+        ViajePropio viajePropio = elementoDAO.saveAndFlush(elemento);
         //Agrega los tramos del viaje
         elemento.getViajePropioTramos().forEach((item) -> {
             viajePropioTramoDAO.saveAndFlush(item);
@@ -112,11 +114,13 @@ public class ViajePropioService {
         elemento.getViajePropioPeajes().forEach((item) -> {
             viajePropioPeajeDAO.saveAndFlush(item);
         });*/
+        return viajePropio;
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajePropio elemento) {
+        elemento = formatearStrings(elemento);
         //Actualiza el viaje propio
         elementoDAO.save(elemento);
     }
@@ -125,6 +129,15 @@ public class ViajePropioService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajePropio elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajePropio formatearStrings(ViajePropio elemento) {
+        elemento.setObservacionVehiculo(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculo().trim()));
+        elemento.setObservacionVehiculoRemolque(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculoRemolque().trim()));
+        elemento.setObservacionChofer(Funcion.primerLetraAMayuscula(elemento.getObservacionChofer().trim()));
+        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        return elemento;
     }
     
 }

@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IAgendaTelefonicaDAO;
 import ar.com.wecoode.jitws.model.AgendaTelefonica;
 import java.util.List;
@@ -22,7 +23,8 @@ public class AgendaTelefonicaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        AgendaTelefonica elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -41,13 +43,15 @@ public class AgendaTelefonicaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(AgendaTelefonica elemento) {
-        elementoDAO.save(elemento);
+    public AgendaTelefonica agregar(AgendaTelefonica elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AgendaTelefonica elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -55,6 +59,14 @@ public class AgendaTelefonicaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(AgendaTelefonica elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los string
+    private AgendaTelefonica formatearStrings(AgendaTelefonica elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase().trim());
+        return elemento;
     }
     
 }

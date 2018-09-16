@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IAreaDAO;
 import ar.com.wecoode.jitws.model.Area;
 import java.util.List;
@@ -21,7 +22,8 @@ public class AreaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Area elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class AreaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Area elemento) {
-        elementoDAO.save(elemento);
+    public Area agregar(Area elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Area elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
         elementoDAO.save(elemento);
     }
     

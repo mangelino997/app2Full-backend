@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IChoferProveedorDAO;
 import ar.com.wecoode.jitws.dao.IProveedorDAO;
 import ar.com.wecoode.jitws.model.ChoferProveedor;
@@ -28,7 +29,8 @@ public class ChoferProveedorService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ChoferProveedor elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -54,13 +56,18 @@ public class ChoferProveedorService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ChoferProveedor elemento) {
-        elementoDAO.save(elemento);
+    public ChoferProveedor agregar(ChoferProveedor elemento) {
+        elemento = formatearStrings(elemento);
+        elementoDAO.saveAndFlush(elemento);
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() + " - " + elemento.getNumeroDocumento());
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ChoferProveedor elemento) {
+        elemento = formatearStrings(elemento);
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);
     }
     
@@ -68,6 +75,13 @@ public class ChoferProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ChoferProveedor elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ChoferProveedor formatearStrings(ChoferProveedor elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        return elemento;
     }
     
 }

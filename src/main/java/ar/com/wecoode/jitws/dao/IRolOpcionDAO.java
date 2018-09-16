@@ -18,8 +18,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IRolOpcionDAO extends JpaRepository<RolOpcion, Integer> {
     
-    public final String NOMBRE_TABLA = "rolopcion";
-    
     //Obtiene una lista de opciones por rol
     public List<RolOpcion> findByRol(Optional<Rol> rol);
     
@@ -30,8 +28,8 @@ public interface IRolOpcionDAO extends JpaRepository<RolOpcion, Integer> {
     public RolOpcion findByRolAndOpcion(Optional<Rol> rol, Optional<Opcion> opcion);
     
     //Elimina todos los datos de la tabla
-    //@Query(value = "DELETE FROM rolopcion", nativeQuery = true)
-    //public void eliminarTodo();
+    @Query(value = "DELETE FROM rolopcion", nativeQuery = true)
+    public void eliminarTodo();
     
     //Reestablece autoincremental
     @Query(value = "ALTER TABLE rolopcion AUTO_INCREMENT=1", nativeQuery = true)

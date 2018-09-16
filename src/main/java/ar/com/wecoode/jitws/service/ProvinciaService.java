@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IProvinciaDAO;
 import ar.com.wecoode.jitws.dao.IPaisDAO;
 import ar.com.wecoode.jitws.model.Provincia;
@@ -28,7 +29,8 @@ public class ProvinciaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Provincia elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -38,7 +40,11 @@ public class ProvinciaService {
     
     //Obtiene una lista por nombre
     public List<Provincia> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
     
     //Obtiene una lista por pais
@@ -48,13 +54,15 @@ public class ProvinciaService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Provincia elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Provincia agregar(Provincia elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Provincia elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -62,6 +70,13 @@ public class ProvinciaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Provincia elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Provincia formatearStrings(Provincia elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
+        return elemento;
     }
 
 }

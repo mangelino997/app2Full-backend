@@ -21,7 +21,8 @@ public class CaeaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Caea elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,8 +32,8 @@ public class CaeaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Caea elemento) {
-        elementoDAO.save(elemento);
+    public Caea agregar(Caea elemento) {
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro

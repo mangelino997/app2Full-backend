@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IMarcaProductoDAO;
 import ar.com.wecoode.jitws.model.MarcaProducto;
 import java.util.List;
@@ -21,7 +22,8 @@ public class MarcaProductoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        MarcaProducto elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class MarcaProductoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(MarcaProducto elemento) {
-        elementoDAO.save(elemento);
+    public MarcaProducto agregar(MarcaProducto elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(MarcaProducto elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,12 @@ public class MarcaProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(MarcaProducto elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private MarcaProducto formatearStrings(MarcaProducto elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

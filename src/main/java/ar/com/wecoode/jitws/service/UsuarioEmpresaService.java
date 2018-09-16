@@ -35,7 +35,8 @@ public class UsuarioEmpresaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        UsuarioEmpresa elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -72,8 +73,8 @@ public class UsuarioEmpresaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(UsuarioEmpresa elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public UsuarioEmpresa agregar(UsuarioEmpresa elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

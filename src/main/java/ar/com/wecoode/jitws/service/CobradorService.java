@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ICobradorDAO;
 import ar.com.wecoode.jitws.model.Cobrador;
 import java.util.List;
@@ -21,7 +22,8 @@ public class CobradorService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Cobrador elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class CobradorService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Cobrador elemento) {
-        elementoDAO.save(elemento);
+    public Cobrador agregar(Cobrador elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Cobrador elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,12 @@ public class CobradorService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Cobrador elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Cobrador formatearStrings(Cobrador elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

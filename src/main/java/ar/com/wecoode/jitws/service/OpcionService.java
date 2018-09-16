@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IOpcionDAO;
 import ar.com.wecoode.jitws.dao.ISubopcionDAO;
 import ar.com.wecoode.jitws.model.Opcion;
@@ -28,7 +29,8 @@ public class OpcionService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Opcion elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -54,13 +56,15 @@ public class OpcionService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Opcion elemento) {
-        elementoDAO.save(elemento);
+    public Opcion agregar(Opcion elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Opcion elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -68,6 +72,12 @@ public class OpcionService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Opcion elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Opcion formatearStrings(Opcion elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

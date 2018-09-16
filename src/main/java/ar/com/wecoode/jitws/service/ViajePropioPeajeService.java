@@ -21,7 +21,8 @@ public class ViajePropioPeajeService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajePropioPeaje elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,13 +32,15 @@ public class ViajePropioPeajeService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajePropioPeaje elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajePropioPeaje agregar(ViajePropioPeaje elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajePropioPeaje elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -45,6 +48,12 @@ public class ViajePropioPeajeService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajePropioPeaje elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajePropioPeaje formatearStrings(ViajePropioPeaje elemento) {
+        elemento.setLetra(elemento.getLetra().trim());
+        return elemento;
     }
 
 }

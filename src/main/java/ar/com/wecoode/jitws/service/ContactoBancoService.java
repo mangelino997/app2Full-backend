@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IContactoBancoDAO;
 import ar.com.wecoode.jitws.dao.ISucursalBancoDAO;
 import ar.com.wecoode.jitws.model.ContactoBanco;
@@ -28,7 +29,8 @@ public class ContactoBancoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ContactoBanco elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -55,13 +57,15 @@ public class ContactoBancoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ContactoBanco elemento) {
-        elementoDAO.save(elemento);
+    public ContactoBanco agregar(ContactoBanco elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ContactoBanco elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -69,6 +73,13 @@ public class ContactoBancoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ContactoBanco elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ContactoBanco formatearStrings(ContactoBanco elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase());
+        return elemento;
     }
     
 }

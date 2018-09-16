@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IContactoCompaniaSeguroDAO;
 import ar.com.wecoode.jitws.model.ContactoCompaniaSeguro;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ContactoCompaniaSeguroService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ContactoCompaniaSeguro elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class ContactoCompaniaSeguroService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ContactoCompaniaSeguro elemento) {
-        elementoDAO.save(elemento);
+    public ContactoCompaniaSeguro agregar(ContactoCompaniaSeguro elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ContactoCompaniaSeguro elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,13 @@ public class ContactoCompaniaSeguroService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ContactoCompaniaSeguro elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ContactoCompaniaSeguro formatearStrings(ContactoCompaniaSeguro elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase());
+        return elemento;
     }
     
 }

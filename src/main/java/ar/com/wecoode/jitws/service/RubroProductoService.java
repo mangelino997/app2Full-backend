@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IRubroProductoDAO;
 import ar.com.wecoode.jitws.model.RubroProducto;
 import java.util.List;
@@ -21,7 +22,8 @@ public class RubroProductoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        RubroProducto elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class RubroProductoService {
     
     //Obtiene una lista por nombre
     public List<RubroProducto> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(RubroProducto elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public RubroProducto agregar(RubroProducto elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(RubroProducto elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class RubroProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(RubroProducto elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private RubroProducto formatearStrings(RubroProducto elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IZonaDAO;
 import ar.com.wecoode.jitws.model.Zona;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ZonaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Zona elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -36,13 +38,15 @@ public class ZonaService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Zona elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Zona agregar(Zona elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Zona elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +54,12 @@ public class ZonaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Zona elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Zona formatearStrings(Zona elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

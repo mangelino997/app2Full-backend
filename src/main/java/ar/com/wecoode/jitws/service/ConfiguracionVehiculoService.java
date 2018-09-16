@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IConfiguracionVehiculoDAO;
 import ar.com.wecoode.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.wecoode.jitws.dao.ITipoVehiculoDAO;
@@ -34,7 +35,8 @@ public class ConfiguracionVehiculoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ConfiguracionVehiculo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -54,13 +56,15 @@ public class ConfiguracionVehiculoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ConfiguracionVehiculo elemento) {
-        elementoDAO.save(elemento);
+    public ConfiguracionVehiculo agregar(ConfiguracionVehiculo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ConfiguracionVehiculo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -68,6 +72,13 @@ public class ConfiguracionVehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ConfiguracionVehiculo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ConfiguracionVehiculo formatearStrings(ConfiguracionVehiculo elemento) {
+        elemento.setModelo(Funcion.primerLetraAMayuscula(elemento.getModelo().trim()));
+        elemento.setDescripcion(Funcion.primerLetraAMayuscula(elemento.getDescripcion().trim()));
+        return elemento;
     }
     
 }

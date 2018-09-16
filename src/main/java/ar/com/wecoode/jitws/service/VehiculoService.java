@@ -21,7 +21,8 @@ public class VehiculoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Vehiculo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -41,13 +42,17 @@ public class VehiculoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Vehiculo elemento) {
+    public Vehiculo agregar(Vehiculo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.saveAndFlush(elemento);
+        elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno());
+        return elementoDAO.save(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Vehiculo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -55,6 +60,16 @@ public class VehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Vehiculo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Vehiculo formatearStrings(Vehiculo elemento) {
+        elemento.setDominio(elemento.getDominio().trim());
+        elemento.setNumeroInterno(elemento.getNumeroInterno().trim());
+        elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
+        elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+        elemento.setNumeroRuta(elemento.getNumeroRuta().trim());
+        return elemento;
     }
 
 }

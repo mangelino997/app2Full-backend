@@ -21,7 +21,8 @@ public class CompaniaSeguroPolizaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        CompaniaSeguroPoliza elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,8 +32,8 @@ public class CompaniaSeguroPolizaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(CompaniaSeguroPoliza elemento) {
-        elementoDAO.save(elemento);
+    public CompaniaSeguroPoliza agregar(CompaniaSeguroPoliza elemento) {
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro

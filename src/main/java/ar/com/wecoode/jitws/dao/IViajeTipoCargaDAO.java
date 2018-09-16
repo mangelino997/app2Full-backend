@@ -1,11 +1,9 @@
 //Paquete al que pertenece la interfaz
 package ar.com.wecoode.jitws.dao;
 
-import ar.com.wecoode.jitws.constant.NombreConstant;
 import ar.com.wecoode.jitws.model.ViajeTipoCarga;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO ViajeTipoCarga
@@ -15,13 +13,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IViajeTipoCargaDAO extends JpaRepository<ViajeTipoCarga, Integer> {
     
-    public final String NOMBRE_TABLA = "viajetipocarga";
-    
     //Obtiene el siguiente id
-    @Query(value = "SELECT Auto_increment FROM information_schema.tables "
-            + "WHERE table_name='" + NOMBRE_TABLA +"'" + " AND table_schema='" 
-            + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
-    public int obtenerSiguienteId();
+    public ViajeTipoCarga findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
     public List<ViajeTipoCarga> findByNombreContaining(String nombre);

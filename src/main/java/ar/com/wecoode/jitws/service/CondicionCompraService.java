@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ICondicionCompraDAO;
 import ar.com.wecoode.jitws.model.CondicionCompra;
 import java.util.List;
@@ -21,7 +22,8 @@ public class CondicionCompraService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        CondicionCompra elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene una lista completa
@@ -40,13 +42,15 @@ public class CondicionCompraService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(CondicionCompra elemento) {
-        elementoDAO.save(elemento);
+    public CondicionCompra agregar(CondicionCompra elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(CondicionCompra elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,12 @@ public class CondicionCompraService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(CondicionCompra elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private CondicionCompra formatearStrings(CondicionCompra elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

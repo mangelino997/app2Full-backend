@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IAfipSituacionDAO;
 import ar.com.wecoode.jitws.model.AfipSituacion;
 import java.util.List;
@@ -21,7 +22,8 @@ public class AfipSituacionService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        AfipSituacion elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class AfipSituacionService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(AfipSituacion elemento) {
-        elementoDAO.save(elemento);
+    public AfipSituacion agregar(AfipSituacion elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipSituacion elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
         elementoDAO.save(elemento);
     }
     

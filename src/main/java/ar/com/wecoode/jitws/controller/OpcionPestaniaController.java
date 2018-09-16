@@ -11,6 +11,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.MessagingException;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +32,12 @@ public class OpcionPestaniaController {
     
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/opcionpestania";
+    //Define la url de subcripciones a sockets
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/opcionpestania";
+    
+    //Define el template para el envio de datos por socket
+    @Autowired
+    private SimpMessagingTemplate template;
     
     //Crea una instancia del servicio
     @Autowired
@@ -53,6 +61,10 @@ public class OpcionPestaniaController {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
                     MensajeRespuesta.TRANSACCION_NO_ACTUALIZADA), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,

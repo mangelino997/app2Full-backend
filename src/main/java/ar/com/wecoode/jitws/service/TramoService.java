@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ITramoDAO;
 import ar.com.wecoode.jitws.model.Tramo;
 import java.util.List;
@@ -21,7 +22,8 @@ public class TramoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Tramo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -36,13 +38,15 @@ public class TramoService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Tramo elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Tramo agregar(Tramo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Tramo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +54,12 @@ public class TramoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Tramo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Tramo formatearStrings(Tramo elemento) {
+        elemento.setRutaAlternativa(Funcion.primerLetraAMayuscula(elemento.getRutaAlternativa().trim()));
+        return elemento;
     }
 
 }

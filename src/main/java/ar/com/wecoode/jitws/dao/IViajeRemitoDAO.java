@@ -1,14 +1,12 @@
 //Paquete al que pertenece la interfaz
 package ar.com.wecoode.jitws.dao;
 
-import ar.com.wecoode.jitws.constant.NombreConstant;
 import ar.com.wecoode.jitws.model.Sucursal;
 import ar.com.wecoode.jitws.model.ViajePropioTramo;
 import ar.com.wecoode.jitws.model.ViajeRemito;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO ViajeRemito
@@ -18,13 +16,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     
-    public final String NOMBRE_TABLA = "viajeremito";
-    
     //Obtiene el siguiente id
-    @Query(value = "SELECT Auto_increment FROM information_schema.tables "
-            + "WHERE table_name='" + NOMBRE_TABLA +"'" + " AND table_schema='" 
-            + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
-    public int obtenerSiguienteId();
+    public ViajeRemito findTopByOrderByIdDesc();
     
     //Obtiene la lista por numero
     public List<ViajeRemito> findByNumeroComprobanteContaining(int numeroComprobante);

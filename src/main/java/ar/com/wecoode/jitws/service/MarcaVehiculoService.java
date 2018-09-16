@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.wecoode.jitws.model.MarcaVehiculo;
 import java.util.List;
@@ -21,7 +22,8 @@ public class MarcaVehiculoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        MarcaVehiculo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class MarcaVehiculoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(MarcaVehiculo elemento) {
-        elementoDAO.save(elemento);
+    public MarcaVehiculo agregar(MarcaVehiculo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(MarcaVehiculo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -55,5 +59,11 @@ public class MarcaVehiculoService {
     public void eliminar(MarcaVehiculo elemento) {
         elementoDAO.delete(elemento);
     }
+    
+    //Formatea los strings
+    private MarcaVehiculo formatearStrings(MarcaVehiculo elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
+    } 
     
 }

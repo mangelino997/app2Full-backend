@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IBancoDAO;
 import ar.com.wecoode.jitws.model.Banco;
 import java.util.List;
@@ -21,7 +22,8 @@ public class BancoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Banco elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class BancoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Banco elemento) {
-        elementoDAO.save(elemento);
+    public Banco agregar(Banco elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Banco elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,13 @@ public class BancoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Banco elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Banco formatearStrings(Banco elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setSitioWeb(elemento.getSitioWeb().toLowerCase().trim());
+        return elemento;
     }
     
 }

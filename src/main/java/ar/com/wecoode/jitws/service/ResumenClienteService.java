@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IResumenClienteDAO;
 import ar.com.wecoode.jitws.model.ResumenCliente;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ResumenClienteService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ResumenCliente elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class ResumenClienteService {
     
     //Obtiene una lista por nombre
     public List<ResumenCliente> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ResumenCliente elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ResumenCliente agregar(ResumenCliente elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ResumenCliente elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class ResumenClienteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ResumenCliente elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ResumenCliente formatearStrings(ResumenCliente elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

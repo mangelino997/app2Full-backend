@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IViajeTipoCargaDAO;
 import ar.com.wecoode.jitws.model.ViajeTipoCarga;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ViajeTipoCargaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajeTipoCarga elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -36,13 +38,15 @@ public class ViajeTipoCargaService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajeTipoCarga elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajeTipoCarga agregar(ViajeTipoCarga elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTipoCarga elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +54,12 @@ public class ViajeTipoCargaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeTipoCarga elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajeTipoCarga formatearStrings(ViajeTipoCarga elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

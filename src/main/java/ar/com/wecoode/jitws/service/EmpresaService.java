@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IEmpresaDAO;
 import ar.com.wecoode.jitws.model.Empresa;
 import java.util.List;
@@ -21,7 +22,8 @@ public class EmpresaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Empresa elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -40,13 +42,15 @@ public class EmpresaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Empresa elemento) {
-        elementoDAO.save(elemento);
+    public Empresa agregar(Empresa elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Empresa elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -54,6 +58,16 @@ public class EmpresaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Empresa elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Empresa formatearStrings(Empresa elemento) {
+        elemento.setRazonSocial(Funcion.convertirATitulo(elemento.getRazonSocial().trim()));
+        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setCuit(elemento.getCuit().trim());
+        elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
+        elemento.setAbreviatura(elemento.getAbreviatura().trim());
+        return elemento;
     }
     
 }

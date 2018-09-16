@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IViajeTerceroEfectivoDAO;
 import ar.com.wecoode.jitws.model.ViajeTerceroEfectivo;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ViajeTerceroEfectivoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajeTerceroEfectivo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,13 +33,15 @@ public class ViajeTerceroEfectivoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajeTerceroEfectivo elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajeTerceroEfectivo agregar(ViajeTerceroEfectivo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTerceroEfectivo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -45,6 +49,13 @@ public class ViajeTerceroEfectivoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeTerceroEfectivo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajeTerceroEfectivo formatearStrings(ViajeTerceroEfectivo elemento) {
+        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        elemento.setObservacionesAnulado(Funcion.primerLetraAMayuscula(elemento.getObservacionesAnulado().trim()));
+        return elemento;
     }
 
 }

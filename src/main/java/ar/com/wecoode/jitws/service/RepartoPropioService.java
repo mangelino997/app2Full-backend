@@ -21,7 +21,8 @@ public class RepartoPropioService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        RepartoPropio elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,8 +32,8 @@ public class RepartoPropioService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(RepartoPropio elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public RepartoPropio agregar(RepartoPropio elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

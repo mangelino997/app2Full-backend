@@ -34,7 +34,8 @@ public class ViajePrecioService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajePrecio elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -53,8 +54,8 @@ public class ViajePrecioService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajePrecio elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajePrecio agregar(ViajePrecio elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

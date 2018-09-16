@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ISeguridadSocialDAO;
 import ar.com.wecoode.jitws.model.SeguridadSocial;
 import java.util.List;
@@ -21,7 +22,8 @@ public class SeguridadSocialService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        SeguridadSocial elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class SeguridadSocialService {
     
     //Obtiene una lista por nombre
     public List<SeguridadSocial> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(SeguridadSocial elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public SeguridadSocial agregar(SeguridadSocial elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SeguridadSocial elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,13 @@ public class SeguridadSocialService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(SeguridadSocial elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private SeguridadSocial formatearStrings(SeguridadSocial elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
+        return elemento;
     }
 
 }

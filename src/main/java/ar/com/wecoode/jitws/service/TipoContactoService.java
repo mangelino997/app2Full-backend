@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ITipoContactoDAO;
 import ar.com.wecoode.jitws.model.TipoContacto;
 import java.util.List;
@@ -21,7 +22,8 @@ public class TipoContactoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        TipoContacto elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class TipoContactoService {
     
     //Obtiene una lista por nombre
     public List<TipoContacto> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(TipoContacto elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public TipoContacto agregar(TipoContacto elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TipoContacto elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class TipoContactoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(TipoContacto elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private TipoContacto formatearStrings(TipoContacto elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

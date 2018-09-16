@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ITipoDocumentoDAO;
 import ar.com.wecoode.jitws.model.TipoDocumento;
 import java.util.List;
@@ -21,7 +22,8 @@ public class TipoDocumentoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        TipoDocumento elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class TipoDocumentoService {
     
     //Obtiene una lista por nombre
     public List<TipoDocumento> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(TipoDocumento elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public TipoDocumento agregar(TipoDocumento elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TipoDocumento elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,14 @@ public class TipoDocumentoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(TipoDocumento elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private TipoDocumento formatearStrings(TipoDocumento elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setAbreviatura(elemento.getAbreviatura().trim());
+        elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
+        return elemento;
     }
 
 }

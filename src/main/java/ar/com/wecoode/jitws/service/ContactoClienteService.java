@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IClienteDAO;
 import ar.com.wecoode.jitws.dao.IContactoClienteDAO;
 import ar.com.wecoode.jitws.model.Cliente;
@@ -28,7 +29,8 @@ public class ContactoClienteService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ContactoCliente elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -55,13 +57,15 @@ public class ContactoClienteService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ContactoCliente elemento) {
-        elementoDAO.save(elemento);
+    public ContactoCliente agregar(ContactoCliente elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ContactoCliente elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -69,6 +73,13 @@ public class ContactoClienteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ContactoCliente elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ContactoCliente formatearStrings(ContactoCliente elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase());
+        return elemento;
     }
     
 }

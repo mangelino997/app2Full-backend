@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IUnidadMedidaDAO;
 import ar.com.wecoode.jitws.model.UnidadMedida;
 import java.util.List;
@@ -21,7 +22,8 @@ public class UnidadMedidaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        UnidadMedida elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class UnidadMedidaService {
     
     //Obtiene una lista por nombre
     public List<UnidadMedida> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(UnidadMedida elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public UnidadMedida agregar(UnidadMedida elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(UnidadMedida elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class UnidadMedidaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(UnidadMedida elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private UnidadMedida formatearStrings(UnidadMedida elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

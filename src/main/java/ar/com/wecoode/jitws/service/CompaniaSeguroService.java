@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.wecoode.jitws.model.CompaniaSeguro;
 import java.util.List;
@@ -21,7 +22,8 @@ public class CompaniaSeguroService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        CompaniaSeguro elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -36,13 +38,15 @@ public class CompaniaSeguroService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(CompaniaSeguro elemento) {
-        elementoDAO.save(elemento);
+    public CompaniaSeguro agregar(CompaniaSeguro elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(CompaniaSeguro elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +54,12 @@ public class CompaniaSeguroService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(CompaniaSeguro elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private CompaniaSeguro formatearStrings(CompaniaSeguro elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

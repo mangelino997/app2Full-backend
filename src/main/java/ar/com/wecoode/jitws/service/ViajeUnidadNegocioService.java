@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IViajeUnidadNegocioDAO;
 import ar.com.wecoode.jitws.model.ViajeUnidadNegocio;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ViajeUnidadNegocioService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajeUnidadNegocio elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -36,13 +38,15 @@ public class ViajeUnidadNegocioService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajeUnidadNegocio elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajeUnidadNegocio agregar(ViajeUnidadNegocio elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeUnidadNegocio elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +54,12 @@ public class ViajeUnidadNegocioService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeUnidadNegocio elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajeUnidadNegocio formatearStrings(ViajeUnidadNegocio elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

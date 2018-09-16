@@ -1,6 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
-import ar.com.wecoode.jitws.constant.FuncionConstante;
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IPaisDAO;
 import ar.com.wecoode.jitws.model.Pais;
 import java.util.List;
@@ -22,8 +22,8 @@ public class PaisService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        Pais pais = elementoDAO.findTopByOrderByIdDesc();
-        return pais.getId()+1;
+        Pais elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -33,13 +33,17 @@ public class PaisService {
     
     //Obtiene una lista por nombre
     public List<Pais> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Pais agregar(Pais elemento) {
-        elemento.setNombre(FuncionConstante.convertToTitleCase(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         elementoDAO.saveAndFlush(elemento);
         return elemento;
     }
@@ -47,7 +51,7 @@ public class PaisService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Pais elemento) {
-        elemento.setNombre(FuncionConstante.convertToTitleCase(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -55,6 +59,12 @@ public class PaisService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Pais elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Pais formatearStrings(Pais elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

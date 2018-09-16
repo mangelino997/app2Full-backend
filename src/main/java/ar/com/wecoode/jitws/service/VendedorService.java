@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IVendedorDAO;
 import ar.com.wecoode.jitws.model.Vendedor;
 import java.util.List;
@@ -21,7 +22,8 @@ public class VendedorService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Vendedor elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class VendedorService {
     
     //Obtiene una lista por nombre
     public List<Vendedor> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Vendedor elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Vendedor agregar(Vendedor elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Vendedor elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class VendedorService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Vendedor elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Vendedor formatearStrings(Vendedor elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

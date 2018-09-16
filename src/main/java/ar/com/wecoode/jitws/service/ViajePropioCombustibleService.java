@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IViajePropioCombustibleDAO;
 import ar.com.wecoode.jitws.model.ViajePropioCombustible;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ViajePropioCombustibleService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajePropioCombustible elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,13 +33,15 @@ public class ViajePropioCombustibleService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajePropioCombustible elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajePropioCombustible agregar(ViajePropioCombustible elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajePropioCombustible elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -45,6 +49,13 @@ public class ViajePropioCombustibleService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajePropioCombustible elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajePropioCombustible formatearStrings(ViajePropioCombustible elemento) {
+        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        elemento.setObservacionesAnulado(Funcion.primerLetraAMayuscula(elemento.getObservacionesAnulado().trim()));
+        return elemento;
     }
 
 }

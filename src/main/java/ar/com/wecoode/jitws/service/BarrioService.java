@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IBarrioDAO;
 import ar.com.wecoode.jitws.model.Barrio;
 import java.util.List;
@@ -20,7 +21,8 @@ public class BarrioService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Barrio elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -39,13 +41,15 @@ public class BarrioService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Barrio elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Barrio agregar(Barrio elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Barrio elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
         elementoDAO.save(elemento);
     }
     

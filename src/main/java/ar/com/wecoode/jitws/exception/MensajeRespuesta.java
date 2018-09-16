@@ -30,6 +30,8 @@ public class MensajeRespuesta {
     
     public static final String QUITADOS = "Registros quitados con éxito";
     
-    public static final String TRANSACCION_NO_ACTUALIZADA = "Registro actualizado por otra transaccion";
+    public static final String TRANSACCION_NO_ACTUALIZADA = "Registro actualizado por otra transacción";
+    
+    public static final String ERROR_SINC_SOCKET = "Error de sincronización de datos";
     
 }

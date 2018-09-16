@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ISucursalDAO;
 import ar.com.wecoode.jitws.dao.IViajePropioTramoDAO;
 import ar.com.wecoode.jitws.dao.IViajeRemitoDAO;
@@ -34,7 +35,8 @@ public class ViajeRemitoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajeRemito elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene el listado completo
@@ -101,13 +103,15 @@ public class ViajeRemitoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajeRemito elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajeRemito agregar(ViajeRemito elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeRemito elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -115,6 +119,13 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeRemito elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajeRemito formatearStrings(ViajeRemito elemento) {
+        elemento.setLetra(elemento.getLetra().trim());
+        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        return elemento;
     }
     
 }

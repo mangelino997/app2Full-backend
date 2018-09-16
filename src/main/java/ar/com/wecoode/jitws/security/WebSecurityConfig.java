@@ -1,8 +1,6 @@
 package ar.com.wecoode.jitws.security;
 
-import static ar.com.wecoode.jitws.security.SecurityConstants.SIGN_UP_URL;
 import ar.com.wecoode.jitws.service.AppUserDetailsService;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
@@ -36,12 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /* Configura los filtros de autenticacion (rutas autorizadas), los cors y 
+     + deshabilita el cross site scripting
+     */ 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //Configura los cors
         http.addFilterBefore(corsFilter(), ChannelProcessingFilter.class);
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+                .antMatchers("/jit/socket/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
@@ -49,18 +49,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
+    // Configura la gestion de autenticacion y la encriptacion de la contrasenia
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(appUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }
-
 
     /*
     * Esta configuración permite que la aplicación del cliente acceda a esta API. 

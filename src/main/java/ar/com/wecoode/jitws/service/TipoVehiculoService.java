@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ITipoVehiculoDAO;
 import ar.com.wecoode.jitws.model.TipoVehiculo;
 import java.util.List;
@@ -21,7 +22,8 @@ public class TipoVehiculoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        TipoVehiculo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class TipoVehiculoService {
     
     //Obtiene una lista por nombre
     public List<TipoVehiculo> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(TipoVehiculo elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public TipoVehiculo agregar(TipoVehiculo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TipoVehiculo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class TipoVehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(TipoVehiculo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private TipoVehiculo formatearStrings(TipoVehiculo elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

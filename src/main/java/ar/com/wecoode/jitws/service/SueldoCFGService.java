@@ -21,7 +21,8 @@ public class SueldoCFGService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        SueldoCFG elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,8 +32,8 @@ public class SueldoCFGService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(SueldoCFG elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public SueldoCFG agregar(SueldoCFG elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

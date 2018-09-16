@@ -19,8 +19,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IRolSubopcionDAO extends JpaRepository<RolSubopcion, Integer> {
     
-    public final String NOMBRE_TABLA = "rolsubopcion";
-    
     //Obtiene una lista de subopciones por rol
     public List<RolSubopcion> findByRol(Optional<Rol> rol);
     

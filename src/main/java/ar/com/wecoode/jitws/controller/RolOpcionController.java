@@ -6,6 +6,7 @@ import ar.com.wecoode.jitws.model.RolOpcion;
 import ar.com.wecoode.jitws.service.RolOpcionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,12 @@ public class RolOpcionController {
     
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/rolopcion";
+    //Define la url de subcripciones a sockets
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/rolopcion";
+    
+    //Define el template para el envio de datos por socket
+    @Autowired
+    private SimpMessagingTemplate template;
     
     //Crea una instancia del servicio
     @Autowired

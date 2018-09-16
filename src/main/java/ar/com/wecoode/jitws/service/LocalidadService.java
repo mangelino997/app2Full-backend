@@ -1,10 +1,10 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ILocalidadDAO;
 import ar.com.wecoode.jitws.dao.IProvinciaDAO;
 import ar.com.wecoode.jitws.model.Localidad;
 import ar.com.wecoode.jitws.model.Provincia;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,8 @@ public class LocalidadService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Localidad elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene una lista completa
@@ -54,13 +55,15 @@ public class LocalidadService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Localidad elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public Localidad agregar(Localidad elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Localidad elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -68,6 +71,13 @@ public class LocalidadService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Localidad elemento) {
         elementoDAO.delete(elemento);
-    } 
+    }
+    
+    //Formatea los strings
+    private Localidad formatearStrings(Localidad elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setCodigoPostal(elemento.getCodigoPostal().trim());
+        return elemento;
+    }
 
 }

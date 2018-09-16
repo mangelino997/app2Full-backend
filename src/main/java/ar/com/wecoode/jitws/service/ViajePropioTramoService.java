@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IViajePropioTramoDAO;
 import ar.com.wecoode.jitws.model.ViajePropioTramo;
 import java.util.List;
@@ -21,7 +22,8 @@ public class ViajePropioTramoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        ViajePropioTramo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,13 +33,15 @@ public class ViajePropioTramoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajePropioTramo elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public ViajePropioTramo agregar(ViajePropioTramo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajePropioTramo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -45,6 +49,12 @@ public class ViajePropioTramoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajePropioTramo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajePropioTramo formatearStrings(ViajePropioTramo elemento) {
+        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        return elemento;
     }
 
 }

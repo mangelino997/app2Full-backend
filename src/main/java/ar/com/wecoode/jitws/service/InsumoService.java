@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IInsumoDAO;
 import ar.com.wecoode.jitws.model.Insumo;
 import java.util.List;
@@ -21,7 +22,8 @@ public class InsumoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Insumo elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -50,13 +52,15 @@ public class InsumoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Insumo elemento) {
-        elementoDAO.save(elemento);
+    public Insumo agregar(Insumo elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Insumo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -64,6 +68,12 @@ public class InsumoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Insumo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Insumo formatearStrings(Insumo elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

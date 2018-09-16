@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ISituacionClienteDAO;
 import ar.com.wecoode.jitws.model.SituacionCliente;
 import java.util.List;
@@ -21,7 +22,8 @@ public class SituacionClienteService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        SituacionCliente elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,13 +33,17 @@ public class SituacionClienteService {
     
     //Obtiene una lista por nombre
     public List<SituacionCliente> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(SituacionCliente elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public SituacionCliente agregar(SituacionCliente elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
@@ -50,6 +56,12 @@ public class SituacionClienteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(SituacionCliente elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private SituacionCliente formatearStrings(SituacionCliente elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

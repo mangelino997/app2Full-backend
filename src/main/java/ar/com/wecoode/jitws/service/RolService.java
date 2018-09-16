@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IRolDAO;
 import ar.com.wecoode.jitws.dao.IRolSubopcionDAO;
 import ar.com.wecoode.jitws.dao.ISubopcionDAO;
@@ -34,7 +35,8 @@ public class RolService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Rol elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -44,12 +46,17 @@ public class RolService {
     
     //Obtiene una lista por nombre
     public List<Rol> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(Rol elemento) {
+    public Rol agregar(Rol elemento) {
+        elemento = formatearStrings(elemento);
         Rol rol = elementoDAO.saveAndFlush(elemento);
         //Obtiene la lista completa de subopciones
         List<Subopcion> subopciones = subopcionDAO.findAll();
@@ -64,11 +71,13 @@ public class RolService {
             rolSubopcion.setMostrar(false);
             rolSubopcionDAO.saveAndFlush(rolSubopcion);
         }
+        return rol;
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Rol elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -82,6 +91,12 @@ public class RolService {
             rolSubopcionDAO.delete(rolSubopcion);
         });
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Rol formatearStrings(Rol elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }

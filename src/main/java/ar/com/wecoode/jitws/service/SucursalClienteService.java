@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IClienteDAO;
 import ar.com.wecoode.jitws.dao.ISucursalClienteDAO;
 import ar.com.wecoode.jitws.model.Cliente;
@@ -28,7 +29,8 @@ public class SucursalClienteService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        SucursalCliente elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -38,7 +40,11 @@ public class SucursalClienteService {
     
     //Obtiene una lista por nombre
     public List<SucursalCliente> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
     
     //Obtiene una lista por nombre de banco
@@ -50,13 +56,15 @@ public class SucursalClienteService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(SucursalCliente elemento) {
-        elementoDAO.save(elemento);
+    public SucursalCliente agregar(SucursalCliente elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SucursalCliente elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -64,6 +72,15 @@ public class SucursalClienteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(SucursalCliente elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private SucursalCliente formatearStrings(SucursalCliente elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
+        elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        return elemento;
     }
     
 }

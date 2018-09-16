@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IUsuarioDAO;
 import ar.com.wecoode.jitws.model.Usuario;
 import java.util.List;
@@ -25,7 +26,8 @@ public class UsuarioService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        Usuario elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene una lista completa
@@ -41,13 +43,14 @@ public class UsuarioService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Usuario agregar(Usuario elemento) {
-        elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
+        elemento = formatearStrings(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public Usuario actualizar(Usuario elemento) {
+        elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
     
@@ -55,6 +58,14 @@ public class UsuarioService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Usuario elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Usuario formatearStrings(Usuario elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setUsername(elemento.getUsername().trim().toLowerCase());
+        elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
+        return elemento;
     }
 
 }

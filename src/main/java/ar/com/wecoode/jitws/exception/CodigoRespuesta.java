@@ -40,6 +40,9 @@ public class CodigoRespuesta {
     //Define una respuesta de TRANSACCION NO ACTUALIZADA
     public static final int TRANSACCION_NO_ACTUALIZADA = 600;
     
+    //Define una respuesta de sincronizacion mediante socket
+    public static final int ERROR_SINC_SOCKET = 5001;
+    
     //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_NOMBRE = 11002;
     

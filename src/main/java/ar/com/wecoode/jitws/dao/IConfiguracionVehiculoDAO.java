@@ -1,14 +1,12 @@
 //Paquete al que pertenece la interfaz
 package ar.com.wecoode.jitws.dao;
 
-import ar.com.wecoode.jitws.constant.NombreConstant;
 import ar.com.wecoode.jitws.model.ConfiguracionVehiculo;
 import ar.com.wecoode.jitws.model.MarcaVehiculo;
 import ar.com.wecoode.jitws.model.TipoVehiculo;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO ConfiguracionVehiculo
@@ -18,13 +16,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IConfiguracionVehiculoDAO extends JpaRepository<ConfiguracionVehiculo, Integer> {
     
-    public final String NOMBRE_TABLA = "configuracionvehiculo";
-    
     //Obtiene el siguiente id
-    @Query(value = "SELECT Auto_increment FROM information_schema.tables "
-            + "WHERE table_name='" + NOMBRE_TABLA +"'" + " AND table_schema='" 
-            + NombreConstant.NOMBRE_BASE_DATOS + "'", nativeQuery = true)
-    public int obtenerSiguienteId();
+    public ConfiguracionVehiculo findTopByOrderByIdDesc();
     
     //Obtiene una lista por id tipo vehiculo y id marca vehiculo
     public List<ConfiguracionVehiculo> findByTipoVehiculoAndMarcaVehiculo(Optional<TipoVehiculo> TipoVehiculo, Optional<MarcaVehiculo> marcaVehiculo);

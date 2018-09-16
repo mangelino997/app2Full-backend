@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ISucursalBancoDAO;
 import ar.com.wecoode.jitws.model.SucursalBanco;
 import java.util.List;
@@ -21,7 +22,8 @@ public class SucursalBancoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        SucursalBanco elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,7 +33,11 @@ public class SucursalBancoService {
     
     //Obtiene una lista por nombre
     public List<SucursalBanco> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
     
     //Obtiene una lista por nombre de banco
@@ -41,13 +47,15 @@ public class SucursalBancoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(SucursalBanco elemento) {
-        elementoDAO.save(elemento);
+    public SucursalBanco agregar(SucursalBanco elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SucursalBanco elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -55,6 +63,12 @@ public class SucursalBancoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(SucursalBanco elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private SucursalBanco formatearStrings(SucursalBanco elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
     
 }

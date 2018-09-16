@@ -4,6 +4,7 @@ import ar.com.wecoode.jitws.constant.RutaConstant;
 import ar.com.wecoode.jitws.exception.CodigoRespuesta;
 import ar.com.wecoode.jitws.exception.DuplicidadError;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
+import ar.com.wecoode.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
 import ar.com.wecoode.jitws.model.Pais;
 import ar.com.wecoode.jitws.model.Provincia;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.MessagingException;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +37,12 @@ public class ProvinciaController {
     
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/provincia";
+    //Define la url de subcripciones a sockets
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/provincia";
+    
+    //Define el template para el envio de datos por socket
+    @Autowired
+    private SimpMessagingTemplate template;
     
     //Crea una instancia del servicio
     @Autowired
@@ -71,9 +80,11 @@ public class ProvinciaController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Provincia elemento) {
         try {
-            elementoService.agregar(elemento);
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CREADO, 
-                    MensajeRespuesta.AGREGADO), HttpStatus.CREATED);
+            Provincia e = elementoService.agregar(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
+                    MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
         } catch(DataIntegrityViolationException e) {
             //Obtiene mensaje de duplicidad de datos
             String[] partes = e.getMostSpecificCause().getMessage().split("'");
@@ -88,6 +99,10 @@ public class ProvinciaController {
                 return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                         MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
@@ -100,6 +115,8 @@ public class ProvinciaController {
     public ResponseEntity<?> actualizar(@RequestBody Provincia elemento) {
         try {
             elementoService.actualizar(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
         } catch(DataIntegrityViolationException dive) {
@@ -120,6 +137,10 @@ public class ProvinciaController {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
                     MensajeRespuesta.TRANSACCION_NO_ACTUALIZADA), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,

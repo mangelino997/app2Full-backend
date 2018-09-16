@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IViajeTerceroCombustibleDAO;
 import ar.com.wecoode.jitws.dao.IViajeTerceroDAO;
 import ar.com.wecoode.jitws.dao.IViajeTerceroEfectivoDAO;
@@ -67,9 +68,10 @@ public class ViajeTerceroService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(ViajeTercero elemento) {
-        //Agrega el viaje propio
-        elementoDAO.saveAndFlush(elemento);
+    public ViajeTercero agregar(ViajeTercero elemento) {
+        elemento = formatearStrings(elemento);
+        //Agrega el viaje tercero
+        ViajeTercero viajeTercero =  elementoDAO.saveAndFlush(elemento);
         //Agrega los tramos del viaje
         elemento.getViajeTerceroTramos().forEach((item) -> {
             viajeTerceroTramoDAO.saveAndFlush(item);
@@ -86,11 +88,13 @@ public class ViajeTerceroService {
         elemento.getViajeTerceroInsumos().forEach((item) -> {
             viajeTerceroInsumoDAO.saveAndFlush(item);
         });
+        return viajeTercero;
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTercero elemento) {
+        elemento = formatearStrings(elemento);
         //Actualiza el viaje propio
         elementoDAO.save(elemento);
     }
@@ -99,6 +103,16 @@ public class ViajeTerceroService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeTercero elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajeTercero formatearStrings(ViajeTercero elemento) {
+        elemento.setNumeroLiquidacion(elemento.getNumeroLiquidacion().trim());
+        elemento.setObservacionVehiculo(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculo().trim()));
+        elemento.setObservacionVehiculoRemolque(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculoRemolque().trim()));
+        elemento.setObservacionChofer(Funcion.primerLetraAMayuscula(elemento.getObservacionChofer().trim()));
+        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        return elemento;
     }
     
 }

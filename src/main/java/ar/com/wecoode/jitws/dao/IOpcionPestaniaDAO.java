@@ -17,8 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IOpcionPestaniaDAO extends JpaRepository<OpcionPestania, Integer> {
     
-    public final String NOMBRE_TABLA = "opcionpestania";
-    
     //Obtiene una lista de pestañas por rol y opcion
     public List<OpcionPestania> findByRolAndOpcion(Optional<Rol> rol, Optional<Opcion> opcion);
     

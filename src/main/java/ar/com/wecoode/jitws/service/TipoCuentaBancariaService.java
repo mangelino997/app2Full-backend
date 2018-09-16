@@ -1,5 +1,6 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ITipoCuentaBancariaDAO;
 import ar.com.wecoode.jitws.model.TipoCuentaBancaria;
 import java.util.List;
@@ -21,7 +22,8 @@ public class TipoCuentaBancariaService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        return elementoDAO.obtenerSiguienteId();
+        TipoCuentaBancaria elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +33,24 @@ public class TipoCuentaBancariaService {
     
     //Obtiene una lista por nombre
     public List<TipoCuentaBancaria> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public void agregar(TipoCuentaBancaria elemento) {
-        elementoDAO.saveAndFlush(elemento);
+    public TipoCuentaBancaria agregar(TipoCuentaBancaria elemento) {
+        elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TipoCuentaBancaria elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -50,6 +58,12 @@ public class TipoCuentaBancariaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(TipoCuentaBancaria elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private TipoCuentaBancaria formatearStrings(TipoCuentaBancaria elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        return elemento;
     }
 
 }
