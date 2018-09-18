@@ -17,6 +17,6 @@ public interface IPaisDAO extends JpaRepository<Pais, Integer> {
     public Pais findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<Pais> findByNombreContaining(String nombre);
+    public List<Pais> findByNombreStartingWith(String nombre);
     
 }

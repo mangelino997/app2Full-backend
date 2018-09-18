@@ -10,7 +10,7 @@ public class DuplicidadError {
     
     public static final String CORREOELECTRONICO_UNICO = "correoelectronico_UNIQUE";
     
-    public static final String SITIOWEB_UNICO = "sitioweb_UNIQUE";
+    public static final String SITIOWEB_UNICO = "sitioWeb_UNIQUE";
     
     public static final String ABREVIATURA_UNICO = "abreviatura_UNIQUE";
     

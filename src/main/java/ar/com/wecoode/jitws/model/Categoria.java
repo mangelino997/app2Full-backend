@@ -38,7 +38,7 @@ public class Categoria extends ObjetoGenerico {
     
     //Define las horas laborables
     @Column(name = "horasLaborables", nullable = false)
-    private short horasLoborables;
+    private short horasLaborables;
     
     //Getters y Setters de la clase
 
@@ -82,12 +82,12 @@ public class Categoria extends ObjetoGenerico {
         this.diasLaborables = diasLaborables;
     }
 
-    public short getHorasLoborables() {
-        return horasLoborables;
+    public short getHorasLaborables() {
+        return horasLaborables;
     }
 
-    public void setHorasLoborables(short horasLoborables) {
-        this.horasLoborables = horasLoborables;
+    public void setHorasLaborables(short horasLaborables) {
+        this.horasLaborables = horasLaborables;
     }
     
 }

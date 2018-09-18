@@ -3,6 +3,8 @@ package ar.com.wecoode.jitws.service;
 import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.ICobradorDAO;
 import ar.com.wecoode.jitws.model.Cobrador;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,7 @@ public class CobradorService {
     @Transactional(rollbackFor = Exception.class)
     public Cobrador agregar(Cobrador elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaAlta(new Timestamp(new java.util.Date().getTime()));
         return elementoDAO.save(elemento);
     }
     
