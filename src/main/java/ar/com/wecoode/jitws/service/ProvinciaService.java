@@ -30,7 +30,7 @@ public class ProvinciaService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Provincia elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -48,8 +48,9 @@ public class ProvinciaService {
     }
     
     //Obtiene una lista por pais
-    public List<Provincia> listarPorPais(Optional<Pais> pais) {
-        return elementoDAO.findByPais(pais);
+    public List<Provincia> listarPorPais(int id) {
+        Optional<Pais> elemento = paisDAO.findById(id);
+        return elementoDAO.findByPais(elemento);
     }
 
     //Agrega un registro

@@ -17,11 +17,11 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,21 +47,21 @@ public class ObraSocialController {
     ObraSocialService elementoService;
     
     //Obtiene el siguiente id
-    @RequestMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<ObraSocial> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
-    @RequestMapping(value = URL + "/listarPorNombre/{nombre}")
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
     public List<ObraSocial> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
@@ -80,15 +80,21 @@ public class ObraSocialController {
             //Obtiene mensaje de duplicidad de datos
             String[] partes = e.getMostSpecificCause().getMessage().split("'");
             //Determina que columna tiene el dato duplicado
-            if(partes[3].equals(DuplicidadError.NOMBRE_UNICO)) {
-                //Retorna codigo y mensaje de error de dato duplicado
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE, 
-                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"), 
-                        HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                //Retorna codigo y mensaje de error interno en el servidor
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                        MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            switch (partes[3]) {
+                case DuplicidadError.NOMBRE_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.SITIOWEB_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_SITIOWEB,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getSitioWeb()+ "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                default:
+                    //Retorna codigo y mensaje de error interno en el servidor
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
@@ -114,15 +120,21 @@ public class ObraSocialController {
             //Obtiene mensaje de duplicidad de datos
             String[] partes = dive.getMostSpecificCause().getMessage().split("'");
             //Determina que columna tiene el dato duplicado
-            if(partes[3].equals(DuplicidadError.NOMBRE_UNICO)) {
-                //Retorna codigo y mensaje de error de dato duplicado
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE, 
-                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"), 
-                        HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                //Retorna codigo y mensaje de error interno en el servidor
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                        MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            switch (partes[3]) {
+                case DuplicidadError.NOMBRE_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.SITIOWEB_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_SITIOWEB,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getSitioWeb()+ "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                default:
+                    //Retorna codigo y mensaje de error interno en el servidor
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
