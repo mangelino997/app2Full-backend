@@ -23,7 +23,7 @@ public class TramoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Tramo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -33,7 +33,7 @@ public class TramoService {
     
     //Obtiene una lista por origen
     public List<Tramo> listarPorOrigen(String nombre) {
-        return elementoDAO.findByOrigen_Nombre(nombre);
+        return elementoDAO.findByOrigen_NombreContaining(nombre);
     }
 
     //Agrega un registro
@@ -58,7 +58,9 @@ public class TramoService {
     
     //Formatea los strings
     private Tramo formatearStrings(Tramo elemento) {
-        elemento.setRutaAlternativa(Funcion.primerLetraAMayuscula(elemento.getRutaAlternativa().trim()));
+        if(elemento.getRutaAlternativa() != null) {
+            elemento.setRutaAlternativa(Funcion.primerLetraAMayuscula(elemento.getRutaAlternativa().trim()));
+        }
         return elemento;
     }
 

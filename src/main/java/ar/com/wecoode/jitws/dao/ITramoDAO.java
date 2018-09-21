@@ -17,6 +17,6 @@ public interface ITramoDAO extends JpaRepository<Tramo, Integer> {
     public Tramo findTopByOrderByIdDesc();
     
     //Obtiene un listado por origen
-    public List<Tramo> findByOrigen_Nombre(String nombre);
+    public List<Tramo> findByOrigen_NombreContaining(String nombre);
     
 }

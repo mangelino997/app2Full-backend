@@ -58,7 +58,7 @@ public class TramoController {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por origen
     @RequestMapping(value = URL + "/listarPorOrigen/{nombre}")
     @ResponseBody
     public List<Tramo> listarPorOrigen(@PathVariable String nombre) {
