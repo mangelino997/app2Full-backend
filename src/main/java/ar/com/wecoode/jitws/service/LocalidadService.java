@@ -43,7 +43,7 @@ public class LocalidadService {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByNombreStartingWith(nombre);
         }
     }
     

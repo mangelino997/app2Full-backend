@@ -3,6 +3,7 @@ package ar.com.wecoode.jitws.service;
 import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IVendedorDAO;
 import ar.com.wecoode.jitws.model.Vendedor;
+import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,7 @@ public class VendedorService {
     @Transactional(rollbackFor = Exception.class)
     public Vendedor agregar(Vendedor elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaAlta(new Timestamp(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }
 

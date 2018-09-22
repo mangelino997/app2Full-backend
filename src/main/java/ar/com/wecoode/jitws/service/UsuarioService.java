@@ -39,6 +39,15 @@ public class UsuarioService {
     public Usuario obtenerPorUsername(String username) {
         return elementoDAO.findOneByUsername(username);
     }
+    
+    //Obtiene un listado por nombre
+    public List<Usuario> listarPorNombre(String nombre) {
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

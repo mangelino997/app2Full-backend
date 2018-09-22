@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,11 +25,11 @@ public class Vendedor extends ObjetoGenerico {
     
     //Define la fecha de alta
     @Column(name = "fechaAlta", nullable = false)
-    private Date fechaAlta;
+    private Timestamp fechaAlta;
     
     //Define la fecha de baja
     @Column(name = "fechaBaja", nullable = true)
-    private Date fechaBaja;
+    private Timestamp fechaBaja;
     
     //Define la baja
     @Column(name = "estaActivo", nullable = false)
@@ -50,19 +50,19 @@ public class Vendedor extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public Date getFechaAlta() {
+    public Timestamp getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
+    public void setFechaAlta(Timestamp fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
-    public Date getFechaBaja() {
+    public Timestamp getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(Date fechaBaja) {
+    public void setFechaBaja(Timestamp fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

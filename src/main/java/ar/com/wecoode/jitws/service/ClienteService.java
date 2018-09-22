@@ -24,7 +24,7 @@ public class ClienteService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Cliente elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene una lista completa

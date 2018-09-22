@@ -64,4 +64,10 @@ public class CodigoRespuesta {
     //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_SITIOWEB = 11008;
     
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_TELEFONO = 11009;
+    
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_DOCUMENTO = 11010;
+    
 }
