@@ -33,7 +33,7 @@ public class CondicionIvaService {
     
     //Obtiene una lista por nombre
     public List<CondicionIva> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+        if(nombre.equals("*")) {
             return elementoDAO.findAll();
         } else {
             return elementoDAO.findByNombreContaining(nombre);

@@ -47,6 +47,10 @@ public class VentaComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idAfipComprobante", nullable = false)
     private AfipComprobante afipComprobante;
     
+    //Define el codigo de afip
+    @Column(name = "codigoAfip", nullable = false)
+    private String codigoAfip;
+    
     //Define la fecha de emision
     @Column(name = "fechaEmision", nullable = false)
     private Date fechaEmision;
@@ -101,6 +105,10 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define el importe total
     @Column(name = "importeTotal", nullable = true)
     private BigDecimal importeTotal;
+    
+    //Define el importe saldo
+    @Column(name = "importeSaldo", nullable = true)
+    private BigDecimal importeSaldo;
 
     //Getters y Setters de la clase
 
@@ -152,6 +160,14 @@ public class VentaComprobante extends ObjetoGenerico {
         this.afipComprobante = afipComprobante;
     }
 
+    public String getCodigoAfip() {
+        return codigoAfip;
+    }
+
+    public void setCodigoAfip(String codigoAfip) {
+        this.codigoAfip = codigoAfip;
+    }
+    
     public Date getFechaEmision() {
         return fechaEmision;
     }
@@ -246,6 +262,14 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setImporteTotal(BigDecimal importeTotal) {
         this.importeTotal = importeTotal;
+    }
+
+    public BigDecimal getImporteSaldo() {
+        return importeSaldo;
+    }
+
+    public void setImporteSaldo(BigDecimal importeSaldo) {
+        this.importeSaldo = importeSaldo;
     }
     
 }

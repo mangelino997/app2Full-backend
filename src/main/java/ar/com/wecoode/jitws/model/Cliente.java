@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -108,9 +108,9 @@ public class Cliente extends ObjetoGenerico {
     private SituacionCliente situacionCliente;
     
     //Referencia a la clase Orden de venta
-    /*@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVenta", nullable = true)
-    private OrdenVenta ordenVenta;*/
+    private OrdenVenta ordenVenta;
     
     //Referencia a la clase Sucursal lugar de pago
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -144,7 +144,7 @@ public class Cliente extends ObjetoGenerico {
     
     //Define el vencimiento de la poliza del seguro
     @Column(name = "vencimientoPolizaSeguro", nullable = true)
-    private Date vencimientoPolizaSeguro;
+    private Timestamp vencimientoPolizaSeguro;
     
     //Define las observaciones
     @Column(name = "observaciones", nullable = true)
@@ -178,7 +178,7 @@ public class Cliente extends ObjetoGenerico {
     
     //Define la fecha de baja del cliente
     @Column(name = "fechaBaja", nullable = true)
-    private Date fechaBaja;
+    private Timestamp fechaBaja;
     
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -187,7 +187,7 @@ public class Cliente extends ObjetoGenerico {
     
     //Define la fecha de ultima modificacion
     @Column(name = "fechaUltimaMod", nullable = true)
-    private Date fechaUltimaMod;
+    private Timestamp fechaUltimaMod;
     
     //Define el alias para las busquedas
     @Column(name = "alias", nullable = true)
@@ -347,6 +347,14 @@ public class Cliente extends ObjetoGenerico {
         this.situacionCliente = situacionCliente;
     }
 
+    public OrdenVenta getOrdenVenta() {
+        return ordenVenta;
+    }
+
+    public void setOrdenVenta(OrdenVenta ordenVenta) {
+        this.ordenVenta = ordenVenta;
+    }
+    
     public Sucursal getSucursalLugarPago() {
         return sucursalLugarPago;
     }
@@ -403,11 +411,11 @@ public class Cliente extends ObjetoGenerico {
         this.numeroPolizaSeguro = numeroPolizaSeguro;
     }
 
-    public Date getVencimientoPolizaSeguro() {
+    public Timestamp getVencimientoPolizaSeguro() {
         return vencimientoPolizaSeguro;
     }
 
-    public void setVencimientoPolizaSeguro(Date vencimientoPolizaSeguro) {
+    public void setVencimientoPolizaSeguro(Timestamp vencimientoPolizaSeguro) {
         this.vencimientoPolizaSeguro = vencimientoPolizaSeguro;
     }
 
@@ -467,11 +475,11 @@ public class Cliente extends ObjetoGenerico {
         this.usuarioBaja = usuarioBaja;
     }
 
-    public Date getFechaBaja() {
+    public Timestamp getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(Date fechaBaja) {
+    public void setFechaBaja(Timestamp fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 
@@ -483,11 +491,11 @@ public class Cliente extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public Date getFechaUltimaMod() {
+    public Timestamp getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(Date fechaUltimaMod) {
+    public void setFechaUltimaMod(Timestamp fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
 

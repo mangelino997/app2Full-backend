@@ -1,58 +1,58 @@
 package ar.com.wecoode.jitws.service;
 
-import ar.com.wecoode.jitws.dao.IVentaComprobanteDAO;
-import ar.com.wecoode.jitws.model.VentaComprobante;
+import ar.com.wecoode.jitws.dao.IAlicuotaIvaDAO;
+import ar.com.wecoode.jitws.model.AlicuotaIva;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio VentaComprobante
+ * Servicio AlicuotaIva
  * @author blas
  */
 
 @Service
-public class VentaComprobanteService {
+public class AlicuotaIvaService {
     
     //Define la referencia al dao
     @Autowired
-    IVentaComprobanteDAO elementoDAO;
+    IAlicuotaIvaDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        VentaComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
+        AlicuotaIva elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
-    public List<VentaComprobante> listar() {
+    public List<AlicuotaIva> listar() {
         return elementoDAO.findAll();
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VentaComprobante agregar(VentaComprobante elemento) {
+    public AlicuotaIva agregar(AlicuotaIva elemento) {
         elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VentaComprobante elemento) {
+    public void actualizar(AlicuotaIva elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(VentaComprobante elemento) {
+    public void eliminar(AlicuotaIva elemento) {
         elementoDAO.delete(elemento);
     }
     
-    //Formatea los strings
-    private VentaComprobante formatearStrings(VentaComprobante elemento) {
-        elemento.setLetra(elemento.getLetra().trim());
+    //Formatea los string
+    private AlicuotaIva formatearStrings(AlicuotaIva elemento) {
+        elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;
     }
     
