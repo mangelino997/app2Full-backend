@@ -23,7 +23,7 @@ public class PersonalService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Personal elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -31,18 +31,18 @@ public class PersonalService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por nombre
-    public List<Personal> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+    //Obtiene una lista por alias
+    public List<Personal> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreCompletoContaining(nombre);
+            return elementoDAO.findByAliasContaining(alias);
         }
     }
     
-    //Obtiene un chofer por nombre
-    public List<Personal> listarChoferPorNombre(String nombre) {
-        return elementoDAO.findByNombreCompletoContainingAndEsChofer(nombre, 1);
+    //Obtiene un chofer por alias
+    public List<Personal> listarChoferPorAlias(String alias) {
+        return elementoDAO.findByAliasContainingAndEsChofer(alias, 1);
     }
 
     //Agrega un registro

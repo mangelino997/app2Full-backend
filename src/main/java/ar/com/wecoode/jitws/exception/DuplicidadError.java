@@ -20,8 +20,18 @@ public class DuplicidadError {
     
     public static final String CUIT_UNICO = "cuit_UNIQUE";
     
+    public static final String CUIL_UNICO = "cuil_UNIQUE";
+    
     public static final String TELEFONO_UNICO = "telefono_UNIQUE";
     
+    public static final String TELEFONO_FIJO_UNICO = "telefonoFijo_UNIQUE";
+    
+    public static final String TELEFONO_MOVIL_UNICO = "telefonoMovil_UNIQUE";
+    
+    public static final String TELEFONO_MOVIL_EMPRESA_UNICO = "telefonoMovilEmpresa_UNIQUE";
+    
     public static final String DOCUMENTO_UNICO = "numeroDocumento_UNIQUE";
+    
+    public static final String CBU_UNICO = "numeroCBU_UNIQUE";
     
 }

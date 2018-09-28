@@ -70,4 +70,19 @@ public class CodigoRespuesta {
     //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_DOCUMENTO = 11010;
     
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_CBU = 11011;
+    
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_CUIL = 11012;
+    
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_TELEFONO_FIJO = 11013;
+    
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_TELEFONO_MOVIL = 11014;
+    
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_TELEFONO_MOVIL_EMPRESA = 11015;
+    
 }

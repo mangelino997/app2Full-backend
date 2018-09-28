@@ -2,6 +2,7 @@ package ar.com.wecoode.jitws.controller;
 
 import ar.com.wecoode.jitws.constant.RutaConstant;
 import ar.com.wecoode.jitws.exception.CodigoRespuesta;
+import ar.com.wecoode.jitws.exception.DuplicidadError;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
 import ar.com.wecoode.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
@@ -9,17 +10,18 @@ import ar.com.wecoode.jitws.model.Proveedor;
 import ar.com.wecoode.jitws.service.ProveedorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,21 +47,21 @@ public class ProveedorController {
     ProveedorService elementoService;
     
     //Obtiene el siguiente id
-    @RequestMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<Proveedor> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
-    @RequestMapping(value = URL + "/listarPorAlias/{alias}")
+    @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public List<Proveedor> listarPorAlias(@PathVariable String alias) {
         return elementoService.listarPorAlias(alias);
@@ -74,6 +76,41 @@ public class ProveedorController {
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
+        } catch(DataIntegrityViolationException e) {
+            //Obtiene mensaje de duplicidad de datos
+            String[] partes = e.getMostSpecificCause().getMessage().split("'");
+            //Determina que columna tiene el dato duplicado
+            switch (partes[3]) {
+                case DuplicidadError.RAZONSOCIAL_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_RAZONSOCIAL,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getRazonSocial() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.TELEFONO_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefono() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.SITIOWEB_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_SITIOWEB,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getSitioWeb() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.DOCUMENTO_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNumeroDocumento() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.CBU_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CBU,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNumeroCBU() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                default:
+                    //Retorna codigo y mensaje de error interno en el servidor
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
@@ -94,6 +131,41 @@ public class ProveedorController {
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
+        } catch(DataIntegrityViolationException e) {
+            //Obtiene mensaje de duplicidad de datos
+            String[] partes = e.getMostSpecificCause().getMessage().split("'");
+            //Determina que columna tiene el dato duplicado
+            switch (partes[3]) {
+                case DuplicidadError.RAZONSOCIAL_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_RAZONSOCIAL,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getRazonSocial() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.TELEFONO_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefono() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.SITIOWEB_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_SITIOWEB,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getSitioWeb() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.DOCUMENTO_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNumeroDocumento() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.CBU_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CBU,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNumeroCBU() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                default:
+                    //Retorna codigo y mensaje de error interno en el servidor
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,

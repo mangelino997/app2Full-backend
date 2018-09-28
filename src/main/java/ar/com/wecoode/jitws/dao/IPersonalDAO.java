@@ -16,10 +16,10 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     //Obtiene el siguiente id
     public Personal findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre completo
-    public List<Personal> findByNombreCompletoContaining(String nombreCompleto);
+    //Obtiene una lista por alias
+    public List<Personal> findByAliasContaining(String alias);
     
-    //Obtiene una lista por nombre completo y por esChofer
-    public List<Personal> findByNombreCompletoContainingAndEsChofer(String nombreCompleto, int esChofer);
+    //Obtiene una lista por alias y por esChofer
+    public List<Personal> findByAliasContainingAndEsChofer(String alias, int esChofer);
     
 }
