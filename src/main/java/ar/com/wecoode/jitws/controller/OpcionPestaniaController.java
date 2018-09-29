@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,7 +44,7 @@ public class OpcionPestaniaController {
     OpcionPestaniaService elementoService;
     
     //Obtiene una lista por rol y opcion
-    @RequestMapping(value = URL + "/listarPorRolOpcion/{idRol}/{idOpcion}")
+    @GetMapping(value = URL + "/listarPorRolOpcion/{idRol}/{idOpcion}")
     @ResponseBody
     public List<Pestania> listarPorRolOpcion(@PathVariable int idRol, @PathVariable int idOpcion) {
         return elementoService.listarPorRolOpcion(idRol, idOpcion);

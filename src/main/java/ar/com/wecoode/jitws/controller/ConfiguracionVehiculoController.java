@@ -15,11 +15,11 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,21 +45,21 @@ public class ConfiguracionVehiculoController {
     ConfiguracionVehiculoService elementoService;
     
     //Obtiene el siguiente id
-    @RequestMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<ConfiguracionVehiculo> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
-    @RequestMapping(value = URL + "/listarPorTipoVehiculoMarcaVehiculo/"
+    @GetMapping(value = URL + "/listarPorTipoVehiculoMarcaVehiculo/"
             + "{idTipoVehiculo}/{idMarcaVehiculo}")
     @ResponseBody
     public List<ConfiguracionVehiculo> listarPorTipoVehiculoMarcaVehiculo(

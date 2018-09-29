@@ -1,9 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,7 +38,7 @@ public class ViajePropio extends ObjetoGenerico {
     
     //Define la fecha
     @Column(name = "fecha", nullable = false)
-    private Date fecha;
+    private LocalDate fecha;
     
     //Referencia a la clase Vehiculo
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -86,7 +85,7 @@ public class ViajePropio extends ObjetoGenerico {
     
     //Defina una fecha de documentacion
     @Column(name = "fechaDocumentacion", nullable = true)
-    private Date fechaDocumentacion;
+    private LocalDate fechaDocumentacion;
     
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -99,7 +98,7 @@ public class ViajePropio extends ObjetoGenerico {
     
     //Define una fecha de liquidacion
     @Column(name = "fechaLiquidacion", nullable = true)
-    private Date fechaLiquidacion;
+    private LocalDate fechaLiquidacion;
     
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -187,11 +186,11 @@ public class ViajePropio extends ObjetoGenerico {
         this.usuario = usuario;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -267,11 +266,11 @@ public class ViajePropio extends ObjetoGenerico {
         this.numeroDocumentacion = numeroDocumentacion;
     }
 
-    public Date getFechaDocumentacion() {
+    public LocalDate getFechaDocumentacion() {
         return fechaDocumentacion;
     }
 
-    public void setFechaDocumentacion(Date fechaDocumentacion) {
+    public void setFechaDocumentacion(LocalDate fechaDocumentacion) {
         this.fechaDocumentacion = fechaDocumentacion;
     }
 
@@ -291,11 +290,11 @@ public class ViajePropio extends ObjetoGenerico {
         this.numeroLiquidacion = numeroLiquidacion;
     }
 
-    public Date getFechaLiquidacion() {
+    public LocalDate getFechaLiquidacion() {
         return fechaLiquidacion;
     }
 
-    public void setFechaLiquidacion(Date fechaLiquidacion) {
+    public void setFechaLiquidacion(LocalDate fechaLiquidacion) {
         this.fechaLiquidacion = fechaLiquidacion;
     }
 

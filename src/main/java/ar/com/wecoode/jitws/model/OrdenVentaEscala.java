@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,7 +48,7 @@ public class OrdenVentaEscala extends ObjetoGenerico {
     
     //Define la fecha desde que estan los precios
     @Column(name = "preciosDesde", nullable = false)
-    private Date preciosDesde;
+    private LocalDate preciosDesde;
 
     //Getters y Setters de la clase
 
@@ -100,11 +100,11 @@ public class OrdenVentaEscala extends ObjetoGenerico {
         this.minimo = minimo;
     }
 
-    public Date getPreciosDesde() {
+    public LocalDate getPreciosDesde() {
         return preciosDesde;
     }
 
-    public void setPreciosDesde(Date preciosDesde) {
+    public void setPreciosDesde(LocalDate preciosDesde) {
         this.preciosDesde = preciosDesde;
     }
     

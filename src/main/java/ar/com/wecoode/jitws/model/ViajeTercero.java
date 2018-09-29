@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,7 +38,7 @@ public class ViajeTercero extends ObjetoGenerico {
     
     //Define la fecha
     @Column(name = "fecha", nullable = false)
-    private Date fecha;
+    private LocalDate fecha;
     
     //Referencia a la clase Vehiculo Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -85,7 +85,7 @@ public class ViajeTercero extends ObjetoGenerico {
     
     //Define una fecha de liquidacion
     @Column(name = "fechaLiquidacion", nullable = true)
-    private Date fechaLiquidacion;
+    private LocalDate fechaLiquidacion;
     
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -165,11 +165,11 @@ public class ViajeTercero extends ObjetoGenerico {
         this.usuario = usuario;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -245,11 +245,11 @@ public class ViajeTercero extends ObjetoGenerico {
         this.numeroLiquidacion = numeroLiquidacion;
     }
 
-    public Date getFechaLiquidacion() {
+    public LocalDate getFechaLiquidacion() {
         return fechaLiquidacion;
     }
 
-    public void setFechaLiquidacion(Date fechaLiquidacion) {
+    public void setFechaLiquidacion(LocalDate fechaLiquidacion) {
         this.fechaLiquidacion = fechaLiquidacion;
     }
 

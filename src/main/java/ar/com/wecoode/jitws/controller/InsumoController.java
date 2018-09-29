@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,35 +45,35 @@ public class InsumoController {
     InsumoService elementoService;
     
     //Obtiene el siguiente id
-    @RequestMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<Insumo> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
-    @RequestMapping(value = URL + "/listarPorNombre/{nombre}")
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
     public List<Insumo> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
     
     //Obtiene una lista de insumos combustibles
-    @RequestMapping(value = URL + "/listarCombustibles")
+    @GetMapping(value = URL + "/listarCombustibles")
     @ResponseBody
     public List<Insumo> listarCombustibles() {
         return elementoService.listarCombustibles();
     }
     
     //Obtiene una lista de insumos combustibles
-    @RequestMapping(value = URL + "/listarNoCombustibles")
+    @GetMapping(value = URL + "/listarNoCombustibles")
     @ResponseBody
     public List<Insumo> listarNoCombustibles() {
         return elementoService.listarNoCombustibles();

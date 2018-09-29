@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,11 +38,11 @@ public class ViajePropioTramo extends ObjetoGenerico {
     
     //Define una fecha tramo
     @Column(name = "fechaTramo", nullable = false)
-    private Date fechaTramo;
+    private LocalDate fechaTramo;
     
     //Define una fecha alta
     @Column(name = "fechaAlta", nullable = false)
-    private Date fechaAlta;
+    private LocalDate fechaAlta;
     
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -128,19 +128,19 @@ public class ViajePropioTramo extends ObjetoGenerico {
         this.numeroOrden = numeroOrden;
     }
 
-    public Date getFechaTramo() {
+    public LocalDate getFechaTramo() {
         return fechaTramo;
     }
 
-    public void setFechaTramo(Date fechaTramo) {
+    public void setFechaTramo(LocalDate fechaTramo) {
         this.fechaTramo = fechaTramo;
     }
 
-    public Date getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 

@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,11 +52,11 @@ public class ViajePropioEfectivo extends ObjetoGenerico {
 
     //Define la fecha
     @Column(name = "fecha", nullable = false)
-    private Date fecha;
+    private LocalDate fecha;
     
     //Define la fecha caja
     @Column(name = "fechaCaja", nullable = false)
-    private Date fechaCaja;
+    private LocalDate fechaCaja;
     
     //Define el importe
     @Column(name = "importe", nullable = false)
@@ -124,19 +124,19 @@ public class ViajePropioEfectivo extends ObjetoGenerico {
         this.tipoComprobante = tipoComprobante;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaCaja() {
+    public LocalDate getFechaCaja() {
         return fechaCaja;
     }
 
-    public void setFechaCaja(Date fechaCaja) {
+    public void setFechaCaja(LocalDate fechaCaja) {
         this.fechaCaja = fechaCaja;
     }
 

@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +35,7 @@ public class CompaniaSeguroPoliza extends ObjetoGenerico {
     
     //Define el vencimiento de la poliza
     @Column(name = "vtoPoliza", nullable = false)
-    private Date vtoPoliza;
+    private LocalDate vtoPoliza;
 
     //Getters y Setters de la clase
 
@@ -63,11 +63,11 @@ public class CompaniaSeguroPoliza extends ObjetoGenerico {
         this.numeroPoliza = numeroPoliza;
     }
 
-    public Date getVtoPoliza() {
+    public LocalDate getVtoPoliza() {
         return vtoPoliza;
     }
 
-    public void setVtoPoliza(Date vtoPoliza) {
+    public void setVtoPoliza(LocalDate vtoPoliza) {
         this.vtoPoliza = vtoPoliza;
     }
     

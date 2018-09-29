@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +41,7 @@ public class OrdenVenta extends ObjetoGenerico {
     
     //Define la fecha de alta
     @Column(name = "fechaAlta", nullable = false)
-    private Date fechaAlta;
+    private LocalDate fechaAlta;
     
     //Referencia a la clase TipoTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -70,7 +70,7 @@ public class OrdenVenta extends ObjetoGenerico {
     
     //Define la fecha desde que esta activa
     @Column(name = "activaDesde", nullable = true)
-    private Date activaDesde;
+    private LocalDate activaDesde;
 
     //Getters y Setters de la clase
 
@@ -106,11 +106,11 @@ public class OrdenVenta extends ObjetoGenerico {
         this.vendedor = vendedor;
     }
 
-    public Date getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
@@ -162,11 +162,11 @@ public class OrdenVenta extends ObjetoGenerico {
         this.estaActiva = estaActiva;
     }
 
-    public Date getActivaDesde() {
+    public LocalDate getActivaDesde() {
         return activaDesde;
     }
 
-    public void setActivaDesde(Date activaDesde) {
+    public void setActivaDesde(LocalDate activaDesde) {
         this.activaDesde = activaDesde;
     }
     

@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,19 +38,19 @@ public class Caea extends ObjetoGenerico {
     
     //Define fecha desde
     @Column(name = "fechaDesde", nullable = false)
-    private Date fechaDesde;
+    private LocalDate fechaDesde;
     
     //Define fecha hasta
     @Column(name = "fechaHasta", nullable = false)
-    private Date fechaHasta;
+    private LocalDate fechaHasta;
     
     //Define fecha tope informar
     @Column(name = "fechaTopeInformar", nullable = false)
-    private Date fechaTopeInformar;
+    private LocalDate fechaTopeInformar;
     
     //Define fecha solicitud
     @Column(name = "fechaSolicitud", nullable = false)
-    private Date fechaSolicitud;
+    private LocalDate fechaSolicitud;
 
     //Getters y Setters de la clase
 
@@ -86,35 +86,35 @@ public class Caea extends ObjetoGenerico {
         this.numeroCAEA = numeroCAEA;
     }
 
-    public Date getFechaDesde() {
+    public LocalDate getFechaDesde() {
         return fechaDesde;
     }
 
-    public void setFechaDesde(Date fechaDesde) {
+    public void setFechaDesde(LocalDate fechaDesde) {
         this.fechaDesde = fechaDesde;
     }
 
-    public Date getFechaHasta() {
+    public LocalDate getFechaHasta() {
         return fechaHasta;
     }
 
-    public void setFechaHasta(Date fechaHasta) {
+    public void setFechaHasta(LocalDate fechaHasta) {
         this.fechaHasta = fechaHasta;
     }
 
-    public Date getFechaTopeInformar() {
+    public LocalDate getFechaTopeInformar() {
         return fechaTopeInformar;
     }
 
-    public void setFechaTopeInformar(Date fechaTopeInformar) {
+    public void setFechaTopeInformar(LocalDate fechaTopeInformar) {
         this.fechaTopeInformar = fechaTopeInformar;
     }
 
-    public Date getFechaSolicitud() {
+    public LocalDate getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(Date fechaSolicitud) {
+    public void setFechaSolicitud(LocalDate fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
     

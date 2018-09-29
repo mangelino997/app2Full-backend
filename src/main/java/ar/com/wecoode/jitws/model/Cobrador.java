@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,11 +25,11 @@ public class Cobrador extends ObjetoGenerico {
     
     //Define la fecha de alta
     @Column(name = "fechaAlta", nullable = false)
-    private Timestamp fechaAlta;
+    private LocalDate fechaAlta;
     
     //Define la fecha de baja
     @Column(name = "fechaBaja", nullable = true)
-    private Timestamp fechaBaja;
+    private LocalDate fechaBaja;
     
     //Define si esta activo
     @Column(name = "estaActivo", nullable = false)
@@ -50,19 +50,19 @@ public class Cobrador extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public Timestamp getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Timestamp fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
-    public Timestamp getFechaBaja() {
+    public LocalDate getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(Timestamp fechaBaja) {
+    public void setFechaBaja(LocalDate fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

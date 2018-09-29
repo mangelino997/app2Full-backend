@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,7 +52,7 @@ public class ViajePropioGasto extends ObjetoGenerico {
     
     //Define la fecha
     @Column(name = "fecha", nullable = false)
-    private Date fecha;
+    private LocalDate fecha;
     
     //Define la cantidad
     @Column(name = "cantidad", nullable = false)
@@ -124,11 +124,11 @@ public class ViajePropioGasto extends ObjetoGenerico {
         this.rubroProducto = rubroProducto;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

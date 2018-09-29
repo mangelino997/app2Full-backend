@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -89,7 +89,7 @@ public class Proveedor extends ObjetoGenerico {
     
     //Define la fecha de ultima modificacion
     @Column(name = "fechaUltimaMod", nullable = true)
-    private Date fechaUltimaMod;
+    private LocalDate fechaUltimaMod;
     
     //Define las observaciones
     @Column(name = "observaciones", nullable = true)
@@ -264,11 +264,11 @@ public class Proveedor extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public Date getFechaUltimaMod() {
+    public LocalDate getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(Date fechaUltimaMod) {
+    public void setFechaUltimaMod(LocalDate fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
 

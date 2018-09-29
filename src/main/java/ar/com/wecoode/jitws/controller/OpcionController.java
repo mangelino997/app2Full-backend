@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,28 +47,28 @@ public class OpcionController {
     OpcionService elementoService;
     
     //Obtiene el siguiente id
-    @RequestMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<Opcion> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
-    @RequestMapping(value = URL + "/listarPorNombre/{nombre}")
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
     public List<Opcion> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
     
     //Obtiene una lista por subopcion
-    @RequestMapping(value = URL + "/listarPorSubopcion/{idSubopcion}")
+    @GetMapping(value = URL + "/listarPorSubopcion/{idSubopcion}")
     @ResponseBody
     public List<Opcion> listarPorSubopcion(@PathVariable int idSubopcion) {
         return elementoService.listarPorSubopcion(idSubopcion);

@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +53,7 @@ public class ChoferProveedor extends ObjetoGenerico {
     
     //Define la fecha de nacimiento
     @Column(name = "fechaNacimiento", nullable = false)
-    private Date fechaNacimiento; 
+    private LocalDate fechaNacimiento; 
     
     //Define el telefono fijo
     @Column(name = "telefonoFijo", nullable = true)
@@ -65,19 +65,19 @@ public class ChoferProveedor extends ObjetoGenerico {
     
     //Define el vencimiento del carnet
     @Column(name = "vtoCarnet", nullable = false)
-    private Date vtoCarnet;
+    private LocalDate vtoCarnet;
     
     //Define el vencimiento del curso de un chofer
     @Column(name = "vtoCurso", nullable = false)
-    private Date vtoCurso;
+    private LocalDate vtoCurso;
     
     //Define el vencimiento de LNH
     @Column(name = "vtoLNH", nullable = false)
-    private Date vtoLNH;
+    private LocalDate vtoLNH;
     
     //Define el vencimiento de la libreta de sanidad
     @Column(name = "vtoLibretaSanidad", nullable = true)
-    private Date vtoLibretaSanidad;
+    private LocalDate vtoLibretaSanidad;
     
     //Referencia a la clase Usuario (Alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -86,7 +86,7 @@ public class ChoferProveedor extends ObjetoGenerico {
     
     //Define la fecha de alta
     @Column(name = "fechaAlta", nullable = false)
-    private Date fechaAlta;
+    private LocalDate fechaAlta;
     
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -95,7 +95,7 @@ public class ChoferProveedor extends ObjetoGenerico {
     
     //Define la fecha de modificacion
     @Column(name = "fechaUltimaMod", nullable = true)
-    private Date fechaUltimaMod;
+    private LocalDate fechaUltimaMod;
     
     //Referencia a la clase Usuario (Baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -104,7 +104,7 @@ public class ChoferProveedor extends ObjetoGenerico {
     
     //Define la fecha de baja
     @Column(name = "fechaBaja", nullable = true)
-    private Date fechaBaja;
+    private LocalDate fechaBaja;
     
     //Define el alias para las busquedas
     @Column(name = "alias", nullable = true)
@@ -168,11 +168,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -192,35 +192,35 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.telefonoMovil = telefonoMovil;
     }
 
-    public Date getVtoCarnet() {
+    public LocalDate getVtoCarnet() {
         return vtoCarnet;
     }
 
-    public void setVtoCarnet(Date vtoCarnet) {
+    public void setVtoCarnet(LocalDate vtoCarnet) {
         this.vtoCarnet = vtoCarnet;
     }
 
-    public Date getVtoCurso() {
+    public LocalDate getVtoCurso() {
         return vtoCurso;
     }
 
-    public void setVtoCurso(Date vtoCurso) {
+    public void setVtoCurso(LocalDate vtoCurso) {
         this.vtoCurso = vtoCurso;
     }
 
-    public Date getVtoLNH() {
+    public LocalDate getVtoLNH() {
         return vtoLNH;
     }
 
-    public void setVtoLNH(Date vtoLNH) {
+    public void setVtoLNH(LocalDate vtoLNH) {
         this.vtoLNH = vtoLNH;
     }
 
-    public Date getVtoLibretaSanidad() {
+    public LocalDate getVtoLibretaSanidad() {
         return vtoLibretaSanidad;
     }
 
-    public void setVtoLibretaSanidad(Date vtoLibretaSanidad) {
+    public void setVtoLibretaSanidad(LocalDate vtoLibretaSanidad) {
         this.vtoLibretaSanidad = vtoLibretaSanidad;
     }
 
@@ -232,11 +232,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.usuarioAlta = usuarioAlta;
     }
 
-    public Date getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
@@ -248,11 +248,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public Date getFechaUltimaMod() {
+    public LocalDate getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(Date fechaUltimaMod) {
+    public void setFechaUltimaMod(LocalDate fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
 
@@ -264,11 +264,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.usuarioBaja = usuarioBaja;
     }
 
-    public Date getFechaBaja() {
+    public LocalDate getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(Date fechaBaja) {
+    public void setFechaBaja(LocalDate fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

@@ -50,7 +50,8 @@ public class PersonalService {
     public Personal agregar(Personal elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.saveAndFlush(elemento);
-        elemento.setAlias(elemento.getId() + " - " + elemento.getNombreCompleto() + " - " + elemento.getNumeroDocumento());
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombreCompleto() 
+                + " - " + elemento.getNumeroDocumento());
         return elementoDAO.save(elemento);
     }
 
@@ -74,16 +75,34 @@ public class PersonalService {
         elemento.setNombreCompleto(elemento.getApellido() + " " + elemento.getNombre());
         elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
         elemento.setCuil(elemento.getCuil().trim());
-        elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
-        elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
-        elemento.setCorreoelectronico(elemento.getCorreoelectronico().trim().toLowerCase());
+        if(elemento.getTelefonoFijo() != null) {
+            elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
+        }
+        if(elemento.getTelefonoMovil() != null) {
+            elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        }
+        if(elemento.getCorreoelectronico() != null) {
+            elemento.setCorreoelectronico(elemento.getCorreoelectronico().trim().toLowerCase());
+        }
         elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
-        elemento.setTalleCamisa(elemento.getTalleCamisa().trim());
-        elemento.setTallePantalon(elemento.getTallePantalon().trim());
-        elemento.setTalleCalzado(elemento.getTalleCalzado().trim());
-        elemento.setTelefonoMovilEmpresa(elemento.getTelefonoMovilEmpresa().trim());
-        elemento.setTelefonoMovilObservacion(elemento.getTelefonoMovilObservacion().trim());
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        if(elemento.getTalleCamisa() != null) {
+            elemento.setTalleCamisa(elemento.getTalleCamisa().trim());
+        }
+        if(elemento.getTallePantalon() != null) {
+            elemento.setTallePantalon(elemento.getTallePantalon().trim());
+        }
+        if(elemento.getTalleCalzado() != null) {
+            elemento.setTalleCalzado(elemento.getTalleCalzado().trim());
+        }
+        if(elemento.getTelefonoMovilEmpresa() != null) {
+            elemento.setTelefonoMovilEmpresa(elemento.getTelefonoMovilEmpresa().trim());
+        }
+        if(elemento.getTelefonoMovilObservacion() != null) {
+            elemento.setTelefonoMovilObservacion(elemento.getTelefonoMovilObservacion().trim());
+        }
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        }
         return elemento;
     }
 

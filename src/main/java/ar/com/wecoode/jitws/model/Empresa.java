@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.sql.Blob;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,7 +76,7 @@ public class Empresa extends ObjetoGenerico {
     
     //Define el inicio de actividad
     @Column(name = "inicioActividad", nullable = true)
-    private Date inicioActividad;
+    private LocalDate inicioActividad;
     
     //Getters y Setters de la clase
 
@@ -176,11 +176,11 @@ public class Empresa extends ObjetoGenerico {
         this.estaActiva = estaActiva;
     }
 
-    public Date getInicioActividad() {
+    public LocalDate getInicioActividad() {
         return inicioActividad;
     }
 
-    public void setInicioActividad(Date inicioActividad) {
+    public void setInicioActividad(LocalDate inicioActividad) {
         this.inicioActividad = inicioActividad;
     }
     

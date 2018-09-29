@@ -2,8 +2,8 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -68,7 +68,7 @@ public class Personal extends ObjetoGenerico {
     
     //Define la fecha de nacimiento
     @Column(name = "fechaNacimiento", nullable = false)
-    private Date fechaNacimiento; 
+    private LocalDate fechaNacimiento; 
     
     //Define el telefono fijo
     @Column(name = "telefonoFijo", nullable = true)
@@ -104,11 +104,11 @@ public class Personal extends ObjetoGenerico {
     
     //Define la fecha de inicio
     @Column(name = "fechaInicio", nullable = false)
-    private Date fechaInicio;
+    private LocalDate fechaInicio;
     
     //Define la fecha de fin
     @Column(name = "fechaFin", nullable = true)
-    private Date fechaFin;
+    private LocalDate fechaFin;
     
     //Define la antiguedad anterior anios
     @Column(name = "antiguedadAntAnio", nullable = true)
@@ -241,19 +241,19 @@ public class Personal extends ObjetoGenerico {
     
     //Define el vencimiento de la licencia de conducirde un chofer
     @Column(name = "vtoLicenciaConducir", nullable = true)
-    private Date vtoLicenciaConducir;
+    private LocalDate vtoLicenciaConducir;
     
     //Define el vencimiento del curso CNRT de un chofer
     @Column(name = "vtoCursoCNRT", nullable = true)
-    private Date vtoCursoCNRT;
+    private LocalDate vtoCursoCNRT;
     
     //Define el vencimiento de LNH
     @Column(name = "vtoLNH", nullable = true)
-    private Date vtoLNH;
+    private LocalDate vtoLNH;
     
     //Define el vencimiento de la libreta de sanidad
     @Column(name = "vtoLibretaSanidad", nullable = true)
-    private Date vtoLibretaSanidad;
+    private LocalDate vtoLibretaSanidad;
     
     //Referencia a la clase Usuario (Modificacion LC)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -277,19 +277,19 @@ public class Personal extends ObjetoGenerico {
     
     //Define la fecha de modificacion de LC
     @Column(name = "fechaModLC", nullable = true)
-    private Date fechaModLC;
+    private LocalDate fechaModLC;
     
     //Define la fecha de modificacion de CNRT
     @Column(name = "fechaModCNRT", nullable = true)
-    private Date fechaModCNRT;
+    private LocalDate fechaModCNRT;
     
     //Define la fecha de modificacion de LNH
     @Column(name = "fechaModLNH", nullable = true)
-    private Date fechaModLNH;
+    private LocalDate fechaModLNH;
     
     //Define la fecha de modificacion de LS
     @Column(name = "fechaModLS", nullable = true)
-    private Date fechaModLS;
+    private LocalDate fechaModLS;
     
     //Define el talle de camisa
     @Column(name = "talleCamisa", nullable = true)
@@ -357,11 +357,11 @@ public class Personal extends ObjetoGenerico {
     
     //Define el telefono movil fecha de entrega
     @Column(name = "telefonoMovilFechaEntrega", nullable = true)
-    private Date telefonoMovilFechaEntrega;
+    private LocalDate telefonoMovilFechaEntrega;
     
     //Define el telefono movil fecha de devolucion
     @Column(name = "telefonoMovilFechaDevolucion", nullable = true)
-    private Date telefonoMovilFechaDevolucion;
+    private LocalDate telefonoMovilFechaDevolucion;
     
     //Define el telefono movil observacion
     @Column(name = "telefonoMovilObservacion", nullable = true)
@@ -469,11 +469,11 @@ public class Personal extends ObjetoGenerico {
         this.localidadNacimiento = localidadNacimiento;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -533,19 +533,19 @@ public class Personal extends ObjetoGenerico {
         this.area = area;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDate getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
@@ -781,35 +781,35 @@ public class Personal extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public Date getVtoLicenciaConducir() {
+    public LocalDate getVtoLicenciaConducir() {
         return vtoLicenciaConducir;
     }
 
-    public void setVtoLicenciaConducir(Date vtoLicenciaConducir) {
+    public void setVtoLicenciaConducir(LocalDate vtoLicenciaConducir) {
         this.vtoLicenciaConducir = vtoLicenciaConducir;
     }
 
-    public Date getVtoCursoCNRT() {
+    public LocalDate getVtoCursoCNRT() {
         return vtoCursoCNRT;
     }
 
-    public void setVtoCursoCNRT(Date vtoCursoCNRT) {
+    public void setVtoCursoCNRT(LocalDate vtoCursoCNRT) {
         this.vtoCursoCNRT = vtoCursoCNRT;
     }
 
-    public Date getVtoLNH() {
+    public LocalDate getVtoLNH() {
         return vtoLNH;
     }
 
-    public void setVtoLNH(Date vtoLNH) {
+    public void setVtoLNH(LocalDate vtoLNH) {
         this.vtoLNH = vtoLNH;
     }
 
-    public Date getVtoLibretaSanidad() {
+    public LocalDate getVtoLibretaSanidad() {
         return vtoLibretaSanidad;
     }
 
-    public void setVtoLibretaSanidad(Date vtoLibretaSanidad) {
+    public void setVtoLibretaSanidad(LocalDate vtoLibretaSanidad) {
         this.vtoLibretaSanidad = vtoLibretaSanidad;
     }
 
@@ -845,35 +845,35 @@ public class Personal extends ObjetoGenerico {
         this.usuarioModLS = usuarioModLS;
     }
 
-    public Date getFechaModLC() {
+    public LocalDate getFechaModLC() {
         return fechaModLC;
     }
 
-    public void setFechaModLC(Date fechaModLC) {
+    public void setFechaModLC(LocalDate fechaModLC) {
         this.fechaModLC = fechaModLC;
     }
 
-    public Date getFechaModCNRT() {
+    public LocalDate getFechaModCNRT() {
         return fechaModCNRT;
     }
 
-    public void setFechaModCNRT(Date fechaModCNRT) {
+    public void setFechaModCNRT(LocalDate fechaModCNRT) {
         this.fechaModCNRT = fechaModCNRT;
     }
 
-    public Date getFechaModLNH() {
+    public LocalDate getFechaModLNH() {
         return fechaModLNH;
     }
 
-    public void setFechaModLNH(Date fechaModLNH) {
+    public void setFechaModLNH(LocalDate fechaModLNH) {
         this.fechaModLNH = fechaModLNH;
     }
 
-    public Date getFechaModLS() {
+    public LocalDate getFechaModLS() {
         return fechaModLS;
     }
 
-    public void setFechaModLS(Date fechaModLS) {
+    public void setFechaModLS(LocalDate fechaModLS) {
         this.fechaModLS = fechaModLS;
     }
 
@@ -1005,19 +1005,19 @@ public class Personal extends ObjetoGenerico {
         this.telefonoMovilEmpresa = telefonoMovilEmpresa;
     }
 
-    public Date getTelefonoMovilFechaEntrega() {
+    public LocalDate getTelefonoMovilFechaEntrega() {
         return telefonoMovilFechaEntrega;
     }
 
-    public void setTelefonoMovilFechaEntrega(Date telefonoMovilFechaEntrega) {
+    public void setTelefonoMovilFechaEntrega(LocalDate telefonoMovilFechaEntrega) {
         this.telefonoMovilFechaEntrega = telefonoMovilFechaEntrega;
     }
 
-    public Date getTelefonoMovilFechaDevolucion() {
+    public LocalDate getTelefonoMovilFechaDevolucion() {
         return telefonoMovilFechaDevolucion;
     }
 
-    public void setTelefonoMovilFechaDevolucion(Date telefonoMovilFechaDevolucion) {
+    public void setTelefonoMovilFechaDevolucion(LocalDate telefonoMovilFechaDevolucion) {
         this.telefonoMovilFechaDevolucion = telefonoMovilFechaDevolucion;
     }
 

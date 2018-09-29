@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,7 +53,7 @@ public class VentaComprobante extends ObjetoGenerico {
     
     //Define la fecha de emision
     @Column(name = "fechaEmision", nullable = false)
-    private Date fechaEmision;
+    private LocalDate fechaEmision;
     
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -168,11 +168,11 @@ public class VentaComprobante extends ObjetoGenerico {
         this.codigoAfip = codigoAfip;
     }
     
-    public Date getFechaEmision() {
+    public LocalDate getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(Date fechaEmision) {
+    public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 

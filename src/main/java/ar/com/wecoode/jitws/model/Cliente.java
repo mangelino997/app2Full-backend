@@ -2,7 +2,7 @@
 package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -144,7 +144,7 @@ public class Cliente extends ObjetoGenerico {
     
     //Define el vencimiento de la poliza del seguro
     @Column(name = "vencimientoPolizaSeguro", nullable = true)
-    private Timestamp vencimientoPolizaSeguro;
+    private LocalDate vencimientoPolizaSeguro;
     
     //Define las observaciones
     @Column(name = "observaciones", nullable = true)
@@ -178,7 +178,7 @@ public class Cliente extends ObjetoGenerico {
     
     //Define la fecha de baja del cliente
     @Column(name = "fechaBaja", nullable = true)
-    private Timestamp fechaBaja;
+    private LocalDate fechaBaja;
     
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -187,7 +187,7 @@ public class Cliente extends ObjetoGenerico {
     
     //Define la fecha de ultima modificacion
     @Column(name = "fechaUltimaMod", nullable = true)
-    private Timestamp fechaUltimaMod;
+    private LocalDate fechaUltimaMod;
     
     //Define el alias para las busquedas
     @Column(name = "alias", nullable = true)
@@ -411,11 +411,11 @@ public class Cliente extends ObjetoGenerico {
         this.numeroPolizaSeguro = numeroPolizaSeguro;
     }
 
-    public Timestamp getVencimientoPolizaSeguro() {
+    public LocalDate getVencimientoPolizaSeguro() {
         return vencimientoPolizaSeguro;
     }
 
-    public void setVencimientoPolizaSeguro(Timestamp vencimientoPolizaSeguro) {
+    public void setVencimientoPolizaSeguro(LocalDate vencimientoPolizaSeguro) {
         this.vencimientoPolizaSeguro = vencimientoPolizaSeguro;
     }
 
@@ -475,11 +475,11 @@ public class Cliente extends ObjetoGenerico {
         this.usuarioBaja = usuarioBaja;
     }
 
-    public Timestamp getFechaBaja() {
+    public LocalDate getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(Timestamp fechaBaja) {
+    public void setFechaBaja(LocalDate fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 
@@ -491,11 +491,11 @@ public class Cliente extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public Timestamp getFechaUltimaMod() {
+    public LocalDate getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(Timestamp fechaUltimaMod) {
+    public void setFechaUltimaMod(LocalDate fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
 
