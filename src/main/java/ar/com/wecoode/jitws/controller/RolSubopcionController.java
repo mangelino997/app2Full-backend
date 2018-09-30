@@ -19,7 +19,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,21 +45,21 @@ public class RolSubopcionController {
     RolSubopcionService elementoService;
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<RolSubopcion> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por rol y modulo
-    @RequestMapping(value = URL + "/listarPorRolModulo/{idRol}/{idModulo}")
+    @GetMapping(value = URL + "/listarPorRolModulo/{idRol}/{idModulo}")
     @ResponseBody
     public List<Submodulo> listarPorRolModulo(@PathVariable int idRol, @PathVariable int idModulo) {
         return elementoService.listarPorRolModulo(idRol, idModulo);
     }
     
     //Obtiene una lista por rol y submodulo
-    @RequestMapping(value = URL + "/listarPorRolSubmodulo/{idRol}/{idSubmodulo}")
+    @GetMapping(value = URL + "/listarPorRolSubmodulo/{idRol}/{idSubmodulo}")
     @ResponseBody
     public List<Subopcion> listarPorRolSubmodulo(@PathVariable int idRol, @PathVariable int idSubmodulo) {
         return elementoService.listarPorRolSubmodulo(idRol, idSubmodulo);
@@ -90,14 +90,14 @@ public class RolSubopcionController {
     }
     
     //Agrega una subopcion a todos los roles
-    @RequestMapping(value = URL + "/agregarSubopcionARoles")
+    @GetMapping(value = URL + "/agregarSubopcionARoles")
     @ResponseBody
     public void agregarSubopcionARoles(@RequestBody Subopcion elemento) {
         elementoService.agregarSubopcionARoles(elemento);
     }
     
     //Elimina una subopcion por id de todos los roles
-    @RequestMapping(value = URL + "/eliminarSubopcionDeRoles/{idSubopcion}")
+    @GetMapping(value = URL + "/eliminarSubopcionDeRoles/{idSubopcion}")
     @ResponseBody
     public void eliminarSubopcionDeRoles(@PathVariable int idSubopcion) {
         elementoService.eliminarSubopcionDeRoles(idSubopcion);
@@ -107,7 +107,7 @@ public class RolSubopcionController {
      * Asigna todas las subopciones a cada uno de los roles, eliminando todo los
      * datos y reestableciendo desde cero
      */
-    @RequestMapping(value = URL + "/reestablecerTablaDesdeCero")
+    @GetMapping(value = URL + "/reestablecerTablaDesdeCero")
     @ResponseBody
     public void reestablecerTablaDesdeCero() {
         elementoService.reestablecerTablaDesdeCero();

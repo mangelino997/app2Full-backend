@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,35 +46,35 @@ public class ViajeRemitoController {
     ViajeRemitoService elementoService;
     
     //Obtiene el siguiente id
-    @RequestMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<ViajeRemito> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por numero de comprobante
-    @RequestMapping(value = URL + "/listarPorNumeroComprobante/{numero}")
+    @GetMapping(value = URL + "/listarPorNumeroComprobante/{numero}")
     @ResponseBody
     public List<ViajeRemito> listarPorNumeroComprobante(@PathVariable int numero) {
         return elementoService.listarPorNumeroComprobante(numero);
     }
     
     //Obtiene una lista de remitos pendientes por sucursal
-    @RequestMapping(value = URL + "/listarPendientesPorSucursal/{idSucursal}")
+    @GetMapping(value = URL + "/listarPendientesPorSucursal/{idSucursal}")
     @ResponseBody
     public List<ViajeRemito> listarPendientesPorSucursal(@PathVariable int idSucursal) {
         return elementoService.listarPendientesPorSucursal(idSucursal);
     }
     
     //Obtiene una lista de remitos pendientes por filtro
-    @RequestMapping(value = URL + "/listarPendientesPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
+    @GetMapping(value = URL + "/listarPendientesPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
     @ResponseBody
     public List<ViajeRemito> listarPendientesPorFiltro(@PathVariable int idSucursal, 
             @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) {
@@ -82,7 +82,7 @@ public class ViajeRemitoController {
     }
     
     //Obtiene una lista de remitos asignados por filtro
-    @RequestMapping(value = URL + "/listarAsignadosPorFiltro/{idSucursal}/{idSucursalDestino}"
+    @GetMapping(value = URL + "/listarAsignadosPorFiltro/{idSucursal}/{idSucursalDestino}"
             + "/{numeroCamion}/{idViajePropioTramo}")
     @ResponseBody
     public List<ViajeRemito> listarAsignadosPorFiltro(@PathVariable int idSucursal, 

@@ -18,7 +18,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,14 +44,14 @@ public class SubopcionPestaniaController {
     SubopcionPestaniaService elementoService;
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<SubopcionPestania> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por rol y subopcion
-    @RequestMapping(value = URL + "/listarPorRolSubopcion/{idRol}/{idSubopcion}")
+    @GetMapping(value = URL + "/listarPorRolSubopcion/{idRol}/{idSubopcion}")
     @ResponseBody
     public List<Pestania> listarPorRolSubopcion(@PathVariable int idRol, @PathVariable int idSubopcion) {
         return elementoService.listarPorRolSubopcion(idRol, idSubopcion);
@@ -82,7 +82,7 @@ public class SubopcionPestaniaController {
     }
     
     //Asigna todas las pestañas a cada una de las subopciones
-    @RequestMapping(value = URL + "/asignarPestaniasASubopciones")
+    @GetMapping(value = URL + "/asignarPestaniasASubopciones")
     @ResponseBody
     public void asignarPestaniasASubopciones() {
         elementoService.asignarPestaniasASubopciones();
@@ -92,7 +92,7 @@ public class SubopcionPestaniaController {
      * Asigna todas las pestañas a cada una de las subopciones, eliminando todo los
      * datos y reestableciendo desde cero
      */
-    @RequestMapping(value = URL + "/reestablecerTablaDesdeCero")
+    @GetMapping(value = URL + "/reestablecerTablaDesdeCero")
     @ResponseBody
     public void reestablecerTablaDesdeCero() {
         elementoService.reestablecerTablaDesdeCero();

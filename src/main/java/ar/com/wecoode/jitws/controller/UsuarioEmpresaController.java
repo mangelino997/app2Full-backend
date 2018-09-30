@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,28 +46,28 @@ public class UsuarioEmpresaController {
     UsuarioEmpresaService elementoService;
     
     //Obtiene el siguiente id
-    @RequestMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
     
     //Obtiene la lista completa
-    @RequestMapping(value = URL)
+    @GetMapping(value = URL)
     @ResponseBody
     public List<UsuarioEmpresa> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por usuario
-    @RequestMapping(value = URL + "/listarPorUsuario/{idUsuario}")
+    @GetMapping(value = URL + "/listarPorUsuario/{idUsuario}")
     @ResponseBody
     public List<UsuarioEmpresa> listarPorUsuario(@PathVariable int idUsuario) {
         return elementoService.listarPorUsuario(idUsuario);
     }
     
     //Obtiene las empresas activas del usuario
-    @RequestMapping(value = URL + "/listarEmpresasActivasDeUsuario/{idUsuario}")
+    @GetMapping(value = URL + "/listarEmpresasActivasDeUsuario/{idUsuario}")
     @ResponseBody
     public List<Empresa> listarEmpresasActivasDeUsuario(@PathVariable int idUsuario) {
         return elementoService.listarEmpresasActivasDeUsuario(idUsuario);
@@ -135,7 +135,7 @@ public class UsuarioEmpresaController {
      * Asigna todas las empresas a cada uno de los usuarios, manteniendo el dato
      * 'Mostrar' de cada empresa
      */
-    @RequestMapping(value = URL + "/eliminarTabla")
+    @GetMapping(value = URL + "/eliminarTabla")
     @ResponseBody
     public List<UsuarioEmpresa> eliminarTabla() {
         return elementoService.eliminarTabla();
@@ -145,7 +145,7 @@ public class UsuarioEmpresaController {
      * Asigna todas las empresas a cada uno de los usuarios, manteniendo el dato
      * 'Mostrar' de cada empresa
      */
-    @RequestMapping(value = URL + "/reestablecerTabla")
+    @GetMapping(value = URL + "/reestablecerTabla")
     @ResponseBody
     public void reestablecerTabla(@RequestBody List<UsuarioEmpresa> elemento) {
         elementoService.reestablecerTabla(elemento);
@@ -155,7 +155,7 @@ public class UsuarioEmpresaController {
      * Asigna todas las empresas a cada uno de los usuarios, eliminando todo los
      * datos y reestableciendo desde cero
      */
-    @RequestMapping(value = URL + "/reestablecerTablaDesdeCero")
+    @GetMapping(value = URL + "/reestablecerTablaDesdeCero")
     @ResponseBody
     public void reestablecerTablaDesdeCero() {
         elementoService.reestablecerTablaDesdeCero();
