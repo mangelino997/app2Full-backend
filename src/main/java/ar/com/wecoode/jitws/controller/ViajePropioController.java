@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,7 +44,7 @@ public class ViajePropioController {
     ViajePropioService elementoService;
     
     //Obtiene por id
-    @RequestMapping(value = URL + "/listarPorNombre/{id}")
+    @GetMapping(value = URL + "/listarPorNombre/{id}")
     @ResponseBody
     public ViajePropio obtener(@PathVariable int id) {
         return elementoService.obtener(id);
