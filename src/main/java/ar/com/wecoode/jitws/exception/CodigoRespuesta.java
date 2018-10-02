@@ -85,4 +85,7 @@ public class CodigoRespuesta {
     //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_TELEFONO_MOVIL_EMPRESA = 11015;
     
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_VALOR = 11016;
+    
 }

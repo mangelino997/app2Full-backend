@@ -34,4 +34,6 @@ public class DuplicidadError {
     
     public static final String CBU_UNICO = "numeroCBU_UNIQUE";
     
+    public static final String VALOR_UNICO = "valor_UNIQUE";
+    
 }

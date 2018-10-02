@@ -2,6 +2,7 @@ package ar.com.wecoode.jitws.service;
 
 import ar.com.wecoode.jitws.dao.IEscalaTarifaDAO;
 import ar.com.wecoode.jitws.model.EscalaTarifa;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,9 @@ public class EscalaTarifaService {
     
     //Obtiene la lista completa
     public List<EscalaTarifa> listar() {
-        return elementoDAO.findAll();
+        List<EscalaTarifa> lista = elementoDAO.findAll();
+        lista.sort(Comparator.comparing(EscalaTarifa::getValor));
+        return lista;
     }
     
     //Agrega un registro
@@ -44,8 +47,8 @@ public class EscalaTarifaService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(EscalaTarifa elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
     
 }
