@@ -21,7 +21,7 @@ public interface IChoferProveedorDAO extends JpaRepository<ChoferProveedor, Inte
     //Obtiene una lista por id proveedor
     public List<ChoferProveedor> findByProveedor(Optional<Proveedor> proveedor);
     
-    //Obtiene una lista por nombre
-    public List<ChoferProveedor> findByNombreContaining(String nombre);
+    //Obtiene una lista por alias
+    public List<ChoferProveedor> findByAliasContaining(String alias);
     
 }

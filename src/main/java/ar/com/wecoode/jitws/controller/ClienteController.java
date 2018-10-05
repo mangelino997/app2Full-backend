@@ -114,7 +114,7 @@ public class ClienteController {
                     return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                             MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }  catch(MessagingException e) {
+        } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
                     MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);

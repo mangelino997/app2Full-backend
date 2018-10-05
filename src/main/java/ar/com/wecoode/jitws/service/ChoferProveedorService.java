@@ -39,11 +39,11 @@ public class ChoferProveedorService {
     }
     
     //Obtiene una lista por nombre
-    public List<ChoferProveedor> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+    public List<ChoferProveedor> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByAliasContaining(alias);
         }
     }
     
