@@ -48,7 +48,7 @@ public class ContactoClienteService {
     }
     
     //Obtiene por cliente
-    public ContactoCliente obtenerPorCliente(int idCliente) {
+    public List<ContactoCliente> listarPorCliente(int idCliente) {
         //Obtiene el cliente por id
         Optional<Cliente> cliente = clienteDAO.findById(idCliente);
         //Retorna por cliente

@@ -67,6 +67,13 @@ public class ContactoBancoController {
         return elementoService.listarPorNombre(nombre);
     }
     
+    //Obtiene una lista de contactos por sucursal banco
+    @GetMapping(value = URL + "/listarPorSucursalBanco/{id}")
+    @ResponseBody
+    public List<ContactoBanco> listarPorSucursalBanco(@PathVariable int id) {
+        return elementoService.listarPorSucursalBanco(id);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ContactoBanco elemento) {

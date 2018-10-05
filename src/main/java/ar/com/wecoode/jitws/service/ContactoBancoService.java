@@ -4,7 +4,9 @@ import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IContactoBancoDAO;
 import ar.com.wecoode.jitws.dao.ISucursalBancoDAO;
 import ar.com.wecoode.jitws.model.ContactoBanco;
+import ar.com.wecoode.jitws.model.SucursalBanco;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,14 @@ public class ContactoBancoService {
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
+    }
+    
+    //Obtiene una lista de contactos por sucursal banco
+    public List<ContactoBanco> listarPorSucursalBanco(int idSucursalBanco) {
+        //Obtiene la sucursal banco por id
+        Optional<SucursalBanco> elemento = sucursalBancoDAO.findById(idSucursalBanco);
+        //Retorna los datos
+        return elementoDAO.findBySucursalBanco(elemento);
     }
     
     //Agrega un registro

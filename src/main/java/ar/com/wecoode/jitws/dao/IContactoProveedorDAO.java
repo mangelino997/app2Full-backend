@@ -21,7 +21,7 @@ public interface IContactoProveedorDAO extends JpaRepository<ContactoProveedor, 
     //Obtiene una lista por nombre
     public List<ContactoProveedor> findByNombreContaining(String nombre);
     
-    //Obtiene por proveedor
-    public ContactoProveedor findByProveedor(Optional<Proveedor> proveedor);
+    //Obtiene una lista por proveedor
+    public List<ContactoProveedor> findByProveedor(Optional<Proveedor> proveedor);
     
 }

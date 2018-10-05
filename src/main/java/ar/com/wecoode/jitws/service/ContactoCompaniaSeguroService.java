@@ -1,9 +1,12 @@
 package ar.com.wecoode.jitws.service;
 
 import ar.com.wecoode.jitws.constant.Funcion;
+import ar.com.wecoode.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.wecoode.jitws.dao.IContactoCompaniaSeguroDAO;
+import ar.com.wecoode.jitws.model.CompaniaSeguro;
 import ar.com.wecoode.jitws.model.ContactoCompaniaSeguro;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,10 @@ public class ContactoCompaniaSeguroService {
     //Define la referencia al dao
     @Autowired
     IContactoCompaniaSeguroDAO elementoDAO;
+    
+    //Define la referencia al dao
+    @Autowired
+    ICompaniaSeguroDAO companiaSeguroDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -38,6 +45,14 @@ public class ContactoCompaniaSeguroService {
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
+    }
+    
+    //Obtiene una lista por compania seguro
+    public List<ContactoCompaniaSeguro> listarPorCompaniaSeguro(int idCompaniaSeguro) {
+        //Obtiene la compania seguro por id
+        Optional<CompaniaSeguro> elemento = companiaSeguroDAO.findById(idCompaniaSeguro);
+        //Retorna los datos
+        return elementoDAO.findByCompaniaSeguro(elemento);
     }
     
     //Agrega un registro

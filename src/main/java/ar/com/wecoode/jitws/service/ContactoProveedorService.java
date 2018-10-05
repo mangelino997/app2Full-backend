@@ -44,7 +44,7 @@ public class ContactoProveedorService {
     }
     
     //Obtiene por proveedor
-    public ContactoProveedor obtenerPorProveedor(int idProveedor) {
+    public List<ContactoProveedor> listarPorProveedor(int idProveedor) {
         //Obtiene el proveedor por id
         Optional<Proveedor> proveedor = proveedorDAO.findById(idProveedor);
         //Retorna por proveedor

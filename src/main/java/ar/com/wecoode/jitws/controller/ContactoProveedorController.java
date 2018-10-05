@@ -65,11 +65,11 @@ public class ContactoProveedorController {
         return elementoService.listarPorNombre(nombre);
     }
     
-    //Obtiene por sucursal banco
-    @GetMapping(value = URL + "/obtenerPorProveedor/{idProveedor}")
+    //Obtiene una lista por proveedor
+    @GetMapping(value = URL + "/listarPorProveedor/{idProveedor}")
     @ResponseBody
-    public ContactoProveedor obtenerPorProveedor(@PathVariable int idProveedor) {
-        return elementoService.obtenerPorProveedor(idProveedor);
+    public List<ContactoProveedor> listarPorProveedor(@PathVariable int idProveedor) {
+        return elementoService.listarPorProveedor(idProveedor);
     }
     
     //Agrega un registro

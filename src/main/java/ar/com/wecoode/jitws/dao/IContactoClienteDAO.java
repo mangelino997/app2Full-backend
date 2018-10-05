@@ -22,6 +22,6 @@ public interface IContactoClienteDAO extends JpaRepository<ContactoCliente, Inte
     public List<ContactoCliente> findByNombreContaining(String nombre);
     
     //Obtiene por cliente
-    public ContactoCliente findByCliente(Optional<Cliente> cliente);
+    public List<ContactoCliente> findByCliente(Optional<Cliente> cliente);
     
 }
