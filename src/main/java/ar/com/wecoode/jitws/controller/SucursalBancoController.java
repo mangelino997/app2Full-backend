@@ -67,11 +67,11 @@ public class SucursalBancoController {
         return elementoService.listarPorNombre(nombre);
     }
     
-    //Obtiene una lista por nombre de banco
-    @GetMapping(value = URL + "/listarPorNombreBanco/{nombreBanco}")
+    //Obtiene una lista por banco
+    @GetMapping(value = URL + "/listarPorBanco/{id}")
     @ResponseBody
-    public List<SucursalBanco> listarPorNombreBanco(@PathVariable String nombreBanco) {
-        return elementoService.listarPorNombreBanco(nombreBanco);
+    public List<SucursalBanco> listarPorBanco(@PathVariable int id) {
+        return elementoService.listarPorBanco(id);
     }
     
     //Agrega un registro

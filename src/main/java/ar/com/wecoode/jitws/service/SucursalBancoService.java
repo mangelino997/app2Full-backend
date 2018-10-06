@@ -1,9 +1,12 @@
 package ar.com.wecoode.jitws.service;
 
 import ar.com.wecoode.jitws.constant.Funcion;
+import ar.com.wecoode.jitws.dao.IBancoDAO;
 import ar.com.wecoode.jitws.dao.ISucursalBancoDAO;
+import ar.com.wecoode.jitws.model.Banco;
 import ar.com.wecoode.jitws.model.SucursalBanco;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,10 @@ public class SucursalBancoService {
     //Define la referencia al dao
     @Autowired
     ISucursalBancoDAO elementoDAO;
+    
+    //Define la referencia al dao banco
+    @Autowired
+    IBancoDAO bancoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -40,9 +47,12 @@ public class SucursalBancoService {
         }
     }
     
-    //Obtiene una lista por nombre de banco
-    public List<SucursalBanco> listarPorNombreBanco(String nombreBanco) {
-        return elementoDAO.findByBanco_NombreContaining(nombreBanco);
+    //Obtiene una lista por banco
+    public List<SucursalBanco> listarPorBanco(int idBanco) {
+        //Obtiene el banco por id
+        Optional<Banco> banco = bancoDAO.findById(idBanco);
+        //Retorn los datos
+        return elementoDAO.findByBanco(banco);
     }
     
     //Agrega un registro

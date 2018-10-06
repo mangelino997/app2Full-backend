@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,6 +56,13 @@ public class PuntoVentaController {
     @ResponseBody
     public List<PuntoVenta> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene una lista por sucursal
+    @GetMapping(value = URL + "/listarPorSucursal/{id}")
+    @ResponseBody
+    public List<PuntoVenta> listarPorSucursal(@PathVariable int id) {
+        return elementoService.listarPorSucursal(id);
     }
     
     //Agrega un registro
