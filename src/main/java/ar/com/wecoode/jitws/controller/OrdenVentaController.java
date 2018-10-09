@@ -73,7 +73,7 @@ public class OrdenVentaController {
         try {
             OrdenVenta e = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
         } catch(DataIntegrityViolationException e) {
@@ -107,7 +107,7 @@ public class OrdenVentaController {
         try {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
         } catch(DataIntegrityViolationException dive) {

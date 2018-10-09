@@ -1,7 +1,11 @@
 package ar.com.wecoode.jitws.service;
 
+import ar.com.wecoode.jitws.dao.IEscalaTarifaDAO;
 import ar.com.wecoode.jitws.dao.IOrdenVentaEscalaDAO;
+import ar.com.wecoode.jitws.model.EscalaTarifa;
 import ar.com.wecoode.jitws.model.OrdenVentaEscala;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,10 @@ public class OrdenVentaEscalaService {
     @Autowired
     IOrdenVentaEscalaDAO elementoDAO;
     
+    //Define la referencia al dao escala tarifa
+    @Autowired
+    IEscalaTarifaDAO escalaTarifaDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         OrdenVentaEscala elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -28,6 +36,29 @@ public class OrdenVentaEscalaService {
     //Obtiene la lista completa
     public List<OrdenVentaEscala> listar() {
         return elementoDAO.findAll();
+    }
+    
+    /*
+    * Obtiene una lista con todas las escalas tarifas asignadas
+    * para la tabla de orden-venta.html
+    */
+    public List<OrdenVentaEscala> listarConEscalaTarifa() {
+        //Obtiene la lista completa de escalas tarifas
+        List<EscalaTarifa> escalasTarifas = escalaTarifaDAO.findAll();
+        //Ordena la lista de escalas tarifas
+        escalasTarifas.sort(Comparator.comparing(EscalaTarifa::getValor));
+        //Crea una lista vacia de ordenes de ventas escalas
+        List<OrdenVentaEscala> ordenesVentasEscalas = new ArrayList<>();
+        //Define una orden venta escala
+        OrdenVentaEscala ordenVentaEscala;
+        //Recorre la lista de escalas tarifas
+        for(EscalaTarifa escalaTarifa : escalasTarifas) {
+            ordenVentaEscala = new OrdenVentaEscala();
+            ordenVentaEscala.setEscalaTarifa(escalaTarifa);
+            ordenesVentasEscalas.add(ordenVentaEscala);
+        }
+        //Retorna los datos
+        return ordenesVentasEscalas;
     }
     
     //Agrega un registro

@@ -3,11 +3,13 @@ package ar.com.wecoode.jitws.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -71,6 +73,14 @@ public class OrdenVenta extends ObjetoGenerico {
     //Define la fecha desde que esta activa
     @Column(name = "activaDesde", nullable = true)
     private LocalDate activaDesde;
+    
+    //Define la lista de OrdenVentaEscala
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
+    private List<OrdenVentaEscala> ordenesVentasEscalas;
+    
+    //Define la lista de OrdenVentaTramo
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
+    private List<OrdenVentaTramo> ordenesVentasTramos;
 
     //Getters y Setters de la clase
 
@@ -168,6 +178,22 @@ public class OrdenVenta extends ObjetoGenerico {
 
     public void setActivaDesde(LocalDate activaDesde) {
         this.activaDesde = activaDesde;
+    }
+
+    public List<OrdenVentaEscala> getOrdenesVentasEscalas() {
+        return ordenesVentasEscalas;
+    }
+
+    public void setOrdenesVentasEscalas(List<OrdenVentaEscala> ordenesVentasEscalas) {
+        this.ordenesVentasEscalas = ordenesVentasEscalas;
+    }
+
+    public List<OrdenVentaTramo> getOrdenesVentasTramos() {
+        return ordenesVentasTramos;
+    }
+
+    public void setOrdenesVentasTramos(List<OrdenVentaTramo> ordenesVentasTramos) {
+        this.ordenesVentasTramos = ordenesVentasTramos;
     }
     
 }

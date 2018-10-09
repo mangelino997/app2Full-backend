@@ -57,6 +57,13 @@ public class OrdenVentaEscalaController {
         return elementoService.listar();
     }
     
+    //Obtiene una lista con escalas tarifas asignadas
+    @GetMapping(value = URL + "/listarConEscalaTarifa")
+    @ResponseBody
+    public List<OrdenVentaEscala> listarConEscalaTarifa() {
+        return elementoService.listarConEscalaTarifa();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVentaEscala elemento) {
@@ -66,6 +73,10 @@ public class OrdenVentaEscalaController {
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error interno en el servidor
+            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                    MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
