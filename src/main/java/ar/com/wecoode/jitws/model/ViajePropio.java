@@ -137,27 +137,27 @@ public class ViajePropio extends ObjetoGenerico {
     private String observaciones;
     
     //Define la lista de tramos
-    @OneToMany(mappedBy = "viajePropio")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioTramo> viajePropioTramos;
     
     //Define la lista de ordenes de combustible
-    @OneToMany(mappedBy = "viajePropio")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioCombustible> viajePropioCombustibles;
     
     //Define la lista de adelantos de efectivo
-    @OneToMany(mappedBy = "viajePropio")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioEfectivo> viajePropioEfectivos;
     
     //Define la lista de ordenes de insumo
-    @OneToMany(mappedBy = "viajePropio")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioInsumo> viajePropioInsumos;
     
     //Define la lista de gastos
-    @OneToMany(mappedBy = "viajePropio")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioGasto> viajePropioGastos;
     
     //Define la lista de peajes
-    @OneToMany(mappedBy = "viajePropio")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioPeaje> viajePropioPeajes;
 
     //Getters y Setters de la clase

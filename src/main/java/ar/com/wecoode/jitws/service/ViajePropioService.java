@@ -57,6 +57,17 @@ public class ViajePropioService {
     @Autowired
     IViajePropioPeajeDAO viajePropioPeajeDAO;
     
+    //Obtiene el siguiente id
+    public int obtenerSiguienteId() {
+        ViajePropio elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento != null ? elemento.getId()+1 : 1;
+    }
+    
+    //Obtiene la lista completa
+    public List<ViajePropio> listar() {
+        return elementoDAO.findAll();
+    }
+    
     //Obtiene por id
     public ViajePropio obtener(int id) {
         //Obtiene un viaje propio por id

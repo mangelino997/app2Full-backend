@@ -7,6 +7,7 @@ import ar.com.wecoode.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
 import ar.com.wecoode.jitws.model.ViajePropio;
 import ar.com.wecoode.jitws.service.ViajePropioService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,6 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,11 +43,18 @@ public class ViajePropioController {
     @Autowired
     ViajePropioService elementoService;
     
-    //Obtiene por id
-    @GetMapping(value = URL + "/listarPorNombre/{id}")
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
-    public ViajePropio obtener(@PathVariable int id) {
-        return elementoService.obtener(id);
+    public int obtenerSiguienteId() {
+        return elementoService.obtenerSiguienteId();
+    }
+    
+    //Obtiene la lista completa
+    @GetMapping(value = URL)
+    @ResponseBody
+    public List<ViajePropio> listar() {
+        return elementoService.listar();
     }
     
     //Agrega un registro
@@ -55,6 +62,8 @@ public class ViajePropioController {
     public ResponseEntity<?> agregar(@RequestBody ViajePropio elemento) {
         try {
             ViajePropio e = elementoService.agregar(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
         } catch(MessagingException e) {
@@ -73,6 +82,8 @@ public class ViajePropioController {
     public ResponseEntity<?> actualizar(@RequestBody ViajePropio elemento) {
         try {
             elementoService.actualizar(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
         } catch (ObjectOptimisticLockingFailureException oolfe) {

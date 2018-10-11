@@ -36,4 +36,8 @@ public class DuplicidadError {
     
     public static final String VALOR_UNICO = "valor_UNIQUE";
     
+    public static final String DOMINIO_UNICO = "dominio_UNIQUE";
+    
+    public static final String NUMERO_INTERNO_UNICO = "numeroInterno_UNIQUE";
+    
 }

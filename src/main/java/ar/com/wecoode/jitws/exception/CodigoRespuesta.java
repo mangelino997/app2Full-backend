@@ -88,4 +88,10 @@ public class CodigoRespuesta {
     //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_VALOR = 11016;
     
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_DOMINIO = 11017;
+    
+    //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_NUMERO_INTERNO = 11018;
+    
 }

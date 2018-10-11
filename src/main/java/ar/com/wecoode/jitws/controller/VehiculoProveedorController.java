@@ -2,6 +2,7 @@ package ar.com.wecoode.jitws.controller;
 
 import ar.com.wecoode.jitws.constant.RutaConstant;
 import ar.com.wecoode.jitws.exception.CodigoRespuesta;
+import ar.com.wecoode.jitws.exception.DuplicidadError;
 import ar.com.wecoode.jitws.exception.EstadoRespuesta;
 import ar.com.wecoode.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.wecoode.jitws.exception.MensajeRespuesta;
@@ -9,6 +10,7 @@ import ar.com.wecoode.jitws.model.VehiculoProveedor;
 import ar.com.wecoode.jitws.service.VehiculoProveedorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
@@ -81,6 +83,21 @@ public class VehiculoProveedorController {
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
+        } catch(DataIntegrityViolationException e) {
+            //Obtiene mensaje de duplicidad de datos
+            String[] partes = e.getMostSpecificCause().getMessage().split("'");
+            //Determina que columna tiene el dato duplicado
+            switch (partes[3]) {
+                case DuplicidadError.DOMINIO_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOMINIO,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getDominio() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                default:
+                    //Retorna codigo y mensaje de error interno en el servidor
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
@@ -101,6 +118,21 @@ public class VehiculoProveedorController {
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
+        } catch(DataIntegrityViolationException e) {
+            //Obtiene mensaje de duplicidad de datos
+            String[] partes = e.getMostSpecificCause().getMessage().split("'");
+            //Determina que columna tiene el dato duplicado
+            switch (partes[3]) {
+                case DuplicidadError.DOMINIO_UNICO:
+                    //Retorna codigo y mensaje de error de dato duplicado
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOMINIO,
+                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getDominio() + "'"),
+                            HttpStatus.INTERNAL_SERVER_ERROR);
+                default:
+                    //Retorna codigo y mensaje de error interno en el servidor
+                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
