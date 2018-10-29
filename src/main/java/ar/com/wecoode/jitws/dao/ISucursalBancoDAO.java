@@ -24,4 +24,7 @@ public interface ISucursalBancoDAO extends JpaRepository<SucursalBanco, Integer>
     //Obtiene una lista por banco
     public List<SucursalBanco> findByBanco(Optional<Banco> banco);
     
+    //Obtiene una lista por nombre de banco
+    public List<SucursalBanco> findByBanco_NombreContaining(String nombre);
+    
 }

@@ -55,6 +55,11 @@ public class SucursalBancoService {
         return elementoDAO.findByBanco(banco);
     }
     
+    //Obtiene una lista por nombre de banco
+    public List<SucursalBanco> listarPorNombreBanco(String nombre) {
+        return elementoDAO.findByBanco_NombreContaining(nombre);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SucursalBanco agregar(SucursalBanco elemento) {
