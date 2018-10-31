@@ -32,11 +32,6 @@ public class PuntoVenta extends ObjetoGenerico {
     @Column(name = "puntoVenta", nullable = false)
     private int puntoVenta;
     
-    //Referencia a la clase Afip Comprobante
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipComprobante", nullable = false)
-    private AfipComprobante afipComprobante;
-    
     //Define el fe
     @Column(name = "fe", nullable = false)
     private boolean fe;
@@ -69,6 +64,10 @@ public class PuntoVenta extends ObjetoGenerico {
     @Column(name = "estaHabilitado", nullable = false)
     private boolean estaHabilitado;
     
+    //Define si valor por defecto
+    @Column(name = "porDefecto", nullable = false)
+    private boolean porDefecto;
+    
     //Getters y Setters de la clase
 
     public Sucursal getSucursal() {
@@ -93,14 +92,6 @@ public class PuntoVenta extends ObjetoGenerico {
 
     public void setPuntoVenta(int puntoVenta) {
         this.puntoVenta = puntoVenta;
-    }
-
-    public AfipComprobante getAfipComprobante() {
-        return afipComprobante;
-    }
-
-    public void setAfipComprobante(AfipComprobante afipComprobante) {
-        this.afipComprobante = afipComprobante;
     }
 
     public boolean getFe() {
@@ -165,6 +156,14 @@ public class PuntoVenta extends ObjetoGenerico {
 
     public void setEstaHabilitado(boolean estaHabilitado) {
         this.estaHabilitado = estaHabilitado;
+    }
+
+    public boolean isPorDefecto() {
+        return porDefecto;
+    }
+
+    public void setPorDefecto(boolean porDefecto) {
+        this.porDefecto = porDefecto;
     }
     
 }

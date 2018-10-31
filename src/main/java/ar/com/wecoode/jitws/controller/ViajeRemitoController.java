@@ -59,11 +59,11 @@ public class ViajeRemitoController {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por numero de comprobante
-    @GetMapping(value = URL + "/listarPorNumeroComprobante/{numero}")
+    //Obtiene una lista por numero
+    @GetMapping(value = URL + "/listarPorNumero/{numero}")
     @ResponseBody
-    public List<ViajeRemito> listarPorNumeroComprobante(@PathVariable int numero) {
-        return elementoService.listarPorNumeroComprobante(numero);
+    public List<ViajeRemito> listarPorNumero(@PathVariable int numero) {
+        return elementoService.listarPorNumero(numero);
     }
     
     //Obtiene una lista de remitos pendientes por sucursal

@@ -16,7 +16,4 @@ public interface IAfipComprobanteDAO extends JpaRepository<AfipComprobante, Inte
     //Obtiene el siguiente id
     public AfipComprobante findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
-    public List<AfipComprobante> findByNombreContaining(String nombre);
-    
 }

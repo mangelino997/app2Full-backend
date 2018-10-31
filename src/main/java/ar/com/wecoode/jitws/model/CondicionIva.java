@@ -1,7 +1,6 @@
 //Paquete al que pertenece la clase
 package ar.com.wecoode.jitws.model;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -24,14 +23,6 @@ public class CondicionIva extends ObjetoGenerico {
     @Column(name = "abreviatura", nullable = false)
     private String abreviatura;
     
-    //Define la alicuota
-    @Column(name = "alicuota", nullable = false)
-    private BigDecimal alicuota;
-    
-    //Define la sobretasa
-    @Column(name = "sobretasa", nullable = false)
-    private BigDecimal sobretasa;
-    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -48,22 +39,6 @@ public class CondicionIva extends ObjetoGenerico {
 
     public void setAbreviatura(String abreviatura) {
         this.abreviatura = abreviatura;
-    }
-
-    public BigDecimal getAlicuota() {
-        return alicuota;
-    }
-
-    public void setAlicuota(BigDecimal alicuota) {
-        this.alicuota = alicuota;
-    }
-
-    public BigDecimal getSobretasa() {
-        return sobretasa;
-    }
-
-    public void setSobretasa(BigDecimal sobretasa) {
-        this.sobretasa = sobretasa;
     }
     
 }

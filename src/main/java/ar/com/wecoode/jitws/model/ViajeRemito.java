@@ -20,15 +20,15 @@ import javax.persistence.Table;
 @Table(name = "viajeremito")
 public class ViajeRemito extends ObjetoGenerico {
     
+    //Referencia a la clase Sucursal
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idSucursalEmision", nullable = false)
+    private Sucursal sucursalEmision;
+    
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresaEmision", nullable = false)
     private Empresa empresaEmision;
-    
-    //Referencia a la clase Sucursal
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idSucursal", nullable = false)
-    private Sucursal sucursal;
     
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -48,10 +48,10 @@ public class ViajeRemito extends ObjetoGenerico {
     @JoinColumn(name = "idSucursalDestino", nullable = false)
     private Sucursal sucursalDestino;
     
-    //Referencia a la clase Afip Comprobante
+    //Referencia a la clase Tipo Comprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipComprobante", nullable = false)
-    private AfipComprobante afipComprobante;
+    @JoinColumn(name = "idTipoComprobante", nullable = false)
+    private TipoComprobante tipoComprobante;
     
     //Define el punto de venta
     @Column(name = "puntoVenta", nullable = false)
@@ -62,8 +62,8 @@ public class ViajeRemito extends ObjetoGenerico {
     private String letra;
     
     //Define el numero
-    @Column(name = "numeroComprobante", nullable = false)
-    private int numeroComprobante;
+    @Column(name = "numero", nullable = false)
+    private int numero;
     
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -84,9 +84,13 @@ public class ViajeRemito extends ObjetoGenerico {
     @Column(name = "bultos", nullable = false)
     private short bultos;
     
-    //Define los kilos
-    @Column(name = "kilos", nullable = true)
-    private BigDecimal kilos;
+    //Define los kilos efectivo
+    @Column(name = "kilosEfectivo", nullable = true)
+    private BigDecimal kilosEfectivo;
+    
+    //Define los kilos aforados
+    @Column(name = "kilosAforado", nullable = true)
+    private BigDecimal kilosAforado;
     
     //Define los m3
     @Column(name = "m3", nullable = true)
@@ -105,7 +109,7 @@ public class ViajeRemito extends ObjetoGenerico {
     private BigDecimal importeEntrega;
     
     //Define si esta pendiente
-    @Column(name = "estaPendiente", nullable = true)
+    @Column(name = "estaPendiente", nullable = false)
     private boolean estaPendiente;
     
     //Referencia a la clase Viaje Propio Tramo
@@ -118,30 +122,32 @@ public class ViajeRemito extends ObjetoGenerico {
     @JoinColumn(name = "idViajeTerceroTramo", nullable = true)
     private ViajeTerceroTramo viajeTerceroTramo;
     
-    //Referencia a la clase Reparto Propio
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRepartoPropio", nullable = true)
-    private RepartoPropio repartoPropio;
-
-    //Referencia a la clase Reparto Tercero
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRepartoTercero", nullable = true)
-    private RepartoTercero repartoTercero;
-    
-    //Define el orden impuesto reparto
-    @Column(name = "ordenImpReparto", nullable = true)
-    private short ordenImpReparto;
-    
-    //Referencia a la clase Estado Carga
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idEstadoCargo", nullable = true)
-    private EstadoCarga estadoCarga;*/
-    
     //Define las observaciones
     @Column(name = "observaciones", nullable = true)
     private String observaciones;
     
+    //Define si esta facturado
+    @Column(name = "estaFacturado", nullable = false)
+    private boolean estaFacturado;
+    
+    //Referencia a la clase Seguimiento
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idSeguimiento", nullable = true)
+    private Seguimiento siguimiento;
+    
+    //Define si esta en reparto
+    @Column(name = "estaEnReparto", nullable = false)
+    private boolean estaEnReparto;
+    
     //Getters y Setters de la clase
+
+    public Sucursal getSucursalEmision() {
+        return sucursalEmision;
+    }
+
+    public void setSucursalEmision(Sucursal sucursalEmision) {
+        this.sucursalEmision = sucursalEmision;
+    }
 
     public Empresa getEmpresaEmision() {
         return empresaEmision;
@@ -149,14 +155,6 @@ public class ViajeRemito extends ObjetoGenerico {
 
     public void setEmpresaEmision(Empresa empresaEmision) {
         this.empresaEmision = empresaEmision;
-    }
-
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
     }
 
     public Usuario getUsuario() {
@@ -191,12 +189,12 @@ public class ViajeRemito extends ObjetoGenerico {
         this.sucursalDestino = sucursalDestino;
     }
 
-    public AfipComprobante getAfipComprobante() {
-        return afipComprobante;
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
     }
 
-    public void setAfipComprobante(AfipComprobante afipComprobante) {
-        this.afipComprobante = afipComprobante;
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
     }
 
     public int getPuntoVenta() {
@@ -215,12 +213,12 @@ public class ViajeRemito extends ObjetoGenerico {
         this.letra = letra;
     }
 
-    public int getNumeroComprobante() {
-        return numeroComprobante;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setNumeroComprobante(int numeroComprobante) {
-        this.numeroComprobante = numeroComprobante;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public Cliente getClienteRemitente() {
@@ -255,12 +253,20 @@ public class ViajeRemito extends ObjetoGenerico {
         this.bultos = bultos;
     }
 
-    public BigDecimal getKilos() {
-        return kilos;
+    public BigDecimal getKilosEfectivo() {
+        return kilosEfectivo;
     }
 
-    public void setKilos(BigDecimal kilos) {
-        this.kilos = kilos;
+    public void setKilosEfectivo(BigDecimal kilosEfectivo) {
+        this.kilosEfectivo = kilosEfectivo;
+    }
+
+    public BigDecimal getKilosAforado() {
+        return kilosAforado;
+    }
+
+    public void setKilosAforado(BigDecimal kilosAforado) {
+        this.kilosAforado = kilosAforado;
     }
 
     public BigDecimal getM3() {
@@ -295,7 +301,7 @@ public class ViajeRemito extends ObjetoGenerico {
         this.importeEntrega = importeEntrega;
     }
 
-    public boolean getEstaPendiente() {
+    public boolean isEstaPendiente() {
         return estaPendiente;
     }
 
@@ -319,36 +325,36 @@ public class ViajeRemito extends ObjetoGenerico {
         this.viajeTerceroTramo = viajeTerceroTramo;
     }
 
-    public RepartoPropio getRepartoPropio() {
-        return repartoPropio;
-    }
-
-    public void setRepartoPropio(RepartoPropio repartoPropio) {
-        this.repartoPropio = repartoPropio;
-    }
-
-    public RepartoTercero getRepartoTercero() {
-        return repartoTercero;
-    }
-
-    public void setRepartoTercero(RepartoTercero repartoTercero) {
-        this.repartoTercero = repartoTercero;
-    }
-
-    public short getOrdenImpReparto() {
-        return ordenImpReparto;
-    }
-
-    public void setOrdenImpReparto(short ordenImpReparto) {
-        this.ordenImpReparto = ordenImpReparto;
-    }
-
     public String getObservaciones() {
         return observaciones;
     }
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public boolean isEstaFacturado() {
+        return estaFacturado;
+    }
+
+    public void setEstaFacturado(boolean estaFacturado) {
+        this.estaFacturado = estaFacturado;
+    }
+
+    public Seguimiento getSiguimiento() {
+        return siguimiento;
+    }
+
+    public void setSiguimiento(Seguimiento siguimiento) {
+        this.siguimiento = siguimiento;
+    }
+
+    public boolean isEstaEnReparto() {
+        return estaEnReparto;
+    }
+
+    public void setEstaEnReparto(boolean estaEnReparto) {
+        this.estaEnReparto = estaEnReparto;
     }
     
 }

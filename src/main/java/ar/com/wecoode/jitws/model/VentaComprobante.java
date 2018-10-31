@@ -42,10 +42,10 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "numero", nullable = false)
     private int numero;
     
-    //Referencia a la clase AfipComprobante
+    //Referencia a la clase TipoComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipComprobante", nullable = false)
-    private AfipComprobante afipComprobante;
+    @JoinColumn(name = "idTipoComprobante", nullable = false)
+    private TipoComprobante tipoComprobante;
     
     //Define el codigo de afip
     @Column(name = "codigoAfip", nullable = false)
@@ -54,6 +54,10 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define la fecha de emision
     @Column(name = "fechaEmision", nullable = false)
     private LocalDate fechaEmision;
+    
+    //Define la fecha de vencimiento de pago
+    @Column(name = "fechaVtoPago", nullable = false)
+    private LocalDate fechaVtoPago;
     
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -90,6 +94,14 @@ public class VentaComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idCondicionVenta", nullable = false)
     private CondicionVenta condicionVenta;
     
+    //Define el importe no gravado
+    @Column(name = "importeNoGravado", nullable = true)
+    private BigDecimal importeNoGravado;
+    
+    //Define el importe exento
+    @Column(name = "importeExento", nullable = true)
+    private BigDecimal importeExento;
+    
     //Define el importe neto gravado
     @Column(name = "importeNetoGravado", nullable = true)
     private BigDecimal importeNetoGravado;
@@ -98,9 +110,9 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "importeIva", nullable = true)
     private BigDecimal importeIva;
     
-    //Define el importe no gravado
-    @Column(name = "importeNoGravado", nullable = true)
-    private BigDecimal importeNoGravado;
+    //Define el importe de otros tributos
+    @Column(name = "importeOtrosTributos", nullable = true)
+    private BigDecimal importeOtrosTributos;
     
     //Define el importe total
     @Column(name = "importeTotal", nullable = true)
@@ -109,6 +121,15 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define el importe saldo
     @Column(name = "importeSaldo", nullable = true)
     private BigDecimal importeSaldo;
+    
+    //Referencia a la clase Cobrador
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idCobrador", nullable = false)
+    private Cobrador cobrador;
+    
+    //Define si el pago es en origen
+    @Column(name = "pagoEnOrigen", nullable = false)
+    private boolean pagoEnOrigen;
 
     //Getters y Setters de la clase
 
@@ -152,12 +173,12 @@ public class VentaComprobante extends ObjetoGenerico {
         this.numero = numero;
     }
 
-    public AfipComprobante getAfipComprobante() {
-        return afipComprobante;
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
     }
 
-    public void setAfipComprobante(AfipComprobante afipComprobante) {
-        this.afipComprobante = afipComprobante;
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
     }
 
     public String getCodigoAfip() {
@@ -167,13 +188,21 @@ public class VentaComprobante extends ObjetoGenerico {
     public void setCodigoAfip(String codigoAfip) {
         this.codigoAfip = codigoAfip;
     }
-    
+
     public LocalDate getFechaEmision() {
         return fechaEmision;
     }
 
     public void setFechaEmision(LocalDate fechaEmision) {
         this.fechaEmision = fechaEmision;
+    }
+
+    public LocalDate getFechaVtoPago() {
+        return fechaVtoPago;
+    }
+
+    public void setFechaVtoPago(LocalDate fechaVtoPago) {
+        this.fechaVtoPago = fechaVtoPago;
     }
 
     public Cliente getCliente() {
@@ -232,6 +261,22 @@ public class VentaComprobante extends ObjetoGenerico {
         this.condicionVenta = condicionVenta;
     }
 
+    public BigDecimal getImporteNoGravado() {
+        return importeNoGravado;
+    }
+
+    public void setImporteNoGravado(BigDecimal importeNoGravado) {
+        this.importeNoGravado = importeNoGravado;
+    }
+
+    public BigDecimal getImporteExento() {
+        return importeExento;
+    }
+
+    public void setImporteExento(BigDecimal importeExento) {
+        this.importeExento = importeExento;
+    }
+
     public BigDecimal getImporteNetoGravado() {
         return importeNetoGravado;
     }
@@ -248,12 +293,12 @@ public class VentaComprobante extends ObjetoGenerico {
         this.importeIva = importeIva;
     }
 
-    public BigDecimal getImporteNoGravado() {
-        return importeNoGravado;
+    public BigDecimal getImporteOtrosTributos() {
+        return importeOtrosTributos;
     }
 
-    public void setImporteNoGravado(BigDecimal importeNoGravado) {
-        this.importeNoGravado = importeNoGravado;
+    public void setImporteOtrosTributos(BigDecimal importeOtrosTributos) {
+        this.importeOtrosTributos = importeOtrosTributos;
     }
 
     public BigDecimal getImporteTotal() {
@@ -270,6 +315,22 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setImporteSaldo(BigDecimal importeSaldo) {
         this.importeSaldo = importeSaldo;
+    }
+
+    public Cobrador getCobrador() {
+        return cobrador;
+    }
+
+    public void setCobrador(Cobrador cobrador) {
+        this.cobrador = cobrador;
+    }
+
+    public boolean isPagoEnOrigen() {
+        return pagoEnOrigen;
+    }
+
+    public void setPagoEnOrigen(boolean pagoEnOrigen) {
+        this.pagoEnOrigen = pagoEnOrigen;
     }
     
 }

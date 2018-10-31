@@ -45,15 +45,15 @@ public class ViajeRemitoService {
     }
     
     //Obtiene un listado por numero de comprobante
-    public List<ViajeRemito> listarPorNumeroComprobante(int numeroComprobante) {
-        return elementoDAO.findByNumeroComprobanteContaining(numeroComprobante);
+    public List<ViajeRemito> listarPorNumero(int numero) {
+        return elementoDAO.findByNumeroContaining(numero);
     }
     
     //Obtiene un listado de pendientes por sucursal
     public List<ViajeRemito> listarPendientesPorSucursal(int idSucursal) {
         //Obtiene la sucursal por id
         Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
-        return elementoDAO.findBySucursalAndEstaPendienteTrue(sucursal);
+        return elementoDAO.findBySucursalEmisionAndEstaPendienteTrue(sucursal);
     }
     
     //Obtiene un listado de pendientes por filtro
@@ -63,7 +63,7 @@ public class ViajeRemitoService {
         //Obtiene la sucursal destino por id
         Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
         //Retorna los datos
-        return elementoDAO.findBySucursalAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(sucursal, sucursalDestino, numeroCamion);
+        return elementoDAO.findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(sucursal, sucursalDestino, numeroCamion);
     }
     
     //Obtiene un listado de asignados por filtro
@@ -75,7 +75,7 @@ public class ViajeRemitoService {
         //Obtiene el viaje propio tramo por id
         Optional<ViajePropioTramo> viajePropioTramo = viajePropioTramoDAO.findById(idViajePropioTramo);
         //Retorna los datos
-        return elementoDAO.findBySucursalAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
+        return elementoDAO.findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
                 sucursal, sucursalDestino, numeroCamion, viajePropioTramo);
     }
     

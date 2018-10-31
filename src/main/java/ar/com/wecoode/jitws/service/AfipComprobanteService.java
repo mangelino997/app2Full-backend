@@ -31,26 +31,17 @@ public class AfipComprobanteService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por nombre
-    public List<AfipComprobante> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
-    }
-    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipComprobante agregar(AfipComprobante elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipComprobante elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -58,6 +49,13 @@ public class AfipComprobanteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(AfipComprobante elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private AfipComprobante formatearStrings(AfipComprobante elemento) {
+        elemento.setLetra(elemento.getLetra().trim());
+        elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
+        return elemento;
     }
     
 }

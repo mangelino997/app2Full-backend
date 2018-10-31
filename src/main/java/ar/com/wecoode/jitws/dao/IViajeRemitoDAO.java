@@ -20,17 +20,17 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public ViajeRemito findTopByOrderByIdDesc();
     
     //Obtiene la lista por numero
-    public List<ViajeRemito> findByNumeroComprobanteContaining(int numeroComprobante);
+    public List<ViajeRemito> findByNumeroContaining(int numero);
     
-    //Obtiene una lista de pendientes por sucursal
-    public List<ViajeRemito> findBySucursalAndEstaPendienteTrue(Optional<Sucursal> sucursal);
+    //Obtiene una lista de pendientes por sucursal emision
+    public List<ViajeRemito> findBySucursalEmisionAndEstaPendienteTrue(Optional<Sucursal> sucursal);
     
-    //Obtiene una lista de pendientes por filtro (sucursal, sucursalDestino y numero camion)
-    public List<ViajeRemito> findBySucursalAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
+    //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino y numero camion)
+    public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
     
-    //Obtiene una lista de pendientes por filtro (sucursal, sucursalDestino, numero camion y viajePropioTramo)
-    public List<ViajeRemito> findBySucursalAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
+    //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino, numero camion y viajePropioTramo)
+    public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion, Optional<ViajePropioTramo> viajePropioTramo);
     
 }

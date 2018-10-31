@@ -58,13 +58,6 @@ public class AfipComprobanteController {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
-    @ResponseBody
-    public List<AfipComprobante> listarPorNombre(@PathVariable String nombre) {
-        return elementoService.listarPorNombre(nombre);
-    }
-    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody AfipComprobante elemento) {
