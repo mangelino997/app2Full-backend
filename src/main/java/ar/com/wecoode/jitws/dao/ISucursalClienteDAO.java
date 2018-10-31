@@ -24,4 +24,7 @@ public interface ISucursalClienteDAO extends JpaRepository<SucursalCliente, Inte
     //Obtiene una lista por cliente
     public List<SucursalCliente> findByCliente(Optional<Cliente> cliente);
     
+    //Obtiene una lista por alias del cliente
+    public List<SucursalCliente> findByCliente_AliasContaining(String alias);
+    
 }

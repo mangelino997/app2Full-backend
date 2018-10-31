@@ -54,6 +54,11 @@ public class SucursalClienteService {
         return elementoDAO.findByCliente(cliente);
     }
     
+    //Obtiene una lista por alias del cliente
+    public List<SucursalCliente> listarPorAliasCliente(String alias) {
+        return elementoDAO.findByCliente_AliasContaining(alias);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SucursalCliente agregar(SucursalCliente elemento) {

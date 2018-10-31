@@ -74,6 +74,13 @@ public class SucursalClienteController {
         return elementoService.listarPorCliente(idCliente);
     }
     
+    //Obtiene una lista por alias del cliente
+    @GetMapping(value = URL + "/listarPorAliasCliente/{alias}")
+    @ResponseBody
+    public List<SucursalCliente> listarPorAliasCliente(@PathVariable String alias) {
+        return elementoService.listarPorAliasCliente(alias);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody SucursalCliente elemento) {

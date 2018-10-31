@@ -2,6 +2,7 @@ package ar.com.wecoode.jitws.service;
 
 import ar.com.wecoode.jitws.dao.IVehiculoDAO;
 import ar.com.wecoode.jitws.model.Vehiculo;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class VehiculoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Vehiculo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -44,6 +45,7 @@ public class VehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public Vehiculo agregar(Vehiculo elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaAlta(LocalDate.now());
         elementoDAO.saveAndFlush(elemento);
         elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno());
         return elementoDAO.save(elemento);
@@ -53,6 +55,7 @@ public class VehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Vehiculo elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaUltimaMod(LocalDate.now());
         elementoDAO.save(elemento);
     }
     
@@ -65,9 +68,15 @@ public class VehiculoService {
     //Formatea los strings
     private Vehiculo formatearStrings(Vehiculo elemento) {
         elemento.setDominio(elemento.getDominio().trim());
-        elemento.setNumeroInterno(elemento.getNumeroInterno().trim());
-        elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
-        elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+        if(elemento.getNumeroInterno() != null) {
+            elemento.setNumeroInterno(elemento.getNumeroInterno().trim());
+        }
+        if(elemento.getNumeroMotor() != null) {
+            elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
+        }
+        if(elemento.getNumeroChasis() != null) {
+            elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+        }
         elemento.setNumeroRuta(elemento.getNumeroRuta().trim());
         return elemento;
     }
