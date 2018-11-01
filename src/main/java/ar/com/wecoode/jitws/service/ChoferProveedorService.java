@@ -5,6 +5,7 @@ import ar.com.wecoode.jitws.dao.IChoferProveedorDAO;
 import ar.com.wecoode.jitws.dao.IProveedorDAO;
 import ar.com.wecoode.jitws.model.ChoferProveedor;
 import ar.com.wecoode.jitws.model.Proveedor;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ChoferProveedorService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ChoferProveedor elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -58,8 +59,10 @@ public class ChoferProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public ChoferProveedor agregar(ChoferProveedor elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaAlta(LocalDate.now());
         elementoDAO.saveAndFlush(elemento);
-        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() + " - " + elemento.getNumeroDocumento());
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
+                + " - " + elemento.getNumeroDocumento());
         return elementoDAO.save(elemento);
     }
     
@@ -67,7 +70,9 @@ public class ChoferProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ChoferProveedor elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() + " - " + elemento.getNumeroDocumento());
+        elemento.setFechaUltimaMod(LocalDate.now());
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
+                + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);
     }
     

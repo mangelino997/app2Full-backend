@@ -47,7 +47,8 @@ public class VehiculoService {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(LocalDate.now());
         elementoDAO.saveAndFlush(elemento);
-        elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno());
+        elemento.setAlias(elemento.getDominio() + " - " 
+                + elemento.getNumeroInterno());
         return elementoDAO.save(elemento);
     }
 
@@ -56,6 +57,8 @@ public class VehiculoService {
     public void actualizar(Vehiculo elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaUltimaMod(LocalDate.now());
+        elemento.setAlias(elemento.getDominio() + " - " 
+                + elemento.getNumeroInterno());
         elementoDAO.save(elemento);
     }
     

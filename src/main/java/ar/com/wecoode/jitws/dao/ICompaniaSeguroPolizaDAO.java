@@ -2,6 +2,9 @@
 package ar.com.wecoode.jitws.dao;
 
 import ar.com.wecoode.jitws.model.CompaniaSeguroPoliza;
+import ar.com.wecoode.jitws.model.Empresa;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +17,8 @@ public interface ICompaniaSeguroPolizaDAO extends JpaRepository<CompaniaSeguroPo
     
     //Obtiene el siguiente id
     public CompaniaSeguroPoliza findTopByOrderByIdDesc();
+    
+    //Obtiene una lista por empresa
+    public List<CompaniaSeguroPoliza> findByEmpresa(Optional<Empresa> empresa);
     
 }

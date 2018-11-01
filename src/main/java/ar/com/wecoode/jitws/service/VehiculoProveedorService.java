@@ -1,8 +1,8 @@
 package ar.com.wecoode.jitws.service;
 
-import ar.com.wecoode.jitws.constant.Funcion;
 import ar.com.wecoode.jitws.dao.IVehiculoProveedorDAO;
 import ar.com.wecoode.jitws.model.VehiculoProveedor;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class VehiculoProveedorService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         VehiculoProveedor elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -45,6 +45,7 @@ public class VehiculoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public VehiculoProveedor agregar(VehiculoProveedor elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaAlta(LocalDate.now());
         elementoDAO.saveAndFlush(elemento);
         elemento.setAlias(elemento.getDominio());
         return elementoDAO.save(elemento);
@@ -54,6 +55,8 @@ public class VehiculoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(VehiculoProveedor elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaUltimaMod(LocalDate.now());
+        elemento.setAlias(elemento.getDominio());
         elementoDAO.save(elemento);
     }
     
@@ -66,8 +69,12 @@ public class VehiculoProveedorService {
     //Formatea los strings
     private VehiculoProveedor formatearStrings(VehiculoProveedor elemento) {
         elemento.setDominio(elemento.getDominio().trim());
-        elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
-        elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+        if(elemento.getNumeroMotor() != null) {
+            elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
+        }
+        if(elemento.getNumeroChasis() != null) {
+            elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+        }
         elemento.setNumeroPoliza(elemento.getNumeroPoliza().trim());
         elemento.setNumeroRuta(elemento.getNumeroRuta().trim());
         return elemento;
