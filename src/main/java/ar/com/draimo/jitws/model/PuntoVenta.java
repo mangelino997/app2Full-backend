@@ -32,6 +32,10 @@ public class PuntoVenta extends ObjetoGenerico {
     @Column(name = "puntoVenta", nullable = false)
     private int puntoVenta;
     
+    //Define el codigo de afip
+    @Column(name = "codigoAfip", nullable = false)
+    private String codigoAfip;
+    
     //Define el fe
     @Column(name = "fe", nullable = false)
     private boolean fe;
@@ -92,6 +96,14 @@ public class PuntoVenta extends ObjetoGenerico {
 
     public void setPuntoVenta(int puntoVenta) {
         this.puntoVenta = puntoVenta;
+    }
+
+    public String getCodigoAfip() {
+        return codigoAfip;
+    }
+
+    public void setCodigoAfip(String codigoAfip) {
+        this.codigoAfip = codigoAfip;
     }
 
     public boolean getFe() {
