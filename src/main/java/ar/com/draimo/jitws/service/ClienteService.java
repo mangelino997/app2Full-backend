@@ -74,13 +74,25 @@ public class ClienteService {
     //Formatea los string
     private Cliente formatearString(Cliente elemento) {
         elemento.setRazonSocial(Funcion.convertirATitulo(elemento.getRazonSocial().trim()));
-        elemento.setNombreFantasia(Funcion.convertirATitulo(elemento.getNombreFantasia().trim()));
+        if(elemento.getNombreFantasia() != null) {
+            elemento.setNombreFantasia(Funcion.convertirATitulo(elemento.getNombreFantasia().trim()));
+        }
         elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
-        elemento.setSitioWeb(elemento.getSitioWeb().toLowerCase().trim());
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
-        elemento.setNotaEmisionComprobante(Funcion.primerLetraAMayuscula(elemento.getNotaEmisionComprobante().trim()));
-        elemento.setNotaImpresionComprobante(Funcion.primerLetraAMayuscula(elemento.getNotaImpresionComprobante().trim()));
-        elemento.setNotaImpresionRemito(Funcion.primerLetraAMayuscula(elemento.getNotaImpresionRemito().trim()));
+        if(elemento.getSitioWeb() != null) {
+            elemento.setSitioWeb(elemento.getSitioWeb().toLowerCase().trim());
+        }
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        }
+        if(elemento.getNotaEmisionComprobante() != null) {
+            elemento.setNotaEmisionComprobante(Funcion.primerLetraAMayuscula(elemento.getNotaEmisionComprobante().trim()));
+        }
+        if(elemento.getNotaImpresionComprobante() != null) {
+            elemento.setNotaImpresionComprobante(Funcion.primerLetraAMayuscula(elemento.getNotaImpresionComprobante().trim()));
+        }
+        if(elemento.getNotaImpresionRemito() != null) {
+            elemento.setNotaImpresionRemito(Funcion.primerLetraAMayuscula(elemento.getNotaImpresionRemito().trim()));
+        }
         return elemento;
     }
     

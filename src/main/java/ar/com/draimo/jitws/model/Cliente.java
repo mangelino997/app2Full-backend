@@ -97,6 +97,11 @@ public class Cliente extends ObjetoGenerico {
     @Column(name = "esCuentaCorriente", nullable = false)
     private boolean esCuentaCorriente;
     
+    //Referencia a la clase Condicion Venta
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idCondicionVenta", nullable = false)
+    private CondicionVenta condicionVenta;
+    
     //Referencia a la clase Resumen Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idResumenCliente", nullable = true)
@@ -331,6 +336,14 @@ public class Cliente extends ObjetoGenerico {
         this.esCuentaCorriente = esCuentaCorriente;
     }
 
+    public CondicionVenta getCondicionVenta() {
+        return condicionVenta;
+    }
+
+    public void setCondicionVenta(CondicionVenta condicionVenta) {
+        this.condicionVenta = condicionVenta;
+    }
+    
     public ResumenCliente getResumenCliente() {
         return resumenCliente;
     }
