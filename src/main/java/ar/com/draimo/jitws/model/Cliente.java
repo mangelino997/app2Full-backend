@@ -30,8 +30,8 @@ public class Cliente extends ObjetoGenerico {
     
     //Referencia a la clase Cuenta principal
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCuentaPrincipal", nullable = true)
-    private Cliente cuentaPrincipal;
+    @JoinColumn(name = "idCuentaGrupo", nullable = true)
+    private Cliente cuentaGrupo;
     
     //Define el domicilio
     @Column(name = "domicilio", nullable = false)
@@ -211,14 +211,14 @@ public class Cliente extends ObjetoGenerico {
         this.nombreFantasia = nombreFantasia;
     }
 
-    public Cliente getCuentaPrincipal() {
-        return cuentaPrincipal;
+    public Cliente getCuentaGrupo() {
+        return cuentaGrupo;
     }
 
-    public void setCuentaPrincipal(Cliente cuentaPrincipal) {
-        this.cuentaPrincipal = cuentaPrincipal;
+    public void setCuentaGrupo(Cliente cuentaGrupo) {
+        this.cuentaGrupo = cuentaGrupo;
     }
-
+    
     public String getDomicilio() {
         return domicilio;
     }
