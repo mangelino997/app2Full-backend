@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ISindicatoDAO;
 import ar.com.draimo.jitws.model.Sindicato;
 import java.util.List;
@@ -23,7 +22,7 @@ public class SindicatoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Sindicato elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -62,8 +61,10 @@ public class SindicatoService {
     
     //Formatea los strings
     private Sindicato formatearStrings(Sindicato elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
+        elemento.setNombre(elemento.getNombre().trim());
+        if(elemento.getSitioWeb() != null) {
+            elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
+        }
         return elemento;
     }
 

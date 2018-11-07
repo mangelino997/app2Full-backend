@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IBancoDAO;
 import ar.com.draimo.jitws.model.Banco;
 import java.util.List;
@@ -62,8 +61,10 @@ public class BancoService {
     
     //Formatea los strings
     private Banco formatearStrings(Banco elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setSitioWeb(elemento.getSitioWeb().toLowerCase().trim());
+        elemento.setNombre(elemento.getNombre().trim().toUpperCase());
+        if(elemento.getSitioWeb() != null) {
+            elemento.setSitioWeb(elemento.getSitioWeb().toLowerCase().trim());
+        }
         return elemento;
     }
     

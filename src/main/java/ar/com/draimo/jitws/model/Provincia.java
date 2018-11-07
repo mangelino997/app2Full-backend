@@ -27,7 +27,7 @@ public class Provincia extends ObjetoGenerico {
     private int codigoIIBB;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip")
+    @Column(name = "codigoAfip", nullable = true)
     private String codigoAfip;
     
     //Referencia a la clase Pais

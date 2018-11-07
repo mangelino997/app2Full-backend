@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.dao.IPaisDAO;
 import ar.com.draimo.jitws.model.Provincia;
@@ -75,8 +74,10 @@ public class ProvinciaService {
     
     //Formatea los strings
     private Provincia formatearStrings(Provincia elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
+        elemento.setNombre(elemento.getNombre().trim());
+        if(elemento.getCodigoAfip() != null) {
+            elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
+        }
         return elemento;
     }
 

@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IBarrioDAO;
 import ar.com.draimo.jitws.model.Barrio;
 import java.util.List;
@@ -42,14 +41,14 @@ public class BarrioService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Barrio agregar(Barrio elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Barrio elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -57,6 +56,12 @@ public class BarrioService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Barrio elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Barrio formatearStrings(Barrio elemento) {
+        elemento.setNombre(elemento.getNombre().trim());
+        return elemento;
     }
 
 }

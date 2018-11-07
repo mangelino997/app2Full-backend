@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.model.Sucursal;
 import java.util.List;
@@ -23,7 +22,7 @@ public class SucursalService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Sucursal elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -62,8 +61,8 @@ public class SucursalService {
     
     //Formatea los strings
     private Sucursal formatearStrings(Sucursal elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
+        elemento.setDomicilio(elemento.getDomicilio().trim());
         return elemento;
     }
 

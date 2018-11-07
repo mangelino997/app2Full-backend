@@ -46,12 +46,14 @@ public class CompaniaSeguroPolizaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CompaniaSeguroPoliza agregar(CompaniaSeguroPoliza elemento) {
+        elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(CompaniaSeguroPoliza elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -59,6 +61,12 @@ public class CompaniaSeguroPolizaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(CompaniaSeguroPoliza elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private CompaniaSeguroPoliza formatearStrings(CompaniaSeguroPoliza elemento) {
+        elemento.setNumeroPoliza(elemento.getNumeroPoliza().trim());
+        return elemento;
     }
     
 }

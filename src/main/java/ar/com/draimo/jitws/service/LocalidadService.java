@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ILocalidadDAO;
 import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.model.Localidad;
@@ -30,7 +29,7 @@ public class LocalidadService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Localidad elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene una lista completa
@@ -75,8 +74,10 @@ public class LocalidadService {
     
     //Formatea los strings
     private Localidad formatearStrings(Localidad elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setCodigoPostal(elemento.getCodigoPostal().trim());
+        elemento.setNombre(elemento.getNombre().trim());
+        if(elemento.getCodigoPostal() != null) {
+            elemento.setCodigoPostal(elemento.getCodigoPostal().trim());
+        }
         return elemento;
     }
 

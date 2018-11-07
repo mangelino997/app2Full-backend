@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IConfiguracionVehiculoDAO;
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
@@ -36,7 +35,7 @@ public class ConfiguracionVehiculoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ConfiguracionVehiculo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -76,8 +75,10 @@ public class ConfiguracionVehiculoService {
     
     //Formatea los strings
     private ConfiguracionVehiculo formatearStrings(ConfiguracionVehiculo elemento) {
-        elemento.setModelo(Funcion.primerLetraAMayuscula(elemento.getModelo().trim()));
-        elemento.setDescripcion(Funcion.primerLetraAMayuscula(elemento.getDescripcion().trim()));
+        elemento.setModelo(elemento.getModelo().trim());
+        if(elemento.getDescripcion() != null) {
+            elemento.setDescripcion(elemento.getDescripcion().trim());
+        }
         return elemento;
     }
     

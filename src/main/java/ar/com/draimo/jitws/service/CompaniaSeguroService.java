@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.draimo.jitws.model.CompaniaSeguro;
 import java.util.List;
@@ -58,7 +57,7 @@ public class CompaniaSeguroService {
     
     //Formatea los strings
     private CompaniaSeguro formatearStrings(CompaniaSeguro elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim().toUpperCase());
         return elemento;
     }
     

@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IAreaDAO;
 import ar.com.draimo.jitws.model.Area;
 import java.util.List;
@@ -43,14 +42,14 @@ public class AreaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Area agregar(Area elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Area elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -58,6 +57,12 @@ public class AreaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Area elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Area formatearStrings(Area elemento) {
+        elemento.setNombre(elemento.getNombre().trim());
+        return elemento;
     }
     
 }

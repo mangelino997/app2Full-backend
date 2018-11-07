@@ -20,7 +20,7 @@ public class Sindicato extends ObjetoGenerico {
     private String nombre;
     
     //Define el sitio web
-    @Column(name = "sitioWeb")
+    @Column(name = "sitioWeb", nullable = true)
     private String sitioWeb;
     
     //Getters y Setters de la clase

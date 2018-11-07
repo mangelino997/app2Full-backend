@@ -22,7 +22,7 @@ public class VentaComprobanteService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         VentaComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -53,6 +53,7 @@ public class VentaComprobanteService {
     //Formatea los strings
     private VentaComprobante formatearStrings(VentaComprobante elemento) {
         elemento.setLetra(elemento.getLetra().trim());
+        elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;
     }
     

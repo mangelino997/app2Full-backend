@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import java.util.List;
@@ -23,7 +22,7 @@ public class TipoDocumentoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         TipoDocumento elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -62,7 +61,7 @@ public class TipoDocumentoService {
     
     //Formatea los strings
     private TipoDocumento formatearStrings(TipoDocumento elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         elemento.setAbreviatura(elemento.getAbreviatura().trim());
         elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;

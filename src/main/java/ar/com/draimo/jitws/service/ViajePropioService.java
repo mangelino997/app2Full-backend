@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IViajePropioCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajePropioDAO;
 import ar.com.draimo.jitws.dao.IViajePropioEfectivoDAO;
@@ -144,10 +143,18 @@ public class ViajePropioService {
     
     //Formatea los strings
     private ViajePropio formatearStrings(ViajePropio elemento) {
-        elemento.setObservacionVehiculo(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculo().trim()));
-        elemento.setObservacionVehiculoRemolque(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculoRemolque().trim()));
-        elemento.setObservacionChofer(Funcion.primerLetraAMayuscula(elemento.getObservacionChofer().trim()));
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        if(elemento.getObservacionVehiculo() != null) {
+            elemento.setObservacionVehiculo(elemento.getObservacionVehiculo().trim());
+        }
+        if(elemento.getObservacionVehiculoRemolque() != null) {
+            elemento.setObservacionVehiculoRemolque(elemento.getObservacionVehiculoRemolque().trim());
+        }
+        if(elemento.getObservacionChofer() != null) {
+            elemento.setObservacionChofer(elemento.getObservacionChofer().trim());
+        }
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(elemento.getObservaciones().trim());
+        }
         return elemento;
     }
     

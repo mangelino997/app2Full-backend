@@ -22,7 +22,7 @@ public class ViajeTerceroInsumoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeTerceroInsumo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -33,12 +33,14 @@ public class ViajeTerceroInsumoService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ViajeTerceroInsumo agregar(ViajeTerceroInsumo elemento) {
+        elemento = formatearStrings(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTerceroInsumo elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -46,6 +48,12 @@ public class ViajeTerceroInsumoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajeTerceroInsumo elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private ViajeTerceroInsumo formatearStrings(ViajeTerceroInsumo elemento) {
+        elemento.setNombre(elemento.getNombre().trim());
+        return elemento;
     }
 
 }

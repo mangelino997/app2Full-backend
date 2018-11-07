@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemDAO;
 import ar.com.draimo.jitws.model.VentaComprobanteItem;
 import java.util.List;
@@ -23,7 +22,7 @@ public class VentaComprobanteItemService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         VentaComprobanteItem elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -53,7 +52,9 @@ public class VentaComprobanteItemService {
     
     //Formatea los strings
     private VentaComprobanteItem formatearStrings(VentaComprobanteItem elemento) {
-        elemento.setDescripcionCarga(Funcion.primerLetraAMayuscula(elemento.getDescripcionCarga().trim()));
+        if(elemento.getDescripcionCarga() != null) {
+            elemento.setDescripcionCarga(elemento.getDescripcionCarga().trim());
+        }
         return elemento;
     }
     

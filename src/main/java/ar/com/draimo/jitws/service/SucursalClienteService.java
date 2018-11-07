@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.ISucursalClienteDAO;
 import ar.com.draimo.jitws.model.Cliente;
@@ -81,10 +80,14 @@ public class SucursalClienteService {
     
     //Formatea los strings
     private SucursalCliente formatearStrings(SucursalCliente elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
-        elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
-        elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        elemento.setNombre(elemento.getNombre().trim());
+        elemento.setDomicilio(elemento.getDomicilio().trim());
+        if(elemento.getTelefonoFijo() != null) {
+            elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
+        }
+        if(elemento.getTelefonoMovil() != null) {
+            elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        }
         return elemento;
     }
     

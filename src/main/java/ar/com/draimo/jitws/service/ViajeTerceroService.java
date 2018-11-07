@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IViajeTerceroCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeTerceroDAO;
 import ar.com.draimo.jitws.dao.IViajeTerceroEfectivoDAO;
@@ -107,11 +106,21 @@ public class ViajeTerceroService {
     
     //Formatea los strings
     private ViajeTercero formatearStrings(ViajeTercero elemento) {
-        elemento.setNumeroLiquidacion(elemento.getNumeroLiquidacion().trim());
-        elemento.setObservacionVehiculo(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculo().trim()));
-        elemento.setObservacionVehiculoRemolque(Funcion.primerLetraAMayuscula(elemento.getObservacionVehiculoRemolque().trim()));
-        elemento.setObservacionChofer(Funcion.primerLetraAMayuscula(elemento.getObservacionChofer().trim()));
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        if(elemento.getNumeroLiquidacion() != null) {
+            elemento.setNumeroLiquidacion(elemento.getNumeroLiquidacion().trim());
+        }
+        if(elemento.getObservacionVehiculo() != null) {
+            elemento.setObservacionVehiculo(elemento.getObservacionVehiculo().trim());
+        }
+        if(elemento.getObservacionVehiculoRemolque() != null) {
+            elemento.setObservacionVehiculoRemolque(elemento.getObservacionVehiculoRemolque().trim());
+        }
+        if(elemento.getObservacionChofer() != null) {
+            elemento.setObservacionChofer(elemento.getObservacionChofer().trim());
+        }
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(elemento.getObservaciones().trim());
+        }
         return elemento;
     }
     

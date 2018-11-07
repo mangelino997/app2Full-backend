@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ISexoDAO;
 import ar.com.draimo.jitws.model.Sexo;
 import java.util.List;
@@ -23,7 +22,7 @@ public class SexoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Sexo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -62,7 +61,7 @@ public class SexoService {
     
     //Formatea los strings
     private Sexo formatearStrings(Sexo elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
 

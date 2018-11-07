@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.model.Moneda;
 import java.util.List;
@@ -23,7 +22,7 @@ public class MonedaService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Moneda elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -62,7 +61,7 @@ public class MonedaService {
     
     //Formatea los strings
     private Moneda formatearStrings(Moneda elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
     

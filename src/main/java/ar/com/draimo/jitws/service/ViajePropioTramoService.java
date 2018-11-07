@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import java.util.List;
@@ -23,7 +22,7 @@ public class ViajePropioTramoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajePropioTramo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -53,7 +52,9 @@ public class ViajePropioTramoService {
     
     //Formatea los strings
     private ViajePropioTramo formatearStrings(ViajePropioTramo elemento) {
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(elemento.getObservaciones().trim());
+        }
         return elemento;
     }
 

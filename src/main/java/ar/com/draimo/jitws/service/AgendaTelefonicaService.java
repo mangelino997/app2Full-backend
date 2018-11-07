@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IAgendaTelefonicaDAO;
 import ar.com.draimo.jitws.model.AgendaTelefonica;
 import java.util.List;
@@ -63,8 +62,16 @@ public class AgendaTelefonicaService {
     
     //Formatea los string
     private AgendaTelefonica formatearStrings(AgendaTelefonica elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
+        if(elemento.getDomicilio() != null) {
+            elemento.setDomicilio(elemento.getDomicilio().trim());
+        }
+        if(elemento.getTelefonoFijo() != null) {
+            elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
+        }
+        if(elemento.getTelefonoMovil() != null) {
+            elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        }
         elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase().trim());
         return elemento;
     }

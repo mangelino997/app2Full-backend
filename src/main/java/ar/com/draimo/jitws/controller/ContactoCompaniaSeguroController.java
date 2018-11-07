@@ -88,16 +88,6 @@ public class ContactoCompaniaSeguroController {
             String[] partes = e.getMostSpecificCause().getMessage().split("'");
             //Determina que columna tiene el dato duplicado
             switch (partes[3]) {
-                case DuplicidadError.TELEFONO_FIJO_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_FIJO,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoFijo() + "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.TELEFONO_MOVIL_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_MOVIL,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoMovil() + "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.CORREOELECTRONICO_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
                     return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CORREOELECTRONICO,
@@ -133,16 +123,6 @@ public class ContactoCompaniaSeguroController {
             String[] partes = e.getMostSpecificCause().getMessage().split("'");
             //Determina que columna tiene el dato duplicado
             switch (partes[3]) {
-                case DuplicidadError.TELEFONO_FIJO_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_FIJO,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoFijo() + "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.TELEFONO_MOVIL_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_MOVIL,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoMovil() + "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.CORREOELECTRONICO_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
                     return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CORREOELECTRONICO,

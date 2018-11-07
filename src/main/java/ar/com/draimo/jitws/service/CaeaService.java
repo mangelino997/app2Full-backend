@@ -33,12 +33,14 @@ public class CaeaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Caea agregar(Caea elemento) {
+        elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Caea elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -46,6 +48,12 @@ public class CaeaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Caea elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private Caea formatearStrings(Caea elemento) {
+        elemento.setNumeroCAEA(elemento.getNumeroCAEA().trim());
+        return elemento;
     }
     
 }

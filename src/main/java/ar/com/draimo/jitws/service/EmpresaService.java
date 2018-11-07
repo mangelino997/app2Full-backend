@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.Empresa;
 import java.util.List;
@@ -23,7 +22,7 @@ public class EmpresaService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Empresa elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -62,10 +61,12 @@ public class EmpresaService {
     
     //Formatea los strings
     private Empresa formatearStrings(Empresa elemento) {
-        elemento.setRazonSocial(Funcion.convertirATitulo(elemento.getRazonSocial().trim()));
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setRazonSocial(elemento.getRazonSocial().trim().toUpperCase());
+        elemento.setDomicilio(elemento.getDomicilio().trim());
         elemento.setCuit(elemento.getCuit().trim());
-        elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
+        if(elemento.getNumeroIIBB() != null) {
+            elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
+        }
         elemento.setAbreviatura(elemento.getAbreviatura().trim());
         return elemento;
     }

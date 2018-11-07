@@ -24,7 +24,7 @@ public class ObraSocial extends ObjetoGenerico {
     private String codigoAfip;
     
     //Define el sitio web
-    @Column(name = "sitioWeb")
+    @Column(name = "sitioWeb", nullable = true)
     private String sitioWeb;
     
     //Getters y Setters de la clase

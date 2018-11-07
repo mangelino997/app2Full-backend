@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
@@ -36,7 +35,7 @@ public class ViajeRemitoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeRemito elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene el listado completo
@@ -124,7 +123,9 @@ public class ViajeRemitoService {
     //Formatea los strings
     private ViajeRemito formatearStrings(ViajeRemito elemento) {
         elemento.setLetra(elemento.getLetra().trim());
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(elemento.getObservaciones().trim());
+        }
         return elemento;
     }
     

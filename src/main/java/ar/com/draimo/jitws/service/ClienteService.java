@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.model.Cliente;
 import java.util.List;
@@ -73,25 +72,35 @@ public class ClienteService {
     
     //Formatea los string
     private Cliente formatearString(Cliente elemento) {
-        elemento.setRazonSocial(Funcion.convertirATitulo(elemento.getRazonSocial().trim()));
+        elemento.setRazonSocial(elemento.getRazonSocial().trim().toUpperCase());
         if(elemento.getNombreFantasia() != null) {
-            elemento.setNombreFantasia(Funcion.convertirATitulo(elemento.getNombreFantasia().trim()));
+            elemento.setNombreFantasia(elemento.getNombreFantasia().trim());
         }
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setDomicilio(elemento.getDomicilio().trim());
+        if(elemento.getTelefono() != null) {
+            elemento.setTelefono(elemento.getTelefono().trim());
+        }
         if(elemento.getSitioWeb() != null) {
             elemento.setSitioWeb(elemento.getSitioWeb().toLowerCase().trim());
         }
+        elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
+        if(elemento.getNumeroIIBB() != null) {
+            elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
+        }
+        if(elemento.getNumeroPolizaSeguro() != null) {
+            elemento.setNumeroPolizaSeguro(elemento.getNumeroPolizaSeguro().trim());
+        }
         if(elemento.getObservaciones() != null) {
-            elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+            elemento.setObservaciones(elemento.getObservaciones().trim());
         }
         if(elemento.getNotaEmisionComprobante() != null) {
-            elemento.setNotaEmisionComprobante(Funcion.primerLetraAMayuscula(elemento.getNotaEmisionComprobante().trim()));
+            elemento.setNotaEmisionComprobante(elemento.getNotaEmisionComprobante().trim());
         }
         if(elemento.getNotaImpresionComprobante() != null) {
-            elemento.setNotaImpresionComprobante(Funcion.primerLetraAMayuscula(elemento.getNotaImpresionComprobante().trim()));
+            elemento.setNotaImpresionComprobante(elemento.getNotaImpresionComprobante().trim());
         }
         if(elemento.getNotaImpresionRemito() != null) {
-            elemento.setNotaImpresionRemito(Funcion.primerLetraAMayuscula(elemento.getNotaImpresionRemito().trim()));
+            elemento.setNotaImpresionRemito(elemento.getNotaImpresionRemito().trim());
         }
         return elemento;
     }

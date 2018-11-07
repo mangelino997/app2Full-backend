@@ -84,8 +84,15 @@ public class ChoferProveedorService {
     
     //Formatea los strings
     private ChoferProveedor formatearStrings(ChoferProveedor elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
+        elemento.setDomicilio(elemento.getDomicilio().trim());
+        elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
+        if(elemento.getTelefonoFijo() != null) {
+            elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
+        }
+        if(elemento.getTelefonoMovil() != null) {
+            elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        }
         return elemento;
     }
     

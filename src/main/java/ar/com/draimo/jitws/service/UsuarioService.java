@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.model.Usuario;
 import java.util.List;
@@ -27,7 +26,7 @@ public class UsuarioService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Usuario elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene una lista completa
@@ -71,7 +70,7 @@ public class UsuarioService {
     
     //Formatea los strings
     private Usuario formatearStrings(Usuario elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         elemento.setUsername(elemento.getUsername().trim().toLowerCase());
         elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
         return elemento;

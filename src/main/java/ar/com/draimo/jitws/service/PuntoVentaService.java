@@ -48,12 +48,14 @@ public class PuntoVentaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public PuntoVenta agregar(PuntoVenta elemento) {
+        elemento = formatearStrings(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(PuntoVenta elemento) {
+        elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -61,6 +63,12 @@ public class PuntoVentaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(PuntoVenta elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los strings
+    private PuntoVenta formatearStrings(PuntoVenta elemento) {
+        elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
+        return elemento;
     }
 
 }

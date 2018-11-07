@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.draimo.jitws.dao.IContactoCompaniaSeguroDAO;
 import ar.com.draimo.jitws.model.CompaniaSeguro;
@@ -77,8 +76,16 @@ public class ContactoCompaniaSeguroService {
     
     //Formatea los strings
     private ContactoCompaniaSeguro formatearStrings(ContactoCompaniaSeguro elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase());
+        elemento.setNombre(elemento.getNombre().trim());
+        if(elemento.getTelefonoFijo() != null) {
+            elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
+        }
+        if(elemento.getTelefonoMovil() != null) {
+            elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        }
+        if(elemento.getCorreoelectronico() != null) {
+            elemento.setCorreoelectronico(elemento.getCorreoelectronico().trim().toLowerCase());
+        }
         return elemento;
     }
     

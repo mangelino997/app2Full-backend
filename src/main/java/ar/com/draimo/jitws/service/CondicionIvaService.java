@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ICondicionIvaDAO;
 import ar.com.draimo.jitws.model.CondicionIva;
 import java.util.List;
@@ -23,7 +22,7 @@ public class CondicionIvaService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CondicionIva elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -33,7 +32,7 @@ public class CondicionIvaService {
     
     //Obtiene una lista por nombre
     public List<CondicionIva> listarPorNombre(String nombre) {
-        if(nombre.equals("*")) {
+        if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
             return elementoDAO.findByNombreContaining(nombre);
@@ -62,7 +61,7 @@ public class CondicionIvaService {
     
     //Formatea los strings
     private CondicionIva formatearStrings(CondicionIva elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
     

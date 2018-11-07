@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IMarcaProductoDAO;
 import ar.com.draimo.jitws.model.MarcaProducto;
 import java.util.List;
@@ -62,7 +61,7 @@ public class MarcaProductoService {
     
     //Formatea los strings
     private MarcaProducto formatearStrings(MarcaProducto elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
     

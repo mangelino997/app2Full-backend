@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.model.Personal;
 import java.util.List;
@@ -70,8 +69,8 @@ public class PersonalService {
     
     //Formatea los strings
     private Personal formatearStrings(Personal elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setApellido(Funcion.convertirATitulo(elemento.getApellido().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
+        elemento.setApellido(elemento.getApellido().trim());
         elemento.setNombreCompleto(elemento.getApellido() + " " + elemento.getNombre());
         elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
         elemento.setCuil(elemento.getCuil().trim());
@@ -84,7 +83,7 @@ public class PersonalService {
         if(elemento.getCorreoelectronico() != null) {
             elemento.setCorreoelectronico(elemento.getCorreoelectronico().trim().toLowerCase());
         }
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setDomicilio(elemento.getDomicilio().trim());
         if(elemento.getTalleCamisa() != null) {
             elemento.setTalleCamisa(elemento.getTalleCamisa().trim());
         }
@@ -101,7 +100,7 @@ public class PersonalService {
             elemento.setTelefonoMovilObservacion(elemento.getTelefonoMovilObservacion().trim());
         }
         if(elemento.getObservaciones() != null) {
-            elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
+            elemento.setObservaciones(elemento.getObservaciones().trim());
         }
         return elemento;
     }

@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IOrigenDestinoDAO;
 import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.model.OrigenDestino;
@@ -76,7 +75,7 @@ public class OrigenDestinoService {
     
     //Formatea los strings
     private OrigenDestino formatearStrings(OrigenDestino elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
     

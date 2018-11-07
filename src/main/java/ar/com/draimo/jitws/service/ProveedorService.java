@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.Proveedor;
 import java.util.List;
@@ -65,20 +64,40 @@ public class ProveedorService {
     
     //Formatea los strings
     private Proveedor formatearStrings(Proveedor elemento) {
-        elemento.setRazonSocial(Funcion.convertirATitulo(elemento.getRazonSocial().trim()));
-        elemento.setNombreFantasia(Funcion.convertirATitulo(elemento.getNombreFantasia().trim()));
-        elemento.setDomicilio(Funcion.primerLetraAMayuscula(elemento.getDomicilio().trim()));
+        elemento.setRazonSocial(elemento.getRazonSocial().trim().toUpperCase());
+        elemento.setNombreFantasia(elemento.getNombreFantasia().trim());
+        elemento.setDomicilio(elemento.getDomicilio().trim());
         elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
-        elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
-        elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
-        elemento.setTelefono(elemento.getTelefono().trim());
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
-        elemento.setNotaIngresarComprobante(Funcion.primerLetraAMayuscula(elemento.getNotaIngresarComprobante().trim()));
-        elemento.setNotaImpresionOrdenPago(Funcion.primerLetraAMayuscula(elemento.getNotaImpresionOrdenPago().trim()));
-        elemento.setNumeroCuenta(elemento.getNumeroCuenta().trim());
-        elemento.setTitular(Funcion.convertirATitulo(elemento.getTitular().trim()));
-        elemento.setNumeroCBU(elemento.getNumeroCBU().trim());
-        elemento.setAliasCBU(elemento.getAliasCBU().trim());
+        if(elemento.getNumeroIIBB() != null) {
+            elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
+        }
+        if(elemento.getSitioWeb() != null) {
+            elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
+        }
+        if(elemento.getTelefono() != null) {
+            elemento.setTelefono(elemento.getTelefono().trim());
+        }
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(elemento.getObservaciones().trim());
+        }
+        if(elemento.getNotaIngresarComprobante() != null) {
+            elemento.setNotaIngresarComprobante(elemento.getNotaIngresarComprobante().trim());
+        }
+        if(elemento.getNotaImpresionOrdenPago() != null) {
+            elemento.setNotaImpresionOrdenPago(elemento.getNotaImpresionOrdenPago().trim());
+        }
+        if(elemento.getNumeroCuenta() != null) {
+            elemento.setNumeroCuenta(elemento.getNumeroCuenta().trim());
+        }
+        if(elemento.getTitular() != null) {
+            elemento.setTitular(elemento.getTitular().trim());
+        }
+        if(elemento.getNumeroCBU() != null) {
+            elemento.setNumeroCBU(elemento.getNumeroCBU().trim());
+        }
+        if(elemento.getAliasCBU() != null) {
+            elemento.setAliasCBU(elemento.getAliasCBU().trim());
+        }
         return elemento;
     }
 

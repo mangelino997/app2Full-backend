@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IViajeUnidadNegocioDAO;
 import ar.com.draimo.jitws.model.ViajeUnidadNegocio;
 import java.util.List;
@@ -23,7 +22,7 @@ public class ViajeUnidadNegocioService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeUnidadNegocio elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -58,7 +57,7 @@ public class ViajeUnidadNegocioService {
     
     //Formatea los strings
     private ViajeUnidadNegocio formatearStrings(ViajeUnidadNegocio elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
 

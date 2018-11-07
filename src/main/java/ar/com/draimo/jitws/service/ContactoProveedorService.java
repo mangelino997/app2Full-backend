@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IContactoProveedorDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.ContactoProveedor;
@@ -30,7 +29,7 @@ public class ContactoProveedorService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ContactoProveedor elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -73,8 +72,16 @@ public class ContactoProveedorService {
     
     //Formatea los strings
     private ContactoProveedor formatearStrings(ContactoProveedor elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase());
+        elemento.setNombre(elemento.getNombre().trim());
+        if(elemento.getTelefonoFijo() != null) {
+            elemento.setTelefonoFijo(elemento.getTelefonoFijo().trim());
+        }
+        if(elemento.getTelefonoMovil() != null) {
+            elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
+        }
+        if(elemento.getCorreoelectronico() != null) {
+            elemento.setCorreoelectronico(elemento.getCorreoelectronico().trim().toLowerCase());
+        }
         return elemento;
     }
     

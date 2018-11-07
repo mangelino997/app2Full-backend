@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IViajePropioEfectivoDAO;
 import ar.com.draimo.jitws.model.ViajePropioEfectivo;
 import java.util.List;
@@ -23,7 +22,7 @@ public class ViajePropioEfectivoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajePropioEfectivo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -53,8 +52,12 @@ public class ViajePropioEfectivoService {
     
     //Formatea los strings
     private ViajePropioEfectivo formatearStrings(ViajePropioEfectivo elemento) {
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
-        elemento.setObservacionesAnulado(Funcion.primerLetraAMayuscula(elemento.getObservacionesAnulado().trim()));
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(elemento.getObservaciones().trim());
+        }
+        if(elemento.getObservacionesAnulado() != null) {
+            elemento.setObservacionesAnulado(elemento.getObservacionesAnulado().trim());
+        }
         return elemento;
     }
 

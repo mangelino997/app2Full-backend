@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ITramoDAO;
 import ar.com.draimo.jitws.model.Tramo;
 import java.util.List;
@@ -59,7 +58,7 @@ public class TramoService {
     //Formatea los strings
     private Tramo formatearStrings(Tramo elemento) {
         if(elemento.getRutaAlternativa() != null) {
-            elemento.setRutaAlternativa(Funcion.primerLetraAMayuscula(elemento.getRutaAlternativa().trim()));
+            elemento.setRutaAlternativa(elemento.getRutaAlternativa().trim());
         }
         return elemento;
     }

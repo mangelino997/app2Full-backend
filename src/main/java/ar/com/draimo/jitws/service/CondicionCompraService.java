@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
 import ar.com.draimo.jitws.model.CondicionCompra;
 import java.util.List;
@@ -23,7 +22,7 @@ public class CondicionCompraService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CondicionCompra elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene una lista completa
@@ -62,7 +61,7 @@ public class CondicionCompraService {
     
     //Formatea los strings
     private CondicionCompra formatearStrings(CondicionCompra elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
     

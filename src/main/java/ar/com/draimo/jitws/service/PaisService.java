@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IPaisDAO;
 import ar.com.draimo.jitws.model.Pais;
 import java.util.List;
@@ -63,7 +62,7 @@ public class PaisService {
     
     //Formatea los strings
     private Pais formatearStrings(Pais elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
 

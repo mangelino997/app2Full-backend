@@ -23,7 +23,7 @@ public class Localidad extends ObjetoGenerico {
     private String nombre;
     
     //Define el codigo postal
-    @Column(name = "codigoPostal")
+    @Column(name = "codigoPostal", nullable = true)
     private String codigoPostal;
     
     //Referencia a la clase Provincia

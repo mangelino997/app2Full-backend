@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IViajeTerceroEfectivoDAO;
 import ar.com.draimo.jitws.model.ViajeTerceroEfectivo;
 import java.util.List;
@@ -23,7 +22,7 @@ public class ViajeTerceroEfectivoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeTerceroEfectivo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
@@ -53,8 +52,12 @@ public class ViajeTerceroEfectivoService {
     
     //Formatea los strings
     private ViajeTerceroEfectivo formatearStrings(ViajeTerceroEfectivo elemento) {
-        elemento.setObservaciones(Funcion.primerLetraAMayuscula(elemento.getObservaciones().trim()));
-        elemento.setObservacionesAnulado(Funcion.primerLetraAMayuscula(elemento.getObservacionesAnulado().trim()));
+        if(elemento.getObservaciones() != null) {
+            elemento.setObservaciones(elemento.getObservaciones().trim());
+        }
+        if(elemento.getObservacionesAnulado() != null) {
+            elemento.setObservacionesAnulado(elemento.getObservacionesAnulado().trim());
+        }
         return elemento;
     }
 
