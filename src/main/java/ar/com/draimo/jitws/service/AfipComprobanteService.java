@@ -1,6 +1,5 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IAfipComprobanteDAO;
 import ar.com.draimo.jitws.model.AfipComprobante;
 import java.util.List;

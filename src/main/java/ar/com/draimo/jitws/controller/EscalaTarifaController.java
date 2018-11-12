@@ -67,7 +67,7 @@ public class EscalaTarifaController {
             EscalaTarifa e = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
+            return new ResponseEntity<>(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
         } catch(DataIntegrityViolationException e) {
             //Obtiene mensaje de duplicidad de datos
@@ -75,21 +75,21 @@ public class EscalaTarifaController {
             //Determina que columna tiene el dato duplicado
             if(partes[3].equals(DuplicidadError.VALOR_UNICO)) {
                 //Retorna codigo y mensaje de error de dato duplicado
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_VALOR, 
+                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_VALOR, 
                     MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getValor() + "'"), 
                         HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 //Retorna codigo y mensaje de error interno en el servidor
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                         MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
                     MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -101,7 +101,7 @@ public class EscalaTarifaController {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
         } catch(DataIntegrityViolationException e) {
             //Obtiene mensaje de duplicidad de datos
@@ -109,25 +109,25 @@ public class EscalaTarifaController {
             //Determina que columna tiene el dato duplicado
             if(partes[3].equals(DuplicidadError.VALOR_UNICO)) {
                 //Retorna codigo y mensaje de error de dato duplicado
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_VALOR, 
+                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_VALOR, 
                     MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getValor() + "'"), 
                         HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 //Retorna codigo y mensaje de error interno en el servidor
-                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                         MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
                     MensajeRespuesta.TRANSACCION_NO_ACTUALIZADA), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
                     MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -139,15 +139,15 @@ public class EscalaTarifaController {
             elementoService.eliminar(id);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ELIMINADO), HttpStatus.OK);
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
                     MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR, 
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR, 
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -81,7 +81,7 @@ public class ChoferProveedorController {
             ChoferProveedor e = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
+            return new ResponseEntity<>(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
                     MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
         } catch(DataIntegrityViolationException e) {
             //Obtiene mensaje de duplicidad de datos
@@ -90,31 +90,31 @@ public class ChoferProveedorController {
             switch (partes[3]) {
                 case DuplicidadError.DOCUMENTO_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
                             MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNumeroDocumento() + "'"),
                             HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.TELEFONO_FIJO_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_FIJO,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_FIJO,
                             MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoFijo() + "'"),
                             HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.TELEFONO_MOVIL_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_MOVIL,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_MOVIL,
                             MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoMovil() + "'"),
                             HttpStatus.INTERNAL_SERVER_ERROR);
                 default:
                     //Retorna codigo y mensaje de error interno en el servidor
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                             MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
                     MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -126,7 +126,7 @@ public class ChoferProveedorController {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
         } catch(DataIntegrityViolationException e) {
             //Obtiene mensaje de duplicidad de datos
@@ -135,35 +135,35 @@ public class ChoferProveedorController {
             switch (partes[3]) {
                 case DuplicidadError.DOCUMENTO_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
                             MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNumeroDocumento() + "'"),
                             HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.TELEFONO_FIJO_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_FIJO,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_FIJO,
                             MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoFijo() + "'"),
                             HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.TELEFONO_MOVIL_UNICO:
                     //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_MOVIL,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TELEFONO_MOVIL,
                             MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getTelefonoMovil() + "'"),
                             HttpStatus.INTERNAL_SERVER_ERROR);
                 default:
                     //Retorna codigo y mensaje de error interno en el servidor
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                             MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
                     MensajeRespuesta.TRANSACCION_NO_ACTUALIZADA), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
                     MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -173,11 +173,11 @@ public class ChoferProveedorController {
     public ResponseEntity<?> eliminar(@RequestBody ChoferProveedor elemento) {
         try {
             elementoService.eliminar(elemento);
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ELIMINADO), HttpStatus.OK);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR, 
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR, 
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
