@@ -8,7 +8,9 @@ import ar.com.draimo.jitws.dto.SubmoduloMenuDTO;
 import ar.com.draimo.jitws.dto.SubopcionMenuDTO;
 import ar.com.draimo.jitws.model.Rol;
 import ar.com.draimo.jitws.model.RolSubopcion;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +171,13 @@ public class MenuService {
                         }
                     }
                 }
+            }
+        }
+
+        //Ordena los submodulos y subopciones alfabeticamente
+        for(ModuloMenuDTO moduloMenuDTO : menu.getModulos()) {
+            for(SubmoduloMenuDTO submoduloMenuDTO : moduloMenuDTO.getSubmodulos()) {
+                submoduloMenuDTO.getSubopciones().sort(Comparator.comparing(SubopcionMenuDTO::getSubopcion));
             }
         }
         

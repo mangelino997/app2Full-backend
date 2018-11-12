@@ -34,4 +34,6 @@ public class MensajeRespuesta {
     
     public static final String ERROR_SINC_SOCKET = "Error de sincronización de datos";
     
+    public static final String TABLA_REESTABLECIDA = "Tabla reestablecida con éxito";
+
 }

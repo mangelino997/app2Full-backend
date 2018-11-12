@@ -8,6 +8,7 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RolSubopcion;
 import ar.com.draimo.jitws.model.Submodulo;
 import ar.com.draimo.jitws.model.Subopcion;
+import ar.com.draimo.jitws.service.MenuService;
 import ar.com.draimo.jitws.service.RolSubopcionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,10 @@ public class RolSubopcionController {
     //Crea una instancia del servicio
     @Autowired
     RolSubopcionService elementoService;
+
+    //Crea una instancia del servicio menu
+    @Autowired
+    MenuService menuService;
     
     //Obtiene la lista completa
     @GetMapping(value = URL)
@@ -72,19 +77,19 @@ public class RolSubopcionController {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
                     MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
                     MensajeRespuesta.TRANSACCION_NO_ACTUALIZADA), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
                     MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(Exception e) {
             //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                     MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -109,8 +114,18 @@ public class RolSubopcionController {
      */
     @GetMapping(value = URL + "/reestablecerTablaDesdeCero")
     @ResponseBody
-    public void reestablecerTablaDesdeCero() {
+    public ResponseEntity<?> reestablecerTablaDesdeCero() {
         elementoService.reestablecerTablaDesdeCero();
+        try {
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/listarMenu", 1);
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
+                    MensajeRespuesta.TABLA_REESTABLECIDA), HttpStatus.OK);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }
