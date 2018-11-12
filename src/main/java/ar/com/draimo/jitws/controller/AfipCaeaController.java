@@ -5,8 +5,8 @@ import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.Caea;
-import ar.com.draimo.jitws.service.CaeaService;
+import ar.com.draimo.jitws.model.AfipCaea;
+import ar.com.draimo.jitws.service.AfipCaeaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase Caea Controller
+ * Clase AfipCaea Controller
  * @author blas
  */
 
 @RestController
-public class CaeaController {
+public class AfipCaeaController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/caea";
+    private final String URL = RutaConstant.URL_BASE + "/afipcaea";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/caea";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/afipcaea";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -41,7 +41,7 @@ public class CaeaController {
     
     //Crea una instancia del servicio
     @Autowired
-    CaeaService elementoService;
+    AfipCaeaService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -53,15 +53,15 @@ public class CaeaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<Caea> listar() {
+    public List<AfipCaea> listar() {
         return elementoService.listar();
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody Caea elemento) {
+    public ResponseEntity<?> agregar(@RequestBody AfipCaea elemento) {
         try {
-            Caea e = elementoService.agregar(elemento);
+            AfipCaea e = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity<>(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
@@ -79,7 +79,7 @@ public class CaeaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Caea elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody AfipCaea elemento) {
         try {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
@@ -103,7 +103,7 @@ public class CaeaController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody Caea elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody AfipCaea elemento) {
         try {
             elementoService.eliminar(elemento);
             return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 

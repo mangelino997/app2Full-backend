@@ -1,18 +1,18 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.Caea;
+import ar.com.draimo.jitws.model.AfipCaea;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Caea
+ * Interfaz DAO AfipCaea
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface ICaeaDAO extends JpaRepository<Caea, Integer> {
+public interface IAfipCaeaDAO extends JpaRepository<AfipCaea, Integer> {
     
     //Obtiene el siguiente id
-    public Caea findTopByOrderByIdDesc();
+    public AfipCaea findTopByOrderByIdDesc();
     
 }

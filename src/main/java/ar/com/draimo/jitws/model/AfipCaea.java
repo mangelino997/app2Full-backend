@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Caea
+ * Clase AfipCaea
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
 @Entity
-@Table(name = "caea")
-public class Caea extends ObjetoGenerico {
+@Table(name = "afipcaea")
+public class AfipCaea extends ObjetoGenerico {
 
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -50,7 +51,7 @@ public class Caea extends ObjetoGenerico {
     
     //Define fecha solicitud
     @Column(name = "fechaSolicitud", nullable = false)
-    private LocalDate fechaSolicitud;
+    private LocalDateTime fechaSolicitud;
 
     //Getters y Setters de la clase
 
@@ -110,11 +111,11 @@ public class Caea extends ObjetoGenerico {
         this.fechaTopeInformar = fechaTopeInformar;
     }
 
-    public LocalDate getFechaSolicitud() {
+    public LocalDateTime getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(LocalDate fechaSolicitud) {
+    public void setFechaSolicitud(LocalDateTime fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
     
