@@ -94,20 +94,6 @@ public class RolSubopcionController {
         }
     }
     
-    //Agrega una subopcion a todos los roles
-    @GetMapping(value = URL + "/agregarSubopcionARoles")
-    @ResponseBody
-    public void agregarSubopcionARoles(@RequestBody Subopcion elemento) {
-        elementoService.agregarSubopcionARoles(elemento);
-    }
-    
-    //Elimina una subopcion por id de todos los roles
-    @GetMapping(value = URL + "/eliminarSubopcionDeRoles/{idSubopcion}")
-    @ResponseBody
-    public void eliminarSubopcionDeRoles(@PathVariable int idSubopcion) {
-        elementoService.eliminarSubopcionDeRoles(idSubopcion);
-    }
-    
     /*
      * Asigna todas las subopciones a cada uno de los roles, eliminando todo los
      * datos y reestableciendo desde cero

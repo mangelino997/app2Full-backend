@@ -176,56 +176,6 @@ public class RolSubopcionService {
         
     }
     
-    //Agrega una subopcion a todos los roles
-    @Transactional(rollbackFor = Exception.class)
-    public void agregarSubopcionARoles(Subopcion subopcion) {
-        
-        //Agrega la subopcion
-        subopcionDAO.saveAndFlush(subopcion);
-        
-        //Obtiene la lista completa de roles
-        List<Rol> roles = rolDAO.findAll();
-        
-        //Define un rolSubopcion
-        RolSubopcion rolSubopcion;
-        
-        //Recorre la lista de roles
-        for(Rol rol : roles) {
-            rolSubopcion = new RolSubopcion();
-            rolSubopcion.setRol(rol);
-            rolSubopcion.setSubopcion(subopcion);
-            rolSubopcion.setMostrar((rol.getId() < 3));
-            elementoDAO.saveAndFlush(rolSubopcion);
-        }
-        
-    }
-    
-    //Elimina una subopcion por id de todos los roles
-    @Transactional(rollbackFor = Exception.class)
-    public void eliminarSubopcionDeRoles(int idSubopcion) {
-        
-        //Obtiene la lista completa de roles
-        List<Rol> roles = rolDAO.findAll();
-        
-        //Obtiene la subopcion por id
-        Optional<Subopcion> subopcion = subopcionDAO.findById(idSubopcion);
-        
-        //Define un rolSubopcion
-        RolSubopcion rolSubopcion;
-        
-        //Recorre la lista de roles
-        for(Rol rol : roles) {
-            //Obtiene el rol por id
-            Optional<Rol> r = rolDAO.findById(rol.getId());
-            rolSubopcion = elementoDAO.findByRolAndSubopcion(r, subopcion);
-            elementoDAO.delete(rolSubopcion);
-        }
-        
-        //Elimina la subopcion
-        subopcionDAO.deleteById(idSubopcion);
-        
-    }
-    
     /*
      * Asigna todas las subopciones a cada uno de los roles, eliminando todo los
      * datos y reestableciendo desde cero

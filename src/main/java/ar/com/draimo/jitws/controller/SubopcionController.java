@@ -74,6 +74,48 @@ public class SubopcionController {
         return elementoService.listarPorSubmodulo(idSubmodulo);
     }
     
+    //Agrega una subopcion a todos los roles y agrega pestanias a subopcion
+    @PostMapping(value = URL + "/agregar")
+    @ResponseBody
+    public ResponseEntity<?> agregarSubopcionARolesYPestaniasASubopcion(@RequestBody Subopcion elemento) {
+        try {
+            Subopcion e = elementoService.agregarSubopcionARolesYPestaniasASubopcion(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
+                    MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
+        } catch(DataIntegrityViolationException e) {
+            //Obtiene mensaje de duplicidad de datos
+            String[] partes = e.getMostSpecificCause().getMessage().split("'");
+            //Determina que columna tiene el dato duplicado
+            if(partes[3].equals(DuplicidadError.NOMBRE_UNICO)) {
+                //Retorna codigo y mensaje de error de dato duplicado
+                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE, 
+                    MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"), 
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                //Retorna codigo y mensaje de error interno en el servidor
+                return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                        MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch(Exception e) {
+            //Retorna codigo y mensaje de error interno en el servidor
+            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                    MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    //Elimina una subopcion por id de todos los roles
+    @GetMapping(value = URL + "/eliminarSubopcionDeRoles/{idSubopcion}")
+    @ResponseBody
+    public void eliminarSubopcionDeRoles(@PathVariable int idSubopcion) {
+        elementoService.eliminarSubopcionDeRoles(idSubopcion);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Subopcion elemento) {

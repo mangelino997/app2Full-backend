@@ -56,19 +56,10 @@ public class Empresa extends ObjetoGenerico {
     @Column(name = "abreviatura", nullable = false, unique = true)
     private String abreviatura;
     
-    //Define el certificado digital
-    @Lob
-    @Column(name = "feCertificadoDigitalBin", nullable = true)
-    private Blob feCertificadoDigitalBin;
-    
     //Define el logo
     @Lob
     @Column(name = "logoBin", nullable = true)
     private Blob logoBin;
-    
-    //Define el caea
-    @Column(name = "feCaea", nullable = false)
-    private boolean feCAEA;
     
     //Define si esta activa
     @Column(name = "estaActiva", nullable = false)
@@ -77,6 +68,24 @@ public class Empresa extends ObjetoGenerico {
     //Define el inicio de actividad
     @Column(name = "inicioActividad", nullable = true)
     private LocalDate inicioActividad;
+    
+    //Define el caea
+    @Column(name = "feCaea", nullable = false)
+    private boolean feCAEA;
+    
+    //Define el fe modo
+    @Column(name = "feModo", nullable = false)
+    private boolean feModo;
+    
+    //Define el certificado real
+    @Lob
+    @Column(name = "certificadoReal", nullable = true)
+    private Blob certificadoReal;
+    
+    //Define el certificado prueba
+    @Lob
+    @Column(name = "certificadoPrueba", nullable = true)
+    private Blob certificadoPrueba;
     
     //Getters y Setters de la clase
 
@@ -144,14 +153,6 @@ public class Empresa extends ObjetoGenerico {
         this.abreviatura = abreviatura;
     }
 
-    public Blob getFeCertificadoDigitalBin() {
-        return feCertificadoDigitalBin;
-    }
-
-    public void setFeCertificadoDigitalBin(Blob feCertificadoDigitalBin) {
-        this.feCertificadoDigitalBin = feCertificadoDigitalBin;
-    }
-
     public Blob getLogoBin() {
         return logoBin;
     }
@@ -160,15 +161,7 @@ public class Empresa extends ObjetoGenerico {
         this.logoBin = logoBin;
     }
 
-    public boolean getFeCAEA() {
-        return feCAEA;
-    }
-
-    public void setFeCAEA(boolean feCAEA) {
-        this.feCAEA = feCAEA;
-    }
-
-    public boolean getEstaActiva() {
+    public boolean isEstaActiva() {
         return estaActiva;
     }
 
@@ -182,6 +175,38 @@ public class Empresa extends ObjetoGenerico {
 
     public void setInicioActividad(LocalDate inicioActividad) {
         this.inicioActividad = inicioActividad;
+    }
+
+    public boolean isFeCAEA() {
+        return feCAEA;
+    }
+
+    public void setFeCAEA(boolean feCAEA) {
+        this.feCAEA = feCAEA;
+    }
+
+    public boolean isFeModo() {
+        return feModo;
+    }
+
+    public void setFeModo(boolean feModo) {
+        this.feModo = feModo;
+    }
+
+    public Blob getCertificadoReal() {
+        return certificadoReal;
+    }
+
+    public void setCertificadoReal(Blob certificadoReal) {
+        this.certificadoReal = certificadoReal;
+    }
+
+    public Blob getCertificadoPrueba() {
+        return certificadoPrueba;
+    }
+
+    public void setCertificadoPrueba(Blob certificadoPrueba) {
+        this.certificadoPrueba = certificadoPrueba;
     }
     
 }

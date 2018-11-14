@@ -94,8 +94,18 @@ public class SubopcionPestaniaController {
      */
     @GetMapping(value = URL + "/reestablecerTablaDesdeCero")
     @ResponseBody
-    public void reestablecerTablaDesdeCero() {
+    public ResponseEntity<?> reestablecerTablaDesdeCero() {
         elementoService.reestablecerTablaDesdeCero();
+        try {
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/listarMenu", 1);
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
+                    MensajeRespuesta.TABLA_REESTABLECIDA), HttpStatus.OK);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
+                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }
