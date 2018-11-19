@@ -59,6 +59,13 @@ public class ViajeRemitoController {
         return elementoService.listar();
     }
     
+    //Obtiene una lista por alias
+    @GetMapping(value = URL + "/listarPorAlias/{alias}")
+    @ResponseBody
+    public List<ViajeRemito> listarPorAlias(@PathVariable String alias) {
+        return elementoService.listarPorAlias(alias);
+    }
+    
     //Obtiene una lista por numero
     @GetMapping(value = URL + "/listarPorNumero/{numero}")
     @ResponseBody

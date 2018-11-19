@@ -139,6 +139,10 @@ public class ViajeRemito extends ObjetoGenerico {
     @Column(name = "estaEnReparto", nullable = false)
     private boolean estaEnReparto;
     
+    //Define el alias para las busquedas
+    @Column(name = "alias", nullable = true)
+    private String alias;
+    
     //Getters y Setters de la clase
 
     public Sucursal getSucursalEmision() {
@@ -355,6 +359,14 @@ public class ViajeRemito extends ObjetoGenerico {
 
     public void setEstaEnReparto(boolean estaEnReparto) {
         this.estaEnReparto = estaEnReparto;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

@@ -19,6 +19,9 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     //Obtiene el siguiente id
     public ViajeRemito findTopByOrderByIdDesc();
     
+    //Obtiene una lista por alias
+    public List<ViajeRemito> findByAliasContaining(String alias);
+    
     //Obtiene la lista por numero
     public List<ViajeRemito> findByNumeroContaining(int numero);
     

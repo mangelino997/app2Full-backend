@@ -22,6 +22,22 @@ public class TipoComprobante extends ObjetoGenerico {
     //Define la abreviatura
     @Column(name = "abreviatura", nullable = false)
     private String abreviatura;
+    
+    //Define esta activo ingreso carga
+    @Column(name = "estaActivoIngresoCarga", nullable = false)
+    private boolean estaActivoIngresoCarga;
+    
+    //Define esta activo venta
+    @Column(name = "estaActivoVenta", nullable = false)
+    private boolean estaActivoVentaCarga;
+    
+    //Define esta activo compra
+    @Column(name = "estaActivoCompra", nullable = false)
+    private boolean estaActivoCompraCarga;
+    
+    //Define numeracion punto venta
+    @Column(name = "numeracionPuntoVenta", nullable = false)
+    private boolean numeracionPuntoVenta;
 
     //Getters y Setters de la clase
 
@@ -39,6 +55,38 @@ public class TipoComprobante extends ObjetoGenerico {
 
     public void setAbreviatura(String abreviatura) {
         this.abreviatura = abreviatura;
+    }
+
+    public boolean isEstaActivoIngresoCarga() {
+        return estaActivoIngresoCarga;
+    }
+
+    public void setEstaActivoIngresoCarga(boolean estaActivoIngresoCarga) {
+        this.estaActivoIngresoCarga = estaActivoIngresoCarga;
+    }
+
+    public boolean isEstaActivoVentaCarga() {
+        return estaActivoVentaCarga;
+    }
+
+    public void setEstaActivoVentaCarga(boolean estaActivoVentaCarga) {
+        this.estaActivoVentaCarga = estaActivoVentaCarga;
+    }
+
+    public boolean isEstaActivoCompraCarga() {
+        return estaActivoCompraCarga;
+    }
+
+    public void setEstaActivoCompraCarga(boolean estaActivoCompraCarga) {
+        this.estaActivoCompraCarga = estaActivoCompraCarga;
+    }
+
+    public boolean isNumeracionPuntoVenta() {
+        return numeracionPuntoVenta;
+    }
+
+    public void setNumeracionPuntoVenta(boolean numeracionPuntoVenta) {
+        this.numeracionPuntoVenta = numeracionPuntoVenta;
     }
     
 }

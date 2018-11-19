@@ -43,6 +43,11 @@ public class ViajeRemitoService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene una lista por alias
+    public List<ViajeRemito> listarPorAlias(String alias) {
+        return elementoDAO.findByAliasContaining(alias);
+    }
+    
     //Obtiene un listado por numero de comprobante
     public List<ViajeRemito> listarPorNumero(int numero) {
         return elementoDAO.findByNumeroContaining(numero);
@@ -103,7 +108,14 @@ public class ViajeRemitoService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ViajeRemito agregar(ViajeRemito elemento) {
+        //Establece valores por defecto
+        elemento.setEstaPendiente(false);
+        elemento.setEstaFacturado(false);
+        elemento.setEstaEnReparto(false);
+        //Formatea los strings
         elemento = formatearStrings(elemento);
+        elemento.setAlias(elemento.getNumero() + " - (R: " + elemento.getClienteRemitente().getAlias() + ") - " 
+                + "(D: " + elemento.getClienteDestinatario().getAlias() + ")");
         return elementoDAO.saveAndFlush(elemento);
     }
     
@@ -111,6 +123,8 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeRemito elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setAlias(elemento.getNumero() + " - (R: " + elemento.getClienteRemitente().getAlias() + ") - " 
+                + "(D: " + elemento.getClienteDestinatario().getAlias() + ")");
         elementoDAO.save(elemento);
     }
     

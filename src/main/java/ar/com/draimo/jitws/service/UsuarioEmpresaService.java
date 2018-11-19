@@ -120,20 +120,20 @@ public class UsuarioEmpresaService {
     @Transactional(rollbackFor = Exception.class)
     public void reestablecerTabla(List<UsuarioEmpresa> usuariosEmpresas) {
         
-        //Obtiene la lista completa de roles
+        //Obtiene la lista completa de usuarios
         List<Usuario> usuarios = usuarioDAO.findAll();
         
-        //Obtiene la lista completa de subopciones
+        //Obtiene la lista completa de empresas
         List<Empresa> empresas = empresaDAO.findAll();
         
         boolean mostrar;
-        //Define un RolSubopcion
+        //Define un UsuarioEmpresa
         UsuarioEmpresa usuarioEmpresa;
         for (Usuario usuario : usuarios) {
-            //Recorre la lista de submodulos
+            //Recorre la lista de empresas
             for (Empresa empresa : empresas) {
                 mostrar = false;
-                //Crea una instancia de RolSubopcion
+                //Crea una instancia de UsuarioEmpresa
                 usuarioEmpresa = new UsuarioEmpresa();
                 usuarioEmpresa.setUsuario(usuario);
                 usuarioEmpresa.setEmpresa(empresa);
@@ -164,21 +164,22 @@ public class UsuarioEmpresaService {
         //Reestablece el autoincremental
         elementoDAO.reestablecerAutoincremental();
         
-        //Obtiene la lista completa de roles
+        //Obtiene la lista completa de usuarios
         List<Usuario> usuarios = usuarioDAO.findAll();
         
-        //Obtiene la lista completa de subopciones
+        //Obtiene la lista completa de empresas
         List<Empresa> empresas = empresaDAO.findAll();
         
-        //Define un RolSubopcion
+        //Define un UsuarioEmpresa
         UsuarioEmpresa usuarioEmpresa;
         for (Usuario usuario : usuarios) {
-            //Recorre la lista de submodulos
+            //Recorre la lista de empresas
             for (Empresa empresa : empresas) {
-                //Crea una instancia de RolSubopcion
+                //Crea una instancia de UsuarioEmpresa
                 usuarioEmpresa = new UsuarioEmpresa();
                 usuarioEmpresa.setUsuario(usuario);
                 usuarioEmpresa.setEmpresa(empresa);
+                //Establece mostrar en 1 solo para los dos primeros usuarios de la tabla
                 usuarioEmpresa.setMostrar((usuario.getId() < 3));
                 elementoDAO.saveAndFlush(usuarioEmpresa);
             }
