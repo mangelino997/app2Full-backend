@@ -16,8 +16,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "ventacomprobanteitem")
-public class VentaComprobanteItem extends ObjetoGenerico {
+@Table(name = "ventacomprobanteitemFA")
+public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -86,10 +86,14 @@ public class VentaComprobanteItem extends ObjetoGenerico {
     @Column(name = "importeEntrega", nullable = true)
     private BigDecimal importeEntrega;
     
+    //Define el importe neto gravado
+    @Column(name = "importeNetoGravado", nullable = true)
+    private BigDecimal importeNetoGravado;
+    
     //Referencia a la clase AlicuotaIva
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAlicuotaIva", nullable = false)
-    private AlicuotaIva alicuotaIva;
+    @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
+    private AfipAlicuotaIva afipAlicuotaIva;
     
     //Define la alicuota iva
     @Column(name = "alicuotaIva", nullable = false)
@@ -98,6 +102,18 @@ public class VentaComprobanteItem extends ObjetoGenerico {
     //Define el importe de iva
     @Column(name = "importeIva", nullable = true)
     private BigDecimal importeIva;
+    
+    //Define el importe no gravado
+    @Column(name = "importeNoGravado", nullable = true)
+    private BigDecimal importeNoGravado;
+    
+    //Define el importe excento
+    @Column(name = "importeExento", nullable = true)
+    private BigDecimal importeExento;
+    
+    //Referencia a la clase Jurisdiccion
+//    @Column(name = "idJurisdiccion", nullable = true)
+//    private Jurisdiccion jurisdiccion;
 
     //Getters y Setters de la clase
 
@@ -221,12 +237,44 @@ public class VentaComprobanteItem extends ObjetoGenerico {
         this.importeEntrega = importeEntrega;
     }
 
-    public AlicuotaIva getAlicuotaIva() {
-        return alicuotaIva;
+    public BigDecimal getImporteNetoGravado() {
+        return importeNetoGravado;
     }
 
-    public void setAlicuotaIva(AlicuotaIva alicuotaIva) {
-        this.alicuotaIva = alicuotaIva;
+    public void setImporteNetoGravado(BigDecimal importeNetoGravado) {
+        this.importeNetoGravado = importeNetoGravado;
+    }
+
+    public AfipAlicuotaIva getAfipAlicuotaIva() {
+        return afipAlicuotaIva;
+    }
+
+    public void setAfipAlicuotaIva(AfipAlicuotaIva afipAlicuotaIva) {
+        this.afipAlicuotaIva = afipAlicuotaIva;
+    }
+
+    public BigDecimal getImporteNoGravado() {
+        return importeNoGravado;
+    }
+
+    public void setImporteNoGravado(BigDecimal importeNoGravado) {
+        this.importeNoGravado = importeNoGravado;
+    }
+
+    public BigDecimal getImporteExento() {
+        return importeExento;
+    }
+
+    public void setImporteExento(BigDecimal importeExento) {
+        this.importeExento = importeExento;
+    }
+    
+    public AfipAlicuotaIva getAlicuotaIva() {
+        return afipAlicuotaIva;
+    }
+
+    public void setAlicuotaIva(AfipAlicuotaIva alicuotaIva) {
+        this.afipAlicuotaIva = alicuotaIva;
     }
 
     public BigDecimal getAlicuotaiva() {

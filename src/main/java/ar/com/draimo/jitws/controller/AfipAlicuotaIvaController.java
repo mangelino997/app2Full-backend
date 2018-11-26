@@ -5,8 +5,8 @@ import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.AlicuotaIva;
-import ar.com.draimo.jitws.service.AlicuotaIvaService;
+import ar.com.draimo.jitws.model.AfipAlicuotaIva;
+import ar.com.draimo.jitws.service.AfipAlicuotaIvaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase AlicuotaIva Controller
+ * Clase AfipAlicuotaIva Controller
  * @author blas
  */
 
 @RestController
-public class AlicuotaIvaController {
+public class AfipAlicuotaIvaController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/alicuotaiva";
+    private final String URL = RutaConstant.URL_BASE + "/afipalicuotaiva";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/alicuotaiva";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/afipalicuotaiva";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -41,7 +41,7 @@ public class AlicuotaIvaController {
     
     //Crea una instancia del servicio
     @Autowired
-    AlicuotaIvaService elementoService;
+    AfipAlicuotaIvaService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -53,15 +53,15 @@ public class AlicuotaIvaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<AlicuotaIva> listar() {
+    public List<AfipAlicuotaIva> listar() {
         return elementoService.listar();
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody AlicuotaIva elemento) {
+    public ResponseEntity<?> agregar(@RequestBody AfipAlicuotaIva elemento) {
         try {
-            AlicuotaIva e = elementoService.agregar(elemento);
+            AfipAlicuotaIva e = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity<>(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
@@ -79,7 +79,7 @@ public class AlicuotaIvaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody AlicuotaIva elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody AfipAlicuotaIva elemento) {
         try {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
@@ -103,7 +103,7 @@ public class AlicuotaIvaController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody AlicuotaIva elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody AfipAlicuotaIva elemento) {
         try {
             elementoService.eliminar(elemento);
             return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 

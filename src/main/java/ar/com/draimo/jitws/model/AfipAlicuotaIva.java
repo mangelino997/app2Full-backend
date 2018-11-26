@@ -13,8 +13,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "alicuotaiva")
-public class AlicuotaIva extends ObjetoGenerico {
+@Table(name = "afipalicuotaiva")
+public class AfipAlicuotaIva extends ObjetoGenerico {
 
     //Define la alicuota
     @Column(name = "alicuota", nullable = false)

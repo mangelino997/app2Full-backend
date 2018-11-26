@@ -18,6 +18,10 @@ public class CondicionCompra extends ObjetoGenerico {
     //Define el nombre
     @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
+    
+    //Define si es contado
+    @Column(name = "esContado", nullable = false)
+    private boolean esContado;
 
     //Getters y Setters de la clase
 
@@ -27,6 +31,14 @@ public class CondicionCompra extends ObjetoGenerico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isEsContado() {
+        return esContado;
+    }
+
+    public void setEsContado(boolean esContado) {
+        this.esContado = esContado;
     }
 
 }

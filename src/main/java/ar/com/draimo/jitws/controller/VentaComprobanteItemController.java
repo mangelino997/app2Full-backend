@@ -5,7 +5,7 @@ import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.VentaComprobanteItem;
+import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import ar.com.draimo.jitws.service.VentaComprobanteItemService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,15 +53,15 @@ public class VentaComprobanteItemController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<VentaComprobanteItem> listar() {
+    public List<VentaComprobanteItemFA> listar() {
         return elementoService.listar();
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody VentaComprobanteItem elemento) {
+    public ResponseEntity<?> agregar(@RequestBody VentaComprobanteItemFA elemento) {
         try {
-            VentaComprobanteItem e = elementoService.agregar(elemento);
+            VentaComprobanteItemFA e = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
@@ -79,7 +79,7 @@ public class VentaComprobanteItemController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody VentaComprobanteItem elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody VentaComprobanteItemFA elemento) {
         try {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
@@ -103,7 +103,7 @@ public class VentaComprobanteItemController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody VentaComprobanteItem elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody VentaComprobanteItemFA elemento) {
         try {
             elementoService.eliminar(elemento);
             return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 

@@ -1,7 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.VentaComprobanteItem;
+import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author blas
  */
 
-public interface IVentaComprobanteItemDAO extends JpaRepository<VentaComprobanteItem, Integer> {
+public interface IVentaComprobanteItemDAO extends JpaRepository<VentaComprobanteItemFA, Integer> {
     
     //Obtiene el siguiente id
-    public VentaComprobanteItem findTopByOrderByIdDesc();
+    public VentaComprobanteItemFA findTopByOrderByIdDesc();
     
 }

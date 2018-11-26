@@ -1,57 +1,57 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IAlicuotaIvaDAO;
-import ar.com.draimo.jitws.model.AlicuotaIva;
+import ar.com.draimo.jitws.model.AfipAlicuotaIva;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.IAfipAlicuotaIvaDAO;
 
 /**
- * Servicio AlicuotaIva
+ * Servicio AfipAlicuotaIva
  * @author blas
  */
 
 @Service
-public class AlicuotaIvaService {
+public class AfipAlicuotaIvaService {
     
     //Define la referencia al dao
     @Autowired
-    IAlicuotaIvaDAO elementoDAO;
+    IAfipAlicuotaIvaDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        AlicuotaIva elemento = elementoDAO.findTopByOrderByIdDesc();
+        AfipAlicuotaIva elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
-    public List<AlicuotaIva> listar() {
+    public List<AfipAlicuotaIva> listar() {
         return elementoDAO.findAll();
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public AlicuotaIva agregar(AlicuotaIva elemento) {
+    public AfipAlicuotaIva agregar(AfipAlicuotaIva elemento) {
         elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(AlicuotaIva elemento) {
+    public void actualizar(AfipAlicuotaIva elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(AlicuotaIva elemento) {
+    public void eliminar(AfipAlicuotaIva elemento) {
         elementoDAO.delete(elemento);
     }
     
     //Formatea los string
-    private AlicuotaIva formatearStrings(AlicuotaIva elemento) {
+    private AfipAlicuotaIva formatearStrings(AfipAlicuotaIva elemento) {
         elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;
     }

@@ -1,18 +1,18 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.AlicuotaIva;
+import ar.com.draimo.jitws.model.AfipAlicuotaIva;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO AlicuotaIva
+ * Interfaz DAO AfipAlicuotaIva
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface IAlicuotaIvaDAO extends JpaRepository<AlicuotaIva, Integer> {
+public interface IAfipAlicuotaIvaDAO extends JpaRepository<AfipAlicuotaIva, Integer> {
     
     //Obtiene el siguiente id
-    public AlicuotaIva findTopByOrderByIdDesc();
+    public AfipAlicuotaIva findTopByOrderByIdDesc();
     
 }
