@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.dao.IUsuarioEmpresaDAO;
+import ar.com.draimo.jitws.dto.UsuarioDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Usuario;
 import ar.com.draimo.jitws.model.UsuarioEmpresa;
@@ -79,11 +80,13 @@ public class UsuarioEmpresaService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(List<UsuarioEmpresa> elementos) {
-        //Recorre la lista
-        for(int i = 0 ; i < elementos.size() ; i++) {
-            //Actualiza el registro
-            elementoDAO.save(elementos.get(i));
+    public void actualizar(UsuarioDTO elemento) {
+        //Obtiene la lista de empresas de un usuario
+        List<UsuarioEmpresa> usuarioEmpresas = elementoDAO.findByUsuario(usuarioDAO.findById(elemento.getId()));
+        for(int i = 0 ; i < usuarioEmpresas.size() ; i++) {
+            //Establece el mostrar de la actual empresa en el mostrar seleccionado
+            usuarioEmpresas.get(i).setMostrar(elemento.getEmpresas().get(i).getMostrar());
+            elementoDAO.save(usuarioEmpresas.get(i));
         }
     }
     

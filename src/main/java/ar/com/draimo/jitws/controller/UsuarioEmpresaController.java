@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.UsuarioDTO;
 import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.EstadoRespuestaAgregar;
@@ -95,7 +96,7 @@ public class UsuarioEmpresaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody List<UsuarioEmpresa> elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody UsuarioDTO elemento) {
         try {
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
