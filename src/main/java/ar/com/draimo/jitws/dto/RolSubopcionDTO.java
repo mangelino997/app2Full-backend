@@ -4,8 +4,7 @@ package ar.com.draimo.jitws.dto;
 import java.util.List;
 
 /**
- * DTO RolSubopcion
- * Define la estructura JSON para la transferencia de datos.
+ * Define un RolSubopcionDTO
  * @author blas
  */
 
@@ -15,13 +14,13 @@ public class RolSubopcionDTO {
     private int id;
     
     //Define el id del rol
-    private int idRol;
+    private RolDTO rol;
     
     //Define el id del submodulo
-    private int idSubmodulo;
+    private SubmoduloDTO submodulo;
     
     //Define el id del subopcion
-    private List<Integer> idSubopciones;
+    private List<SubopcionDTO> subopciones;
     
     //Getters y Setters de la clase
 
@@ -33,28 +32,28 @@ public class RolSubopcionDTO {
         this.id = id;
     }
 
-    public int getIdRol() {
-        return idRol;
+    public RolDTO getRol() {
+        return rol;
     }
 
-    public int getIdSubmodulo() {
-        return idSubmodulo;
+    public void setRol(RolDTO rol) {
+        this.rol = rol;
     }
 
-    public void setIdSubmodulo(int idSubmodulo) {
-        this.idSubmodulo = idSubmodulo;
+    public SubmoduloDTO getSubmodulo() {
+        return submodulo;
     }
 
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
+    public void setSubmodulo(SubmoduloDTO submodulo) {
+        this.submodulo = submodulo;
     }
 
-    public List<Integer> getIdSubopciones() {
-        return idSubopciones;
+    public List<SubopcionDTO> getSubopciones() {
+        return subopciones;
     }
 
-    public void setIdSubopciones(List<Integer> idSubopciones) {
-        this.idSubopciones = idSubopciones;
+    public void setSubopciones(List<SubopcionDTO> subopciones) {
+        this.subopciones = subopciones;
     }
     
 }

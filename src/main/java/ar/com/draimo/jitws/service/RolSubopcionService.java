@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.IRolSubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubmoduloDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dto.RolSubopcionDTO;
+import ar.com.draimo.jitws.dto.SubopcionDTO;
 import ar.com.draimo.jitws.model.Modulo;
 import ar.com.draimo.jitws.model.Rol;
 import ar.com.draimo.jitws.model.RolSubopcion;
@@ -140,37 +141,55 @@ public class RolSubopcionService {
         
     }
     
+    //Obtiene un rol, submodulo y una lista de subopciones
+    public RolSubopcionDTO listarPorRolYSubmodulo(int idRol, int idSubmodulo) {
+        
+        //Define un rol subopcion dto
+        RolSubopcionDTO rolSubopcionDTO = new RolSubopcionDTO();
+        //Define una lista dto de subopciones
+        List<SubopcionDTO> subopciones = new ArrayList<>();
+        //Define una subopcion dto
+        SubopcionDTO subopcionDTO;
+        
+        //Obtiene un rol por id
+        Optional<Rol> rol = rolDAO.findById(idRol);
+        //Obtiene un submodulo por id
+        Optional<Submodulo> submodulo = submoduloDAO.findById(idSubmodulo);
+        //Obtiene la lista de rolsubopcion por rol y submodulo
+        List<RolSubopcion> rolesSubopcion = elementoDAO.findByRolAndSubopcion_Submodulo(rol, submodulo);
+        
+        //Recorre la lista de rolsubopcion
+        for(RolSubopcion rolSubopcion : rolesSubopcion) {
+            subopcionDTO = new SubopcionDTO();
+            subopcionDTO.setId(rolSubopcion.getSubopcion().getId());
+            subopcionDTO.setVersion(rolSubopcion.getSubopcion().getVersion());
+            subopcionDTO.setNombre(rolSubopcion.getSubopcion().getNombre());
+            subopcionDTO.setEsABM(rolSubopcion.getSubopcion().getEsABM());
+            subopcionDTO.setMostrar(rolSubopcion.getMostrar());
+            subopciones.add(subopcionDTO);
+        }
+        
+        //Asigna la lista de subopciones al rol subopcion dto
+        rolSubopcionDTO.setSubopciones(subopciones);
+        
+        //Retorna los datos
+        return rolSubopcionDTO;
+        
+    }
+    
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(RolSubopcionDTO elemento) {
         
-        //Obtiene el rol por id
-        Optional<Rol> rol = rolDAO.findById(elemento.getIdRol());
+        //Define un rol subopcion
+        RolSubopcion rolSubopcion;
         
-        //Obtiene el submodulo por id
-        Optional<Submodulo> submodulo = submoduloDAO.findById(elemento.getIdSubmodulo());
-        
-        //Obtiene la lista de subopciones por rol y submodulo
-        List<RolSubopcion> rolesSubopcion = elementoDAO.findByRolAndSubopcion_Submodulo(rol, submodulo);
-        
-        //Define un idSubopcion
-        int idSubopcion;
-        //Recorre la lista
-        for(RolSubopcion rolSubopcion : rolesSubopcion) {
-            //Establece el valor de idSubopcion
-            idSubopcion = rolSubopcion.getSubopcion().getId();
-            /*
-             * Si el idSubopcion no esta en la lista de rolSubopcionDTO.idSubopciones
-             * establece "mostrar" en 0
-             */
-            if(elemento.getIdSubopciones().contains(idSubopcion)) {
-                //Establece "mostrar" en 1
-                rolSubopcion.setMostrar(true);
-            } else {
-                //Establece "mostrar" en 0
-                rolSubopcion.setMostrar(false);
-            }
-            //Actualiza los datos
+        //Recorro la lista de subopciones
+        for(SubopcionDTO subopcionDTO : elemento.getSubopciones()) {
+            //Obtiene un rolsubopcion por rol y subopcion
+            rolSubopcion = elementoDAO.obtenerPorRolYSubopcion(elemento.getRol().getId(), subopcionDTO.getId());
+            rolSubopcion.setMostrar(subopcionDTO.getMostrar());
+            //Actualiza el registro
             elementoDAO.save(rolSubopcion);
         }
         

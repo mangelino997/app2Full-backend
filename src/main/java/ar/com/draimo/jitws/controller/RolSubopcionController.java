@@ -70,6 +70,13 @@ public class RolSubopcionController {
         return elementoService.listarPorRolSubmodulo(idRol, idSubmodulo);
     }
     
+    //Obtiene una lista por rol y submodulo para armado de menu por rol
+    @GetMapping(value = URL + "/listarPorRolYSubmodulo/{idRol}/{idSubmodulo}")
+    @ResponseBody
+    public RolSubopcionDTO listarPorRolYSubmodulo(@PathVariable int idRol, @PathVariable int idSubmodulo) {
+        return elementoService.listarPorRolYSubmodulo(idRol, idSubmodulo);
+    }
+    
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody RolSubopcionDTO elemento) {

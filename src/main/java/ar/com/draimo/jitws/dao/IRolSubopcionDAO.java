@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO RolSubopcion
@@ -31,6 +32,10 @@ public interface IRolSubopcionDAO extends JpaRepository<RolSubopcion, Integer> {
     
     //Obtiene un RolSubmodulo por rol y subopcion
     public RolSubopcion findByRolAndSubopcion(Optional<Rol> rol, Optional<Subopcion> subopcion);
+    
+    //Obtiene por rol y subopcion
+    @Query(value = "select * from rolsubopcion where idRol=:idRol and idSubopcion=:idSubopcion", nativeQuery = true)
+    public RolSubopcion obtenerPorRolYSubopcion(@Param("idRol") int idRol, @Param("idSubopcion") int idSubopcion);
     
     //Elimina todos los datos de la tabla
     @Modifying
