@@ -74,6 +74,13 @@ public class UsuarioController {
         return elementoService.listarPorNombre(nombre);
     }
     
+    //Obtiene una lista por rol
+    @GetMapping(value = URL + "/listarPorRol/{idRol}")
+    @ResponseBody
+    public List<Usuario> listarPorNombre(@PathVariable int idRol) {
+        return elementoService.listarPorRol(idRol);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Usuario elemento) {

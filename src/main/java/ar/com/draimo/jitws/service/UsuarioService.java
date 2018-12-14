@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.model.Usuario;
 import java.util.List;
@@ -22,6 +23,10 @@ public class UsuarioService {
     //Define la referencia al dao
     @Autowired
     IUsuarioDAO elementoDAO;
+    
+    //Define la referencia al dao rol
+    @Autowired
+    IRolDAO rolDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -46,6 +51,11 @@ public class UsuarioService {
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
+    }
+    
+    //Obtiene una lista por rol
+    public List<Usuario> listarPorRol(int idRol) {
+        return elementoDAO.findByRol(rolDAO.findById(idRol));
     }
 
     //Agrega un registro
