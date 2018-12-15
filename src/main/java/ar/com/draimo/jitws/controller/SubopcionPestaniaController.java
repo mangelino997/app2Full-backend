@@ -57,6 +57,13 @@ public class SubopcionPestaniaController {
         return elementoService.listarPorRolSubopcion(idRol, idSubopcion);
     }
     
+    //Obtiene una lista por rol y subopcion para actualizar estado mostrar
+    @GetMapping(value = URL + "/obtenerPestaniasPorRolYSubopcion/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public SubopcionPestaniaDTO obtenerPestaniasPorRolYSubopcion(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.obtenerPestaniasPorRolYSubopcion(idRol, idSubopcion);
+    }
+    
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody SubopcionPestaniaDTO elemento) {

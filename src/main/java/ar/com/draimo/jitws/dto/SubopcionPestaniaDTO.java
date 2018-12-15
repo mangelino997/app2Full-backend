@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * DTO SubopcionPestania
- * Define la estructura JSON para la transferencia de datos.
+ * Define la estructura JSON para la transferencia de datos
  * @author blas
  */
 
@@ -17,14 +17,14 @@ public class SubopcionPestaniaDTO {
     //Define la version
     private int version;
     
-    //Define el id rol
-    private int idRol;
+    //Define el rol
+    private RolDTO rol;
     
-    //Define el id de la subopcion
-    private int idSubopcion;
+    //Define la subopcion
+    private SubopcionDTO subopcion;
     
-    //Define una lista de idPestania
-    private List<Integer> idPestanias;
+    //Define una lista de pestanias
+    private List<PestaniaDTO> pestanias;
     
     //Getters y Setters de la clase
 
@@ -44,28 +44,28 @@ public class SubopcionPestaniaDTO {
         this.version = version;
     }
 
-    public int getIdRol() {
-        return idRol;
+    public RolDTO getRol() {
+        return rol;
     }
 
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
+    public void setRol(RolDTO rol) {
+        this.rol = rol;
     }
 
-    public int getIdSubopcion() {
-        return idSubopcion;
+    public SubopcionDTO getSubopcion() {
+        return subopcion;
     }
 
-    public void setIdSubopcion(int idSubopcion) {
-        this.idSubopcion = idSubopcion;
+    public void setSubopcion(SubopcionDTO subopcion) {
+        this.subopcion = subopcion;
     }
 
-    public List<Integer> getIdPestanias() {
-        return idPestanias;
+    public List<PestaniaDTO> getPestanias() {
+        return pestanias;
     }
 
-    public void setIdPestanias(List<Integer> idPestanias) {
-        this.idPestanias = idPestanias;
+    public void setPestanias(List<PestaniaDTO> pestanias) {
+        this.pestanias = pestanias;
     }
     
 }

@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.dao.IPestaniaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
+import ar.com.draimo.jitws.dto.PestaniaDTO;
 import ar.com.draimo.jitws.dto.SubopcionPestaniaDTO;
 import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.Rol;
@@ -89,36 +90,65 @@ public class SubopcionPestaniaService {
         
     }
     
+    //Obtiene la lista de pestanias de una subopcion para actualizar estado mostrar
+    public SubopcionPestaniaDTO obtenerPestaniasPorRolYSubopcion(int idRol, int idSubopcion) {
+        
+        //Obtiene el rol por id
+        Optional<Rol> rol = rolDAO.findById(idRol);
+        
+        //Obtiene la subopcion por id
+        Optional<Subopcion> subopcion = subopcionDAO.findById(idSubopcion);
+        
+        //Obtiene la lista de subopcion pestania
+        List<SubopcionPestania> subopcionPestanias = elementoDAO.findByRolAndSubopcion(rol, subopcion);
+        
+        //Define una subopcion pestania dto
+        SubopcionPestaniaDTO subopcionPestaniaDTO = new SubopcionPestaniaDTO();
+        
+        //Define una lista de pestanias dto
+        List<PestaniaDTO> pestaniaDTOs = new ArrayList<>();
+        
+        //Defina una pestania dto
+        PestaniaDTO pestaniaDTO;
+        
+        //Recorre la lista de subopcion pestania
+        for(SubopcionPestania subopcionPestania : subopcionPestanias) {
+            pestaniaDTO = new PestaniaDTO();
+            pestaniaDTO.setId(subopcionPestania.getPestania().getId());
+            pestaniaDTO.setVersion(subopcionPestania.getPestania().getVersion());
+            pestaniaDTO.setNombre(subopcionPestania.getPestania().getNombre());
+            pestaniaDTO.setMostrar(subopcionPestania.getMostrar());
+            pestaniaDTOs.add(pestaniaDTO);
+        }
+        
+        //Establece la lista de pestanias a la subopcion pestania dto
+        subopcionPestaniaDTO.setPestanias(pestaniaDTOs);
+        
+        //Retorna los datos
+        return subopcionPestaniaDTO;
+        
+    }
+    
     //Actualiza
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SubopcionPestaniaDTO subopcionPestaniaDTO) {
         
-        //Obtiene el rol por id
-        Optional<Rol> rol = rolDAO.findById(subopcionPestaniaDTO.getIdRol());
+        //Obtiene el rol
+        Optional<Rol> rol = rolDAO.findById(subopcionPestaniaDTO.getRol().getId());
         
-        //Obtiene la subopcion por id
-        Optional<Subopcion> subopcion = subopcionDAO.findById(subopcionPestaniaDTO.getIdSubopcion());
+        //Obtiene la subopcion
+        Optional<Subopcion> subopcion = subopcionDAO.findById(subopcionPestaniaDTO.getSubopcion().getId());
         
-        //Obtiene la lista de pestañas de la subopcion
-        List<SubopcionPestania> subopcionPestaniaLista = elementoDAO.findByRolAndSubopcion(rol, subopcion);
+        //Define una subopcion pestania
+        SubopcionPestania subopcionPestania;
         
-        //Define un idPestania
-        int idPestania;
-        //Recorre la lista
-        for (SubopcionPestania subopcionPestania : subopcionPestaniaLista) {
-            //Establece el valor de idPestania
-            idPestania = subopcionPestania.getPestania().getId();
-            /*
-             * Si el idPestania no esta en la lista de subopcionPestaniaDTO.idPestanias
-             * establece "mostrar" en 0
-             */
-            if(subopcionPestaniaDTO.getIdPestanias().contains(idPestania)) {
-                //Establece "mostrar" en 1
-                subopcionPestania.setMostrar(true);
-            } else {
-                //Establece "mostrar" en 0
-                subopcionPestania.setMostrar(false);
-            }
+        //Recorre la lista de pestanias
+        for(PestaniaDTO pestaniaDTO : subopcionPestaniaDTO.getPestanias()) {
+            subopcionPestania = elementoDAO.findByRolAndSubopcionAndPestania(rol, subopcion, 
+                    pestaniaDAO.findById(pestaniaDTO.getId()));
+            //Establece el estado de la pestania
+            subopcionPestania.setMostrar(pestaniaDTO.getMostrar());
+            //Actualiza el registro
             elementoDAO.save(subopcionPestania);
         }
         

@@ -25,6 +25,9 @@ public interface ISubopcionPestaniaDAO extends JpaRepository<SubopcionPestania, 
     //Obtiene por subopcion y pestania
     public SubopcionPestania findBySubopcionAndPestania(Optional<Subopcion> subopcion, Optional<Pestania> pestania);
     
+    //Obtiene por rol, subopcion y pestania
+    public SubopcionPestania findByRolAndSubopcionAndPestania(Optional<Rol> rol, Optional<Subopcion> subopcion, Optional<Pestania> pestania);
+    
     //Elimina todos los datos de la tabla
     @Modifying
     @Query(value = "DELETE FROM subopcionpestania", nativeQuery = true)
