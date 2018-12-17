@@ -1,11 +1,15 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IPestaniaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IRolSubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
+import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
+import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.Rol;
 import ar.com.draimo.jitws.model.RolSubopcion;
 import ar.com.draimo.jitws.model.Subopcion;
+import ar.com.draimo.jitws.model.SubopcionPestania;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +32,17 @@ public class RolService {
     @Autowired
     ISubopcionDAO subopcionDAO;
     
+    //Define la referencia al dao pestania
+    @Autowired
+    IPestaniaDAO pestaniaDAO;
+    
     //Define la referencia al dao rolsubopcion
     @Autowired
     IRolSubopcionDAO rolSubopcionDAO;
+    
+    //Define la referencia al dao subopcionpestania
+    @Autowired
+    ISubopcionPestaniaDAO subopcionPestaniaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -59,9 +71,13 @@ public class RolService {
         Rol rol = elementoDAO.saveAndFlush(elemento);
         //Obtiene la lista completa de subopciones
         List<Subopcion> subopciones = subopcionDAO.findAll();
+        //Obtiene la lista de pestanias
+        List<Pestania> pestanias = pestaniaDAO.findAll();
         //Define un RolSubopcion
         RolSubopcion rolSubopcion;
-        //Recorre la lista de submodulos
+        //Define una subopcion pestania
+        SubopcionPestania subopcionPestania;
+        //Recorre la lista de subopciones
         for (Subopcion subopcion : subopciones) {
             //Crea una instancia de RolSubopcion
             rolSubopcion = new RolSubopcion();
@@ -69,6 +85,14 @@ public class RolService {
             rolSubopcion.setSubopcion(subopcion);
             rolSubopcion.setMostrar(false);
             rolSubopcionDAO.saveAndFlush(rolSubopcion);
+            for(Pestania pestania : pestanias) {
+                //Crea una instancias de SubopcionPestania
+                subopcionPestania = new SubopcionPestania();
+                subopcionPestania.setRol(rol);
+                subopcionPestania.setSubopcion(subopcion);
+                subopcionPestania.setPestania(pestania);
+                subopcionPestania.setMostrar(false);
+            }
         }
         return rol;
     }
