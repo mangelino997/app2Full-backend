@@ -1,8 +1,16 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IOpcionDAO;
+import ar.com.draimo.jitws.dao.IOpcionPestaniaDAO;
+import ar.com.draimo.jitws.dao.IPestaniaDAO;
+import ar.com.draimo.jitws.dao.IRolDAO;
+import ar.com.draimo.jitws.dao.IRolOpcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.model.Opcion;
+import ar.com.draimo.jitws.model.OpcionPestania;
+import ar.com.draimo.jitws.model.Pestania;
+import ar.com.draimo.jitws.model.Rol;
+import ar.com.draimo.jitws.model.RolOpcion;
 import ar.com.draimo.jitws.model.Subopcion;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +33,22 @@ public class OpcionService {
     //Define la referencia al dao subopcion
     @Autowired
     ISubopcionDAO subopcionDAO;
+    
+    //Define la referencia al dao rol
+    @Autowired
+    IRolDAO rolDAO;
+    
+    //Define la referencia al dao pestania
+    @Autowired
+    IPestaniaDAO pestaniaDAO;
+    
+    //Define la referencia al dao rolopcion
+    @Autowired
+    IRolOpcionDAO rolOpcionDAO;
+    
+    //Define la referencia al dao opcionpestania
+    @Autowired
+    IOpcionPestaniaDAO opcionPestaniaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -56,8 +80,40 @@ public class OpcionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Opcion agregar(Opcion elemento) {
+        //Formatea los strings
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        //Agrega el registro
+        Opcion opcion = elementoDAO.saveAndFlush(elemento);
+        //Obtiene la lista de roles
+        List<Rol> roles = rolDAO.findAll();
+        //Obtiene la lista de pestanias
+        List<Pestania> pestanias = pestaniaDAO.findAll();
+        //Define un RolOpcion
+        RolOpcion rolOpcion;
+        //Define un OpcionPestania
+        OpcionPestania opcionPestania;
+        //Recorre la lista de roles y guarda cada opcion con rol en RolOpcion
+        for(Rol rol : roles) {
+            rolOpcion = new RolOpcion();
+            rolOpcion.setRol(rol);
+            rolOpcion.setOpcion(opcion);
+            rolOpcion.setMostrar((rol.getId() < 3));
+            rolOpcionDAO.saveAndFlush(rolOpcion);
+            //Verifica si la opcion agrega es ABM
+            if(opcion.getEsABM()) {
+                //Recorre la lista de pestanias
+                for (Pestania pestania : pestanias) {
+                    //Crea una instancia de opcionpestania
+                    opcionPestania = new OpcionPestania();
+                    opcionPestania.setRol(rol);
+                    opcionPestania.setOpcion(opcion);
+                    opcionPestania.setPestania(pestania);
+                    opcionPestania.setMostrar((rol.getId() < 3));
+                    opcionPestaniaDAO.saveAndFlush(opcionPestania);
+                }
+            }
+        }
+        return opcion;
     }
     
     //Actualiza un registro

@@ -107,14 +107,17 @@ public class SubopcionService {
             rolSubopcion.setSubopcion(s);
             rolSubopcion.setMostrar((rol.getId() < 3));
             rolSubopcionDAO.saveAndFlush(rolSubopcion);
-            //Recorre la lista de pestanias
-            for (Pestania pestania : pestanias) {
-                subopcionPestania = new SubopcionPestania();
-                subopcionPestania.setRol(rol);
-                subopcionPestania.setSubopcion(s);
-                subopcionPestania.setPestania(pestania);
-                subopcionPestania.setMostrar((rol.getId() < 3));
-                subopcionPestaniaDAO.saveAndFlush(subopcionPestania);
+            //Verifica si la subopcion es ABM
+            if(subopcion.getEsABM()) {
+                //Recorre la lista de pestanias
+                for (Pestania pestania : pestanias) {
+                    subopcionPestania = new SubopcionPestania();
+                    subopcionPestania.setRol(rol);
+                    subopcionPestania.setSubopcion(s);
+                    subopcionPestania.setPestania(pestania);
+                    subopcionPestania.setMostrar((rol.getId() < 3));
+                    subopcionPestaniaDAO.saveAndFlush(subopcionPestania);
+                }
             }
         }
         
