@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author blas
  */
 
-public interface IVentaComprobanteItemDAO extends JpaRepository<VentaComprobanteItemFA, Integer> {
+public interface IVentaComprobanteItemFADAO extends JpaRepository<VentaComprobanteItemFA, Integer> {
     
     //Obtiene el siguiente id
     public VentaComprobanteItemFA findTopByOrderByIdDesc();

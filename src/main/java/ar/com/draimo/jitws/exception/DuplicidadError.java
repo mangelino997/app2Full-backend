@@ -6,6 +6,8 @@ package ar.com.draimo.jitws.exception;
  */
 public class DuplicidadError {
     
+    public static final String ID_UNICO = "id_UNIQUE";
+    
     public static final String NOMBRE_UNICO = "nombre_UNIQUE";
     
     public static final String CORREOELECTRONICO_UNICO = "correoelectronico_UNIQUE";
@@ -39,5 +41,5 @@ public class DuplicidadError {
     public static final String DOMINIO_UNICO = "dominio_UNIQUE";
     
     public static final String NUMERO_INTERNO_UNICO = "numeroInterno_UNIQUE";
-    
+
 }

@@ -43,55 +43,42 @@ public class CodigoRespuesta {
     //Define una respuesta de sincronizacion mediante socket
     public static final int ERROR_SINC_SOCKET = 5001;
     
+    
     //Define una respuesta de datos duplicados
+    public static final int DATO_DUPLICADO_ID = 11001;
     public static final int DATO_DUPLICADO_NOMBRE = 11002;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_CORREOELECTRONICO = 11003;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_USERNAME = 11005;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_RAZONSOCIAL = 11006;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_CUIT = 11007;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_SITIOWEB = 11008;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_TELEFONO = 11009;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_DOCUMENTO = 11010;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_CBU = 11011;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_CUIL = 11012;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_TELEFONO_FIJO = 11013;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_TELEFONO_MOVIL = 11014;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_TELEFONO_MOVIL_EMPRESA = 11015;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_VALOR = 11016;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_DOMINIO = 11017;
-    
-    //Define una respuesta de datos duplicados
     public static final int DATO_DUPLICADO_NUMERO_INTERNO = 11018;
+    
+     public static final int NOMBRE_LONGITUD = 12001;
+    public static final int APELLIDO_LONGITUD = 12002;
+    public static final int DOCUMENTO_LONGITUD = 12003;
+    public static final int CODIGO_AREA_LONGITUD = 12004;
+    public static final int CODIGO_AREA_ALT_LONGITUD = 12005;
+    public static final int TELEFONO_LONGITUD = 12006;
+    public static final int TELEFONO_ALT_LONGITUD = 12007;
+    public static final int DIRECCION_LONGITUD = 12008;
+    public static final int DIRECCION_ALT_LONGITUD = 12009;
+    public static final int CUIL_LONGITUD = 12010;
+    public static final int CUIT_LONGITUD = 12011;
+    public static final int CORREO_ELECTRONICO_LONGITUD = 12013;
+    public static final int NUMERO_LONGITUD = 12014;
+    public static final int ABREVIATURA_LONGITUD = 12015;
+    public static final int PAGINA_WEB_LONGITUD = 12016;
+    public static final int USERNAME_LONGITUD = 12017;
     
 }

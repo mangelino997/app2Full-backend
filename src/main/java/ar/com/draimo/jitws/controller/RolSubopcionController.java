@@ -12,6 +12,7 @@ import ar.com.draimo.jitws.service.MenuService;
 import ar.com.draimo.jitws.service.RolSubopcionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
@@ -81,28 +82,29 @@ public class RolSubopcionController {
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody RolSubopcionDTO elemento) {
         try {
+            //Actualiza el registro
             elementoService.actualizar(elemento);
-            //Envia la nueva lista a los usuarios subscriptos
+            //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
-                    MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
-        } catch (ObjectOptimisticLockingFailureException oolfe) {
-            //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
-                    MensajeRespuesta.TRANSACCION_NO_ACTUALIZADA), HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch(MessagingException e) {
+            //Retorna mensaje de actualizado con exito
+            return MensajeRespuesta.actualizado();
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch(ObjectOptimisticLockingFailureException oolfe) {
+            //Retorna mensaje de transaccion no actualizada
+            return MensajeRespuesta.transaccionNoActualizada();
+        }catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
-                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.errorSincSocket();
         } catch(Exception e) {
-            //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                    MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
         }
     }
     
     /*
-     * Asigna todas las subopciones a cada uno de los roles, eliminando todo los
+     * Asigna todas las empresas a cada uno de los usuarios, eliminando todo los
      * datos y reestableciendo desde cero
      */
     @GetMapping(value = URL + "/reestablecerTablaDesdeCero")
@@ -112,12 +114,10 @@ public class RolSubopcionController {
         try {
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/listarMenu", 1);
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, 
-                    MensajeRespuesta.TABLA_REESTABLECIDA), HttpStatus.OK);
-        } catch(MessagingException e) {
+               return MensajeRespuesta.tablaReestablecida();
+        }catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
-                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.errorSincSocket();
         }
     }
     

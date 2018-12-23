@@ -16,10 +16,14 @@ public class EstadoRespuesta {
     //Mensaje de respuesta
     private String mensaje;
     
+    //Id de respuesta
+    private int id;
+    
     //Constructor de la clase Estado de respuesta
-    public EstadoRespuesta(int codigo, String mensaje) {
+    public EstadoRespuesta(int codigo, String mensaje, int id) {
         this.codigo = codigo;
         this.mensaje = mensaje;
+        this.id = id;
     }
     
     //Getters y Setters de la clase
@@ -38,6 +42,14 @@ public class EstadoRespuesta {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

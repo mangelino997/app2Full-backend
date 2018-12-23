@@ -54,10 +54,10 @@ public class ViajePropioCombustible extends ObjetoGenerico {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
     
-    //Referencia a la clase Insumo
+    //Referencia a la clase InsumoProducto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idInsumo", nullable = false)
-    private Insumo insumo;
+    private InsumoProducto insumo;
     
     //Define la cantidad
     @Column(name = "cantidad", nullable = false)
@@ -137,11 +137,11 @@ public class ViajePropioCombustible extends ObjetoGenerico {
         this.fecha = fecha;
     }
 
-    public Insumo getInsumo() {
+    public InsumoProducto getInsumo() {
         return insumo;
     }
 
-    public void setInsumo(Insumo insumo) {
+    public void setInsumo(InsumoProducto insumo) {
         this.insumo = insumo;
     }
 

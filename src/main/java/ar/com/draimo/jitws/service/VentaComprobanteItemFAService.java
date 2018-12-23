@@ -1,11 +1,11 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IVentaComprobanteItemDAO;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 
 /**
  * Servicio VentaComprobanteItem
@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
-public class VentaComprobanteItemService {
+public class VentaComprobanteItemFAService {
     
     //Define la referencia al dao
     @Autowired
-    IVentaComprobanteItemDAO elementoDAO;
+    IVentaComprobanteItemFADAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

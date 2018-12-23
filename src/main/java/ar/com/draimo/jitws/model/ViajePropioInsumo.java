@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Viaje Propio Insumo
- * Define el modelo (columnas) de la base de datos.
+ * Clase Viaje Propio InsumoProducto
+ Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
@@ -54,10 +54,10 @@ public class ViajePropioInsumo extends ObjetoGenerico {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
     
-    //Referencia a la clase Insumo
+    //Referencia a la clase InsumoProducto
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idInsumo", nullable = false)
-    private Insumo insumo;
+    @JoinColumn(name = "idInsumoProducto", nullable = false)
+    private InsumoProducto insumoProducto;
     
     //Define la cantidad
     @Column(name = "cantidad", nullable = false)
@@ -137,12 +137,12 @@ public class ViajePropioInsumo extends ObjetoGenerico {
         this.fecha = fecha;
     }
 
-    public Insumo getInsumo() {
-        return insumo;
+    public InsumoProducto getInsumoProducto() {
+        return insumoProducto;
     }
 
-    public void setInsumo(Insumo insumo) {
-        this.insumo = insumo;
+    public void setInsumoProducto(InsumoProducto insumoProducto) {
+        this.insumoProducto = insumoProducto;
     }
 
     public short getCantidad() {

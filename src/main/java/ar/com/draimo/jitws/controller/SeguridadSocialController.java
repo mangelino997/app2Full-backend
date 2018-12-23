@@ -1,17 +1,12 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
-import ar.com.draimo.jitws.exception.DuplicidadError;
-import ar.com.draimo.jitws.exception.EstadoRespuesta;
-import ar.com.draimo.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.SeguridadSocial;
 import ar.com.draimo.jitws.service.SeguridadSocialService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -71,39 +66,20 @@ public class SeguridadSocialController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody SeguridadSocial elemento) {
         try {
-            SeguridadSocial e = elementoService.agregar(elemento);
+            SeguridadSocial a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuestaAgregar(CodigoRespuesta.CREADO, 
-                    MensajeRespuesta.AGREGADO, (e.getId()+1)), HttpStatus.CREATED);
-        } catch(DataIntegrityViolationException e) {
-            //Obtiene mensaje de duplicidad de datos
-            String[] partes = e.getMostSpecificCause().getMessage().split("'");
-            //Determina que columna tiene el dato duplicado
-            switch (partes[3]) {
-                case DuplicidadError.NOMBRE_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.SITIOWEB_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_SITIOWEB,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getSitioWeb()+ "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
-                default:
-                    //Retorna codigo y mensaje de error interno en el servidor
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            //Retorna mensaje de agregado con exito
+            return MensajeRespuesta.agregado(a.getId());
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
-                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch(Exception e) {
-            //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                    MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
         }
     }
     
@@ -111,43 +87,24 @@ public class SeguridadSocialController {
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody SeguridadSocial elemento) {
         try {
+            //Actualiza el registro
             elementoService.actualizar(elemento);
-            //Envia la nueva lista a los usuarios subscriptos
+            //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
-                    MensajeRespuesta.ACTUALIZADO), HttpStatus.OK);
-        } catch(DataIntegrityViolationException dive) {
-            //Obtiene mensaje de duplicidad de datos
-            String[] partes = dive.getMostSpecificCause().getMessage().split("'");
-            //Determina que columna tiene el dato duplicado
-            switch (partes[3]) {
-                case DuplicidadError.NOMBRE_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getNombre() + "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.SITIOWEB_UNICO:
-                    //Retorna codigo y mensaje de error de dato duplicado
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_SITIOWEB,
-                            MensajeRespuesta.DATO_DUPLICADO + " '" + elemento.getSitioWeb()+ "'"),
-                            HttpStatus.INTERNAL_SERVER_ERROR);
-                default:
-                    //Retorna codigo y mensaje de error interno en el servidor
-                    return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } catch (ObjectOptimisticLockingFailureException oolfe) {
-            //Retorna codigo y mensaje de error de operacion actualizada por otra transaccion
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.TRANSACCION_NO_ACTUALIZADA,
-                    MensajeRespuesta.TRANSACCION_NO_ACTUALIZADA), HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch(MessagingException e) {
+            //Retorna mensaje de actualizado con exito
+            return MensajeRespuesta.actualizado();
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch(ObjectOptimisticLockingFailureException oolfe) {
+            //Retorna mensaje de transaccion no actualizada
+            return MensajeRespuesta.transaccionNoActualizada();
+        }catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_SINC_SOCKET,
-                    MensajeRespuesta.ERROR_SINC_SOCKET), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.errorSincSocket();
         } catch(Exception e) {
-            //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                    MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
         }
     }
     
@@ -156,12 +113,11 @@ public class SeguridadSocialController {
     public ResponseEntity<?> eliminar(@RequestBody SeguridadSocial elemento) {
         try {
             elementoService.eliminar(elemento);
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, 
-                    MensajeRespuesta.ELIMINADO), HttpStatus.OK);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
         } catch(Exception e) {
-            //Retorna codigo y mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR, 
-                    MensajeRespuesta.ERROR_INTERNO_SERVIDOR), HttpStatus.INTERNAL_SERVER_ERROR);
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
         }
     }
     
