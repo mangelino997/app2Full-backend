@@ -55,8 +55,8 @@ public class InsumoProducto extends ObjetoGenerico {
     private boolean esCritico;
     
     //Define el stock minimo
-    @Column(name = "stocMinimo", nullable = false)
-    private BigDecimal stocMinimo;
+    @Column(name = "stockMinimo", nullable = false)
+    private BigDecimal stockMinimo;
     
     //Define el precio unitario venta
     @Column(name = "precioUnitarioVenta", nullable = false)
@@ -137,12 +137,12 @@ public class InsumoProducto extends ObjetoGenerico {
         this.esCritico = esCritico;
     }
 
-    public BigDecimal getStocMinimo() {
-        return stocMinimo;
+    public BigDecimal getStockMinimo() {
+        return stockMinimo;
     }
 
-    public void setStocMinimo(BigDecimal stocMinimo) {
-        this.stocMinimo = stocMinimo;
+    public void setStockMinimo(BigDecimal stockMinimo) {
+        this.stockMinimo = stockMinimo;
     }
 
     public BigDecimal getPrecioUnitarioVenta() {
