@@ -59,7 +59,7 @@ public class ClienteController {
     //Obtiene por id
     @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
-    public Optional<Cliente> obtenerPorId(@PathVariable int id) {
+    public Cliente obtenerPorId(@PathVariable int id) {
         return elementoService.obtenerPorId(id);
     }
     
@@ -68,6 +68,27 @@ public class ClienteController {
     @ResponseBody
     public List<Cliente> listarPorAlias(@PathVariable String alias) {
         return elementoService.listarPorAlias(alias);
+    }
+    
+    //Agrega un cliente eventual
+    @PostMapping(value = URL + "/agregarClienteEventual")
+    public ResponseEntity<?> agregarClienteEventual(@RequestBody Cliente elemento) {
+        try {
+            Cliente a = elementoService.agregarClienteEventual(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de agregado con exito
+            return MensajeRespuesta.agregado(a.getId());
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro

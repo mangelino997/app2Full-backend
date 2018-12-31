@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
+import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.model.Cliente;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,10 @@ public class ClienteService {
     @Autowired
     IClienteDAO elementoDAO;
     
+    //Define la referencia al dao CondicionVenta
+    @Autowired
+    ICondicionVentaDAO condicionVentaDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Cliente elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -32,8 +37,8 @@ public class ClienteService {
     }
     
     //Obtiene por id
-    public Optional<Cliente> obtenerPorId(int id) {
-        return elementoDAO.findById(id);
+    public Cliente obtenerPorId(int id) {
+        return elementoDAO.findById(id).get();
     }
     
     //Obtiene una lista por alias
@@ -43,6 +48,19 @@ public class ClienteService {
         } else {
             return elementoDAO.findByAliasContaining(alias);
         }
+    }
+    
+    //Agrega un cliente eventual
+    @Transactional(rollbackFor = Exception.class)
+    public Cliente agregarClienteEventual(Cliente elemento) {
+        elemento = formatearString(elemento);
+        elemento.setEsCuentaCorriente(false);
+        elemento.setCondicionVenta(condicionVentaDAO.findById(1).get());
+        elemento.setEsSeguroPropio(false);
+        elemento.setImprimirControlDeuda(false);
+        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
+                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Agrega un registro
