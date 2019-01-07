@@ -28,4 +28,7 @@ public interface ICompaniaSeguroPolizaDAO extends JpaRepository<CompaniaSeguroPo
     //Obtiene por compania de seguro y empresa
     public CompaniaSeguroPoliza findByCompaniaSeguroAndEmpresa(Optional<CompaniaSeguro> companiaSeguro, Optional<Empresa> empresa);
     
+    //Obtiene una lista por nombre de compania de seguro
+    public List<CompaniaSeguroPoliza> findByCompaniaSeguro_NombreContaining(String nombre);
+    
 }

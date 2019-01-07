@@ -76,6 +76,13 @@ public class CompaniaSeguroPolizaController {
         return elementoService.obtenerPorCompaniaSeguroYEmpresa(idCompaniaSeguro, idEmpresa);
     }
     
+    //Obtiene una lista por nombre de compania de seguro
+    @GetMapping(value = URL + "/listarPorCompaniaSeguroNombre/{nombre}")
+    @ResponseBody
+    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguroNombre(@PathVariable String nombre) {
+        return elementoService.listarPorCompaniaSeguroNombre(nombre);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody CompaniaSeguroPoliza elemento) {
