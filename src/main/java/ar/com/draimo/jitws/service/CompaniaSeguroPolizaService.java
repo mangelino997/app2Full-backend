@@ -1,7 +1,9 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.draimo.jitws.dao.ICompaniaSeguroPolizaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.model.CompaniaSeguro;
 import ar.com.draimo.jitws.model.CompaniaSeguroPoliza;
 import ar.com.draimo.jitws.model.Empresa;
 import java.util.List;
@@ -26,6 +28,10 @@ public class CompaniaSeguroPolizaService {
     @Autowired
     IEmpresaDAO empresaDAO;
     
+    //Define la referencia al dao compania seguro
+    @Autowired
+    ICompaniaSeguroDAO companiaSeguroDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CompaniaSeguroPoliza elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -41,6 +47,19 @@ public class CompaniaSeguroPolizaService {
     public List<CompaniaSeguroPoliza> listarPorEmpresa(int id) {
         Optional<Empresa> empresa = empresaDAO.findById(id);
         return elementoDAO.findByEmpresa(empresa);
+    }
+    
+    //Obtiene una lista por compania de seguro
+    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguro(int idCompaniaSeguro) {
+        Optional<CompaniaSeguro> companiaSeguro = companiaSeguroDAO.findById(idCompaniaSeguro);
+        return elementoDAO.findByCompaniaSeguro(companiaSeguro);
+    }
+    
+    //Obtiene por compania de seguro y empresa
+    public CompaniaSeguroPoliza obtenerPorCompaniaSeguroYEmpresa(int idCompaniaSeguro, int idEmpresa) {
+        Optional<CompaniaSeguro> companiaSeguro = companiaSeguroDAO.findById(idCompaniaSeguro);
+        Optional<Empresa> empresa = empresaDAO.findById(idEmpresa);
+        return elementoDAO.findByCompaniaSeguroAndEmpresa(companiaSeguro, empresa);
     }
     
     //Agrega un registro
