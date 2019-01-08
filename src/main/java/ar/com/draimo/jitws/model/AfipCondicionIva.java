@@ -6,14 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Condicion Iva
+ * Clase Afip Condicion Iva
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
 @Entity
-@Table(name = "condicioniva")
-public class CondicionIva extends ObjetoGenerico {
+@Table(name = "afipcondicioniva")
+public class AfipCondicionIva extends ObjetoGenerico {
     
     //Define el nombre
     @Column(name = "nombre", nullable = false)

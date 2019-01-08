@@ -71,8 +71,8 @@ public class VentaComprobante extends ObjetoGenerico {
     
     //Referencia a la clase CondicionIva
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCondicionIva", nullable = false)
-    private CondicionIva condicionIva;
+    @JoinColumn(name = "idAfipCondicionIva", nullable = false)
+    private AfipCondicionIva afipCondicionIva;
     
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -221,12 +221,12 @@ public class VentaComprobante extends ObjetoGenerico {
         this.clienteGrupo = clienteGrupo;
     }
 
-    public CondicionIva getCondicionIva() {
-        return condicionIva;
+    public AfipCondicionIva getAfipCondicionIva() {
+        return afipCondicionIva;
     }
 
-    public void setCondicionIva(CondicionIva condicionIva) {
-        this.condicionIva = condicionIva;
+    public void setAfipCondicionIva(AfipCondicionIva afipCondicionIva) {
+        this.afipCondicionIva = afipCondicionIva;
     }
 
     public Cliente getClienteRemitente() {

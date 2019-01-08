@@ -1,22 +1,22 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.VentaConcepto;
+import ar.com.draimo.jitws.model.AfipCondicionIva;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Venta Concepto
+ * Interfaz DAO Afip Condicion Iva
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface IVentaConceptoDAO extends JpaRepository<VentaConcepto, Integer> {
+public interface IAfipCondicionIvaDAO extends JpaRepository<AfipCondicionIva, Integer> {
     
     //Obtiene el siguiente id
-    public VentaConcepto findTopByOrderByIdDesc();
+    public AfipCondicionIva findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<VentaConcepto> findByNombreContaining(String nombre);
+    public List<AfipCondicionIva> findByNombreContaining(String nombre);
     
 }

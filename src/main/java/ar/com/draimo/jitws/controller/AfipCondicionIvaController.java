@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.VentaConcepto;
-import ar.com.draimo.jitws.service.VentaConceptoService;
+import ar.com.draimo.jitws.model.AfipCondicionIva;
+import ar.com.draimo.jitws.service.AfipCondicionIvaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase Afip Concepto Controller
+ * Clase AfipCondicionIva Controller
  * @author blas
  */
 
 @RestController
-public class VentaConceptoController {
+public class AfipCondicionIvaController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ventaconcepto";
+    private final String URL = RutaConstant.URL_BASE + "/afipcondicioniva";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventaconcepto";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/afipcondicioniva";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -39,7 +39,7 @@ public class VentaConceptoController {
     
     //Crea una instancia del servicio
     @Autowired
-    VentaConceptoService elementoService;
+    AfipCondicionIvaService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,22 +51,22 @@ public class VentaConceptoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<VentaConcepto> listar() {
+    public List<AfipCondicionIva> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<VentaConcepto> listarPorNombre(@PathVariable String nombre) {
+    public List<AfipCondicionIva> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody VentaConcepto elemento) {
+    public ResponseEntity<?> agregar(@RequestBody AfipCondicionIva elemento) {
         try {
-            VentaConcepto a = elementoService.agregar(elemento);
+            AfipCondicionIva a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -85,7 +85,7 @@ public class VentaConceptoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody VentaConcepto elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody AfipCondicionIva elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -110,7 +110,7 @@ public class VentaConceptoController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody VentaConcepto elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody AfipCondicionIva elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

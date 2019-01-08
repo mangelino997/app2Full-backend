@@ -39,10 +39,10 @@ public class Empresa extends ObjetoGenerico {
     @JoinColumn(name = "idLocalidad", nullable = false)
     private Localidad localidad;
     
-    //Referencia a la clase CondicionIva
+    //Referencia a la clase AfipCondicionIva
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCondicionIva", nullable = false)
-    private CondicionIva condicionIva;
+    @JoinColumn(name = "idAfipCondicionIva", nullable = false)
+    private AfipCondicionIva afipCondicionIva;
     
     //Define el cuit
     @Column(name = "cuit", nullable = false, unique = true)
@@ -121,12 +121,12 @@ public class Empresa extends ObjetoGenerico {
         this.localidad = localidad;
     }
 
-    public CondicionIva getCondicionIva() {
-        return condicionIva;
+    public AfipCondicionIva getAfipCondicionIva() {
+        return afipCondicionIva;
     }
 
-    public void setCondicionIva(CondicionIva condicionIva) {
-        this.condicionIva = condicionIva;
+    public void setAfipCondicionIva(AfipCondicionIva afipCondicionIva) {
+        this.afipCondicionIva = afipCondicionIva;
     }
 
     public String getCuit() {

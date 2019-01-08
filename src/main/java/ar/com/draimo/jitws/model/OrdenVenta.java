@@ -54,10 +54,6 @@ public class OrdenVenta extends ObjetoGenerico {
     @Column(name = "seguro", nullable = false)
     private BigDecimal seguro;
     
-    //Define el aforo
-    @Column(name = "aforo", nullable = false)
-    private short aforo;
-    
     //Define la comision cr
     @Column(name = "comisionCR", nullable = true)
     private BigDecimal comisionCR;
@@ -138,14 +134,6 @@ public class OrdenVenta extends ObjetoGenerico {
 
     public void setSeguro(BigDecimal seguro) {
         this.seguro = seguro;
-    }
-
-    public short getAforo() {
-        return aforo;
-    }
-
-    public void setAforo(short aforo) {
-        this.aforo = aforo;
     }
 
     public BigDecimal getComisionCR() {

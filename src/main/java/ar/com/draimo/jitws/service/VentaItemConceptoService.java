@@ -1,37 +1,37 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.ICondicionIvaDAO;
-import ar.com.draimo.jitws.model.CondicionIva;
+import ar.com.draimo.jitws.model.VentaItemConcepto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.IVentaItemConceptoDAO;
 
 /**
- * Servicio Condicion Iva
+ * Servicio Venta Item Concepto
  * @author blas
  */
 
 @Service
-public class CondicionIvaService {
-    
+public class VentaItemConceptoService {
+
     //Define la referencia al dao
     @Autowired
-    ICondicionIvaDAO elementoDAO;
+    IVentaItemConceptoDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        CondicionIva elemento = elementoDAO.findTopByOrderByIdDesc();
+        VentaItemConcepto elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
-    public List<CondicionIva> listar() {
+    public List<VentaItemConcepto> listar() {
         return elementoDAO.findAll();
     }
     
     //Obtiene una lista por nombre
-    public List<CondicionIva> listarPorNombre(String nombre) {
+    public List<VentaItemConcepto> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
@@ -41,28 +41,28 @@ public class CondicionIvaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public CondicionIva agregar(CondicionIva elemento) {
+    public VentaItemConcepto agregar(VentaItemConcepto elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(CondicionIva elemento) {
+    public void actualizar(VentaItemConcepto elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(CondicionIva elemento) {
+    public void eliminar(VentaItemConcepto elemento) {
         elementoDAO.delete(elemento);
     }
     
     //Formatea los strings
-    private CondicionIva formatearStrings(CondicionIva elemento) {
+    private VentaItemConcepto formatearStrings(VentaItemConcepto elemento) {
         elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
-    
+
 }

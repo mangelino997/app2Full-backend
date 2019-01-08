@@ -1,37 +1,37 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IVentaConceptoDAO;
-import ar.com.draimo.jitws.model.VentaConcepto;
+import ar.com.draimo.jitws.model.AfipCondicionIva;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
 
 /**
- * Servicio Provincia
+ * Servicio Afip Condicion Iva
  * @author blas
  */
 
 @Service
-public class VentaConceptoService {
-
+public class AfipCondicionIvaService {
+    
     //Define la referencia al dao
     @Autowired
-    IVentaConceptoDAO elementoDAO;
+    IAfipCondicionIvaDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        VentaConcepto elemento = elementoDAO.findTopByOrderByIdDesc();
+        AfipCondicionIva elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
-    public List<VentaConcepto> listar() {
+    public List<AfipCondicionIva> listar() {
         return elementoDAO.findAll();
     }
     
     //Obtiene una lista por nombre
-    public List<VentaConcepto> listarPorNombre(String nombre) {
+    public List<AfipCondicionIva> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
@@ -41,28 +41,28 @@ public class VentaConceptoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VentaConcepto agregar(VentaConcepto elemento) {
+    public AfipCondicionIva agregar(AfipCondicionIva elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.save(elemento);
     }
-
+    
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VentaConcepto elemento) {
+    public void actualizar(AfipCondicionIva elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(VentaConcepto elemento) {
+    public void eliminar(AfipCondicionIva elemento) {
         elementoDAO.delete(elemento);
     }
     
     //Formatea los strings
-    private VentaConcepto formatearStrings(VentaConcepto elemento) {
+    private AfipCondicionIva formatearStrings(AfipCondicionIva elemento) {
         elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
-
+    
 }

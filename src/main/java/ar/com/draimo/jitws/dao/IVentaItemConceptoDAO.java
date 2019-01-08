@@ -1,22 +1,22 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.CondicionIva;
+import ar.com.draimo.jitws.model.VentaItemConcepto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Condicion iva
+ * Interfaz DAO Venta Item Concepto
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface ICondicionIvaDAO extends JpaRepository<CondicionIva, Integer> {
+public interface IVentaItemConceptoDAO extends JpaRepository<VentaItemConcepto, Integer> {
     
     //Obtiene el siguiente id
-    public CondicionIva findTopByOrderByIdDesc();
+    public VentaItemConcepto findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<CondicionIva> findByNombreContaining(String nombre);
+    public List<VentaItemConcepto> findByNombreContaining(String nombre);
     
 }
