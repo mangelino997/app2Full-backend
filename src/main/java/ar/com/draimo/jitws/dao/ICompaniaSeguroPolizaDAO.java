@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.CompaniaSeguro;
 import ar.com.draimo.jitws.model.CompaniaSeguroPoliza;
 import ar.com.draimo.jitws.model.Empresa;
 import java.util.List;
@@ -20,5 +21,14 @@ public interface ICompaniaSeguroPolizaDAO extends JpaRepository<CompaniaSeguroPo
     
     //Obtiene una lista por empresa
     public List<CompaniaSeguroPoliza> findByEmpresa(Optional<Empresa> empresa);
+    
+    //Obtiene una lista por compania de seguro
+    public List<CompaniaSeguroPoliza> findByCompaniaSeguro(Optional<CompaniaSeguro> companiaSeguro);
+    
+    //Obtiene por compania de seguro y empresa
+    public CompaniaSeguroPoliza findByCompaniaSeguroAndEmpresa(Optional<CompaniaSeguro> companiaSeguro, Optional<Empresa> empresa);
+    
+    //Obtiene una lista por nombre de compania de seguro
+    public List<CompaniaSeguroPoliza> findByCompaniaSeguro_NombreContaining(String nombre);
     
 }

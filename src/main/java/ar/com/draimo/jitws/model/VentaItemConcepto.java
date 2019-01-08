@@ -45,7 +45,7 @@ public class VentaItemConcepto extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public boolean isEstaHabilitado() {
+    public boolean getEstaHabilitado() {
         return estaHabilitado;
     }
 
@@ -61,7 +61,7 @@ public class VentaItemConcepto extends ObjetoGenerico {
         this.tipoComprobante = tipoComprobante;
     }
 
-    public boolean isEsChequeRechazado() {
+    public boolean getEsChequeRechazado() {
         return esChequeRechazado;
     }
 
