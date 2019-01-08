@@ -38,6 +38,10 @@ public class TipoComprobante extends ObjetoGenerico {
     //Define numeracion punto venta
     @Column(name = "numeracionPuntoVenta", nullable = false)
     private boolean numeracionPuntoVenta;
+    
+    //Define si esta activo reparto
+    @Column(name = "estaActivoReparto", nullable = false)
+    private boolean estaActivoReparto;
 
     //Getters y Setters de la clase
 
@@ -57,7 +61,7 @@ public class TipoComprobante extends ObjetoGenerico {
         this.abreviatura = abreviatura;
     }
 
-    public boolean isEstaActivoIngresoCarga() {
+    public boolean getEstaActivoIngresoCarga() {
         return estaActivoIngresoCarga;
     }
 
@@ -65,7 +69,7 @@ public class TipoComprobante extends ObjetoGenerico {
         this.estaActivoIngresoCarga = estaActivoIngresoCarga;
     }
 
-    public boolean isEstaActivoVentaCarga() {
+    public boolean getEstaActivoVentaCarga() {
         return estaActivoVentaCarga;
     }
 
@@ -73,7 +77,7 @@ public class TipoComprobante extends ObjetoGenerico {
         this.estaActivoVentaCarga = estaActivoVentaCarga;
     }
 
-    public boolean isEstaActivoCompraCarga() {
+    public boolean getEstaActivoCompraCarga() {
         return estaActivoCompraCarga;
     }
 
@@ -81,12 +85,20 @@ public class TipoComprobante extends ObjetoGenerico {
         this.estaActivoCompraCarga = estaActivoCompraCarga;
     }
 
-    public boolean isNumeracionPuntoVenta() {
+    public boolean getNumeracionPuntoVenta() {
         return numeracionPuntoVenta;
     }
 
     public void setNumeracionPuntoVenta(boolean numeracionPuntoVenta) {
         this.numeracionPuntoVenta = numeracionPuntoVenta;
+    }
+
+    public boolean getEstaActivoReparto() {
+        return estaActivoReparto;
+    }
+
+    public void setEstaActivoReparto(boolean estaActivoReparto) {
+        this.estaActivoReparto = estaActivoReparto;
     }
     
 }

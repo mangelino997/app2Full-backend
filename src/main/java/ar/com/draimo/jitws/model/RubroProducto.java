@@ -19,6 +19,14 @@ public class RubroProducto extends ObjetoGenerico {
     @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
     
+    //Define si es insumo
+    @Column(name = "esInsumo", nullable = false)
+    private boolean esInsumo;
+    
+    //Define si es combustible
+    @Column(name = "esCombustible", nullable = false)
+    private boolean esCombustible;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -27,6 +35,22 @@ public class RubroProducto extends ObjetoGenerico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isEsInsumo() {
+        return esInsumo;
+    }
+
+    public void setEsInsumo(boolean esInsumo) {
+        this.esInsumo = esInsumo;
+    }
+
+    public boolean isEsCombustible() {
+        return esCombustible;
+    }
+
+    public void setEsCombustible(boolean esCombustible) {
+        this.esCombustible = esCombustible;
     }
     
 }
