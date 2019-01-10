@@ -31,10 +31,6 @@ public class VentaItemConcepto extends ObjetoGenerico {
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
     
-    //Define si es cheque rechazado
-    @Column(name = "esChequeRechazado", nullable = false)
-    private boolean esChequeRechazado;
-    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -59,14 +55,6 @@ public class VentaItemConcepto extends ObjetoGenerico {
 
     public void setTipoComprobante(TipoComprobante tipoComprobante) {
         this.tipoComprobante = tipoComprobante;
-    }
-
-    public boolean getEsChequeRechazado() {
-        return esChequeRechazado;
-    }
-
-    public void setEsChequeRechazado(boolean esChequeRechazado) {
-        this.esChequeRechazado = esChequeRechazado;
     }
     
 }
