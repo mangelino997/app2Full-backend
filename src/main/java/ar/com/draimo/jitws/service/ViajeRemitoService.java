@@ -109,7 +109,7 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public ViajeRemito agregar(ViajeRemito elemento) {
         //Establece valores por defecto
-        elemento.setEstaPendiente(false);
+        elemento.setEstaPendiente(true);
         elemento.setEstaFacturado(false);
         elemento.setEstaEnReparto(false);
         //Formatea los strings
