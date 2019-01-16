@@ -57,7 +57,7 @@ public class ViajeRemitoService {
     public List<ViajeRemito> listarPendientesPorSucursal(int idSucursal) {
         //Obtiene la sucursal por id
         Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
-        return elementoDAO.findBySucursalEmisionAndEstaPendienteTrue(sucursal);
+        return elementoDAO.findBySucursalEmisionAndEstaPendienteFalse(sucursal);
     }
     
     //Obtiene un listado de pendientes por filtro
@@ -67,7 +67,7 @@ public class ViajeRemitoService {
         //Obtiene la sucursal destino por id
         Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
         //Retorna los datos
-        return elementoDAO.findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(sucursal, sucursalDestino, numeroCamion);
+        return elementoDAO.findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(sucursal, sucursalDestino, numeroCamion);
     }
     
     //Obtiene un listado de asignados por filtro

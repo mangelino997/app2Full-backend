@@ -26,10 +26,10 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public List<ViajeRemito> findByNumeroContaining(int numero);
     
     //Obtiene una lista de pendientes por sucursal emision
-    public List<ViajeRemito> findBySucursalEmisionAndEstaPendienteTrue(Optional<Sucursal> sucursal);
+    public List<ViajeRemito> findBySucursalEmisionAndEstaPendienteFalse(Optional<Sucursal> sucursal);
     
     //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino y numero camion)
-    public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
+    public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
     
     //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino, numero camion y viajePropioTramo)
