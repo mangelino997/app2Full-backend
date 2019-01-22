@@ -38,6 +38,20 @@ public class EmpresaService {
             return elementoDAO.findByRazonSocialContaining(razonSocial);
         }
     }
+    //Obtiene por razon social
+    public List<Empresa> listarPorRazonSocialYCAEAHabilitado(String razonSocial) {
+            return elementoDAO.findByRazonSocialContainingAndFeCAEATrue(razonSocial);
+    }
+    
+    //Obtiene por razon social y esta activo
+    public List<Empresa> listarPorRazonSocialYActiva(String razonSocial) {
+            return elementoDAO.findByRazonSocialContainingAndEstaActivaTrue(razonSocial);
+    }
+    
+    //Obtiene por razon social, esta activo y fe
+    public List<Empresa> listarPorRazonSocialYActivaYFe(String razonSocial) {
+            return elementoDAO.findByRazonSocialContainingAndEstaActivaTrueAndFeTrue(razonSocial);
+    }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

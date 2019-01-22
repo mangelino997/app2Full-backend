@@ -1,11 +1,13 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.model.AfipCaea;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IAfipCaeaDAO;
+import java.util.ArrayList;
 
 /**
  * Servicio AfipCaea
@@ -28,6 +30,26 @@ public class AfipCaeaService {
     //Obtiene la lista completa
     public List<AfipCaea> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene un listado de anios
+    public List<Short> listarAnios() {
+        List<Short> anios = new ArrayList<>();
+        short anio = Funcion.anioInicio;
+        for (short i = anio; i < anio+14; i++) {
+            anios.add((short)i);
+        }
+        return anios;
+    }
+    
+    //Obtiene un registro por empresa, anio, mes y quincena
+    public AfipCaea obtenerPorEmpresaYPeriodoOrden(int idEmpresa, short anio, short mes, short quincena) {
+        return elementoDAO.obtenerPorEmpresaYPeriodoOrden(idEmpresa, anio, mes, quincena);
+    }
+    
+    //Obtiene un listado de registros por empresa y anio
+    public List<AfipCaea> listarPorEmpresaYAnio(int idEmpresa, short anio) {
+        return elementoDAO.listarPorEmpresaYAnio(idEmpresa, anio);
     }
     
     //Agrega un registro

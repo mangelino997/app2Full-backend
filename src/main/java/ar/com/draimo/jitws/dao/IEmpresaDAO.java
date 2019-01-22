@@ -19,4 +19,13 @@ public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
     //Obtiene una lista por razon social
     public List<Empresa> findByRazonSocialContaining(String razonSocial);
     
+    //Obtiene una lista por razon social y CAEA habilitado
+    public List<Empresa> findByRazonSocialContainingAndFeCAEATrue(String razonSocial);
+    
+    //Obtiene un listado por razon social y activa
+    public List<Empresa> findByRazonSocialContainingAndEstaActivaTrue(String razonSocial);
+    
+    //Obtiene un listado por razon social, esta activa y fe
+    public List<Empresa> findByRazonSocialContainingAndEstaActivaTrueAndFeTrue(String razonSocial);
+    
 }

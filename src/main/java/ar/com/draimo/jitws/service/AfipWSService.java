@@ -38,6 +38,27 @@ public class AfipWSService {
             return elementoDAO.findByNombreContaining(nombre);
         }
     }
+    
+    //Solicita  FECAEA
+    public void solicitarFECAEA(int anio, int mes, short quincena) {
+        //Desarrollar código para solicitar CAE Anticipado al servicio web de afip.
+    }
+    
+    //Consulta FECAEA
+    public void consultarFECAEA(int anio, int mes, short quincena) {
+        //Desarrollar código para consultar CAE Anticipado al servicio web de afip.
+    }
+    
+    //Consulta el estado de infraestructura
+    public void dummyFE() {
+        //Desarrollar código para consultar estado de infraestructura.
+    }
+    
+    //Consulta vencimiento del certificado digital
+    public void archivoCertificadoVtoFE() {
+        //Desarrollar código para consultar vencimiento del certificado digital 
+        // ver nombre del método no está en manual de afip.
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

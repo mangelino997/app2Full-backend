@@ -1,7 +1,6 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;

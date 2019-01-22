@@ -62,6 +62,20 @@ public class OrdenVentaController {
         return elementoService.listarPorNombre(nombre);
     }
     
+    //Obtiene una lista por cliente
+    @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
+    @ResponseBody
+    public List<OrdenVenta> listarPorCliente(@PathVariable int idCliente) {
+        return elementoService.listarPorCliente(idCliente);
+    }
+    
+    //Obtiene una lista por empresa
+    @GetMapping(value = URL + "/listarPorEmpresa/{empresa}")
+    @ResponseBody
+    public List<OrdenVenta> listarPorEmpresa(@PathVariable int idEmpresa) {
+        return elementoService.listarPorEmpresa(idEmpresa);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVenta elemento) {

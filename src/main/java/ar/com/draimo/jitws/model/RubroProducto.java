@@ -1,8 +1,11 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,7 +19,7 @@ import javax.persistence.Table;
 public class RubroProducto extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre", length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define si es insumo
@@ -26,6 +29,16 @@ public class RubroProducto extends ObjetoGenerico {
     //Define si es combustible
     @Column(name = "esCombustible", nullable = false)
     private boolean esCombustible;
+    
+    //Referencia a CuentaContableVenta
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPlandeCuentaVenta")
+    private PlandeCuenta plandeCuentaVenta;
+    
+    //Referencia a CuentaContableCompra
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPlandeCuentaCompra")
+    private PlandeCuenta planDeCuentaCompra;
     
     //Getters y Setters de la clase
 
@@ -51,6 +64,22 @@ public class RubroProducto extends ObjetoGenerico {
 
     public void setEsCombustible(boolean esCombustible) {
         this.esCombustible = esCombustible;
+    }
+
+    public PlandeCuenta getPlandeCuentaVenta() {
+        return plandeCuentaVenta;
+    }
+
+    public void setPlandeCuentaVenta(PlandeCuenta plandeCuentaVenta) {
+        this.plandeCuentaVenta = plandeCuentaVenta;
+    }
+
+    public PlandeCuenta getPlanDeCuentaCompra() {
+        return planDeCuentaCompra;
+    }
+
+    public void setPlanDeCuentaCompra(PlandeCuenta planDeCuentaCompra) {
+        this.planDeCuentaCompra = planDeCuentaCompra;
     }
     
 }

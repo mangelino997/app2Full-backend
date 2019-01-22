@@ -31,19 +31,19 @@ public class OrdenVentaEscala extends ObjetoGenerico {
     private EscalaTarifa escalaTarifa;
     
     //Define el importe fijo
-    @Column(name = "importeFijo", nullable = true)
+    @Column(name = "importeFijo")
     private BigDecimal importeFijo;
     
     //Define el precio unitario
-    @Column(name = "precioUnitario", nullable = true)
+    @Column(name = "precioUnitario")
     private BigDecimal precioUnitario;
     
     //Define el porcentaje
-    @Column(name = "porcentaje", nullable = true)
+    @Column(name = "porcentaje")
     private BigDecimal porcentaje;
     
     //Define el minimo
-    @Column(name = "minimo", nullable = true)
+    @Column(name = "minimo")
     private BigDecimal minimo;
     
     //Define la fecha desde que estan los precios

@@ -22,16 +22,16 @@ import javax.persistence.Table;
 public class Empresa extends ObjetoGenerico {
     
     //Define la razon social
-    @Column(name = "razonSocial", nullable = false, unique = true)
+    @Column(name = "razonSocial",length = 45, nullable = false, unique = true)
     private String razonSocial;
     
     //Define el domicilio
-    @Column(name = "domicilio", nullable = false)
+    @Column(name = "domicilio", length = 60, nullable = false)
     private String domicilio;
     
     //Referencia a la clase Barrio
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idBarrio", nullable = true)
+    @JoinColumn(name = "idBarrio")
     private Barrio barrio;
     
     //Referencia a la clase Localidad
@@ -45,20 +45,20 @@ public class Empresa extends ObjetoGenerico {
     private AfipCondicionIva afipCondicionIva;
     
     //Define el cuit
-    @Column(name = "cuit", nullable = false, unique = true)
+    @Column(name = "cuit", length = 11, nullable = false, unique = true)
     private String cuit;
     
     //Define el numero de ingresos brutos
-    @Column(name = "numeroIIBB", nullable = true)
+    @Column(name = "numeroIIBB", length = 15)
     private String numeroIIBB;
     
     //Define la abreviatura
-    @Column(name = "abreviatura", nullable = false, unique = true)
+    @Column(name = "abreviatura", length = 15, nullable = false, unique = true)
     private String abreviatura;
     
     //Define el logo
     @Lob
-    @Column(name = "logoBin", nullable = true)
+    @Column(name = "logoBin")
     private Blob logoBin;
     
     //Define si esta activa
@@ -66,11 +66,11 @@ public class Empresa extends ObjetoGenerico {
     private boolean estaActiva;
     
     //Define el inicio de actividad
-    @Column(name = "inicioActividad", nullable = true)
+    @Column(name = "inicioActividad")
     private LocalDate inicioActividad;
     
     //Define el caea
-    @Column(name = "feCaea", nullable = false)
+    @Column(name = "feCAEA", nullable = false)
     private boolean feCAEA;
     
     //Define el fe modo
@@ -79,13 +79,17 @@ public class Empresa extends ObjetoGenerico {
     
     //Define el certificado real
     @Lob
-    @Column(name = "certificadoReal", nullable = true)
+    @Column(name = "certificadoReal")
     private Blob certificadoReal;
     
     //Define el certificado prueba
     @Lob
-    @Column(name = "certificadoPrueba", nullable = true)
+    @Column(name = "certificadoPrueba")
     private Blob certificadoPrueba;
+    
+    //Define fe
+    @Column(name = "fe", nullable = false)
+    private boolean fe;
     
     //Getters y Setters de la clase
 
@@ -207,6 +211,14 @@ public class Empresa extends ObjetoGenerico {
 
     public void setCertificadoPrueba(Blob certificadoPrueba) {
         this.certificadoPrueba = certificadoPrueba;
+    }
+
+    public boolean isFe() {
+        return fe;
+    }
+
+    public void setFe(boolean fe) {
+        this.fe = fe;
     }
     
 }

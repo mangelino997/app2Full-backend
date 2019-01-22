@@ -25,16 +25,20 @@ public class AfipCaea extends ObjetoGenerico {
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
-    //Define el periodo
-    @Column(name = "periodo", nullable = false)
-    private int periodo;
+    //Define el anio
+    @Column(name = "anio", nullable = false)
+    private short anio;
+    
+    //Define el mes
+    @Column(name = "mes", nullable = false)
+    private short mes;
     
     //Define la quincena
     @Column(name = "quincena", nullable = false)
     private short quincena;
     
     //Define el numero caea
-    @Column(name = "numeroCAEA", nullable = false)
+    @Column(name = "numeroCAEA",length = 14, nullable = false)
     private String numeroCAEA;
     
     //Define fecha desde
@@ -63,12 +67,20 @@ public class AfipCaea extends ObjetoGenerico {
         this.empresa = empresa;
     }
 
-    public int getPeriodo() {
-        return periodo;
+    public short getAnio() {
+        return anio;
     }
 
-    public void setPeriodo(int periodo) {
-        this.periodo = periodo;
+    public void setAnio(short anio) {
+        this.anio = anio;
+    }
+
+    public short getMes() {
+        return mes;
+    }
+
+    public void setMes(short mes) {
+        this.mes = mes;
     }
 
     public short getQuincena() {
@@ -118,5 +130,5 @@ public class AfipCaea extends ObjetoGenerico {
     public void setFechaSolicitud(LocalDateTime fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
-    
+
 }

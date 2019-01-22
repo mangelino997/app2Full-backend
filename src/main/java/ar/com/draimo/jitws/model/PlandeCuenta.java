@@ -12,11 +12,11 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "area")
-public class Area extends ObjetoGenerico {
+@Table(name = "plandecuenta")
+public class PlandeCuenta extends ObjetoGenerico {
 
     //Define el nombre
-    @Column(name = "nombre", length = 45, nullable = false, unique = true)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
 
     //Getters y Setters de la clase

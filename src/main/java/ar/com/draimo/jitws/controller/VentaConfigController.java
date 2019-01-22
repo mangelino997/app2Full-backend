@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.AfipWS;
-import ar.com.draimo.jitws.service.AfipWSService;
+import ar.com.draimo.jitws.model.VentaConfig;
+import ar.com.draimo.jitws.service.VentaConfigService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,26 +12,25 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase afipws Controller
+ * Clase VentaConfig Controller
  * @author blas
  */
 
 @RestController
-public class AfipWSController {
+public class VentaConfigController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/afipws";
+    private final String URL = RutaConstant.URL_BASE + "/ventaconfig";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/afipws";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventaconfig";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -39,7 +38,7 @@ public class AfipWSController {
     
     //Crea una instancia del servicio
     @Autowired
-    AfipWSService elementoService;
+    VentaConfigService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,50 +50,15 @@ public class AfipWSController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<AfipWS> listar() {
+    public List<VentaConfig> listar() {
         return elementoService.listar();
-    }
-    
-    //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
-    @ResponseBody
-    public List<AfipWS> listarPorNombre(@PathVariable String nombre) {
-        return elementoService.listarPorNombre(nombre);
-    }
-    
-    //Solicita CAE anticipado
-    @GetMapping(value = URL + "/solicitarFECAEA/{anio}/{mes}/{quincena}")
-    @ResponseBody
-    public void listarPorNombre(@PathVariable int anio, @PathVariable int mes, @PathVariable short quincena) {
-        elementoService.solicitarFECAEA(anio, mes, quincena);
-    }
-
-    //Consulta FECAEA anticipado
-    @GetMapping(value = URL + "/consultarFECAEA/{anio}/{mes}/{quincena}")
-    @ResponseBody
-    public void consultarFECAEA(@PathVariable int anio, @PathVariable int mes, @PathVariable short quincena) {
-        elementoService.consultarFECAEA(anio, mes, quincena);
-    }
-
-    //Consulta estado de infraestructura
-    @GetMapping(value = URL + "/dummyFE")
-    @ResponseBody
-    public void dummyFE() {
-        elementoService.dummyFE();
-    }
-
-    //Consulta vencimiento del certificado digital
-    @GetMapping(value = URL + "/archivoCertificadoVtoFE")
-    @ResponseBody
-    public void archivoCertificadoVtoFE() {
-        elementoService.archivoCertificadoVtoFE();
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody AfipWS elemento) {
+    public ResponseEntity<?> agregar(@RequestBody VentaConfig elemento) {
         try {
-            AfipWS a = elementoService.agregar(elemento);
+            VentaConfig a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -113,7 +77,7 @@ public class AfipWSController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody AfipWS elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody VentaConfig elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -138,7 +102,7 @@ public class AfipWSController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody AfipWS elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody VentaConfig elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

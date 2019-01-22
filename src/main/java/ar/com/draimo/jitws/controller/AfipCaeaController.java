@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +53,28 @@ public class AfipCaeaController {
     @ResponseBody
     public List<AfipCaea> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene un listado de anios
+    @GetMapping(value = URL + "/listarAnios")
+    @ResponseBody
+    public List<Short> listarAnios() {
+        return elementoService.listarAnios();
+    }
+    
+    //Obtiene un registro por empresa, anio, mes y quincena
+    @GetMapping(value = URL + "/obtenerPorEmpresaYPeriodoOrden/{idEmpresa}/{anio}/{mes}/{quincena}")
+    @ResponseBody
+    public AfipCaea obtenerPorEmpresaYPeriodoOrden(@PathVariable int idEmpresa,
+            @PathVariable short anio,@PathVariable short mes,@PathVariable short quincena) {
+        return elementoService.obtenerPorEmpresaYPeriodoOrden(idEmpresa, anio, mes, quincena);
+    }
+    
+    //Obtiene un listado por empresa y anio
+    @GetMapping(value = URL + "/listarPorEmpresaYAnio/{idEmpresa}/{anio}")
+    @ResponseBody
+    public List<AfipCaea> listarPorEmpresaYAnio(@PathVariable int idEmpresa, @PathVariable short anio) {
+        return elementoService.listarPorEmpresaYAnio(idEmpresa, anio);
     }
     
     //Agrega un registro

@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEscalaTarifaDAO;
+import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
 import ar.com.draimo.jitws.model.EscalaTarifa;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
@@ -22,6 +23,10 @@ public class OrdenVentaEscalaService {
     //Define la referencia al dao
     @Autowired
     IOrdenVentaEscalaDAO elementoDAO;
+    
+    //Define la referencia al dao de ordenVenta
+    @Autowired
+    IOrdenVentaDAO ordenVentaDAO;
     
     //Define la referencia al dao escala tarifa
     @Autowired
@@ -60,6 +65,12 @@ public class OrdenVentaEscalaService {
         //Retorna los datos
         return ordenesVentasEscalas;
     }
+    
+    //Obtiene un listado por orden venta
+    public List<OrdenVentaEscala> listarPorOrdenVenta(int idOrdenVenta) {
+        return elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta));
+    }
+    
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

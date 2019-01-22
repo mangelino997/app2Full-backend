@@ -32,4 +32,7 @@ public class Funcion {
         return StringUtils.capitalize(palabra);
     }
     
+    //Obtiene el anio de inicio
+    public static final short anioInicio = 2019;
+    
 }

@@ -23,17 +23,17 @@ import javax.persistence.Table;
 public class OrdenVenta extends ObjetoGenerico {
 
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCliente", nullable = true)
+    @JoinColumn(name = "idCliente")
     private Cliente cliente;
     
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idEmpresa", nullable = true)
+    @JoinColumn(name = "idEmpresa")
     private Empresa empresa;
     
     //Referencia a la clase Vendedor
@@ -59,7 +59,7 @@ public class OrdenVenta extends ObjetoGenerico {
     private BigDecimal comisionCR;
     
     //Define las observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones", length = 200, nullable = true)
     private String observaciones;
     
     //Define si esta activa

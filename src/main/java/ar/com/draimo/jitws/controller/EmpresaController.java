@@ -62,6 +62,27 @@ public class EmpresaController {
         return elementoService.listarPorRazonSocial(razonSocial);
     }
     
+    //Obtiene una lista por nombre y feCAEA habilitado
+    @GetMapping(value = URL + "/listarPorRazonSocialYCAEAHabilitado/{razonSocial}")
+    @ResponseBody
+    public List<Empresa> listarPorRazonSocialYCAEAHabilitado(@PathVariable String razonSocial) {
+        return elementoService.listarPorRazonSocialYCAEAHabilitado(razonSocial);
+    }
+    
+    //Obtiene una lista por nombre y esta activa
+    @GetMapping(value = URL + "/listarPorRazonSocialYActiva/{razonSocial}")
+    @ResponseBody
+    public List<Empresa> listarPorRazonSocialYActiva(@PathVariable String razonSocial) {
+        return elementoService.listarPorRazonSocialYActiva(razonSocial);
+    }
+    
+    //Obtiene una lista por nombre, esta activa y fe
+    @GetMapping(value = URL + "/listarPorRazonSocialYActivaYFe/{razonSocial}")
+    @ResponseBody
+    public List<Empresa> listarPorRazonSocialYActivaYFe(@PathVariable String razonSocial) {
+        return elementoService.listarPorRazonSocialYActivaYFe(razonSocial);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Empresa elemento) {

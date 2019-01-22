@@ -40,7 +40,7 @@ public class TipoComprobante extends ObjetoGenerico {
     private boolean numeracionPuntoVenta;
     
     //Define si esta activo reparto
-    @Column(name = "estaActivoReparto", nullable = false)
+    @Column(name = "estaActivoReparto")
     private boolean estaActivoReparto;
 
     //Getters y Setters de la clase
