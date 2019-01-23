@@ -74,10 +74,10 @@ public class ViajeTercero extends ObjetoGenerico {
     @JoinColumn(name = "idProveedorRemolque", nullable = true)
     private Proveedor proveedorRemolque;
     
-    //Referencia a la clase Condicion de Iva
+    //Referencia a la clase Afip Condicion de Iva
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCondicionIva", nullable = false)
-    private AfipCondicionIva condicionIva;
+    @JoinColumn(name = "idAfipCondicionIva", nullable = false)
+    private AfipCondicionIva afipCondicionIva;
     
     //Define un numero de liquidacion
     @Column(name = "numeroLiquidacion", nullable = true)
@@ -229,12 +229,12 @@ public class ViajeTercero extends ObjetoGenerico {
         this.proveedorRemolque = proveedorRemolque;
     }
 
-    public AfipCondicionIva getCondicionIva() {
-        return condicionIva;
+    public AfipCondicionIva getAfipCondicionIva() {
+        return afipCondicionIva;
     }
 
-    public void setCondicionIva(AfipCondicionIva condicionIva) {
-        this.condicionIva = condicionIva;
+    public void setAfipCondicionIva(AfipCondicionIva afipCondicionIva) {
+        this.afipCondicionIva = afipCondicionIva;
     }
 
     public String getNumeroLiquidacion() {
