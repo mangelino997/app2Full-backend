@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -137,26 +138,32 @@ public class ViajePropio extends ObjetoGenerico {
     private String observaciones;
     
     //Define la lista de tramos
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioTramo> viajePropioTramos;
     
     //Define la lista de ordenes de combustible
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioCombustible> viajePropioCombustibles;
     
     //Define la lista de adelantos de efectivo
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioEfectivo> viajePropioEfectivos;
     
     //Define la lista de ordenes de insumo
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioInsumo> viajePropioInsumos;
     
     //Define la lista de gastos
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioGasto> viajePropioGastos;
     
     //Define la lista de peajes
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
     private List<ViajePropioPeaje> viajePropioPeajes;
 

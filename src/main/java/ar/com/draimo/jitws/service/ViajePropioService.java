@@ -100,30 +100,49 @@ public class ViajePropioService {
         elemento = formatearStrings(elemento);
         //Agrega el viaje propio
         ViajePropio viajePropio = elementoDAO.saveAndFlush(elemento);
-        //Agrega los tramos del viaje
-        elemento.getViajePropioTramos().forEach((item) -> {
-            viajePropioTramoDAO.saveAndFlush(item);
-        });
-        //Agrega las ordenes de combustible del viaje
-        elemento.getViajePropioCombustibles().forEach((item) -> {
-            viajePropioCombustibleDAO.saveAndFlush(item);
-        });
-        //Agrega los adelantos de efectivo del viaje
-        elemento.getViajePropioEfectivos().forEach((item) -> {
-            viajePropioEfectivoDAO.saveAndFlush(item);
-        });
-        //Agrega las ordenes de insumo del viaje
-        elemento.getViajePropioInsumos().forEach((item) -> {
-            viajePropioInsumoDAO.saveAndFlush(item);
-        });
-        //Agrega los gastos del viaje
-        /*elemento.getViajePropioGastos().forEach((item) -> {
-            viajePropioGastoDAO.saveAndFlush(item);
-        });
-        //Agrega los peajes del viaje
-        elemento.getViajePropioPeajes().forEach((item) -> {
-            viajePropioPeajeDAO.saveAndFlush(item);
-        });*/
+        //Verifica que la lista de tramos tenga elementos
+        if (elemento.getViajePropioTramos() != null) {
+            //Agrega los tramos del viaje
+            elemento.getViajePropioTramos().forEach((item) -> {
+                item.setViajePropio(viajePropio);
+                viajePropioTramoDAO.saveAndFlush(item);
+            });
+        }
+        //Verifica que la lista de combustibles tenga elementos
+        if (elemento.getViajePropioCombustibles() != null) {
+            //Agrega las ordenes de combustible del viaje
+            elemento.getViajePropioCombustibles().forEach((item) -> {
+                viajePropioCombustibleDAO.saveAndFlush(item);
+            });
+        }
+        //Verifica que la lista de efectivos tenga elementos
+        if (elemento.getViajePropioEfectivos() != null) {
+            //Agrega los adelantos de efectivo del viaje
+            elemento.getViajePropioEfectivos().forEach((item) -> {
+                viajePropioEfectivoDAO.saveAndFlush(item);
+            });
+        }
+        //Verifica que la lista de insumos tenga elementos
+        if (elemento.getViajePropioInsumos() != null) {
+            //Agrega las ordenes de insumo del viaje
+            elemento.getViajePropioInsumos().forEach((item) -> {
+                viajePropioInsumoDAO.saveAndFlush(item);
+            });
+        }
+        //Verifica que la lista de gatos tenga elementos
+        if (elemento.getViajePropioGastos() != null) {
+            //Agrega los gastos del viaje
+            elemento.getViajePropioGastos().forEach((item) -> {
+                viajePropioGastoDAO.saveAndFlush(item);
+            });
+        }
+        //Verifica que la lista de peajes tenga elementos
+        if (elemento.getViajePropioPeajes() != null) {
+            //Agrega los peajes del viaje
+            elemento.getViajePropioPeajes().forEach((item) -> {
+                viajePropioPeajeDAO.saveAndFlush(item);
+            });
+        }
         return viajePropio;
     }
     
