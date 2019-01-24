@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Configura los cors
         http.addFilterBefore(corsFilter(), ChannelProcessingFilter.class);
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/jitws/socket/**").permitAll()
+                .antMatchers("/jitws/socket/**", "/jitws/auth/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

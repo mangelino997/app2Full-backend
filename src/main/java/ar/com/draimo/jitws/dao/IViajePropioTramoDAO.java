@@ -20,7 +20,7 @@ public interface IViajePropioTramoDAO extends JpaRepository<ViajePropioTramo, In
     public ViajePropioTramo findTopByOrderByIdDesc();
     
     //Obtiene una lista por viaje propio
-    public List<ViajePropioTramo> findByViajePropio(Optional<ViajePropio> viajePropio);
+    public List<ViajePropioTramo> findByViajePropio(ViajePropio viajePropio);
     
     //Obtiene por viaje propio y tramo
     public ViajePropioTramo findByViajePropioAndTramo(Optional<ViajePropio> viajePropio, Optional<Tramo> tramo);

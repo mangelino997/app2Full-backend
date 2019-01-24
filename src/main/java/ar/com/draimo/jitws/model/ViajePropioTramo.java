@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -97,10 +98,12 @@ public class ViajePropioTramo extends ObjetoGenerico {
     private BigDecimal importe;
     
     //Define la lista de tramos de clientes
+    @JsonManagedReference
     @OneToMany(mappedBy = "viajePropioTramo")
     private List<ViajePropioTramoCliente> viajePropioTramoClientes;
     
     //Define la lista de remitos
+    @JsonManagedReference
     @OneToMany(mappedBy = "viajePropioTramo")
     private List<ViajeRemito> viajeRemitos;
     

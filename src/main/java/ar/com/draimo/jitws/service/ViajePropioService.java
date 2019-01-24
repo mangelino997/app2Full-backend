@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.IViajePropioEfectivoDAO;
 import ar.com.draimo.jitws.dao.IViajePropioGastoDAO;
 import ar.com.draimo.jitws.dao.IViajePropioInsumoDAO;
 import ar.com.draimo.jitws.dao.IViajePropioPeajeDAO;
+import ar.com.draimo.jitws.dao.IViajePropioTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.model.ViajePropio;
 import ar.com.draimo.jitws.model.ViajePropioCombustible;
@@ -15,7 +16,6 @@ import ar.com.draimo.jitws.model.ViajePropioInsumo;
 import ar.com.draimo.jitws.model.ViajePropioPeaje;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +35,10 @@ public class ViajePropioService {
     //Define la referencia al dao viaje propio tramo
     @Autowired
     IViajePropioTramoDAO viajePropioTramoDAO;
+    
+    //Define la referencia al dao viaje propio tramo cliente
+    @Autowired
+    IViajePropioTramoClienteDAO viajePropioTramoClienteDAO;
     
     //Define la referencia al dao viaje propio combustible
     @Autowired
@@ -68,27 +72,26 @@ public class ViajePropioService {
     }
     
     //Obtiene por id
-    public ViajePropio obtener(int id) {
+    public ViajePropio obtenerPorId(int id) {
         //Obtiene un viaje propio por id
-        Optional<ViajePropio> viajePropioOptional = elementoDAO.findById(id);
-        ViajePropio viajePropio = viajePropioOptional.get();
+        ViajePropio viajePropio = elementoDAO.obtenerPorId(id);
         //Obtiene la lista de tramos del viaje
-        List<ViajePropioTramo> viajePropioTramos = viajePropioTramoDAO.findByViajePropio(viajePropioOptional);
+        List<ViajePropioTramo> viajePropioTramos = viajePropioTramoDAO.findByViajePropio(viajePropio);
         viajePropio.setViajePropioTramos(viajePropioTramos);
         //Obtiene la lista de ordenes de combustible del viaje
-        List<ViajePropioCombustible> viajePropioCombustibles = viajePropioCombustibleDAO.findByViajePropio(viajePropioOptional);
+        List<ViajePropioCombustible> viajePropioCombustibles = viajePropioCombustibleDAO.findByViajePropio(viajePropio);
         viajePropio.setViajePropioCombustibles(viajePropioCombustibles);
         //Obtiene la lista de adelantos de efectivo del viaje
-        List<ViajePropioEfectivo> viajePropioEfectivos = viajePropioEfectivoDAO.findByViajePropio(viajePropioOptional);
+        List<ViajePropioEfectivo> viajePropioEfectivos = viajePropioEfectivoDAO.findByViajePropio(viajePropio);
         viajePropio.setViajePropioEfectivos(viajePropioEfectivos);
         //Obtiene la lista de ordenes de insumo del viaje
-        List<ViajePropioInsumo> viajePropioInsumos = viajePropioInsumoDAO.findByViajePropio(viajePropioOptional);
+        List<ViajePropioInsumo> viajePropioInsumos = viajePropioInsumoDAO.findByViajePropio(viajePropio);
         viajePropio.setViajePropioInsumos(viajePropioInsumos);
         //Obtiene la lista de gastos del viaje
-        List<ViajePropioGasto> viajePropioGasto = viajePropioGastoDAO.findByViajePropio(viajePropioOptional);
+        List<ViajePropioGasto> viajePropioGasto = viajePropioGastoDAO.findByViajePropio(viajePropio);
         viajePropio.setViajePropioGastos(viajePropioGasto);
         //Obtiene la lista de peajes del viaje
-        List<ViajePropioPeaje> viajePropioPeaje = viajePropioPeajeDAO.findByViajePropio(viajePropioOptional);
+        List<ViajePropioPeaje> viajePropioPeaje = viajePropioPeajeDAO.findByViajePropio(viajePropio);
         viajePropio.setViajePropioPeajes(viajePropioPeaje);
         //Retorna los datos
         return viajePropio;
@@ -105,13 +108,19 @@ public class ViajePropioService {
             //Agrega los tramos del viaje
             elemento.getViajePropioTramos().forEach((item) -> {
                 item.setViajePropio(viajePropio);
-                viajePropioTramoDAO.saveAndFlush(item);
+                ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.saveAndFlush(item);
+                //Agrega los dadores-destinatarios
+                item.getViajePropioTramoClientes().forEach((elem) -> {
+                    elem.setViajePropioTramo(viajePropioTramo);
+                    viajePropioTramoClienteDAO.saveAndFlush(elem);
+                });
             });
         }
         //Verifica que la lista de combustibles tenga elementos
         if (elemento.getViajePropioCombustibles() != null) {
             //Agrega las ordenes de combustible del viaje
             elemento.getViajePropioCombustibles().forEach((item) -> {
+                item.setViajePropio(viajePropio);
                 viajePropioCombustibleDAO.saveAndFlush(item);
             });
         }
@@ -119,6 +128,7 @@ public class ViajePropioService {
         if (elemento.getViajePropioEfectivos() != null) {
             //Agrega los adelantos de efectivo del viaje
             elemento.getViajePropioEfectivos().forEach((item) -> {
+                item.setViajePropio(viajePropio);
                 viajePropioEfectivoDAO.saveAndFlush(item);
             });
         }
@@ -126,6 +136,7 @@ public class ViajePropioService {
         if (elemento.getViajePropioInsumos() != null) {
             //Agrega las ordenes de insumo del viaje
             elemento.getViajePropioInsumos().forEach((item) -> {
+                item.setViajePropio(viajePropio);
                 viajePropioInsumoDAO.saveAndFlush(item);
             });
         }
@@ -133,6 +144,7 @@ public class ViajePropioService {
         if (elemento.getViajePropioGastos() != null) {
             //Agrega los gastos del viaje
             elemento.getViajePropioGastos().forEach((item) -> {
+                item.setViajePropio(viajePropio);
                 viajePropioGastoDAO.saveAndFlush(item);
             });
         }
@@ -140,6 +152,7 @@ public class ViajePropioService {
         if (elemento.getViajePropioPeajes() != null) {
             //Agrega los peajes del viaje
             elemento.getViajePropioPeajes().forEach((item) -> {
+                item.setViajePropio(viajePropio);
                 viajePropioPeajeDAO.saveAndFlush(item);
             });
         }
