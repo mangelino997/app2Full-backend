@@ -4,7 +4,6 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.ViajePropio;
 import ar.com.draimo.jitws.model.ViajePropioGasto;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,6 +18,6 @@ public interface IViajePropioGastoDAO extends JpaRepository<ViajePropioGasto, In
     public ViajePropioGasto findTopByOrderByIdDesc();
     
     //Obtiene una lista por viaje propio
-    public List<ViajePropioGasto> findByViajePropio(Optional<ViajePropio> viajePropio);
+    public List<ViajePropioGasto> findByViajePropio(ViajePropio viajePropio);
     
 }

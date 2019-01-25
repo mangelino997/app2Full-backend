@@ -32,7 +32,7 @@ public class ViajePropioTramoService {
     
     //Obtiene una lista de tramos por viaje propio
     public List<ViajePropioTramo> listarTramos(int idViajePropio) {
-        return elementoDAO.obtenerPorViajePropio(idViajePropio);
+        return elementoDAO.findByViajePropio(viajePropioDAO.obtenerPorId(idViajePropio));
     }
     
     //Obtiene la lista completa
