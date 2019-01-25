@@ -56,7 +56,7 @@ public class ViajeRemitoService {
     
     //Obtiene un listado por numero de comprobante
     public List<ViajeRemito> listarPorNumero(int numero) {
-        return elementoDAO.findByNumeroContaining(numero);
+        return elementoDAO.findByNumero(numero);
     }
     
     //Obtiene un listado de pendientes por sucursal

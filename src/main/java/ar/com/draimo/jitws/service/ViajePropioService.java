@@ -68,7 +68,7 @@ public class ViajePropioService {
     
     //Obtiene la lista completa
     public List<ViajePropio> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.obtenerTodos();
     }
     
     //Obtiene por id
@@ -79,20 +79,20 @@ public class ViajePropioService {
         List<ViajePropioTramo> viajePropioTramos = viajePropioTramoDAO.findByViajePropio(viajePropio);
         viajePropio.setViajePropioTramos(viajePropioTramos);
         //Obtiene la lista de ordenes de combustible del viaje
-//        List<ViajePropioCombustible> viajePropioCombustibles = viajePropioCombustibleDAO.findByViajePropio(viajePropio);
-//        viajePropio.setViajePropioCombustibles(viajePropioCombustibles);
-//        //Obtiene la lista de adelantos de efectivo del viaje
-//        List<ViajePropioEfectivo> viajePropioEfectivos = viajePropioEfectivoDAO.findByViajePropio(viajePropio);
-//        viajePropio.setViajePropioEfectivos(viajePropioEfectivos);
-//        //Obtiene la lista de ordenes de insumo del viaje
-//        List<ViajePropioInsumo> viajePropioInsumos = viajePropioInsumoDAO.findByViajePropio(viajePropio);
-//        viajePropio.setViajePropioInsumos(viajePropioInsumos);
-//        //Obtiene la lista de gastos del viaje
-//        List<ViajePropioGasto> viajePropioGasto = viajePropioGastoDAO.findByViajePropio(viajePropio);
-//        viajePropio.setViajePropioGastos(viajePropioGasto);
-//        //Obtiene la lista de peajes del viaje
-//        List<ViajePropioPeaje> viajePropioPeaje = viajePropioPeajeDAO.findByViajePropio(viajePropio);
-//        viajePropio.setViajePropioPeajes(viajePropioPeaje);
+        List<ViajePropioCombustible> viajePropioCombustibles = viajePropioCombustibleDAO.findByViajePropio(viajePropio);
+        viajePropio.setViajePropioCombustibles(viajePropioCombustibles);
+        //Obtiene la lista de adelantos de efectivo del viaje
+        List<ViajePropioEfectivo> viajePropioEfectivos = viajePropioEfectivoDAO.findByViajePropio(viajePropio);
+        viajePropio.setViajePropioEfectivos(viajePropioEfectivos);
+        //Obtiene la lista de ordenes de insumo del viaje
+        List<ViajePropioInsumo> viajePropioInsumos = viajePropioInsumoDAO.findByViajePropio(viajePropio);
+        viajePropio.setViajePropioInsumos(viajePropioInsumos);
+        //Obtiene la lista de gastos del viaje
+        List<ViajePropioGasto> viajePropioGasto = viajePropioGastoDAO.findByViajePropio(viajePropio);
+        viajePropio.setViajePropioGastos(viajePropioGasto);
+        //Obtiene la lista de peajes del viaje
+        List<ViajePropioPeaje> viajePropioPeaje = viajePropioPeajeDAO.findByViajePropio(viajePropio);
+        viajePropio.setViajePropioPeajes(viajePropioPeaje);
         //Retorna los datos
         return viajePropio;
     }

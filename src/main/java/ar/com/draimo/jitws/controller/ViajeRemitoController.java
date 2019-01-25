@@ -99,7 +99,7 @@ public class ViajeRemitoController {
     //Obtiene una lista de remito por viaje propio o viaje tercero
     @GetMapping(value = URL + "/listarRemitos/{idViajeTramo}/{item}")
     @ResponseBody
-    public List<ViajeRemito> listarPorNumero(@PathVariable int idViajeTramo, @PathVariable int item) {
+    public List<ViajeRemito> listarRemitos(@PathVariable int idViajeTramo, @PathVariable int item) {
         return elementoService.listarRemitos(idViajeTramo, item);
     }
     

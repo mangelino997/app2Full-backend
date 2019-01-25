@@ -24,7 +24,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public List<ViajeRemito> findByAliasContaining(String alias);
     
     //Obtiene la lista por numero
-    public List<ViajeRemito> findByNumeroContaining(int numero);
+    public List<ViajeRemito> findByNumero(int numero);
     
     //Obtiene una lista de pendientes por sucursal emision
     public List<ViajeRemito> findBySucursalEmisionAndEstaPendienteFalse(Optional<Sucursal> sucursal);

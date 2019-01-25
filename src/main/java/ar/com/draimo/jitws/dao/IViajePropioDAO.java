@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.ViajePropio;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,5 +21,9 @@ public interface IViajePropioDAO extends JpaRepository<ViajePropio, Integer> {
     //Obtiene un registro por id
     @Query(value = "SELECT * FROM viajepropio WHERE id=:id", nativeQuery = true)
     public ViajePropio obtenerPorId(@Param("id") int id);
+    
+    //Obtiene todos los registros
+    @Query(value = "SELECT * FROM viajepropio", nativeQuery = true)
+    public List<ViajePropio> obtenerTodos();
     
 }
