@@ -25,4 +25,8 @@ public interface IViajePropioDAO extends JpaRepository<ViajePropio, Integer> {
     //Obtiene una lista de registros por alias
     public List<ViajePropio> findByAliasContaining(String alias);
     
+    //Obtiene todos los registros
+    @Query(value = "SELECT * FROM viajepropio", nativeQuery = true)
+    public List<ViajePropio> obtenerTodos();
+    
 }

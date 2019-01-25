@@ -37,7 +37,7 @@ public class ViajeTerceroTramoService {
     
     //Obtiene una lista de tramos por viaje tercero
     public List<ViajeTerceroTramo> listarTramos(int idViajeTercero) {
-        return elementoDAO.findByViajeTercero(viajeTerceroDAO.findById(idViajeTercero));
+        return elementoDAO.findByViajeTercero(viajeTerceroDAO.obtenerPorId(idViajeTercero));
     }
     
     //Agrega un registro

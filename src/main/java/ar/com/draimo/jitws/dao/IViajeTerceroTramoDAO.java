@@ -4,7 +4,6 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.ViajeTercero;
 import ar.com.draimo.jitws.model.ViajeTerceroTramo;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,6 +18,6 @@ public interface IViajeTerceroTramoDAO extends JpaRepository<ViajeTerceroTramo, 
     public ViajeTerceroTramo findTopByOrderByIdDesc();
     
     //Obtiene un listado por viaje tercero
-    public List<ViajeTerceroTramo> findByViajeTercero(Optional<ViajeTercero> viajeTercero);
+    public List<ViajeTerceroTramo> findByViajeTercero(ViajeTercero viajeTercero);
     
 }

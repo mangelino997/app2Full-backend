@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -124,18 +125,22 @@ public class ViajeTercero extends ObjetoGenerico {
     private String observaciones;
     
     //Define la lista de tramos
+    @JsonManagedReference
     @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroTramo> viajeTerceroTramos;
     
     //Define la lista de ordenes de combustible
+    @JsonManagedReference
     @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroCombustible> viajeTerceroCombustibles;
     
     //Define la lista de adelantos de efectivo
+    @JsonManagedReference
     @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroEfectivo> viajeTerceroEfectivos;
     
     //Define la lista de ordenes de insumo
+    @JsonManagedReference
     @OneToMany(mappedBy = "viajeTercero")
     private List<ViajeTerceroInsumo> viajeTerceroInsumos;
 

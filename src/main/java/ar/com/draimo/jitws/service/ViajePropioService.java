@@ -68,7 +68,7 @@ public class ViajePropioService {
     
     //Obtiene la lista completa
     public List<ViajePropio> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.obtenerTodos();
     }
     
     //Obtiene por id
