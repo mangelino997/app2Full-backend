@@ -61,6 +61,13 @@ public class ViajePropioController {
     public ViajePropio obtenerPorId(@PathVariable int id) {
         return elementoService.obtenerPorId(id);
     }
+    
+    //Obtiene una lista de registros por alias
+    @GetMapping(value = URL + "/listarPorAlias/{alias}")
+    @ResponseBody
+    public List<ViajePropio> listarPorAlias(@PathVariable String alias) {
+        return elementoService.listarPorAlias(alias);
+    }
  
     //Agrega un registro
     @PostMapping(value = URL)

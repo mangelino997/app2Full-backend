@@ -137,6 +137,10 @@ public class ViajePropio extends ObjetoGenerico {
     @Column(name = "observaciones", nullable = true)
     private String observaciones;
     
+    //Define el alias para las busquedas
+    @Column(name = "alias", length = 100, nullable = true)
+    private String alias;
+    
     //Define la lista de tramos
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
@@ -369,6 +373,14 @@ public class ViajePropio extends ObjetoGenerico {
         this.observaciones = observaciones;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+    
     public List<ViajePropioTramo> getViajePropioTramos() {
         return viajePropioTramos;
     }
