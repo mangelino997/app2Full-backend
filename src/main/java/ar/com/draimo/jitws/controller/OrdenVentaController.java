@@ -70,7 +70,7 @@ public class OrdenVentaController {
     }
     
     //Obtiene una lista por empresa
-    @GetMapping(value = URL + "/listarPorEmpresa/{empresa}")
+    @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
     public List<OrdenVenta> listarPorEmpresa(@PathVariable int idEmpresa) {
         return elementoService.listarPorEmpresa(idEmpresa);

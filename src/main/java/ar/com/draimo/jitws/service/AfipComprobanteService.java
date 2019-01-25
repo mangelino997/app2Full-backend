@@ -1,8 +1,13 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipComprobanteDAO;
+import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.AfipComprobante;
+import ar.com.draimo.jitws.model.AfipCondicionIva;
+import ar.com.draimo.jitws.model.TipoComprobante;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +24,14 @@ public class AfipComprobanteService {
     @Autowired
     IAfipComprobanteDAO elementoDAO;
     
+    //Define el dao de tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO comprobanteDAO;
+    
+    //Define el dao de tipoComprobante
+    @Autowired
+    IAfipCondicionIvaDAO afipCondicionIvaDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         AfipComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -28,6 +41,25 @@ public class AfipComprobanteService {
     //Obtiene la lista completa
     public List<AfipComprobante> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene el codigo afip
+    public String obtenerCodigoAfip(int idTipoComprobante, String letra) {
+        Optional<TipoComprobante> tipoComprobante = comprobanteDAO.findById(idTipoComprobante);
+        AfipComprobante ac = elementoDAO.findByTipoComprobanteAndLetra(tipoComprobante, letra);
+        return ac.getCodigoAfip();
+    }
+    
+    //Obtiene la letra segun condicion de iva
+    public String obtenerLetra(int idCondicionIva) {
+        AfipCondicionIva aci = afipCondicionIvaDAO.findById(idCondicionIva).get();
+        String letra;
+        if (aci.getId()==1) {
+            letra = "A";
+        } else{
+            letra = "B";
+        }
+        return letra;
     }
     
     //Agrega un registro

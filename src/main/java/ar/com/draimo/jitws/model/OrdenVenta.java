@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -71,10 +72,12 @@ public class OrdenVenta extends ObjetoGenerico {
     private LocalDate activaDesde;
     
     //Define la lista de OrdenVentaEscala
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
     private List<OrdenVentaEscala> ordenesVentasEscalas;
     
     //Define la lista de OrdenVentaTramo
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
     private List<OrdenVentaTramo> ordenesVentasTramos;
 

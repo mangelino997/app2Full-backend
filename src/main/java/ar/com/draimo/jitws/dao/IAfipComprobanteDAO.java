@@ -2,6 +2,8 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.AfipComprobante;
+import ar.com.draimo.jitws.model.TipoComprobante;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +16,8 @@ public interface IAfipComprobanteDAO extends JpaRepository<AfipComprobante, Inte
     
     //Obtiene el siguiente id
     public AfipComprobante findTopByOrderByIdDesc();
+    
+    //Obtiene el siguiente id
+    public AfipComprobante findByTipoComprobanteAndLetra(Optional<TipoComprobante> tipoComprobante, String letra);
     
 }

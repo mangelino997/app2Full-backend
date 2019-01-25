@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IViajeTerceroDAO;
 import ar.com.draimo.jitws.dao.IViajeTerceroTramoDAO;
 import ar.com.draimo.jitws.model.ViajeTerceroTramo;
 import java.util.List;
@@ -19,6 +20,10 @@ public class ViajeTerceroTramoService {
     @Autowired
     IViajeTerceroTramoDAO elementoDAO;
     
+    //Define la referencia al dao de viajeTercero
+    @Autowired
+    IViajeTerceroDAO viajeTerceroDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeTerceroTramo elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -28,6 +33,11 @@ public class ViajeTerceroTramoService {
     //Obtiene la lista completa
     public List<ViajeTerceroTramo> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene una lista de tramos por viaje tercero
+    public List<ViajeTerceroTramo> listarTramos(int idViajeTercero) {
+        return elementoDAO.findByViajeTercero(viajeTerceroDAO.findById(idViajeTercero));
     }
     
     //Agrega un registro

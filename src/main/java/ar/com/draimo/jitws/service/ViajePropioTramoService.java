@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IViajePropioDAO;
 import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import java.util.List;
@@ -19,10 +20,19 @@ public class ViajePropioTramoService {
     @Autowired
     IViajePropioTramoDAO elementoDAO;
     
+    //Define la referencia al dao de viajePropio
+    @Autowired
+    IViajePropioDAO viajePropioDAO; 
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajePropioTramo elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId()+1 : 1;
+    }
+    
+    //Obtiene una lista de tramos por viaje propio
+    public List<ViajePropioTramo> listarTramos(int idViajePropio) {
+        return elementoDAO.obtenerPorViajePropio(idViajePropio);
     }
     
     //Obtiene la lista completa

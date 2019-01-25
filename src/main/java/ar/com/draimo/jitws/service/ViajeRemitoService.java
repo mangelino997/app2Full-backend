@@ -3,9 +3,11 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
+import ar.com.draimo.jitws.dao.IViajeTerceroTramoDAO;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import ar.com.draimo.jitws.model.ViajeRemito;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,10 @@ public class ViajeRemitoService {
     //Define la referencia al dao viaje propio tramo
     @Autowired
     IViajePropioTramoDAO viajePropioTramoDAO;
+    
+    //Define la referencia al dao viaje tercero tramo
+    @Autowired
+    IViajeTerceroTramoDAO viajeTerceroTramoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -81,6 +87,19 @@ public class ViajeRemitoService {
         //Retorna los datos
         return elementoDAO.findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
                 sucursal, sucursalDestino, numeroCamion, viajePropioTramo);
+    }
+    
+    //Obtiene un listado de remitos por viajePropio
+    public List<ViajeRemito> listarRemitos(int idViajeTramo, int item) {
+        List<ViajeRemito> viajeRemitos = new ArrayList<>();
+        if (item==1) { //ViajePropioTramo
+            viajeRemitos = elementoDAO.findByViajePropioTramoAndEstaFacturadoFalse
+        (viajePropioTramoDAO.findById(idViajeTramo));
+        } else if (item ==2){ //ViajeTerceroTramo
+            viajeRemitos = elementoDAO.findByViajeTerceroTramoAndEstaFacturadoFalse
+        (viajeTerceroTramoDAO.findById(idViajeTramo));
+        }
+        return viajeRemitos;
     }
     
     //Asigna los remitos

@@ -55,7 +55,7 @@ public class EmpresaController {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por razon social
     @GetMapping(value = URL + "/listarPorRazonSocial/{razonSocial}")
     @ResponseBody
     public List<Empresa> listarPorRazonSocial(@PathVariable String razonSocial) {

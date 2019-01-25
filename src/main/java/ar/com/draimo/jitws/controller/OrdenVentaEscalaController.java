@@ -1,9 +1,9 @@
 package ar.com.draimo.jitws.controller;
-
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.service.OrdenVentaEscalaService;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -67,6 +67,13 @@ public class OrdenVentaEscalaController {
     @ResponseBody
     public List<OrdenVentaEscala> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
+    }
+    
+    //Obtiene el precio flete
+    @GetMapping(value = URL + "/obtenerPrecioFlete/{idOrdenVenta}/{valor}")
+    @ResponseBody
+    public BigDecimal obtenerPrecioFlete(@PathVariable int idOrdenVenta,@PathVariable String valor) {
+        return elementoService.obtenerPrecioFlete(idOrdenVenta, valor);
     }
     
     //Agrega un registro

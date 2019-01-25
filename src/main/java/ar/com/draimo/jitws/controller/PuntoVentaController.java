@@ -62,6 +62,20 @@ public class PuntoVentaController {
         return elementoService.listarPorSucursal(id);
     }
     
+    //Obtiene una lista por sucursal y empresa
+    @GetMapping(value = URL + "/listarPorEmpresaYSucursal/{idEmpresa}/{idSucursal}")
+    @ResponseBody
+    public List<PuntoVenta> listarPorEmpresaYSucursal(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
+        return elementoService.listarPorEmpresaYSucursal(idEmpresa, idSucursal);
+    }
+    
+    //Obtiene el numero 
+    @GetMapping(value = URL + "/obtenerNumero/{puntoVenta}/{codigoAfip}")
+    @ResponseBody
+    public int obtenerNumero(@PathVariable int puntoVenta, @PathVariable String codigoAfip) {
+        return elementoService.obtenerNumero(puntoVenta, codigoAfip);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody PuntoVenta elemento) {

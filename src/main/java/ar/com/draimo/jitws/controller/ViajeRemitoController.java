@@ -1,8 +1,6 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
-import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import ar.com.draimo.jitws.model.ViajeRemito;
@@ -10,7 +8,6 @@ import ar.com.draimo.jitws.service.ViajeRemitoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -97,6 +94,13 @@ public class ViajeRemitoController {
             @PathVariable int idViajePropioTramo) {
         return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, 
                 numeroCamion, idViajePropioTramo);
+    }
+    
+    //Obtiene una lista de remito por viaje propio o viaje tercero
+    @GetMapping(value = URL + "/listarRemitos/{idViajeTramo}/{item}")
+    @ResponseBody
+    public List<ViajeRemito> listarPorNumero(@PathVariable int idViajeTramo, @PathVariable int item) {
+        return elementoService.listarRemitos(idViajeTramo, item);
     }
     
     //Asigna remitos

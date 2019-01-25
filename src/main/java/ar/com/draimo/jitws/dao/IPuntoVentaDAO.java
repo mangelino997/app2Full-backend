@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.Sucursal;
 import java.util.List;
@@ -21,4 +22,10 @@ public interface IPuntoVentaDAO extends JpaRepository<PuntoVenta, Integer> {
     //Obtiene una lista por sucursal
     public List<PuntoVenta> findBySucursal(Optional<Sucursal> sucursal);
     
+    //Obtiene una lista por sucursal y empresa
+    public List<PuntoVenta> findBySucursalAndEmpresa(Optional<Sucursal> sucursal, Optional<Empresa> empresa);
+     
+    //Obtiene un registro por puntoVenta y codigoAfip
+    public PuntoVenta findByPuntoVentaAndCodigoAfip(int puntoVenta, String codigoAfip);
+     
 }

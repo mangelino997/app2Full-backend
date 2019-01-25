@@ -1,12 +1,11 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.Tramo;
-import ar.com.draimo.jitws.model.ViajePropio;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Viaje Propio Tramo
@@ -20,9 +19,11 @@ public interface IViajePropioTramoDAO extends JpaRepository<ViajePropioTramo, In
     public ViajePropioTramo findTopByOrderByIdDesc();
     
     //Obtiene una lista por viaje propio
-    public List<ViajePropioTramo> findByViajePropio(Optional<ViajePropio> viajePropio);
+    @Query(value = "SELECT * FROM viajepropiotramo WHERE idViajePropio=:idViajePropio",nativeQuery = true)
+    public List<ViajePropioTramo> obtenerPorViajePropio(@Param("idViajePropio") int idViajePropio);
     
     //Obtiene por viaje propio y tramo
-    public ViajePropioTramo findByViajePropioAndTramo(Optional<ViajePropio> viajePropio, Optional<Tramo> tramo);
+    @Query(value = "SELECT * FROM viajepropiotramo WHERE idViajePropio=:idViajePropio AND idTramo=:idTramo ",nativeQuery = true)
+    public ViajePropioTramo findByViajePropioAndTramo(@Param("idViajePropio") int idViajePropio, @Param("idTramo") int idTramo);
     
 }

@@ -1,7 +1,9 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.Sucursal;
 import java.util.List;
@@ -26,6 +28,10 @@ public class PuntoVentaService {
     @Autowired
     ISucursalDAO sucursalDAO;
     
+    //Define la referencia al dao empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         PuntoVenta elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -43,6 +49,23 @@ public class PuntoVentaService {
         Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
         //Retorna los datos
         return elementoDAO.findBySucursal(sucursal);
+    }
+    
+    //Obtiene una lista por sucursal y empresa
+    public List<PuntoVenta> listarPorEmpresaYSucursal(int idEmpresa, int idSucursal) {
+        //Obtiene la sucursal por id
+        Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
+        //Obtiene la empresa por id
+        Optional<Empresa> empresa = empresaDAO.findById(idEmpresa);
+        //Retorna los datos
+        return elementoDAO.findBySucursalAndEmpresa(sucursal, empresa);
+    }
+    
+    //Obtiene el numero 
+    public int obtenerNumero(int puntoVenta, String codigoAfip) {
+        PuntoVenta pVenta = elementoDAO.findByPuntoVentaAndCodigoAfip(puntoVenta, codigoAfip);
+        int numero = pVenta.getUltimoNumero() + 1;
+        return numero;
     }
     
     //Agrega un registro

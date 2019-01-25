@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipComprobante;
+import ar.com.draimo.jitws.model.AfipCondicionIva;
 import ar.com.draimo.jitws.service.AfipComprobanteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +54,20 @@ public class AfipComprobanteController {
     @ResponseBody
     public List<AfipComprobante> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene el codigo afip
+    @GetMapping(value = URL + "/obtenerCodigoAfip/{idTipoComprobante}/{letra}")
+    @ResponseBody
+    public String obtenerCodigoAfip(@PathVariable int idTipoComprobante, @PathVariable String letra) {
+        return elementoService.obtenerCodigoAfip(idTipoComprobante, letra);
+    }
+    
+    //Obtiene la letra
+    @GetMapping(value = URL + "/obtenerLetra/{idCondicionIva}")
+    @ResponseBody
+    public String obtenerLetra(@PathVariable int idCondicionIva) {
+        return elementoService.obtenerLetra(idCondicionIva);
     }
     
     //Agrega un registro

@@ -67,7 +67,7 @@ public class OrdenVentaService {
         return elementoDAO.findByCliente(clienteDAO.findById(idCliente));
     }
    
-    //Obtiene una lista por nombre
+    //Obtiene una lista por empresa
     public List<OrdenVenta> listarPorEmpresa(int idEmpresa) {
         return elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
     }

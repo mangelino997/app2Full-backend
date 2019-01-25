@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,6 +29,7 @@ public class ViajePropioTramoCliente extends ObjetoGenerico {
     private Cliente clienteDestinatario;
     
     //Referencia a la clase Viaje Propio Tramo
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajePropioTramo", nullable = false)
     private ViajePropioTramo viajePropioTramo;
