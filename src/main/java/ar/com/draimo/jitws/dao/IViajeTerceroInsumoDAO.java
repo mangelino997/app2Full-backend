@@ -19,6 +19,6 @@ public interface IViajeTerceroInsumoDAO extends JpaRepository<ViajeTerceroInsumo
     public ViajeTerceroInsumo findTopByOrderByIdDesc();
     
     //Obtiene un listado por viaje tercero
-    public List<ViajeTerceroInsumo> findByViajeTercero(Optional<ViajeTercero> viajeTercero);
+    public List<ViajeTerceroInsumo> findByViajeTercero(ViajeTercero viajeTercero);
     
 }
