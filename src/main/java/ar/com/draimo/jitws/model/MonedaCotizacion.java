@@ -1,8 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,8 +27,9 @@ public class MonedaCotizacion extends ObjetoGenerico {
     private Moneda moneda;
     
     //Define la fecha
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fecha", nullable = false)
-    private LocalDate fecha;
+    private Date fecha;
     
     //Define el valor
     @Column(name = "valor", nullable = false)
@@ -43,14 +45,14 @@ public class MonedaCotizacion extends ObjetoGenerico {
         this.moneda = moneda;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
+    
     public BigDecimal getValor() {
         return valor;
     }

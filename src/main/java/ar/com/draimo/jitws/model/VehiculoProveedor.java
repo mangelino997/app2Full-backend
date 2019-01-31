@@ -1,7 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,28 +71,33 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private String numeroPoliza;
     
     //Define el vencimiento de la poliza
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoPoliza", nullable = false)
-    private LocalDate vtoPoliza;
+    private Date vtoPoliza;
     
     //Define el vencimiento del rto
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoRTO", nullable = false)
-    private LocalDate vtoRTO;
+    private Date vtoRTO;
     
     //Define el numero de ruta
     @Column(name = "numeroRuta", nullable = false)
     private String numeroRuta;
     
     //Define el vencimiento de ruta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoRuta", nullable = false)
-    private LocalDate vtoRuta;
-    
+    private Date vtoRuta;
+
     //Define el vencimiento de senasa
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoSenasa", nullable = true)
-    private LocalDate vtoSenasa;
+    private Date vtoSenasa;
     
     //Define el vencimiento de habilitacion bromatologia
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoHabBromatologica", nullable = true)
-    private LocalDate vtoHabBromatologica;
+    private Date vtoHabBromatologica;
     
     //Referencia a la clase Usuario (Alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -99,8 +105,9 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private Usuario usuarioAlta;
     
     //Define la fecha de alta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaAlta", nullable = true)
-    private LocalDate fechaAlta;
+    private Date fechaAlta;
     
     //Referencia a la clase Usuario (Baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -108,8 +115,9 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private Usuario usuarioBaja;
     
     //Define la fecha de baja
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaBaja", nullable = true)
-    private LocalDate fechaBaja;
+    private Date fechaBaja;
     
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -117,8 +125,9 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define la fecha de ultima modificacion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaUltimaMod", nullable = true)
-    private LocalDate fechaUltimaMod;
+    private Date fechaUltimaMod;
     
     //Define el alias
     @Column(name = "alias", nullable = true)
@@ -214,51 +223,51 @@ public class VehiculoProveedor extends ObjetoGenerico {
         this.numeroPoliza = numeroPoliza;
     }
 
-    public LocalDate getVtoPoliza() {
+    public String getNumeroRuta() {
+        return numeroRuta;
+    }
+
+    public Date getVtoPoliza() {
         return vtoPoliza;
     }
 
-    public void setVtoPoliza(LocalDate vtoPoliza) {
+    public void setVtoPoliza(Date vtoPoliza) {
         this.vtoPoliza = vtoPoliza;
     }
 
-    public LocalDate getVtoRTO() {
+    public Date getVtoRTO() {
         return vtoRTO;
     }
 
-    public void setVtoRTO(LocalDate vtoRTO) {
+    public void setVtoRTO(Date vtoRTO) {
         this.vtoRTO = vtoRTO;
-    }
-
-    public String getNumeroRuta() {
-        return numeroRuta;
     }
 
     public void setNumeroRuta(String numeroRuta) {
         this.numeroRuta = numeroRuta;
     }
 
-    public LocalDate getVtoRuta() {
+    public Date getVtoRuta() {
         return vtoRuta;
     }
 
-    public void setVtoRuta(LocalDate vtoRuta) {
+    public void setVtoRuta(Date vtoRuta) {
         this.vtoRuta = vtoRuta;
     }
 
-    public LocalDate getVtoSenasa() {
+    public Date getVtoSenasa() {
         return vtoSenasa;
     }
 
-    public void setVtoSenasa(LocalDate vtoSenasa) {
+    public void setVtoSenasa(Date vtoSenasa) {
         this.vtoSenasa = vtoSenasa;
     }
 
-    public LocalDate getVtoHabBromatologica() {
+    public Date getVtoHabBromatologica() {
         return vtoHabBromatologica;
     }
 
-    public void setVtoHabBromatologica(LocalDate vtoHabBromatologica) {
+    public void setVtoHabBromatologica(Date vtoHabBromatologica) {
         this.vtoHabBromatologica = vtoHabBromatologica;
     }
 
@@ -270,11 +279,11 @@ public class VehiculoProveedor extends ObjetoGenerico {
         this.usuarioAlta = usuarioAlta;
     }
 
-    public LocalDate getFechaAlta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
@@ -286,11 +295,11 @@ public class VehiculoProveedor extends ObjetoGenerico {
         this.usuarioBaja = usuarioBaja;
     }
 
-    public LocalDate getFechaBaja() {
+    public Date getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(LocalDate fechaBaja) {
+    public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 
@@ -302,11 +311,11 @@ public class VehiculoProveedor extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public LocalDate getFechaUltimaMod() {
+    public Date getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(LocalDate fechaUltimaMod) {
+    public void setFechaUltimaMod(Date fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
 

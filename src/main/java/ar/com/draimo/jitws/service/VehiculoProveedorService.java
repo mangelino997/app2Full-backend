@@ -2,7 +2,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IVehiculoProveedorDAO;
 import ar.com.draimo.jitws.model.VehiculoProveedor;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class VehiculoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public VehiculoProveedor agregar(VehiculoProveedor elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setFechaAlta(LocalDate.now());
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         elementoDAO.saveAndFlush(elemento);
         elemento.setAlias(elemento.getDominio());
         return elementoDAO.save(elemento);
@@ -55,7 +55,7 @@ public class VehiculoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(VehiculoProveedor elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setFechaUltimaMod(LocalDate.now());
+        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento.setAlias(elemento.getDominio());
         elementoDAO.save(elemento);
     }

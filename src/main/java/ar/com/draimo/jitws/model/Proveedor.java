@@ -1,7 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -88,8 +89,9 @@ public class Proveedor extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define la fecha de ultima modificacion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaUltimaMod", nullable = true)
-    private LocalDate fechaUltimaMod;
+    private Date fechaUltimaMod;
     
     //Define las observaciones
     @Column(name = "observaciones", nullable = true)
@@ -264,14 +266,14 @@ public class Proveedor extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public LocalDate getFechaUltimaMod() {
+    public Date getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(LocalDate fechaUltimaMod) {
+    public void setFechaUltimaMod(Date fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
-
+    
     public String getObservaciones() {
         return observaciones;
     }

@@ -1,8 +1,10 @@
 package ar.com.draimo.jitws.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,17 +37,20 @@ public class RetiroDeposito extends ObjetoGenerico {
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
     
-    //Define fecha de reggistracion
-    @Column(name = "fechaRegistracion", nullable = false)
-    private LocalDateTime fechaRegistracion;
+    //Define fechaRegistracion
+    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "fechaRegistracion", nullable = false)  
+    private LocalDateTime  fechaRegistracion;
     
     //Define fecha salida
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaSalida", nullable = false)
-    private LocalDate fechaSalida;
+    private Date fechaSalida;
     
     //Define hora salida
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "horaSalida", nullable = false)
-    private LocalTime horaSalida;
+    private Time horaSalida;
     
     //Define observaciones
     @Column(name = "observaciones",length = 100)
@@ -100,20 +105,20 @@ public class RetiroDeposito extends ObjetoGenerico {
     public void setFechaRegistracion(LocalDateTime fechaRegistracion) {
         this.fechaRegistracion = fechaRegistracion;
     }
-
-    public LocalDate getFechaSalida() {
+    
+    public Date getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(LocalDate fechaSalida) {
+    public void setFechaSalida(Date fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
-    public LocalTime getHoraSalida() {
+    public Time getHoraSalida() {
         return horaSalida;
     }
 
-    public void setHoraSalida(LocalTime horaSalida) {
+    public void setHoraSalida(Time horaSalida) {
         this.horaSalida = horaSalida;
     }
 

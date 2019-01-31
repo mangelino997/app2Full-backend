@@ -1,6 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
 import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,12 +26,14 @@ public class Vendedor extends ObjetoGenerico {
     private String nombre;
     
     //Define la fecha de alta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaAlta", nullable = false)
-    private LocalDate fechaAlta;
+    private Date fechaAlta;
     
     //Define la fecha de baja
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaBaja", nullable = true)
-    private LocalDate fechaBaja;
+    private Date fechaBaja;
     
     //Define la baja
     @Column(name = "estaActivo", nullable = false)
@@ -50,19 +54,19 @@ public class Vendedor extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public LocalDate getFechaAlta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
-    public LocalDate getFechaBaja() {
+    public Date getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(LocalDate fechaBaja) {
+    public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

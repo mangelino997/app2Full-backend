@@ -2,8 +2,9 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,8 +54,9 @@ public class OrdenVentaTramo extends ObjetoGenerico {
     private BigDecimal precioUnitarioRef;
     
     //Define la fecha desde que estan los precios
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "preciosDesde", nullable = false)
-    private LocalDate preciosDesde;
+    private Date preciosDesde;
 
     //Getters y Setters de la clase
 
@@ -114,11 +116,11 @@ public class OrdenVentaTramo extends ObjetoGenerico {
         this.precioUnitarioRef = precioUnitarioRef;
     }
 
-    public LocalDate getPreciosDesde() {
+    public Date getPreciosDesde() {
         return preciosDesde;
     }
 
-    public void setPreciosDesde(LocalDate preciosDesde) {
+    public void setPreciosDesde(Date preciosDesde) {
         this.preciosDesde = preciosDesde;
     }
     

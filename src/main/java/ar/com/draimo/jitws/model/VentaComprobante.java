@@ -1,8 +1,10 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,12 +54,14 @@ public class VentaComprobante extends ObjetoGenerico {
     private String codigoAfip;
     
     //Define la fecha de emision
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaEmision", nullable = false)
-    private LocalDate fechaEmision;
+    private Date fechaEmision;
     
     //Define la fecha de vencimiento de pago
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaVtoPago", nullable = false)
-    private LocalDate fechaVtoPago;
+    private Date fechaVtoPago;
     
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -74,6 +78,15 @@ public class VentaComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idAfipCondicionIva", nullable = false)
     private AfipCondicionIva afipCondicionIva;
     
+    //Referencia a la clase tipoDocumento
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idTipoDocumento", nullable = false)
+    private TipoDocumento tipoDocumento;
+    
+    //Define el numeroDocumento
+    @Column(name = "numeroDocumento", length = 15, nullable = false)
+    private String numeroDocumento;
+    
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteRemitente", nullable = false)
@@ -83,6 +96,11 @@ public class VentaComprobante extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
+    
+    //Referencia a la clase Cliente
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idClienteRemitenteSuc", nullable = true)
+    private Cliente clienteRemitenteSuc;
     
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -130,7 +148,44 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define si el pago es en origen
     @Column(name = "pagoEnOrigen", nullable = false)
     private boolean pagoEnOrigen;
+    
+    //Referencia a la clase Usuario
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioAlta", nullable = false)
+    private Usuario usuarioAlta;
+    
+    //Referencia a la clase Usuario
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioMod", nullable = true)
+    private Usuario usuarioMod;
+    
+    //Define si es CAEA
+    @Column(name = "esCAEA", nullable = false)
+    private boolean esCAEA;
+    
+    //Define CAE
+    @Column(name = "CAE", length = 14, nullable = false)
+    private String CAE;
+    
+    //Define CAEVencimiento
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @Column(name = "CAEVencimiento", nullable = false)
+    private Date CAEVencimiento;
+    
+    //Define CAEEstado
+    @Column(name = "CAEEstado", length = 1, nullable = false)
+    private String CAEEstado;
+    
+    //Define fechaRegistracion
+    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "fechaRegistracion", nullable = false)
+    private LocalDateTime fechaRegistracion;
 
+    //Referencia a la clase AfipConcepto
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idAfipConcepto", nullable = true)
+    private AfipConcepto afipConcepto;
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -189,19 +244,19 @@ public class VentaComprobante extends ObjetoGenerico {
         this.codigoAfip = codigoAfip;
     }
 
-    public LocalDate getFechaEmision() {
+    public Date getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(LocalDate fechaEmision) {
+    public void setFechaEmision(Date fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
-    public LocalDate getFechaVtoPago() {
+    public Date getFechaVtoPago() {
         return fechaVtoPago;
     }
 
-    public void setFechaVtoPago(LocalDate fechaVtoPago) {
+    public void setFechaVtoPago(Date fechaVtoPago) {
         this.fechaVtoPago = fechaVtoPago;
     }
 
@@ -229,6 +284,22 @@ public class VentaComprobante extends ObjetoGenerico {
         this.afipCondicionIva = afipCondicionIva;
     }
 
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
     public Cliente getClienteRemitente() {
         return clienteRemitente;
     }
@@ -243,6 +314,14 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setClienteDestinatario(Cliente clienteDestinatario) {
         this.clienteDestinatario = clienteDestinatario;
+    }
+
+    public Cliente getClienteRemitenteSuc() {
+        return clienteRemitenteSuc;
+    }
+
+    public void setClienteRemitenteSuc(Cliente clienteRemitenteSuc) {
+        this.clienteRemitenteSuc = clienteRemitenteSuc;
     }
 
     public Cliente getClienteDestinatarioSuc() {
@@ -331,6 +410,70 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setPagoEnOrigen(boolean pagoEnOrigen) {
         this.pagoEnOrigen = pagoEnOrigen;
+    }
+
+    public Usuario getUsuarioAlta() {
+        return usuarioAlta;
+    }
+
+    public void setUsuarioAlta(Usuario usuarioAlta) {
+        this.usuarioAlta = usuarioAlta;
+    }
+
+    public Usuario getUsuarioMod() {
+        return usuarioMod;
+    }
+
+    public void setUsuarioMod(Usuario usuarioMod) {
+        this.usuarioMod = usuarioMod;
+    }
+
+    public boolean isEsCAEA() {
+        return esCAEA;
+    }
+
+    public void setEsCAEA(boolean esCAEA) {
+        this.esCAEA = esCAEA;
+    }
+
+    public String getCAE() {
+        return CAE;
+    }
+
+    public void setCAE(String CAE) {
+        this.CAE = CAE;
+    }
+
+    public Date getCAEVencimiento() {
+        return CAEVencimiento;
+    }
+
+    public void setCAEVencimiento(Date CAEVencimiento) {
+        this.CAEVencimiento = CAEVencimiento;
+    }
+
+    public String getCAEEstado() {
+        return CAEEstado;
+    }
+
+    public void setCAEEstado(String CAEEstado) {
+        this.CAEEstado = CAEEstado;
+    }
+
+    public LocalDateTime getFechaRegistracion() {
+        return fechaRegistracion;
+    }
+
+    public void setFechaRegistracion(LocalDateTime fechaRegistracion) {
+        this.fechaRegistracion = fechaRegistracion;
+    }
+
+    public AfipConcepto getAfipConcepto() {
+        return afipConcepto;
+    }
+
+    public void setAfipConcepto(AfipConcepto afipConcepto) {
+        this.afipConcepto = afipConcepto;
     }
     
 }

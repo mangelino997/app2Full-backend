@@ -44,9 +44,9 @@ public class ViajeTerceroService {
     IViajeTerceroInsumoDAO viajeTerceroInsumoDAO;
     
     //Obtiene por id
-    public ViajeTercero obtener(int id) {
+    public ViajeTercero obtenerPorId(int id) {
         //Obtiene un viaje propio por id
-        ViajeTercero viajeTercero = elementoDAO.findById(id).get();
+        ViajeTercero viajeTercero = elementoDAO.obtenerPorId(id);
         //Obtiene la lista de tramos del viaje
         List<ViajeTerceroTramo> viajeTerceroTramos = viajeTerceroTramoDAO.findByViajeTercero(viajeTercero);
         viajeTercero.setViajeTerceroTramos(viajeTerceroTramos);

@@ -2,7 +2,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IVendedorDAO;
 import ar.com.draimo.jitws.model.Vendedor;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class VendedorService {
     @Transactional(rollbackFor = Exception.class)
     public Vendedor agregar(Vendedor elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setFechaAlta(LocalDate.now());
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }
 

@@ -1,7 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,21 +43,25 @@ public class AfipCaea extends ObjetoGenerico {
     private String numeroCAEA;
     
     //Define fecha desde
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaDesde", nullable = false)
-    private LocalDate fechaDesde;
+    private Date fechaDesde;
     
     //Define fecha hasta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaHasta", nullable = false)
-    private LocalDate fechaHasta;
+    private Date fechaHasta;
     
     //Define fecha tope informar
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaTopeInformar", nullable = false)
-    private LocalDate fechaTopeInformar;
+    private Date fechaTopeInformar;
     
     //Define fecha solicitud
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "fechaSolicitud", nullable = false)
     private LocalDateTime fechaSolicitud;
-
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -99,27 +104,27 @@ public class AfipCaea extends ObjetoGenerico {
         this.numeroCAEA = numeroCAEA;
     }
 
-    public LocalDate getFechaDesde() {
+    public Date getFechaDesde() {
         return fechaDesde;
     }
 
-    public void setFechaDesde(LocalDate fechaDesde) {
+    public void setFechaDesde(Date fechaDesde) {
         this.fechaDesde = fechaDesde;
     }
 
-    public LocalDate getFechaHasta() {
+    public Date getFechaHasta() {
         return fechaHasta;
     }
 
-    public void setFechaHasta(LocalDate fechaHasta) {
+    public void setFechaHasta(Date fechaHasta) {
         this.fechaHasta = fechaHasta;
     }
 
-    public LocalDate getFechaTopeInformar() {
+    public Date getFechaTopeInformar() {
         return fechaTopeInformar;
     }
 
-    public void setFechaTopeInformar(LocalDate fechaTopeInformar) {
+    public void setFechaTopeInformar(Date fechaTopeInformar) {
         this.fechaTopeInformar = fechaTopeInformar;
     }
 
@@ -130,5 +135,5 @@ public class AfipCaea extends ObjetoGenerico {
     public void setFechaSolicitud(LocalDateTime fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
-
+    
 }

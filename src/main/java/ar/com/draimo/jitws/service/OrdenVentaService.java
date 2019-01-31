@@ -8,7 +8,7 @@ import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,15 +80,15 @@ public class OrdenVentaService {
         * Por cuestiones de ahorro de codigo, se pasa el valor de PreciosDesde
         * de OrdenVentaEscala mediante ActivaDesde de OrdenVenta
         */
-        LocalDate preciosDesde = elemento.getActivaDesde();
+        Date preciosDesde = elemento.getActivaDesde();
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Establece la fecha actual
-        elemento.setFechaAlta(LocalDate.now());
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         //Establece activa en true
         elemento.setEstaActiva(true);
         //Establece ActivaDesde con fecha actual
-        elemento.setActivaDesde(LocalDate.now());
+        elemento.setActivaDesde(new Date(new java.util.Date().getTime()));
         //Agrega la orden de venta
         OrdenVenta ordenVenta =  elementoDAO.save(elemento);
         //Verifica si la lista es de OrdenVentaEscala o OrdenVentaTramo
