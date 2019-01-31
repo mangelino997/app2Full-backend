@@ -1,9 +1,11 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -67,9 +69,10 @@ public class Personal extends ObjetoGenerico {
     private Localidad localidadNacimiento;
     
     //Define la fecha de nacimiento
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaNacimiento", nullable = false)
-    private LocalDate fechaNacimiento; 
-    
+    private Date fechaNacimiento;
+
     //Define el telefono fijo
     @Column(name = "telefonoFijo", nullable = true)
     private String telefonoFijo;
@@ -103,12 +106,14 @@ public class Personal extends ObjetoGenerico {
     private Area area;
     
     //Define la fecha de inicio
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaInicio", nullable = false)
-    private LocalDate fechaInicio;
-    
+    private Date fechaInicio;
+
     //Define la fecha de fin
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaFin", nullable = true)
-    private LocalDate fechaFin;
+    private Date fechaFin;
     
     //Define la antiguedad anterior anios
     @Column(name = "antiguedadAntAnio", nullable = true)
@@ -240,21 +245,25 @@ public class Personal extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define el vencimiento de la licencia de conducirde un chofer
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoLicenciaConducir", nullable = true)
-    private LocalDate vtoLicenciaConducir;
-    
+    private Date vtoLicenciaConducir;
+
     //Define el vencimiento del curso CNRT de un chofer
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoCursoCNRT", nullable = true)
-    private LocalDate vtoCursoCNRT;
+    private Date vtoCursoCNRT;
     
     //Define el vencimiento de LNH
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoLNH", nullable = true)
-    private LocalDate vtoLNH;
-    
+    private Date vtoLNH;
+
     //Define el vencimiento de la libreta de sanidad
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoLibretaSanidad", nullable = true)
-    private LocalDate vtoLibretaSanidad;
-    
+    private Date vtoLibretaSanidad;
+
     //Referencia a la clase Usuario (Modificacion LC)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModLC", nullable = true)
@@ -276,21 +285,25 @@ public class Personal extends ObjetoGenerico {
     private Usuario usuarioModLS;
     
     //Define la fecha de modificacion de LC
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaModLC", nullable = true)
-    private LocalDate fechaModLC;
-    
+    private Date fechaModLC;
+
     //Define la fecha de modificacion de CNRT
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaModCNRT", nullable = true)
-    private LocalDate fechaModCNRT;
-    
+    private Date fechaModCNRT;
+
     //Define la fecha de modificacion de LNH
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaModLNH", nullable = true)
-    private LocalDate fechaModLNH;
+    private Date fechaModLNH;
     
     //Define la fecha de modificacion de LS
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaModLS", nullable = true)
-    private LocalDate fechaModLS;
-    
+    private Date fechaModLS;
+
     //Define el talle de camisa
     @Column(name = "talleCamisa", nullable = true)
     private String talleCamisa;
@@ -304,42 +317,53 @@ public class Personal extends ObjetoGenerico {
     private String talleCalzado;
     
     //Define el turno entrada mañana
+    //Define fechaRegistracion
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoMEntrada", nullable = true)
     private Time turnoMEntrada;
     
     //Define el turno salida mañana
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoMSalida", nullable = true)
     private Time turnoMSalida;
     
     //Define el turno entrada tarde
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoTEntrada", nullable = true)
     private Time turnoTEntrada;
     
     //Define el turno salida tarde
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoTSalida", nullable = true)
     private Time turnoTSalida;
     
     //Define el turno entrada noche
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoNEntrada", nullable = true)
     private Time turnoNEntrada;
     
     //Define el turno salida noche
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoNSalida", nullable = true)
     private Time turnoNSalida;
     
     //Define el turno entrada sabado
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoSEntrada", nullable = true)
     private Time turnoSEntrada;
     
     //Define el turno salida sabado
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoSSalida", nullable = true)
     private Time turnoSSalida;
     
     //Define el turno entrada domingo
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoDEntrada", nullable = true)
     private Time turnoDEntrada;
     
     //Define el turno salida domingo
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "turnoDSalida", nullable = true)
     private Time turnoDSalida;
     
@@ -356,12 +380,14 @@ public class Personal extends ObjetoGenerico {
     private String telefonoMovilEmpresa;
     
     //Define el telefono movil fecha de entrega
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "telefonoMovilFechaEntrega", nullable = true)
-    private LocalDate telefonoMovilFechaEntrega;
-    
+    private Date telefonoMovilFechaEntrega;
+
     //Define el telefono movil fecha de devolucion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "telefonoMovilFechaDevolucion", nullable = true)
-    private LocalDate telefonoMovilFechaDevolucion;
+    private Date telefonoMovilFechaDevolucion;
     
     //Define el telefono movil observacion
     @Column(name = "telefonoMovilObservacion", nullable = true)
@@ -469,14 +495,14 @@ public class Personal extends ObjetoGenerico {
         this.localidadNacimiento = localidadNacimiento;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-
+    
     public String getTelefonoFijo() {
         return telefonoFijo;
     }
@@ -533,19 +559,19 @@ public class Personal extends ObjetoGenerico {
         this.area = area;
     }
 
-    public LocalDate getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 
@@ -781,38 +807,38 @@ public class Personal extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public LocalDate getVtoLicenciaConducir() {
+    public Date getVtoLicenciaConducir() {
         return vtoLicenciaConducir;
     }
 
-    public void setVtoLicenciaConducir(LocalDate vtoLicenciaConducir) {
+    public void setVtoLicenciaConducir(Date vtoLicenciaConducir) {
         this.vtoLicenciaConducir = vtoLicenciaConducir;
     }
 
-    public LocalDate getVtoCursoCNRT() {
+    public Date getVtoCursoCNRT() {
         return vtoCursoCNRT;
     }
 
-    public void setVtoCursoCNRT(LocalDate vtoCursoCNRT) {
+    public void setVtoCursoCNRT(Date vtoCursoCNRT) {
         this.vtoCursoCNRT = vtoCursoCNRT;
     }
 
-    public LocalDate getVtoLNH() {
+    public Date getVtoLNH() {
         return vtoLNH;
     }
 
-    public void setVtoLNH(LocalDate vtoLNH) {
+    public void setVtoLNH(Date vtoLNH) {
         this.vtoLNH = vtoLNH;
     }
 
-    public LocalDate getVtoLibretaSanidad() {
+    public Date getVtoLibretaSanidad() {
         return vtoLibretaSanidad;
     }
 
-    public void setVtoLibretaSanidad(LocalDate vtoLibretaSanidad) {
+    public void setVtoLibretaSanidad(Date vtoLibretaSanidad) {
         this.vtoLibretaSanidad = vtoLibretaSanidad;
     }
-
+    
     public Usuario getUsuarioModLC() {
         return usuarioModLC;
     }
@@ -845,38 +871,38 @@ public class Personal extends ObjetoGenerico {
         this.usuarioModLS = usuarioModLS;
     }
 
-    public LocalDate getFechaModLC() {
+    public Date getFechaModLC() {
         return fechaModLC;
     }
 
-    public void setFechaModLC(LocalDate fechaModLC) {
+    public void setFechaModLC(Date fechaModLC) {
         this.fechaModLC = fechaModLC;
     }
 
-    public LocalDate getFechaModCNRT() {
+    public Date getFechaModCNRT() {
         return fechaModCNRT;
     }
 
-    public void setFechaModCNRT(LocalDate fechaModCNRT) {
+    public void setFechaModCNRT(Date fechaModCNRT) {
         this.fechaModCNRT = fechaModCNRT;
     }
 
-    public LocalDate getFechaModLNH() {
+    public Date getFechaModLNH() {
         return fechaModLNH;
     }
 
-    public void setFechaModLNH(LocalDate fechaModLNH) {
+    public void setFechaModLNH(Date fechaModLNH) {
         this.fechaModLNH = fechaModLNH;
     }
 
-    public LocalDate getFechaModLS() {
+    public Date getFechaModLS() {
         return fechaModLS;
     }
 
-    public void setFechaModLS(LocalDate fechaModLS) {
+    public void setFechaModLS(Date fechaModLS) {
         this.fechaModLS = fechaModLS;
     }
-
+    
     public String getTalleCamisa() {
         return talleCamisa;
     }
@@ -1005,22 +1031,22 @@ public class Personal extends ObjetoGenerico {
         this.telefonoMovilEmpresa = telefonoMovilEmpresa;
     }
 
-    public LocalDate getTelefonoMovilFechaEntrega() {
+    public Date getTelefonoMovilFechaEntrega() {
         return telefonoMovilFechaEntrega;
     }
 
-    public void setTelefonoMovilFechaEntrega(LocalDate telefonoMovilFechaEntrega) {
+    public void setTelefonoMovilFechaEntrega(Date telefonoMovilFechaEntrega) {
         this.telefonoMovilFechaEntrega = telefonoMovilFechaEntrega;
     }
 
-    public LocalDate getTelefonoMovilFechaDevolucion() {
+    public Date getTelefonoMovilFechaDevolucion() {
         return telefonoMovilFechaDevolucion;
     }
 
-    public void setTelefonoMovilFechaDevolucion(LocalDate telefonoMovilFechaDevolucion) {
+    public void setTelefonoMovilFechaDevolucion(Date telefonoMovilFechaDevolucion) {
         this.telefonoMovilFechaDevolucion = telefonoMovilFechaDevolucion;
     }
-
+    
     public String getTelefonoMovilObservacion() {
         return telefonoMovilObservacion;
     }

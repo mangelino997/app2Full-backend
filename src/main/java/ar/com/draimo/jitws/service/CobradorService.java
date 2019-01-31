@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICobradorDAO;
 import ar.com.draimo.jitws.model.Cobrador;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class CobradorService {
     @Transactional(rollbackFor = Exception.class)
     public Cobrador agregar(Cobrador elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setFechaAlta(LocalDate.now());
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         return elementoDAO.save(elemento);
     }
     

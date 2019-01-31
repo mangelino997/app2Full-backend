@@ -41,10 +41,10 @@ public class ViajeTerceroController {
     ViajeTerceroService elementoService;
     
     //Obtiene por id
-    @GetMapping(value = URL + "/listarPorNombre/{id}")
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
-    public ViajeTercero obtener(@PathVariable int id) {
-        return elementoService.obtener(id);
+    public ViajeTercero obtenerPorid(@PathVariable int id) {
+        return elementoService.obtenerPorId(id);
     }
     
     //Agrega un registro

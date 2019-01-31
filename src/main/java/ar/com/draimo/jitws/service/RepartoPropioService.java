@@ -33,6 +33,7 @@ public class RepartoPropioService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoPropio agregar(RepartoPropio elemento) {
+        System.out.println(elemento.getFechaRegistracion());
         return elementoDAO.saveAndFlush(elemento);
     }
 

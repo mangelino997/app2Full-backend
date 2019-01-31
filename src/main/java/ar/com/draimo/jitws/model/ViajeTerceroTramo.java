@@ -2,8 +2,9 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,12 +38,14 @@ public class ViajeTerceroTramo extends ObjetoGenerico {
     private short numeroOrden;
     
     //Define una fecha tramo
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaTramo", nullable = false)
-    private LocalDate fechaTramo;
+    private Date fechaTramo;
     
     //Define una fecha alta
-    @Column(name = "fechaAlta", nullable = false)
-    private LocalDate fechaAlta;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @Column(name = "fechaAlta", nullable = false) 
+    private Date fechaAlta;
     
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -119,23 +122,23 @@ public class ViajeTerceroTramo extends ObjetoGenerico {
     public void setNumeroOrden(short numeroOrden) {
         this.numeroOrden = numeroOrden;
     }
-    
-    public LocalDate getFechaTramo() {
+
+    public Date getFechaTramo() {
         return fechaTramo;
     }
 
-    public void setFechaTramo(LocalDate fechaTramo) {
+    public void setFechaTramo(Date fechaTramo) {
         this.fechaTramo = fechaTramo;
     }
 
-    public LocalDate getFechaAlta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
-
+    
     public Empresa getEmpresa() {
         return empresa;
     }

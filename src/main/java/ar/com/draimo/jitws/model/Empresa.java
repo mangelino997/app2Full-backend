@@ -1,8 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Blob;
-import java.time.LocalDate;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -66,9 +67,10 @@ public class Empresa extends ObjetoGenerico {
     private boolean estaActiva;
     
     //Define el inicio de actividad
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "inicioActividad")
-    private LocalDate inicioActividad;
-    
+    private Date inicioActividad;
+
     //Define el caea
     @Column(name = "feCAEA", nullable = false)
     private boolean feCAEA;
@@ -173,14 +175,14 @@ public class Empresa extends ObjetoGenerico {
         this.estaActiva = estaActiva;
     }
 
-    public LocalDate getInicioActividad() {
+    public Date getInicioActividad() {
         return inicioActividad;
     }
 
-    public void setInicioActividad(LocalDate inicioActividad) {
+    public void setInicioActividad(Date inicioActividad) {
         this.inicioActividad = inicioActividad;
     }
-
+    
     public boolean isFeCAEA() {
         return feCAEA;
     }

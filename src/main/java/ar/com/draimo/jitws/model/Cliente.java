@@ -1,8 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -148,8 +149,9 @@ public class Cliente extends ObjetoGenerico {
     private String numeroPolizaSeguro;
     
     //Define el vencimiento de la poliza del seguro
-    @Column(name = "vencimientoPolizaSeguro", nullable = true)
-    private LocalDate vencimientoPolizaSeguro;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @Column(name = "vencimientoPolizaSeguro", nullable = false)
+    private Date vencimientoPolizaSeguro;
     
     //Define las observaciones
     @Column(name = "observaciones", nullable = true)
@@ -182,8 +184,9 @@ public class Cliente extends ObjetoGenerico {
     private Usuario usuarioBaja;
     
     //Define la fecha de baja del cliente
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaBaja", nullable = true)
-    private LocalDate fechaBaja;
+    private Date fechaBaja;
     
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -191,8 +194,9 @@ public class Cliente extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define la fecha de ultima modificacion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaUltimaMod", nullable = true)
-    private LocalDate fechaUltimaMod;
+    private Date fechaUltimaMod;
     
     //Define el alias para las busquedas
     @Column(name = "alias", nullable = true)
@@ -424,14 +428,14 @@ public class Cliente extends ObjetoGenerico {
         this.numeroPolizaSeguro = numeroPolizaSeguro;
     }
 
-    public LocalDate getVencimientoPolizaSeguro() {
+    public Date getVencimientoPolizaSeguro() {
         return vencimientoPolizaSeguro;
     }
 
-    public void setVencimientoPolizaSeguro(LocalDate vencimientoPolizaSeguro) {
+    public void setVencimientoPolizaSeguro(Date vencimientoPolizaSeguro) {
         this.vencimientoPolizaSeguro = vencimientoPolizaSeguro;
     }
-
+    
     public String getObservaciones() {
         return observaciones;
     }
@@ -488,14 +492,14 @@ public class Cliente extends ObjetoGenerico {
         this.usuarioBaja = usuarioBaja;
     }
 
-    public LocalDate getFechaBaja() {
+    public Date getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(LocalDate fechaBaja) {
+    public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
-
+    
     public Usuario getUsuarioMod() {
         return usuarioMod;
     }
@@ -504,14 +508,14 @@ public class Cliente extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public LocalDate getFechaUltimaMod() {
+    public Date getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(LocalDate fechaUltimaMod) {
+    public void setFechaUltimaMod(Date fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
-
+    
     public String getAlias() {
         return alias;
     }

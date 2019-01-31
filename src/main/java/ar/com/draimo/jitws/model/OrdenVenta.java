@@ -1,9 +1,10 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,9 +44,10 @@ public class OrdenVenta extends ObjetoGenerico {
     private Vendedor vendedor;
     
     //Define la fecha de alta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaAlta", nullable = false)
-    private LocalDate fechaAlta;
-    
+    private Date fechaAlta;
+
     //Referencia a la clase TipoTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoTarifa", nullable = false)
@@ -68,8 +70,9 @@ public class OrdenVenta extends ObjetoGenerico {
     private boolean estaActiva;
     
     //Define la fecha desde que esta activa
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "activaDesde", nullable = true)
-    private LocalDate activaDesde;
+    private Date activaDesde;
     
     //Define la lista de OrdenVentaEscala
     @JsonManagedReference
@@ -115,14 +118,14 @@ public class OrdenVenta extends ObjetoGenerico {
         this.vendedor = vendedor;
     }
 
-    public LocalDate getFechaAlta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
-
+    
     public TipoTarifa getTipoTarifa() {
         return tipoTarifa;
     }
@@ -163,14 +166,14 @@ public class OrdenVenta extends ObjetoGenerico {
         this.estaActiva = estaActiva;
     }
 
-    public LocalDate getActivaDesde() {
+    public Date getActivaDesde() {
         return activaDesde;
     }
 
-    public void setActivaDesde(LocalDate activaDesde) {
+    public void setActivaDesde(Date activaDesde) {
         this.activaDesde = activaDesde;
     }
-
+    
     public List<OrdenVentaEscala> getOrdenesVentasEscalas() {
         return ordenesVentasEscalas;
     }

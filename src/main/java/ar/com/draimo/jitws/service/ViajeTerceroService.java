@@ -45,21 +45,20 @@ public class ViajeTerceroService {
     IViajeTerceroInsumoDAO viajeTerceroInsumoDAO;
     
     //Obtiene por id
-    public ViajeTercero obtener(int id) {
+    public ViajeTercero obtenerPorId(int id) {
         //Obtiene un viaje propio por id
-        Optional<ViajeTercero> viajeTerceroOptional = elementoDAO.findById(id);
-        ViajeTercero viajeTercero = viajeTerceroOptional.get();
+        ViajeTercero viajeTercero = elementoDAO.obtenerPorId(id);
         //Obtiene la lista de tramos del viaje
-        List<ViajeTerceroTramo> viajeTerceroTramos = viajeTerceroTramoDAO.findByViajeTercero(viajeTerceroOptional);
+        List<ViajeTerceroTramo> viajeTerceroTramos = viajeTerceroTramoDAO.findByViajeTercero(viajeTercero);
         viajeTercero.setViajeTerceroTramos(viajeTerceroTramos);
         //Obtiene la lista de ordenes de combustible del viaje
-        List<ViajeTerceroCombustible> viajeTerceroCombustibles = viajeTerceroCombustibleDAO.findByViajeTercero(viajeTerceroOptional);
+        List<ViajeTerceroCombustible> viajeTerceroCombustibles = viajeTerceroCombustibleDAO.findByViajeTercero(viajeTercero);
         viajeTercero.setViajeTerceroCombustibles(viajeTerceroCombustibles);
         //Obtiene la lista de adelantos de efectivo del viaje
-        List<ViajeTerceroEfectivo> viajeTerceroEfectivos = viajeTerceroEfectivoDAO.findByViajeTercero(viajeTerceroOptional);
+        List<ViajeTerceroEfectivo> viajeTerceroEfectivos = viajeTerceroEfectivoDAO.findByViajeTercero(viajeTercero);
         viajeTercero.setViajeTerceroEfectivos(viajeTerceroEfectivos);
         //Obtiene la lista de ordenes de insumo del viaje
-        List<ViajeTerceroInsumo> viajeTerceroInsumos = viajeTerceroInsumoDAO.findByViajeTercero(viajeTerceroOptional);
+        List<ViajeTerceroInsumo> viajeTerceroInsumos = viajeTerceroInsumoDAO.findByViajeTercero(viajeTercero);
         viajeTercero.setViajeTerceroInsumos(viajeTerceroInsumos);
         //Retorna los datos
         return viajeTercero;

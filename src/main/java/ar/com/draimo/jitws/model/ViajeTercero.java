@@ -1,8 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,8 +39,9 @@ public class ViajeTercero extends ObjetoGenerico {
     private Usuario usuario;
     
     //Define la fecha
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fecha", nullable = false)
-    private LocalDate fecha;
+    private Date fecha;
     
     //Referencia a la clase Vehiculo Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -85,8 +87,9 @@ public class ViajeTercero extends ObjetoGenerico {
     private String numeroLiquidacion;
     
     //Define una fecha de liquidacion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "fechaLiquidacion", nullable = true)
-    private LocalDate fechaLiquidacion;
+    private Date fechaLiquidacion;
     
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -170,14 +173,14 @@ public class ViajeTercero extends ObjetoGenerico {
         this.usuario = usuario;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-
+    
     public VehiculoProveedor getVehiculoProveedor() {
         return vehiculoProveedor;
     }
@@ -250,11 +253,11 @@ public class ViajeTercero extends ObjetoGenerico {
         this.numeroLiquidacion = numeroLiquidacion;
     }
 
-    public LocalDate getFechaLiquidacion() {
+    public Date getFechaLiquidacion() {
         return fechaLiquidacion;
     }
 
-    public void setFechaLiquidacion(LocalDate fechaLiquidacion) {
+    public void setFechaLiquidacion(Date fechaLiquidacion) {
         this.fechaLiquidacion = fechaLiquidacion;
     }
 
