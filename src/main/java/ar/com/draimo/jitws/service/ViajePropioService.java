@@ -189,6 +189,14 @@ public class ViajePropioService {
                 }
             }
         }
+        //Verifica que la lista de combustibles tenga elementos
+        if (elemento.getViajePropioCombustibles() != null) {
+            //Agrega los tramos del viaje
+            for(ViajePropioCombustible item : elemento.getViajePropioCombustibles()) {
+                item.setViajePropio(elemento);
+                viajePropioCombustibleDAO.save(item);
+            }
+        }
         //Actualiza el viaje propio
         elementoDAO.save(elemento);
     }
