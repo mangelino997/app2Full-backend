@@ -22,6 +22,9 @@ public interface IViajePropioDAO extends JpaRepository<ViajePropio, Integer> {
     @Query(value = "SELECT * FROM viajepropio WHERE id=:id", nativeQuery = true)
     public ViajePropio obtenerPorId(@Param("id") int id);
     
+    //Obtiene una lista de registros por alias
+    public List<ViajePropio> findByAliasContaining(String alias);
+    
     //Obtiene todos los registros
     @Query(value = "SELECT * FROM viajepropio", nativeQuery = true)
     public List<ViajePropio> obtenerTodos();

@@ -15,6 +15,7 @@ import ar.com.draimo.jitws.model.ViajePropioGasto;
 import ar.com.draimo.jitws.model.ViajePropioInsumo;
 import ar.com.draimo.jitws.model.ViajePropioPeaje;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
+import ar.com.draimo.jitws.model.ViajePropioTramoCliente;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,12 +98,23 @@ public class ViajePropioService {
         return viajePropio;
     }
     
+    //Obtiene una lista de registros por alias
+    public List<ViajePropio> listarPorAlias(String alias) {
+        return elementoDAO.findByAliasContaining(alias);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ViajePropio agregar(ViajePropio elemento) {
         elemento = formatearStrings(elemento);
         //Agrega el viaje propio
         ViajePropio viajePropio = elementoDAO.saveAndFlush(elemento);
+        //Establece el alias
+        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha() 
+                + " - " + viajePropio.getEmpresa().getRazonSocial() 
+                + " - " + viajePropio.getPersonal().getNombreCompleto());
+        //Actualiza el viaje propio
+        elementoDAO.save(viajePropio);
         //Verifica que la lista de tramos tenga elementos
         if (elemento.getViajePropioTramos() != null) {
             //Agrega los tramos del viaje
@@ -162,7 +174,21 @@ public class ViajePropioService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajePropio elemento) {
+        //Formatea los strings
         elemento = formatearStrings(elemento);
+        //Verifica que la lista de tramos tenga elementos
+        if (elemento.getViajePropioTramos() != null) {
+            //Agrega los tramos del viaje
+            for(ViajePropioTramo item : elemento.getViajePropioTramos()) {
+                item.setViajePropio(elemento);
+                ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.save(item);
+                //Agrega los dadores-destinatarios
+                for(ViajePropioTramoCliente elem : item.getViajePropioTramoClientes()) {
+                    elem.setViajePropioTramo(viajePropioTramo);
+                    viajePropioTramoClienteDAO.saveAndFlush(elem);
+                }
+            }
+        }
         //Actualiza el viaje propio
         elementoDAO.save(elemento);
     }

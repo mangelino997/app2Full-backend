@@ -122,7 +122,6 @@ public class ViajeRemito extends ObjetoGenerico {
     private ViajePropioTramo viajePropioTramo;
     
     //Referencia a la clase Viaje Tercero Tramo
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTerceroTramo", nullable = true)
     private ViajeTerceroTramo viajeTerceroTramo;
