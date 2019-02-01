@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsuarioService {
     
     //Define la encriptacion de la contrasenia
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //Define la referencia al dao
