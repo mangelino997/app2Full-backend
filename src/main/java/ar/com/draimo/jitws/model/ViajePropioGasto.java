@@ -64,6 +64,10 @@ public class ViajePropioGasto extends ObjetoGenerico {
     @Column(name = "precioUnitario", nullable = false)
     private BigDecimal precioUnitario;
     
+    //Define el importe
+    @Column(name = "importe", nullable = false)
+    private BigDecimal importe;
+    
     //Define las observaciones
     @Column(name = "observaciones", nullable = true)
     private String observaciones;
@@ -150,6 +154,14 @@ public class ViajePropioGasto extends ObjetoGenerico {
         this.precioUnitario = precioUnitario;
     }
 
+    public BigDecimal getImporte() {
+        return importe;
+    }
+
+    public void setImporte(BigDecimal importe) {
+        this.importe = importe;
+    }
+    
     public String getObservaciones() {
         return observaciones;
     }

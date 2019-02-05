@@ -177,26 +177,65 @@ public class ViajePropioService {
         //Formatea los strings
         elemento = formatearStrings(elemento);
         //Verifica que la lista de tramos tenga elementos
-        if (elemento.getViajePropioTramos() != null) {
-            //Agrega los tramos del viaje
-            for(ViajePropioTramo item : elemento.getViajePropioTramos()) {
-                item.setViajePropio(elemento);
-                ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.save(item);
-                //Agrega los dadores-destinatarios
-                for(ViajePropioTramoCliente elem : item.getViajePropioTramoClientes()) {
-                    elem.setViajePropioTramo(viajePropioTramo);
-                    viajePropioTramoClienteDAO.saveAndFlush(elem);
-                }
-            }
-        }
-        //Verifica que la lista de combustibles tenga elementos
-        if (elemento.getViajePropioCombustibles() != null) {
-            //Agrega los tramos del viaje
-            for(ViajePropioCombustible item : elemento.getViajePropioCombustibles()) {
-                item.setViajePropio(elemento);
-                viajePropioCombustibleDAO.save(item);
-            }
-        }
+        
+        /* VER COMO TRATAR EL TEMA DE MODIFICAR Y ELIMINAR ITEMS */
+        
+//        if (elemento.getViajePropioTramos() != null) {
+//            //Agrega los tramos del viaje
+//            for(ViajePropioTramo item : elemento.getViajePropioTramos()) {
+//                item.setViajePropio(elemento);
+//                ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.save(item);
+//                //Agrega los dadores-destinatarios
+//                for(ViajePropioTramoCliente elem : item.getViajePropioTramoClientes()) {
+//                    elem.setViajePropioTramo(viajePropioTramo);
+//                    viajePropioTramoClienteDAO.saveAndFlush(elem);
+//                }
+//            }
+//        }
+//        //Verifica que la lista de combustibles tenga elementos
+//        if (elemento.getViajePropioCombustibles() != null) {
+//            //Agrega los combustibles del viaje
+//            for(ViajePropioCombustible item : elemento.getViajePropioCombustibles()) {
+//                if(item.getId() != 0) {
+//                    item.setViajePropio(elemento);
+//                    viajePropioCombustibleDAO.save(item);
+//                } else {
+//                    viajePropioCombustibleDAO.delete(item);
+//                }
+//            }
+//        }
+//        //Verifica que la lista de efectivos tenga elementos
+//        if (elemento.getViajePropioEfectivos() != null) {
+//            //Agrega los efectivos del viaje
+//            for(ViajePropioEfectivo item : elemento.getViajePropioEfectivos()) {
+//                item.setViajePropio(elemento);
+//                viajePropioEfectivoDAO.save(item);
+//            }
+//        }
+//        //Verifica que la lista de insumos tenga elementos
+//        if (elemento.getViajePropioInsumos() != null) {
+//            //Agrega los insumos del viaje
+//            for(ViajePropioInsumo item : elemento.getViajePropioInsumos()) {
+//                item.setViajePropio(elemento);
+//                viajePropioInsumoDAO.save(item);
+//            }
+//        }
+//        //Verifica que la lista de gastos tenga elementos
+//        if (elemento.getViajePropioGastos() != null) {
+//            //Agrega los gastos del viaje
+//            for(ViajePropioGasto item : elemento.getViajePropioGastos()) {
+//                item.setViajePropio(elemento);
+//                viajePropioGastoDAO.save(item);
+//            }
+//        }
+//        //Verifica que la lista de peajes tenga elementos
+//        if (elemento.getViajePropioPeajes() != null) {
+//            //Agrega los tramos del viaje
+//            for(ViajePropioPeaje item : elemento.getViajePropioPeajes()) {
+//                item.setViajePropio(elemento);
+//                viajePropioPeajeDAO.save(item);
+//            }
+//        }
         //Actualiza el viaje propio
         elementoDAO.save(elemento);
     }
