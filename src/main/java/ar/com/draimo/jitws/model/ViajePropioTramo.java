@@ -102,7 +102,7 @@ public class ViajePropioTramo extends ObjetoGenerico {
     
     //Define la lista de tramos de clientes
     @JsonManagedReference
-    @OneToMany(mappedBy = "viajePropioTramo")
+    @OneToMany(mappedBy = "viajePropioTramo", cascade = CascadeType.REMOVE)
     private List<ViajePropioTramoCliente> viajePropioTramoClientes;
     
     //Define la lista de remitos
