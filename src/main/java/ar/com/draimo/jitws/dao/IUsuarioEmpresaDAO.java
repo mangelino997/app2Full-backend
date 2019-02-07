@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Usuario;
 import ar.com.draimo.jitws.model.UsuarioEmpresa;
 import java.util.List;
@@ -25,6 +26,9 @@ public interface IUsuarioEmpresaDAO extends JpaRepository<UsuarioEmpresa, Intege
     
     //Obtiene una lista por usuario
     public List<UsuarioEmpresa> findByUsuarioAndMostrarTrue(Optional<Usuario> usuario);
+    
+    //Obtiene una lista por empresa
+    public List<UsuarioEmpresa> findByEmpresaAndMostrarTrue(Empresa empresa);
     
     //Elimina todos los datos de la tabla
     @Modifying

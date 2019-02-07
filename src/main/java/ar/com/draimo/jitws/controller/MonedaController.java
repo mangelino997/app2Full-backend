@@ -62,6 +62,13 @@ public class MonedaController {
         return elementoService.listarPorNombre(nombre);
     }
     
+    //Obtiene la moneda principal por defecto
+    @GetMapping(value = URL + "/obtenerPorDefecto")
+    @ResponseBody
+    public Moneda obtenerPorDefecto() {
+        return elementoService.obtenerPorDefecto();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Moneda elemento) {

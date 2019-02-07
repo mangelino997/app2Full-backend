@@ -19,4 +19,7 @@ public interface IMonedaDAO extends JpaRepository<Moneda, Integer> {
     //Obtiene una lista por nombre
     public List<Moneda> findByNombreContaining(String nombre);
     
+    //Obtiene la moneda por defecto
+    public Moneda findByPorDefectoTrue();
+    
 }

@@ -23,10 +23,17 @@ public class Moneda extends ObjetoGenerico {
     @Column(name = "estaActivo", nullable = false)
     private boolean estaActivo;
     
-    //Referencia a la clase Plan de Cuenta
-    /*@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idPlanCuenta", nullable = false)
-    private PlanCuenta planCuenta;*/
+    //Define por defecto
+    @Column(name = "porDefecto", nullable = false)
+    private boolean porDefecto;
+    
+    //Define el codigo de afip
+    @Column(name = "codigoAfip", nullable = false)
+    private String codigoAfip;
+    
+    //Define el simbolo
+    @Column(name = "simbolo", nullable = false)
+    private String simbolo;
     
     //Getters y Setters de la clase
 
@@ -44,6 +51,30 @@ public class Moneda extends ObjetoGenerico {
 
     public void setEstaActivo(boolean estaActivo) {
         this.estaActivo = estaActivo;
+    }
+
+    public boolean isPorDefecto() {
+        return porDefecto;
+    }
+
+    public void setPorDefecto(boolean porDefecto) {
+        this.porDefecto = porDefecto;
+    }
+
+    public String getCodigoAfip() {
+        return codigoAfip;
+    }
+
+    public void setCodigoAfip(String codigoAfip) {
+        this.codigoAfip = codigoAfip;
+    }
+
+    public String getSimbolo() {
+        return simbolo;
+    }
+
+    public void setSimbolo(String simbolo) {
+        this.simbolo = simbolo;
     }
     
 }

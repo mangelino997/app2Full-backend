@@ -39,6 +39,11 @@ public class MonedaService {
         }
     }
     
+    //Obtiene la moneda principal por defecto
+    public Moneda obtenerPorDefecto() {
+        return elementoDAO.findByPorDefectoTrue();
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Moneda agregar(Moneda elemento) {

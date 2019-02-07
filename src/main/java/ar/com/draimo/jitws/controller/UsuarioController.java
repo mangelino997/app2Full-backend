@@ -72,8 +72,15 @@ public class UsuarioController {
     //Obtiene una lista por rol
     @GetMapping(value = URL + "/listarPorRol/{idRol}")
     @ResponseBody
-    public List<Usuario> listarPorNombre(@PathVariable int idRol) {
+    public List<Usuario> listarPorRol(@PathVariable int idRol) {
         return elementoService.listarPorRol(idRol);
+    }
+    
+    //Obtiene una lista de usuarios por empresa
+    @GetMapping(value = URL + "/listarUsuariosPorEmpresa/{idEmpresa}")
+    @ResponseBody
+    public List<Usuario> listarUsuariosPorEmpresa(@PathVariable int idEmpresa) {
+        return elementoService.listarUsuariosPorEmpresa(idEmpresa);
     }
     
     //Agrega un registro

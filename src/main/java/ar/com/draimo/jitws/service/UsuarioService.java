@@ -1,8 +1,12 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
+import ar.com.draimo.jitws.dao.IUsuarioEmpresaDAO;
 import ar.com.draimo.jitws.model.Usuario;
+import ar.com.draimo.jitws.model.UsuarioEmpresa;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +32,14 @@ public class UsuarioService {
     //Define la referencia al dao rol
     @Autowired
     IRolDAO rolDAO;
+    
+    //Define la referencia al dao empresa
+    @Autowired
+    IUsuarioEmpresaDAO usuarioEmpresaDAO;
+    
+    //Define la referencia al dao usuarioempresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -57,6 +69,16 @@ public class UsuarioService {
     //Obtiene una lista por rol
     public List<Usuario> listarPorRol(int idRol) {
         return elementoDAO.findByRol(rolDAO.findById(idRol));
+    }
+    
+    //Obtiene una lista de usuarios por empresa
+    public List<Usuario> listarUsuariosPorEmpresa(int idEmpresa) {
+        List<UsuarioEmpresa> usuariosEmpresa = usuarioEmpresaDAO.findByEmpresaAndMostrarTrue(empresaDAO.findById(idEmpresa).get());
+        List<Usuario> usuarios = new ArrayList<>();
+        for(UsuarioEmpresa usuarioEmpresa : usuariosEmpresa) {
+            usuarios.add(usuarioEmpresa.getUsuario());
+        }
+        return usuarios;
     }
 
     //Agrega un registro
