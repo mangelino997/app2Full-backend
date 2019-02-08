@@ -83,6 +83,13 @@ public class EmpresaController {
         return elementoService.listarPorRazonSocialYActivaYFe(razonSocial);
     }
     
+    //Obtiene una lista de usuarios por empresa
+    @GetMapping(value = URL + "/listarEmpresasPorUsuario/{idUsuario}")
+    @ResponseBody
+    public List<Empresa> listarEmpresasPorUsuario(@PathVariable int idUsuario) {
+        return elementoService.listarEmpresasPorUsuario(idUsuario);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Empresa elemento) {

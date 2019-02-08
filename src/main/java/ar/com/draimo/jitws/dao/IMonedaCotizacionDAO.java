@@ -1,11 +1,11 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.MonedaCotizacion;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO moneda cotizacion
@@ -18,8 +18,8 @@ public interface IMonedaCotizacionDAO extends JpaRepository<MonedaCotizacion, In
     //Obtiene el siguiente id
     public MonedaCotizacion findTopByOrderByIdDesc();
     
-    
     //Obtiene un listado de moneda cotizacion por moneda
-    public List<MonedaCotizacion> findByMoneda(Optional<Moneda> elemento);
+    @Query(value = "SELECT * FROM monedacotizacion WHERE idMoneda=:idMoneda ORDER BY fecha DESC", nativeQuery = true)
+    public List<MonedaCotizacion> listarPorMoneda(@Param("idMoneda") int idMoneda);
     
 }

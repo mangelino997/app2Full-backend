@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio Provincia
+ * Servicio MonedaCuentaContable
  * @author blas
  */
 
@@ -46,13 +46,20 @@ public class MonedaCuentaContableService {
     //Obtiene una lista por moneda
     public List<MonedaCuentaContable> listarPorMoneda(int id) {
         Optional<Moneda> elemento = monedaDAO.findById(id);
-        return elementoDAO.findByMoneda(elemento);
+        return elementoDAO.findByMoneda(elemento.get());
     }
     
     //Obtiene una lista por moneda
     public List<MonedaCuentaContable> listarPorEmpresa(int id) {
         Optional<Empresa> elemento = empresaDAO.findById(id);
-        return elementoDAO.findByEmpresa(elemento);
+        return elementoDAO.findByEmpresa(elemento.get());
+    }
+    
+    //Obtiene un registro por moneda y empresa
+    public MonedaCuentaContable obtenerPorMonedaYEmpresa(int idMoneda, int idEmpresa) {
+        Moneda moneda = monedaDAO.findById(idMoneda).get();
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+        return elementoDAO.findByMonedaAndEmpresa(moneda, empresa);
     }
 
     //Agrega un registro

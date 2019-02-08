@@ -1,42 +1,42 @@
 package ar.com.draimo.jitws.service;
-
-import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
-import ar.com.draimo.jitws.model.TipoComprobante;
+import ar.com.draimo.jitws.dao.IGrupoCuentaContableDAO;
+import ar.com.draimo.jitws.dao.ITipoCuentaContableDAO;
+import ar.com.draimo.jitws.model.GrupoCuentaContable;
+import ar.com.draimo.jitws.model.TipoCuentaContable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio TipoComprobante
+ * Servicio GrupoCuentaContable
  * @author blas
  */
 
 @Service
-public class TipoComprobanteService {
+public class GrupoCuentaContableService {
 
     //Define la referencia al dao
     @Autowired
-    ITipoComprobanteDAO elementoDAO;
+    IGrupoCuentaContableDAO elementoDAO;
+    
+    //Define la referencia al dao pais
+    @Autowired
+    ITipoCuentaContableDAO tipoCuentaContableDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        TipoComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
+        GrupoCuentaContable elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId()+1 : 1;
     }
     
-    //Obtiene un registro por id
-    public TipoComprobante obtenerPorId(int id) {
-        return elementoDAO.findById(id).get();
-    }
-    
     //Obtiene la lista completa
-    public List<TipoComprobante> listar() {
+    public List<GrupoCuentaContable> listar() {
         return elementoDAO.findAll();
     }
     
-    //Obtiene un listado por nombre
-    public List<TipoComprobante> listarPorNombre(String nombre) {
+    //Obtiene una lista por nombre
+    public List<GrupoCuentaContable> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
@@ -44,35 +44,35 @@ public class TipoComprobanteService {
         }
     }
     
-    //Obtiene una lista por esta activo ingreso carga igual true
-    public List<TipoComprobante> listarPorEstaActivoIngresoCargaTrue() {
-        return elementoDAO.findByEstaActivoIngresoCargaTrue();
+    //Obtiene una lista por pais
+    public List<GrupoCuentaContable> listarPorTipoCuentaContable(int id) {
+        TipoCuentaContable elemento = tipoCuentaContableDAO.findById(id).get();
+        return elementoDAO.findByTipoCuentaContable(elemento);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public TipoComprobante agregar(TipoComprobante elemento) {
+    public GrupoCuentaContable agregar(GrupoCuentaContable elemento) {
         elemento = formatearStrings(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(TipoComprobante elemento) {
+    public void actualizar(GrupoCuentaContable elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(TipoComprobante elemento) {
+    public void eliminar(GrupoCuentaContable elemento) {
         elementoDAO.delete(elemento);
     }
     
     //Formatea los strings
-    private TipoComprobante formatearStrings(TipoComprobante elemento) {
+    private GrupoCuentaContable formatearStrings(GrupoCuentaContable elemento) {
         elemento.setNombre(elemento.getNombre().trim());
-        elemento.setAbreviatura(elemento.getAbreviatura().trim());
         return elemento;
     }
 

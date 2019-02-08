@@ -2,7 +2,6 @@
 package ar.com.draimo.jitws.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,9 +27,33 @@ public class MonedaCuentaContable extends ObjetoGenerico {
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
-    //Instancia de la clase cuentaContable(todavia no existe)
-    //@ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idCuentaContable", nullable = false)
-    private int cuentaContable;
+    //Instancia de la clase Plan de cuenta
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPlandeCuenta", nullable = false)
+    private PlandeCuenta planCuenta;
+
+    public Moneda getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public PlandeCuenta getPlanCuenta() {
+        return planCuenta;
+    }
+
+    public void setPlanCuenta(PlandeCuenta planCuenta) {
+        this.planCuenta = planCuenta;
+    }
     
 }

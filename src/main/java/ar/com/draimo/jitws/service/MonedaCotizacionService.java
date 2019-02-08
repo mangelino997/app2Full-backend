@@ -2,10 +2,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IMonedaCotizacionDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
-import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.MonedaCotizacion;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,8 +37,7 @@ public class MonedaCotizacionService {
     
     //Obtiene una lista por moneda
     public List<MonedaCotizacion> listarPorMoneda(int id) {
-        Optional<Moneda> elemento = monedaDAO.findById(id);
-        return elementoDAO.findByMoneda(elemento);
+        return elementoDAO.listarPorMoneda(id);
     }
 
     //Agrega un registro

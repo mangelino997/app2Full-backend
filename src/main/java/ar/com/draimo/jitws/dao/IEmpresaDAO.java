@@ -4,6 +4,8 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.Empresa;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Empresa
@@ -27,5 +29,10 @@ public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
     
     //Obtiene un listado por razon social, esta activa y fe
     public List<Empresa> findByRazonSocialContainingAndEstaActivaTrueAndFeTrue(String razonSocial);
+    
+    //Obtiene una lista por empresa
+    @Query(value = "SELECT e.* FROM usuarioempresa u INNER JOIN empresa e ON "
+            + "u.idUsuario = e.id WHERE u.idUsuario=:idUsuario AND u.mostrar=1 AND estaActiva=1", nativeQuery = true)
+    public List<Empresa> listarPorUsuarioYMostrarTrue(@Param("idUsuario") int idUsuario);
     
 }

@@ -1,73 +1,68 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IPlandeCuentaDAO;
-import ar.com.draimo.jitws.model.PlandeCuenta;
+import ar.com.draimo.jitws.dao.ITipoCuentaContableDAO;
+import ar.com.draimo.jitws.model.TipoCuentaContable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio PlandeCuenta
+ * Servicio TipoCuentaContable
  * @author blas
  */
 
 @Service
-public class PlandeCuentaService {
-    
+public class TipoCuentaContableService {
+
     //Define la referencia al dao
     @Autowired
-    IPlandeCuentaDAO elementoDAO;
+    ITipoCuentaContableDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        PlandeCuenta elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        TipoCuentaContable elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
-    public List<PlandeCuenta> listar() {
+    public List<TipoCuentaContable> listar() {
         return elementoDAO.findAll();
     }
     
     //Obtiene una lista por nombre
-    public List<PlandeCuenta> listarPorNombre(String nombre) {
+    public List<TipoCuentaContable> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
     }
-    
-    //Obtiene un listado por grupocuentacontable y estaactivo
-    public List<PlandeCuenta> listarGrupoACTIVO(int idEmpresa) {
-        return elementoDAO.listarGrupoACTIVO(idEmpresa);
-    }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public PlandeCuenta agregar(PlandeCuenta elemento) {
+    public TipoCuentaContable agregar(TipoCuentaContable elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(PlandeCuenta elemento) {
+    public void actualizar(TipoCuentaContable elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(PlandeCuenta elemento) {
+    public void eliminar(TipoCuentaContable elemento) {
         elementoDAO.delete(elemento);
     }
     
     //Formatea los strings
-    private PlandeCuenta formatearStrings(PlandeCuenta elemento) {
+    private TipoCuentaContable formatearStrings(TipoCuentaContable elemento) {
         elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
-    
+
 }

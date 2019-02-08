@@ -69,6 +69,31 @@ public class MonedaController {
         return elementoService.obtenerPorDefecto();
     }
     
+    //Establece a moneda por defecto false
+    @PutMapping(value = URL + "/establecerMonedaPrincipal/{idMoneda}")
+    public ResponseEntity<?> establecerMonedaPrincipal(@PathVariable int idMoneda) {
+        try {
+            //Actualiza el registro
+            elementoService.establecerMonedaPrincipal(idMoneda);
+            //Envia la nueva lista a los usuarios subscripto
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de actualizado con exito
+            return MensajeRespuesta.actualizado();
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch(ObjectOptimisticLockingFailureException oolfe) {
+            //Retorna mensaje de transaccion no actualizada
+            return MensajeRespuesta.transaccionNoActualizada();
+        }catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Moneda elemento) {

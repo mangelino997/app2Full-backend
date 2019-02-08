@@ -44,6 +44,14 @@ public class MonedaService {
         return elementoDAO.findByPorDefectoTrue();
     }
     
+    //Establece la moneda como principal
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerMonedaPrincipal(int idMoneda) {
+        Moneda moneda = elementoDAO.findById(idMoneda).get();
+        moneda.setPorDefecto(false);
+        elementoDAO.save(moneda);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Moneda agregar(Moneda elemento) {

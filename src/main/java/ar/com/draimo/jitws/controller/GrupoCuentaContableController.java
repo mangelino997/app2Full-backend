@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.MonedaCuentaContable;
-import ar.com.draimo.jitws.service.MonedaCuentaContableService;
+import ar.com.draimo.jitws.model.GrupoCuentaContable;
+import ar.com.draimo.jitws.service.GrupoCuentaContableService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase monedaCuentaContable Controller
+ * Clase GrupoCuentaContable Controller
  * @author blas
  */
 
 @RestController
-public class MonedaCuentaContableController {
+public class GrupoCuentaContableController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/monedacuentacontable";
+    private final String URL = RutaConstant.URL_BASE + "/grupocuentacontable";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/monedacuentacontable";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/grupocuentacontable";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -39,7 +39,7 @@ public class MonedaCuentaContableController {
     
     //Crea una instancia del servicio
     @Autowired
-    MonedaCuentaContableService elementoService;
+    GrupoCuentaContableService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,36 +51,29 @@ public class MonedaCuentaContableController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<MonedaCuentaContable> listar() {
+    public List<GrupoCuentaContable> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por moneda
-    @GetMapping(value = URL + "/listarPorMoneda/{id}")
+    //Obtiene una lista por nombre
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<MonedaCuentaContable> listarPorMoneda(@PathVariable int id) {
-        return elementoService.listarPorMoneda(id);
+    public List<GrupoCuentaContable> listarPorNombre(@PathVariable String nombre) {
+        return elementoService.listarPorNombre(nombre);
     }
     
-    //Obtiene una lista por empresa
-    @GetMapping(value = URL + "/listarPorEmpresa/{id}")
+    //Obtiene una lista por pais
+    @GetMapping(value = URL + "/listarPorTipoCuentaContable/{id}")
     @ResponseBody
-    public List<MonedaCuentaContable> listarPorEmpresa(@PathVariable int id) {
-        return elementoService.listarPorEmpresa(id);
-    }
-    
-    //Obtiene un registro por moneda y empresa
-    @GetMapping(value = URL + "/obtenerPorMonedaYEmpresa/{idMoneda}/{idEmpresa}")
-    @ResponseBody
-    public MonedaCuentaContable obtenerPorMonedaYEmpresa(@PathVariable int idMoneda, @PathVariable int idEmpresa) {
-        return elementoService.obtenerPorMonedaYEmpresa(idMoneda, idEmpresa);
+    public List<GrupoCuentaContable> listarPorTipoCuentaContable(@PathVariable int id) {
+        return elementoService.listarPorTipoCuentaContable(id);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody MonedaCuentaContable elemento) {
+    public ResponseEntity<?> agregar(@RequestBody GrupoCuentaContable elemento) {
         try {
-            MonedaCuentaContable a = elementoService.agregar(elemento);
+            GrupoCuentaContable a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -99,7 +92,7 @@ public class MonedaCuentaContableController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody MonedaCuentaContable elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody GrupoCuentaContable elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -124,7 +117,7 @@ public class MonedaCuentaContableController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody MonedaCuentaContable elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody GrupoCuentaContable elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

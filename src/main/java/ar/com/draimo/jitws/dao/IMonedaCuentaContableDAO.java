@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.MonedaCuentaContable;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -21,9 +20,12 @@ public interface IMonedaCuentaContableDAO extends JpaRepository<MonedaCuentaCont
     
     
     //Obtiene un listado de moneda cuenta contable por moneda
-    public List<MonedaCuentaContable> findByMoneda(Optional<Moneda> elemento);
+    public List<MonedaCuentaContable> findByMoneda(Moneda elemento);
     
     //Obtiene un listado de moneda cuenta contable por empresa
-    public List<MonedaCuentaContable> findByEmpresa(Optional<Empresa> elemento);
+    public List<MonedaCuentaContable> findByEmpresa(Empresa elemento);
+    
+    //Obtiene un registro por moneda y empresa
+    public MonedaCuentaContable findByMonedaAndEmpresa(Moneda moneda, Empresa empresa);
     
 }
