@@ -27,13 +27,23 @@ public class MonedaCotizacion extends ObjetoGenerico {
     private Moneda moneda;
     
     //Define la fecha
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART", locale = "es_AR")
     @Column(name = "fecha", nullable = false)
     private Date fecha;
     
     //Define el valor
     @Column(name = "valor", nullable = false)
     private BigDecimal valor;
+    
+    //Define el usuario alta
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioAlta", nullable = false)
+    private Usuario usuarioAlta;
+    
+    //Define el usuario modificacion
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioMod", nullable = true)
+    private Usuario usuarioMod;
      
     //Getters and setters de la clase
     
@@ -59,6 +69,22 @@ public class MonedaCotizacion extends ObjetoGenerico {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public Usuario getUsuarioAlta() {
+        return usuarioAlta;
+    }
+
+    public void setUsuarioAlta(Usuario usuarioAlta) {
+        this.usuarioAlta = usuarioAlta;
+    }
+
+    public Usuario getUsuarioMod() {
+        return usuarioMod;
+    }
+
+    public void setUsuarioMod(Usuario usuarioMod) {
+        this.usuarioMod = usuarioMod;
     }
     
 }

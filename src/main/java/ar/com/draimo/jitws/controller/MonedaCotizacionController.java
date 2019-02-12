@@ -1,12 +1,15 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
+import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.MonedaCotizacion;
 import ar.com.draimo.jitws.service.MonedaCotizacionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -68,7 +71,7 @@ public class MonedaCotizacionController {
         try {
             MonedaCotizacion a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/lista", elementoService.listarPorMoneda(elemento.getMoneda().getId()));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -79,7 +82,12 @@ public class MonedaCotizacionController {
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
+            if(e.getMessage().equals("1")) {
+                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                "La cotización a agregar ya existe.", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                return MensajeRespuesta.error();
+            }
         }
     }
     
@@ -90,7 +98,7 @@ public class MonedaCotizacionController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/lista", elementoService.listarPorMoneda(elemento.getMoneda().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -104,7 +112,12 @@ public class MonedaCotizacionController {
             return MensajeRespuesta.errorSincSocket();
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
+            if(e.getMessage().equals("1")) {
+                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                "La cotización a actualizar ya existe.", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                return MensajeRespuesta.error();
+            }
         }
     }
     

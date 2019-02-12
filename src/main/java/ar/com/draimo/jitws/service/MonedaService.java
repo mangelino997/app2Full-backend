@@ -56,7 +56,12 @@ public class MonedaService {
     @Transactional(rollbackFor = Exception.class)
     public Moneda agregar(Moneda elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        if(elemento.getPorDefecto()) {
+            Moneda moneda = elementoDAO.findByPorDefectoTrue();
+            moneda.setPorDefecto(false);
+            elementoDAO.save(moneda);
+        }
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

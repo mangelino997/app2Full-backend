@@ -53,7 +53,7 @@ public class Moneda extends ObjetoGenerico {
         this.estaActivo = estaActivo;
     }
 
-    public boolean isPorDefecto() {
+    public boolean getPorDefecto() {
         return porDefecto;
     }
 

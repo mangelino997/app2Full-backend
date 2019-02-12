@@ -28,14 +28,9 @@ public class RepartoPropioComprobante extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Referencia a la clase Comprobante
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idComprobante", nullable = false)
-    private int comprobante;
-    
-    //Referencia a la clase estado
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idEstado")
-    private int estado;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaComprobante", nullable = false)
+    private VentaComprobante ventaComprobante;
     
     //Getters y Setters de la clase
 
@@ -55,20 +50,12 @@ public class RepartoPropioComprobante extends ObjetoGenerico {
         this.tipoComprobante = tipoComprobante;
     }
 
-    public int getComprobante() {
-        return comprobante;
+    public VentaComprobante getVentaComprobante() {
+        return ventaComprobante;
     }
 
-    public void setComprobante(int comprobante) {
-        this.comprobante = comprobante;
-    }
-
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public void setVentaComprobante(VentaComprobante ventaComprobante) {
+        this.ventaComprobante = ventaComprobante;
     }
     
 }

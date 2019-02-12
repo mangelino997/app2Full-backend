@@ -42,14 +42,26 @@ public class MonedaCotizacionService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public MonedaCotizacion agregar(MonedaCotizacion elemento) {
-        return elementoDAO.saveAndFlush(elemento);
+    public MonedaCotizacion agregar(MonedaCotizacion elemento) throws Exception {
+        MonedaCotizacion monedaCotizacion;
+        try {
+            monedaCotizacion = elementoDAO.findByMonedaAndFecha(elemento.getMoneda(), elemento.getFecha());
+            monedaCotizacion = elementoDAO.saveAndFlush(elemento);
+        } catch(Exception e) {
+            throw new Exception("1");
+        }
+        return monedaCotizacion;
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(MonedaCotizacion elemento) {
-        elementoDAO.save(elemento);
+    public void actualizar(MonedaCotizacion elemento) throws Exception {
+        MonedaCotizacion monedaCotizacion = elementoDAO.findByMonedaAndFecha(elemento.getMoneda(), elemento.getFecha());
+        if(elemento.getId() == monedaCotizacion.getId()) {
+            elementoDAO.save(elemento);
+        } else {
+            throw new Exception("1");
+        }
     }
     
     //Elimina un registro
