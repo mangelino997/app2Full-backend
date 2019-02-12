@@ -21,36 +21,34 @@ import javax.persistence.Table;
 public class RetiroDepositoComprobante extends ObjetoGenerico {
     
     //Referencia a la clase RetiroDeposito
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRetiroDeposito", nullable = false)
-    private Empresa empresa;
+//    @ManyToOne(cascade = CascadeType.REFRESH)
+    @Column(name = "idRetiroDeposito", nullable = false)
+    private int retiroDeposito;
     
     //Referencia a la clase TipoComprobante
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idTipoComprobante", nullable = false)
-    private TipoComprobante tipoComprobante;
+//    @ManyToOne(cascade = CascadeType.REFRESH)
+    @Column(name = "idTipoComprobante", nullable = false)
+    private int tipoComprobante;
     
     //Referencia a la Clase Comprobante
     @Column(name = "idComprobante", length = 15, nullable = false)
     private int comprobante;
-    
-    //Referencia a la clase Estado
-    @Column(name = "idEstado", length = 15, nullable = false)
-    private int estado;
 
-    public Empresa getEmpresa() {
-        return empresa;
+    //Define los getters y setters
+
+    public int getRetiroDeposito() {
+        return retiroDeposito;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setRetiroDeposito(int retiroDeposito) {
+        this.retiroDeposito = retiroDeposito;
     }
 
-    public TipoComprobante getTipoComprobante() {
+    public int getTipoComprobante() {
         return tipoComprobante;
     }
 
-    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+    public void setTipoComprobante(int tipoComprobante) {
         this.tipoComprobante = tipoComprobante;
     }
 
@@ -60,14 +58,6 @@ public class RetiroDepositoComprobante extends ObjetoGenerico {
 
     public void setComprobante(int comprobante) {
         this.comprobante = comprobante;
-    }
-
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
     }
     
 }
