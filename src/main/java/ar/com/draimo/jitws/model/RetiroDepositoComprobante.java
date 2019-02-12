@@ -1,10 +1,6 @@
 package ar.com.draimo.jitws.model;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,43 +17,44 @@ import javax.persistence.Table;
 public class RetiroDepositoComprobante extends ObjetoGenerico {
     
     //Referencia a la clase RetiroDeposito
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idRetiroDeposito", nullable = false)
-    private int retiroDeposito;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idRetiroDeposito", nullable = false)
+    private RetiroDeposito retiroDeposito;
     
-    //Referencia a la clase TipoComprobante
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idTipoComprobante", nullable = false)
-    private int tipoComprobante;
+    //Referencia a la clase VentaComprobante
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaComprobante", nullable = true)
+    private VentaComprobante ventaComprobante;
     
-    //Referencia a la Clase Comprobante
-    @Column(name = "idComprobante", length = 15, nullable = false)
-    private int comprobante;
-
+    //Referencia a la clase ViajeRemito
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idViajeRemito", nullable = true)
+    private ViajeRemito viajeRemito;
+    
     //Define los getters y setters
 
-    public int getRetiroDeposito() {
+    public RetiroDeposito getRetiroDeposito() {
         return retiroDeposito;
     }
 
-    public void setRetiroDeposito(int retiroDeposito) {
+    public void setRetiroDeposito(RetiroDeposito retiroDeposito) {
         this.retiroDeposito = retiroDeposito;
     }
 
-    public int getTipoComprobante() {
-        return tipoComprobante;
+    public VentaComprobante getVentaComprobante() {
+        return ventaComprobante;
     }
 
-    public void setTipoComprobante(int tipoComprobante) {
-        this.tipoComprobante = tipoComprobante;
+    public void setVentaComprobante(VentaComprobante ventaComprobante) {
+        this.ventaComprobante = ventaComprobante;
     }
 
-    public int getComprobante() {
-        return comprobante;
+    public ViajeRemito getViajeRemito() {
+        return viajeRemito;
     }
 
-    public void setComprobante(int comprobante) {
-        this.comprobante = comprobante;
+    public void setViajeRemito(ViajeRemito viajeRemito) {
+        this.viajeRemito = viajeRemito;
     }
     
 }

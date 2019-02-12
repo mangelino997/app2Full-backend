@@ -21,15 +21,20 @@ public class RepartoPropioComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idRepartoPropio", nullable = false)
     private RepartoPropio repartoPropio;
     
-    //Referencia a la clase TipoComprobante
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idTipoComprobante", nullable = false)
-    private TipoComprobante tipoComprobante;
-    
     //Referencia a la clase VentaComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idVentaComprobante", nullable = false)
+    @JoinColumn(name = "idVentaComprobante", nullable = true)
     private VentaComprobante ventaComprobante;
+    
+    //Referencia a la clase OrdenRecoleccion
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idOrdenRecoleccion", nullable = true)
+    private OrdenRecoleccion ordenRecoleccion;
+    
+    //Referencia a la clase ViajeRemito
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idViajeRemito", nullable = true)
+    private ViajeRemito viajeRemito;
     
     //Getters y Setters de la clase
 
@@ -41,20 +46,28 @@ public class RepartoPropioComprobante extends ObjetoGenerico {
         this.repartoPropio = repartoPropio;
     }
 
-    public TipoComprobante getTipoComprobante() {
-        return tipoComprobante;
-    }
-
-    public void setTipoComprobante(TipoComprobante tipoComprobante) {
-        this.tipoComprobante = tipoComprobante;
-    }
-
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }
 
     public void setVentaComprobante(VentaComprobante ventaComprobante) {
         this.ventaComprobante = ventaComprobante;
+    }
+
+    public OrdenRecoleccion getOrdenRecoleccion() {
+        return ordenRecoleccion;
+    }
+
+    public void setOrdenRecoleccion(OrdenRecoleccion ordenRecoleccion) {
+        this.ordenRecoleccion = ordenRecoleccion;
+    }
+
+    public ViajeRemito getViajeRemito() {
+        return viajeRemito;
+    }
+
+    public void setViajeRemito(ViajeRemito viajeRemito) {
+        this.viajeRemito = viajeRemito;
     }
     
 }

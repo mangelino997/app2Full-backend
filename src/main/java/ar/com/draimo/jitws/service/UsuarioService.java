@@ -74,6 +74,7 @@ public class UsuarioService {
     @Transactional(rollbackFor = Exception.class)
     public Usuario agregar(Usuario elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -94,7 +95,6 @@ public class UsuarioService {
     private Usuario formatearStrings(Usuario elemento) {
         elemento.setNombre(elemento.getNombre().trim());
         elemento.setUsername(elemento.getUsername().trim().toLowerCase());
-        elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
         return elemento;
     }
 

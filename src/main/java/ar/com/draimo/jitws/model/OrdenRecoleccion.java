@@ -24,18 +24,6 @@ import javax.persistence.Table;
 @Table(name = "ordenrecoleccion")
 public class OrdenRecoleccion extends ObjetoGenerico {
 
-    //Referencia a la clase RepartoPropio
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRepartoPropio", nullable = true)
-    private RepartoPropio repartoPropio;
-    
-    //Referencia a la clase RepartoTercero
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRepartoTercero", nullable = true)
-    private RepartoTercero repartoTercero;
-    
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
@@ -153,22 +141,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private String alias;
     
     //Getters y Setters de la clase
-
-    public RepartoPropio getRepartoPropio() {
-        return repartoPropio;
-    }
-
-    public void setRepartoPropio(RepartoPropio repartoPropio) {
-        this.repartoPropio = repartoPropio;
-    }
-
-    public RepartoTercero getRepartoTercero() {
-        return repartoTercero;
-    }
-
-    public void setRepartoTercero(RepartoTercero repartoTercero) {
-        this.repartoTercero = repartoTercero;
-    }
 
     public Empresa getEmpresa() {
         return empresa;

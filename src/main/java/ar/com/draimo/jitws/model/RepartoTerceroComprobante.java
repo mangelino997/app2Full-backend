@@ -1,7 +1,6 @@
 package ar.com.draimo.jitws.model;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,44 +17,57 @@ import javax.persistence.Table;
 public class RepartoTerceroComprobante extends ObjetoGenerico {
     
     //Referencia a la clase reparto tercero
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idRepartoTercero", nullable = false)
-    private int repartoTercero;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idRepartoTercero", nullable = false)
+    private RepartoTercero repartoTercero;
     
-    //Referencia a la clase TipoComprobante
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idTipoComprobante", nullable = false)
-    private int tipoComprobante;
+    //Referencia a la clase VentaComprobante
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaComprobante", nullable = true)
+    private VentaComprobante ventaComprobante;
     
-    //Referencia a la clase Comprobante
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-    @Column(name = "idComprobante", nullable = false)
-    private int comprobante;
+    //Referencia a la clase OrdenRecoleccion
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idOrdenRecoleccion", nullable = true)
+    private OrdenRecoleccion ordenRecoleccion;
+    
+    //Referencia a la clase ViajeRemito
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idViajeRemito", nullable = true)
+    private ViajeRemito viajeRemito;
     
     //Getters y Setters de la clase
 
-    public int getRepartoTercero() {
+    public RepartoTercero getRepartoTercero() {
         return repartoTercero;
     }
 
-    public void setRepartoTercero(int repartoTercero) {
+    public void setRepartoTercero(RepartoTercero repartoTercero) {
         this.repartoTercero = repartoTercero;
     }
 
-    public int getTipoComprobante() {
-        return tipoComprobante;
+    public VentaComprobante getVentaComprobante() {
+        return ventaComprobante;
     }
 
-    public void setTipoComprobante(int tipoComprobante) {
-        this.tipoComprobante = tipoComprobante;
+    public void setVentaComprobante(VentaComprobante ventaComprobante) {
+        this.ventaComprobante = ventaComprobante;
     }
 
-    public int getComprobante() {
-        return comprobante;
+    public OrdenRecoleccion getOrdenRecoleccion() {
+        return ordenRecoleccion;
     }
 
-    public void setComprobante(int comprobante) {
-        this.comprobante = comprobante;
+    public void setOrdenRecoleccion(OrdenRecoleccion ordenRecoleccion) {
+        this.ordenRecoleccion = ordenRecoleccion;
+    }
+
+    public ViajeRemito getViajeRemito() {
+        return viajeRemito;
+    }
+
+    public void setViajeRemito(ViajeRemito viajeRemito) {
+        this.viajeRemito = viajeRemito;
     }
     
 }
