@@ -21,7 +21,7 @@ public interface IPlandeCuentaDAO extends JpaRepository<PlandeCuenta, Integer> {
     //Obtiene una lista por nombre
     public List<PlandeCuenta> findByNombreContaining(String nombre);
     
-    @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresaa AND idGrupoCuentaContable=1 AND estaActivo=1", nativeQuery = true)
-    public List<PlandeCuenta> listarGrupoACTIVO(@Param("idEmpresa") int idEmpresa);
+    @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresa AND idGrupoCuentaContable=1 AND estaActivo=1", nativeQuery = true)
+    public List<PlandeCuenta> listarGrupoActivo(@Param("idEmpresa") int idEmpresa);
     
 }

@@ -62,11 +62,11 @@ public class PlandeCuentaController {
         return elementoService.listarPorNombre(nombre);
     }
     
-    //obtiene un listado de grupoActivo por idEmpresa
-    @GetMapping(value = URL + "/listarGrupoACTIVO/{idEmpresa}")
+    //Obtiene un listado de grupoActivo por idEmpresa
+    @GetMapping(value = URL + "/listarGrupoActivo/{idEmpresa}")
     @ResponseBody
-    public List<PlandeCuenta> listarGrupoACTIVO (@PathVariable int idEmpresa) {
-        return elementoService.listarGrupoACTIVO(idEmpresa);
+    public List<PlandeCuenta> listarGrupoActivo(@PathVariable int idEmpresa) {
+        return elementoService.listarGrupoActivo(idEmpresa);
     }
     
     //Agrega un registro

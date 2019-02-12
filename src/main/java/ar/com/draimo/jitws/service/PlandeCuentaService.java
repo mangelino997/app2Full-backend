@@ -40,8 +40,8 @@ public class PlandeCuentaService {
     }
     
     //Obtiene un listado por grupocuentacontable y estaactivo
-    public List<PlandeCuenta> listarGrupoACTIVO(int idEmpresa) {
-        return elementoDAO.listarGrupoACTIVO(idEmpresa);
+    public List<PlandeCuenta> listarGrupoActivo(int idEmpresa) {
+        return elementoDAO.listarGrupoActivo(idEmpresa);
     }
     
     //Agrega un registro
