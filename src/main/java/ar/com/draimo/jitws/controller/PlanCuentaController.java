@@ -1,9 +1,10 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.PlanCuentaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.PlandeCuenta;
-import ar.com.draimo.jitws.service.PlandeCuentaService;
+import ar.com.draimo.jitws.model.PlanCuenta;
+import ar.com.draimo.jitws.service.PlanCuentaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class PlandeCuentaController {
+public class PlanCuentaController {
     
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/plandecuenta";
@@ -39,7 +40,7 @@ public class PlandeCuentaController {
     
     //Crea una instancia del servicio
     @Autowired
-    PlandeCuentaService elementoService;
+    PlanCuentaService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,29 +52,36 @@ public class PlandeCuentaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<PlandeCuenta> listar() {
+    public List<PlanCuenta> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<PlandeCuenta> listarPorNombre(@PathVariable String nombre) {
+    public List<PlanCuenta> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
     
     //Obtiene un listado de grupoActivo por idEmpresa
     @GetMapping(value = URL + "/listarGrupoActivo/{idEmpresa}")
     @ResponseBody
-    public List<PlandeCuenta> listarGrupoActivo(@PathVariable int idEmpresa) {
+    public List<PlanCuenta> listarGrupoActivo(@PathVariable int idEmpresa) {
         return elementoService.listarGrupoActivo(idEmpresa);
+    }
+    
+    //Crear el arbol de plan de cuenta
+    @GetMapping(value = URL + "/crearArbol")
+    @ResponseBody
+    public PlanCuentaDTO crearArbol() {
+        return elementoService.crearArbol();
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody PlandeCuenta elemento) {
+    public ResponseEntity<?> agregar(@RequestBody PlanCuenta elemento) {
         try {
-            PlandeCuenta a = elementoService.agregar(elemento);
+            PlanCuenta a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -92,7 +100,7 @@ public class PlandeCuentaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody PlandeCuenta elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody PlanCuenta elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -117,7 +125,7 @@ public class PlandeCuentaController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody PlandeCuenta elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody PlanCuenta elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

@@ -1,7 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.PlandeCuenta;
+import ar.com.draimo.jitws.model.PlanCuenta;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,15 +13,18 @@ import org.springframework.data.repository.query.Param;
  * @author blas
  */
 
-public interface IPlandeCuentaDAO extends JpaRepository<PlandeCuenta, Integer> {
+public interface IPlanCuentaDAO extends JpaRepository<PlanCuenta, Integer> {
     
     //Obtiene el siguiente id
-    public PlandeCuenta findTopByOrderByIdDesc();
+    public PlanCuenta findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<PlandeCuenta> findByNombreContaining(String nombre);
+    public List<PlanCuenta> findByNombreContaining(String nombre);
     
     @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresa AND idGrupoCuentaContable=1 AND estaActivo=1", nativeQuery = true)
-    public List<PlandeCuenta> listarGrupoActivo(@Param("idEmpresa") int idEmpresa);
+    public List<PlanCuenta> listarGrupoActivo(@Param("idEmpresa") int idEmpresa);
+    
+    //Obtiene una lista por idPadre
+    public List<PlanCuenta> findByPadre(PlanCuenta planCuenta);
     
 }

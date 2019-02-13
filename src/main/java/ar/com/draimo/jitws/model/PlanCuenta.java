@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "plandecuenta")
-public class PlandeCuenta extends ObjetoGenerico {
+public class PlanCuenta extends ObjetoGenerico {
 
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -31,7 +31,7 @@ public class PlandeCuenta extends ObjetoGenerico {
     //Referencia a la clase PlanDeCuenta
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPadre")
-    private PlandeCuenta padre;
+    private PlanCuenta padre;
     
     //Define el nombre
     @Column(name = "nombre", length = 45, nullable = false)
@@ -73,11 +73,11 @@ public class PlandeCuenta extends ObjetoGenerico {
         this.grupoCuentaContable = grupoCuentaContable;
     }
 
-    public PlandeCuenta getPadre() {
+    public PlanCuenta getPadre() {
         return padre;
     }
 
-    public void setPadre(PlandeCuenta padre) {
+    public void setPadre(PlanCuenta padre) {
         this.padre = padre;
     }
 

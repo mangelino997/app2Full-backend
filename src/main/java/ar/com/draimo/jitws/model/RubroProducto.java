@@ -33,12 +33,12 @@ public class RubroProducto extends ObjetoGenerico {
     //Referencia a CuentaContableVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPlandeCuentaVenta")
-    private PlandeCuenta plandeCuentaVenta;
+    private PlanCuenta plandeCuentaVenta;
     
     //Referencia a CuentaContableCompra
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPlandeCuentaCompra")
-    private PlandeCuenta planDeCuentaCompra;
+    private PlanCuenta planDeCuentaCompra;
     
     //Getters y Setters de la clase
 
@@ -66,19 +66,19 @@ public class RubroProducto extends ObjetoGenerico {
         this.esCombustible = esCombustible;
     }
 
-    public PlandeCuenta getPlandeCuentaVenta() {
+    public PlanCuenta getPlandeCuentaVenta() {
         return plandeCuentaVenta;
     }
 
-    public void setPlandeCuentaVenta(PlandeCuenta plandeCuentaVenta) {
+    public void setPlandeCuentaVenta(PlanCuenta plandeCuentaVenta) {
         this.plandeCuentaVenta = plandeCuentaVenta;
     }
 
-    public PlandeCuenta getPlanDeCuentaCompra() {
+    public PlanCuenta getPlanDeCuentaCompra() {
         return planDeCuentaCompra;
     }
 
-    public void setPlanDeCuentaCompra(PlandeCuenta planDeCuentaCompra) {
+    public void setPlanDeCuentaCompra(PlanCuenta planDeCuentaCompra) {
         this.planDeCuentaCompra = planDeCuentaCompra;
     }
     

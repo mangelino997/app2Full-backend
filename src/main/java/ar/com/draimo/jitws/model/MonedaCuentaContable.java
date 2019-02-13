@@ -30,7 +30,7 @@ public class MonedaCuentaContable extends ObjetoGenerico {
     //Instancia de la clase Plan de cuenta
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPlandeCuenta", nullable = false)
-    private PlandeCuenta planCuenta;
+    private PlanCuenta planCuenta;
 
     public Moneda getMoneda() {
         return moneda;
@@ -48,11 +48,11 @@ public class MonedaCuentaContable extends ObjetoGenerico {
         this.empresa = empresa;
     }
 
-    public PlandeCuenta getPlanCuenta() {
+    public PlanCuenta getPlanCuenta() {
         return planCuenta;
     }
 
-    public void setPlanCuenta(PlandeCuenta planCuenta) {
+    public void setPlanCuenta(PlanCuenta planCuenta) {
         this.planCuenta = planCuenta;
     }
     
