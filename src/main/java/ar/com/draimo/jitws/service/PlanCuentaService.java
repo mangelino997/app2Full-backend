@@ -7,7 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IPlanCuentaDAO;
 import ar.com.draimo.jitws.dto.PlanCuentaDTO;
-import java.util.ArrayList;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 
 /**
  * Servicio PlandeCuenta
@@ -46,34 +51,18 @@ public class PlanCuentaService {
         return elementoDAO.listarGrupoActivo(idEmpresa);
     }
     
-    //Crear el arbol de plan de cuenta
-    public PlanCuentaDTO crearArbol() {
-        //Define un plan de cuenta dto
-        PlanCuentaDTO planCuentaDTO = new PlanCuentaDTO();
-        //Obtiene la lista de plan de cuenta
-        List<PlanCuenta> planCuenta = elementoDAO.findAll();
-        //Define la lista de hijos
-        List<PlanCuenta> hijos;
-        //Define una lista de planes de cuenta dto
-        List<PlanCuentaDTO> planCuentaDTOs;
-        //Define una plan cuenta dto
-        PlanCuentaDTO plDTO;
-        //Recorre la lista para crear el arbol
-        for(PlanCuenta pl: planCuenta) {
-            if(pl.getPadre() == null) {
-                hijos = elementoDAO.findByPadre(pl);
-                planCuentaDTO.setNombre(pl.getNombre());
-                planCuentaDTOs = new ArrayList<>();
-                for(PlanCuenta hijo : hijos) {
-                    plDTO = new PlanCuentaDTO();
-                    plDTO.setNombre(hijo.getNombre());
-                    plDTO.setHijos(new ArrayList<>());
-                    planCuentaDTOs.add(plDTO);
-                }
-                planCuentaDTO.setHijos(planCuentaDTOs);
-            }
-        }
-        return planCuentaDTO;
+    public PlanCuentaDTO obtenerPlanCuenta() throws JsonProcessingException, 
+            IOException {
+        PlanCuenta planCuenta = elementoDAO.findById(1).get();
+        PlanCuenta pc = crearPlanCuenta(planCuenta);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("empresa", "grupoCuentaContable", 
+                        "usuarioAlta", "usuarioMod");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(pc);
+        return new ObjectMapper().readValue(string, PlanCuentaDTO.class);
     }
     
     public PlanCuenta crearPlanCuenta(PlanCuenta planCuenta) {
@@ -81,7 +70,7 @@ public class PlanCuentaService {
         if(!hijos.isEmpty()) {
             planCuenta.setHijos(hijos);
             for(PlanCuenta pc : planCuenta.getHijos()) {
-                crearPlanCuenta(pc);
+                pc = crearPlanCuenta(pc);
             }
         }
         return planCuenta;

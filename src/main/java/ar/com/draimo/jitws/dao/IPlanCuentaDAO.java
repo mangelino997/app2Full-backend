@@ -24,7 +24,7 @@ public interface IPlanCuentaDAO extends JpaRepository<PlanCuenta, Integer> {
     @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresa AND idGrupoCuentaContable=1 AND estaActivo=1", nativeQuery = true)
     public List<PlanCuenta> listarGrupoActivo(@Param("idEmpresa") int idEmpresa);
     
-    //Obtiene una lista por idPadre
+    //Obtiene una lista por padre
     public List<PlanCuenta> findByPadre(PlanCuenta planCuenta);
     
 }

@@ -5,6 +5,8 @@ import ar.com.draimo.jitws.dto.PlanCuentaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PlanCuenta;
 import ar.com.draimo.jitws.service.PlanCuentaService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -70,11 +72,11 @@ public class PlanCuentaController {
         return elementoService.listarGrupoActivo(idEmpresa);
     }
     
-    //Crear el arbol de plan de cuenta
-    @GetMapping(value = URL + "/crearArbol")
+    //Obtiene el plan de cuenta
+    @GetMapping(value = URL + "/obtenerPlanCuenta")
     @ResponseBody
-    public PlanCuentaDTO crearArbol() {
-        return elementoService.crearArbol();
+    public PlanCuentaDTO obtenerPlanCuenta() throws IOException {
+        return elementoService.obtenerPlanCuenta();
     }
     
     //Agrega un registro

@@ -1,6 +1,10 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +22,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "plandecuenta")
+@JsonFilter("filtro")
 public class PlanCuenta extends ObjetoGenerico {
 
     //Referencia a la clase Empresa
@@ -31,6 +36,7 @@ public class PlanCuenta extends ObjetoGenerico {
     private GrupoCuentaContable grupoCuentaContable;
     
     //Referencia a la clase PlanDeCuenta
+    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPadre")
     private PlanCuenta padre;
@@ -58,6 +64,7 @@ public class PlanCuenta extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define las cuentas hijas
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "padre")
     private List<PlanCuenta> hijos;
     
