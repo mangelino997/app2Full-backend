@@ -76,6 +76,17 @@ public class PlanCuentaService {
         return planCuentaDTO;
     }
     
+    public PlanCuenta crearPlanCuenta(PlanCuenta planCuenta) {
+        List<PlanCuenta> hijos = elementoDAO.findByPadre(planCuenta);
+        if(!hijos.isEmpty()) {
+            planCuenta.setHijos(hijos);
+            for(PlanCuenta pc : planCuenta.getHijos()) {
+                crearPlanCuenta(pc);
+            }
+        }
+        return planCuenta;
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public PlanCuenta agregar(PlanCuenta elemento) {

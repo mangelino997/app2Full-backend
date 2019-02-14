@@ -1,11 +1,13 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -54,6 +56,10 @@ public class PlanCuenta extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod")
     private Usuario usuarioMod;
+    
+    //Define las cuentas hijas
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "padre")
+    private List<PlanCuenta> hijos;
     
     //Getters y setters de la clase
 
@@ -119,6 +125,14 @@ public class PlanCuenta extends ObjetoGenerico {
 
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
+    }
+
+    public List<PlanCuenta> getHijos() {
+        return hijos;
+    }
+
+    public void setHijos(List<PlanCuenta> hijos) {
+        this.hijos = hijos;
     }
     
 }
