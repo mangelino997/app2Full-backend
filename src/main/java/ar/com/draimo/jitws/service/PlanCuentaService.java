@@ -92,7 +92,8 @@ public class PlanCuentaService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(PlanCuenta elemento) {
+    public void eliminar(int id) {
+        PlanCuenta elemento = elementoDAO.findById(id).get();
         elementoDAO.delete(elemento);
     }
     

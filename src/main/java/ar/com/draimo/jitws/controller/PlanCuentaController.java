@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.dto.PlanCuentaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PlanCuenta;
 import ar.com.draimo.jitws.service.PlanCuentaService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,9 +84,9 @@ public class PlanCuentaController {
         try {
             PlanCuenta a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.obtenerPlanCuenta());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return MensajeRespuesta.agregado(a.getId()-1);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -116,7 +115,7 @@ public class PlanCuentaController {
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch(Exception e) {
@@ -126,10 +125,10 @@ public class PlanCuentaController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody PlanCuenta elemento) {
+    @DeleteMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
+            elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch(Exception e) {
