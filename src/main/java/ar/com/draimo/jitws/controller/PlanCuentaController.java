@@ -83,8 +83,6 @@ public class PlanCuentaController {
     public ResponseEntity<?> agregar(@RequestBody PlanCuenta elemento) {
         try {
             PlanCuenta a = elementoService.agregar(elemento);
-            //Envia la nueva lista a los usuarios subscriptos
-            //template.convertAndSend(TOPIC + "/lista", elementoService.obtenerPlanCuenta());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId()-1);
         } catch (DataIntegrityViolationException dive) {
