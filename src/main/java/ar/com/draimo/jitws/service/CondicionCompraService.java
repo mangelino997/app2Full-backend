@@ -43,7 +43,7 @@ public class CondicionCompraService {
     @Transactional(rollbackFor = Exception.class)
     public CondicionCompra agregar(CondicionCompra elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
