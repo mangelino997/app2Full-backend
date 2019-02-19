@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +53,13 @@ public class OrdenVentaTramoController {
     @ResponseBody
     public List<OrdenVentaTramo> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene una lista por orden de venta
+    @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
+    @ResponseBody
+    public List<OrdenVentaTramo> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
+        return elementoService.listarPorOrdenVenta(idOrdenVenta);
     }
     
     //Agrega un registro

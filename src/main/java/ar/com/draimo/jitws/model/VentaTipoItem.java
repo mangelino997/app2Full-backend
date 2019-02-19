@@ -42,7 +42,7 @@ public class VentaTipoItem extends ObjetoGenerico {
 
     //Define si es cheque rechazado
     @Column(name = "esChequeRechazado", nullable = false)
-    private boolean esChequeRechaazado;
+    private boolean esChequeRechazado;
 
     //Getters y Setters de la clase
 
@@ -62,7 +62,7 @@ public class VentaTipoItem extends ObjetoGenerico {
         this.tipoComprobante = tipoComprobante;
     }
 
-    public boolean isEsContrareembolso() {
+    public boolean getEsContrareembolso() {
         return esContrareembolso;
     }
 
@@ -78,7 +78,7 @@ public class VentaTipoItem extends ObjetoGenerico {
         this.afipConcepto = afipConcepto;
     }
 
-    public boolean isEstaHabilitado() {
+    public boolean getEstaHabilitado() {
         return estaHabilitado;
     }
 
@@ -86,12 +86,12 @@ public class VentaTipoItem extends ObjetoGenerico {
         this.estaHabilitado = estaHabilitado;
     }
 
-    public boolean isEsChequeRechaazado() {
-        return esChequeRechaazado;
+    public boolean getEsChequeRechazado() {
+        return esChequeRechazado;
     }
 
-    public void setEsChequeRechaazado(boolean esChequeRechaazado) {
-        this.esChequeRechaazado = esChequeRechaazado;
+    public void setEsChequeRechazado(boolean esChequeRechazado) {
+        this.esChequeRechazado = esChequeRechazado;
     }
 
 }

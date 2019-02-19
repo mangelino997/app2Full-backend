@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
 import java.util.List;
@@ -19,6 +20,10 @@ public class OrdenVentaTramoService {
     @Autowired
     IOrdenVentaTramoDAO elementoDAO;
     
+    //Define la referencia al dao orden venta
+    @Autowired
+    IOrdenVentaDAO ordenVentaDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         OrdenVentaTramo elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -28,6 +33,11 @@ public class OrdenVentaTramoService {
     //Obtiene la lista completa
     public List<OrdenVentaTramo> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene una lista por orden de venta
+    public List<OrdenVentaTramo> listarPorOrdenVenta(int idOrdenVenta) {
+        return elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta).get());
     }
     
     //Agrega un registro

@@ -22,14 +22,14 @@ public class VentaItemConcepto extends ObjetoGenerico {
     @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
     
-    //Define si esta habilitado
-    @Column(name = "estaHabilitado", nullable = false)
-    private boolean estaHabilitado;
-    
     //Referencia a la clase Tipo Comprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
+    
+    //Define si esta habilitado
+    @Column(name = "estaHabilitado", nullable = false)
+    private boolean estaHabilitado;
     
     //Getters y Setters de la clase
 
@@ -40,6 +40,14 @@ public class VentaItemConcepto extends ObjetoGenerico {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
+    }
 
     public boolean getEstaHabilitado() {
         return estaHabilitado;
@@ -49,12 +57,4 @@ public class VentaItemConcepto extends ObjetoGenerico {
         this.estaHabilitado = estaHabilitado;
     }
 
-    public TipoComprobante getTipoComprobante() {
-        return tipoComprobante;
-    }
-
-    public void setTipoComprobante(TipoComprobante tipoComprobante) {
-        this.tipoComprobante = tipoComprobante;
-    }
-    
 }
