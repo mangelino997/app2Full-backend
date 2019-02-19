@@ -30,15 +30,6 @@ public class OrdenRecoleccionService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por nombre
-    public List<OrdenRecoleccion> listarPorAlias(String alias) {
-        if(alias.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByAliasContaining(alias);
-        }
-    }
-    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public OrdenRecoleccion agregar(OrdenRecoleccion elemento) {
@@ -61,7 +52,7 @@ public class OrdenRecoleccionService {
     
     //Formatea los strings
     private OrdenRecoleccion formatearStrings(OrdenRecoleccion elemento) {
-        elemento.setDomicilioRecoleccion(elemento.getDomicilioRecoleccion().trim());
+        elemento.setDomicilio(elemento.getDomicilio().trim());
         elemento.setSolicitadoPor(elemento.getSolicitadoPor().trim());
         elemento.setTelefonoContacto(elemento.getTelefonoContacto().trim());
         elemento.setDescripcionCarga(elemento.getDescripcionCarga().trim());

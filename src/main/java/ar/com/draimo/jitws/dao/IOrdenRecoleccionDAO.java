@@ -1,7 +1,6 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,8 +13,5 @@ public interface IOrdenRecoleccionDAO extends JpaRepository<OrdenRecoleccion, In
     
     //Obtiene el siguiente id
     public OrdenRecoleccion findTopByOrderByIdDesc();
-    
-    //Obtiene una lista por alias
-    public List<OrdenRecoleccion> findByAliasContaining(String alias);
     
 }

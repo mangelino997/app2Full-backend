@@ -29,11 +29,6 @@ public class PlanCuenta extends ObjetoGenerico {
     @JoinColumn(name = "idEmpresa")
     private Empresa empresa;
     
-    //Referencia a la clase grupo cuenta contable
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idGrupoCuentaContable")
-    private GrupoCuentaContable grupoCuentaContable;
-    
     //Referencia a la clase PlanDeCuenta
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -75,14 +70,6 @@ public class PlanCuenta extends ObjetoGenerico {
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
-    }
-
-    public GrupoCuentaContable getGrupoCuentaContable() {
-        return grupoCuentaContable;
-    }
-
-    public void setGrupoCuentaContable(GrupoCuentaContable grupoCuentaContable) {
-        this.grupoCuentaContable = grupoCuentaContable;
     }
 
     public PlanCuenta getPadre() {

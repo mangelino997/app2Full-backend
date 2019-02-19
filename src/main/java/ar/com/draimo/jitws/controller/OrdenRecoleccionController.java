@@ -55,13 +55,6 @@ public class OrdenRecoleccionController {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorAlias/{alias}")
-    @ResponseBody
-    public List<OrdenRecoleccion> listarPorAlias(@PathVariable String alias) {
-        return elementoService.listarPorAlias(alias);
-    }
-    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenRecoleccion elemento) {

@@ -51,30 +51,30 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
     
-    //Define Domicilio Recoleccion
-    @Column(name = "domicilioRecoleccion",length = 60, nullable = false)
-    private String domicilioRecoleccion;
+    //Define Domicilio
+    @Column(name = "domicilio",length = 60, nullable = false)
+    private String domicilio;
     
     //Referencia a la clase Barrio
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idBarrioRecoleccion", nullable = true)
-    private Barrio barrioRecoleccion;
+    @JoinColumn(name = "idBarrio", nullable = true)
+    private Barrio barrio;
     
     //Referencia a la clase Localidad
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idLocalidadRecoleccion", nullable = true)
-    private Localidad localidadRecoleccion;
+    @JoinColumn(name = "idLocalidad", nullable = true)
+    private Localidad localidad;
     
     //Define fechaEmision
     @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "fechaEmision", nullable = false)  
     private LocalDateTime fechaEmision;
     
-    //Define fechaRecoleccion
+    //Define fecha
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
-    @Column(name = "fechaRecoleccion", nullable = false)
-    private Date fechaRecoleccion;
+    @Column(name = "fecha", nullable = false)
+    private Date fecha;
     
     //Define horaDesde
     @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
@@ -121,8 +121,8 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private Sucursal sucursalDestino;
     
     //Define el entregaEnDomicilio
-    @Column(name = "entregaEnDomicilio", nullable = false)
-    private boolean entregaEnDomicilio;
+    @Column(name = "entregarEnDomicilio", nullable = false)
+    private boolean entregarEnDomicilio;
     
     //Define el pagoEnOrigen
     @Column(name = "pagoEnOrigen", nullable = true)
@@ -135,10 +135,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     //Define observaciones
     @Column(name = "observaciones", length = 60, nullable = true)
     private String observaciones;
-    
-    //Define alias
-    @Column(name = "alias", length = 100, nullable = true)
-    private String alias;
     
     //Getters y Setters de la clase
 
@@ -182,28 +178,28 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.cliente = cliente;
     }
 
-    public String getDomicilioRecoleccion() {
-        return domicilioRecoleccion;
+    public String getDomicilio() {
+        return domicilio;
     }
 
-    public void setDomicilioRecoleccion(String domicilioRecoleccion) {
-        this.domicilioRecoleccion = domicilioRecoleccion;
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
     }
 
-    public Barrio getBarrioRecoleccion() {
-        return barrioRecoleccion;
+    public Barrio getBarrio() {
+        return barrio;
     }
 
-    public void setBarrioRecoleccion(Barrio barrioRecoleccion) {
-        this.barrioRecoleccion = barrioRecoleccion;
+    public void setBarrio(Barrio barrio) {
+        this.barrio = barrio;
     }
 
-    public Localidad getLocalidadRecoleccion() {
-        return localidadRecoleccion;
+    public Localidad getLocalidad() {
+        return localidad;
     }
 
-    public void setLocalidadRecoleccion(Localidad localidadRecoleccion) {
-        this.localidadRecoleccion = localidadRecoleccion;
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
     }
 
     public LocalDateTime getFechaEmision() {
@@ -214,12 +210,12 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.fechaEmision = fechaEmision;
     }
 
-    public Date getFechaRecoleccion() {
-        return fechaRecoleccion;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFechaRecoleccion(Date fechaRecoleccion) {
-        this.fechaRecoleccion = fechaRecoleccion;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public Time getHoraDesde() {
@@ -302,12 +298,12 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.sucursalDestino = sucursalDestino;
     }
 
-    public boolean isEntregaEnDomicilio() {
-        return entregaEnDomicilio;
+    public boolean isEntregarEnDomicilio() {
+        return entregarEnDomicilio;
     }
 
-    public void setEntregaEnDomicilio(boolean entregaEnDomicilio) {
-        this.entregaEnDomicilio = entregaEnDomicilio;
+    public void setEntregarEnDomicilio(boolean entregarEnDomicilio) {
+        this.entregarEnDomicilio = entregarEnDomicilio;
     }
 
     public boolean isPagoEnOrigen() {
@@ -332,14 +328,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
     }
 
 }
