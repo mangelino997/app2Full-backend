@@ -75,12 +75,6 @@ public class OrdenVentaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public OrdenVenta agregar(OrdenVenta elemento) {
-        /*
-        * Establece PreciosDesde de ActivaDesde
-        * Por cuestiones de ahorro de codigo, se pasa el valor de PreciosDesde
-        * de OrdenVentaEscala mediante ActivaDesde de OrdenVenta
-        */
-        Date preciosDesde = elemento.getActivaDesde();
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Establece la fecha actual
@@ -97,8 +91,6 @@ public class OrdenVentaService {
             for (OrdenVentaEscala ove : elemento.getOrdenesVentasEscalas()) {
                 //Establece el id de orden venta
                 ove.setOrdenVenta(ordenVenta);
-                //Establece la fecha de precios desde
-                ove.setPreciosDesde(preciosDesde);
                 //Verifica que exista algun precio asignado para guardar
                 if (!(ove.getImporteFijo() == null && ove.getPrecioUnitario() == null
                         && ove.getMinimo() == null)) {
@@ -111,8 +103,6 @@ public class OrdenVentaService {
             for(OrdenVentaTramo ovt : elemento.getOrdenesVentasTramos()) {
                 //Establece el id de orden venta
                 ovt.setOrdenVenta(ordenVenta);
-                //Establece la fecha de precios desde
-                ovt.setPreciosDesde(preciosDesde);
                 //Verifica que exista algun precio o importe asignado para guardar
                 if (!(ovt.getImporteFijoSeco() == null && ovt.getImporteFijoRef() == null
                         && ovt.getPrecioUnitarioSeco() == null && ovt.getPrecioUnitarioRef() == null)) {
