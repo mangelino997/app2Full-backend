@@ -25,4 +25,7 @@ public interface IRetiroDepositoDAO extends JpaRepository<RetiroDeposito, Intege
     //Obtiene un listado por empresa
     public List<RetiroDeposito> findByEmpresa(Optional<Empresa> empresa);
     
+    //Obtiene un listado de planillas abiertas
+    public List<RetiroDeposito> findByEstaCerradaFalse();
+    
 }

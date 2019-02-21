@@ -54,6 +54,13 @@ public class RepartoTerceroController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista por estaCerrada
+    @GetMapping(value = URL + "/listarPorEstaCerrada")
+    @ResponseBody
+    public List<RepartoTercero> listarPorEstaCerrada() {
+        return elementoService.listarPorEstaCerrada();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody RepartoTercero elemento) {

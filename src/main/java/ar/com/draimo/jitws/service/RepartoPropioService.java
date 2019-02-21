@@ -30,6 +30,11 @@ public class RepartoPropioService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene la lista por EstaCerrada = 0
+    public List<RepartoPropio> listarPorEstaCerrada() {
+        return elementoDAO.findByEstaCerradaFalse();
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoPropio agregar(RepartoPropio elemento) {

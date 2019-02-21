@@ -19,4 +19,10 @@ public interface IZonaDAO extends JpaRepository<Zona, Integer> {
     //Obtiene una lista por nombre
     public List<Zona> findByNombreContaining(String nombre);
     
+    //Obtiene una lista ordenada por id
+    public List<Zona> findByOrderByNombreAsc();
+    
+    //Obtiene una lista ordenada por id
+    public List<Zona> findByOrderByIdAsc();
+    
 }

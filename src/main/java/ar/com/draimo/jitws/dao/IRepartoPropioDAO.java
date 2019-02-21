@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.RepartoPropio;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,8 @@ public interface IRepartoPropioDAO extends JpaRepository<RepartoPropio, Integer>
     
     //Obtiene el siguiente id
     public RepartoPropio findTopByOrderByIdDesc();
+    
+    //Obtiene u listado por estaCerrada falso
+    public List<RepartoPropio> findByEstaCerradaFalse();
     
 }

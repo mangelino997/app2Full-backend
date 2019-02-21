@@ -1,17 +1,12 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
-import ar.com.draimo.jitws.exception.DuplicidadError;
-import ar.com.draimo.jitws.exception.EstadoRespuesta;
-import ar.com.draimo.jitws.exception.EstadoRespuestaAgregar;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Zona;
 import ar.com.draimo.jitws.service.ZonaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -58,6 +53,13 @@ public class ZonaController {
     @ResponseBody
     public List<Zona> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista completa ordanada
+    @GetMapping(value = URL + "/listarOrdenado/{columna}")
+    @ResponseBody
+    public List<Zona> listarOrdenado(@PathVariable String columna) {
+        return elementoService.listarOrdenado(columna);
     }
     
     //Obtiene una lista por nombre

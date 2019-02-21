@@ -43,6 +43,16 @@ public class PersonalService {
     public List<Personal> listarChoferPorAlias(String alias) {
         return elementoDAO.findByAliasContainingAndEsChofer(alias, 1);
     }
+    
+    //Obtiene un listado de choferes ordenados por nombre de corta distancia
+    public List<Personal> listarChoferesCortaDistanciaOrdenadoPorNombre() {
+        return elementoDAO.listarChoferesCortaDistancia();
+    }
+    
+    //Obtiene un listado de acompañantes ordenados por nombre
+    public List<Personal> listarAcompaniantesOrdenadoPorNombre() {
+        return elementoDAO.listarAcompaniantes();
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

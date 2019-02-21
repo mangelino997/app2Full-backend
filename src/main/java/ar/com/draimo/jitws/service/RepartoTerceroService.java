@@ -30,6 +30,11 @@ public class RepartoTerceroService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene la lista por EstaCerrada = 0
+    public List<RepartoTercero> listarPorEstaCerrada() {
+        return elementoDAO.findByEstaCerradaFalse();
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoTercero agregar(RepartoTercero elemento) {

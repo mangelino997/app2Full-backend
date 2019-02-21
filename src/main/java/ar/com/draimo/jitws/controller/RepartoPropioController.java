@@ -54,6 +54,13 @@ public class RepartoPropioController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista por estaCerrada
+    @GetMapping(value = URL + "/listarPorEstaCerrada")
+    @ResponseBody
+    public List<RepartoPropio> listarPorEstaCerrada() {
+        return elementoService.listarPorEstaCerrada();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody RepartoPropio elemento) {
