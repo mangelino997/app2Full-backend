@@ -76,14 +76,14 @@ public class OrdenVenta extends ObjetoGenerico {
     private Date activaDesde;
     
     //Define la lista de OrdenVentaEscala
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
-            property = "id")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
+//            property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
     private List<OrdenVentaEscala> ordenesVentasEscalas;
     
     //Define la lista de OrdenVentaTramo
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
-            property = "id")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
+//            property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
     private List<OrdenVentaTramo> ordenesVentasTramos;
 
