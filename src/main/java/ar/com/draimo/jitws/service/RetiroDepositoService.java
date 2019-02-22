@@ -37,6 +37,11 @@ public class RetiroDepositoService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene la lista de planillas abiertas
+    public List<RetiroDeposito> listarPorEstaCerrada() {
+        return elementoDAO.findByEstaCerradaFalse();
+    }
+    
     //Obtiene una lista por empresa
     public List<RetiroDeposito> listarPorEmpresa(int id) {
         Optional<Empresa> elemento = empresaDAO.findById(id);

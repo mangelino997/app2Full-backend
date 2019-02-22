@@ -1,5 +1,4 @@
 package ar.com.draimo.jitws.controller;
-
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Personal;
@@ -53,6 +52,20 @@ public class PersonalController {
     @ResponseBody
     public List<Personal> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/listarChoferesCortaDistanciaOrdenados")
+    @ResponseBody
+    public List<Personal> listarChoferesCortaDistanciaOrdenados() {
+        return elementoService.listarChoferesCortaDistanciaOrdenadoPorNombre();
+    }
+    
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/listarAcompaniantesOrdenados")
+    @ResponseBody
+    public List<Personal> listarAcompaniantesOrdenados() {
+        return elementoService.listarAcompaniantesOrdenadoPorNombre();
     }
     
     //Obtiene una lista por alias

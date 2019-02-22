@@ -30,6 +30,18 @@ public class ZonaService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene la lista completa ordenada
+    public List<Zona> listarOrdenado(String elemento) {
+        switch (elemento) {
+            case "nombre":
+                return elementoDAO.findByOrderByNombreAsc();
+            case "id":
+                return elementoDAO.findByOrderByIdAsc();
+            default:
+                return elementoDAO.findAll();
+        }
+    }
+    
     //Obtiene una lista por nombre
     public List<Zona> listarPorNombre(String nombre) {
         return elementoDAO.findByNombreContaining(nombre);

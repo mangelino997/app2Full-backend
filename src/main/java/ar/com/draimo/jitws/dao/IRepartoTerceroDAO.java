@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.RepartoTercero;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,8 @@ public interface IRepartoTerceroDAO extends JpaRepository<RepartoTercero, Intege
     
     //Obtiene el siguiente id
     public RepartoTercero findTopByOrderByIdDesc();
+    
+    //Obtiene u listado por estaCerrada falso
+    public List<RepartoTercero> findByEstaCerradaFalse();
     
 }
