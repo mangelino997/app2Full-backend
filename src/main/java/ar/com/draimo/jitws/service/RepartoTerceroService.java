@@ -35,6 +35,10 @@ public class RepartoTerceroService {
         return elementoDAO.findByEstaCerradaFalse();
     }
     
+    //Cierra un reparto
+    public void cerrarReparto() {
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoTercero agregar(RepartoTercero elemento) {

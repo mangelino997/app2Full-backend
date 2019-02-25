@@ -62,10 +62,17 @@ public class RetiroDepositoController {
         return elementoService.listarPorEstaCerrada();
     }
     
+    //Cierra un repartopropio
+    @PutMapping(value = URL + "/cerrarReparto")
+    @ResponseBody
+    public void cerrarReparto() {
+        elementoService.listarPorEstaCerrada();
+    }
+    
     //Obtiene una lista por numeroDocumento
     @GetMapping(value = URL + "/listarPorNumeroDocumento/{numeroDocumento}")
     @ResponseBody
-    public List<RetiroDeposito> listarPorNombre(@PathVariable String numeroDocumento) {
+    public List<RetiroDeposito> listarPorNumeroDocumento(@PathVariable String numeroDocumento) {
         return elementoService.obtenerPorNumeroDocumento(numeroDocumento);
     }
     

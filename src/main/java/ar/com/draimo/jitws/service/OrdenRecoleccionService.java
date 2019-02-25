@@ -25,6 +25,11 @@ public class OrdenRecoleccionService {
         return elemento.getId()+1;
     }
     
+    //Obtiene un registro por id
+    public OrdenRecoleccion obtenerPorId(int idOrdenRecoleccion) {
+        return (elementoDAO.findById(idOrdenRecoleccion).get());
+    } 
+    
     //Obtiene la lista completa
     public List<OrdenRecoleccion> listar() {
         return elementoDAO.findAll();

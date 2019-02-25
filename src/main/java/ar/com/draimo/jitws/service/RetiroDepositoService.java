@@ -42,6 +42,10 @@ public class RetiroDepositoService {
         return elementoDAO.findByEstaCerradaFalse();
     }
     
+    //Cierra un reparto
+    public void cerrarReparto() {
+    }
+    
     //Obtiene una lista por empresa
     public List<RetiroDeposito> listarPorEmpresa(int id) {
         Optional<Empresa> elemento = empresaDAO.findById(id);

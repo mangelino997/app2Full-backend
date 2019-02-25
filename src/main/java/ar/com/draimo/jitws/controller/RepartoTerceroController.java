@@ -61,6 +61,13 @@ public class RepartoTerceroController {
         return elementoService.listarPorEstaCerrada();
     }
     
+    //Cierra un repartopropio
+    @PutMapping(value = URL + "/cerrarReparto")
+    @ResponseBody
+    public void cerrarReparto() {
+        elementoService.listarPorEstaCerrada();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody RepartoTercero elemento) {
