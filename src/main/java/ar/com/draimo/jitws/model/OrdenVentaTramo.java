@@ -1,8 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
@@ -23,7 +24,8 @@ import javax.persistence.Table;
 public class OrdenVentaTramo extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
-    @JsonBackReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
