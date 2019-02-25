@@ -24,7 +24,7 @@ import javax.persistence.Table;
 public class OrdenVentaTramo extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
             property = "id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVenta", nullable = false)

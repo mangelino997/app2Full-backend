@@ -55,6 +55,13 @@ public class RetiroDepositoController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista de planillas abiertas
+    @GetMapping(value = URL + "/listarPorEstaCerrada")
+    @ResponseBody
+    public List<RetiroDeposito> listarPorEstaCerrada() {
+        return elementoService.listarPorEstaCerrada();
+    }
+    
     //Obtiene una lista por numeroDocumento
     @GetMapping(value = URL + "/listarPorNumeroDocumento/{numeroDocumento}")
     @ResponseBody
