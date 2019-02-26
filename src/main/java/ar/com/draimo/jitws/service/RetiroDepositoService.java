@@ -38,8 +38,8 @@ public class RetiroDepositoService {
     }
     
     //Obtiene la lista de planillas abiertas
-    public List<RetiroDeposito> listarPorEstaCerrada() {
-        return elementoDAO.findByEstaCerradaFalse();
+    public List<RetiroDeposito> listarPorEstaCerrada(boolean estaCerrada) {
+        return elementoDAO.listarPorEstaCerrada(estaCerrada);
     }
     
     //Cierra un reparto

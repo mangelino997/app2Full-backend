@@ -6,6 +6,8 @@ import ar.com.draimo.jitws.model.RetiroDeposito;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO RetiroDeposito
@@ -26,6 +28,7 @@ public interface IRetiroDepositoDAO extends JpaRepository<RetiroDeposito, Intege
     public List<RetiroDeposito> findByEmpresa(Optional<Empresa> empresa);
     
     //Obtiene un listado de planillas abiertas
-    public List<RetiroDeposito> findByEstaCerradaFalse();
+    @Query(value = "SELECT * FROM retirodeposito WHERE estaCerrada=:estaCerrada", nativeQuery = true)
+    public List<RetiroDeposito> listarPorEstaCerrada(@Param("estaCerrada") boolean estaCerrada);
     
 }

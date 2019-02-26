@@ -30,9 +30,9 @@ public class RepartoPropioService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene la lista por EstaCerrada = 0
-    public List<RepartoPropio> listarPorEstaCerrada() {
-        return elementoDAO.findByEstaCerradaFalse();
+    //Obtiene la lista por EstaCerrada 
+    public List<RepartoPropio> listarPorEstaCerrada(boolean estaCerrada) {
+        return elementoDAO.listarPorEstaCerrada(estaCerrada);
     }
     
     //Cierra un reparto

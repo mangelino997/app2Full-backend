@@ -4,6 +4,8 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.RepartoTercero;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Reparto Tercero
@@ -16,7 +18,8 @@ public interface IRepartoTerceroDAO extends JpaRepository<RepartoTercero, Intege
     //Obtiene el siguiente id
     public RepartoTercero findTopByOrderByIdDesc();
     
-    //Obtiene u listado por estaCerrada falso
-    public List<RepartoTercero> findByEstaCerradaFalse();
+    //Obtiene u listado por estaCerrada 
+    @Query(value = "SELECT * FROM repartotercero WHERE estaCerrada=:estaCerrada", nativeQuery = true)
+    public List<RepartoTercero> listarPorEstaCerrada(@Param("estaCerrada") boolean estaCerrada);
     
 }
