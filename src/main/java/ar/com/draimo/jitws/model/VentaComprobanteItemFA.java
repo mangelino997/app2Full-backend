@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase VentaComprobanteItem
+ * Clase VentaComprobanteItemFA
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
@@ -24,10 +24,10 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
     
-    //Referencia a la clase Concepto
-    //@ManyToOne(cascade = CascadeType.REFRESH)
-    //@JoinColumn(name = "idConcepto", nullable = false)
-    //private Concepto concepto;
+    //Referencia a la VentaTipoItem
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaTipoItem", nullable = false)
+    private VentaTipoItem ventaTipoItem;
     
     //Referencia a la clase ViajeRemito
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -86,6 +86,15 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @Column(name = "importeEntrega", nullable = true)
     private BigDecimal importeEntrega;
     
+    //Referencia a la clase VentaItemConcepto
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaItemConcepto", nullable = true)
+    private VentaItemConcepto ventaItemConcepto;
+    
+    //Define el importe venta item concepto
+    @Column(name = "importeVentaItemConcepto", nullable = true)
+    private BigDecimal importeVentaItemConcepto;
+    
     //Define el importe neto gravado
     @Column(name = "importeNetoGravado", nullable = true)
     private BigDecimal importeNetoGravado;
@@ -111,9 +120,15 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @Column(name = "importeExento", nullable = true)
     private BigDecimal importeExento;
     
-    //Referencia a la clase Jurisdiccion
-//    @Column(name = "idJurisdiccion", nullable = true)
-//    private Jurisdiccion jurisdiccion;
+    //Referencia a la clase Provincia
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idProvincia", nullable = false)
+    private Provincia provincia;
+    
+    //Referencia a la clase OrdenVenta
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idOrdenVenta", nullable = false)
+    private OrdenVenta ordenVenta;
 
     //Getters y Setters de la clase
 
@@ -123,6 +138,14 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     public void setVentaComprobante(VentaComprobante ventaComprobante) {
         this.ventaComprobante = ventaComprobante;
+    }
+
+    public VentaTipoItem getVentaTipoItem() {
+        return ventaTipoItem;
+    }
+
+    public void setVentaTipoItem(VentaTipoItem ventaTipoItem) {
+        this.ventaTipoItem = ventaTipoItem;
     }
 
     public ViajeRemito getViajeRemito() {
@@ -237,6 +260,22 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
         this.importeEntrega = importeEntrega;
     }
 
+    public VentaItemConcepto getVentaItemConcepto() {
+        return ventaItemConcepto;
+    }
+
+    public void setVentaItemConcepto(VentaItemConcepto ventaItemConcepto) {
+        this.ventaItemConcepto = ventaItemConcepto;
+    }
+
+    public BigDecimal getImporteVentaItemConcepto() {
+        return importeVentaItemConcepto;
+    }
+
+    public void setImporteVentaItemConcepto(BigDecimal importeVentaItemConcepto) {
+        this.importeVentaItemConcepto = importeVentaItemConcepto;
+    }
+
     public BigDecimal getImporteNetoGravado() {
         return importeNetoGravado;
     }
@@ -251,6 +290,22 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     public void setAfipAlicuotaIva(AfipAlicuotaIva afipAlicuotaIva) {
         this.afipAlicuotaIva = afipAlicuotaIva;
+    }
+
+    public BigDecimal getAlicuotaiva() {
+        return alicuotaiva;
+    }
+
+    public void setAlicuotaiva(BigDecimal alicuotaiva) {
+        this.alicuotaiva = alicuotaiva;
+    }
+
+    public BigDecimal getImporteIva() {
+        return importeIva;
+    }
+
+    public void setImporteIva(BigDecimal importeIva) {
+        this.importeIva = importeIva;
     }
 
     public BigDecimal getImporteNoGravado() {
@@ -268,29 +323,21 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     public void setImporteExento(BigDecimal importeExento) {
         this.importeExento = importeExento;
     }
-    
-    public AfipAlicuotaIva getAlicuotaIva() {
-        return afipAlicuotaIva;
+
+    public Provincia getProvincia() {
+        return provincia;
     }
 
-    public void setAlicuotaIva(AfipAlicuotaIva alicuotaIva) {
-        this.afipAlicuotaIva = alicuotaIva;
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
     }
 
-    public BigDecimal getAlicuotaiva() {
-        return alicuotaiva;
+    public OrdenVenta getOrdenVenta() {
+        return ordenVenta;
     }
 
-    public void setAlicuotaiva(BigDecimal alicuotaiva) {
-        this.alicuotaiva = alicuotaiva;
-    }
-
-    public BigDecimal getImporteIva() {
-        return importeIva;
-    }
-
-    public void setImporteIva(BigDecimal importeIva) {
-        this.importeIva = importeIva;
+    public void setOrdenVenta(OrdenVenta ordenVenta) {
+        this.ordenVenta = ordenVenta;
     }
     
 }

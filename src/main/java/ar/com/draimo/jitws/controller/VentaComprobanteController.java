@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.OrdenRecoleccion;
-import ar.com.draimo.jitws.service.OrdenRecoleccionService;
+import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
+import ar.com.draimo.jitws.service.VentaComprobanteItemFAService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,7 +13,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,17 +20,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase OrdenRecoleccion Controller
+ * Clase VentaComprobante Controller
  * @author blas
  */
 
 @RestController
-public class OrdenRecoleccionController {
+public class VentaComprobanteController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ordenrecoleccion";
+    private final String URL = RutaConstant.URL_BASE + "/ventacomprobante";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ordenrecoleccion";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventacomprobante";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -39,7 +38,7 @@ public class OrdenRecoleccionController {
     
     //Crea una instancia del servicio
     @Autowired
-    OrdenRecoleccionService elementoService;
+    VentaComprobanteItemFAService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,22 +50,15 @@ public class OrdenRecoleccionController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenRecoleccion> listar() {
+    public List<VentaComprobanteItemFA> listar() {
         return elementoService.listar();
-    }
-    
-    //Obtiene una lista por alias
-    @GetMapping(value = URL + "/listarPorAlias/{alias}")
-    @ResponseBody
-    public List<OrdenRecoleccion> listarPorAlias(@PathVariable String alias) {
-        return elementoService.listarPorAlias(alias);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody OrdenRecoleccion elemento) {
+    public ResponseEntity<?> agregar(@RequestBody VentaComprobanteItemFA elemento) {
         try {
-            OrdenRecoleccion a = elementoService.agregar(elemento);
+            VentaComprobanteItemFA a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -85,7 +77,7 @@ public class OrdenRecoleccionController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody OrdenRecoleccion elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody VentaComprobanteItemFA elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -110,7 +102,7 @@ public class OrdenRecoleccionController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody OrdenRecoleccion elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody VentaComprobanteItemFA elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

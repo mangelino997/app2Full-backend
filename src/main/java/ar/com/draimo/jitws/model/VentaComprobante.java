@@ -97,15 +97,15 @@ public class VentaComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase SucursalCliente
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idClienteRemitenteSuc", nullable = true)
-    private Cliente clienteRemitenteSuc;
+    @JoinColumn(name = "idSucursalClienteRem", nullable = true)
+    private SucursalCliente sucursalClienteRem;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase SucursalCliente
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idClienteDestinatarioSuc", nullable = true)
-    private Cliente clienteDestinatarioSuc;
+    @JoinColumn(name = "idSucursalClienteDes", nullable = true)
+    private SucursalCliente sucursalClienteDes;
     
     //Referencia a la clase CondicionVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -316,20 +316,20 @@ public class VentaComprobante extends ObjetoGenerico {
         this.clienteDestinatario = clienteDestinatario;
     }
 
-    public Cliente getClienteRemitenteSuc() {
-        return clienteRemitenteSuc;
+    public SucursalCliente getSucursalClienteRem() {
+        return sucursalClienteRem;
     }
 
-    public void setClienteRemitenteSuc(Cliente clienteRemitenteSuc) {
-        this.clienteRemitenteSuc = clienteRemitenteSuc;
+    public void setSucursalClienteRem(SucursalCliente sucursalClienteRem) {
+        this.sucursalClienteRem = sucursalClienteRem;
     }
 
-    public Cliente getClienteDestinatarioSuc() {
-        return clienteDestinatarioSuc;
+    public SucursalCliente getSucursalClienteDes() {
+        return sucursalClienteDes;
     }
 
-    public void setClienteDestinatarioSuc(Cliente clienteDestinatarioSuc) {
-        this.clienteDestinatarioSuc = clienteDestinatarioSuc;
+    public void setSucursalClienteDes(SucursalCliente sucursalClienteDes) {
+        this.sucursalClienteDes = sucursalClienteDes;
     }
 
     public CondicionVenta getCondicionVenta() {

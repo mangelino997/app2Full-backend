@@ -1,12 +1,11 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private Empresa empresa;
     
     //Referencia a la clase Sucursal
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
@@ -41,7 +39,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private Usuario usuario;
     
     //Referencia a la clase TipoComprobante
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
@@ -56,7 +53,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private String domicilio;
     
     //Referencia a la clase Barrio
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBarrio", nullable = true)
     private Barrio barrio;
@@ -67,7 +63,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private Localidad localidad;
     
     //Define fechaEmision
-    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "fechaEmision", nullable = false)  
     private LocalDateTime fechaEmision;
     
@@ -77,14 +72,14 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private Date fecha;
     
     //Define horaDesde
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+//    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "horaDesde", nullable = false)
-    private Time horaDesde;
+    private LocalTime horaDesde;
     
     //Define horaHasta
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+//    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
     @Column(name = "horaHasta", nullable = false)
-    private Time horaHasta;
+    private LocalTime horaHasta;
     
     //Define solicitadoPor
     @Column(name = "solicitadoPor", length = 30, nullable = false)
@@ -115,7 +110,6 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private BigDecimal valorDeclarado;
     
     //Referencia a la clase SucursalDestino
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalDestino", nullable = false)
     private Sucursal sucursalDestino;
@@ -135,6 +129,10 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     //Define observaciones
     @Column(name = "observaciones", length = 60, nullable = true)
     private String observaciones;
+    
+    //Define el alias
+    @Column(name = "alias", length = 100, nullable = true)
+    private String alias;
     
     //Getters y Setters de la clase
 
@@ -218,19 +216,19 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.fecha = fecha;
     }
 
-    public Time getHoraDesde() {
+    public LocalTime getHoraDesde() {
         return horaDesde;
     }
 
-    public void setHoraDesde(Time horaDesde) {
+    public void setHoraDesde(LocalTime horaDesde) {
         this.horaDesde = horaDesde;
     }
 
-    public Time getHoraHasta() {
+    public LocalTime getHoraHasta() {
         return horaHasta;
     }
 
-    public void setHoraHasta(Time horaHasta) {
+    public void setHoraHasta(LocalTime horaHasta) {
         this.horaHasta = horaHasta;
     }
 
@@ -330,4 +328,12 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.observaciones = observaciones;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+    
 }
