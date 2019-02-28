@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +53,20 @@ public class RepartoTerceroComprobanteController {
     @ResponseBody
     public List<RepartoTerceroComprobante> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista por RepartoTercero
+    @GetMapping(value = URL + "/listarComprobantes/{idRepartoTercero}")
+    @ResponseBody
+    public List<RepartoTerceroComprobante> listarComprobantes(@PathVariable int idRepartoTercero) {
+        return elementoService.listarComprobantes(idRepartoTercero);
+    }
+    
+    //Obtiene la lista por RepartoTercero
+    @GetMapping(value = URL + "/quitarComprobante")
+    @ResponseBody
+    public void quitarComprobante() {
+         elementoService.quitarComprobante();
     }
     
     //Agrega un registro

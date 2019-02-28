@@ -69,6 +69,13 @@ public class TipoComprobanteController {
         return elementoService.listarPorEstaActivoIngresoCargaTrue();
     }
     
+    //Obtiene una lista por esta activo Reparto igual true
+    @GetMapping(value = URL + "/listarPorEstaRepartoTrue")
+    @ResponseBody
+    public List<TipoComprobante> listarPorEstaActivoRepartoTrue() {
+        return elementoService.listarPorEstaActivoRepartoTrue();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TipoComprobante elemento) {

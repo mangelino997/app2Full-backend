@@ -65,7 +65,7 @@ public class UsuarioService {
     }
     
     //Obtiene una lista de usuarios por empresa
-    public List<Usuario> listarUsuariosPorEmpresa(int idEmpresa) {
+    public List<Usuario> listarPorEmpresa(int idEmpresa) {
         List<Usuario> usuarios = elementoDAO.listarPorEmpresaYMostrarTrue(idEmpresa);
         return usuarios;
     }

@@ -1,7 +1,9 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.RetiroDeposito;
 import ar.com.draimo.jitws.model.RetiroDepositoComprobante;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +16,8 @@ public interface IRetiroDepositoComprobanteDAO extends JpaRepository<RetiroDepos
     
     //Obtiene el siguiente id
     public RetiroDepositoComprobante findTopByOrderByIdDesc();
+    
+    //Obtiene un listado de RepartoTerceroComprobante por idRepartoTercero
+    public List<RetiroDepositoComprobante> findByRetiroDeposito(RetiroDeposito retiroDeposito);
     
 }

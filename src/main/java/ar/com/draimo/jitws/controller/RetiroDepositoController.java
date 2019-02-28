@@ -56,16 +56,23 @@ public class RetiroDepositoController {
     }
     
     //Obtiene la lista de planillas abiertas
-    @GetMapping(value = URL + "/listarPorEstaCerrada")
+    @GetMapping(value = URL + "/listarPorEstaCerrada/{estaCerrada}")
     @ResponseBody
-    public List<RetiroDeposito> listarPorEstaCerrada() {
-        return elementoService.listarPorEstaCerrada();
+    public List<RetiroDeposito> listarPorEstaCerrada(@PathVariable boolean estaCerrada) {
+        return elementoService.listarPorEstaCerrada(estaCerrada);
+    }
+    
+    //Cierra un repartopropio
+    @PutMapping(value = URL + "/cerrarReparto")
+    @ResponseBody
+    public void cerrarReparto() {
+        elementoService.cerrarReparto();
     }
     
     //Obtiene una lista por numeroDocumento
     @GetMapping(value = URL + "/listarPorNumeroDocumento/{numeroDocumento}")
     @ResponseBody
-    public List<RetiroDeposito> listarPorNombre(@PathVariable String numeroDocumento) {
+    public List<RetiroDeposito> listarPorNumeroDocumento(@PathVariable String numeroDocumento) {
         return elementoService.obtenerPorNumeroDocumento(numeroDocumento);
     }
     

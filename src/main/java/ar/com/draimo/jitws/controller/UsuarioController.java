@@ -77,10 +77,10 @@ public class UsuarioController {
     }
     
     //Obtiene una lista de usuarios por empresa
-    @GetMapping(value = URL + "/listarUsuariosPorEmpresa/{idEmpresa}")
+    @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public List<Usuario> listarUsuariosPorEmpresa(@PathVariable int idEmpresa) {
-        return elementoService.listarUsuariosPorEmpresa(idEmpresa);
+    public List<Usuario> listarPorEmpresa(@PathVariable int idEmpresa) {
+        return elementoService.listarPorEmpresa(idEmpresa);
     }
     
     //Agrega un registro

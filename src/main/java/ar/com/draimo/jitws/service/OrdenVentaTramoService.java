@@ -40,6 +40,15 @@ public class OrdenVentaTramoService {
         return elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta).get());
     }
     
+    //Agrega una lista de registros
+    @Transactional(rollbackFor = Exception.class)
+    public OrdenVentaTramo agregarLista(List<OrdenVentaTramo> elementos) {
+        for (OrdenVentaTramo elemento : elementos) {
+            elementoDAO.save(elemento);
+        }
+        return elementos.get(elementos.size()-1);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public OrdenVentaTramo agregar(OrdenVentaTramo elemento) {

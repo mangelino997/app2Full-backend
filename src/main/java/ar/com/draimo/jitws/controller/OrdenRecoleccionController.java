@@ -48,6 +48,13 @@ public class OrdenRecoleccionController {
         return elementoService.obtenerSiguienteId();
     }
     
+    //Obtiene un registro por id
+    @GetMapping(value = URL + "/obtenerPorId/{idOrdenRecoleccion}")
+    @ResponseBody
+    public OrdenRecoleccion obtenerPorId(@PathVariable int idOrdenRecoleccion) {
+        return elementoService.obtenerPorId(idOrdenRecoleccion);
+    }
+    
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody

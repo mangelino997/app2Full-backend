@@ -48,6 +48,11 @@ public class TipoComprobanteService {
     public List<TipoComprobante> listarPorEstaActivoIngresoCargaTrue() {
         return elementoDAO.findByEstaActivoIngresoCargaTrue();
     }
+    
+    //Obtiene una lista por esta activo Reparto igual true
+    public List<TipoComprobante> listarPorEstaActivoRepartoTrue() {
+        return elementoDAO.findByEstaActivoRepartoTrue();
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

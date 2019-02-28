@@ -91,6 +91,15 @@ public class OrdenVentaEscalaService {
         return precioFlete;
     }
     
+    //Agrega una lista de registros
+    @Transactional(rollbackFor = Exception.class)
+    public OrdenVentaEscala agregarLista(List<OrdenVentaEscala> elementos) {
+        for (OrdenVentaEscala elemento : elementos) {
+            elementoDAO.save(elemento);
+        }
+        return elementos.get(elementos.size()-1);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public OrdenVentaEscala agregar(OrdenVentaEscala elemento) {
