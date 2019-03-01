@@ -20,15 +20,15 @@ import org.springframework.context.annotation.Scope;
 public class Usuario extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
     
     //Define el usuario
-    @Column(name = "username", nullable = false, unique = true)
+    @Column(name = "username",length = 15, nullable = false, unique = true)
     private String username;
     
     //Define la contraseña
-    @Column(name = "password", nullable = false)
+    @Column(name = "password",length = 60, nullable = false)
     private String password;
     
     //Referencia a la clase rol

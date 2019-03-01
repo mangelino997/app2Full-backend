@@ -16,11 +16,11 @@ import javax.persistence.Table;
 public class ViajeTipo extends ObjetoGenerico {
 
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Define la abreviatura
-    @Column(name = "abreviatura", nullable = false)
+    @Column(name = "abreviatura",length = 10, nullable = false)
     private String abreviatura;
 
     //Getters y Setters de la clase

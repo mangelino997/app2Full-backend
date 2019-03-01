@@ -29,19 +29,19 @@ public class ContactoBanco extends ObjetoGenerico {
     private TipoContacto tipoContacto;
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Define el telefono fijo
-    @Column(name = "telefonoFijo", nullable = true)
+    @Column(name = "telefonoFijo",length = 45, nullable = true)
     private String telefonoFijo;
     
     //Define el telefono movil
-    @Column(name = "telefonoMovil", nullable = true)
+    @Column(name = "telefonoMovil",length = 45, nullable = true)
     private String telefonoMovil;
     
     //Define el correo electronico
-    @Column(name = "correoelectronico", nullable = true)
+    @Column(name = "correoelectronico",length = 30, nullable = true)
     private String correoelectronico;
     
     //Referencia a la clase Usuario (Alta)

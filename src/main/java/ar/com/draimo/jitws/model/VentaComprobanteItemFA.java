@@ -51,7 +51,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private BigDecimal m3;
     
     //Define la descripcion carga
-    @Column(name = "descripcionCarga", nullable = true)
+    @Column(name = "descripcionCarga", length = 200, nullable = true)
     private String descripcionCarga;
     
     //Define el valor declarado

@@ -23,15 +23,15 @@ import javax.persistence.Table;
 public class Personal extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45 , nullable = false)
     private String nombre;
     
     //Define el apellido
-    @Column(name = "apellido", nullable = false)
+    @Column(name = "apellido",length = 45 , nullable = false)
     private String apellido;
     
     //Define el nombre completo
-    @Column(name = "nombreCompleto", nullable = false)
+    @Column(name = "nombreCompleto",length = 45 , nullable = false)
     private String nombreCompleto;
     
     //Referencia a la clase Tipo de documento
@@ -40,17 +40,21 @@ public class Personal extends ObjetoGenerico {
     private TipoDocumento tipoDocumento;
     
     //Define el numero de documento
-    @Column(name = "numeroDocumento", nullable = false)
+    @Column(name = "numeroDocumento",length = 11 , nullable = false)
     private String numeroDocumento;
     
     //Define el cuil
-    @Column(name = "cuil", nullable = false)
+    @Column(name = "cuil",length = 11 , nullable = false)
     private String cuil;
     
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
+    
+    //Define el domicilio
+    @Column(name = "domicilio",length = 60 , nullable = false)
+    private String domicilio;
     
     //Referencia a la clase Barrio
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -73,11 +77,11 @@ public class Personal extends ObjetoGenerico {
     private Date fechaNacimiento;
 
     //Define el telefono fijo
-    @Column(name = "telefonoFijo", nullable = true)
+    @Column(name = "telefonoFijo",length = 45 , nullable = true)
     private String telefonoFijo;
     
     //Define el telefono movil
-    @Column(name = "telefonoMovil", nullable = true)
+    @Column(name = "telefonoMovil",length = 45 , nullable = true)
     private String telefonoMovil;
     
     //Referencia a la clese Estado civil
@@ -86,7 +90,7 @@ public class Personal extends ObjetoGenerico {
     private EstadoCivil estadoCivil;
     
     //Define el correo electronico
-    @Column(name = "correoelectronico", nullable = true)
+    @Column(name = "correoelectronico",length = 30 , nullable = true)
     private String correoelectronico;
     
     //Referencia a la clese Sexo
@@ -121,10 +125,6 @@ public class Personal extends ObjetoGenerico {
     //Define la antiguedad anterior mes
     @Column(name = "antiguedadAntMes", nullable = true)
     private short antiguedadAntMes;
-    
-    //Define el domicilio
-    @Column(name = "domicilio", nullable = false)
-    private String domicilio;
     
     //Define si es jubilado
     @Column(name = "esJubilado", nullable = false)
@@ -304,15 +304,15 @@ public class Personal extends ObjetoGenerico {
     private Date fechaModLS;
 
     //Define el talle de camisa
-    @Column(name = "talleCamisa", nullable = true)
+    @Column(name = "talleCamisa",length = 20 , nullable = true)
     private String talleCamisa;
     
     //Define el talle de pantalon
-    @Column(name = "tallePantalon", nullable = true)
+    @Column(name = "tallePantalon",length = 20, nullable = true)
     private String tallePantalon;
     
     //Define el talle de calzado
-    @Column(name = "talleCalzado", nullable = true)
+    @Column(name = "talleCalzado",length = 20 , nullable = true)
     private String talleCalzado;
     
     //Define el turno entrada mañana
@@ -375,7 +375,7 @@ public class Personal extends ObjetoGenerico {
     private boolean turnoFueraConvenio;
     
     //Define el telefono movil de la empresa
-    @Column(name = "telefonoMovilEmpresa", nullable = true)
+    @Column(name = "telefonoMovilEmpresa",length = 45 , nullable = true)
     private String telefonoMovilEmpresa;
     
     //Define el telefono movil fecha de entrega
@@ -389,7 +389,7 @@ public class Personal extends ObjetoGenerico {
     private Date telefonoMovilFechaDevolucion;
     
     //Define el telefono movil observacion
-    @Column(name = "telefonoMovilObservacion", nullable = true)
+    @Column(name = "telefonoMovilObservacion",length = 100 , nullable = true)
     private String telefonoMovilObservacion;
     
     //Define si es chofer
@@ -405,11 +405,11 @@ public class Personal extends ObjetoGenerico {
     private boolean esAcompReparto;
     
     //Define las observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones",length = 200 , nullable = true)
     private String observaciones;
     
     //Define el alias para las busquedas
-    @Column(name = "alias", nullable = true)
+    @Column(name = "alias",length = 100 , nullable = true)
     private String alias;
     
     //Getters y Setters de la clase

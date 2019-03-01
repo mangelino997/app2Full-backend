@@ -25,11 +25,11 @@ public class Vehiculo extends ObjetoGenerico {
     private ConfiguracionVehiculo configuracionVehiculo;
     
     //Define el dominio
-    @Column(name = "dominio", nullable = false)
+    @Column(name = "dominio",length = 10, nullable = false)
     private String dominio;
     
     //Define el numero interno
-    @Column(name = "numeroInterno", nullable = true)
+    @Column(name = "numeroInterno",length = 5, nullable = true)
     private String numeroInterno;
     
     //Referencia a la clase Localidad
@@ -42,11 +42,11 @@ public class Vehiculo extends ObjetoGenerico {
     private short anioFabricacion;
     
     //Define el numero de motor
-    @Column(name = "numeroMotor", nullable = true)
+    @Column(name = "numeroMotor",length = 25, nullable = true)
     private String numeroMotor;
     
     //Define el numero de chasis
-    @Column(name = "numeroChasis", nullable = true)
+    @Column(name = "numeroChasis",length = 25, nullable = true)
     private String numeroChasis;
     
     //Referencia a la clase Empresa
@@ -75,7 +75,7 @@ public class Vehiculo extends ObjetoGenerico {
     private Date vtoRTO;
     
     //Define el numero de ruta
-    @Column(name = "numeroRuta", nullable = false)
+    @Column(name = "numeroRuta",length = 15, nullable = false)
     private String numeroRuta;
     
     //Define el vencimiento de ruta
@@ -124,7 +124,7 @@ public class Vehiculo extends ObjetoGenerico {
     private Date fechaUltimaMod;
     
     //Define el alias
-    @Column(name = "alias", nullable = true)
+    @Column(name = "alias",length = 100, nullable = true)
     private String alias;
     
     //Getters y Setters de la clase

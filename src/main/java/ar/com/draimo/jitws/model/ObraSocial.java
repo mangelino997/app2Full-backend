@@ -16,15 +16,15 @@ import javax.persistence.Table;
 public class ObraSocial extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip",length = 6, nullable = false)
     private String codigoAfip;
     
     //Define el sitio web
-    @Column(name = "sitioWeb", nullable = true)
+    @Column(name = "sitioWeb",length = 60, nullable = true)
     private String sitioWeb;
     
     //Getters y Setters de la clase

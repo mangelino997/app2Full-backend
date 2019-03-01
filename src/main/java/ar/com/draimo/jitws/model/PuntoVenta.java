@@ -33,7 +33,7 @@ public class PuntoVenta extends ObjetoGenerico {
     private int puntoVenta;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     
     //Define el fe

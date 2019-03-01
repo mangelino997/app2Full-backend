@@ -33,7 +33,7 @@ public class VentaComprobante extends ObjetoGenerico {
     private Sucursal sucursal;
     
     //Define el punto de venta
-    @Column(name = "puntoVenta", nullable = false)
+    @Column(name = "puntoVenta",length = 1, nullable = false)
     private int puntoVenta;
     
     //Define la letra

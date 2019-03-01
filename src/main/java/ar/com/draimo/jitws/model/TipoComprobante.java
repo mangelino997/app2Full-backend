@@ -16,11 +16,11 @@ import javax.persistence.Table;
 public class TipoComprobante extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
     
     //Define la abreviatura
-    @Column(name = "abreviatura", nullable = false)
+    @Column(name = "abreviatura",length = 8, nullable = false)
     private String abreviatura;
     
     //Define esta activo ingreso carga

@@ -19,23 +19,23 @@ import javax.persistence.Table;
 public class AgendaTelefonica extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Define el domicilio
-    @Column(name = "domicilio", nullable = true)
+    @Column(name = "domicilio",length = 45, nullable = true)
     private String domicilio;
     
     //Define el telefono fijo
-    @Column(name = "telefonoFijo", nullable = true)
+    @Column(name = "telefonoFijo",length = 45, nullable = true)
     private String telefonoFijo;
     
     //Define el telefono movil
-    @Column(name = "telefonoMovil", nullable = true)
+    @Column(name = "telefonoMovil",length = 45, nullable = true)
     private String telefonoMovil;
     
     //Define el correo electronico
-    @Column(name = "correoelectronico", nullable = true, unique = true)
+    @Column(name = "correoelectronico",length = 30, nullable = true, unique = true)
     private String correoelectronico;
     
     //Referencia a la clase Localidad

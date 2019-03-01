@@ -16,11 +16,11 @@ import javax.persistence.Table;
 public class Banco extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define el sitio web
-    @Column(name = "sitioWeb", nullable = true)
+    @Column(name = "sitioWeb",length = 60, nullable = true, unique = true)
     private String sitioWeb;
     
     //Getters y Setters de la clase

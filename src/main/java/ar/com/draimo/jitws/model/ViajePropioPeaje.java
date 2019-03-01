@@ -42,7 +42,7 @@ public class ViajePropioPeaje extends ObjetoGenerico {
     private int puntoVenta;
     
     //Define el letra
-    @Column(name = "letra", nullable = false)
+    @Column(name = "letra",length = 1, nullable = false)
     private String letra;
     
     //Define el numero

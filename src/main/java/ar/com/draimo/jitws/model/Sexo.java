@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Sexo extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 20, nullable = false)
     private String nombre;
     
     //Getters y Setters de la clase

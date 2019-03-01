@@ -83,7 +83,7 @@ public class ViajeTercero extends ObjetoGenerico {
     private AfipCondicionIva afipCondicionIva;
     
     //Define un numero de liquidacion
-    @Column(name = "numeroLiquidacion", nullable = true)
+    @Column(name = "numeroLiquidacion",length = 10, nullable = true)
     private String numeroLiquidacion;
     
     //Define una fecha de liquidacion
@@ -112,19 +112,19 @@ public class ViajeTercero extends ObjetoGenerico {
     private Usuario usuarioChoferAutorizado;
     
     //Define una observacion vehiculo
-    @Column(name = "observacionVehiculo", nullable = true)
+    @Column(name = "observacionVehiculo",length = 100, nullable = true)
     private String observacionVehiculo;
     
     //Define una observacion vehiculo remolque
-    @Column(name = "observacionVehiculoRemolque", nullable = true)
+    @Column(name = "observacionVehiculoRemolque",length = 100, nullable = true)
     private String observacionVehiculoRemolque;
     
     //Define una observacion chofer
-    @Column(name = "observacionChofer", nullable = true)
+    @Column(name = "observacionChofer",length = 100, nullable = true)
     private String observacionChofer;
     
     //Define una observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones",length = 100, nullable = true)
     private String observaciones;
     
     //Define la lista de tramos

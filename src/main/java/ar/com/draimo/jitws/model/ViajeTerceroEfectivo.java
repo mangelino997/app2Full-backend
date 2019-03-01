@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,7 +68,7 @@ public class ViajeTerceroEfectivo extends ObjetoGenerico {
     private BigDecimal importe;
     
     //Define las observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones",length = 60, nullable = true)
     private String observaciones;
     
     //Define si esta anulado
@@ -77,7 +76,7 @@ public class ViajeTerceroEfectivo extends ObjetoGenerico {
     private boolean estaAnulado;
     
     //Define las observaciones de anulacion
-    @Column(name = "observacionesAnulado", nullable = true)
+    @Column(name = "observacionesAnulado",length = 60, nullable = true)
     private String observacionesAnulado;
 
     //Getters y Setters de la clase

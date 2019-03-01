@@ -16,11 +16,11 @@ import javax.persistence.Table;
 public class AfipLocalidad extends ObjetoGenerico {
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 140, nullable = false)
     private String nombre;
     
     //Getters y Setters de la clase

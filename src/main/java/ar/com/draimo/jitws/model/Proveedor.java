@@ -21,15 +21,15 @@ import javax.persistence.Table;
 public class Proveedor extends ObjetoGenerico {
     
     //Define la razon social
-    @Column(name = "razonSocial", nullable = false)
+    @Column(name = "razonSocial",length = 45, nullable = false)
     private String razonSocial;
     
     //Define el nombre de fantasia
-    @Column(name = "nombreFantasia", nullable = false)
+    @Column(name = "nombreFantasia", length = 45,nullable = false)
     private String nombreFantasia;
     
     //Define el domicilio
-    @Column(name = "domicilio", nullable = false)
+    @Column(name = "domicilio", length = 60, nullable = false)
     private String domicilio;
     
     //Referencia a la clase Barrio
@@ -48,19 +48,19 @@ public class Proveedor extends ObjetoGenerico {
     private TipoDocumento tipoDocumento;
     
     //Define el numeroDocumento
-    @Column(name = "numeroDocumento", nullable = false)
+    @Column(name = "numeroDocumento",length = 15, nullable = false)
     private String numeroDocumento;
     
     //Define el codigo de ingresos brutos
-    @Column(name = "numeroIIBB", nullable = true)
+    @Column(name = "numeroIIBB",length = 15, nullable = true)
     private String numeroIIBB;
     
     //Define el sitio web
-    @Column(name = "sitioWeb", nullable = true)
+    @Column(name = "sitioWeb",length = 60, nullable = true)
     private String sitioWeb;
     
     //Define el telefono
-    @Column(name = "telefono", nullable = true)
+    @Column(name = "telefono",length = 45, nullable = true)
     private String telefono;
     
     //Referencia a la clase AfipCondicionIva
@@ -94,15 +94,15 @@ public class Proveedor extends ObjetoGenerico {
     private Date fechaUltimaMod;
     
     //Define las observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones",length = 400, nullable = true)
     private String observaciones;
     
     //Define la nota ingreso comprobante
-    @Column(name = "notaIngresarComprobante", nullable = true)
+    @Column(name = "notaIngresarComprobante",length = 200, nullable = true)
     private String notaIngresarComprobante;
     
     //Define la nota impresion orden de pago
-    @Column(name = "notaImpresionOrdenPago", nullable = true)
+    @Column(name = "notaImpresionOrdenPago",length = 200, nullable = true)
     private String notaImpresionOrdenPago;
     
     //Referencia a la clase Banco
@@ -116,19 +116,19 @@ public class Proveedor extends ObjetoGenerico {
     private TipoCuentaBancaria tipoCuentaBancaria;
     
     //Define el numero de cuenta
-    @Column(name = "numeroCuenta", nullable = true)
+    @Column(name = "numeroCuenta",length = 20, nullable = true)
     private String numeroCuenta;
     
     //Define el titular de la cuenta
-    @Column(name = "titular", nullable = true)
+    @Column(name = "titular",length = 45, nullable = true)
     private String titular;
     
     //Define el numero de cbu de la cuenta
-    @Column(name = "numeroCBU", nullable = true)
+    @Column(name = "numeroCBU",length = 22, nullable = true)
     private String numeroCBU;
     
     //Define el alias de cbu de la cuenta
-    @Column(name = "aliasCBU", nullable = true)
+    @Column(name = "aliasCBU",length = 45, nullable = true)
     private String aliasCBU;
     
     //Referencia a la clase Tipo Proveedor
@@ -141,7 +141,7 @@ public class Proveedor extends ObjetoGenerico {
     private boolean estaActivo;
     
     //Define el alias
-    @Column(name = "alias", nullable = true)
+    @Column(name = "alias",length = 100, nullable = true)
     private String alias;
     
     //Getters y Setters de la clase

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class InsumoProducto extends ObjetoGenerico {
 
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Referenica a la clase Rubro Producto

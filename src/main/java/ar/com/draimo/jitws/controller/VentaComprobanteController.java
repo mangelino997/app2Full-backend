@@ -2,8 +2,10 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import ar.com.draimo.jitws.service.VentaComprobanteItemFAService;
+import ar.com.draimo.jitws.service.VentaComprobanteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,7 +40,7 @@ public class VentaComprobanteController {
     
     //Crea una instancia del servicio
     @Autowired
-    VentaComprobanteItemFAService elementoService;
+    VentaComprobanteService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -50,15 +52,15 @@ public class VentaComprobanteController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<VentaComprobanteItemFA> listar() {
+    public List<VentaComprobante> listar() {
         return elementoService.listar();
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody VentaComprobanteItemFA elemento) {
+    public ResponseEntity<?> agregar(@RequestBody VentaComprobante elemento) {
         try {
-            VentaComprobanteItemFA a = elementoService.agregar(elemento);
+            VentaComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -77,7 +79,7 @@ public class VentaComprobanteController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody VentaComprobanteItemFA elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody VentaComprobante elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -102,7 +104,7 @@ public class VentaComprobanteController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody VentaComprobanteItemFA elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody VentaComprobante elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

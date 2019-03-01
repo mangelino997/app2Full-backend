@@ -31,7 +31,7 @@ public class CompaniaSeguroPoliza extends ObjetoGenerico {
     private Empresa empresa;
     
     //Define el numero de poliza
-    @Column(name = "numeroPoliza", nullable = false)
+    @Column(name = "numeroPoliza", length = 15, nullable = false)
     private String numeroPoliza;
     
     //Define el vencimiento de la poliza

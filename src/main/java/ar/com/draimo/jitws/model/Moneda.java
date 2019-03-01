@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Moneda extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define si esta activo o no
@@ -28,11 +28,11 @@ public class Moneda extends ObjetoGenerico {
     private boolean porDefecto;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     
     //Define el simbolo
-    @Column(name = "simbolo", nullable = false)
+    @Column(name = "simbolo",length = 5, nullable = false)
     private String simbolo;
     
     //Getters y Setters de la clase

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase Venta Item Concepto Controller
+ * Clase VentaItemConcepto Controller
  * @author blas
  */
 

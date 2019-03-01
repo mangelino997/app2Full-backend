@@ -21,11 +21,11 @@ import javax.persistence.Table;
 public class ChoferProveedor extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Define el domicilio
-    @Column(name = "domicilio", nullable = false)
+    @Column(name = "domicilio",length = 60, nullable = false)
     private String domicilio;
     
     //Referencia a la clase Proveedor

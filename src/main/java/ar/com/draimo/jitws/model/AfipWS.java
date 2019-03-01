@@ -28,7 +28,7 @@ public class AfipWS extends ObjetoGenerico {
     private String urlReal;
     
     //Define el urlPrueba
-    @Column(name = "urlPrueba", nullable = false)
+    @Column(name = "urlPrueba",length = 150, nullable = false)
     private String urlPrueba;
 
     public String getNombre() {

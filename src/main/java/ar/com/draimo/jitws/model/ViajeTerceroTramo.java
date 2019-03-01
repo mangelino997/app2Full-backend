@@ -62,7 +62,7 @@ public class ViajeTerceroTramo extends ObjetoGenerico {
     private Usuario usuario;
     
     //Define observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones",length = 100, nullable = true)
     private String observaciones;
     
     //Referencia a la clase Viaje Tipo

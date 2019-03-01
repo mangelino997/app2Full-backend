@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase Barrio Controller
+ * Clase Localidad Controller
  * @author blas
  */
 

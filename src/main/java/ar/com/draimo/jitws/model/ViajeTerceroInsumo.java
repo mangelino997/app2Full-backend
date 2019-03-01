@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class ViajeTerceroInsumo extends ObjetoGenerico {
 
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Referencia a la clase Viaje Tercero

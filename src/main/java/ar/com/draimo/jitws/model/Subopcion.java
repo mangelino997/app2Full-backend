@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Subopcion extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Define si el submodulo es una ABM

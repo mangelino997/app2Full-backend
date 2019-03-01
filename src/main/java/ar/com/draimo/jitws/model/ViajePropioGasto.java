@@ -69,7 +69,7 @@ public class ViajePropioGasto extends ObjetoGenerico {
     private BigDecimal importe;
     
     //Define las observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones",length = 60, nullable = true)
     private String observaciones;
     
     //Define si esta anulado
@@ -77,7 +77,7 @@ public class ViajePropioGasto extends ObjetoGenerico {
     private boolean estaAnulado;
     
     //Define las observaciones de anulado
-    @Column(name = "observacionesAnulado", nullable = true)
+    @Column(name = "observacionesAnulado",length = 60, nullable = true)
     private String observacionesAnulado;
 
     //Getters y Setters de la clase

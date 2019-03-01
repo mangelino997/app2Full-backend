@@ -29,11 +29,11 @@ public class ConfiguracionVehiculo extends ObjetoGenerico {
     private MarcaVehiculo marcaVehiculo;
     
     //Define el modelo
-    @Column(name = "modelo", nullable = false)
+    @Column(name = "modelo",length = 45, nullable = false)
     private String modelo;
     
     //Define la descripcion
-    @Column(name = "descripcion", nullable = true)
+    @Column(name = "descripcion",length = 100, nullable = true)
     private String descripcion;
     
     //Define la cantidad de ejes

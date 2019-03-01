@@ -19,11 +19,11 @@ import javax.persistence.Table;
 public class SucursalCliente extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Define el domicilio
-    @Column(name = "domicilio", nullable = false)
+    @Column(name = "domicilio",length = 60, nullable = false)
     private String domicilio;
     
     //Referencia a la clase Barrio
@@ -32,11 +32,11 @@ public class SucursalCliente extends ObjetoGenerico {
     private Barrio barrio;
     
     //Define el telefono fijo
-    @Column(name = "telefonoFijo", nullable = true)
+    @Column(name = "telefonoFijo",length = 45, nullable = true, unique = true)
     private String telefonoFijo;
     
     //Define el telefono movil
-    @Column(name = "telefonoMovil", nullable = true)
+    @Column(name = "telefonoMovil",length = 45, nullable = true, unique = true)
     private String telefonoMovil;
     
     //Referencia a la clase Cliente

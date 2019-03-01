@@ -19,11 +19,11 @@ import javax.persistence.Table;
 public class Localidad extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define el codigo postal
-    @Column(name = "codigoPostal", nullable = true)
+    @Column(name = "codigoPostal",length = 10, nullable = true)
     private String codigoPostal;
     
     //Referencia a la clase Provincia

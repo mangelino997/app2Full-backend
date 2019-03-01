@@ -3,7 +3,6 @@ package ar.com.draimo.jitws.controller;
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipComprobante;
-import ar.com.draimo.jitws.model.AfipCondicionIva;
 import ar.com.draimo.jitws.service.AfipComprobanteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

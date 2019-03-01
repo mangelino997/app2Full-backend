@@ -22,11 +22,11 @@ import javax.persistence.Table;
 public class Cliente extends ObjetoGenerico {
     
     //Define la razon social
-    @Column(name = "razonSocial", nullable = false)
+    @Column(name = "razonSocial", length = 45, nullable = false)
     private String razonSocial;
     
     //Define el nombre de fantasia
-    @Column(name = "nombreFantasia", nullable = true)
+    @Column(name = "nombreFantasia", length = 45, nullable = true)
     private String nombreFantasia;
     
     //Referencia a la clase Cuenta principal
@@ -35,7 +35,7 @@ public class Cliente extends ObjetoGenerico {
     private Cliente cuentaGrupo;
     
     //Define el domicilio
-    @Column(name = "domicilio", nullable = false)
+    @Column(name = "domicilio", length = 60, nullable = false)
     private String domicilio;
     
     //Referencia a la clase Localidad
@@ -49,11 +49,11 @@ public class Cliente extends ObjetoGenerico {
     private Barrio barrio;
     
     //Define el telefono
-    @Column(name = "telefono", nullable = true)
+    @Column(name = "telefono", length = 45, nullable = true)
     private String telefono;
     
     //Define el sitio web
-    @Column(name = "sitioWeb", nullable = true)
+    @Column(name = "sitioWeb", length = 60, nullable = true)
     private String sitioWeb;
     
     //Referencia a la clase Zona
@@ -87,11 +87,11 @@ public class Cliente extends ObjetoGenerico {
     private TipoDocumento tipoDocumento;
     
     //Define el numeroDocumento
-    @Column(name = "numeroDocumento", nullable = false)
+    @Column(name = "numeroDocumento", length = 15, nullable = false)
     private String numeroDocumento;
     
     //Define el codigo de ingresos brutos
-    @Column(name = "numeroIIBB", nullable = true)
+    @Column(name = "numeroIIBB", length = 15, nullable = true)
     private String numeroIIBB;
     
     //Define si es cuenta corriente
@@ -145,7 +145,7 @@ public class Cliente extends ObjetoGenerico {
     private CompaniaSeguro companiaSeguro;
     
     //Define el numero de poliza del seguro
-    @Column(name = "numeroPolizaSeguro", nullable = true)
+    @Column(name = "numeroPolizaSeguro", length = 20, nullable = true)
     private String numeroPolizaSeguro;
     
     //Define el vencimiento de la poliza del seguro
@@ -154,19 +154,19 @@ public class Cliente extends ObjetoGenerico {
     private Date vencimientoPolizaSeguro;
     
     //Define las observaciones
-    @Column(name = "observaciones", nullable = true)
+    @Column(name = "observaciones", length = 400, nullable = true)
     private String observaciones;
     
     //Define la nota emision comprobante
-    @Column(name = "notaEmisionComprobante", nullable = true)
+    @Column(name = "notaEmisionComprobante", length = 200, nullable = true)
     private String notaEmisionComprobante;
     
     //Define la nota impresion comprobante
-    @Column(name = "notaImpresionComprobante", nullable = true)
+    @Column(name = "notaImpresionComprobante", length = 200, nullable = true)
     private String notaImpresionComprobante;
     
     //Define la nota impresion remite
-    @Column(name = "notaImpresionRemito", nullable = true)
+    @Column(name = "notaImpresionRemito", length = 200, nullable = true)
     private String notaImpresionRemito;
     
     //Define imprimir control de deuda
@@ -199,7 +199,7 @@ public class Cliente extends ObjetoGenerico {
     private Date fechaUltimaMod;
     
     //Define el alias para las busquedas
-    @Column(name = "alias", nullable = true)
+    @Column(name = "alias", length = 100, nullable = true)
     private String alias;
     
     //Getters y Setters de la clase

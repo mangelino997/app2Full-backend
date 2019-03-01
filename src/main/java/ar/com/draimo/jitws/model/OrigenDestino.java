@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class OrigenDestino extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
 
     //Referencia a la clase Provincia
