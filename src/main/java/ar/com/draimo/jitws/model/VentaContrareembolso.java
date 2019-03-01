@@ -29,7 +29,7 @@ public class VentaContrareembolso extends ObjetoGenerico {
     private BigDecimal importe;
     
     //Define comisionCR
-    @Column(name = "comosionCR", nullable = false)
+    @Column(name = "comisionCR", nullable = false)
     private BigDecimal comisionCR;
     
     //Getters y Setters de la clase
