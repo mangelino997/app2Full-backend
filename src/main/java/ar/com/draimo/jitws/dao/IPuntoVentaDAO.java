@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.model.Sucursal;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO PuntoVenta
@@ -23,9 +24,15 @@ public interface IPuntoVentaDAO extends JpaRepository<PuntoVenta, Integer> {
     public List<PuntoVenta> findBySucursal(Optional<Sucursal> sucursal);
     
     //Obtiene una lista por sucursal y empresa
-    public List<PuntoVenta> findBySucursalAndEmpresa(Optional<Sucursal> sucursal, Optional<Empresa> empresa);
+    public List<PuntoVenta> findBySucursalAndEmpresa(Sucursal sucursal, Empresa empresa);
+    
+    //Obtiene una lista por empresa, sucursal
+    @Query(value = "SELECT distinct p.puntoVenta FROM puntoventa as p INNER JOIN "
+            + "afipcomprobante a ON p.codigoAfip=a.codigoAfip where p.idEmpresa=1 "
+            + "and p.idSucursal=1 and p.fe=1 and p.estaHabilitado=1 AND a.idTipoComprobante=1;", nativeQuery = true)
+    public List<Object> listarPorEmpresaYSucursal(Sucursal sucursal, Empresa empresa);
      
     //Obtiene un registro por puntoVenta y codigoAfip
-    public PuntoVenta findByPuntoVentaAndCodigoAfip(int puntoVenta, String codigoAfip);
+    public PuntoVenta findByPuntoVentaAndCodigoAfipAndSucursalAndEmpresa(int puntoVenta, String codigoAfip, Sucursal sucursal, Empresa empresa);
      
 }

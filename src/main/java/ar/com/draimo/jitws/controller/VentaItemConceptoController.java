@@ -55,6 +55,13 @@ public class VentaItemConceptoController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/listarPorTipoComprobante/{idTipoComprobante}")
+    @ResponseBody
+    public List<VentaItemConcepto> listarPorTipoComprobante(@PathVariable int idTipoComprobante) {
+        return elementoService.listarPorTipoComprobante(idTipoComprobante);
+    }
+    
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody

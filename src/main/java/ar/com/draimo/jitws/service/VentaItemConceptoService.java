@@ -1,11 +1,13 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.VentaItemConcepto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IVentaItemConceptoDAO;
+import ar.com.draimo.jitws.model.TipoComprobante;
 
 /**
  * Servicio Venta Item Concepto
@@ -18,6 +20,10 @@ public class VentaItemConceptoService {
     //Define la referencia al dao
     @Autowired
     IVentaItemConceptoDAO elementoDAO;
+    
+    //Define la referencia al dao TipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -37,6 +43,13 @@ public class VentaItemConceptoService {
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
+    }
+    
+    //Obtiene la lista por tipo de comprobante
+    public List<VentaItemConcepto> listarPorTipoComprobante(int idTipoComprobante) {
+        //Obtiene el tipo de comprobante
+        TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante).get();
+        return elementoDAO.findByTipoComprobanteAndEstaHabilitadoTrue(tipoComprobante);
     }
     
     //Agrega un registro

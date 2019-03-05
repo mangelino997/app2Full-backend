@@ -70,10 +70,10 @@ public class PuntoVentaController {
     }
     
     //Obtiene el numero 
-    @GetMapping(value = URL + "/obtenerNumero/{puntoVenta}/{codigoAfip}")
+    @GetMapping(value = URL + "/obtenerNumero/{puntoVenta}/{codigoAfip}/{idSucursal}/{idEmpresa}")
     @ResponseBody
-    public int obtenerNumero(@PathVariable int puntoVenta, @PathVariable String codigoAfip) {
-        return elementoService.obtenerNumero(puntoVenta, codigoAfip);
+    public int obtenerNumero(@PathVariable int puntoVenta, @PathVariable String codigoAfip, @PathVariable int idSucursal, @PathVariable int idEmpresa) {
+        return elementoService.obtenerNumero(puntoVenta, codigoAfip, idSucursal, idEmpresa);
     }
     
     //Agrega un registro
