@@ -18,6 +18,7 @@ import javax.persistence.Table;
  * @author blas
  */
 
+
 @Entity
 @Table(name = "viajepropio")
 public class ViajePropio extends ObjetoGenerico {

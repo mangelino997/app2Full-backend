@@ -28,9 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class VentaComprobanteItemFAController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ventacomprobanteitem";
+    private final String URL = RutaConstant.URL_BASE + "/ventacomprobanteitemfa";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventacomprobanteitem";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventacomprobanteitemfa";
     
     //Define el template para el envio de datos por socket
     @Autowired

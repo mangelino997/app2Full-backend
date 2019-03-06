@@ -20,11 +20,11 @@ public class VentaConfig extends ObjetoGenerico {
     private short aforo;
     
     //Define NotaImpresionComprobanteGral1
-    @Column(name = "NotaImpresionComprobanteGral1", length = 200)
+    @Column(name = "NotaImpresionComprobanteGral1", length = 200, nullable = true)
     private String notaImpresionComprobanteGral1;
     
     //Define NotaImpresionComprobanteGral2
-    @Column(name = "NotaImpresionComprobanteGral2",length = 200, nullable = false)
+    @Column(name = "NotaImpresionComprobanteGral2",length = 200, nullable = true)
     private String notaImpresionComprobanteGral2;
     
     //Getters y Setters de la clase

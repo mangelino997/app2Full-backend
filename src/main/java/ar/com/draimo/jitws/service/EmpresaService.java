@@ -2,7 +2,6 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.Empresa;
-import ar.com.draimo.jitws.model.Usuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
