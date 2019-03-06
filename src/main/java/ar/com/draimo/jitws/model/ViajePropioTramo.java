@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,7 +28,7 @@ public class ViajePropioTramo extends ObjetoGenerico {
 
     //Referencia a la clase Viaje
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idViajePropio", nullable = false)
     private ViajePropio viajePropio;
     

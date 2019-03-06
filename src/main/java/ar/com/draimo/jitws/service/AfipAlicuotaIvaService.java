@@ -30,6 +30,11 @@ public class AfipAlicuotaIvaService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene una lista de activas
+    public List<AfipAlicuotaIva> listarActivas() {
+        return elementoDAO.findByEstaActivaTrue();
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipAlicuotaIva agregar(AfipAlicuotaIva elemento) {

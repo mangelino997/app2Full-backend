@@ -54,6 +54,13 @@ public class AfipAlicuotaIvaController {
         return elementoService.listar();
     }
     
+    //Obtiene una lista de activas
+    @GetMapping(value = URL + "/listarActivas")
+    @ResponseBody
+    public List<AfipAlicuotaIva> listarActivas() {
+        return elementoService.listarActivas();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody AfipAlicuotaIva elemento) {

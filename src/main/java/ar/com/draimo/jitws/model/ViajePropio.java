@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -144,7 +145,7 @@ public class ViajePropio extends ObjetoGenerico {
     
     //Define la lista de tramos
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viajePropio")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viajePropio")
     private List<ViajePropioTramo> viajePropioTramos;
     
     //Define la lista de ordenes de combustible

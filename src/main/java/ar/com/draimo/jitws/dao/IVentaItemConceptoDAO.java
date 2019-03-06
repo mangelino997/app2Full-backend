@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaItemConcepto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,8 @@ public interface IVentaItemConceptoDAO extends JpaRepository<VentaItemConcepto, 
     
     //Obtiene una lista por nombre
     public List<VentaItemConcepto> findByNombreContaining(String nombre);
+    
+    //Obtiene una lista por tipo de comprobante y esta habilitado en true
+    public List<VentaItemConcepto> findByTipoComprobanteAndEstaHabilitadoTrue(TipoComprobante tipoComprobante);
     
 }

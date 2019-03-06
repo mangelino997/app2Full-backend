@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.AfipAlicuotaIva;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,8 @@ public interface IAfipAlicuotaIvaDAO extends JpaRepository<AfipAlicuotaIva, Inte
     
     //Obtiene el siguiente id
     public AfipAlicuotaIva findTopByOrderByIdDesc();
+    
+    //Obtiene una lista de activas
+    public List<AfipAlicuotaIva> findByEstaActivaTrue();
     
 }
