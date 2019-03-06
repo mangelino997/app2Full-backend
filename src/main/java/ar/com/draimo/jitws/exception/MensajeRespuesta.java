@@ -230,6 +230,9 @@ public class MensajeRespuesta {
                 case LongitudError.NUMERO_POLIZA_SEGURO_LONGITUD:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_POLIZA_SEGURO_LONGITUD,
                             MensajeRespuesta.LONGITUD + " NUMERO POLIZA SEGURO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case LongitudError.NUMERO_REMITO_LONGITUD:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_REMITO_LONGITUD,
+                            MensajeRespuesta.LONGITUD + " NUMERO REMITO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
                 case LongitudError.NUMERO_RUTA_LONGITUD:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_RUTA_LONGITUD,
                             MensajeRespuesta.LONGITUD + " NUMERO RUTA", 0), HttpStatus.INTERNAL_SERVER_ERROR);

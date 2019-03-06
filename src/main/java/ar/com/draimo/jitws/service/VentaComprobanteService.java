@@ -1,7 +1,12 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
+import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
+import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
+import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.model.VentaComprobante;
+import ar.com.draimo.jitws.model.VentaComprobanteItemCR;
+import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,18 @@ public class VentaComprobanteService {
     @Autowired
     IVentaComprobanteDAO elementoDAO;
     
+    //Define la referencia VentaComprobanteItemCRDAO
+    @Autowired
+    IVentaComprobanteItemCRDAO ventaComprobanteItemCRDAO;
+    
+    //Define la referencia a VentaComprobanteitemFADAO
+    @Autowired
+    IVentaComprobanteItemFADAO ventaComprobanteItemFADAO;
+    
+    //Define la referancia a RemitoDAO
+    @Autowired
+    IViajeRemitoDAO viajeRemitoDAO; 
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         VentaComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -33,8 +50,22 @@ public class VentaComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public VentaComprobante agregar(VentaComprobante elemento) {
+        VentaComprobanteItemFA comprobanteItemFA;
+        VentaComprobanteItemCR comprobanteItemCR;
+        elementoDAO.save(elemento);
+        for (VentaComprobanteItemFA ventaComprobanteItemFA : elemento.getVentaComprobanteItemFAs()) {
+            comprobanteItemFA = ventaComprobanteItemFA;
+            comprobanteItemFA.setVentaComprobante(elemento);
+            if (ventaComprobanteItemFA.getViajeRemito()!=null) {
+                ventaComprobanteItemFA.getViajeRemito().setEstaFacturado(true);
+            }
+            ventaComprobanteItemFADAO.saveAndFlush(comprobanteItemFA);
+        }
+        comprobanteItemCR = elemento.getVentaComprobanteItemCR();
+        comprobanteItemCR.setVentaComprobante(elemento);
+        ventaComprobanteItemCRDAO.saveAndFlush(comprobanteItemCR);
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

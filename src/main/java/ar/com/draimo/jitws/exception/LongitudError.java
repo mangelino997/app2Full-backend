@@ -46,6 +46,7 @@ public class LongitudError {
     public static final String NUMERO_MOTOR_LONGITUD = "numeroMotor";
     public static final String NUMERO_POLIZA_SEGURO_LONGITUD = "numeroPolizaSeguro";
     public static final String NUMERO_POLIZA_LONGITUD = "numeroPoliza";
+    public static final String NUMERO_REMITO_LONGITUD = "numeroRemito";
     public static final String NUMERO_RUTA_LONGITUD = "numeroRuta";
     public static final String OBSERVACION_CHOFER_LONGITUD = "observacionChofer";
     public static final String OBSERVACION_VEHICULO_LONGITUD = "observacionVehiculo";

@@ -2,14 +2,18 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -185,6 +189,24 @@ public class VentaComprobante extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipConcepto", nullable = true)
     private AfipConcepto afipConcepto;
+    
+    //Referencia a la clase Moneda
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idMoneda", nullable = false)
+    private Moneda moneda;
+    
+    //Define monedaCotizacion
+    @Column(name = "monedaCotizacion", nullable = false)
+    private BigDecimal monedaCotizacion;
+    
+    //Define la lista de ventaComprobanteItemFA
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
+    
+    //Define referencia a ventaComprobanteItemCR
+    @OneToOne(mappedBy = "ventaComprobante", cascade = CascadeType.REFRESH)
+    private VentaComprobanteItemCR ventaComprobanteItemCR;
     
     //Getters y Setters de la clase
 
@@ -474,6 +496,38 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setAfipConcepto(AfipConcepto afipConcepto) {
         this.afipConcepto = afipConcepto;
+    }
+
+    public Moneda getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
+    }
+
+    public BigDecimal getMonedaCotizacion() {
+        return monedaCotizacion;
+    }
+
+    public void setMonedaCotizacion(BigDecimal monedaCotizacion) {
+        this.monedaCotizacion = monedaCotizacion;
+    }
+
+    public List<VentaComprobanteItemFA> getVentaComprobanteItemFAs() {
+        return ventaComprobanteItemFAs;
+    }
+
+    public void setVentaComprobanteItemFAs(List<VentaComprobanteItemFA> ventaComprobanteItemFAs) {
+        this.ventaComprobanteItemFAs = ventaComprobanteItemFAs;
+    }
+
+    public VentaComprobanteItemCR getVentaComprobanteItemCR() {
+        return ventaComprobanteItemCR;
+    }
+
+    public void setVentaComprobanteItemCR(VentaComprobanteItemCR ventaComprobanteItemCR) {
+        this.ventaComprobanteItemCR = ventaComprobanteItemCR;
     }
     
 }
