@@ -25,17 +25,17 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     private VentaComprobante ventaComprobante;
     
     //Referencia a la clase Concepto
-    //@ManyToOne(cascade = CascadeType.REFRESH)
-    //@JoinColumn(name = "idConcepto", nullable = false)
-    //private Concepto concepto;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaTipoItem", nullable = false)
+    private VentaTipoItem ventaTipoItem;
     
     //Define el importe neto gravado
-    @Column(name = "importeNetoGravado", nullable = true)
+    @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
     
     //Referencia a la clase idAliCuotaIva
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipAlicuotaIva", nullable = true)
+    @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
     private AfipAlicuotaIva viajeRemito;
     
     //Define la alicuota iva
@@ -43,28 +43,28 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     private BigDecimal alicuotaiva;
     
     //Define el importe de iva
-    @Column(name = "importeIva", nullable = true)
+    @Column(name = "importeIva", nullable = false)
     private BigDecimal importeIva;
     
     //Define el importe no gravado
-    @Column(name = "importeNoGravado", nullable = true)
+    @Column(name = "importeNoGravado", nullable = false)
     private BigDecimal importeNoGravado;
     
     //Define el importe excento
-    @Column(name = "importeExento", nullable = true)
+    @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
     
     //Referencia a la clase Jurisdiccion
-//    @Column(name = "idJurisdiccion", nullable = true)
-//    private Jurisdiccion jurisdiccion;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idProvincia", nullable = false)
+    private Provincia provincia;
 
-//    //Referencia a la clase VentaComprobanteAplicado
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-//    @JoinColumn(name = "idVentaComprobanteAplicado", nullable = true)
-//    private VentaComprobanteAplicado ventaComprobanteAplicado;
+    //Referencia a la clase VentaComprobanteAplicado
+    @Column(name = "idVentaComprobanteAplicado", nullable = true)
+    private int ventaComprobanteAplicado;
     
     //Define comprobanteAplicado
-    @Column(name = "comprobanteAplicado",length = 14, nullable = false)
+    @Column(name = "comprobanteAplicado",length = 14, nullable = true)
     private String comprobanteAplicado;
 
     public VentaComprobante getVentaComprobante() {
@@ -73,6 +73,14 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
 
     public void setVentaComprobante(VentaComprobante ventaComprobante) {
         this.ventaComprobante = ventaComprobante;
+    }
+
+    public VentaTipoItem getVentaTipoItem() {
+        return ventaTipoItem;
+    }
+
+    public void setVentaTipoItem(VentaTipoItem ventaTipoItem) {
+        this.ventaTipoItem = ventaTipoItem;
     }
 
     public BigDecimal getImporteNetoGravado() {
@@ -121,6 +129,22 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
 
     public void setImporteExento(BigDecimal importeExento) {
         this.importeExento = importeExento;
+    }
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public int getVentaComprobanteAplicado() {
+        return ventaComprobanteAplicado;
+    }
+
+    public void setVentaComprobanteAplicado(int ventaComprobanteAplicado) {
+        this.ventaComprobanteAplicado = ventaComprobanteAplicado;
     }
 
     public String getComprobanteAplicado() {
