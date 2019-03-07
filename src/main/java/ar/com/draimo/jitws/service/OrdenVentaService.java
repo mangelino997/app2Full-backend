@@ -95,7 +95,7 @@ public class OrdenVentaService {
                 if (!(ove.getImporteFijo() == null && ove.getPrecioUnitario() == null
                         && ove.getMinimo() == null)) {
                     //Agrega la orden venta escala
-                    ordenVentaEscalaDAO.save(ove);
+                    ordenVentaEscalaDAO.saveAndFlush(ove);
                 }
             }
         } else {
@@ -107,12 +107,12 @@ public class OrdenVentaService {
                 if (!(ovt.getImporteFijoSeco() == null && ovt.getImporteFijoRef() == null
                         && ovt.getPrecioUnitarioSeco() == null && ovt.getPrecioUnitarioRef() == null)) {
                     //Agrega la orden venta tramo
-                    ordenVentaTramoDAO.save(ovt);
+                    ordenVentaTramoDAO.saveAndFlush(ovt);
                 }
             }
         }
         //Retorna la orden de venta almacenada
-        return ordenVenta;
+        return elementoDAO.saveAndFlush(ordenVenta);
     }
     
     //Actualiza un registro

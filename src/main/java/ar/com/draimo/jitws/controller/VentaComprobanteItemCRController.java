@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
-import ar.com.draimo.jitws.service.VentaComprobanteItemFAService;
+import ar.com.draimo.jitws.model.VentaComprobanteItemCR;
+import ar.com.draimo.jitws.service.VentaComprobanteItemCRService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,17 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase VentaComprobanteItem Controller
+ * Clase VentaComprobanteItem CR Controller
  * @author blas
  */
 
 @RestController
-public class VentaComprobanteItemFAController {
+public class VentaComprobanteItemCRController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ventacomprobanteitemfa";
+    private final String URL = RutaConstant.URL_BASE + "/ventacomprobanteitemcr";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventacomprobanteitemfa";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventacomprobanteitemcr";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -38,7 +39,7 @@ public class VentaComprobanteItemFAController {
     
     //Crea una instancia del servicio
     @Autowired
-    VentaComprobanteItemFAService elementoService;
+    VentaComprobanteItemCRService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -50,15 +51,15 @@ public class VentaComprobanteItemFAController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<VentaComprobanteItemFA> listar() {
+    public List<VentaComprobanteItemCR> listar() {
         return elementoService.listar();
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody VentaComprobanteItemFA elemento) {
+    public ResponseEntity<?> agregar(@RequestBody VentaComprobanteItemCR elemento) {
         try {
-            VentaComprobanteItemFA a = elementoService.agregar(elemento);
+            VentaComprobanteItemCR a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -77,7 +78,7 @@ public class VentaComprobanteItemFAController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody VentaComprobanteItemFA elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody VentaComprobanteItemCR elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -101,10 +102,10 @@ public class VentaComprobanteItemFAController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody VentaComprobanteItemFA elemento) {
+    @DeleteMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
+            elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch(Exception e) {

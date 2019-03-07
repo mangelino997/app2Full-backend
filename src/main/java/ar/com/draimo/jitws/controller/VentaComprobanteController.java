@@ -3,8 +3,6 @@ package ar.com.draimo.jitws.controller;
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.VentaComprobante;
-import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
-import ar.com.draimo.jitws.service.VentaComprobanteItemFAService;
 import ar.com.draimo.jitws.service.VentaComprobanteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

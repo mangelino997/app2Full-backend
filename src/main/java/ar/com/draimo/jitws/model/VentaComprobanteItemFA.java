@@ -1,6 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +22,8 @@ import javax.persistence.Table;
 public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
@@ -34,8 +38,12 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @JoinColumn(name = "idViajeRemito", nullable = true)
     private ViajeRemito viajeRemito;
     
+    //Define numero remito
+    @Column(name = "numeroRemito",length = 14, nullable = true)
+    private String numeroRemito;
+    
     //Define los bultos
-    @Column(name = "bultos", nullable = false)
+    @Column(name = "bultos", nullable = true)
     private short bultos;
     
     //Define los kilos efectivos
@@ -55,7 +63,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private String descripcionCarga;
     
     //Define el valor declarado
-    @Column(name = "valorDeclarado", nullable = true)
+    @Column(name = "valorDeclarado", nullable = false)
     private BigDecimal valorDeclarado;
     
     //Define el p seguro
@@ -63,7 +71,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private BigDecimal pSeguro;
     
     //Define el importe seguro
-    @Column(name = "importeSeguro", nullable = true)
+    @Column(name = "importeSeguro", nullable = false)
     private BigDecimal importeSeguro;
     
     //Define el flete
@@ -79,11 +87,11 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private BigDecimal importeFlete;
     
     //Define el importe retiro
-    @Column(name = "importeRetiro", nullable = true)
+    @Column(name = "importeRetiro", nullable = false)
     private BigDecimal importeRetiro;
     
     //Define el importe entrega
-    @Column(name = "importeEntrega", nullable = true)
+    @Column(name = "importeEntrega", nullable = false)
     private BigDecimal importeEntrega;
     
     //Referencia a la clase VentaItemConcepto
@@ -92,11 +100,11 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private VentaItemConcepto ventaItemConcepto;
     
     //Define el importe venta item concepto
-    @Column(name = "importeVentaItemConcepto", nullable = true)
+    @Column(name = "importeVentaItemConcepto", nullable = false)
     private BigDecimal importeVentaItemConcepto;
     
     //Define el importe neto gravado
-    @Column(name = "importeNetoGravado", nullable = true)
+    @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
     
     //Referencia a la clase AlicuotaIva
@@ -106,18 +114,18 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     
     //Define la alicuota iva
     @Column(name = "alicuotaIva", nullable = false)
-    private BigDecimal alicuotaiva;
+    private BigDecimal alicuotaIva;
     
     //Define el importe de iva
-    @Column(name = "importeIva", nullable = true)
+    @Column(name = "importeIva", nullable = false)
     private BigDecimal importeIva;
     
     //Define el importe no gravado
-    @Column(name = "importeNoGravado", nullable = true)
+    @Column(name = "importeNoGravado", nullable = false)
     private BigDecimal importeNoGravado;
     
     //Define el importe excento
-    @Column(name = "importeExento", nullable = true)
+    @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
     
     //Referencia a la clase Provincia
@@ -156,6 +164,14 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
         this.viajeRemito = viajeRemito;
     }
 
+    public String getNumeroRemito() {
+        return numeroRemito;
+    }
+
+    public void setNumeroRemito(String numeroRemito) {
+        this.numeroRemito = numeroRemito;
+    }
+    
     public short getBultos() {
         return bultos;
     }
@@ -292,14 +308,14 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
         this.afipAlicuotaIva = afipAlicuotaIva;
     }
 
-    public BigDecimal getAlicuotaiva() {
-        return alicuotaiva;
+    public BigDecimal getAlicuotaIva() {
+        return alicuotaIva;
     }
 
-    public void setAlicuotaiva(BigDecimal alicuotaiva) {
-        this.alicuotaiva = alicuotaiva;
+    public void setAlicuotaIva(BigDecimal alicuotaIva) {
+        this.alicuotaIva = alicuotaIva;
     }
-
+    
     public BigDecimal getImporteIva() {
         return importeIva;
     }

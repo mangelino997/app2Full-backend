@@ -2,14 +2,18 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -113,31 +117,31 @@ public class VentaComprobante extends ObjetoGenerico {
     private CondicionVenta condicionVenta;
     
     //Define el importe no gravado
-    @Column(name = "importeNoGravado", nullable = true)
+    @Column(name = "importeNoGravado", nullable = false)
     private BigDecimal importeNoGravado;
     
     //Define el importe exento
-    @Column(name = "importeExento", nullable = true)
+    @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
     
     //Define el importe neto gravado
-    @Column(name = "importeNetoGravado", nullable = true)
+    @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
     
     //Define el importe iva
-    @Column(name = "importeIva", nullable = true)
+    @Column(name = "importeIva", nullable = false)
     private BigDecimal importeIva;
     
     //Define el importe de otros tributos
-    @Column(name = "importeOtrosTributos", nullable = true)
+    @Column(name = "importeOtrosTributos", nullable = false)
     private BigDecimal importeOtrosTributos;
     
     //Define el importe total
-    @Column(name = "importeTotal", nullable = true)
+    @Column(name = "importeTotal", nullable = false)
     private BigDecimal importeTotal;
     
     //Define el importe saldo
-    @Column(name = "importeSaldo", nullable = true)
+    @Column(name = "importeSaldo", nullable = false)
     private BigDecimal importeSaldo;
     
     //Referencia a la clase Cobrador
@@ -164,16 +168,16 @@ public class VentaComprobante extends ObjetoGenerico {
     private boolean esCAEA;
     
     //Define CAE
-    @Column(name = "CAE", length = 14, nullable = false)
+    @Column(name = "CAE", length = 14, nullable = true)
     private String CAE;
     
     //Define CAEVencimiento
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
-    @Column(name = "CAEVencimiento", nullable = false)
+    @Column(name = "CAEVencimiento", nullable = true)
     private Date CAEVencimiento;
     
     //Define CAEEstado
-    @Column(name = "CAEEstado", length = 1, nullable = false)
+    @Column(name = "CAEEstado", length = 1, nullable = true)
     private String CAEEstado;
     
     //Define fechaRegistracion
@@ -183,8 +187,29 @@ public class VentaComprobante extends ObjetoGenerico {
 
     //Referencia a la clase AfipConcepto
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipConcepto", nullable = true)
+    @JoinColumn(name = "idAfipConcepto", nullable = false)
     private AfipConcepto afipConcepto;
+    
+    //Referencia a la clase Moneda
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idMoneda", nullable = false)
+    private Moneda moneda;
+    
+    //Define monedaCotizacion
+    @Column(name = "monedaCotizacion", nullable = false)
+    private BigDecimal monedaCotizacion;
+    
+    //Define la lista de ventaComprobanteItemFA
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
+    
+    //Define referencia a ventaComprobanteItemCR
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
+  private List<VentaComprobanteItemCR> ventaComprobanteItemCRs;
     
     //Getters y Setters de la clase
 
@@ -474,6 +499,38 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setAfipConcepto(AfipConcepto afipConcepto) {
         this.afipConcepto = afipConcepto;
+    }
+
+    public Moneda getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
+    }
+
+    public BigDecimal getMonedaCotizacion() {
+        return monedaCotizacion;
+    }
+
+    public void setMonedaCotizacion(BigDecimal monedaCotizacion) {
+        this.monedaCotizacion = monedaCotizacion;
+    }
+
+    public List<VentaComprobanteItemFA> getVentaComprobanteItemFAs() {
+        return ventaComprobanteItemFAs;
+    }
+
+    public void setVentaComprobanteItemFAs(List<VentaComprobanteItemFA> ventaComprobanteItemFAs) {
+        this.ventaComprobanteItemFAs = ventaComprobanteItemFAs;
+    }
+
+    public List<VentaComprobanteItemCR> getVentaComprobanteItemCRs() {
+        return ventaComprobanteItemCRs;
+    }
+
+    public void setVentaComprobanteItemCRs(List<VentaComprobanteItemCR> ventaComprobanteItemCRs) {
+        this.ventaComprobanteItemCRs = ventaComprobanteItemCRs;
     }
     
 }
