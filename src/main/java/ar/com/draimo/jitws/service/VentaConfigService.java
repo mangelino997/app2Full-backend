@@ -25,6 +25,11 @@ public class VentaConfigService {
         return elemento != null ? elemento.getId()+1 : 1;
     }
     
+    //Obtiene un registro por id
+    public VentaConfig obtenerPorId(int id) {
+        return elementoDAO.findById(id).get();
+    }
+    
     //Obtiene la lista completa
     public List<VentaConfig> listar() {
         return elementoDAO.findAll();
