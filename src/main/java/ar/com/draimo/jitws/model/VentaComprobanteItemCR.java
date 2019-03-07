@@ -1,6 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.CascadeType;
@@ -8,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -22,7 +23,9 @@ import javax.persistence.Table;
 public class VentaComprobanteItemCR extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
     
@@ -32,7 +35,7 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     
     //Referencia a la clase OrdenVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idOrdenVenta", nullable = true)
+    @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
     
     //Define pComision

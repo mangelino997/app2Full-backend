@@ -2,7 +2,9 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -200,13 +203,16 @@ public class VentaComprobante extends ObjetoGenerico {
     private BigDecimal monedaCotizacion;
     
     //Define la lista de ventaComprobanteItemFA
-    @JsonManagedReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
     
     //Define referencia a ventaComprobanteItemCR
-    @OneToOne(mappedBy = "ventaComprobante", cascade = CascadeType.REFRESH)
-    private VentaComprobanteItemCR ventaComprobanteItemCR;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
+  private List<VentaComprobanteItemCR> ventaComprobanteItemCRs;
     
     //Getters y Setters de la clase
 
@@ -522,12 +528,12 @@ public class VentaComprobante extends ObjetoGenerico {
         this.ventaComprobanteItemFAs = ventaComprobanteItemFAs;
     }
 
-    public VentaComprobanteItemCR getVentaComprobanteItemCR() {
-        return ventaComprobanteItemCR;
+    public List<VentaComprobanteItemCR> getVentaComprobanteItemCRs() {
+        return ventaComprobanteItemCRs;
     }
 
-    public void setVentaComprobanteItemCR(VentaComprobanteItemCR ventaComprobanteItemCR) {
-        this.ventaComprobanteItemCR = ventaComprobanteItemCR;
+    public void setVentaComprobanteItemCRs(List<VentaComprobanteItemCR> ventaComprobanteItemCRs) {
+        this.ventaComprobanteItemCRs = ventaComprobanteItemCRs;
     }
     
 }

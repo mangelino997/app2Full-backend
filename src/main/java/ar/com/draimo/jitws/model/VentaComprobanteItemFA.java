@@ -1,7 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +22,8 @@ import javax.persistence.Table;
 public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
-    @JsonBackReference
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
@@ -41,7 +43,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private String numeroRemito;
     
     //Define los bultos
-    @Column(name = "bultos", nullable = false)
+    @Column(name = "bultos", nullable = true)
     private short bultos;
     
     //Define los kilos efectivos
