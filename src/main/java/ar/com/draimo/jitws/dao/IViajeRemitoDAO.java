@@ -8,6 +8,8 @@ import ar.com.draimo.jitws.model.ViajeTerceroTramo;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ViajeRemito
@@ -42,5 +44,11 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     
     //Obtiene un listado de remitos por viaje propio
     public List<ViajeRemito> findByViajeTerceroTramoAndEstaFacturadoFalse(Optional<ViajeTerceroTramo> viajeTerceroTramo);
+    
+    //Obtiene un registro por puntoVenta, letra y nroComprobante
+    @Query(value = "SELECT * FROM ventacomprobante WHERE puntaVenta =:puntoVenta "
+            + "AND letra=:letra AND numero=:numero", nativeQuery = true)
+    public ViajeRemito obtenerPorPuntoVentaLetraYNumero(@Param("puntoVenta")
+            int puntoVenta, @Param("letra") String letra, @Param("numero") int numero);
     
 }

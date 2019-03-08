@@ -1,7 +1,12 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IRepartoPropioComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoPropioDAO;
+import ar.com.draimo.jitws.dao.IRepartoPropioPersonalDAO;
 import ar.com.draimo.jitws.model.RepartoPropio;
+import ar.com.draimo.jitws.model.RepartoPropioComprobante;
+import ar.com.draimo.jitws.model.RepartoPropioPersonal;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +23,14 @@ public class RepartoPropioService {
     //Define la referencia al dao
     @Autowired
     IRepartoPropioDAO elementoDAO;
+    
+    //define la referencia al dao de RepartoPropioPersonal
+    @Autowired
+    IRepartoPropioPersonalDAO repartoPropioPersonalDAO;
+    
+    //define la referencia al dao de RepartoPropioComprobante
+    @Autowired
+    IRepartoPropioComprobanteDAO repartoPropioComprobanteDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -36,14 +49,29 @@ public class RepartoPropioService {
     }
     
     //Cierra un reparto
-    public void cerrarReparto() {
+    public boolean cerrarReparto(int idRepartoPropio) {
+        RepartoPropio r = elementoDAO.findById(idRepartoPropio).get();
+        List<RepartoPropioComprobante> c = repartoPropioComprobanteDAO.findByRepartoPropio(r);
+        if (c.isEmpty()) {
+            return false;
+        }else {
+            r.setEstaCerrada(true);
+            elementoDAO.save(r);
+            return true;
+        }
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoPropio agregar(RepartoPropio elemento) {
-        System.out.println(elemento.getFechaRegistracion());
-        return elementoDAO.saveAndFlush(elemento);
+        elemento.setFechaRegistracion(LocalDateTime.now());
+        elemento.setEstaCerrada(false);
+        elementoDAO.saveAndFlush(elemento);
+        for (RepartoPropioPersonal acompaniante : elemento.getAcompaniantes()) {
+            acompaniante.setRepartoPropio(elemento);
+          repartoPropioPersonalDAO.saveAndFlush(acompaniante);
+        }
+        return elemento;
     }
 
     //Actualiza un registro
@@ -54,8 +82,14 @@ public class RepartoPropioService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(RepartoPropio elemento) {
-        elementoDAO.delete(elemento);
+    public boolean eliminar(int elemento) {
+        if(repartoPropioComprobanteDAO.findByRepartoPropio(elementoDAO.findById(elemento).get()).isEmpty()){
+            elementoDAO.deleteById(elemento);
+            return true;
+        }else {
+            return false;
+        }
+        
     }
 
 }

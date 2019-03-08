@@ -2,7 +2,9 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.RepartoPropio;
 import ar.com.draimo.jitws.model.RepartoPropioComprobante;
+import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.service.RepartoPropioComprobanteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,11 +73,12 @@ public class RepartoPropioComprobanteController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody RepartoPropioComprobante elemento) {
+    public ResponseEntity<?> agregar(@RequestBody int rp,@RequestBody int tc,@RequestBody String puntoVenta,
+            @RequestBody String letra, @RequestBody String comprobante) {
         try {
-            RepartoPropioComprobante a = elementoService.agregar(elemento);
+            RepartoPropioComprobante a = elementoService.agregar(rp, tc, puntoVenta, letra, comprobante);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/listarComprobantes", elementoService.listarComprobantes(rp));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {

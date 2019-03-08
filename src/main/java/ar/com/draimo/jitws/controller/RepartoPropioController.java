@@ -63,10 +63,16 @@ public class RepartoPropioController {
     }
     
     //Cierra un repartopropio
-    @PutMapping(value = URL + "/cerrarReparto")
-    @ResponseBody
-    public void cerrarReparto() {
-        elementoService.cerrarReparto();
+    @PutMapping(value = URL + "/cerrarReparto/{idRepartoPropio}")
+    public ResponseEntity<?> cerrarReparto(@PathVariable int idRepartoPropio) {
+        boolean r = elementoService.cerrarReparto(idRepartoPropio);
+        if (r == true) {
+            template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
+                    elementoService.listarPorEstaCerrada(false));
+            return MensajeRespuesta.cerrado();
+        } else{
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro
@@ -116,12 +122,17 @@ public class RepartoPropioController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody RepartoPropio elemento) {
+    @DeleteMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
-            //Retorna mensaje de eliminado con exito
-            return MensajeRespuesta.eliminado();
+            boolean a = elementoService.eliminar(id);
+            if(a==true){
+                template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
+                        elementoService.listarPorEstaCerrada(a));
+                return MensajeRespuesta.eliminado();
+            } else {
+                return MensajeRespuesta.error();
+            }
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
