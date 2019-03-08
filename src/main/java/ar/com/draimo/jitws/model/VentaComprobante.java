@@ -209,7 +209,7 @@ public class VentaComprobante extends ObjetoGenerico {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
             property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
-  private List<VentaComprobanteItemCR> ventaComprobanteItemCRs;
+  private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
     
     //Getters y Setters de la clase
 
@@ -526,11 +526,11 @@ public class VentaComprobante extends ObjetoGenerico {
     }
 
     public List<VentaComprobanteItemCR> getVentaComprobanteItemCRs() {
-        return ventaComprobanteItemCRs;
+        return ventaComprobanteItemCR;
     }
 
     public void setVentaComprobanteItemCRs(List<VentaComprobanteItemCR> ventaComprobanteItemCRs) {
-        this.ventaComprobanteItemCRs = ventaComprobanteItemCRs;
+        this.ventaComprobanteItemCR = ventaComprobanteItemCRs;
     }
     
 }
