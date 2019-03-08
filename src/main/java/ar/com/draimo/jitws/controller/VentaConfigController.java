@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,6 +46,13 @@ public class VentaConfigController {
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
+    }
+    
+    //Obtiene un registro por id
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public VentaConfig obtenerPorId(@PathVariable int id) {
+        return elementoService.obtenerPorId(id);
     }
     
     //Obtiene la lista completa
