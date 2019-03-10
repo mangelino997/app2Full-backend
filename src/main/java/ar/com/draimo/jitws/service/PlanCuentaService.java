@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.PlanCuenta;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IPlanCuentaDAO;
 import ar.com.draimo.jitws.dto.PlanCuentaDTO;
+import ar.com.draimo.jitws.model.Empresa;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -25,6 +27,10 @@ public class PlanCuentaService {
     //Define la referencia al dao
     @Autowired
     IPlanCuentaDAO elementoDAO;
+    
+    //Define la referencia al dao Empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -51,14 +57,15 @@ public class PlanCuentaService {
         return elementoDAO.listarGrupoActivo(idEmpresa);
     }
     
-    public PlanCuentaDTO obtenerPlanCuenta() throws JsonProcessingException, 
-            IOException {
-        PlanCuenta planCuenta = elementoDAO.findById(1).get();
+    public PlanCuentaDTO obtenerPlanCuenta(int idEmpresa) 
+            throws JsonProcessingException, IOException {
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+        PlanCuenta planCuenta = elementoDAO.findByEmpresaAndNivel(empresa, (short)1);
         PlanCuenta pc = crearPlanCuenta(planCuenta);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("empresa", "grupoCuentaContable", 
-                        "usuarioAlta", "usuarioMod");
+                        "usuarioAlta", "usuarioMod", "tipoCuentaContable");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtro", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(pc);

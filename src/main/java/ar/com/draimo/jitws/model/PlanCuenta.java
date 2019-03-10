@@ -57,6 +57,15 @@ public class PlanCuenta extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioMod")
     private Usuario usuarioMod;
     
+    //Referencia a la clase Tipo Cuenta Contable
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idTipoCuentaContable")
+    private TipoCuentaContable tipoCuentaContable;
+    
+    //Define el nivel
+    @Column(name = "nivel", nullable = false)
+    private short nivel;
+    
     //Define las cuentas hijas
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "padre")
@@ -120,6 +129,22 @@ public class PlanCuenta extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
+    public TipoCuentaContable getTipoCuentaContable() {
+        return tipoCuentaContable;
+    }
+
+    public void setTipoCuentaContable(TipoCuentaContable tipoCuentaContable) {
+        this.tipoCuentaContable = tipoCuentaContable;
+    }
+
+    public short getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(short nivel) {
+        this.nivel = nivel;
+    }
+    
     public List<PlanCuenta> getHijos() {
         return hijos;
     }
