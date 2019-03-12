@@ -28,6 +28,7 @@ public class MensajeRespuesta {
     public static final String ERROR_SINC_SOCKET = "Error de sincronización de datos";
     public static final String TABLA_REESTABLECIDA = "Tabla reestablecida con éxito";
     public static final String LONGITUD = "Cantidad caracteres excedida en";
+    public static final String CERRADO = "Registro cerrado con exito";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {
@@ -73,6 +74,24 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> asignado() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK,
                 MensajeRespuesta.ASIGNADOS, 0), HttpStatus.OK);
+    }
+        
+    //Retorna mensaje con ReponseEntity de cerrado
+    public static ResponseEntity<?> cerrado() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CERRADO_CON_EXITO,
+                MensajeRespuesta.CERRADO, 0), HttpStatus.OK);
+    }
+    
+    //Retorna mensaje con ReponseEntity de sin contenido
+    public static ResponseEntity<?> sinContenido() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO,
+                MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    //Retorna mensaje de dato duplicado 
+    public static ResponseEntity<?> datoDuplicado() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO,
+                MensajeRespuesta.DATO_DUPLICADO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //Envia mensaje de dato repetido

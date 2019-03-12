@@ -2,14 +2,18 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -84,6 +88,12 @@ public class RepartoPropio extends ObjetoGenerico {
     //Define si esta cerrada
     @Column(name = "estaCerrada", nullable = false)
     private boolean estaCerrada;
+    
+    //Define referencia a personal
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="repartoPropio")
+  private List<RepartoPropioPersonal> acompaniantes;
     
     //Getters y Setters de la clase
 
@@ -189,6 +199,14 @@ public class RepartoPropio extends ObjetoGenerico {
 
     public void setEstaCerrada(boolean estaCerrada) {
         this.estaCerrada = estaCerrada;
+    }
+
+    public List<RepartoPropioPersonal> getAcompaniantes() {
+        return acompaniantes;
+    }
+
+    public void setAcompaniantes(List<RepartoPropioPersonal> acompaniantes) {
+        this.acompaniantes = acompaniantes;
     }
 
 }

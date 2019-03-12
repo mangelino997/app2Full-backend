@@ -1,5 +1,7 @@
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,6 +19,8 @@ import javax.persistence.Table;
 public class RepartoPropioPersonal extends ObjetoGenerico {
     
     //Referencia a la clase reparto propio
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+            property = "id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRepartoPropio", nullable = false)
     private RepartoPropio repartoPropio;

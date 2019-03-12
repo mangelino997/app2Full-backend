@@ -72,10 +72,10 @@ public class PlanCuentaController {
     }
     
     //Obtiene el plan de cuenta
-    @GetMapping(value = URL + "/obtenerPlanCuenta")
+    @GetMapping(value = URL + "/obtenerPlanCuentaPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public PlanCuentaDTO obtenerPlanCuenta() throws IOException {
-        return elementoService.obtenerPlanCuenta();
+    public PlanCuentaDTO obtenerPlanCuentaPorEmpresa(@PathVariable int idEmpresa) throws IOException {
+        return elementoService.obtenerPlanCuenta(idEmpresa);
     }
     
     //Agrega un registro

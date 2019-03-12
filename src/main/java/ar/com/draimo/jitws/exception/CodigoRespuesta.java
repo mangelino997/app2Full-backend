@@ -43,10 +43,14 @@ public class CodigoRespuesta {
     //Define una respuesta de sincronizacion mediante socket
     public static final int ERROR_SINC_SOCKET = 5001;
     
+    //Define una respuesta de Cerrado con exito
+    public static final int CERRADO_CON_EXITO = 5002;
+    
     
     //Define una respuesta de datos duplicados
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo datoDuplicado = 11019
+    //Ultimo codigo datoDuplicado = 11020
+    public static final int DATO_DUPLICADO = 11020;
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
     public static final int DATO_DUPLICADO_CBU = 11011;
     public static final int DATO_DUPLICADO_CODIGO_AFIP = 11019;

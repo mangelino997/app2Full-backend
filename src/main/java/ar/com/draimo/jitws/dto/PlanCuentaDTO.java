@@ -23,6 +23,9 @@ public class PlanCuentaDTO {
     //Define si esta activo
     private boolean estaActivo;
     
+    //Define el nivel
+    private short nivel;
+    
     //Define los hijos
     private List<PlanCuentaDTO> hijos;
     
@@ -68,6 +71,14 @@ public class PlanCuentaDTO {
         this.estaActivo = estaActivo;
     }
 
+    public short getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(short nivel) {
+        this.nivel = nivel;
+    }
+    
     public List<PlanCuentaDTO> getHijos() {
         return hijos;
     }
