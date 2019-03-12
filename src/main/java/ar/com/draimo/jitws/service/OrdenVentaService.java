@@ -69,12 +69,19 @@ public class OrdenVentaService {
     }
    
     //Obtiene una lista por cliente
-    public List<OrdenVenta> listarPorCliente(int idCliente) {
-        return elementoDAO.findByCliente(clienteDAO.findById(idCliente));
+    public Object listarPorCliente(int idCliente) throws IOException {
+        List<OrdenVenta> ordenesVenta = elementoDAO.findByCliente(clienteDAO.findById(idCliente));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroOrdenVentaEscala", theFilter).addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ordenesVenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
    
     //Obtiene una lista por empresa
-    public Object listarPorEmpresa(int idEmpresa) throws JsonProcessingException, IOException {
+    public Object listarPorEmpresa(int idEmpresa) throws IOException {
         List<OrdenVenta> ordenesVenta = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
