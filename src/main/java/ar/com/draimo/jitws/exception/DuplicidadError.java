@@ -43,5 +43,11 @@ public class DuplicidadError {
     public static final String USERNAME_UNICO = "usuario_UNIQUE";
     
     public static final String VALOR_UNICO = "valor_UNIQUE";
+    
+    public static final String REPARTO_VENTACOMPROBANTE_UNICOS = "reparto_vcomprobante_UNIQUE";
+    
+    public static final String REPARTO_ORDENRECOLECCION_UNICOS = "reparto_orecoleccion_UNIQUE";
+    
+    public static final String REPARTO_VIAJEREMITO_UNICOS = "reparto_vremito_UNIQUE";
 
 }

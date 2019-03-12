@@ -2,10 +2,11 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IEjercicioDAO;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.Ejercicio;
+import ar.com.draimo.jitws.model.Empresa;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,10 @@ public class EjercicioService {
     //Define la referencia al dao
     @Autowired
     IEjercicioDAO elementoDAO;
+
+    //Define la referencia al dao de empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -29,16 +34,17 @@ public class EjercicioService {
     }
     
     //Obtiene la lista completa
-    public List<Ejercicio> listar() {
-        return elementoDAO.findAll();
+    public List<Ejercicio> listar(int idEmpresa) {
+        return elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
     }
     
     //Obtiene una lista por nombre
-    public List<Ejercicio> listarPorNombre(String nombre) {
+    public List<Ejercicio> listarPorNombre(String nombre, int idEmpresa) {
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByEmpresa(empresa);
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByEmpresaAndNombreContaining(empresa, nombre);
         }
     }
     

@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.Ejercicio;
+import ar.com.draimo.jitws.model.Empresa;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,6 +17,9 @@ public interface IEjercicioDAO extends JpaRepository<Ejercicio, Integer> {
     public Ejercicio findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<Ejercicio> findByNombreContaining(String nombre);
+    public List<Ejercicio> findByEmpresaAndNombreContaining(Empresa empresa, String nombre);
+    
+    //Obtiene un listado por empresa
+    public List<Ejercicio> findByEmpresa(Empresa empresa);
     
 }

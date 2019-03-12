@@ -46,10 +46,13 @@ public class CodigoRespuesta {
     //Define una respuesta de Cerrado con exito
     public static final int CERRADO_CON_EXITO = 5002;
     
+    //Define una respuesta de registro no existente
+    public static final int NO_EXISTENTE = 5003;
+    
     
     //Define una respuesta de datos duplicados
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo datoDuplicado = 11020
+    //Ultimo codigo datoDuplicado = 11023
     public static final int DATO_DUPLICADO = 11020;
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
     public static final int DATO_DUPLICADO_CBU = 11011;
@@ -63,6 +66,9 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_NOMBRE = 11002;
     public static final int DATO_DUPLICADO_NUMERO_INTERNO = 11018;
     public static final int DATO_DUPLICADO_RAZONSOCIAL = 11006;
+    public static final int DATO_DUPLICADO_REPARTO_VCOMPROBANTE = 11021;
+    public static final int DATO_DUPLICADO_REPARTO_ORECOLECCION = 11022;
+    public static final int DATO_DUPLICADO_REPARTO_VREMITO = 11023;
     public static final int DATO_DUPLICADO_SITIOWEB = 11008;
     public static final int DATO_DUPLICADO_TELEFONO = 11009;
     public static final int DATO_DUPLICADO_TELEFONO_FIJO = 11013;

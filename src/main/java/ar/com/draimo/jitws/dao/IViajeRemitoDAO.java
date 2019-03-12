@@ -35,20 +35,22 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
     
-    //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino, numero camion y viajePropioTramo)
-    public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
-            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion, Optional<ViajePropioTramo> viajePropioTramo);
+    //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino,
+    //numero camion y viajePropioTramo)
+    public List<ViajeRemito> 
+        findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
+            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion,
+                Optional<ViajePropioTramo> viajePropioTramo);
     
     //Obtiene un listado de remitos por viaje propio
-    public List<ViajeRemito> findByViajePropioTramoAndEstaFacturadoFalse(Optional<ViajePropioTramo> viajePropioTramo);
+    public List<ViajeRemito> findByViajePropioTramoAndEstaFacturadoFalse(
+            Optional<ViajePropioTramo> viajePropioTramo);
     
     //Obtiene un listado de remitos por viaje propio
-    public List<ViajeRemito> findByViajeTerceroTramoAndEstaFacturadoFalse(Optional<ViajeTerceroTramo> viajeTerceroTramo);
+    public List<ViajeRemito> findByViajeTerceroTramoAndEstaFacturadoFalse(
+            Optional<ViajeTerceroTramo> viajeTerceroTramo);
     
     //Obtiene un registro por puntoVenta, letra y nroComprobante
-    @Query(value = "SELECT * FROM ventacomprobante WHERE puntaVenta =:puntoVenta "
-            + "AND letra=:letra AND numero=:numero", nativeQuery = true)
-    public ViajeRemito obtenerPorPuntoVentaLetraYNumero(@Param("puntoVenta")
-            int puntoVenta, @Param("letra") String letra, @Param("numero") int numero);
+    public ViajeRemito findByPuntoVentaAndLetraAndNumero(int puntoVenta,String letra,int numero);
     
 }

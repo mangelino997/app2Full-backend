@@ -63,10 +63,20 @@ public class RepartoTerceroComprobanteController {
     }
     
     //Obtiene la lista por RepartoTercero
-    @GetMapping(value = URL + "/quitarComprobante")
+    @GetMapping(value = URL + "/quitarComprobante/{id}")
     @ResponseBody
-    public void quitarComprobante() {
-         elementoService.quitarComprobante();
+    public ResponseEntity<?> quitarComprobante(int id) {
+        try {
+            int rt = elementoService.quitarComprobante(id);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/listarComprobantes",
+                    elementoService.listarComprobantes(rt));
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
+        } catch (Exception e) {
+            //Retorna mensaje de error
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro
@@ -75,9 +85,11 @@ public class RepartoTerceroComprobanteController {
         try {
             RepartoTerceroComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(elemento.getRepartoTercero().getId()));
+            //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
+            return a.getRepartoTercero()!=null ? MensajeRespuesta.agregado(a.getId()) 
+                    : MensajeRespuesta.registroNoExistente();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

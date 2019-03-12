@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.model.VentaComprobante;
-import ar.com.draimo.jitws.model.VentaComprobanteItemCR;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import java.util.List;
@@ -46,6 +45,11 @@ public class VentaComprobanteService {
     //Obtiene la lista completa
     public List<VentaComprobante> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene un registro por puntoVenta, letra y numero
+    public VentaComprobante obtener(int puntoVenta, String letra, int numero){
+        return elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
     }
     
     //Agrega un registro

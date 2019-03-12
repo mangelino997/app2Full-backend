@@ -63,10 +63,10 @@ public class RepartoTerceroController {
     }
     
     //Cierra un repartopropio
-    @PutMapping(value = URL + "/cerrarReparto")
+    @PutMapping(value = URL + "/cerrarReparto/{idRepartoTercero}")
     @ResponseBody
-    public void cerrarReparto() {
-        elementoService.cerrarReparto();
+    public void cerrarReparto(@PathVariable int idRepartoTercero) {
+        elementoService.cerrarReparto(idRepartoTercero);
     }
     
     //Agrega un registro
@@ -116,12 +116,17 @@ public class RepartoTerceroController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody RepartoTercero elemento) {
+    @DeleteMapping(value = URL + "/{idRepartoTercero}")
+    public ResponseEntity<?> eliminar(@PathVariable int idRepartoTercero) {
         try {
-            elementoService.eliminar(elemento);
-            //Retorna mensaje de eliminado con exito
-            return MensajeRespuesta.eliminado();
+            boolean a = elementoService.eliminar(idRepartoTercero);
+            if(a==true){
+                template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
+                        elementoService.listarPorEstaCerrada(a));
+                return MensajeRespuesta.eliminado();
+            } else {
+                return MensajeRespuesta.error();
+            }
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

@@ -29,6 +29,7 @@ public class MensajeRespuesta {
     public static final String TABLA_REESTABLECIDA = "Tabla reestablecida con éxito";
     public static final String LONGITUD = "Cantidad caracteres excedida en";
     public static final String CERRADO = "Registro cerrado con exito";
+    public static final String NO_EXISTENTE = "Registro no existente";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {
@@ -93,6 +94,12 @@ public class MensajeRespuesta {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO,
                 MensajeRespuesta.DATO_DUPLICADO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
+    //Retorna mensaje de registro no existente
+    public static ResponseEntity<?> registroNoExistente() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.NO_EXISTENTE,
+                MensajeRespuesta.NO_EXISTENTE, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     //Envia mensaje de dato repetido
     public static ResponseEntity<?> datoDuplicado(DataIntegrityViolationException dive) {
@@ -101,33 +108,42 @@ public class MensajeRespuesta {
         if (partes.length == 4) {
             //Determina que columna tiene el dato duplicado
             switch (partes[3]) {
-                case DuplicidadError.ID_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_ID,
-                            MensajeRespuesta.DATO_DUPLICADO + " ID", 0), HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.DOCUMENTO_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
-                            MensajeRespuesta.DATO_DUPLICADO + " DNI", 0), HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.NOMBRE_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE,
-                            MensajeRespuesta.DATO_DUPLICADO + " NOMBRE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.ABREVIATURA_UNICO:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_ABREVIATURA,
+                            MensajeRespuesta.DATO_DUPLICADO + " ABREVIATURA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.CODIGO_AFIP_UNICO:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CODIGO_AFIP ,
+                            MensajeRespuesta.DATO_DUPLICADO + " CODIGO AFIP", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.CORREOELECTRONICO_UNICO:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CORREOELECTRONICO,
+                            MensajeRespuesta.DATO_DUPLICADO + " CORREO ELECTRONICO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.CUIL_UNICO:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CUIL,
                             MensajeRespuesta.DATO_DUPLICADO + " CUIL", 0), HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.CUIT_UNICO:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CUIT,
                             MensajeRespuesta.DATO_DUPLICADO + " CUIT", 0), HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.CORREOELECTRONICO_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CORREOELECTRONICO,
-                            MensajeRespuesta.DATO_DUPLICADO + " CORREO ELECTRONICO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.ABREVIATURA_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_ABREVIATURA,
-                            MensajeRespuesta.DATO_DUPLICADO + " ABREVIATURA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.DOCUMENTO_UNICO:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
+                            MensajeRespuesta.DATO_DUPLICADO + " DNI", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.ID_UNICO:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_ID,
+                            MensajeRespuesta.DATO_DUPLICADO + " ID", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.NOMBRE_UNICO:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE,
+                            MensajeRespuesta.DATO_DUPLICADO + " NOMBRE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.REPARTO_ORDENRECOLECCION_UNICOS:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_REPARTO_ORECOLECCION,
+                            MensajeRespuesta.DATO_DUPLICADO + " REPARTO Y ORDEN RECOLECCION", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.REPARTO_VENTACOMPROBANTE_UNICOS:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_REPARTO_VCOMPROBANTE,
+                            MensajeRespuesta.DATO_DUPLICADO + " REPARTO Y VENTA COMPROBANTE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                case DuplicidadError.REPARTO_VIAJEREMITO_UNICOS:
+                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_REPARTO_VREMITO,
+                            MensajeRespuesta.DATO_DUPLICADO + " REPARTO Y VIAJE REMITO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.USERNAME_UNICO:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_USERNAME,
                             MensajeRespuesta.DATO_DUPLICADO + " USUARIO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
-                case DuplicidadError.CODIGO_AFIP_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CODIGO_AFIP ,
-                            MensajeRespuesta.DATO_DUPLICADO + " CODIGO AFIP", 0), HttpStatus.INTERNAL_SERVER_ERROR);
                 default:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                             MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);

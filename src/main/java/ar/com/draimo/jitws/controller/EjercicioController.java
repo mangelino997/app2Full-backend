@@ -49,17 +49,17 @@ public class EjercicioController {
     }
     
     //Obtiene la lista completa
-    @GetMapping(value = URL)
+    @GetMapping(value = URL + "/{idEmpresa}")
     @ResponseBody
-    public List<Ejercicio> listar() {
-        return elementoService.listar();
+    public List<Ejercicio> listar(@PathVariable int idEmpresa) {
+        return elementoService.listar(idEmpresa);
     }
     
     //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}/{idEmpresa}")
     @ResponseBody
-    public List<Ejercicio> listarPorNombre(@PathVariable String nombre) {
-        return elementoService.listarPorNombre(nombre);
+    public List<Ejercicio> listarPorNombre(@PathVariable String nombre, @PathVariable int idEmpresa) {
+        return elementoService.listarPorNombre(nombre, idEmpresa);
     }
     
     //Obtiene un listado de anios
@@ -75,7 +75,7 @@ public class EjercicioController {
         try {
             Ejercicio a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar(elemento.getEmpresa().getId()));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -97,7 +97,7 @@ public class EjercicioController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar(elemento.getEmpresa().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

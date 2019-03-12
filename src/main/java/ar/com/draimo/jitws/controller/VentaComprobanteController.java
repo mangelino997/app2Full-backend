@@ -54,6 +54,13 @@ public class VentaComprobanteController {
         return elementoService.listar();
     }
     
+    //Obtiene un registro por puntoventa letra y numero
+    @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")
+    @ResponseBody
+    public VentaComprobante obtener(int puntoVenta, String letra, int numero) {
+        return elementoService.obtener(puntoVenta, letra, numero);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody VentaComprobante elemento) {

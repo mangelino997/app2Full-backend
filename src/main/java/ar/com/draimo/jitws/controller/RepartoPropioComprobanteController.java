@@ -2,9 +2,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.RepartoPropio;
 import ar.com.draimo.jitws.model.RepartoPropioComprobante;
-import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.service.RepartoPropioComprobanteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,22 +63,33 @@ public class RepartoPropioComprobanteController {
     }
     
     //Obtiene la lista por RepartoPropio
-    @GetMapping(value = URL + "/quitarComprobante")
+    @GetMapping(value = URL + "/quitarComprobante/{id}")
     @ResponseBody
-    public void quitarComprobante() {
-         elementoService.quitarComprobante();
+    public ResponseEntity<?> quitarComprobante(@PathVariable int id) {
+        try {
+            int rp = elementoService.quitarComprobante(id);
+         //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(rp));
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
+        } catch (Exception e) {
+            //Retorna mensaje de error
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody int rp,@RequestBody int tc,@RequestBody String puntoVenta,
-            @RequestBody String letra, @RequestBody String comprobante) {
+    public ResponseEntity<?> agregar(@RequestBody RepartoPropioComprobante elemento) {
         try {
-            RepartoPropioComprobante a = elementoService.agregar(rp, tc, puntoVenta, letra, comprobante);
+            RepartoPropioComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes", elementoService.listarComprobantes(rp));
-            //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(elemento.getRepartoPropio().getId()));
+            //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
+            return a.getRepartoPropio()!=null ? MensajeRespuesta.agregado(a.getId()) 
+                    : MensajeRespuesta.registroNoExistente();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

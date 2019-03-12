@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.dao.IRepartoPropioComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoPropioDAO;
 import ar.com.draimo.jitws.dao.IRepartoPropioPersonalDAO;
@@ -27,6 +28,10 @@ public class RepartoPropioService {
     //define la referencia al dao de RepartoPropioPersonal
     @Autowired
     IRepartoPropioPersonalDAO repartoPropioPersonalDAO;
+    
+    //define la referencia al dao de Personal
+    @Autowired
+    IPersonalDAO personalDAO;
     
     //define la referencia al dao de RepartoPropioComprobante
     @Autowired
@@ -67,9 +72,12 @@ public class RepartoPropioService {
         elemento.setFechaRegistracion(LocalDateTime.now());
         elemento.setEstaCerrada(false);
         elementoDAO.saveAndFlush(elemento);
-        for (RepartoPropioPersonal acompaniante : elemento.getAcompaniantes()) {
-            acompaniante.setRepartoPropio(elemento);
-          repartoPropioPersonalDAO.saveAndFlush(acompaniante);
+        if (!elemento.getAcompaniantes().isEmpty()) {
+            for (RepartoPropioPersonal acompaniante : elemento.getAcompaniantes()) {
+                acompaniante.setPersonal(personalDAO.findById(acompaniante.getId()).get());
+                acompaniante.setRepartoPropio(elemento);
+                repartoPropioPersonalDAO.saveAndFlush(acompaniante);
+            }
         }
         return elemento;
     }
@@ -89,7 +97,6 @@ public class RepartoPropioService {
         }else {
             return false;
         }
-        
     }
 
 }

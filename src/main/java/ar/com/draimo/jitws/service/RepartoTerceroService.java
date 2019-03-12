@@ -1,7 +1,9 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IRepartoTerceroComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoTerceroDAO;
 import ar.com.draimo.jitws.model.RepartoTercero;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,10 @@ public class RepartoTerceroService {
     //Define la referencia al dao
     @Autowired
     IRepartoTerceroDAO elementoDAO;
+    
+    //Define la referencia al dao de reparto tercero comprobante
+    @Autowired
+    IRepartoTerceroComprobanteDAO repartoTerceroComprobanteDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -36,13 +42,24 @@ public class RepartoTerceroService {
     }
     
     //Cierra un reparto
-    public void cerrarReparto() {
+    public boolean cerrarReparto(int idRepartoTercero) {
+        RepartoTercero r = elementoDAO.findById(idRepartoTercero).get();
+        if (repartoTerceroComprobanteDAO.findByRepartoTercero(r).isEmpty()) {
+            return false;
+        }else {
+            r.setEstaCerrada(true);
+            elementoDAO.save(r);
+            return true;
+        }
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoTercero agregar(RepartoTercero elemento) {
-        return elementoDAO.saveAndFlush(elemento);
+        elemento.setFechaRegistracion(LocalDateTime.now());
+        elemento.setEstaCerrada(false);
+        elementoDAO.saveAndFlush(elemento);
+        return elemento;
     }
 
     //Actualiza un registro
@@ -53,8 +70,13 @@ public class RepartoTerceroService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(RepartoTercero elemento) {
-        elementoDAO.delete(elemento);
+    public boolean eliminar(int elemento) {
+        if(repartoTerceroComprobanteDAO.findByRepartoTercero(elementoDAO.findById(elemento).get()).isEmpty()){
+            elementoDAO.deleteById(elemento);
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }
