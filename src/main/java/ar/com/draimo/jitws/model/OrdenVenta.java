@@ -2,8 +2,6 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -76,14 +74,10 @@ public class OrdenVenta extends ObjetoGenerico {
     private Date activaDesde;
     
     //Define la lista de OrdenVentaEscala
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
-            property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
     private List<OrdenVentaEscala> ordenesVentasEscalas;
     
     //Define la lista de OrdenVentaTramo
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
-            property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
     private List<OrdenVentaTramo> ordenesVentasTramos;
 

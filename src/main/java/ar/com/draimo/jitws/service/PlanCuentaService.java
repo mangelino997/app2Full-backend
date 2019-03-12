@@ -39,8 +39,15 @@ public class PlanCuentaService {
     }
     
     //Obtiene la lista completa
-    public List<PlanCuenta> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws JsonProcessingException, IOException {
+        List<PlanCuenta> planesCuenta = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planesCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
@@ -67,7 +74,7 @@ public class PlanCuentaService {
                 .serializeAllExcept("empresa", "grupoCuentaContable", 
                         "usuarioAlta", "usuarioMod", "tipoCuentaContable");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtro", theFilter);
+                .addFilter("filtroPlanCuenta", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(pc);
         return new ObjectMapper().readValue(string, PlanCuentaDTO.class);
     }

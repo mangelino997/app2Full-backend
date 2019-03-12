@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,11 +22,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ordenventatramo")
+@JsonFilter(value = "filtroOrdenVentaTramo")
 public class OrdenVentaTramo extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
-            property = "id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;

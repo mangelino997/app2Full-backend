@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "plandecuenta")
-@JsonFilter("filtro")
+@JsonFilter("filtroPlanCuenta")
 public class PlanCuenta extends ObjetoGenerico {
 
     //Referencia a la clase Empresa
@@ -30,7 +30,7 @@ public class PlanCuenta extends ObjetoGenerico {
     private Empresa empresa;
     
     //Referencia a la clase PlanDeCuenta
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPadre")
     private PlanCuenta padre;
@@ -67,7 +67,7 @@ public class PlanCuenta extends ObjetoGenerico {
     private short nivel;
     
     //Define las cuentas hijas
-    @JsonManagedReference
+    //@JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "padre")
     private List<PlanCuenta> hijos;
     

@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.service.OrdenVentaService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -72,7 +73,7 @@ public class OrdenVentaController {
     //Obtiene una lista por empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public List<OrdenVenta> listarPorEmpresa(@PathVariable int idEmpresa) {
+    public Object listarPorEmpresa(@PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorEmpresa(idEmpresa);
     }
     

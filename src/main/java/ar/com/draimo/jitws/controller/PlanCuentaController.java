@@ -53,7 +53,7 @@ public class PlanCuentaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<PlanCuenta> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     

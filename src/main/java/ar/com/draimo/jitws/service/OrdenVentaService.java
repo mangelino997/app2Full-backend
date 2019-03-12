@@ -8,6 +8,12 @@ import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +74,15 @@ public class OrdenVentaService {
     }
    
     //Obtiene una lista por empresa
-    public List<OrdenVenta> listarPorEmpresa(int idEmpresa) {
-        return elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
+    public Object listarPorEmpresa(int idEmpresa) throws JsonProcessingException, IOException {
+        List<OrdenVenta> ordenesVenta = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroOrdenVentaEscala", theFilter).addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ordenesVenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Agrega un registro
