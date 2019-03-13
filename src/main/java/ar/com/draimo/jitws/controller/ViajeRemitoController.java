@@ -105,9 +105,9 @@ public class ViajeRemitoController {
     
     //Asigna remitos
     @PutMapping(value = URL + "/asignar")
-    public ResponseEntity<?> asignar(@RequestBody ViajePropioTramo elemento) {
+    public ResponseEntity<?> asignar(@RequestBody List<ViajeRemito> elementos) {
         try {
-            elementoService.asignar(elemento);
+            elementoService.asignar(elementos);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
@@ -129,10 +129,10 @@ public class ViajeRemitoController {
     
     //Quita remitos
     @PutMapping(value = URL + "/quitar")
-    public ResponseEntity<?> quitar(@RequestBody ViajePropioTramo elemento) {
+    public ResponseEntity<?> quitar(@RequestBody List<ViajeRemito> elementos) {
         try {
             //Quita el registro
-            elementoService.quitar(elemento);
+            elementoService.quitar(elementos);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito

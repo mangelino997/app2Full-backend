@@ -104,20 +104,19 @@ public class ViajeRemitoService {
     
     //Asigna los remitos
     @Transactional(rollbackFor = Exception.class)
-    public void asignar(ViajePropioTramo elemento) {
+    public void asignar(List<ViajeRemito> elementos) {
         //Recorre la lista de remitos
-        for(ViajeRemito viajeRemito : elemento.getViajeRemitos()) {
+        for(ViajeRemito viajeRemito : elementos) {
             viajeRemito.setEstaPendiente(false);
-            viajeRemito.setViajePropioTramo(elemento);
             elementoDAO.save(viajeRemito);
         }
     }
     
     //Quita los remitos
     @Transactional(rollbackFor = Exception.class)
-    public void quitar(ViajePropioTramo elemento) {
+    public void quitar(List<ViajeRemito> elementos) {
         //Recorre la lista de remitos
-        for(ViajeRemito viajeRemito : elemento.getViajeRemitos()) {
+        for(ViajeRemito viajeRemito : elementos) {
             viajeRemito.setEstaPendiente(true);
             viajeRemito.setViajePropioTramo(null);
             elementoDAO.save(viajeRemito);

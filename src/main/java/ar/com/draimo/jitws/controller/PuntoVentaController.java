@@ -63,10 +63,11 @@ public class PuntoVentaController {
     }
     
     //Obtiene una lista por sucursal y empresa
-    @GetMapping(value = URL + "/listarPorEmpresaYSucursal/{idEmpresa}/{idSucursal}")
+    @GetMapping(value = URL + "/listarPorEmpresaYSucursal/{idEmpresa}/{idSucursal}/{idTipoComprobante}")
     @ResponseBody
-    public List<PuntoVenta> listarPorEmpresaYSucursal(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
-        return elementoService.listarPorEmpresaYSucursal(idEmpresa, idSucursal);
+    public List<PuntoVenta> listarPorEmpresaYSucursal(@PathVariable int idEmpresa, 
+            @PathVariable int idSucursal, @PathVariable int idTipoComprobante) {
+        return elementoService.listarPorEmpresaYSucursal(idEmpresa, idSucursal, idTipoComprobante);
     }
     
     //Obtiene el numero 

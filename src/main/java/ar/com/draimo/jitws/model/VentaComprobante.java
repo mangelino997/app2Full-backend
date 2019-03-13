@@ -111,18 +111,9 @@ public class VentaComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idSucursalClienteDes", nullable = true)
     private SucursalCliente sucursalClienteDes;
     
-    //Referencia a la clase CondicionVenta
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCondicionVenta", nullable = false)
-    private CondicionVenta condicionVenta;
-    
     //Define el importe no gravado
     @Column(name = "importeNoGravado", nullable = false)
     private BigDecimal importeNoGravado;
-    
-    //Define el importe exento
-    @Column(name = "importeExento", nullable = false)
-    private BigDecimal importeExento;
     
     //Define el importe neto gravado
     @Column(name = "importeNetoGravado", nullable = false)
@@ -143,11 +134,6 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define el importe saldo
     @Column(name = "importeSaldo", nullable = false)
     private BigDecimal importeSaldo;
-    
-    //Referencia a la clase Cobrador
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCobrador", nullable = false)
-    private Cobrador cobrador;
     
     //Define si el pago es en origen
     @Column(name = "pagoEnOrigen", nullable = false)
@@ -180,11 +166,6 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "CAEEstado", length = 1, nullable = true)
     private String CAEEstado;
     
-    //Define fechaRegistracion
-    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "fechaRegistracion", nullable = false)
-    private LocalDateTime fechaRegistracion;
-
     //Referencia a la clase AfipConcepto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipConcepto", nullable = false)
@@ -209,7 +190,7 @@ public class VentaComprobante extends ObjetoGenerico {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
             property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
-  private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
+    private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
     
     //Getters y Setters de la clase
 
@@ -357,28 +338,12 @@ public class VentaComprobante extends ObjetoGenerico {
         this.sucursalClienteDes = sucursalClienteDes;
     }
 
-    public CondicionVenta getCondicionVenta() {
-        return condicionVenta;
-    }
-
-    public void setCondicionVenta(CondicionVenta condicionVenta) {
-        this.condicionVenta = condicionVenta;
-    }
-
     public BigDecimal getImporteNoGravado() {
         return importeNoGravado;
     }
 
     public void setImporteNoGravado(BigDecimal importeNoGravado) {
         this.importeNoGravado = importeNoGravado;
-    }
-
-    public BigDecimal getImporteExento() {
-        return importeExento;
-    }
-
-    public void setImporteExento(BigDecimal importeExento) {
-        this.importeExento = importeExento;
     }
 
     public BigDecimal getImporteNetoGravado() {
@@ -419,14 +384,6 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setImporteSaldo(BigDecimal importeSaldo) {
         this.importeSaldo = importeSaldo;
-    }
-
-    public Cobrador getCobrador() {
-        return cobrador;
-    }
-
-    public void setCobrador(Cobrador cobrador) {
-        this.cobrador = cobrador;
     }
 
     public boolean isPagoEnOrigen() {
@@ -483,14 +440,6 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setCAEEstado(String CAEEstado) {
         this.CAEEstado = CAEEstado;
-    }
-
-    public LocalDateTime getFechaRegistracion() {
-        return fechaRegistracion;
-    }
-
-    public void setFechaRegistracion(LocalDateTime fechaRegistracion) {
-        this.fechaRegistracion = fechaRegistracion;
     }
 
     public AfipConcepto getAfipConcepto() {

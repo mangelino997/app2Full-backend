@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO PuntoVenta
@@ -29,9 +30,10 @@ public interface IPuntoVentaDAO extends JpaRepository<PuntoVenta, Integer> {
     //Obtiene una lista por empresa, sucursal
     @Query(value = "SELECT distinct puntoVenta FROM (SELECT p.puntoVenta, p.porDefecto FROM puntoventa p " +
         "INNER JOIN afipcomprobante a ON p.codigoAfip=a.codigoAfip " +
-        "where p.idEmpresa=1 and p.idSucursal=1 and p.fe=1 and p.estaHabilitado=1 AND a.idTipoComprobante=1 " +
+        "where p.idEmpresa=:idEmpresa and p.idSucursal=:idSucursal and p.fe=1 and p.estaHabilitado=1 AND a.idTipoComprobante=:idTipoComprobante " +
         "group by puntoVenta, porDefecto order by porDefecto desc) b;", nativeQuery = true)
-    public List<Object> listarPorEmpresaYSucursal(Sucursal sucursal, Empresa empresa);
+    public List<Object> listarPorEmpresaYSucursal(@Param("idSucursal") int idSucursal, @Param("idEmpresa") int idEmpresa, 
+            @Param("idTipoComprobante") int idTipoComprobante);
      
     //Obtiene un registro por puntoVenta y codigoAfip
     public PuntoVenta findByPuntoVentaAndCodigoAfipAndSucursalAndEmpresa(int puntoVenta, String codigoAfip, Sucursal sucursal, Empresa empresa);

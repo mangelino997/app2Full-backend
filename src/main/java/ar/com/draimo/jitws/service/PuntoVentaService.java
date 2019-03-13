@@ -53,13 +53,9 @@ public class PuntoVentaService {
     }
     
     //Obtiene una lista por sucursal y empresa
-    public List<PuntoVenta> listarPorEmpresaYSucursal(int idEmpresa, int idSucursal) {
-        //Obtiene la sucursal por id
-        Sucursal sucursal = sucursalDAO.findById(idSucursal).get();
-        //Obtiene la empresa por id
-        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+    public List<PuntoVenta> listarPorEmpresaYSucursal(int idEmpresa, int idSucursal, int idTipoComprobante) {
         //Obtiene la lista de puntos de venta
-        List<Object> elementos = elementoDAO.listarPorEmpresaYSucursal(sucursal, empresa);
+        List<Object> elementos = elementoDAO.listarPorEmpresaYSucursal(idSucursal, idEmpresa, idTipoComprobante);
         //Arma la lista de puntos de venta
         List<PuntoVenta> puntosVentas = new ArrayList<>();
         PuntoVenta puntoVenta;
