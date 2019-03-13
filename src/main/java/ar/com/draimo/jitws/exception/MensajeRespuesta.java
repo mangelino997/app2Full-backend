@@ -22,8 +22,8 @@ public class MensajeRespuesta {
     public static final String NO_AUTORIZADO = "Usuario o contraseña incorrecto";
     public static final String DATO_DUPLICADO = "Dato duplicado";
     public static final String ERROR_INTERNO_SERVIDOR = "Error interno en el servidor";
-    public static final String ASIGNADOS = "Registros asignados con éxito";
-    public static final String QUITADOS = "Registros quitados con éxito";
+    public static final String ASIGNADOS = "Registro/s asignado/s con éxito";
+    public static final String QUITADOS = "Registro/s quitado/s con éxito";
     public static final String TRANSACCION_NO_ACTUALIZADA = "Registro actualizado por otra transacción";
     public static final String ERROR_SINC_SOCKET = "Error de sincronización de datos";
     public static final String TABLA_REESTABLECIDA = "Tabla reestablecida con éxito";
@@ -75,6 +75,12 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> asignado() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK,
                 MensajeRespuesta.ASIGNADOS, 0), HttpStatus.OK);
+    }
+    
+    //Retorna mensaje con ReponseEntity de quitado
+    public static ResponseEntity<?> quitado() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK,
+                MensajeRespuesta.QUITADOS, 0), HttpStatus.OK);
     }
         
     //Retorna mensaje con ReponseEntity de cerrado
