@@ -73,7 +73,7 @@ public class ViajeRemitoService {
         //Obtiene la sucursal destino por id
         Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
         //Retorna los datos
-        return elementoDAO.findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(sucursal, sucursalDestino, numeroCamion);
+        return elementoDAO.findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(sucursal, sucursalDestino, numeroCamion);
     }
     
     //Obtiene un listado de asignados por filtro

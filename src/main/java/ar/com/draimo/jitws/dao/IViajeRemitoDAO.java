@@ -8,8 +8,6 @@ import ar.com.draimo.jitws.model.ViajeTerceroTramo;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ViajeRemito
@@ -32,7 +30,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public List<ViajeRemito> findBySucursalEmisionAndEstaPendienteFalse(Optional<Sucursal> sucursal);
     
     //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino y numero camion)
-    public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(
+    public List<ViajeRemito> findBySucursalEmisionAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
     
     //Obtiene una lista de pendientes por filtro (sucursalEmision, sucursalDestino,
