@@ -72,7 +72,7 @@ public class PlanCuentaService {
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("empresa", "grupoCuentaContable", 
-                        "usuarioAlta", "usuarioMod", "tipoCuentaContable");
+                        "usuarioAlta", "usuarioMod", "tipoCuentaContable", "padre");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(pc);

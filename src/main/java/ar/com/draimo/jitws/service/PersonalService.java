@@ -51,7 +51,7 @@ public class PersonalService {
     
     //Obtiene un listado de acompañantes ordenados por nombre
     public List<Personal> listarAcompaniantesOrdenadoPorNombre(String alias) {
-        return elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNOmbre(alias);
+        return elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
     }
 
     //Agrega un registro
