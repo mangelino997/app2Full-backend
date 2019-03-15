@@ -67,7 +67,7 @@ public class RepartoPropioController {
     public ResponseEntity<?> cerrarReparto(@PathVariable int idRepartoPropio) {
         boolean r = elementoService.cerrarReparto(idRepartoPropio);
         if (r == true) {
-            template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
+            template.convertAndSend(TOPIC + "/lista", 
                     elementoService.listarPorEstaCerrada(false));
             return MensajeRespuesta.cerrado();
         } else{
@@ -81,7 +81,7 @@ public class RepartoPropioController {
         try {
             RepartoPropio a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/lista", elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
