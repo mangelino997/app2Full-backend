@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 import ar.com.draimo.jitws.constant.RutaConstant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,13 @@ public class FechaController {
     @ResponseBody
     public LocalDate fecha() {
         return LocalDate.now();
+    }
+    
+    //Obtiene la hora actual
+    @GetMapping(value = URL + "/obtenerHora")
+    @ResponseBody
+    public LocalTime hora() {
+        return LocalTime.now();
     }
     
     //Obtiene la fecha y hora actual
