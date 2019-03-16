@@ -28,7 +28,6 @@ public class PlanCuenta extends ObjetoGenerico {
     private Empresa empresa;
     
     //Referencia a la clase PlanDeCuenta
-//    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPadre")
     private PlanCuenta padre;
@@ -65,7 +64,6 @@ public class PlanCuenta extends ObjetoGenerico {
     private short nivel;
     
     //Define las cuentas hijas
-    //@JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "padre")
     private List<PlanCuenta> hijos;
     

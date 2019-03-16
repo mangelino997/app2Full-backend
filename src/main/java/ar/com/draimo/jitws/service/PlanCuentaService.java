@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IPlanCuentaDAO;
-import ar.com.draimo.jitws.dto.PlanCuentaDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,19 +63,18 @@ public class PlanCuentaService {
         return elementoDAO.listarGrupoActivo(idEmpresa);
     }
     
-    public PlanCuentaDTO obtenerPlanCuenta(int idEmpresa) 
+    public Object obtenerPlanCuenta(int idEmpresa) 
             throws JsonProcessingException, IOException {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
         PlanCuenta planCuenta = elementoDAO.findByEmpresaAndNivel(empresa, (short)1);
         PlanCuenta pc = crearPlanCuenta(planCuenta);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("empresa", "grupoCuentaContable", 
-                        "usuarioAlta", "usuarioMod", "tipoCuentaContable", "padre");
+                .serializeAllExcept("padre");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(pc);
-        return new ObjectMapper().readValue(string, PlanCuentaDTO.class);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     public PlanCuenta crearPlanCuenta(PlanCuenta planCuenta) {
@@ -99,9 +97,16 @@ public class PlanCuentaService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(PlanCuenta elemento) {
+    public Object actualizar(PlanCuenta elemento) throws IOException {
         elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        PlanCuenta planCuenta = elementoDAO.saveAndFlush(elemento);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Elimina un registro

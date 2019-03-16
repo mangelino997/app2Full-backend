@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -74,7 +75,7 @@ public class PlanCuentaController {
     //Obtiene el plan de cuenta
     @GetMapping(value = URL + "/obtenerPlanCuentaPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public PlanCuentaDTO obtenerPlanCuentaPorEmpresa(@PathVariable int idEmpresa) throws IOException {
+    public Object obtenerPlanCuentaPorEmpresa(@PathVariable int idEmpresa) throws IOException {
         return elementoService.obtenerPlanCuenta(idEmpresa);
     }
     
@@ -102,11 +103,11 @@ public class PlanCuentaController {
     public ResponseEntity<?> actualizar(@RequestBody PlanCuenta elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            Object planCuenta = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            return new ResponseEntity(planCuenta, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -116,6 +117,9 @@ public class PlanCuentaController {
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
+        } catch(IOException e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
