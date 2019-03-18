@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RepartoPropioComprobante;
 import ar.com.draimo.jitws.service.RepartoPropioComprobanteService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -58,7 +59,7 @@ public class RepartoPropioComprobanteController {
     //Obtiene la lista por RepartoPropio
     @GetMapping(value = URL + "/listarComprobantes/{idRepartoPropio}")
     @ResponseBody
-    public List<RepartoPropioComprobante> listarComprobantes(@PathVariable int idRepartoPropio) {
+    public Object listarComprobantes(@PathVariable int idRepartoPropio) throws IOException {
         return elementoService.listarComprobantes(idRepartoPropio);
     }
     

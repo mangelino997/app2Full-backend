@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -110,6 +109,11 @@ public class VentaComprobante extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalClienteDes", nullable = true)
     private SucursalCliente sucursalClienteDes;
+    
+    //Referencia a la clase CondicionVenta
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idCondicionVenta", nullable = false)
+    private CondicionVenta condicionVenta;
     
     //Define el importe no gravado
     @Column(name = "importeNoGravado", nullable = false)
@@ -338,6 +342,22 @@ public class VentaComprobante extends ObjetoGenerico {
         this.sucursalClienteDes = sucursalClienteDes;
     }
 
+    public CondicionVenta getCondicionVenta() {
+        return condicionVenta;
+    }
+
+    public void setCondicionVenta(CondicionVenta condicionVenta) {
+        this.condicionVenta = condicionVenta;
+    }
+
+    public List<VentaComprobanteItemCR> getVentaComprobanteItemCR() {
+        return ventaComprobanteItemCR;
+    }
+
+    public void setVentaComprobanteItemCR(List<VentaComprobanteItemCR> ventaComprobanteItemCR) {
+        this.ventaComprobanteItemCR = ventaComprobanteItemCR;
+    }
+    
     public BigDecimal getImporteNoGravado() {
         return importeNoGravado;
     }

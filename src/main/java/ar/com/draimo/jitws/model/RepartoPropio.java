@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.sql.Date;
 import java.sql.Time;
@@ -90,10 +91,9 @@ public class RepartoPropio extends ObjetoGenerico {
     private boolean estaCerrada;
     
     //Define referencia a personal
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
-            property = "id")
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="repartoPropio")
-  private List<RepartoPropioPersonal> acompaniantes;
+    private List<RepartoPropioPersonal> acompaniantes;
     
     //Getters y Setters de la clase
 
