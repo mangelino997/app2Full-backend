@@ -108,9 +108,10 @@ public class RepartoPropioComprobanteController {
     public ResponseEntity<?> actualizar(@RequestBody RepartoPropioComprobante elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            RepartoPropioComprobante a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(elemento.getRepartoPropio().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

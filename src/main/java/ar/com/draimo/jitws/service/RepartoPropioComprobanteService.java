@@ -94,8 +94,8 @@ public class RepartoPropioComprobanteService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(RepartoPropioComprobante elemento) {
-        elementoDAO.save(elemento);
+    public RepartoPropioComprobante actualizar(RepartoPropioComprobante elemento) {
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro
