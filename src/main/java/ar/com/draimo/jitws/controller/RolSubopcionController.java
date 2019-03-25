@@ -107,8 +107,8 @@ public class RolSubopcionController {
     @GetMapping(value = URL + "/reestablecerTablaDesdeCero")
     @ResponseBody
     public ResponseEntity<?> reestablecerTablaDesdeCero() {
-        elementoService.reestablecerTablaDesdeCero();
         try {
+            elementoService.reestablecerTablaDesdeCero();
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/listarMenu", 1);
                return MensajeRespuesta.tablaReestablecida();

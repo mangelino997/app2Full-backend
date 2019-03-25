@@ -85,13 +85,16 @@ public class RolService {
             rolSubopcion.setSubopcion(subopcion);
             rolSubopcion.setMostrar(false);
             rolSubopcionDAO.saveAndFlush(rolSubopcion);
-            for(Pestania pestania : pestanias) {
-                //Crea una instancias de SubopcionPestania
-                subopcionPestania = new SubopcionPestania();
-                subopcionPestania.setRol(rol);
-                subopcionPestania.setSubopcion(subopcion);
-                subopcionPestania.setPestania(pestania);
-                subopcionPestania.setMostrar(false);
+            if(subopcion.getEsABM()) {
+                for(Pestania pestania : pestanias) {
+                    //Crea una instancias de SubopcionPestania
+                    subopcionPestania = new SubopcionPestania();
+                    subopcionPestania.setRol(rol);
+                    subopcionPestania.setSubopcion(subopcion);
+                    subopcionPestania.setPestania(pestania);
+                    subopcionPestania.setMostrar(false);
+                    subopcionPestaniaDAO.saveAndFlush(subopcionPestania);
+                }
             }
         }
         return rol;

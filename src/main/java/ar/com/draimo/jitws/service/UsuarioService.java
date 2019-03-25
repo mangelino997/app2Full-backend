@@ -3,7 +3,10 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
+import ar.com.draimo.jitws.dao.IUsuarioEmpresaDAO;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Usuario;
+import ar.com.draimo.jitws.model.UsuarioEmpresa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +25,7 @@ public class UsuarioService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    //Define la referencia al dao
+    //Define la referencia al dao usuario
     @Autowired
     IUsuarioDAO elementoDAO;
     
@@ -30,9 +33,13 @@ public class UsuarioService {
     @Autowired
     IRolDAO rolDAO;
     
-    //Define la referencia al dao usuarioempresa
+    //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Define la referencia al dao usuarioempresa
+    @Autowired
+    IUsuarioEmpresaDAO usuarioEmpresaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -75,7 +82,21 @@ public class UsuarioService {
     public Usuario agregar(Usuario elemento) {
         elemento = formatearStrings(elemento);
         elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
-        return elementoDAO.saveAndFlush(elemento);
+        //Agrega el usuario
+        Usuario usuario = elementoDAO.saveAndFlush(elemento);
+        //Define un UsuarioEmpresa
+        UsuarioEmpresa usuarioEmpresa;
+        //Obtiene las empresas
+        List<Empresa> empresas = empresaDAO.findAll();
+        //Asigna todas empresas al nuevo usuario con mostrar en false
+        for(Empresa empresa : empresas) {
+            usuarioEmpresa = new UsuarioEmpresa();
+            usuarioEmpresa.setUsuario(usuario);
+            usuarioEmpresa.setEmpresa(empresa);
+            usuarioEmpresa.setMostrar(false);
+            usuarioEmpresaDAO.saveAndFlush(usuarioEmpresa);
+        }
+        return usuario;
     }
 
     //Actualiza un registro
