@@ -241,7 +241,7 @@ public class SubopcionPestaniaService {
                         subopcionPestania.setRol(rol);
                         subopcionPestania.setSubopcion(subopcion);
                         subopcionPestania.setPestania(pestania);
-                        if(rol.getId() != 1) {
+                        if(rol.getId() > 2) {
                             subopcionPestania.setMostrar(false);
                         } else {
                             subopcionPestania.setMostrar(true);
