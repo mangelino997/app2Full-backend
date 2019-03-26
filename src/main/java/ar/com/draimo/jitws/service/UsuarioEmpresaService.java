@@ -183,7 +183,7 @@ public class UsuarioEmpresaService {
                 usuarioEmpresa.setUsuario(usuario);
                 usuarioEmpresa.setEmpresa(empresa);
                 //Establece mostrar en 1 solo para los dos primeros usuarios de la tabla
-                usuarioEmpresa.setMostrar((usuario.getId() < 3));
+                usuarioEmpresa.setMostrar(usuario.getId() < 3);
                 elementoDAO.saveAndFlush(usuarioEmpresa);
             }
         }
