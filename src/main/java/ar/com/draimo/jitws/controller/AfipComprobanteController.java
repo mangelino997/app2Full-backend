@@ -63,10 +63,10 @@ public class AfipComprobanteController {
     }
     
     //Obtiene la letra
-    @GetMapping(value = URL + "/obtenerLetra/{idCondicionIva}")
+    @GetMapping(value = URL + "/obtenerLetra/{idCondicionIva}/{idTipoComprobante}")
     @ResponseBody
-    public String obtenerLetra(@PathVariable int idCondicionIva) {
-        return elementoService.obtenerLetra(idCondicionIva);
+    public String obtenerLetra(@PathVariable int idCondicionIva, @PathVariable int idTipoComprobante) {
+        return elementoService.obtenerLetra(idCondicionIva, idTipoComprobante);
     }
     
     //Agrega un registro

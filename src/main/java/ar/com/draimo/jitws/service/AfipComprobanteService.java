@@ -51,7 +51,7 @@ public class AfipComprobanteService {
     }
     
     //Obtiene la letra segun condicion de iva
-    public String obtenerLetra(int idCondicionIva) {
+    public String obtenerLetra(int idCondicionIva, int idTipoComprobante) {
         AfipCondicionIva aci = afipCondicionIvaDAO.findById(idCondicionIva).get();
         String letra;
         if (aci.getId()==1) {
