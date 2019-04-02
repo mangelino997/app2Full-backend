@@ -1,8 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,9 +34,8 @@ public class CompaniaSeguroPoliza extends ObjetoGenerico {
     private String numeroPoliza;
     
     //Define el vencimiento de la poliza
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
     @Column(name = "vtoPoliza", nullable = false)
-    private Date vtoPoliza;
+    private LocalDate vtoPoliza;
 
     //Getters y Setters de la clase
 
@@ -65,12 +63,12 @@ public class CompaniaSeguroPoliza extends ObjetoGenerico {
         this.numeroPoliza = numeroPoliza;
     }
 
-    public Date getVtoPoliza() {
+    public LocalDate getVtoPoliza() {
         return vtoPoliza;
     }
 
-    public void setVtoPoliza(Date vtoPoliza) {
+    public void setVtoPoliza(LocalDate vtoPoliza) {
         this.vtoPoliza = vtoPoliza;
     }
-
+    
 }
