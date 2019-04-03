@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -139,6 +141,11 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "importeSaldo", nullable = false)
     private BigDecimal importeSaldo;
     
+    //Referencia a la clase Cobrador
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idCobrador", nullable = false)
+    private Cobrador cobrador;
+    
     //Define si el pago es en origen
     @Column(name = "pagoEnOrigen", nullable = false)
     private boolean pagoEnOrigen;
@@ -169,6 +176,10 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define CAEEstado
     @Column(name = "CAEEstado", length = 1, nullable = true)
     private String CAEEstado;
+    
+    //Define CAEVencimiento
+    @Column(name = "fechaRegistracion", nullable = true)
+    private LocalDateTime fechaRegistracion;
     
     //Referencia a la clase AfipConcepto
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -406,6 +417,14 @@ public class VentaComprobante extends ObjetoGenerico {
         this.importeSaldo = importeSaldo;
     }
 
+    public Cobrador getCobrador() {
+        return cobrador;
+    }
+
+    public void setCobrador(Cobrador cobrador) {
+        this.cobrador = cobrador;
+    }
+    
     public boolean isPagoEnOrigen() {
         return pagoEnOrigen;
     }
@@ -462,6 +481,14 @@ public class VentaComprobante extends ObjetoGenerico {
         this.CAEEstado = CAEEstado;
     }
 
+    public LocalDateTime getFechaRegistracion() {
+        return fechaRegistracion;
+    }
+
+    public void setFechaRegistracion(LocalDateTime fechaRegistracion) {
+        this.fechaRegistracion = fechaRegistracion;
+    }
+    
     public AfipConcepto getAfipConcepto() {
         return afipConcepto;
     }

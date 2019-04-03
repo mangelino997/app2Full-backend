@@ -55,8 +55,16 @@ public class OrdenVentaService {
     }
     
     //Obtiene la lista completa
-    public List<OrdenVenta> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<OrdenVenta> ordenesVentas = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ordenesVentas);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
@@ -75,7 +83,8 @@ public class OrdenVentaService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenVenta");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroOrdenVentaEscala", theFilter).addFilter("filtroOrdenVentaTramo", theFilter);
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(ordenesVenta);
         return new ObjectMapper().readValue(string, Object.class);
     }
@@ -87,7 +96,8 @@ public class OrdenVentaService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenVenta");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroOrdenVentaEscala", theFilter).addFilter("filtroOrdenVentaTramo", theFilter);
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(ordenesVenta);
         return new ObjectMapper().readValue(string, Object.class);
     }

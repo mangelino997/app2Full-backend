@@ -39,7 +39,7 @@ public class InsumoProducto extends ObjetoGenerico {
     private UnidadMedida unidadMedida;
     
     //Define el modelo
-    @Column(name = "modelo", length = 30)
+    @Column(name = "modelo", length = 30, nullable = true)
     private String modelo;
     
     //Define es asignable
@@ -55,11 +55,11 @@ public class InsumoProducto extends ObjetoGenerico {
     private boolean esCritico;
     
     //Define el stock minimo
-    @Column(name = "stockMinimo", nullable = false)
+    @Column(name = "stockMinimo", nullable = true)
     private BigDecimal stockMinimo;
     
     //Define el precio unitario venta
-    @Column(name = "precioUnitarioVenta", nullable = false)
+    @Column(name = "precioUnitarioVenta", nullable = true)
     private BigDecimal precioUnitarioVenta;
     
     //Define el coeficiente ITC

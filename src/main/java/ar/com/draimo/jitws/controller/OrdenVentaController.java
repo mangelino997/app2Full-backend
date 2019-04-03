@@ -52,7 +52,7 @@ public class OrdenVentaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenVenta> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     

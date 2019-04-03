@@ -4,7 +4,7 @@ import ar.com.draimo.jitws.dao.IChoferProveedorDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.ChoferProveedor;
 import ar.com.draimo.jitws.model.Proveedor;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class ChoferProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public ChoferProveedor agregar(ChoferProveedor elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        elemento.setFechaAlta(LocalDate.now());
         elementoDAO.saveAndFlush(elemento);
         elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
                 + " - " + elemento.getNumeroDocumento());
@@ -69,7 +69,7 @@ public class ChoferProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ChoferProveedor elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
+        elemento.setFechaUltimaMod(LocalDate.now());
         elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
                 + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);

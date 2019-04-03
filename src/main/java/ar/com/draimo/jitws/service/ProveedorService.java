@@ -53,6 +53,8 @@ public class ProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
+                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);
     }
     
