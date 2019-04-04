@@ -68,13 +68,13 @@ public class VentaComprobanteService {
         elemento.setMonedaCotizacion(new BigDecimal(0.0));
         elemento.setFechaRegistracion(LocalDateTime.now());
         VentaComprobante vc = elementoDAO.saveAndFlush(elemento);
-        ViajeRemito vr;
+        ViajeRemito viajeRemito;
         for (VentaComprobanteItemFA ventaComprobanteItemFA : elemento.getVentaComprobanteItemFAs()) {
             ventaComprobanteItemFA.setVentaComprobante(vc);
             if (ventaComprobanteItemFA.getViajeRemito() != null) {
-                vr = viajeRemitoDAO.findById(ventaComprobanteItemFA.getViajeRemito().getId()).get();
-                vr.setEstaFacturado(true);
-                viajeRemitoDAO.save(vr);
+                viajeRemito = viajeRemitoDAO.findById(ventaComprobanteItemFA.getViajeRemito().getId()).get();
+                viajeRemito.setEstaFacturado(true);
+                viajeRemitoDAO.save(viajeRemito);
             }
             ventaComprobanteItemFADAO.saveAndFlush(ventaComprobanteItemFA);
         }

@@ -68,6 +68,11 @@ public class MonedaService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Moneda elemento) {
         elemento = formatearStrings(elemento);
+        if(elemento.getPorDefecto()) {
+            Moneda moneda = elementoDAO.findByPorDefectoTrue();
+            moneda.setPorDefecto(false);
+            elementoDAO.save(moneda);
+        }
         elementoDAO.save(elemento);
     }
     
