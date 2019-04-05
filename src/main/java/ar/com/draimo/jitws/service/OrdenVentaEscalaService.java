@@ -5,6 +5,11 @@ import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
 import ar.com.draimo.jitws.model.EscalaTarifa;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -69,8 +74,16 @@ public class OrdenVentaEscalaService {
     }
     
     //Obtiene un listado por orden venta.
-    public List<OrdenVentaEscala> listarPorOrdenVenta(int idOrdenVenta) {
-        return elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta));
+    public Object listarPorOrdenVenta(int idOrdenVenta) throws IOException {
+        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ordenesEscala);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene el precio del flete

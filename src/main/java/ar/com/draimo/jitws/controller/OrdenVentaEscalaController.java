@@ -3,6 +3,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.service.OrdenVentaEscalaService;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class OrdenVentaEscalaController {
     //Obtiene una lista por id de orden venta
     @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody
-    public List<OrdenVentaEscala> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
+    public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
     }
     
