@@ -48,7 +48,7 @@ public class ChoferProveedor extends ObjetoGenerico {
     private TipoDocumento tipoDocumento;
     
     //Define el numero de documento
-    @Column(name = "numeroDocumento", nullable = false)
+    @Column(name = "numeroDocumento", nullable = false, unique = true)
     private String numeroDocumento;
     
     //Define la fecha de nacimiento
@@ -56,24 +56,28 @@ public class ChoferProveedor extends ObjetoGenerico {
     private LocalDate fechaNacimiento;
     
     //Define el telefono fijo
-    @Column(name = "telefonoFijo", nullable = true)
+    @Column(name = "telefonoFijo", nullable = true, unique = true)
     private String telefonoFijo;
     
     //Define el telefono movil
-    @Column(name = "telefonoMovil", nullable = true)
+    @Column(name = "telefonoMovil", nullable = true, unique = true)
     private String telefonoMovil;
     
     //Define el vencimiento del carnet
-    @Column(name = "vtoCarnet", nullable = false)
-    private LocalDate vtoCarnet;
+    @Column(name = "vtoLicenciaConducir", nullable = false)
+    private LocalDate vtoLicenciaConducir;
     
     //Define el vencimiento del curso de un chofer
     @Column(name = "vtoCurso", nullable = false)
     private LocalDate vtoCurso;
     
+    //Define el vencimiento del curso de cargaPeligrosa
+    @Column(name = "vtoCursoCargaPeligrosa", nullable = true)
+    private LocalDate vtoCursoCargaPeligrosa;
+    
     //Define el vencimiento de LNH
-    @Column(name = "vtoLNH", nullable = false)
-    private LocalDate vtoLNH;
+    @Column(name = "vtoLINTI", nullable = false)
+    private LocalDate vtoLINTI;
     
     //Define el vencimiento de la libreta de sanidad
     @Column(name = "vtoLibretaSanidad", nullable = true)
@@ -192,14 +196,6 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.telefonoMovil = telefonoMovil;
     }
 
-    public LocalDate getVtoCarnet() {
-        return vtoCarnet;
-    }
-
-    public void setVtoCarnet(LocalDate vtoCarnet) {
-        this.vtoCarnet = vtoCarnet;
-    }
-
     public LocalDate getVtoCurso() {
         return vtoCurso;
     }
@@ -208,12 +204,28 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.vtoCurso = vtoCurso;
     }
 
-    public LocalDate getVtoLNH() {
-        return vtoLNH;
+    public LocalDate getVtoLicenciaConducir() {
+        return vtoLicenciaConducir;
     }
 
-    public void setVtoLNH(LocalDate vtoLNH) {
-        this.vtoLNH = vtoLNH;
+    public void setVtoLicenciaConducir(LocalDate vtoLicenciaConducir) {
+        this.vtoLicenciaConducir = vtoLicenciaConducir;
+    }
+
+    public LocalDate getVtoCursoCargaPeligrosa() {
+        return vtoCursoCargaPeligrosa;
+    }
+
+    public void setVtoCursoCargaPeligrosa(LocalDate vtoCursoCargaPeligrosa) {
+        this.vtoCursoCargaPeligrosa = vtoCursoCargaPeligrosa;
+    }
+
+    public LocalDate getVtoLINTI() {
+        return vtoLINTI;
+    }
+
+    public void setVtoLINTI(LocalDate vtoLINTI) {
+        this.vtoLINTI = vtoLINTI;
     }
 
     public LocalDate getVtoLibretaSanidad() {
