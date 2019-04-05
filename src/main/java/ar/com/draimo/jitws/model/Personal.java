@@ -44,7 +44,7 @@ public class Personal extends ObjetoGenerico {
     private String numeroDocumento;
     
     //Define el cuil
-    @Column(name = "cuil",length = 11 , nullable = false)
+    @Column(name = "cuil",length = 11 , nullable = false, unique = true)
     private String cuil;
     
     //Referencia a la clase Empresa
@@ -250,13 +250,18 @@ public class Personal extends ObjetoGenerico {
 
     //Define el vencimiento del curso CNRT de un chofer
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
-    @Column(name = "vtoCursoCNRT", nullable = true)
-    private Date vtoCursoCNRT;
+    @Column(name = "vtoCurso", nullable = true)
+    private Date vtoCurso;
+
+    //Define el vencimiento del curso De carga peligrosa
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @Column(name = "vtoCursoCargaPeligrosa", nullable = true)
+    private Date vtoCursoCargaPeligrosa;
     
     //Define el vencimiento de LNH
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
-    @Column(name = "vtoLNH", nullable = true)
-    private Date vtoLNH;
+    @Column(name = "vtoLINTI", nullable = true)
+    private Date vtoLINTI;
 
     //Define el vencimiento de la libreta de sanidad
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
@@ -268,15 +273,20 @@ public class Personal extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioModLC", nullable = true)
     private Usuario usuarioModLC;
     
-    //Referencia a la clase Usuario (Modificacion CNRT)
+    //Referencia a la clase Usuario (Modificacion Curso)
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioModCNRT", nullable = true)
-    private Usuario usuarioModCNRT;
+    @JoinColumn(name = "idUsuarioModCurso", nullable = true)
+    private Usuario usuarioModCurso;
     
-    //Referencia a la clase Usuario (Modificacion LNH)
+    //Referencia a la clase Usuario (Modificacion CursoCP)
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioModLNH", nullable = true)
-    private Usuario usuarioModLNH;
+    @JoinColumn(name = "idUsuarioModCursoCP", nullable = true)
+    private Usuario usuarioModCursoCP;
+    
+    //Referencia a la clase Usuario (Modificacion LINTI)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioModLINTI", nullable = true)
+    private Usuario usuarioModLINTI;
     
     //Referencia a la clase Usuario (Modificacion LS)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -288,15 +298,20 @@ public class Personal extends ObjetoGenerico {
     @Column(name = "fechaModLC", nullable = true)
     private Date fechaModLC;
 
-    //Define la fecha de modificacion de CNRT
+    //Define la fecha de modificacion de Curso
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
-    @Column(name = "fechaModCNRT", nullable = true)
-    private Date fechaModCNRT;
+    @Column(name = "fechaModCurso", nullable = true)
+    private Date fechaModCurso;
+    
+    //Define la fecha de modificacion de CursoCP
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @Column(name = "fechaModCursoCP", nullable = true)
+    private Date fechaModCursoCP;
 
-    //Define la fecha de modificacion de LNH
+    //Define la fecha de modificacion de LINTI
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
-    @Column(name = "fechaModLNH", nullable = true)
-    private Date fechaModLNH;
+    @Column(name = "fechaModLINTI", nullable = true)
+    private Date fechaModLINTI;
     
     //Define la fecha de modificacion de LS
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
@@ -814,22 +829,30 @@ public class Personal extends ObjetoGenerico {
         this.vtoLicenciaConducir = vtoLicenciaConducir;
     }
 
-    public Date getVtoCursoCNRT() {
-        return vtoCursoCNRT;
+    public Date getVtoCurso() {
+        return vtoCurso;
     }
 
-    public void setVtoCursoCNRT(Date vtoCursoCNRT) {
-        this.vtoCursoCNRT = vtoCursoCNRT;
+    public void setVtoCurso(Date vtoCurso) {
+        this.vtoCurso = vtoCurso;
     }
 
-    public Date getVtoLNH() {
-        return vtoLNH;
+    public Date getVtoCursoCargaPeligrosa() {
+        return vtoCursoCargaPeligrosa;
     }
 
-    public void setVtoLNH(Date vtoLNH) {
-        this.vtoLNH = vtoLNH;
+    public void setVtoCursoCargaPeligrosa(Date vtoCursoCargaPeligrosa) {
+        this.vtoCursoCargaPeligrosa = vtoCursoCargaPeligrosa;
     }
 
+    public Date getVtoLINTI() {
+        return vtoLINTI;
+    }
+
+    public void setVtoLINTI(Date vtoLINTI) {
+        this.vtoLINTI = vtoLINTI;
+    }
+    
     public Date getVtoLibretaSanidad() {
         return vtoLibretaSanidad;
     }
@@ -846,20 +869,28 @@ public class Personal extends ObjetoGenerico {
         this.usuarioModLC = usuarioModLC;
     }
 
-    public Usuario getUsuarioModCNRT() {
-        return usuarioModCNRT;
+    public Usuario getUsuarioModCurso() {
+        return usuarioModCurso;
     }
 
-    public void setUsuarioModCNRT(Usuario usuarioModCNRT) {
-        this.usuarioModCNRT = usuarioModCNRT;
+    public void setUsuarioModCurso(Usuario usuarioModCurso) {
+        this.usuarioModCurso = usuarioModCurso;
     }
 
-    public Usuario getUsuarioModLNH() {
-        return usuarioModLNH;
+    public Usuario getUsuarioModCursoCP() {
+        return usuarioModCursoCP;
     }
 
-    public void setUsuarioModLNH(Usuario usuarioModLNH) {
-        this.usuarioModLNH = usuarioModLNH;
+    public void setUsuarioModCursoCP(Usuario usuarioModCursoCP) {
+        this.usuarioModCursoCP = usuarioModCursoCP;
+    }
+
+    public Usuario getUsuarioModLINTI() {
+        return usuarioModLINTI;
+    }
+
+    public void setUsuarioModLINTI(Usuario usuarioModLINTI) {
+        this.usuarioModLINTI = usuarioModLINTI;
     }
 
     public Usuario getUsuarioModLS() {
@@ -878,22 +909,30 @@ public class Personal extends ObjetoGenerico {
         this.fechaModLC = fechaModLC;
     }
 
-    public Date getFechaModCNRT() {
-        return fechaModCNRT;
+    public Date getFechaModCurso() {
+        return fechaModCurso;
     }
 
-    public void setFechaModCNRT(Date fechaModCNRT) {
-        this.fechaModCNRT = fechaModCNRT;
+    public void setFechaModCurso(Date fechaModCurso) {
+        this.fechaModCurso = fechaModCurso;
     }
 
-    public Date getFechaModLNH() {
-        return fechaModLNH;
+    public Date getFechaModCursoCP() {
+        return fechaModCursoCP;
     }
 
-    public void setFechaModLNH(Date fechaModLNH) {
-        this.fechaModLNH = fechaModLNH;
+    public void setFechaModCursoCP(Date fechaModCursoCP) {
+        this.fechaModCursoCP = fechaModCursoCP;
     }
 
+    public Date getFechaModLINTI() {
+        return fechaModLINTI;
+    }
+
+    public void setFechaModLINTI(Date fechaModLINTI) {
+        this.fechaModLINTI = fechaModLINTI;
+    }
+    
     public Date getFechaModLS() {
         return fechaModLS;
     }
