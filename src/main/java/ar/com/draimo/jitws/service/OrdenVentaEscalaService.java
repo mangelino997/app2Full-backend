@@ -108,7 +108,7 @@ public class OrdenVentaEscalaService {
     @Transactional(rollbackFor = Exception.class)
     public OrdenVentaEscala agregarLista(List<OrdenVentaEscala> elementos) {
         for (OrdenVentaEscala elemento : elementos) {
-            elementoDAO.save(elemento);
+            elementoDAO.saveAndFlush(elemento);
         }
         return elementos.get(elementos.size()-1);
     }
@@ -116,7 +116,7 @@ public class OrdenVentaEscalaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public OrdenVentaEscala agregar(OrdenVentaEscala elemento) {
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
