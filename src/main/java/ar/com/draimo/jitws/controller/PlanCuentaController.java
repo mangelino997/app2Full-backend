@@ -1,7 +1,6 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.dto.PlanCuentaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PlanCuenta;
 import ar.com.draimo.jitws.service.PlanCuentaService;

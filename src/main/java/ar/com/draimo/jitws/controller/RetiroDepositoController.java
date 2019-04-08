@@ -63,10 +63,17 @@ public class RetiroDepositoController {
     }
     
     //Cierra un repartopropio
-    @PutMapping(value = URL + "/cerrarReparto")
+    @PutMapping(value = URL + "/cerrarReparto/{idRetiroDeposito}")
     @ResponseBody
-    public void cerrarReparto() {
-        elementoService.cerrarReparto();
+    public ResponseEntity<?> cerrarReparto(@PathVariable int idRetiroDeposito) {
+        boolean r = elementoService.cerrarReparto(idRetiroDeposito);
+        if (r == true) {
+            template.convertAndSend(TOPIC + "/lista", 
+                    elementoService.listarPorEstaCerrada(false));
+            return MensajeRespuesta.cerrado();
+        } else{
+            return MensajeRespuesta.error();
+        }
     }
     
     //Obtiene una lista por numeroDocumento

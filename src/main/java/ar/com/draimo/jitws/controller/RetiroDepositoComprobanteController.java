@@ -63,10 +63,20 @@ public class RetiroDepositoComprobanteController {
     }
     
     //Obtiene la lista por RetiroDeposito
-    @GetMapping(value = URL + "/quitarComprobante")
+    @GetMapping(value = URL + "/quitarComprobante/{id}")
     @ResponseBody
-    public void quitarComprobante() {
-         elementoService.quitarComprobante();
+    public ResponseEntity<?> quitarComprobante(@PathVariable int id) {
+        try {
+            int rp = elementoService.quitarComprobante(id);
+         //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(rp));
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
+        } catch (Exception e) {
+            //Retorna mensaje de error
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro
@@ -75,7 +85,8 @@ public class RetiroDepositoComprobanteController {
         try {
             RetiroDepositoComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(a.getRetiroDeposito().getId()));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -95,9 +106,10 @@ public class RetiroDepositoComprobanteController {
     public ResponseEntity<?> actualizar(@RequestBody RetiroDepositoComprobante elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            RetiroDepositoComprobante a =  elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(a.getRetiroDeposito().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

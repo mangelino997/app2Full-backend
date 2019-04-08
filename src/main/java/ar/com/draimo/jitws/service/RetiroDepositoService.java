@@ -1,9 +1,11 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IRetiroDepositoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRetiroDepositoDAO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.RetiroDeposito;
+import ar.com.draimo.jitws.model.RetiroDepositoComprobante;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,10 @@ public class RetiroDepositoService {
     //Define la referencia al dao
     @Autowired
     IRetiroDepositoDAO elementoDAO;
+
+    //Define la referencia al dao de retiro deposito comprobante
+    @Autowired
+    IRetiroDepositoComprobanteDAO elementoComprobanteDAO;
     
     //Define la referencia al dao empresa
     @Autowired
@@ -43,7 +49,16 @@ public class RetiroDepositoService {
     }
     
     //Cierra un reparto
-    public void cerrarReparto() {
+    public boolean cerrarReparto(int idRetiroDeposito) {
+        RetiroDeposito r = elementoDAO.findById(idRetiroDeposito).get();
+        List<RetiroDepositoComprobante> c = elementoComprobanteDAO.findByRetiroDeposito(r);
+        if (c.isEmpty()) {
+            return false;
+        }else {
+            r.setEstaCerrada(true);
+            elementoDAO.save(r);
+            return true;
+        }
     }
     
     //Obtiene una lista por empresa
