@@ -2,6 +2,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IRetiroDepositoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRetiroDepositoDAO;
+import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
+import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.model.RetiroDepositoComprobante;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,14 @@ public class RetiroDepositoComprobanteService {
     @Autowired
     IRetiroDepositoDAO retiroDepositoDAO;
     
+    //Define la referencia al dao de RepartoPropio
+    @Autowired
+    IVentaComprobanteDAO ventaComprobanteDAO;
+    
+    //Define la referencia al dao de RepartoPropio
+    @Autowired
+    IViajeRemitoDAO viajeRemitoDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         RetiroDepositoComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -41,19 +51,31 @@ public class RetiroDepositoComprobanteService {
     }
     
     //Quita un comprobante de la tabla y la planilla
-    public void quitarComprobante() {
+    public int quitarComprobante(int id) {
+        int idrp = elementoDAO.findById(id).get().getRetiroDeposito().getId();
+        elementoDAO.deleteById(id);
+        return idrp;
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public RetiroDepositoComprobante agregar(RetiroDepositoComprobante elemento) {
-        return elementoDAO.save(elemento);
+    public RetiroDepositoComprobante agregar(RetiroDepositoComprobante c) {
+        if(c.getVentaComprobante()!= null) {
+            c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
+                c.getVentaComprobante().getPuntoVenta(),c.getVentaComprobante().getLetra(),
+                c.getVentaComprobante().getNumero()));
+        }else if(c.getViajeRemito()!=null){
+            c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
+                    c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
+                    c.getViajeRemito().getNumero()));
+        }
+        return c;
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(RetiroDepositoComprobante elemento) {
-        elementoDAO.save(elemento);
+    public RetiroDepositoComprobante actualizar(RetiroDepositoComprobante elemento) {
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro

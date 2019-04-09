@@ -81,7 +81,8 @@ public class RepartoPropioController {
         try {
             RepartoPropio a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listarPorEstaCerrada(false));
+            template.convertAndSend(TOPIC + "/listarPorEstaCerrada",
+                    elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
