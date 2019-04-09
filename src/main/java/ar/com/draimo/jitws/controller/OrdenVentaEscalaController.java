@@ -5,6 +5,8 @@ import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.service.OrdenVentaEscalaService;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -68,6 +70,21 @@ public class OrdenVentaEscalaController {
     @ResponseBody
     public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
+    }
+    
+    //Obtiene una lista por id de orden venta y preciosDesde
+    @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
+    @ResponseBody
+    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable String preciosDesde) 
+            throws IOException, ParseException {
+        return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
+    }
+    
+    //Obtiene una lista de fechas por orden de venta
+    @GetMapping(value = URL + "/listarFechasPorOrdenVenta/{idOrdenVenta}")
+    @ResponseBody
+    public Object listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
+        return elementoService.listarFechasPorOrdenVenta(idOrdenVenta);
     }
     
     //Obtiene el precio flete

@@ -12,6 +12,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -83,6 +86,45 @@ public class OrdenVentaEscalaService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(ordenesEscala);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
+    //Obtiene una lista por orden de venta y precios desde
+    public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, String preciosDesde) 
+            throws IOException, ParseException {
+        String[] fechas = preciosDesde.split("-");
+        String fecha = fechas[2] + "-" + fechas[1] + "-" + fechas[0];
+        java.util.Date javaFecha = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVentaAndPreciosDesde(
+                ordenVentaDAO.findById(idOrdenVenta).get(), new Date(javaFecha.getTime()));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ordenesEscala);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
+    //Obtiene la lista de fechas por orden de venta
+    public Object listarFechasPorOrdenVenta(int idOrdenVenta) throws IOException {
+        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta));
+        List<OrdenVentaEscala> ordenesEscalaFechaDistinta = new ArrayList<>();
+        List<Date> fechas = new ArrayList<>();
+        for(OrdenVentaEscala elemento : ordenesEscala) {
+            if(!fechas.contains(elemento.getPreciosDesde())) {
+                fechas.add(elemento.getPreciosDesde());
+                ordenesEscalaFechaDistinta.add(elemento);
+            }
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ordenesEscalaFechaDistinta);
         return new ObjectMapper().readValue(string, Object.class);
     }
     

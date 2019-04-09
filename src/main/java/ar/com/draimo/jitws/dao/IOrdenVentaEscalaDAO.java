@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +25,12 @@ public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, In
     //Obtiene un listado por ordenVenta
     public List<OrdenVentaEscala> findByOrdenVenta(Optional<OrdenVenta> ordenVenta);
     
+    //Obtiene una lista por orden de venta y precios desde
+    public List<OrdenVentaEscala> findByOrdenVentaAndPreciosDesde(OrdenVenta ordenVenta, Date preciosDesde);
+    
+    //Obtiene la lista de fecha por orden de venta
+    @Query(value = "SELECT distinct(preciosDesde) FROM ordenventaescala where idOrdenVenta=:idOrdenVenta", nativeQuery = true)
+    public List<Date> listarFechasPorOrdenVenta(@Param("idOrdenVenta") int idOrdenVenta);
     
     //Obtiene un registro por un valor y un idOrdenVenta
     @Query(value = "SELECT e.* FROM ordenventaescala e inner join escalatarifa t"

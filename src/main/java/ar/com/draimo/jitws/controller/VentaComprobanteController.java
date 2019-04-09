@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +53,13 @@ public class VentaComprobanteController {
     @ResponseBody
     public List<VentaComprobante> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/listarPorClienteYEmpresa/{idCliente}/{idEmpresa}")
+    @ResponseBody
+    public List<VentaComprobante> listarPorClienteYEmpresa(@PathVariable int idCliente, @PathVariable int idEmpresa) {
+        return elementoService.listarPorClienteYEmpresa(idCliente, idEmpresa);
     }
     
     //Obtiene un registro por puntoventa letra y numero

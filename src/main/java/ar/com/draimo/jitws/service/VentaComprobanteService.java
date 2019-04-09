@@ -1,5 +1,7 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IClienteDAO;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
@@ -9,7 +11,6 @@ import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,14 @@ public class VentaComprobanteService {
     //Define la referancia a MonedaDAO
     @Autowired
     IMonedaDAO monedaDAO;
+    
+    //Define la referancia a ClienteDAO
+    @Autowired
+    IClienteDAO clienteDAO;
+    
+    //Define la referancia a EmpresaDAO
+    @Autowired
+    IEmpresaDAO empresaDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -58,6 +67,11 @@ public class VentaComprobanteService {
     //Obtiene un registro por puntoVenta, letra y numero
     public VentaComprobante obtener(int puntoVenta, String letra, int numero) {
         return elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+    }
+    
+    //Obtiene una lista por cliente y empresa
+    public List<VentaComprobante> listarPorClienteYEmpresa(int idCliente, int idEmpresa) {
+        return elementoDAO.findByClienteAndEmpresa(clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
     }
 
     //Agrega un registro
