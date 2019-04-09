@@ -1,8 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.CascadeType;
@@ -20,11 +19,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ventacomprobanteitemCR")
+@JsonFilter(value = "filtroVentaComprobanteItemCR")
 public class VentaComprobanteItemCR extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
-            property = "id")
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;

@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.service.VentaComprobanteService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,14 +52,15 @@ public class VentaComprobanteController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<VentaComprobante> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene la lista completa
     @GetMapping(value = URL + "/listarPorClienteYEmpresa/{idCliente}/{idEmpresa}")
     @ResponseBody
-    public List<VentaComprobante> listarPorClienteYEmpresa(@PathVariable int idCliente, @PathVariable int idEmpresa) {
+    public Object listarPorClienteYEmpresa(@PathVariable int idCliente, @PathVariable int idEmpresa) 
+            throws IOException {
         return elementoService.listarPorClienteYEmpresa(idCliente, idEmpresa);
     }
     
@@ -75,7 +77,7 @@ public class VentaComprobanteController {
         try {
             VentaComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
