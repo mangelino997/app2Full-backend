@@ -103,9 +103,11 @@ public class EscalaTarifaController {
     
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable int elemento) {
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
+            elementoService.eliminar(id);
+            //Envia la nueva lista a los usuarios subscripto
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch(Exception e) {
