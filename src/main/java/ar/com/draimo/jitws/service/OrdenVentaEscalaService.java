@@ -90,13 +90,10 @@ public class OrdenVentaEscalaService {
     }
     
     //Obtiene una lista por orden de venta y precios desde
-    public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, String preciosDesde) 
+    public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, Date preciosDesde) 
             throws IOException, ParseException {
-        String[] fechas = preciosDesde.split("-");
-        String fecha = fechas[2] + "-" + fechas[1] + "-" + fechas[0];
-        java.util.Date javaFecha = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
         List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVentaAndPreciosDesde(
-                ordenVentaDAO.findById(idOrdenVenta).get(), new Date(javaFecha.getTime()));
+                ordenVentaDAO.findById(idOrdenVenta).get(), preciosDesde);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenVenta");

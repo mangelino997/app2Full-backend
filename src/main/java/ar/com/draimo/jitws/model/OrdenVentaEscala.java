@@ -50,7 +50,7 @@ public class OrdenVentaEscala extends ObjetoGenerico {
     private BigDecimal minimo;
     
     //Define la fecha desde que estan los precios
-    @JsonFormat(pattern = "dd-MM-yyyy", timezone = "UTC-3")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "preciosDesde", nullable = false)
     private Date preciosDesde;
     
