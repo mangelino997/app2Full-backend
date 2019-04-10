@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.model.Cliente;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,7 @@ public class ClienteService {
         elemento.setEsCuentaCorriente(false);
         elemento.setCondicionVenta(condicionVentaDAO.findById(1).get());
         elemento.setEsSeguroPropio(false);
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         elemento.setImprimirControlDeuda(false);
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
@@ -66,6 +68,7 @@ public class ClienteService {
     @Transactional(rollbackFor = Exception.class)
     public Cliente agregar(Cliente elemento) {
         elemento = formatearString(elemento);
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         elementoDAO.saveAndFlush(elemento);
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
@@ -76,6 +79,7 @@ public class ClienteService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Cliente elemento) {
         elemento = formatearString(elemento);
+        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);

@@ -38,12 +38,12 @@ public class ViajeTerceroTramo extends ObjetoGenerico {
     private short numeroOrden;
     
     //Define una fecha tramo
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaTramo", nullable = false)
     private Date fechaTramo;
     
     //Define una fecha alta
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false) 
     private Date fechaAlta;
     

@@ -27,7 +27,7 @@ public class MonedaCotizacion extends ObjetoGenerico {
     private Moneda moneda;
     
     //Define la fecha
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART", locale = "es_AR")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
     private Date fecha;
     

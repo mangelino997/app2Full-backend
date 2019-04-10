@@ -43,7 +43,7 @@ public class OrdenVenta extends ObjetoGenerico {
     private Vendedor vendedor;
     
     //Define la fecha de alta
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
 
@@ -69,7 +69,7 @@ public class OrdenVenta extends ObjetoGenerico {
     private boolean estaActiva;
     
     //Define la fecha desde que esta activa
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "activaDesde", nullable = true)
     private Date activaDesde;
     

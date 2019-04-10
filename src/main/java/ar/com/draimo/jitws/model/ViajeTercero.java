@@ -39,7 +39,7 @@ public class ViajeTercero extends ObjetoGenerico {
     private Usuario usuario;
     
     //Define la fecha
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
     private Date fecha;
     
@@ -87,7 +87,7 @@ public class ViajeTercero extends ObjetoGenerico {
     private String numeroLiquidacion;
     
     //Define una fecha de liquidacion
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaLiquidacion", nullable = true)
     private Date fechaLiquidacion;
     

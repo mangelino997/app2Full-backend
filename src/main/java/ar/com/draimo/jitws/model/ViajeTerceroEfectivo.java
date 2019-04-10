@@ -54,12 +54,12 @@ public class ViajeTerceroEfectivo extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
 
     //Define la fecha
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
     private Date fecha;
     
     //Define la fecha caja
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaCaja", nullable = false)
     private Date fechaCaja;
     

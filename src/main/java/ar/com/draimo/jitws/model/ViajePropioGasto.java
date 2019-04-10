@@ -2,8 +2,9 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,8 +55,9 @@ public class ViajePropioGasto extends ObjetoGenerico {
     private RubroProducto rubroProducto;
     
     //Define la fecha
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
-    private LocalDate fecha;
+    private Date fecha;
     
     //Define la cantidad
     @Column(name = "cantidad", nullable = false)
@@ -131,11 +133,11 @@ public class ViajePropioGasto extends ObjetoGenerico {
         this.rubroProducto = rubroProducto;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

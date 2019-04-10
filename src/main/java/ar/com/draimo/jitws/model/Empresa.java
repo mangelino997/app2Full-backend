@@ -67,7 +67,7 @@ public class Empresa extends ObjetoGenerico {
     private boolean estaActiva;
     
     //Define el inicio de actividad
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "inicioActividad")
     private Date inicioActividad;
 

@@ -43,22 +43,22 @@ public class AfipCaea extends ObjetoGenerico {
     private String numeroCAEA;
     
     //Define fecha desde
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaDesde", nullable = false)
     private Date fechaDesde;
     
     //Define fecha hasta
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaHasta", nullable = false)
     private Date fechaHasta;
     
     //Define fecha tope informar
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaTopeInformar", nullable = false)
     private Date fechaTopeInformar;
     
     //Define fecha solicitud
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaSolicitud", nullable = false)
     private LocalDateTime fechaSolicitud;
     

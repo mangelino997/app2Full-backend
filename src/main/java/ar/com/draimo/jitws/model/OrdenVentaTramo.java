@@ -54,7 +54,7 @@ public class OrdenVentaTramo extends ObjetoGenerico {
     private BigDecimal precioUnitarioRef;
     
     //Define la fecha desde que estan los precios
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "preciosDesde", nullable = false)
     private Date preciosDesde;
 

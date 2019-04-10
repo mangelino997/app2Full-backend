@@ -1,7 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,8 +53,9 @@ public class ChoferProveedor extends ObjetoGenerico {
     private String numeroDocumento;
     
     //Define la fecha de nacimiento
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaNacimiento", nullable = false)
-    private LocalDate fechaNacimiento;
+    private Date fechaNacimiento;
     
     //Define el telefono fijo
     @Column(name = "telefonoFijo", nullable = true, unique = true)
@@ -64,24 +66,29 @@ public class ChoferProveedor extends ObjetoGenerico {
     private String telefonoMovil;
     
     //Define el vencimiento del carnet
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLicenciaConducir", nullable = false)
-    private LocalDate vtoLicenciaConducir;
+    private Date vtoLicenciaConducir;
     
     //Define el vencimiento del curso de un chofer
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoCurso", nullable = false)
-    private LocalDate vtoCurso;
+    private Date vtoCurso;
     
     //Define el vencimiento del curso de cargaPeligrosa
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoCursoCargaPeligrosa", nullable = true)
-    private LocalDate vtoCursoCargaPeligrosa;
+    private Date vtoCursoCargaPeligrosa;
     
-    //Define el vencimiento de LNH
+    //Define el vencimiento de LINTI
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLINTI", nullable = false)
-    private LocalDate vtoLINTI;
+    private Date vtoLINTI;
     
     //Define el vencimiento de la libreta de sanidad
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLibretaSanidad", nullable = true)
-    private LocalDate vtoLibretaSanidad;
+    private Date vtoLibretaSanidad;
     
     //Referencia a la clase Usuario (Alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -89,8 +96,9 @@ public class ChoferProveedor extends ObjetoGenerico {
     private Usuario usuarioAlta;
     
     //Define la fecha de alta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
-    private LocalDate fechaAlta;
+    private Date fechaAlta;
     
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -98,8 +106,9 @@ public class ChoferProveedor extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define la fecha de modificacion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaUltimaMod", nullable = true)
-    private LocalDate fechaUltimaMod;
+    private Date fechaUltimaMod;
     
     //Referencia a la clase Usuario (Baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -107,8 +116,9 @@ public class ChoferProveedor extends ObjetoGenerico {
     private Usuario usuarioBaja;
     
     //Define la fecha de baja
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaBaja", nullable = true)
-    private LocalDate fechaBaja;
+    private Date fechaBaja;
     
     //Define el alias para las busquedas
     @Column(name = "alias", nullable = true)
@@ -172,11 +182,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
     
@@ -196,43 +206,43 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.telefonoMovil = telefonoMovil;
     }
 
-    public LocalDate getVtoCurso() {
-        return vtoCurso;
-    }
-
-    public void setVtoCurso(LocalDate vtoCurso) {
-        this.vtoCurso = vtoCurso;
-    }
-
-    public LocalDate getVtoLicenciaConducir() {
+    public Date getVtoLicenciaConducir() {
         return vtoLicenciaConducir;
     }
 
-    public void setVtoLicenciaConducir(LocalDate vtoLicenciaConducir) {
+    public void setVtoLicenciaConducir(Date vtoLicenciaConducir) {
         this.vtoLicenciaConducir = vtoLicenciaConducir;
     }
 
-    public LocalDate getVtoCursoCargaPeligrosa() {
+    public Date getVtoCurso() {
+        return vtoCurso;
+    }
+
+    public void setVtoCurso(Date vtoCurso) {
+        this.vtoCurso = vtoCurso;
+    }
+
+    public Date getVtoCursoCargaPeligrosa() {
         return vtoCursoCargaPeligrosa;
     }
 
-    public void setVtoCursoCargaPeligrosa(LocalDate vtoCursoCargaPeligrosa) {
+    public void setVtoCursoCargaPeligrosa(Date vtoCursoCargaPeligrosa) {
         this.vtoCursoCargaPeligrosa = vtoCursoCargaPeligrosa;
     }
 
-    public LocalDate getVtoLINTI() {
+    public Date getVtoLINTI() {
         return vtoLINTI;
     }
 
-    public void setVtoLINTI(LocalDate vtoLINTI) {
+    public void setVtoLINTI(Date vtoLINTI) {
         this.vtoLINTI = vtoLINTI;
     }
 
-    public LocalDate getVtoLibretaSanidad() {
+    public Date getVtoLibretaSanidad() {
         return vtoLibretaSanidad;
     }
 
-    public void setVtoLibretaSanidad(LocalDate vtoLibretaSanidad) {
+    public void setVtoLibretaSanidad(Date vtoLibretaSanidad) {
         this.vtoLibretaSanidad = vtoLibretaSanidad;
     }
     
@@ -244,11 +254,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.usuarioAlta = usuarioAlta;
     }
 
-    public LocalDate getFechaAlta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDate fechaAlta) {
+    public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
@@ -260,11 +270,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public LocalDate getFechaUltimaMod() {
+    public Date getFechaUltimaMod() {
         return fechaUltimaMod;
     }
 
-    public void setFechaUltimaMod(LocalDate fechaUltimaMod) {
+    public void setFechaUltimaMod(Date fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
     }
     
@@ -276,11 +286,11 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.usuarioBaja = usuarioBaja;
     }
 
-    public LocalDate getFechaBaja() {
+    public Date getFechaBaja() {
         return fechaBaja;
     }
 
-    public void setFechaBaja(LocalDate fechaBaja) {
+    public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
     

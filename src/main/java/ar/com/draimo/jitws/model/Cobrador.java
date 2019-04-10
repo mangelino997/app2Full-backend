@@ -25,12 +25,12 @@ public class Cobrador extends ObjetoGenerico {
     private String nombre;
     
     //Define la fecha de alta
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
     
     //Define la fecha de baja
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
     

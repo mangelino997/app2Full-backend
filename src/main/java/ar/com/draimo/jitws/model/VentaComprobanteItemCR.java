@@ -1,9 +1,10 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,12 +42,14 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     private BigDecimal pComision;
     
     //Define fechaCobro
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaCobro", nullable = true)
-    private LocalDate fechaCobro;
+    private Date fechaCobro;
     
     //Define fechaPago
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaPago", nullable = true)
-    private LocalDate fechaPago;
+    private Date fechaPago;
     
     //Getters y Setters de la clase
 
@@ -82,19 +85,19 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
         this.pComision = pComision;
     }
 
-    public LocalDate getFechaCobro() {
+    public Date getFechaCobro() {
         return fechaCobro;
     }
 
-    public void setFechaCobro(LocalDate fechaCobro) {
+    public void setFechaCobro(Date fechaCobro) {
         this.fechaCobro = fechaCobro;
     }
 
-    public LocalDate getFechaPago() {
+    public Date getFechaPago() {
         return fechaPago;
     }
 
-    public void setFechaPago(LocalDate fechaPago) {
+    public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
     }
 

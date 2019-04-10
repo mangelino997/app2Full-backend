@@ -3,7 +3,6 @@ package ar.com.draimo.jitws.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,17 +37,17 @@ public class RetiroDeposito extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Define fechaRegistracion
-    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaRegistracion", nullable = false)  
     private LocalDateTime  fechaRegistracion;
     
     //Define fecha salida
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaSalida", nullable = false)
     private Date fechaSalida;
     
     //Define hora salida
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "horaSalida", nullable = false)
     private Time horaSalida;
     

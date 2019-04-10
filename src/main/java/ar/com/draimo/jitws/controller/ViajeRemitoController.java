@@ -2,7 +2,6 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.ViajePropioTramo;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.service.ViajeRemitoService;
 import java.util.List;
