@@ -10,6 +10,11 @@ import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import ar.com.draimo.jitws.model.ViajeRemito;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -60,8 +65,18 @@ public class VentaComprobanteService {
     }
 
     //Obtiene la lista completa
-    public List<VentaComprobante> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<VentaComprobante> ventasComprobantes = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene un registro por puntoVenta, letra y numero
@@ -70,8 +85,19 @@ public class VentaComprobanteService {
     }
     
     //Obtiene una lista por cliente y empresa
-    public List<VentaComprobante> listarPorClienteYEmpresa(int idCliente, int idEmpresa) {
-        return elementoDAO.findByClienteAndEmpresa(clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
+    public Object listarPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
+        List<VentaComprobante> ventasComprobantes = elementoDAO.findByClienteAndEmpresa(
+                clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Agrega un registro
@@ -92,8 +118,10 @@ public class VentaComprobanteService {
             }
             ventaComprobanteItemFADAO.saveAndFlush(ventaComprobanteItemFA);
         }
-        elemento.getVentaComprobanteItemCRs().get(0).setVentaComprobante(vc);
-        ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCRs().get(0));
+        if(elemento.getVentaComprobanteItemCR() != null) {
+            elemento.getVentaComprobanteItemCRs().get(0).setVentaComprobante(vc);
+            ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCRs().get(0));
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 

@@ -2,8 +2,6 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -196,14 +194,10 @@ public class VentaComprobante extends ObjetoGenerico {
     private BigDecimal monedaCotizacion;
     
     //Define la lista de ventaComprobanteItemFA
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
-            property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
     
     //Define referencia a ventaComprobanteItemCR
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
-            property = "id")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
     private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
     
