@@ -43,12 +43,12 @@ public class RepartoTercero extends ObjetoGenerico {
     private LocalDateTime  fechaRegistracion;
     
     //Define fechaSalida
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaSalida", nullable = false)
     private Date fechaSalida;
     
     //Define horaSalida
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss",  timezone = "UTC-3")
     @Column(name = "horaSalida", nullable = false)
     private Time horaSalida;
     

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 class Seguimiento extends ObjetoGenerico {
     
     //Define la fecha
-    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
     

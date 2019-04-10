@@ -71,12 +71,12 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private String numeroPoliza;
     
     //Define el vencimiento de la poliza
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoPoliza", nullable = false)
     private Date vtoPoliza;
     
     //Define el vencimiento del rto
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoRTO", nullable = false)
     private Date vtoRTO;
     
@@ -85,17 +85,17 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private String numeroRuta;
     
     //Define el vencimiento de ruta
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoRuta", nullable = false)
     private Date vtoRuta;
 
     //Define el vencimiento de senasa
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoSenasa", nullable = true)
     private Date vtoSenasa;
     
     //Define el vencimiento de habilitacion bromatologia
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoHabBromatologica", nullable = true)
     private Date vtoHabBromatologica;
     
@@ -105,7 +105,7 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private Usuario usuarioAlta;
     
     //Define la fecha de alta
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = true)
     private Date fechaAlta;
     
@@ -115,7 +115,7 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private Usuario usuarioBaja;
     
     //Define la fecha de baja
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
     
@@ -125,7 +125,7 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define la fecha de ultima modificacion
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaUltimaMod", nullable = true)
     private Date fechaUltimaMod;
     

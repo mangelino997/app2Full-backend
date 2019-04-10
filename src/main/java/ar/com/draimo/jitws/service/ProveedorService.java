@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.Proveedor;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class ProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public Proveedor agregar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         elementoDAO.saveAndFlush(elemento);
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
@@ -53,6 +55,7 @@ public class ProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);

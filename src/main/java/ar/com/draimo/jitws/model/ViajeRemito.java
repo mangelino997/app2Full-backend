@@ -38,7 +38,7 @@ public class ViajeRemito extends ObjetoGenerico {
     private Usuario usuario;
     
     //Define la fecha
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
     private Date fecha;
     

@@ -149,7 +149,7 @@ public class Cliente extends ObjetoGenerico {
     private String numeroPolizaSeguro;
     
     //Define el vencimiento de la poliza del seguro
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vencimientoPolizaSeguro", nullable = false)
     private Date vencimientoPolizaSeguro;
     
@@ -177,6 +177,11 @@ public class Cliente extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
+
+    //Define la fecha de baja del cliente
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "fechaAlta", nullable = false)
+    private Date fechaAlta;
     
     //Referencia a la clase Usuario (Baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -184,7 +189,7 @@ public class Cliente extends ObjetoGenerico {
     private Usuario usuarioBaja;
     
     //Define la fecha de baja del cliente
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
     
@@ -194,7 +199,7 @@ public class Cliente extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define la fecha de ultima modificacion
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaUltimaMod", nullable = true)
     private Date fechaUltimaMod;
     
@@ -482,6 +487,14 @@ public class Cliente extends ObjetoGenerico {
 
     public void setUsuarioAlta(Usuario usuarioAlta) {
         this.usuarioAlta = usuarioAlta;
+    }
+
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
     }
 
     public Usuario getUsuarioBaja() {

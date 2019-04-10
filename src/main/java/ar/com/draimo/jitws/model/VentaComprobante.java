@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -59,12 +58,12 @@ public class VentaComprobante extends ObjetoGenerico {
     private String codigoAfip;
     
     //Define la fecha de emision
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaEmision", nullable = false)
     private Date fechaEmision;
     
     //Define la fecha de vencimiento de pago
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaVtoPago", nullable = false)
     private Date fechaVtoPago;
     
@@ -169,7 +168,7 @@ public class VentaComprobante extends ObjetoGenerico {
     private String CAE;
     
     //Define CAEVencimiento
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "CAEVencimiento", nullable = true)
     private Date CAEVencimiento;
     
@@ -178,6 +177,7 @@ public class VentaComprobante extends ObjetoGenerico {
     private String CAEEstado;
     
     //Define CAEVencimiento
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaRegistracion", nullable = true)
     private LocalDateTime fechaRegistracion;
     

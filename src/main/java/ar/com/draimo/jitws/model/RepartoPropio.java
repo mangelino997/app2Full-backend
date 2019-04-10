@@ -41,17 +41,17 @@ public class RepartoPropio extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Define fechaRegistracion
-    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaRegistracion", nullable = false)  
     private LocalDateTime fechaRegistracion;
     
     //Define fechaSalida
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaSalida", nullable = false)
     private Date fechaSalida;
     
-    //Define horaSalida
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    //Define horaSalidav
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "horaSalida", nullable = false)
     private Time horaSalida;
     
@@ -87,6 +87,16 @@ public class RepartoPropio extends ObjetoGenerico {
     //Define si esta cerrada
     @Column(name = "estaCerrada", nullable = false)
     private boolean estaCerrada;
+    
+    //Define fecha regreso
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "fechaRegreso", nullable = true)
+    private Date fechaRegreso;
+    
+    //Define horaRegreso
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
+    @Column(name = "horaRegreso", nullable = true)
+    private Time horaRegreso;
     
     //Define referencia a personal
     @JsonManagedReference
@@ -197,6 +207,22 @@ public class RepartoPropio extends ObjetoGenerico {
 
     public void setEstaCerrada(boolean estaCerrada) {
         this.estaCerrada = estaCerrada;
+    }
+
+    public Date getFechaRegreso() {
+        return fechaRegreso;
+    }
+
+    public void setFechaRegreso(Date fechaRegreso) {
+        this.fechaRegreso = fechaRegreso;
+    }
+
+    public Time getHoraRegreso() {
+        return horaRegreso;
+    }
+
+    public void setHoraRegreso(Time horaRegreso) {
+        this.horaRegreso = horaRegreso;
     }
 
     public List<RepartoPropioPersonal> getAcompaniantes() {

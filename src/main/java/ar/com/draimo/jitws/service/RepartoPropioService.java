@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.dao.IRepartoPropioPersonalDAO;
 import ar.com.draimo.jitws.model.RepartoPropio;
 import ar.com.draimo.jitws.model.RepartoPropioComprobante;
 import ar.com.draimo.jitws.model.RepartoPropioPersonal;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

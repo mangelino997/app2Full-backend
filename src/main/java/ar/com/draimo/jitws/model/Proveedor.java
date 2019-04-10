@@ -78,10 +78,20 @@ public class Proveedor extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
+    //Define la fecha de ultima modificacion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "fechaAlta", nullable = false)
+    private Date fechaAlta;
+    
     //Referencia a la clase Usuario (Baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
+    
+    //Define la fecha de ultima modificacion
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "fechaBaja", nullable = true)
+    private Date fechaBaja;
     
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -89,7 +99,7 @@ public class Proveedor extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define la fecha de ultima modificacion
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaUltimaMod", nullable = true)
     private Date fechaUltimaMod;
     
@@ -250,12 +260,28 @@ public class Proveedor extends ObjetoGenerico {
         this.usuarioAlta = usuarioAlta;
     }
 
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
+
     public Usuario getUsuarioBaja() {
         return usuarioBaja;
     }
 
     public void setUsuarioBaja(Usuario usuarioBaja) {
         this.usuarioBaja = usuarioBaja;
+    }
+
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
     public Usuario getUsuarioMod() {

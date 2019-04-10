@@ -72,7 +72,7 @@ public class Personal extends ObjetoGenerico {
     private Localidad localidadNacimiento;
     
     //Define la fecha de nacimiento
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaNacimiento", nullable = false)
     private Date fechaNacimiento;
 
@@ -109,12 +109,12 @@ public class Personal extends ObjetoGenerico {
     private Area area;
     
     //Define la fecha de inicio
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaInicio", nullable = false)
     private Date fechaInicio;
 
     //Define la fecha de fin
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaFin", nullable = true)
     private Date fechaFin;
     
@@ -244,27 +244,27 @@ public class Personal extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Define el vencimiento de la licencia de conducirde un chofer
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLicenciaConducir", nullable = true)
     private Date vtoLicenciaConducir;
 
     //Define el vencimiento del curso CNRT de un chofer
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoCurso", nullable = true)
     private Date vtoCurso;
 
     //Define el vencimiento del curso De carga peligrosa
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoCursoCargaPeligrosa", nullable = true)
     private Date vtoCursoCargaPeligrosa;
     
     //Define el vencimiento de LNH
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLINTI", nullable = true)
     private Date vtoLINTI;
 
     //Define el vencimiento de la libreta de sanidad
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLibretaSanidad", nullable = true)
     private Date vtoLibretaSanidad;
 
@@ -294,27 +294,27 @@ public class Personal extends ObjetoGenerico {
     private Usuario usuarioModLS;
     
     //Define la fecha de modificacion de LC
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModLC", nullable = true)
     private Date fechaModLC;
 
     //Define la fecha de modificacion de Curso
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModCurso", nullable = true)
     private Date fechaModCurso;
     
     //Define la fecha de modificacion de CursoCP
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModCursoCP", nullable = true)
     private Date fechaModCursoCP;
 
     //Define la fecha de modificacion de LINTI
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModLINTI", nullable = true)
     private Date fechaModLINTI;
     
     //Define la fecha de modificacion de LS
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModLS", nullable = true)
     private Date fechaModLS;
 
@@ -332,52 +332,52 @@ public class Personal extends ObjetoGenerico {
     
     //Define el turno entrada mañana
     //Define fechaRegistracion
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoMEntrada", nullable = true)
     private Time turnoMEntrada;
     
     //Define el turno salida mañana
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoMSalida", nullable = true)
     private Time turnoMSalida;
     
     //Define el turno entrada tarde
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoTEntrada", nullable = true)
     private Time turnoTEntrada;
     
     //Define el turno salida tarde
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoTSalida", nullable = true)
     private Time turnoTSalida;
     
     //Define el turno entrada noche
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoNEntrada", nullable = true)
     private Time turnoNEntrada;
     
     //Define el turno salida noche
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoNSalida", nullable = true)
     private Time turnoNSalida;
     
     //Define el turno entrada sabado
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoSEntrada", nullable = true)
     private Time turnoSEntrada;
     
     //Define el turno salida sabado
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoSSalida", nullable = true)
     private Time turnoSSalida;
     
     //Define el turno entrada domingo
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoDEntrada", nullable = true)
     private Time turnoDEntrada;
     
     //Define el turno salida domingo
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "ART")
+    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoDSalida", nullable = true)
     private Time turnoDSalida;
     
@@ -394,12 +394,12 @@ public class Personal extends ObjetoGenerico {
     private String telefonoMovilEmpresa;
     
     //Define el telefono movil fecha de entrega
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "telefonoMovilFechaEntrega", nullable = true)
     private Date telefonoMovilFechaEntrega;
 
     //Define el telefono movil fecha de devolucion
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "ART")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "telefonoMovilFechaDevolucion", nullable = true)
     private Date telefonoMovilFechaDevolucion;
     
