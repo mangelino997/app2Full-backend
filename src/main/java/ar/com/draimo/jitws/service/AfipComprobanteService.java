@@ -62,6 +62,11 @@ public class AfipComprobanteService {
         return letra;
     }
     
+    //Obtiene la letra por codigo de afip
+    public String obtenerLetraPorCodigoAfip(String codigoAfip) {
+        return elementoDAO.findByCodigoAfip(codigoAfip).getLetra();
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipComprobante agregar(AfipComprobante elemento) {

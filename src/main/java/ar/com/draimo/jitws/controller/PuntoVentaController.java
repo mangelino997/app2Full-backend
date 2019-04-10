@@ -63,11 +63,25 @@ public class PuntoVentaController {
     }
     
     //Obtiene una lista por sucursal y empresa
-    @GetMapping(value = URL + "/listarPorEmpresaYSucursal/{idEmpresa}/{idSucursal}/{idTipoComprobante}")
+    @GetMapping(value = URL + "/listarPorSucursalYEmpresa/{idSucursal}/{idEmpresa}")
     @ResponseBody
-    public List<PuntoVenta> listarPorEmpresaYSucursal(@PathVariable int idEmpresa, 
+    public List<PuntoVenta> listarPorSucursalYEmpresa(@PathVariable int idSucursal, @PathVariable int idEmpresa) {
+        return elementoService.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
+    }
+    
+    //Obtiene una lista por sucursal y empresa y agregra la letra
+    @GetMapping(value = URL + "/listarPorSucursalYEmpresaLetra/{idSucursal}/{idEmpresa}")
+    @ResponseBody
+    public List<PuntoVenta> listarPorSucursalYEmpresaLetra(@PathVariable int idSucursal, @PathVariable int idEmpresa) {
+        return elementoService.listarPorSucursalYEmpresaLetra(idSucursal, idEmpresa);
+    }
+    
+    //Obtiene una lista por sucursal y empresa
+    @GetMapping(value = URL + "/listarPorEmpresaYSucursalYTipoComprobante/{idEmpresa}/{idSucursal}/{idTipoComprobante}")
+    @ResponseBody
+    public List<PuntoVenta> listarPorEmpresaYSucursalYTipoComprobante(@PathVariable int idEmpresa, 
             @PathVariable int idSucursal, @PathVariable int idTipoComprobante) {
-        return elementoService.listarPorEmpresaYSucursal(idEmpresa, idSucursal, idTipoComprobante);
+        return elementoService.listarPorEmpresaYSucursalYTipoComprobante(idEmpresa, idSucursal, idTipoComprobante);
     }
     
     //Obtiene el numero 

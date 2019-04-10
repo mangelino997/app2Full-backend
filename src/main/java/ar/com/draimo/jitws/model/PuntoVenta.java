@@ -72,6 +72,10 @@ public class PuntoVenta extends ObjetoGenerico {
     @Column(name = "porDefecto", nullable = false)
     private boolean porDefecto;
     
+    //Define una variable de uso interno
+    @Column(name = "usointerno", length = 10, nullable = true)
+    private String usointerno;
+    
     //Getters y Setters de la clase
 
     public Sucursal getSucursal() {
@@ -176,6 +180,14 @@ public class PuntoVenta extends ObjetoGenerico {
 
     public void setPorDefecto(boolean porDefecto) {
         this.porDefecto = porDefecto;
+    }
+
+    public String getUsointerno() {
+        return usointerno;
+    }
+
+    public void setUsointerno(String usointerno) {
+        this.usointerno = usointerno;
     }
     
 }
