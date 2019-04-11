@@ -34,6 +34,11 @@ public class TramoService {
     public List<Tramo> listarPorOrigen(String nombre) {
         return elementoDAO.findByOrigen_NombreContaining(nombre);
     }
+    
+    //Obtiene una lista por destino
+    public List<Tramo> listarPorDestino(String nombre) {
+        return elementoDAO.findByDestino_NombreContaining(nombre);
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
