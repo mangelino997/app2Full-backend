@@ -43,14 +43,14 @@ public class AfipSiniestradoService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipSiniestrado agregar(AfipSiniestrado elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipSiniestrado elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -58,6 +58,13 @@ public class AfipSiniestradoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(AfipSiniestrado elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los string 
+    private AfipSiniestrado formatearString(AfipSiniestrado elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setAlias(elemento.getCodigoAfip() + " - " + elemento.getNombre());
+        return elemento;
     }
     
 }

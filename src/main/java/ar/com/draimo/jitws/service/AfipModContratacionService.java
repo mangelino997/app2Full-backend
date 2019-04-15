@@ -43,14 +43,14 @@ public class AfipModContratacionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipModContratacion agregar(AfipModContratacion elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipModContratacion elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -58,6 +58,13 @@ public class AfipModContratacionService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(AfipModContratacion elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los string 
+    private AfipModContratacion formatearString(AfipModContratacion elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setAlias(elemento.getCodigoAfip() + " - " + elemento.getNombre());
+        return elemento;
     }
     
 }
