@@ -19,9 +19,13 @@ public class ViajeTarifa extends ObjetoGenerico {
     @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
-    //Define el costo propio
+    //Define si esta activo
     @Column(name = "estaActivo", nullable = false)
     private boolean estaActivo;
+    
+    //Define si es por defecto
+    @Column(name = "porDefecto", nullable = false)
+    private boolean porDefecto;
 
     //Getters y Setters de la clase
 
@@ -39,6 +43,14 @@ public class ViajeTarifa extends ObjetoGenerico {
 
     public void setEstaActivo(boolean estaActivo) {
         this.estaActivo = estaActivo;
+    }
+
+    public boolean isPorDefecto() {
+        return porDefecto;
+    }
+
+    public void setPorDefecto(boolean porDefecto) {
+        this.porDefecto = porDefecto;
     }
     
 }
