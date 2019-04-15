@@ -69,6 +69,13 @@ public class AfipComprobanteController {
         return elementoService.obtenerLetra(idCondicionIva, idTipoComprobante);
     }
     
+    //Obtiene la letra por codigo de afip
+    @GetMapping(value = URL + "/obtenerLetraPorCodigoAfip/{codigoAfip}")
+    @ResponseBody
+    public String obtenerLetraPorCodigoAfip(@PathVariable String codigoAfip) {
+        return elementoService.obtenerLetraPorCodigoAfip(codigoAfip);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody AfipComprobante elemento) {

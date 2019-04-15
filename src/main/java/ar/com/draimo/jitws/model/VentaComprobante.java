@@ -35,7 +35,7 @@ public class VentaComprobante extends ObjetoGenerico {
     private Sucursal sucursal;
     
     //Define el punto de venta
-    @Column(name = "puntoVenta",length = 1, nullable = false)
+    @Column(name = "puntoVenta", nullable = false)
     private int puntoVenta;
     
     //Define la letra
@@ -200,6 +200,10 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define referencia a ventaComprobanteItemCR
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
     private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
+    
+    //Define referencia a ventaComprobanteItemNC
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
+    private List<VentaComprobanteItemNC> ventaComprobanteItemNC;
     
     //Getters y Setters de la clase
 
@@ -521,6 +525,14 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setVentaComprobanteItemCRs(List<VentaComprobanteItemCR> ventaComprobanteItemCRs) {
         this.ventaComprobanteItemCR = ventaComprobanteItemCRs;
+    }
+
+    public List<VentaComprobanteItemNC> getVentaComprobanteItemNC() {
+        return ventaComprobanteItemNC;
+    }
+
+    public void setVentaComprobanteItemNC(List<VentaComprobanteItemNC> ventaComprobanteItemNC) {
+        this.ventaComprobanteItemNC = ventaComprobanteItemNC;
     }
     
 }

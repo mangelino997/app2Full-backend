@@ -17,6 +17,9 @@ public interface IAfipComprobanteDAO extends JpaRepository<AfipComprobante, Inte
     //Obtiene el siguiente id
     public AfipComprobante findTopByOrderByIdDesc();
     
+    //Obtiene por codigo de afip
+    public AfipComprobante findByCodigoAfip(String codigoAfip);
+    
     //Obtiene el siguiente id
     public AfipComprobante findByTipoComprobanteAndLetra(Optional<TipoComprobante> tipoComprobante, String letra);
     

@@ -6,9 +6,11 @@ import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
+import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
+import ar.com.draimo.jitws.model.VentaComprobanteItemNC;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -41,6 +43,10 @@ public class VentaComprobanteService {
     //Define la referencia a VentaComprobanteitemFADAO
     @Autowired
     IVentaComprobanteItemFADAO ventaComprobanteItemFADAO;
+    
+    //Define la referencia a VentaComprobanteitemNCDAO
+    @Autowired
+    IVentaComprobanteItemNCDAO ventaComprobanteItemNCDAO;
 
     //Define la referancia a RemitoDAO
     @Autowired
@@ -73,6 +79,7 @@ public class VentaComprobanteService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(ventasComprobantes);
@@ -94,6 +101,7 @@ public class VentaComprobanteService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(ventasComprobantes);
@@ -109,6 +117,7 @@ public class VentaComprobanteService {
         elemento.setFechaRegistracion(LocalDateTime.now());
         VentaComprobante vc = elementoDAO.saveAndFlush(elemento);
         ViajeRemito viajeRemito;
+        //Agrega los items FA
         for (VentaComprobanteItemFA ventaComprobanteItemFA : elemento.getVentaComprobanteItemFAs()) {
             ventaComprobanteItemFA.setVentaComprobante(vc);
             if (ventaComprobanteItemFA.getViajeRemito() != null) {
@@ -118,9 +127,15 @@ public class VentaComprobanteService {
             }
             ventaComprobanteItemFADAO.saveAndFlush(ventaComprobanteItemFA);
         }
+        //Agrega item ContraReembolso
         if(elemento.getVentaComprobanteItemCR() != null) {
             elemento.getVentaComprobanteItemCRs().get(0).setVentaComprobante(vc);
             ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCRs().get(0));
+        }
+        //Agrega item NC
+        for(VentaComprobanteItemNC ventaComprobanteItemNC : elemento.getVentaComprobanteItemNC()) {
+            ventaComprobanteItemNC.setVentaComprobante(vc);
+            ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
         }
         return elementoDAO.saveAndFlush(elemento);
     }

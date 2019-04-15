@@ -63,10 +63,10 @@ public class VentaTipoItemController {
     }
     
     //Obtiene un listado por tipoComprobante
-    @GetMapping(value = URL + "/listarItems")
+    @GetMapping(value = URL + "/listarItems/{idTipoComprobante}")
     @ResponseBody
-    public List<VentaTipoItem> listarItems() {
-        return elementoService.listarItems();
+    public List<VentaTipoItem> listarItems(@PathVariable int idTipoComprobante) {
+        return elementoService.listarItems(idTipoComprobante);
     }    
     
     //Agrega un registro

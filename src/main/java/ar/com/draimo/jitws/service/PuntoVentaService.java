@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipComprobanteDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
@@ -33,6 +34,10 @@ public class PuntoVentaService {
     @Autowired
     IEmpresaDAO empresaDAO;
     
+    //Define la referencia al dao empresa
+    @Autowired
+    IAfipComprobanteDAO afipComprobanteDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         PuntoVenta elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -53,7 +58,22 @@ public class PuntoVentaService {
     }
     
     //Obtiene una lista por sucursal y empresa
-    public List<PuntoVenta> listarPorEmpresaYSucursal(int idEmpresa, int idSucursal, int idTipoComprobante) {
+    public List<PuntoVenta> listarPorSucursalYEmpresa(int idSucursal, int idEmpresa) {
+        return elementoDAO.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
+    }
+    
+    //Obtiene una lista por sucursal y empresa y agrega letra a cada registro
+    public List<PuntoVenta> listarPorSucursalYEmpresaLetra(int idSucursal, int idEmpresa) {
+        List<PuntoVenta> puntosVentas = elementoDAO.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
+        for(PuntoVenta puntoVenta : puntosVentas) {
+            String letra = afipComprobanteDAO.findByCodigoAfip(puntoVenta.getCodigoAfip()).getLetra();
+            puntoVenta.setUsointerno(letra);
+        }
+        return puntosVentas;
+    }
+    
+    //Obtiene una lista por sucursal y empresa
+    public List<PuntoVenta> listarPorEmpresaYSucursalYTipoComprobante(int idEmpresa, int idSucursal, int idTipoComprobante) {
         //Obtiene la lista de puntos de venta
         List<Object> elementos = elementoDAO.listarPorEmpresaYSucursal(idSucursal, idEmpresa, idTipoComprobante);
         //Arma la lista de puntos de venta

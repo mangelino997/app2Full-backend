@@ -62,6 +62,13 @@ public class TramoController {
         return elementoService.listarPorOrigen(nombre);
     }
     
+    //Obtiene una lista por destino
+    @GetMapping(value = URL + "/listarPorDestino/{nombre}")
+    @ResponseBody
+    public List<Tramo> listarPorDestino(@PathVariable String nombre) {
+        return elementoService.listarPorDestino(nombre);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Tramo elemento) {

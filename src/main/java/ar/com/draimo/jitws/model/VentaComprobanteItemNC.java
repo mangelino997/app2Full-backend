@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ventacomprobanteitemNC")
+@JsonFilter(value = "filtroVentaComprobanteItemNC")
 public class VentaComprobanteItemNC extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante

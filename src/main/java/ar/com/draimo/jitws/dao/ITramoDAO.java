@@ -19,4 +19,7 @@ public interface ITramoDAO extends JpaRepository<Tramo, Integer> {
     //Obtiene un listado por origen
     public List<Tramo> findByOrigen_NombreContaining(String nombre);
     
+    //Obtiene un listado por destino
+    public List<Tramo> findByDestino_NombreContaining(String nombre);
+    
 }

@@ -228,7 +228,7 @@ public class RolSubopcionService {
                         rolSubopcion.setMostrar(true);
                         break;
                     case 2:
-                        rolSubopcion.setMostrar((rolSubopcion.getSubopcion().getSubmodulo().getModulo().getId() != 1));
+                        rolSubopcion.setMostrar(subopcion.getSubmodulo().getModulo().getId() != 1);
                         break;
                     default:
                         rolSubopcion.setMostrar(false);
