@@ -43,14 +43,14 @@ public class AfipLocalidadService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipLocalidad agregar(AfipLocalidad elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipLocalidad elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -58,6 +58,13 @@ public class AfipLocalidadService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(AfipLocalidad elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Formatea los string 
+    private AfipLocalidad formatearString(AfipLocalidad elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setAlias(elemento.getCodigoAfip() + " - " + elemento.getNombre());
+        return elemento;
     }
     
 }

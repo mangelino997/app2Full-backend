@@ -23,6 +23,10 @@ public class AfipLocalidad extends ObjetoGenerico {
     @Column(name = "nombre",length = 140, nullable = false)
     private String nombre;
     
+    //Define el alias
+    @Column(name = "alias", length = 150, nullable = true)
+    private String alias;
+    
     //Getters y Setters de la clase
 
     public String getCodigoAfip() {
@@ -39,6 +43,14 @@ public class AfipLocalidad extends ObjetoGenerico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

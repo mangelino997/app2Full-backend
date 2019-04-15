@@ -43,14 +43,14 @@ public class AfipSituacionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipSituacion agregar(AfipSituacion elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipSituacion elemento) {
-        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        formatearString(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -59,5 +59,12 @@ public class AfipSituacionService {
     public void eliminar(AfipSituacion elemento) {
         elementoDAO.delete(elemento);
     }
+    
+    //Formatea los string 
+    private AfipSituacion formatearString(AfipSituacion elemento) {
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setAlias(elemento.getCodigoAfip() + " - " + elemento.getNombre());
+        return elemento;
+    } 
     
 }
