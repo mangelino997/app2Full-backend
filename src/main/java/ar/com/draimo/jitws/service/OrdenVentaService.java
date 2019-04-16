@@ -114,7 +114,7 @@ public class OrdenVentaService {
         //Establece ActivaDesde con fecha actual
         elemento.setActivaDesde(new Date(new java.util.Date().getTime()));
         //Agrega la orden de venta
-        OrdenVenta ordenVenta =  elementoDAO.save(elemento);
+        OrdenVenta ordenVenta =  elementoDAO.saveAndFlush(elemento);
         //Verifica si la lista es de OrdenVentaEscala o OrdenVentaTramo
         if(!elemento.getOrdenesVentasEscalas().isEmpty()) {
             //Recorre la lista de OrdenVentaEscala
@@ -148,8 +148,10 @@ public class OrdenVentaService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(OrdenVenta elemento) {
+        //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        //Actualiza la orden de venta
+        OrdenVenta ordenVenta =  elementoDAO.saveAndFlush(elemento);
     }
     
     //Elimina un registro
