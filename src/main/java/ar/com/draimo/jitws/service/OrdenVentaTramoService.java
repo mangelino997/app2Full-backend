@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,21 @@ public class OrdenVentaTramoService {
     //Obtiene una lista por orden de venta
     public Object listarPorOrdenVenta(int idOrdenVenta) throws IOException {
         List<OrdenVentaTramo> ordenesTramos = elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenVenta");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(ordenesTramos);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
+    //Obtiene una lista por orden de venta y precios desde
+    public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, Date preciosDesde) 
+            throws IOException, ParseException {
+        List<OrdenVentaTramo> ordenesTramos = elementoDAO.findByOrdenVentaAndPreciosDesde(
+                ordenVentaDAO.findById(idOrdenVenta).get(), preciosDesde);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenVenta");
