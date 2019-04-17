@@ -53,6 +53,11 @@ public class TipoComprobanteService {
     public List<TipoComprobante> listarPorEstaActivoRepartoTrue() {
         return elementoDAO.findByEstaActivoRepartoTrue();
     }
+    
+    //Obtiene una lista por numeracion punto venta igual true
+    public List<TipoComprobante> listarPorNumeracionPuntoVentaTrue() {
+        return elementoDAO.findByNumeracionPuntoVentaTrue();
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
