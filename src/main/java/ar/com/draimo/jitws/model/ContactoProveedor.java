@@ -41,7 +41,7 @@ public class ContactoProveedor extends ObjetoGenerico {
     private String telefonoMovil;
     
     //Define el correo electronico
-    @Column(name = "correoelectronico",length = 30, nullable = true)
+    @Column(name = "correoelectronico",length = 60, nullable = true)
     private String correoelectronico;
     
     //Referencia a la clase Usuario (Alta)

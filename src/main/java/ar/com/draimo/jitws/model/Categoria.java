@@ -20,10 +20,6 @@ public class Categoria extends ObjetoGenerico {
     @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
     
-    //Defiene el basico
-    @Column(name = "basico", nullable = false)
-    private BigDecimal basico;
-    
     //Define el adicional por vacaciones
     @Column(name = "adicionalBasicoVacaciones", nullable = false)
     private BigDecimal adicionalBasicoVacaciones;
@@ -48,14 +44,6 @@ public class Categoria extends ObjetoGenerico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public BigDecimal getBasico() {
-        return basico;
-    }
-
-    public void setBasico(BigDecimal basico) {
-        this.basico = basico;
     }
 
     public BigDecimal getAdicionalBasicoVacaciones() {

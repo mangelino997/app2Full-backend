@@ -35,7 +35,7 @@ public class AgendaTelefonica extends ObjetoGenerico {
     private String telefonoMovil;
     
     //Define el correo electronico
-    @Column(name = "correoelectronico",length = 30, nullable = true, unique = true)
+    @Column(name = "correoelectronico",length = 60, nullable = true, unique = true)
     private String correoelectronico;
     
     //Referencia a la clase Localidad
