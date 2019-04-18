@@ -76,6 +76,13 @@ public class AfipComprobanteController {
         return elementoService.obtenerLetraPorCodigoAfip(codigoAfip);
     }
     
+    //Obtiene una lista por tipo de comprobante
+    @GetMapping(value = URL + "/listarPorTipoComprobante/{idTipoComprobante}")
+    @ResponseBody
+    public List<AfipComprobante> listarPorTipoComprobante(@PathVariable int idTipoComprobante) {
+        return elementoService.listarPorTipoComprobante(idTipoComprobante);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody AfipComprobante elemento) {

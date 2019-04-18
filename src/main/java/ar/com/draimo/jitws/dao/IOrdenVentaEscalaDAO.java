@@ -25,6 +25,11 @@ public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, In
     //Obtiene un listado por ordenVenta
     public List<OrdenVentaEscala> findByOrdenVenta(Optional<OrdenVenta> ordenVenta);
     
+    //Obtiene una lista por ordenventa ordenada por escala tarifa
+    @Query(value = "SELECT * FROM ordenventaescala o inner join escalatarifa e "
+            + "on o.idEscalaTarifa=e.id where o.idOrdenVenta=:idOrdenVenta order by e.valor", nativeQuery = true)
+    public List<OrdenVentaEscala> listarPorOrdenVentaOrdenadaPorEscalaTarifa(@Param("idOrdenVenta") int idOrdenVenta);
+    
     //Obtiene una lista por orden de venta y precios desde
     public List<OrdenVentaEscala> findByOrdenVentaAndPreciosDesde(OrdenVenta ordenVenta, Date preciosDesde);
     

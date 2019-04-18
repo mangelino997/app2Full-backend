@@ -205,6 +205,10 @@ public class VentaComprobante extends ObjetoGenerico {
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
     private List<VentaComprobanteItemNC> ventaComprobanteItemNC;
     
+    //Define referencia a ventaComprobanteItemNC
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
+    private List<VentaComprobanteItemND> ventaComprobanteItemND;
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -533,6 +537,14 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setVentaComprobanteItemNC(List<VentaComprobanteItemNC> ventaComprobanteItemNC) {
         this.ventaComprobanteItemNC = ventaComprobanteItemNC;
+    }
+
+    public List<VentaComprobanteItemND> getVentaComprobanteItemND() {
+        return ventaComprobanteItemND;
+    }
+
+    public void setVentaComprobanteItemND(List<VentaComprobanteItemND> ventaComprobanteItemND) {
+        this.ventaComprobanteItemND = ventaComprobanteItemND;
     }
     
 }

@@ -5,6 +5,8 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
 import ar.com.draimo.jitws.service.OrdenVentaTramoService;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -61,6 +63,14 @@ public class OrdenVentaTramoController {
     @ResponseBody
     public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
+    }
+    
+    //Obtiene una lista por id de orden venta y preciosDesde
+    @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
+    @ResponseBody
+    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable Date preciosDesde) 
+            throws IOException, ParseException {
+        return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
     }
     
     //Agrega un registro

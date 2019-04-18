@@ -76,6 +76,13 @@ public class TipoComprobanteController {
         return elementoService.listarPorEstaActivoRepartoTrue();
     }
     
+    //Obtiene una lista por numeracion punto venta igual true
+    @GetMapping(value = URL + "/listarPorNumeracionPuntoVentaTrue")
+    @ResponseBody
+    public List<TipoComprobante> listarPorNumeracionPuntoVentaTrue() {
+        return elementoService.listarPorNumeracionPuntoVentaTrue();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TipoComprobante elemento) {

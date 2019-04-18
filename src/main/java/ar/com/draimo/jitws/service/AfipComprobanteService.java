@@ -26,9 +26,9 @@ public class AfipComprobanteService {
     
     //Define el dao de tipoComprobante
     @Autowired
-    ITipoComprobanteDAO comprobanteDAO;
+    ITipoComprobanteDAO tipoComprobanteDAO;
     
-    //Define el dao de tipoComprobante
+    //Define el dao de afipCondicionIva
     @Autowired
     IAfipCondicionIvaDAO afipCondicionIvaDAO;
     
@@ -45,7 +45,7 @@ public class AfipComprobanteService {
     
     //Obtiene el codigo afip
     public String obtenerCodigoAfip(int idTipoComprobante, String letra) {
-        Optional<TipoComprobante> tipoComprobante = comprobanteDAO.findById(idTipoComprobante);
+        Optional<TipoComprobante> tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante);
         AfipComprobante ac = elementoDAO.findByTipoComprobanteAndLetra(tipoComprobante, letra);
         return ac.getCodigoAfip();
     }
@@ -65,6 +65,11 @@ public class AfipComprobanteService {
     //Obtiene la letra por codigo de afip
     public String obtenerLetraPorCodigoAfip(String codigoAfip) {
         return elementoDAO.findByCodigoAfip(codigoAfip).getLetra();
+    }
+    
+    //Obtiene la letra por codigo de afip
+    public List<AfipComprobante> listarPorTipoComprobante(int idTipoComprobante) {
+        return elementoDAO.findByTipoComprobante(tipoComprobanteDAO.findById(idTipoComprobante).get());
     }
     
     //Agrega un registro

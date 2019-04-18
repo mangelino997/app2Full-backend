@@ -77,7 +77,7 @@ public class OrdenVentaEscalaService {
     
     //Obtiene un listado por orden venta.
     public Object listarPorOrdenVenta(int idOrdenVenta) throws IOException {
-        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVenta(ordenVentaDAO.findById(idOrdenVenta));
+        List<OrdenVentaEscala> ordenesEscala = elementoDAO.listarPorOrdenVentaOrdenadaPorEscalaTarifa(idOrdenVenta);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenVenta");

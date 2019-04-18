@@ -1,4 +1,5 @@
 package ar.com.draimo.jitws.controller;
+
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -120,8 +120,8 @@ public class OrdenVentaEscalaController {
     public ResponseEntity<?> agregar(@RequestBody OrdenVentaEscala elemento) {
         try {
             OrdenVentaEscala a = elementoService.agregar(elemento);
-            //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/listaEscalas", 
+                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -143,7 +143,8 @@ public class OrdenVentaEscalaController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/listaEscalas", 
+                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -152,23 +153,27 @@ public class OrdenVentaEscalaController {
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch(IOException e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
+    @PutMapping(value = URL + "/eliminar")
     public ResponseEntity<?> eliminar(@RequestBody OrdenVentaEscala elemento) {
         try {
+            //Elimina el registro
             elementoService.eliminar(elemento);
+            //Envia la nueva lista a los usuarios subscripto
+            template.convertAndSend(TOPIC + "/listaEscalas", 
+                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch(IOException | MessagingException e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
