@@ -76,6 +76,11 @@ public class PuntoVenta extends ObjetoGenerico {
     @Column(name = "usointerno", length = 10, nullable = true)
     private String usointerno;
     
+    //Referencia a la clase TipoComprobante
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idTipoComprobante", nullable = false)
+    private TipoComprobante tipoComprobante;
+    
     //Getters y Setters de la clase
 
     public Sucursal getSucursal() {
@@ -188,6 +193,14 @@ public class PuntoVenta extends ObjetoGenerico {
 
     public void setUsointerno(String usointerno) {
         this.usointerno = usointerno;
+    }
+
+    public TipoComprobante getTipoComprobante() {
+        return tipoComprobante;
+    }
+
+    public void setTipoComprobante(TipoComprobante tipoComprobante) {
+        this.tipoComprobante = tipoComprobante;
     }
     
 }

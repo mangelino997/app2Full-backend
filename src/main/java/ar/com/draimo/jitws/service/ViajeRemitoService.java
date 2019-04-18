@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeTerceroTramoDAO;
 import ar.com.draimo.jitws.model.Sucursal;
+import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import java.util.ArrayList;
@@ -100,6 +101,11 @@ public class ViajeRemitoService {
         (viajeTerceroTramoDAO.findById(idViajeTramo));
         }
         return viajeRemitos;
+    }
+    
+    //Obtiene un registro por puntoVenta, letra y numero
+    public ViajeRemito obtener(int puntoVenta, String letra, int numero) {
+        return elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
     }
     
     //Asigna los remitos
