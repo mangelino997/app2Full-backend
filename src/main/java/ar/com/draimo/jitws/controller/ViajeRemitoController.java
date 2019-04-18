@@ -102,6 +102,13 @@ public class ViajeRemitoController {
         return elementoService.listarRemitos(idViajeTramo, item);
     }
     
+    //Obtiene un registro por puntoventa letra y numero
+    @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")
+    @ResponseBody
+    public ViajeRemito obtener(int puntoVenta, String letra, int numero) {
+        return elementoService.obtener(puntoVenta, letra, numero);
+    }
+    
     //Asigna remitos
     @PutMapping(value = URL + "/asignar")
     public ResponseEntity<?> asignar(@RequestBody List<ViajeRemito> elementos) {
