@@ -25,7 +25,7 @@ public class BasicoCategoria extends ObjetoGenerico {
     
     //Define el mes
     @Column(name = "mes", nullable = false)
-    private short nombre;
+    private short mes;
     
     //Define el basico
     @Column(name = "basico", nullable = false)
@@ -46,12 +46,12 @@ public class BasicoCategoria extends ObjetoGenerico {
         this.anio = anio;
     }
 
-    public short getNombre() {
-        return nombre;
+    public short getMes() {
+        return mes;
     }
 
-    public void setNombre(short nombre) {
-        this.nombre = nombre;
+    public void setMes(short mes) {
+        this.mes = mes;
     }
 
     public BigDecimal getBasico() {

@@ -43,8 +43,9 @@ public class FechaController {
         return LocalDateTime.now();
     }
     
-    
     //Obtiene un listado de anios desde el actual hasta 15 años mas
+    @GetMapping(value = URL + "/listarAnios")
+    @ResponseBody
     public List<Short> listarAnios() {
         List<Short> anios = new ArrayList<>();
         short anio = Funcion.anioInicio;
