@@ -78,7 +78,7 @@ public class Proveedor extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
-    //Define la fecha de ultima modificacion
+    //Define la fecha de alta de registro
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
@@ -88,7 +88,7 @@ public class Proveedor extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
     
-    //Define la fecha de ultima modificacion
+    //Define la fecha de baja de registro
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
