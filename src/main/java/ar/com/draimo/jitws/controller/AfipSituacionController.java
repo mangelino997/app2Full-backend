@@ -55,11 +55,11 @@ public class AfipSituacionController {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
+    //Obtiene una lista por alias
+    @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<AfipSituacion> listarPorNombre(@PathVariable String nombre) {
-        return elementoService.listarPorNombre(nombre);
+    public List<AfipSituacion> listarPorAlias(@PathVariable String alias) {
+        return elementoService.listarPorAlias(alias);
     }
     
     //Agrega un registro

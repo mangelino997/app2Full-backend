@@ -31,12 +31,12 @@ public class AfipActividadService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por nombre
-    public List<AfipActividad> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+    //Obtiene una lista por alias
+    public List<AfipActividad> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByAliasContaining(alias);
         }
     }
     
