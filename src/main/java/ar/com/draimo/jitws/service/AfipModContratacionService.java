@@ -31,12 +31,12 @@ public class AfipModContratacionService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por nombre
-    public List<AfipModContratacion> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+    //Obtiene una lista por alias
+    public List<AfipModContratacion> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByAliasContaining(alias);
         }
     }
     

@@ -16,7 +16,7 @@ public interface IAfipCondicionDAO extends JpaRepository<AfipCondicion, Integer>
     //Obtiene el siguiente id
     public AfipCondicion findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
-    public List<AfipCondicion> findByNombreContaining(String nombre);
+    //Obtiene una lista por alias
+    public List<AfipCondicion> findByAliasContaining(String alias);
     
 }

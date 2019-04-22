@@ -16,7 +16,7 @@ public interface IAfipSituacionDAO extends JpaRepository<AfipSituacion, Integer>
     //Obtiene el siguiente id
     public AfipSituacion findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
-    public List<AfipSituacion> findByNombreContaining(String nombre);
+    //Obtiene una lista por alias
+    public List<AfipSituacion> findByAliasContaining(String alias);
     
 }

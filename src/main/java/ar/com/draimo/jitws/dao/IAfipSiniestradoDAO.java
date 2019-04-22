@@ -16,7 +16,7 @@ public interface IAfipSiniestradoDAO extends JpaRepository<AfipSiniestrado, Inte
     //Obtiene el siguiente id
     public AfipSiniestrado findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
-    public List<AfipSiniestrado> findByNombreContaining(String nombre);
+    //Obtiene una lista por alias
+    public List<AfipSiniestrado> findByAliasContaining(String alias);
     
 }
