@@ -67,7 +67,7 @@ public class AfipComprobanteService {
         return elementoDAO.findByCodigoAfip(codigoAfip).getLetra();
     }
     
-    //Obtiene la letra por codigo de afip
+    //Obtiene por tipo de comprobante
     public List<AfipComprobante> listarPorTipoComprobante(int idTipoComprobante) {
         return elementoDAO.findByTipoComprobante(tipoComprobanteDAO.findById(idTipoComprobante).get());
     }
