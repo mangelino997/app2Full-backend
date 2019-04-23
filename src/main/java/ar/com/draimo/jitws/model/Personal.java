@@ -13,101 +13,100 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Personal
- * Define el modelo (columnas) de la base de datos.
+ * Clase Personal Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "personal")
 public class Personal extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45 , nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Define el apellido
-    @Column(name = "apellido",length = 45 , nullable = false)
+    @Column(name = "apellido", length = 45, nullable = false)
     private String apellido;
-    
+
     //Define el nombre completo
-    @Column(name = "nombreCompleto",length = 45 , nullable = false)
+    @Column(name = "nombreCompleto", length = 45, nullable = false)
     private String nombreCompleto;
-    
+
     //Referencia a la clase Tipo de documento
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoDocumento", nullable = false)
     private TipoDocumento tipoDocumento;
-    
+
     //Define el numero de documento
-    @Column(name = "numeroDocumento",length = 11 , nullable = false)
+    @Column(name = "numeroDocumento", length = 11, nullable = false)
     private String numeroDocumento;
-    
+
     //Define el cuil
-    @Column(name = "cuil",length = 11 , nullable = false, unique = true)
+    @Column(name = "cuil", length = 15, nullable = false, unique = true)
     private String cuil;
-    
+
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Define el domicilio
-    @Column(name = "domicilio",length = 60 , nullable = false)
+    @Column(name = "domicilio", length = 60, nullable = false)
     private String domicilio;
-    
+
     //Referencia a la clase Barrio
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBarrio", nullable = true)
     private Barrio barrio;
-    
+
     //Referencia a la clase Localidad
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidad", nullable = false)
     private Localidad localidad;
-    
+
     //Referencia a la clase Localidad (Nacimiento)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidadNacimiento", nullable = false)
     private Localidad localidadNacimiento;
-    
+
     //Define la fecha de nacimiento
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaNacimiento", nullable = false)
     private Date fechaNacimiento;
 
     //Define el telefono fijo
-    @Column(name = "telefonoFijo",length = 45 , nullable = true)
+    @Column(name = "telefonoFijo", length = 45, nullable = true)
     private String telefonoFijo;
-    
+
     //Define el telefono movil
-    @Column(name = "telefonoMovil",length = 45 , nullable = true)
+    @Column(name = "telefonoMovil", length = 45, nullable = true)
     private String telefonoMovil;
-    
+
     //Referencia a la clese Estado civil
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEstadoCivil", nullable = false)
     private EstadoCivil estadoCivil;
-    
+
     //Define el correo electronico
-    @Column(name = "correoelectronico",length = 60 , nullable = true)
+    @Column(name = "correoelectronico", length = 60, nullable = true)
     private String correoelectronico;
-    
+
     //Referencia a la clese Sexo
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSexo", nullable = false)
     private Sexo sexo;
-    
+
     //Referencia a la clese Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
-    
+
     //Referencia a la clese Area
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idArea", nullable = false)
     private Area area;
-    
+
     //Define la fecha de inicio
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaInicio", nullable = false)
@@ -117,132 +116,132 @@ public class Personal extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaFin", nullable = true)
     private Date fechaFin;
-    
+
     //Define la antiguedad anterior anios
     @Column(name = "antiguedadAntAnio", nullable = true)
     private short antiguedadAntAnio;
-    
+
     //Define la antiguedad anterior mes
     @Column(name = "antiguedadAntMes", nullable = true)
     private short antiguedadAntMes;
-    
+
     //Define si es jubilado
     @Column(name = "esJubilado", nullable = false)
     private boolean esJubilado;
-    
+
     //Define si es mensualizado
     @Column(name = "esMensualizado", nullable = false)
     private boolean esMensualizado;
-    
+
     //Referencia a la clase Categoria
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
-    
+
     //Referencia a la clase Obra social
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idObraSocial", nullable = false)
     private ObraSocial obraSocial;
-    
+
     //Referencia a la clase Sindicato
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSindicato", nullable = false)
     private Sindicato sindicato;
-    
+
     //Referencia a la clase Seguridad social
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguridadSocial", nullable = false)
     private SeguridadSocial seguridadSocial;
-    
+
     //Referencia a la clase Afip Situacion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipSituacion", nullable = false)
     private AfipSituacion afipSituacion;
-    
+
     //Referencia a la clase Afip Condicion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipCondicion", nullable = false)
     private AfipCondicion afipCondicion;
-    
+
     //Referencia a la clase Afip Actividad
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipActividad", nullable = false)
     private AfipActividad afipActividad;
-    
+
     //Referencia a la clase Afip Modalidad Contratacion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipModContratacion", nullable = false)
     private AfipModContratacion afipModContratacion;
-    
+
     //Referencia a la clase Afip Localidad
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipLocalidad", nullable = false)
     private AfipLocalidad afipLocalidad;
-    
+
     //Referencia a la clase Afip Siniestrado
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipSiniestrado", nullable = false)
     private AfipSiniestrado afipSiniestrado;
-    
+
     //Define si adherente obra social
     @Column(name = "adherenteObraSocial", nullable = true)
     private short adherenteObraSocial;
-    
+
     //Define el aporte adicional obra social
     @Column(name = "aporteAdicObraSocial", nullable = true)
     private BigDecimal aporteAdicObraSocial;
-    
+
     //Define la contribucion adicional obra social
     @Column(name = "contribAdicObraSocial", nullable = true)
     private BigDecimal contribAdicObraSocial;
-    
+
     //Define el aporte adicional seguridad social
     @Column(name = "aporteAdicSegSoc", nullable = true)
     private BigDecimal aporteAdicSegSoc;
-    
+
     //Define el aporte dif seguridad social
     @Column(name = "aporteDifSegSoc", nullable = true)
     private BigDecimal aporteDifSegSoc;
-    
+
     //Define la contribucion tarea dif seguridad social
     @Column(name = "contribTareaDifSegSoc", nullable = true)
     private BigDecimal contribTareaDifSegSoc;
-    
+
     //Define si esta en convenio colectivo
     @Column(name = "enConvenioColectivo", nullable = false)
     private boolean enConvenioColectivo;
-    
+
     //Define convertura SCVO
     @Column(name = "conCoberturaSCVO", nullable = false)
     private boolean conCoberturaSCVO;
-    
+
     //Define si recibe adelantos
     @Column(name = "recibeAdelanto", nullable = false)
     private boolean recibeAdelanto;
-    
+
     //Define si recibe prestamos
     @Column(name = "recibePrestamo", nullable = false)
     private boolean recibePrestamo;
-    
+
     //Define las cuotas del prestamo
     @Column(name = "cuotasPrestamo", nullable = false)
     private short cuotasPrestamo;
-    
+
     //Referencia a la clase Usuario (Alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
-    
+
     //Referencia a la clase Usuario (Baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
-    
+
     //Referencia a la clase Usuario (Modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
-    
+
     //Define el vencimiento de la licencia de conducirde un chofer
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLicenciaConducir", nullable = true)
@@ -257,7 +256,7 @@ public class Personal extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoCursoCargaPeligrosa", nullable = true)
     private Date vtoCursoCargaPeligrosa;
-    
+
     //Define el vencimiento de LNH
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLINTI", nullable = true)
@@ -272,27 +271,27 @@ public class Personal extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModLC", nullable = true)
     private Usuario usuarioModLC;
-    
+
     //Referencia a la clase Usuario (Modificacion Curso)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModCurso", nullable = true)
     private Usuario usuarioModCurso;
-    
+
     //Referencia a la clase Usuario (Modificacion CursoCP)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModCursoCP", nullable = true)
     private Usuario usuarioModCursoCP;
-    
+
     //Referencia a la clase Usuario (Modificacion LINTI)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModLINTI", nullable = true)
     private Usuario usuarioModLINTI;
-    
+
     //Referencia a la clase Usuario (Modificacion LS)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioModLS", nullable = true)
     private Usuario usuarioModLS;
-    
+
     //Define la fecha de modificacion de LC
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModLC", nullable = true)
@@ -302,7 +301,7 @@ public class Personal extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModCurso", nullable = true)
     private Date fechaModCurso;
-    
+
     //Define la fecha de modificacion de CursoCP
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModCursoCP", nullable = true)
@@ -312,87 +311,87 @@ public class Personal extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModLINTI", nullable = true)
     private Date fechaModLINTI;
-    
+
     //Define la fecha de modificacion de LS
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaModLS", nullable = true)
     private Date fechaModLS;
 
     //Define el talle de camisa
-    @Column(name = "talleCamisa",length = 20 , nullable = true)
+    @Column(name = "talleCamisa", length = 20, nullable = true)
     private String talleCamisa;
-    
+
     //Define el talle de pantalon
-    @Column(name = "tallePantalon",length = 20, nullable = true)
+    @Column(name = "tallePantalon", length = 20, nullable = true)
     private String tallePantalon;
-    
+
     //Define el talle de calzado
-    @Column(name = "talleCalzado",length = 20 , nullable = true)
+    @Column(name = "talleCalzado", length = 20, nullable = true)
     private String talleCalzado;
-    
+
     //Define el turno entrada mañana
     //Define fechaRegistracion
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoMEntrada", nullable = true)
     private Time turnoMEntrada;
-    
+
     //Define el turno salida mañana
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoMSalida", nullable = true)
     private Time turnoMSalida;
-    
+
     //Define el turno entrada tarde
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoTEntrada", nullable = true)
     private Time turnoTEntrada;
-    
+
     //Define el turno salida tarde
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoTSalida", nullable = true)
     private Time turnoTSalida;
-    
+
     //Define el turno entrada noche
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoNEntrada", nullable = true)
     private Time turnoNEntrada;
-    
+
     //Define el turno salida noche
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoNSalida", nullable = true)
     private Time turnoNSalida;
-    
+
     //Define el turno entrada sabado
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoSEntrada", nullable = true)
     private Time turnoSEntrada;
-    
+
     //Define el turno salida sabado
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoSSalida", nullable = true)
     private Time turnoSSalida;
-    
+
     //Define el turno entrada domingo
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoDEntrada", nullable = true)
     private Time turnoDEntrada;
-    
+
     //Define el turno salida domingo
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoDSalida", nullable = true)
     private Time turnoDSalida;
-    
+
     //Define el turno rotativo
     @Column(name = "turnoRotativo", nullable = true)
     private boolean turnoRotativo;
-    
+
     //Define el turno fuera convenio
     @Column(name = "turnoFueraConvenio", nullable = true)
     private boolean turnoFueraConvenio;
-    
+
     //Define el telefono movil de la empresa
-    @Column(name = "telefonoMovilEmpresa",length = 45 , nullable = true)
+    @Column(name = "telefonoMovilEmpresa", length = 45, nullable = true)
     private String telefonoMovilEmpresa;
-    
+
     //Define el telefono movil fecha de entrega
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "telefonoMovilFechaEntrega", nullable = true)
@@ -402,33 +401,32 @@ public class Personal extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "telefonoMovilFechaDevolucion", nullable = true)
     private Date telefonoMovilFechaDevolucion;
-    
+
     //Define el telefono movil observacion
-    @Column(name = "telefonoMovilObservacion",length = 100 , nullable = true)
+    @Column(name = "telefonoMovilObservacion", length = 100, nullable = true)
     private String telefonoMovilObservacion;
-    
+
     //Define si es chofer
     @Column(name = "esChofer", nullable = false)
     private boolean esChofer;
-    
+
     //Define si es chofer de larga distancia
     @Column(name = "esChoferLargaDistancia", nullable = false)
     private boolean esChoferLargaDistancia;
-    
+
     //Define si es acompañante de reparto
     @Column(name = "esAcompReparto", nullable = false)
     private boolean esAcompReparto;
-    
-    //Define las observaciones
-    @Column(name = "observaciones",length = 200 , nullable = true)
-    private String observaciones;
-    
-    //Define el alias para las busquedas
-    @Column(name = "alias",length = 100 , nullable = true)
-    private String alias;
-    
-    //Getters y Setters de la clase
 
+    //Define las observaciones
+    @Column(name = "observaciones", length = 200, nullable = true)
+    private String observaciones;
+
+    //Define el alias para las busquedas
+    @Column(name = "alias", length = 100, nullable = true)
+    private String alias;
+
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -516,7 +514,7 @@ public class Personal extends ObjetoGenerico {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-    
+
     public String getTelefonoFijo() {
         return telefonoFijo;
     }
@@ -852,7 +850,7 @@ public class Personal extends ObjetoGenerico {
     public void setVtoLINTI(Date vtoLINTI) {
         this.vtoLINTI = vtoLINTI;
     }
-    
+
     public Date getVtoLibretaSanidad() {
         return vtoLibretaSanidad;
     }
@@ -860,7 +858,7 @@ public class Personal extends ObjetoGenerico {
     public void setVtoLibretaSanidad(Date vtoLibretaSanidad) {
         this.vtoLibretaSanidad = vtoLibretaSanidad;
     }
-    
+
     public Usuario getUsuarioModLC() {
         return usuarioModLC;
     }
@@ -932,7 +930,7 @@ public class Personal extends ObjetoGenerico {
     public void setFechaModLINTI(Date fechaModLINTI) {
         this.fechaModLINTI = fechaModLINTI;
     }
-    
+
     public Date getFechaModLS() {
         return fechaModLS;
     }
@@ -940,7 +938,7 @@ public class Personal extends ObjetoGenerico {
     public void setFechaModLS(Date fechaModLS) {
         this.fechaModLS = fechaModLS;
     }
-    
+
     public String getTalleCamisa() {
         return talleCamisa;
     }
@@ -1084,7 +1082,7 @@ public class Personal extends ObjetoGenerico {
     public void setTelefonoMovilFechaDevolucion(Date telefonoMovilFechaDevolucion) {
         this.telefonoMovilFechaDevolucion = telefonoMovilFechaDevolucion;
     }
-    
+
     public String getTelefonoMovilObservacion() {
         return telefonoMovilObservacion;
     }
@@ -1132,5 +1130,5 @@ public class Personal extends ObjetoGenerico {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-    
+
 }

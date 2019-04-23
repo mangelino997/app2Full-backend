@@ -58,10 +58,10 @@ public class PersonalService {
     @Transactional(rollbackFor = Exception.class)
     public Personal agregar(Personal elemento) {
         elemento = formatearStrings(elemento);
-        elementoDAO.saveAndFlush(elemento);
-        elemento.setAlias(elemento.getId() + " - " + elemento.getNombreCompleto() 
+        elemento.setId(obtenerSiguienteId());
+        elemento.setAlias(obtenerSiguienteId() + " - " + elemento.getNombreCompleto() 
                 + " - " + elemento.getNumeroDocumento());
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
