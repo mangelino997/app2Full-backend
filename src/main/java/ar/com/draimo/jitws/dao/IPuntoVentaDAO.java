@@ -37,6 +37,6 @@ public interface IPuntoVentaDAO extends JpaRepository<PuntoVenta, Integer> {
             @Param("idTipoComprobante") int idTipoComprobante);
      
     //Obtiene un registro por puntoVenta y codigoAfip
-    public PuntoVenta findByPuntoVentaAndCodigoAfipAndSucursalAndEmpresa(int puntoVenta, String codigoAfip, Sucursal sucursal, Empresa empresa);
+    public PuntoVenta findByPuntoVentaAndSucursalAndEmpresaAndAfipComprobante_CodigoAfip(int puntoVenta, Sucursal sucursal, Empresa empresa, String codigoAfip);
      
 }

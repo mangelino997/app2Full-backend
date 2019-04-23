@@ -32,10 +32,6 @@ public class PuntoVenta extends ObjetoGenerico {
     @Column(name = "puntoVenta", nullable = false)
     private int puntoVenta;
     
-    //Define el codigo de afip
-    @Column(name = "codigoAfip",length = 3, nullable = false)
-    private String codigoAfip;
-    
     //Define el fe
     @Column(name = "fe", nullable = false)
     private boolean fe;
@@ -72,14 +68,10 @@ public class PuntoVenta extends ObjetoGenerico {
     @Column(name = "porDefecto", nullable = false)
     private boolean porDefecto;
     
-    //Define una variable de uso interno
-    @Column(name = "usointerno", length = 10, nullable = true)
-    private String usointerno;
-    
-    //Referencia a la clase TipoComprobante
+    //Referencia a la clase AfipComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idTipoComprobante", nullable = false)
-    private TipoComprobante tipoComprobante;
+    @JoinColumn(name = "idAfipComprobante", nullable = false)
+    private AfipComprobante afipComprobante;
     
     //Getters y Setters de la clase
 
@@ -105,14 +97,6 @@ public class PuntoVenta extends ObjetoGenerico {
 
     public void setPuntoVenta(int puntoVenta) {
         this.puntoVenta = puntoVenta;
-    }
-
-    public String getCodigoAfip() {
-        return codigoAfip;
-    }
-
-    public void setCodigoAfip(String codigoAfip) {
-        this.codigoAfip = codigoAfip;
     }
 
     public boolean getFe() {
@@ -187,20 +171,12 @@ public class PuntoVenta extends ObjetoGenerico {
         this.porDefecto = porDefecto;
     }
 
-    public String getUsointerno() {
-        return usointerno;
+    public AfipComprobante getAfipComprobante() {
+        return afipComprobante;
     }
 
-    public void setUsointerno(String usointerno) {
-        this.usointerno = usointerno;
-    }
-
-    public TipoComprobante getTipoComprobante() {
-        return tipoComprobante;
-    }
-
-    public void setTipoComprobante(TipoComprobante tipoComprobante) {
-        this.tipoComprobante = tipoComprobante;
+    public void setAfipComprobante(AfipComprobante afipComprobante) {
+        this.afipComprobante = afipComprobante;
     }
     
 }
