@@ -87,11 +87,14 @@ public class PersonalController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Personal elemento) {
         try {
-            Personal a = elementoService.agregar(elemento);
+            //Agrega el registro
+            Personal personal = elementoService.agregar(elemento);
+            //Actualiza inmediatamente el registro para establecer el alias
+            elementoService.establecerAlias(personal);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return MensajeRespuesta.agregado(personal.getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

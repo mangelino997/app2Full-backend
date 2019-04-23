@@ -58,9 +58,6 @@ public class PersonalService {
     @Transactional(rollbackFor = Exception.class)
     public Personal agregar(Personal elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setId(obtenerSiguienteId());
-        elemento.setAlias(obtenerSiguienteId() + " - " + elemento.getNombreCompleto() 
-                + " - " + elemento.getNumeroDocumento());
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -68,6 +65,8 @@ public class PersonalService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Personal elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombreCompleto() 
+                + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);
     }
     
@@ -75,6 +74,14 @@ public class PersonalService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Personal elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(Personal elemento) {
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombreCompleto() 
+                + " - " + elemento.getNumeroDocumento());
+        elementoDAO.save(elemento);
     }
     
     //Formatea los strings
