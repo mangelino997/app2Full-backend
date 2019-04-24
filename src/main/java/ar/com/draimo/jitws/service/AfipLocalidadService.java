@@ -47,10 +47,20 @@ public class AfipLocalidadService {
         return elementoDAO.save(elemento);
     }
     
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(AfipLocalidad elemento) {
+        elemento.setAlias(elemento.getCodigoAfip()
+                + " - " + elemento.getNombre());
+        elementoDAO.save(elemento);
+    }
+    
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipLocalidad elemento) {
         formatearString(elemento);
+        elemento.setAlias(elemento.getCodigoAfip()
+                + " - " + elemento.getNombre());
         elementoDAO.save(elemento);
     }
     
@@ -63,7 +73,6 @@ public class AfipLocalidadService {
     //Formatea los string 
     private AfipLocalidad formatearString(AfipLocalidad elemento) {
         elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setAlias(elemento.getCodigoAfip() + " - " + elemento.getNombre());
         return elemento;
     }
     

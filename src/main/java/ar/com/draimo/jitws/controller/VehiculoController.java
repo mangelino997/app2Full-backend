@@ -74,6 +74,8 @@ public class VehiculoController {
     public ResponseEntity<?> agregar(@RequestBody Vehiculo elemento) {
         try {
             Vehiculo a = elementoService.agregar(elemento);
+            //Actualiza inmediatamente el registro para establecer el alias
+            elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito

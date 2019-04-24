@@ -59,8 +59,6 @@ public class ClienteService {
         elemento.setEsSeguroPropio(false);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         elemento.setImprimirControlDeuda(false);
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
-                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         return elementoDAO.saveAndFlush(elemento);
     }
     
@@ -69,10 +67,7 @@ public class ClienteService {
     public Cliente agregar(Cliente elemento) {
         elemento = formatearString(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        elementoDAO.saveAndFlush(elemento);
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
-                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
@@ -80,6 +75,14 @@ public class ClienteService {
     public void actualizar(Cliente elemento) {
         elemento = formatearString(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
+        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
+                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
+        elementoDAO.save(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(Cliente elemento) {
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);

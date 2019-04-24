@@ -55,16 +55,23 @@ public class OrdenRecoleccionService {
         elemento.setEstaEnReparto(false);
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(13).get();
         elemento.setTipoComprobante(tipoComprobante);
-        OrdenRecoleccion or = elementoDAO.saveAndFlush(elemento);
-        or.setAlias(or.getId() + " | " + or.getCliente().getId() + " - " + or.getCliente().getRazonSocial() + " | " + or.getFecha());
-        return elementoDAO.save(or);
+        return elementoDAO.saveAndFlush(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(OrdenRecoleccion or) {
+        or.setAlias(or.getId() + " | " + or.getCliente().getId() + " - " + 
+                or.getCliente().getRazonSocial() + " | " + or.getFecha());
+        elementoDAO.save(or);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(OrdenRecoleccion elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setAlias(elemento.getId() + " | " + elemento.getCliente().getId() + " - " + elemento.getCliente().getRazonSocial() + " | " + elemento.getFecha());
+        elemento.setAlias(elemento.getId() + " | " + elemento.getCliente().getId() 
+                + " - " + elemento.getCliente().getRazonSocial() + " | " + elemento.getFecha());
         elementoDAO.save(elemento);
     }
     

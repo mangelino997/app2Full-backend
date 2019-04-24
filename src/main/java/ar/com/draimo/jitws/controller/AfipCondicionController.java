@@ -67,6 +67,8 @@ public class AfipCondicionController {
     public ResponseEntity<?> agregar(@RequestBody AfipCondicion elemento) {
         try {
             AfipCondicion a = elementoService.agregar(elemento);
+            //Actualiza inmediatamente el registro para establecer el alias
+            elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito

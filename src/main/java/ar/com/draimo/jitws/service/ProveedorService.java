@@ -46,9 +46,15 @@ public class ProveedorService {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.save(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(Proveedor elemento) {
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
-        return elementoDAO.save(elemento);
+        elementoDAO.save(elemento);
     }
 
     //Actualiza un registro

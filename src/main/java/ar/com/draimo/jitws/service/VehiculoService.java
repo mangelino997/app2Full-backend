@@ -46,10 +46,15 @@ public class VehiculoService {
     public Vehiculo agregar(Vehiculo elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(Vehiculo elemento) {
         elemento.setAlias(elemento.getDominio() + " - " 
                 + elemento.getNumeroInterno());
-        return elementoDAO.save(elemento);
+        elementoDAO.save(elemento);
     }
 
     //Actualiza un registro

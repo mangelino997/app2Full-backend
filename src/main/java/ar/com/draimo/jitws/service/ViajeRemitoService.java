@@ -138,9 +138,15 @@ public class ViajeRemitoService {
         elemento.setEstaEnReparto(false);
         //Formatea los strings
         elemento = formatearStrings(elemento);
+        return elementoDAO.saveAndFlush(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(ViajeRemito elemento) {
         elemento.setAlias(elemento.getNumero() + " - (R: " + elemento.getClienteRemitente().getAlias() + ") - " 
                 + "(D: " + elemento.getClienteDestinatario().getAlias() + ")");
-        return elementoDAO.saveAndFlush(elemento);
+        elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
