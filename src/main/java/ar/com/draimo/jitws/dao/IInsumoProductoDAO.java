@@ -19,4 +19,10 @@ public interface IInsumoProductoDAO extends JpaRepository<InsumoProducto, Intege
     //Obtiene una lista por nombre
     public List<InsumoProducto> findByNombreContaining(String nombre);
     
+    //Obtiene una lista por esCombustible
+    public List<InsumoProducto> findByRubroProducto_EsCombustibleTrue();
+    
+    //Obtiene una lista por esInsumo
+    public List<InsumoProducto> findByRubroProducto_EsInsumoTrue();
+    
 }

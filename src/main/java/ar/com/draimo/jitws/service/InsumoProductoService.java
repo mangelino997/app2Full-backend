@@ -39,6 +39,16 @@ public class InsumoProductoService {
         }
     }
     
+    //Obtiene una lista de combustibles
+    public List<InsumoProducto> listarCombustibles() {
+        return elementoDAO.findByRubroProducto_EsCombustibleTrue();
+    }
+    
+    //Obtiene una lista de insumos
+    public List<InsumoProducto> listarInsumos() {
+        return elementoDAO.findByRubroProducto_EsInsumoTrue();
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public InsumoProducto agregar(InsumoProducto elemento) {
