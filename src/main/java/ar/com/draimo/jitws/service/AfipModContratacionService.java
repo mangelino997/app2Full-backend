@@ -47,10 +47,20 @@ public class AfipModContratacionService {
         return elementoDAO.save(elemento);
     }
     
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(AfipModContratacion elemento) {
+        elemento.setAlias(elemento.getCodigoAfip()
+                + " - " + elemento.getNombre());
+        elementoDAO.save(elemento);
+    }
+    
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipModContratacion elemento) {
         formatearString(elemento);
+        elemento.setAlias(elemento.getCodigoAfip()
+                + " - " + elemento.getNombre());
         elementoDAO.save(elemento);
     }
     
@@ -63,7 +73,6 @@ public class AfipModContratacionService {
     //Formatea los string 
     private AfipModContratacion formatearString(AfipModContratacion elemento) {
         elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
-        elemento.setAlias(elemento.getCodigoAfip() + " - " + elemento.getNombre());
         return elemento;
     }
     

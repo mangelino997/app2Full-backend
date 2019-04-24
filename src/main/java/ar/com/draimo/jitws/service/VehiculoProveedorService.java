@@ -47,8 +47,14 @@ public class VehiculoProveedorService {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         elementoDAO.saveAndFlush(elemento);
-        elemento.setAlias(elemento.getDominio());
         return elementoDAO.save(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(VehiculoProveedor elemento) {
+        elemento.setAlias(elemento.getDominio());
+        elementoDAO.save(elemento);
     }
 
     //Actualiza un registro

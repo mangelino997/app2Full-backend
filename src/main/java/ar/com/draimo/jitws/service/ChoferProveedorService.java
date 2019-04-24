@@ -59,10 +59,15 @@ public class ChoferProveedorService {
     public ChoferProveedor agregar(ChoferProveedor elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta((new Date(new java.util.Date().getTime())));
-        elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(ChoferProveedor elemento) {
         elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
                 + " - " + elemento.getNumeroDocumento());
-        return elementoDAO.save(elemento);
+        elementoDAO.save(elemento);
     }
     
     //Actualiza un registro

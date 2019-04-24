@@ -109,10 +109,6 @@ public class ViajePropioService {
         elemento = formatearStrings(elemento);
         //Agrega el viaje propio
         ViajePropio viajePropio = elementoDAO.saveAndFlush(elemento);
-        //Establece el alias
-        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha() 
-                + " - " + viajePropio.getEmpresa().getRazonSocial() 
-                + " - " + viajePropio.getPersonal().getNombreCompleto());
         //Actualiza el viaje propio
         elementoDAO.save(viajePropio);
         //Verifica que la lista de tramos tenga elementos
@@ -171,17 +167,26 @@ public class ViajePropioService {
         return viajePropio;
     }
     
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(ViajePropio viajePropio) {
+        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha() 
+                + " - " + viajePropio.getEmpresa().getRazonSocial() 
+                + " - " + viajePropio.getPersonal().getNombreCompleto());
+        elementoDAO.save(viajePropio);
+    }
+    
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajePropio elemento) {
+    public void actualizar(ViajePropio viajePropio) {
         //Formatea los strings
-        elemento = formatearStrings(elemento);
+        viajePropio = formatearStrings(viajePropio);
         //Verifica que la lista de tramos tenga elementos
-        if (elemento.getViajePropioTramos() != null) {
+        if (viajePropio.getViajePropioTramos() != null) {
             //Agrega los tramos del viaje
-            for(ViajePropioTramo item : elemento.getViajePropioTramos()) {
+            for(ViajePropioTramo item : viajePropio.getViajePropioTramos()) {
                 if (item.getId() >= 0) {
-                    item.setViajePropio(elemento);
+                    item.setViajePropio(viajePropio);
                     ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.save(item);
                     //Agrega los dadores-destinatarios
                     for (ViajePropioTramoCliente elem : item.getViajePropioTramoClientes()) {
@@ -200,11 +205,11 @@ public class ViajePropioService {
             }
         }
         //Verifica que la lista de combustibles tenga elementos
-        if (elemento.getViajePropioCombustibles() != null) {
+        if (viajePropio.getViajePropioCombustibles() != null) {
             //Agrega los combustibles del viaje
-            for(ViajePropioCombustible item : elemento.getViajePropioCombustibles()) {
+            for(ViajePropioCombustible item : viajePropio.getViajePropioCombustibles()) {
                 if(item.getId() >= 0) {
-                    item.setViajePropio(elemento);
+                    item.setViajePropio(viajePropio);
                     viajePropioCombustibleDAO.save(item);
                 } else {
                     item.setId(item.getId()*(-1));
@@ -213,11 +218,11 @@ public class ViajePropioService {
             }
         }
         //Verifica que la lista de efectivos tenga elementos
-        if (elemento.getViajePropioEfectivos() != null) {
+        if (viajePropio.getViajePropioEfectivos() != null) {
             //Agrega los efectivos del viaje
-            for(ViajePropioEfectivo item : elemento.getViajePropioEfectivos()) {
+            for(ViajePropioEfectivo item : viajePropio.getViajePropioEfectivos()) {
                 if(item.getId() >= 0) {
-                    item.setViajePropio(elemento);
+                    item.setViajePropio(viajePropio);
                     viajePropioEfectivoDAO.save(item);
                 } else {
                     item.setId(item.getId()*(-1));
@@ -226,11 +231,11 @@ public class ViajePropioService {
             }
         }
         //Verifica que la lista de insumos tenga elementos
-        if (elemento.getViajePropioInsumos() != null) {
+        if (viajePropio.getViajePropioInsumos() != null) {
             //Agrega los insumos del viaje
-            for(ViajePropioInsumo item : elemento.getViajePropioInsumos()) {
+            for(ViajePropioInsumo item : viajePropio.getViajePropioInsumos()) {
                 if(item.getId() >= 0) {
-                    item.setViajePropio(elemento);
+                    item.setViajePropio(viajePropio);
                     viajePropioInsumoDAO.save(item);
                 } else {
                     item.setId(item.getId()*(-1));
@@ -239,11 +244,11 @@ public class ViajePropioService {
             }
         }
         //Verifica que la lista de gastos tenga elementos
-        if (elemento.getViajePropioGastos() != null) {
+        if (viajePropio.getViajePropioGastos() != null) {
             //Agrega los gastos del viaje
-            for(ViajePropioGasto item : elemento.getViajePropioGastos()) {
+            for(ViajePropioGasto item : viajePropio.getViajePropioGastos()) {
                 if(item.getId() >= 0) {
-                    item.setViajePropio(elemento);
+                    item.setViajePropio(viajePropio);
                     viajePropioGastoDAO.save(item);
                 } else {
                     item.setId(item.getId()*(-1));
@@ -252,11 +257,11 @@ public class ViajePropioService {
             }
         }
         //Verifica que la lista de peajes tenga elementos
-        if (elemento.getViajePropioPeajes() != null) {
+        if (viajePropio.getViajePropioPeajes() != null) {
             //Agrega los tramos del viaje
-            for(ViajePropioPeaje item : elemento.getViajePropioPeajes()) {
+            for(ViajePropioPeaje item : viajePropio.getViajePropioPeajes()) {
                 if(item.getId() >= 0) {
-                    item.setViajePropio(elemento);
+                    item.setViajePropio(viajePropio);
                     viajePropioPeajeDAO.save(item);
                 } else {
                     item.setId(item.getId()*(-1));
@@ -264,8 +269,11 @@ public class ViajePropioService {
                 }
             }
         }
+        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha() 
+                + " - " + viajePropio.getEmpresa().getRazonSocial() 
+                + " - " + viajePropio.getPersonal().getNombreCompleto());
         //Actualiza el viaje propio
-        elementoDAO.save(elemento);
+        elementoDAO.save(viajePropio);
     }
     
     //Elimina un registro
