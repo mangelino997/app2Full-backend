@@ -8,6 +8,7 @@ import ar.com.draimo.jitws.model.Subopcion;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 /**
@@ -28,10 +29,12 @@ public interface IRolOpcionDAO extends JpaRepository<RolOpcion, Integer> {
     public RolOpcion findByRolAndOpcion(Optional<Rol> rol, Optional<Opcion> opcion);
     
     //Elimina todos los datos de la tabla
+    @Modifying
     @Query(value = "DELETE FROM rolopcion", nativeQuery = true)
     public void eliminarTodo();
     
     //Reestablece autoincremental
+    @Modifying
     @Query(value = "ALTER TABLE rolopcion AUTO_INCREMENT=1", nativeQuery = true)
     public void reestablecerAutoincremental();
     

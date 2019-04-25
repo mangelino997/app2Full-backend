@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Pais
@@ -84,6 +85,51 @@ public class RolOpcionService {
         }
         
         return opciones;
+        
+    }
+    
+    /*
+     * Asigna todas las subopciones a cada uno de los roles, eliminando todo los
+     * datos y reestableciendo desde cero
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void reestablecerTablaDesdeCero() {
+        
+        //Elimina todos los datos de la tabla
+        elementoDAO.eliminarTodo();
+        
+        //Reestablece el autoincremental
+        elementoDAO.reestablecerAutoincremental();
+        
+        //Obtiene la lista completa de roles
+        List<Rol> roles = rolDAO.findAll();
+        
+        //Obtiene la lista completa de subopciones
+        List<Opcion> opciones = opcionDAO.findAll();
+        
+        //Define un RolSubopcion
+        RolOpcion rolOpcion;
+        for (Rol rol : roles) {
+            //Recorre la lista de submodulos
+            for (Opcion opcion : opciones) {
+                //Crea una instancia de RolSubopcion
+                rolOpcion = new RolOpcion();
+                rolOpcion.setRol(rol);
+                rolOpcion.setOpcion(opcion);
+                switch (rol.getId()) {
+                    case 1:
+                        rolOpcion.setMostrar(true);
+                        break;
+                    case 2:
+                        rolOpcion.setMostrar(true);
+                        break;
+                    default:
+                        rolOpcion.setMostrar(true);
+                        break;
+                }
+                elementoDAO.saveAndFlush(rolOpcion);
+            }
+        }
         
     }
 

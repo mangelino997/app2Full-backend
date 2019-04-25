@@ -15,6 +15,8 @@ import java.math.RoundingMode;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +116,7 @@ public class OrdenVentaEscalaService {
                 ordenesEscalaFechaDistinta.add(elemento);
             }
         }
+        Collections.sort(ordenesEscalaFechaDistinta, sortDate);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenVenta");
@@ -168,5 +171,13 @@ public class OrdenVentaEscalaService {
     public void eliminar(OrdenVentaEscala elemento) {
         elementoDAO.delete(elemento);
     }
+    
+    /*Comparator for sorting the list by roll no*/
+    private Comparator<OrdenVentaEscala> sortDate = new Comparator<OrdenVentaEscala>() {
+	public int compare(OrdenVentaEscala s1, OrdenVentaEscala s2) {
+	   Date rollno1 = s1.getPreciosDesde();
+	   Date rollno2 = s2.getPreciosDesde();
+	   return rollno2.compareTo(rollno1);
+   }};
     
 }
