@@ -44,6 +44,9 @@ public class TramoService {
     @Transactional(rollbackFor = Exception.class)
     public Tramo agregar(Tramo elemento) {
         elemento = formatearStrings(elemento);
+        if(elemento.getRutaAlternativa() == null) {
+            elemento.setRutaAlternativa("-");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 

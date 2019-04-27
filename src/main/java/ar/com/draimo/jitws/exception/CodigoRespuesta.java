@@ -76,6 +76,7 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_TELEFONO_MOVIL_EMPRESA = 11015;
     public static final int DATO_DUPLICADO_USERNAME = 11005;
     public static final int DATO_DUPLICADO_VALOR = 11016;
+    public static final int DATO_DUPLICADO_TRAMO = 11017;
     
     //Ultimo codigo Longitud = 12066
     public static final int ABREVIATURA_LONGITUD = 12015;
