@@ -18,25 +18,34 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "basicocategoria")
 public class BasicoCategoria extends ObjetoGenerico {
-
-    //Define el anio
-    @Column(name = "anio", nullable = false)
-    private short anio;
-    
-    //Define el mes
-    @Column(name = "mes", nullable = false)
-    private short mes;
-    
-    //Define el basico
-    @Column(name = "basico", nullable = false)
-    private BigDecimal basico;
     
     //Referencia a categoria
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
+
+    //Define el anio
+    @Column(name = "anio", nullable = false)
+    private short anio;
+    
+    //Referencia a la clase Mes
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idMes", nullable = false)
+    private Mes mes;
+    
+    //Define el basico
+    @Column(name = "basico", nullable = false)
+    private BigDecimal basico;
     
     //Getters y Setters de la clase
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public short getAnio() {
         return anio;
@@ -46,11 +55,11 @@ public class BasicoCategoria extends ObjetoGenerico {
         this.anio = anio;
     }
 
-    public short getMes() {
+    public Mes getMes() {
         return mes;
     }
 
-    public void setMes(short mes) {
+    public void setMes(Mes mes) {
         this.mes = mes;
     }
 
@@ -60,14 +69,6 @@ public class BasicoCategoria extends ObjetoGenerico {
 
     public void setBasico(BigDecimal basico) {
         this.basico = basico;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
     }
     
 }

@@ -65,8 +65,15 @@ public class BasicoCategoriaController {
     //Obtiene una lista por categoria
     @GetMapping(value = URL + "/listarPorCategoria/{idCategoria}")
     @ResponseBody
-    public List<BasicoCategoria> listarBasicoPorCategoria(@PathVariable int idCategoria) {
-        return elementoService.listarBasicoPorCategoria(idCategoria);
+    public List<BasicoCategoria> listarPorCategoria(@PathVariable int idCategoria) {
+        return elementoService.listarPorCategoria(idCategoria);
+    }
+    
+    //Obtiene una lista por categoria y anio
+    @GetMapping(value = URL + "/listarPorCategoriaYAnio/{idCategoria}/{anio}")
+    @ResponseBody
+    public List<BasicoCategoria> listarPorCategoria(@PathVariable int idCategoria, @PathVariable short anio) {
+        return elementoService.listarPorCategoriaYAnio(idCategoria, anio);
     }
     
     //Agrega un registro

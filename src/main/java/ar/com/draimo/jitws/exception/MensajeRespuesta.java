@@ -152,7 +152,7 @@ public class MensajeRespuesta {
                             MensajeRespuesta.DATO_DUPLICADO + " USUARIO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
                 case DuplicidadError.UNICIDAD_TABLA:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_TRAMO,
-                            MensajeRespuesta.DATO_DUPLICADO + " TRAMO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                            MensajeRespuesta.DATO_DUPLICADO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
                 default:
                     return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                             MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);

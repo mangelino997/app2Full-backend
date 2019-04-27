@@ -18,6 +18,10 @@ public class Mes extends ObjetoGenerico {
     //Define el nombre
     @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
+    
+    //Define el numero
+    @Column(name = "numero", length = 2, nullable = false)
+    private String numero;
 
     //Getters y Setters de la clase
 
@@ -27,6 +31,14 @@ public class Mes extends ObjetoGenerico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
 }
