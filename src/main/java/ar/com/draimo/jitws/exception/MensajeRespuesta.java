@@ -111,243 +111,325 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> datoDuplicado(DataIntegrityViolationException dive) {
         //Obtiene el mensaje de duplicidad de datos
         String[] partes = dive.getMostSpecificCause().getMessage().split("'");
+        String mensajeRespuesta;
+        String plusMensaje;
+        int codigoRespuesta;
         if (partes.length == 4) {
+            mensajeRespuesta = MensajeRespuesta.DATO_DUPLICADO;
             //Determina que columna tiene el dato duplicado
             switch (partes[3]) {
                 case DuplicidadError.ABREVIATURA_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_ABREVIATURA,
-                            MensajeRespuesta.DATO_DUPLICADO + " ABREVIATURA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ABREVIATURA;
+                    plusMensaje = " ABREVIATURA";
+                    break;
                 case DuplicidadError.CODIGO_AFIP_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CODIGO_AFIP ,
-                            MensajeRespuesta.DATO_DUPLICADO + " CODIGO AFIP", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CODIGO_AFIP;
+                    plusMensaje = " CODIGO AFIP";
+                    break;
                 case DuplicidadError.CORREOELECTRONICO_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CORREOELECTRONICO,
-                            MensajeRespuesta.DATO_DUPLICADO + " CORREO ELECTRONICO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CORREOELECTRONICO;
+                    plusMensaje = " CORREO ELECTRONICO";
+                    break;
                 case DuplicidadError.CUIL_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CUIL,
-                            MensajeRespuesta.DATO_DUPLICADO + " CUIL", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CUIL;
+                    plusMensaje = " CUIL";
+                    break;
                 case DuplicidadError.CUIT_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_CUIT,
-                            MensajeRespuesta.DATO_DUPLICADO + " CUIT", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CUIT;
+                    plusMensaje = " CUIT";
+                    break;
                 case DuplicidadError.DOCUMENTO_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO,
-                            MensajeRespuesta.DATO_DUPLICADO + " DNI", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO;
+                    plusMensaje = " DNI";
+                    break;
                 case DuplicidadError.ID_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_ID,
-                            MensajeRespuesta.DATO_DUPLICADO + " ID", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ID;
+                    plusMensaje = " ID";
+                    break;
                 case DuplicidadError.NOMBRE_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_NOMBRE,
-                            MensajeRespuesta.DATO_DUPLICADO + " NOMBRE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_NOMBRE;
+                    plusMensaje = " NOMBRE";
+                    break;
                 case DuplicidadError.REPARTO_ORDENRECOLECCION_UNICOS:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_REPARTO_ORECOLECCION,
-                            MensajeRespuesta.DATO_DUPLICADO + " REPARTO Y ORDEN RECOLECCION", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_ORECOLECCION;
+                    plusMensaje = " REPARTO Y ORDEN RECOLECCION";
+                    break;
                 case DuplicidadError.REPARTO_VENTACOMPROBANTE_UNICOS:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_REPARTO_VCOMPROBANTE,
-                            MensajeRespuesta.DATO_DUPLICADO + " REPARTO Y VENTA COMPROBANTE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_VCOMPROBANTE;
+                    plusMensaje = " REPARTO Y VENTA COMPROBANTE";
+                    break;
                 case DuplicidadError.REPARTO_VIAJEREMITO_UNICOS:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_REPARTO_VREMITO,
-                            MensajeRespuesta.DATO_DUPLICADO + " REPARTO Y VIAJE REMITO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_VREMITO;
+                    plusMensaje = " REPARTO Y VIAJE REMITO";
+                    break;
                 case DuplicidadError.USERNAME_UNICO:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO_USERNAME,
-                            MensajeRespuesta.DATO_DUPLICADO + " USUARIO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_USERNAME;
+                    plusMensaje = " USUARIO";
+                    break;
                 default:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
+                    plusMensaje = " ";
+                    break;
             }
         } else {
             //Determina la longitud de la columna 
+            mensajeRespuesta = MensajeRespuesta.LONGITUD;
             switch (partes[1]) {
                 case LongitudError.ABREVIATURA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ABREVIATURA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " ABREVIATURA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.ABREVIATURA_LONGITUD;
+                    plusMensaje = " ABREVIATURA";
+                    break;
                 case LongitudError.ALIAS_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ALIAS_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " ALIAS", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.ALIAS_LONGITUD;
+                    plusMensaje = " ALIAS";
+                    break;
                 case LongitudError.ALIAS_CBU_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ALIAS_CBU_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " ALIAS CBU", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.ALIAS_CBU_LONGITUD;
+                    plusMensaje = " ALIAS CBU";
+                    break;
                 case LongitudError.APELLIDO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.APELLIDO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " APELLIDO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.APELLIDO_LONGITUD;
+                    plusMensaje = " APELLIDO";
+                    break;
                 case LongitudError.CODIGO_AFIP_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CODIGO_AFIP_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " CODIGO AFIP", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.CODIGO_AFIP_LONGITUD;
+                    plusMensaje = " CODIGO AFIP";
+                    break;
                 case LongitudError.CODIGO_AREA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CODIGO_AREA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " CODIGO DE AREA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.CODIGO_AREA_LONGITUD;
+                    plusMensaje = " CODIGO DE AREA";
+                    break;
                 case LongitudError.CODIGO_AREA_ALT_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CODIGO_AREA_ALT_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " CODIGO DE AREA ALT", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.CODIGO_AREA_ALT_LONGITUD;
+                    plusMensaje = " CODIGO DE AREA ALT";
+                    break;
                 case LongitudError.CORREO_ELECTRONICO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CORREO_ELECTRONICO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " CORREO ELECTRONICO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.CORREO_ELECTRONICO_LONGITUD;
+                    plusMensaje = " CORREO ELECTRONICO";
+                    break;
                 case LongitudError.CUIL_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CUIL_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " CUIL", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.CUIL_LONGITUD;
+                    plusMensaje = " CUIL";
+                    break;
                 case LongitudError.CUIT_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CUIT_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " CUIT", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.CUIT_LONGITUD;
+                    plusMensaje = " CUIT";
+                    break;
                 case LongitudError.DESCRIPCION_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DESCRIPCION_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " DESCRIPCION", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DESCRIPCION_LONGITUD;
+                    plusMensaje = " DESCRIPCION";
+                    break;
                 case LongitudError.DOCUMENTO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DOCUMENTO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " DNI", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DOCUMENTO_LONGITUD;
+                    plusMensaje = " DNI";
+                    break;
                 case LongitudError.DOMICILIO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DOMICILIO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " DOMICILIO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DOMICILIO_LONGITUD;
+                    plusMensaje = " DOMICILIO";
+                    break;
                 case LongitudError.DOMICILIO_ALT_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DOMICILIO_ALT_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " DOMICILIO ALT", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DOMICILIO_ALT_LONGITUD;
+                    plusMensaje = " DOMICILIO ALT";
+                    break;
                 case LongitudError.DOMINIO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DOMINIO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " DOMINIO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DOMINIO_LONGITUD;
+                    plusMensaje = " DOMINIO";
+                    break;
                 case LongitudError.LETRA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.LETRA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " LETRA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.LETRA_LONGITUD;
+                    plusMensaje = " LETRA";
+                    break;
                 case LongitudError.MODELO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.MODELO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " MODELO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.MODELO_LONGITUD;
+                    plusMensaje = " MODELO";
+                    break;
                 case LongitudError.NOMBRE_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOMBRE_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOMBRE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOMBRE_LONGITUD;
+                    plusMensaje = " NOMBRE";
+                    break;
                 case LongitudError.NOMBRE_COMPLETO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOMBRE_COMPLETO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOMBRE COMPLETO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOMBRE_COMPLETO_LONGITUD;
+                    plusMensaje = " NOMBRE COMPLETO";
+                    break;
                 case LongitudError.NOMBRE_FANTASIA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOMBRE_FANTASIA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOMBRE FANTASIA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOMBRE_FANTASIA_LONGITUD;
+                    plusMensaje = " NOMBRE FANTASIA";
+                    break;
                 case LongitudError.NOTA_EMISION_COMPROBANTE_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOTA_EMISION_COMPROBANTE_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOTA EMISION COMPROBANTE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOTA_EMISION_COMPROBANTE_LONGITUD;
+                    plusMensaje = " NOTA EMISION COMPROBANTE";
+                    break;
                 case LongitudError.NOTA_INGRESAR_COMPROBANTE_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOTA_INGRESAR_COMPROBANTE_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOTA INGRESAR COMPROBANTE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOTA_INGRESAR_COMPROBANTE_LONGITUD;
+                    plusMensaje = " NOTA INGRESAR COMPROBANTE";
+                    break;
                 case LongitudError.NOTA_IMPRESION_COMPROBANTE_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOTA IMPRESION COMPROBANTE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_LONGITUD;
+                    plusMensaje = " NOTA IMPRESION COMPROBANTE";
+                    break;
                 case LongitudError.NOTA_IMPRESION_COMPROBANTE_GRAL_1_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_1_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOTA IMPRESION COMPROBANTE GENERAL 1", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_1_LONGITUD;
+                    plusMensaje = " NOTA IMPRESION COMPROBANTE GENERAL 1";
+                    break;
                 case LongitudError.NOTA_IMPRESION_COMPROBANTE_GRAL_2_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_2_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOTA IMPRESION COMPROBANTE GENERAL 2", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_2_LONGITUD;
+                    plusMensaje = " NOTA IMPRESION COMPROBANTE GENERAL 2";
+                    break;
                 case LongitudError.NOTA_IMPRESION_ORDEN_PAGO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOTA_IMPRESION_ORDEN_PAGO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOTA IMPRESION ORDEN PAGO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_ORDEN_PAGO_LONGITUD;
+                    plusMensaje = " NOTA IMPRESION ORDEN PAGO";
+                    break;
                 case LongitudError.NOTA_IMPRESION_REMITO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NOTA_IMPRESION_REMITO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NOTA IMPRESION REMITO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_REMITO_LONGITUD;
+                    plusMensaje = " NOTA IMPRESION REMITO";
+                    break;
                 case LongitudError.NUMERO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_LONGITUD;
+                    plusMensaje = " NUMERO";
+                    break;
                 case LongitudError.NUMERO_CAEA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_CAEA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO CAEA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_CAEA_LONGITUD;
+                    plusMensaje = " NUMERO CAEA";
+                    break;
                 case LongitudError.NUMERO_CBU_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CBU_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO CBU", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.CBU_LONGITUD;
+                    plusMensaje = " NUMERO CBU";
+                    break;
                 case LongitudError.NUMERO_CHASIS_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_CHASIS_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO CHASIS", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_CHASIS_LONGITUD;
+                    plusMensaje = " NUMERO CHASIS";
+                    break;
                 case LongitudError.NUMERO_CUENTA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_CUENTA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO CUENTA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_CUENTA_LONGITUD;
+                    plusMensaje = " NUMERO CUENTA";
+                    break;
                 case LongitudError.NUMERO_DOCUMENTO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.DOCUMENTO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " DNI", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.DOCUMENTO_LONGITUD;
+                    plusMensaje = " DNI";
+                    break;
                 case LongitudError.NUMERO_IIBB_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_IIBB_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO IIBB", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_IIBB_LONGITUD;
+                    plusMensaje = " NUMERO IIBB";
+                    break;
                 case LongitudError.NUMERO_INTERNO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_INTERNO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO INTERNO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_INTERNO_LONGITUD;
+                    plusMensaje = " NUMERO INTERNO";
+                    break;
                 case LongitudError.NUMERO_MOTOR_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_MOTOR_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO MOTOR", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_MOTOR_LONGITUD;
+                    plusMensaje = " NUMERO MOTOR";
+                    break;
                 case LongitudError.NUMERO_POLIZA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_POLIZA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO POLIZA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_LONGITUD;
+                    plusMensaje = " NUMERO POLIZA";
+                    break;
                 case LongitudError.NUMERO_POLIZA_SEGURO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_POLIZA_SEGURO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO POLIZA SEGURO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_SEGURO_LONGITUD;
+                    plusMensaje = " NUMERO POLIZA SEGURO";
+                    break;
                 case LongitudError.NUMERO_REMITO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_REMITO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO REMITO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_REMITO_LONGITUD;
+                    plusMensaje = " NUMERO REMITO";
+                    break;
                 case LongitudError.NUMERO_RUTA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.NUMERO_RUTA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " NUMERO RUTA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.NUMERO_RUTA_LONGITUD;
+                    plusMensaje = " NUMERO RUTA";
+                    break;
                 case LongitudError.OBSERVACION_CHOFER_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OBSERVACION_CHOFER_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " OBSERVACION CHOFER", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.OBSERVACION_CHOFER_LONGITUD;
+                    plusMensaje = " OBSERVACION CHOFER";
+                    break;
                 case LongitudError.OBSERVACION_VEHICULO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OBSERVACION_VEHICULO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " OBSERVACION VEHIHCULO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_LONGITUD;
+                    plusMensaje = " OBSERVACION VEHIHCULO";
+                    break;
                 case LongitudError.OBSERVACION_VEHICULO_REMOLQUE_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OBSERVACION_VEHICULO_REMOLQUE_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " OBSERVACION VEHICULO REMOLQUE", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_REMOLQUE_LONGITUD;
+                    plusMensaje = " OBSERVACION VEHICULO REMOLQUE";
+                    break;
                 case LongitudError.OBSERVACIONES_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OBSERVACIONES_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " OBSERVACIONES", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.OBSERVACIONES_LONGITUD;
+                    plusMensaje = " OBSERVACIONES";
+                    break;
                 case LongitudError.OBSERVACIONES_ANULADO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OBSERVACIONES_ANULADO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " OBSERVACIONES ANULADO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.OBSERVACIONES_ANULADO_LONGITUD;
+                    plusMensaje = " OBSERVACIONES ANULADO";
+                    break;
                 case LongitudError.PASSWORD_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.PASSWORD_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " PASSWORD", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.PASSWORD_LONGITUD;
+                    plusMensaje = " PASSWORD";
+                    break;
                 case LongitudError.RAZON_SOCIAL_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.RAZON_SOCIAL_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " RAZON SOCIAL", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.RAZON_SOCIAL_LONGITUD;
+                    plusMensaje = " RAZON SOCIAL";
+                    break;
                 case LongitudError.RUTA_ALTERNATIVA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.RUTA_ALTERNATIVA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " RUTA ALTERNATIVA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.RUTA_ALTERNATIVA_LONGITUD;
+                    plusMensaje = " RUTA ALTERNATIVA";
+                    break;
                 case LongitudError.SITIO_WEB_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.SITIO_WEB_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " SITIO WEB", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.SITIO_WEB_LONGITUD;
+                    plusMensaje = " SITIO WEB";
+                    break;
                 case LongitudError.TALLE_CAMISA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TALLE_CAMISA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TALLE CAMISA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TALLE_CAMISA_LONGITUD;
+                    plusMensaje = " TALLE CAMISA";
+                    break;
                 case LongitudError.TALLE_CALZADO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TALLE_CALZADO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TALLE CAlZADO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TALLE_CALZADO_LONGITUD;
+                    plusMensaje = " TALLE CAlZADO";
+                    break;
                 case LongitudError.TALLE_PANTALON_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TALLE_PANTALON_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TALLE PANTALON", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TALLE_PANTALON_LONGITUD;
+                    plusMensaje = " TALLE PANTALON";
+                    break;
                 case LongitudError.TELEFONO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TELEFONO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TELEFONO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_LONGITUD;
+                    plusMensaje = " TELEFONO";
+                    break;
                 case LongitudError.TELEFONO_ALT_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TELEFONO_ALT_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TELEFONO ALT", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_ALT_LONGITUD;
+                    plusMensaje = " TELEFONO ALTERNATIVO";
+                    break;
                 case LongitudError.TELEFONO_FIJO_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TELEFONO_FIJO_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TELEFONO FIJO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_FIJO_LONGITUD;
+                    plusMensaje = " TELEFONO FIJO";
+                    break;
                 case LongitudError.TELEFONO_MOVIL_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TELEFONO_MOVIL_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TELEFONO MOVIL", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_LONGITUD;
+                    plusMensaje = " TELEFONO MOVIL";
+                    break;
                 case LongitudError.TELEFONO_MOVIL_EMPRESA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TELEFONO_MOVIL_EMPRESA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TELEFONO MOVIL EMPRESA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_EMPRESA_LONGITUD;
+                    plusMensaje = " TELEFONO MOVIL EMPRESA";
+                    break;
                 case LongitudError.TELEFONO_MOVIL_OBSERVACION_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TELEFONO_MOVIL_OBSERVACION_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TELEFONO MOVIL OBSERVACION", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_OBSERVACION_LONGITUD;
+                    plusMensaje = " TELEFONO MOVIL OBSERVACION";
+                    break;
                 case LongitudError.TITULAR_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.TITULAR_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " TITULAR", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.TITULAR_LONGITUD;
+                    plusMensaje = " TITULAR";
+                    break;
                 case LongitudError.USERNAME_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.USERNAME_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " USUARIO", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.USERNAME_LONGITUD;
+                    plusMensaje = " USUARIO";
+                    break;
                 case LongitudError.URL_PRUEBA_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.URL_PRUEBA_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " URL PRUEBA", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.URL_PRUEBA_LONGITUD;
+                    plusMensaje = " URL PRUEBA";
+                    break;
                 case LongitudError.URL_REAL_LONGITUD:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.URL_REAL_LONGITUD,
-                            MensajeRespuesta.LONGITUD + " URL REAL", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.URL_REAL_LONGITUD;
+                    plusMensaje = " URL REAL";
+                    break;
                 default:
-                    return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                            MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                    codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
+                    plusMensaje = "";
             }
         }
+            return new ResponseEntity<>(new EstadoRespuesta(codigoRespuesta, 
+                    mensajeRespuesta + plusMensaje, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
