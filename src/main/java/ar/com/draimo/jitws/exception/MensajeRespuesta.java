@@ -166,6 +166,10 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_USERNAME;
                     plusMensaje = " USUARIO";
                     break;
+                case DuplicidadError.UNICIDAD_TABLA:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TRAMO;
+                    plusMensaje = "";
+                    break;
                 default:
                     codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
                     plusMensaje = " ";

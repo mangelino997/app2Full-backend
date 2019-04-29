@@ -23,4 +23,7 @@ public interface IBasicoCategoriaDAO extends JpaRepository<BasicoCategoria, Inte
     //Obtiene un listado por categoria_nombre
     public List<BasicoCategoria> findByCategoria_NombreContaining(String nombre);
     
+    //Obtiene una lista por categoria y anio
+    public List<BasicoCategoria> findByCategoriaAndAnio(Categoria categoria, short anio);
+    
 }

@@ -1,10 +1,8 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IBasicoCategoriaDAO;
 import ar.com.draimo.jitws.dao.ICategoriaDAO;
 import ar.com.draimo.jitws.model.BasicoCategoria;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,8 +45,13 @@ public class BasicoCategoriaService {
     }
     
     //Obtiene una lista por nombre
-    public List<BasicoCategoria> listarBasicoPorCategoria(int idCategoria) {
+    public List<BasicoCategoria> listarPorCategoria(int idCategoria) {
         return elementoDAO.findByCategoria(categoriaDAO.findById(idCategoria).get());
+    }
+    
+    //Obtiene una lista por categoria y aio
+    public List<BasicoCategoria> listarPorCategoriaYAnio(int idCategoria, short anio) {
+        return elementoDAO.findByCategoriaAndAnio(categoriaDAO.findById(idCategoria).get(), anio);
     }
     
     //Agrega un registro

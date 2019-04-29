@@ -49,5 +49,7 @@ public class DuplicidadError {
     public static final String REPARTO_ORDENRECOLECCION_UNICOS = "reparto_orecoleccion_UNIQUE";
     
     public static final String REPARTO_VIAJEREMITO_UNICOS = "reparto_vremito_UNIQUE";
+    
+    public static final String UNICIDAD_TABLA = "unicidad_tabla";
 
 }
