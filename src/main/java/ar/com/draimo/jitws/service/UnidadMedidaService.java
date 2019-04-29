@@ -27,7 +27,7 @@ public class UnidadMedidaService {
     
     //Obtiene la lista completa
     public List<UnidadMedida> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findAllByOrderByNombreDesc();
     }
     
     //Obtiene una lista por nombre
