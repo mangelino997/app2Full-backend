@@ -27,7 +27,7 @@ public class MarcaVehiculoService {
     
     //Obtiene la lista completa
     public List<MarcaVehiculo> listar() {
-        return elementoDAO.findAllByOrderByNombreDesc();
+        return elementoDAO.findAllByOrderByNombreAsc();
     }
     
     //Obtiene una lista por nombre

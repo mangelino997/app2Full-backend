@@ -27,7 +27,7 @@ public class TipoVehiculoService {
     
     //Obtiene la lista completa
     public List<TipoVehiculo> listar() {
-        return elementoDAO.findAllByOrderByNombreDesc();
+        return elementoDAO.findAllByOrderByNombreAsc();
     }
     
     //Obtiene una lista por nombre

@@ -17,7 +17,7 @@ public interface IMarcaVehiculoDAO extends JpaRepository<MarcaVehiculo, Integer>
     public MarcaVehiculo findTopByOrderByIdDesc();
     
     //Obtiene la lista de registro ordenada por nombre desc
-    public List<MarcaVehiculo> findAllByOrderByNombreDesc();
+    public List<MarcaVehiculo> findAllByOrderByNombreAsc();
     
     //Obtiene una lista por nombre
     public List<MarcaVehiculo> findByNombreContaining(String nombre);

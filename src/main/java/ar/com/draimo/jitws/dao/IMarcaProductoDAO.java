@@ -17,7 +17,7 @@ public interface IMarcaProductoDAO extends JpaRepository<MarcaProducto, Integer>
     public MarcaProducto findTopByOrderByIdDesc();
     
     //Obtiene la lista de registro ordenada por nombre desc
-    public List<MarcaProducto> findAllByOrderByNombreDesc();
+    public List<MarcaProducto> findAllByOrderByNombreAsc();
     
     //Obtiene una lista por nombre
     public List<MarcaProducto> findByNombreContaining(String nombre);

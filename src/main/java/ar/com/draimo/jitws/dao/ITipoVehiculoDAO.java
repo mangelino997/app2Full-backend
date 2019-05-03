@@ -17,7 +17,7 @@ public interface ITipoVehiculoDAO extends JpaRepository<TipoVehiculo, Integer> {
     public TipoVehiculo findTopByOrderByIdDesc();
     
     //Obtiene la lista de registros ordenada por nombre desc
-    public List<TipoVehiculo> findAllByOrderByNombreDesc();
+    public List<TipoVehiculo> findAllByOrderByNombreAsc();
     
     //Obtiene una lista por nombre
     public List<TipoVehiculo> findByNombreContaining(String nombre);
