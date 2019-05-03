@@ -52,8 +52,12 @@ public class VehiculoService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(Vehiculo elemento) {
-        elemento.setAlias(elemento.getDominio() + " - " 
+        if(elemento.getNumeroInterno() != null) {
+            elemento.setAlias(elemento.getDominio() + " - " 
                 + elemento.getNumeroInterno());
+        } else {
+            elemento.setAlias(elemento.getDominio());
+        }
         elementoDAO.save(elemento);
     }
 

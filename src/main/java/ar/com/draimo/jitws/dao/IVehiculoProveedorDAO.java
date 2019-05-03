@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.VehiculoProveedor;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +22,8 @@ public interface IVehiculoProveedorDAO extends JpaRepository<VehiculoProveedor, 
     
     //Obtiene un listado por filtro remolque
     public List<VehiculoProveedor> findByAliasContainingAndTipoVehiculo_EsRemolqueTrue(String alias);
+    
+    //Obtiene una lista por proveedor
+    public List<VehiculoProveedor> findByProveedor(Proveedor proveedor);
     
 }

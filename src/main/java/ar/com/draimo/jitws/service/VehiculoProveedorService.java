@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.IVehiculoProveedorDAO;
 import ar.com.draimo.jitws.model.VehiculoProveedor;
 import java.sql.Date;
@@ -20,6 +21,10 @@ public class VehiculoProveedorService {
     @Autowired
     IVehiculoProveedorDAO elementoDAO;
     
+    //Define la referencia al dao
+    @Autowired
+    IProveedorDAO proveedorDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         VehiculoProveedor elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -29,6 +34,11 @@ public class VehiculoProveedorService {
     //Obtiene la lista completa
     public List<VehiculoProveedor> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene una lista por proveedor
+    public List<VehiculoProveedor> listarPorProveedor(int idProveedor) {
+        return elementoDAO.findByProveedor(proveedorDAO.findById(idProveedor).get());
     }
     
     //Obtiene una lista por nombre

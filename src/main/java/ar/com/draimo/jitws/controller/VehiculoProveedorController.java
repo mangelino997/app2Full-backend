@@ -55,6 +55,13 @@ public class VehiculoProveedorController {
         return elementoService.listar();
     }
     
+    //Obtiene una lista por proveedor
+    @GetMapping(value = URL + "/listarPorProveedor/{idProveedor}")
+    @ResponseBody
+    public List<VehiculoProveedor> listarPorProveedor(@PathVariable int idProveedor) {
+        return elementoService.listarPorProveedor(idProveedor);
+    }
+    
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
