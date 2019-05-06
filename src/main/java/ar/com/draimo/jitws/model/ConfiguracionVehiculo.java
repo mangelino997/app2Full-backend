@@ -43,7 +43,7 @@ public class ConfiguracionVehiculo extends ObjetoGenerico {
     
     //Define la capacidad de carga
     @Column(name = "capacidadCarga", nullable = false)
-    private short capacidadCarga;
+    private BigDecimal capacidadCarga;
     
     //Define la tara
     @Column(name = "tara", nullable = true)
@@ -107,11 +107,11 @@ public class ConfiguracionVehiculo extends ObjetoGenerico {
         this.cantidadEjes = cantidadEjes;
     }
 
-    public short getCapacidadCarga() {
+    public BigDecimal getCapacidadCarga() {
         return capacidadCarga;
     }
 
-    public void setCapacidadCarga(short capacidadCarga) {
+    public void setCapacidadCarga(BigDecimal capacidadCarga) {
         this.capacidadCarga = capacidadCarga;
     }
 
