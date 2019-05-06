@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.dao.IAfipComprobanteDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.Sucursal;
@@ -34,9 +35,13 @@ public class PuntoVentaService {
     @Autowired
     IEmpresaDAO empresaDAO;
     
-    //Define la referencia al dao empresa
+    //Define la referencia al dao afipComprobante
     @Autowired
     IAfipComprobanteDAO afipComprobanteDAO;
+    
+    //Define la referencia al dao tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

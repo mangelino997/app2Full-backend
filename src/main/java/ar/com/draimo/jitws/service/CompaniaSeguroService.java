@@ -35,6 +35,11 @@ public class CompaniaSeguroService {
         return elementoDAO.findByNombreContaining(nombre);
     }
     
+    //Obtiene una lista de companias de seguro por empresa (Consulta CompaniaSeguroPoliza)
+    public List<CompaniaSeguro> listarPorEmpresa(int idEmpresa) {
+        return elementoDAO.listarPorEmpresa(idEmpresa);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CompaniaSeguro agregar(CompaniaSeguro elemento) {

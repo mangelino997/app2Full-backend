@@ -30,7 +30,7 @@ public interface IPuntoVentaDAO extends JpaRepository<PuntoVenta, Integer> {
     
     //Obtiene una lista por empresa, sucursal
     @Query(value = "SELECT distinct puntoVenta FROM (SELECT p.puntoVenta, p.porDefecto FROM puntoventa p " +
-        "INNER JOIN afipcomprobante a ON p.codigoAfip=a.codigoAfip " +
+        "INNER JOIN afipcomprobante a ON p.idAfipComprobante=a.id " +
         "where p.idEmpresa=:idEmpresa and p.idSucursal=:idSucursal and p.fe=1 and p.estaHabilitado=1 AND a.idTipoComprobante=:idTipoComprobante " +
         "group by puntoVenta, porDefecto order by porDefecto desc) b;", nativeQuery = true)
     public List<Object> listarPorEmpresaYSucursal(@Param("idSucursal") int idSucursal, @Param("idEmpresa") int idEmpresa, 

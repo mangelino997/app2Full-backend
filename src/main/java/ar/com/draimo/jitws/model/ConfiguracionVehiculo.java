@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,23 +47,23 @@ public class ConfiguracionVehiculo extends ObjetoGenerico {
     
     //Define la tara
     @Column(name = "tara", nullable = true)
-    private short tara;
+    private BigDecimal tara;
     
     //Define la altura
     @Column(name = "altura", nullable = true)
-    private short altura;
+    private BigDecimal altura;
     
     //Define el largo
     @Column(name = "largo", nullable = true)
-    private short largo;
+    private BigDecimal largo;
     
     //Define el ancho
     @Column(name = "ancho", nullable = true)
-    private short ancho;
+    private BigDecimal ancho;
     
     //Define los m3
     @Column(name = "m3", nullable = true)
-    private short m3;
+    private BigDecimal m3;
 
     //Getters y Setters de la clase
 
@@ -114,43 +115,43 @@ public class ConfiguracionVehiculo extends ObjetoGenerico {
         this.capacidadCarga = capacidadCarga;
     }
 
-    public short getTara() {
+    public BigDecimal getTara() {
         return tara;
     }
 
-    public void setTara(short tara) {
+    public void setTara(BigDecimal tara) {
         this.tara = tara;
     }
 
-    public short getAltura() {
+    public BigDecimal getAltura() {
         return altura;
     }
 
-    public void setAltura(short altura) {
+    public void setAltura(BigDecimal altura) {
         this.altura = altura;
     }
 
-    public short getLargo() {
+    public BigDecimal getLargo() {
         return largo;
     }
 
-    public void setLargo(short largo) {
+    public void setLargo(BigDecimal largo) {
         this.largo = largo;
     }
 
-    public short getAncho() {
+    public BigDecimal getAncho() {
         return ancho;
     }
 
-    public void setAncho(short ancho) {
+    public void setAncho(BigDecimal ancho) {
         this.ancho = ancho;
     }
 
-    public short getM3() {
+    public BigDecimal getM3() {
         return m3;
     }
 
-    public void setM3(short m3) {
+    public void setM3(BigDecimal m3) {
         this.m3 = m3;
     }
     
