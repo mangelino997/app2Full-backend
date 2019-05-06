@@ -69,6 +69,13 @@ public class TramoController {
         return elementoService.listarPorDestino(nombre);
     }
     
+    //Obtiene una lista por filtro
+    @GetMapping(value = URL + "/listarPorFiltro/{idOrigen}/{idDestino}")
+    @ResponseBody
+    public List<Tramo> listarPorDestino(@PathVariable int idOrigen, @PathVariable int idDestino) {
+        return elementoService.listarPorFiltro(idOrigen, idDestino);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Tramo elemento) {

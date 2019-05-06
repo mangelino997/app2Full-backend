@@ -1,6 +1,8 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IOrigenDestinoDAO;
 import ar.com.draimo.jitws.dao.ITramoDAO;
+import ar.com.draimo.jitws.model.OrigenDestino;
 import ar.com.draimo.jitws.model.Tramo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ public class TramoService {
     //Define la referencia al dao
     @Autowired
     ITramoDAO elementoDAO;
+    
+    //Define la referencia al dao origendestino
+    @Autowired
+    IOrigenDestinoDAO origenDestinoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -38,6 +44,23 @@ public class TramoService {
     //Obtiene una lista por destino
     public List<Tramo> listarPorDestino(String nombre) {
         return elementoDAO.findByDestino_NombreContaining(nombre);
+    }
+    
+    //Obtiene una lista por destino
+    public List<Tramo> listarPorFiltro(int idOrigen, int idDestino) {
+        if(idOrigen != 0 && idDestino != 0) {
+            OrigenDestino origen = origenDestinoDAO.findById(idOrigen).get();
+            OrigenDestino destino = origenDestinoDAO.findById(idDestino).get();
+            return elementoDAO.findByOrigenAndDestino(origen, destino);
+        } else if(idOrigen != 0) {
+            OrigenDestino origen = origenDestinoDAO.findById(idOrigen).get();
+            return elementoDAO.findByOrigen(origen);
+        } else if(idDestino != 0) {
+            OrigenDestino destino = origenDestinoDAO.findById(idDestino).get();
+            return elementoDAO.findByDestino(destino);
+        } else {
+            return elementoDAO.findAll();
+        }
     }
 
     //Agrega un registro

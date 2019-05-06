@@ -1,5 +1,8 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
+import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
 import ar.com.draimo.jitws.model.Vehiculo;
 import java.sql.Date;
@@ -20,6 +23,18 @@ public class VehiculoService {
     @Autowired
     IVehiculoDAO elementoDAO;
     
+    //Define la referencia al dao empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
+    
+    //Define la referencia al dao tipo vehiculo
+    @Autowired
+    ITipoVehiculoDAO tipoVehiculoDAO;
+    
+    //Define la referencia al dao marca vehiculo
+    @Autowired
+    IMarcaVehiculoDAO marcaVehiculoDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Vehiculo elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -39,6 +54,12 @@ public class VehiculoService {
     //Obtiene una lista por alias filtrado por remolque
     public List<Vehiculo> listarPorAliasFiltroRemolque(String alias) {
         return elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(alias);
+    }
+    
+    //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
+    public List<Vehiculo> listarFiltro(int idEmpresa, int idTipoVehiculo, int idMarcaVehiculo) {
+        return elementoDAO.findByEmpresaAndConfiguracionVehiculo_TipoVehiculoAndConfiguracionVehiculo_MarcaVehiculo(
+                empresaDAO.findById(idEmpresa).get(), tipoVehiculoDAO.findById(idTipoVehiculo).get(), marcaVehiculoDAO.findById(idMarcaVehiculo).get());
     }
     
     //Agrega un registro
