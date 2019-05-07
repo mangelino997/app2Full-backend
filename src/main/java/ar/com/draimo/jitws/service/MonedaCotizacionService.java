@@ -66,8 +66,8 @@ public class MonedaCotizacionService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(MonedaCotizacion elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
 
 }
