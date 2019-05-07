@@ -69,6 +69,14 @@ public class VehiculoController {
         return elementoService.listarPorAliasFiltroRemolque(alias);
     }
     
+    //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
+    @GetMapping(value = URL + "/listarFiltro/{idEmpresa}/{idTipoVehiculo}/{idMarcaVehiculo}")
+    @ResponseBody
+    public List<Vehiculo> listarFiltro(@PathVariable int idEmpresa, @PathVariable int idTipoVehiculo,
+            @PathVariable int idMarcaVehiculo) {
+        return elementoService.listarFiltro(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Vehiculo elemento) {

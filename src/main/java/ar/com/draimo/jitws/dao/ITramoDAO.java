@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.OrigenDestino;
 import ar.com.draimo.jitws.model.Tramo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +22,14 @@ public interface ITramoDAO extends JpaRepository<Tramo, Integer> {
     
     //Obtiene un listado por destino
     public List<Tramo> findByDestino_NombreContaining(String nombre);
+    
+    //Obtiene una lista por origen
+    public List<Tramo> findByOrigen(OrigenDestino origen);
+    
+    //Obtiene una lista por destino
+    public List<Tramo> findByDestino(OrigenDestino destino);
+    
+    //Obtiene una lista por origen y destino
+    public List<Tramo> findByOrigenAndDestino(OrigenDestino origen, OrigenDestino destino);
     
 }

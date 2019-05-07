@@ -22,4 +22,7 @@ public interface IConfiguracionVehiculoDAO extends JpaRepository<ConfiguracionVe
     //Obtiene una lista por id tipo vehiculo y id marca vehiculo
     public List<ConfiguracionVehiculo> findByTipoVehiculoAndMarcaVehiculo(Optional<TipoVehiculo> TipoVehiculo, Optional<MarcaVehiculo> marcaVehiculo);
     
+    //Obtiene una lista por marca de vehiculo
+    public List<ConfiguracionVehiculo> findByMarcaVehiculo(MarcaVehiculo marcaVehiculo);
+    
 }

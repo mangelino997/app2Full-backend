@@ -53,6 +53,11 @@ public class ConfiguracionVehiculoService {
         return elementoDAO.findByTipoVehiculoAndMarcaVehiculo(tipoVehiculo, marcaVehiculo);
     }
     
+    //Obtiene una lista por marca de vehiculo
+    public List<ConfiguracionVehiculo> listarPorMarcaVehiculo(int idMarcaVehiculo) {
+        return elementoDAO.findByMarcaVehiculo(marcaVehiculoDAO.findById(idMarcaVehiculo).get());
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ConfiguracionVehiculo agregar(ConfiguracionVehiculo elemento) {
