@@ -15,7 +15,6 @@ import java.math.RoundingMode;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -172,7 +171,7 @@ public class OrdenVentaEscalaService {
         elementoDAO.delete(elemento);
     }
     
-    /*Comparator for sorting the list by roll no*/
+    //Comparator para ordenar lista
     private Comparator<OrdenVentaEscala> sortDate = new Comparator<OrdenVentaEscala>() {
 	public int compare(OrdenVentaEscala s1, OrdenVentaEscala s2) {
 	   Date rollno1 = s1.getPreciosDesde();
