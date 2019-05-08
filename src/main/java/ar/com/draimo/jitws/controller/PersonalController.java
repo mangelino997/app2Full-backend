@@ -54,12 +54,20 @@ public class PersonalController {
         return elementoService.listar();
     }
     
-    //Obtiene la lista completa
+    //Obtiene la lista de choferes de corta distancia por alias
     @GetMapping(value = URL + "/listarChoferesCortaDistanciaPorAlias/{alias}")
     @ResponseBody
     public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenados(@PathVariable 
             String alias) {
         return elementoService.listarChoferesCortaDistanciaOrdenadoPorNombre(alias);
+    }
+    
+    //Obtiene la lista de choferes de larga distancia por alias
+    @GetMapping(value = URL + "/listarChoferesLargaDistanciaPorAlias/{alias}")
+    @ResponseBody
+    public List<Personal> listarChoferesLargaDistanciaPorAliasOrdenados(@PathVariable 
+            String alias) {
+        return elementoService.listarChoferesLargaDistanciaOrdenadoPorNombre(alias);
     }
     
     //Obtiene la lista completa

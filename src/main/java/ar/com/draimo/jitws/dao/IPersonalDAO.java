@@ -29,6 +29,11 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
             + " ORDER BY nombreCompleto ASC", nativeQuery = true)
     public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(@Param("alias") String alias);
     
+    //Obtiene una lista de choferes de corta distancia
+    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=1 AND alias LIKE %:alias%"
+            + " ORDER BY nombreCompleto ASC", nativeQuery = true)
+    public List<Personal> listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(@Param("alias") String alias);
+    
     //Obtiene una lista de acompañantes ordenados por nombre
     @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND alias LIKE %:alias% ORDER BY nombreCompleto ASC ", nativeQuery = true)
     public List<Personal> listarAcompaniantesPorAliasOrdenadoPorNombre(@Param("alias") String alias);

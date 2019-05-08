@@ -22,6 +22,9 @@ public interface IVehiculoDAO extends JpaRepository<Vehiculo, Integer> {
     //Obtiene un listado por alias
     public List<Vehiculo> findByAliasContaining(String alias);
     
+    //Obtiene un listado por alias filtrado por tipo de vehiculo no remolque
+    public List<Vehiculo> findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueFalse(String alias);
+    
     //Obtiene un listado por alias filtrado por tipo de vehiculo remolque
     public List<Vehiculo> findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(String alias);
     

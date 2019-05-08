@@ -49,6 +49,11 @@ public class PersonalService {
         return elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias);
     }
     
+    //Obtiene un listado de choferes ordenados por nombre de larga distancia
+    public List<Personal> listarChoferesLargaDistanciaOrdenadoPorNombre(String alias) {
+        return elementoDAO.listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(alias);
+    }
+    
     //Obtiene un listado de acompañantes ordenados por nombre
     public List<Personal> listarAcompaniantesOrdenadoPorNombre(String alias) {
         return elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);

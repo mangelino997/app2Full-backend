@@ -69,6 +69,13 @@ public class ChoferProveedorController {
         return elementoService.listarPorProveedor(id);
     }
     
+    //Obtiene una lista por alias y proveedor
+    @GetMapping(value = URL + "/listarPorAliasYProveedor/{alias}/{idProveedor}")
+    @ResponseBody
+    public List<ChoferProveedor> listarPorAliasYProveedor(@PathVariable String alias, @PathVariable int idProveedor) {
+        return elementoService.listarPorAliasYProveedor(alias, idProveedor);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ChoferProveedor elemento) {

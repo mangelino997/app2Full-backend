@@ -54,6 +54,11 @@ public class ChoferProveedorService {
         return elementoDAO.findByProveedor(proveedor);
     }
     
+    //Obtiene una lista por alias y proveedor
+    public List<ChoferProveedor> listarPorAliasYProveedor(String alias, int idProveedor) {
+        return elementoDAO.findByAliasContainingAndProveedor(alias, proveedorDAO.findById(idProveedor).get());
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ChoferProveedor agregar(ChoferProveedor elemento) {

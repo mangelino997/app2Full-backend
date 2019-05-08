@@ -62,11 +62,18 @@ public class VehiculoController {
         return elementoService.listarPorAlias(alias);
     }
     
-    //Obtiene una lista por alias filtro remolque
-    @GetMapping(value = URL + "/listarPorAliasFiltroRemolque/{alias}")
+    //Obtiene una lista por alias filtro no remolque
+    @GetMapping(value = URL + "/listarPorAliasYRemolqueFalse/{alias}")
     @ResponseBody
-    public List<Vehiculo> listarPorAliasFiltroRemolque(@PathVariable String alias) {
-        return elementoService.listarPorAliasFiltroRemolque(alias);
+    public List<Vehiculo> listarPorAliasYRemolqueFalse(@PathVariable String alias) {
+        return elementoService.listarPorAliasYRemolqueFalse(alias);
+    }
+    
+    //Obtiene una lista por alias filtro remolque
+    @GetMapping(value = URL + "/listarPorAliasYRemolqueTrue/{alias}")
+    @ResponseBody
+    public List<Vehiculo> listarPorAliasYRemolqueTrue(@PathVariable String alias) {
+        return elementoService.listarPorAliasYRemolqueTrue(alias);
     }
     
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo

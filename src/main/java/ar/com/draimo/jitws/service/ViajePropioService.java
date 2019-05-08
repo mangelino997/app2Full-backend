@@ -23,55 +23,55 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio ViajePropio
+ *
  * @author blas
  */
-
 @Service
 public class ViajePropioService {
 
     //Define la referencia al dao
     @Autowired
     IViajePropioDAO elementoDAO;
-    
+
     //Define la referencia al dao viaje propio tramo
     @Autowired
     IViajePropioTramoDAO viajePropioTramoDAO;
-    
+
     //Define la referencia al dao viaje propio tramo cliente
     @Autowired
     IViajePropioTramoClienteDAO viajePropioTramoClienteDAO;
-    
+
     //Define la referencia al dao viaje propio combustible
     @Autowired
     IViajePropioCombustibleDAO viajePropioCombustibleDAO;
-    
+
     //Define la referencia al dao viaje propio efectivo
     @Autowired
     IViajePropioEfectivoDAO viajePropioEfectivoDAO;
-    
+
     //Define la referencia al dao viaje propio insumo
     @Autowired
     IViajePropioInsumoDAO viajePropioInsumoDAO;
-    
+
     //Define la referencia al dao viaje propio gasto
     @Autowired
     IViajePropioGastoDAO viajePropioGastoDAO;
-    
+
     //Define la referencia al dao viaje propio peaje
     @Autowired
     IViajePropioPeajeDAO viajePropioPeajeDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajePropio elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public List<ViajePropio> listar() {
         return elementoDAO.obtenerTodos();
     }
-    
+
     //Obtiene por id
     public ViajePropio obtenerPorId(int id) {
         //Obtiene un viaje propio por id
@@ -97,12 +97,12 @@ public class ViajePropioService {
         //Retorna los datos
         return viajePropio;
     }
-    
+
     //Obtiene una lista de registros por alias
     public List<ViajePropio> listarPorAlias(String alias) {
         return elementoDAO.findByAliasContaining(alias);
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ViajePropio agregar(ViajePropio elemento) {
@@ -166,16 +166,16 @@ public class ViajePropioService {
         }
         return viajePropio;
     }
-    
+
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(ViajePropio viajePropio) {
-        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha() 
-                + " - " + viajePropio.getEmpresa().getRazonSocial() 
+        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha()
+                + " - " + viajePropio.getEmpresa().getRazonSocial()
                 + " - " + viajePropio.getPersonal().getNombreCompleto());
         elementoDAO.save(viajePropio);
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajePropio viajePropio) {
@@ -184,7 +184,7 @@ public class ViajePropioService {
         //Verifica que la lista de tramos tenga elementos
         if (viajePropio.getViajePropioTramos() != null) {
             //Agrega los tramos del viaje
-            for(ViajePropioTramo item : viajePropio.getViajePropioTramos()) {
+            for (ViajePropioTramo item : viajePropio.getViajePropioTramos()) {
                 if (item.getId() >= 0) {
                     item.setViajePropio(viajePropio);
                     ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.save(item);
@@ -199,7 +199,7 @@ public class ViajePropioService {
                         }
                     }
                 } else {
-                    item.setId(item.getId()*(-1));
+                    item.setId(item.getId() * (-1));
                     viajePropioTramoDAO.delete(item);
                 }
             }
@@ -207,12 +207,12 @@ public class ViajePropioService {
         //Verifica que la lista de combustibles tenga elementos
         if (viajePropio.getViajePropioCombustibles() != null) {
             //Agrega los combustibles del viaje
-            for(ViajePropioCombustible item : viajePropio.getViajePropioCombustibles()) {
-                if(item.getId() >= 0) {
+            for (ViajePropioCombustible item : viajePropio.getViajePropioCombustibles()) {
+                if (item.getId() >= 0) {
                     item.setViajePropio(viajePropio);
                     viajePropioCombustibleDAO.save(item);
                 } else {
-                    item.setId(item.getId()*(-1));
+                    item.setId(item.getId() * (-1));
                     viajePropioCombustibleDAO.delete(item);
                 }
             }
@@ -220,12 +220,12 @@ public class ViajePropioService {
         //Verifica que la lista de efectivos tenga elementos
         if (viajePropio.getViajePropioEfectivos() != null) {
             //Agrega los efectivos del viaje
-            for(ViajePropioEfectivo item : viajePropio.getViajePropioEfectivos()) {
-                if(item.getId() >= 0) {
+            for (ViajePropioEfectivo item : viajePropio.getViajePropioEfectivos()) {
+                if (item.getId() >= 0) {
                     item.setViajePropio(viajePropio);
                     viajePropioEfectivoDAO.save(item);
                 } else {
-                    item.setId(item.getId()*(-1));
+                    item.setId(item.getId() * (-1));
                     viajePropioEfectivoDAO.delete(item);
                 }
             }
@@ -233,12 +233,12 @@ public class ViajePropioService {
         //Verifica que la lista de insumos tenga elementos
         if (viajePropio.getViajePropioInsumos() != null) {
             //Agrega los insumos del viaje
-            for(ViajePropioInsumo item : viajePropio.getViajePropioInsumos()) {
-                if(item.getId() >= 0) {
+            for (ViajePropioInsumo item : viajePropio.getViajePropioInsumos()) {
+                if (item.getId() >= 0) {
                     item.setViajePropio(viajePropio);
                     viajePropioInsumoDAO.save(item);
                 } else {
-                    item.setId(item.getId()*(-1));
+                    item.setId(item.getId() * (-1));
                     viajePropioInsumoDAO.delete(item);
                 }
             }
@@ -246,12 +246,12 @@ public class ViajePropioService {
         //Verifica que la lista de gastos tenga elementos
         if (viajePropio.getViajePropioGastos() != null) {
             //Agrega los gastos del viaje
-            for(ViajePropioGasto item : viajePropio.getViajePropioGastos()) {
-                if(item.getId() >= 0) {
+            for (ViajePropioGasto item : viajePropio.getViajePropioGastos()) {
+                if (item.getId() >= 0) {
                     item.setViajePropio(viajePropio);
                     viajePropioGastoDAO.save(item);
                 } else {
-                    item.setId(item.getId()*(-1));
+                    item.setId(item.getId() * (-1));
                     viajePropioGastoDAO.delete(item);
                 }
             }
@@ -259,44 +259,44 @@ public class ViajePropioService {
         //Verifica que la lista de peajes tenga elementos
         if (viajePropio.getViajePropioPeajes() != null) {
             //Agrega los tramos del viaje
-            for(ViajePropioPeaje item : viajePropio.getViajePropioPeajes()) {
-                if(item.getId() >= 0) {
+            for (ViajePropioPeaje item : viajePropio.getViajePropioPeajes()) {
+                if (item.getId() >= 0) {
                     item.setViajePropio(viajePropio);
                     viajePropioPeajeDAO.save(item);
                 } else {
-                    item.setId(item.getId()*(-1));
+                    item.setId(item.getId() * (-1));
                     viajePropioPeajeDAO.delete(item);
                 }
             }
         }
-        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha() 
-                + " - " + viajePropio.getEmpresa().getRazonSocial() 
+        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha()
+                + " - " + viajePropio.getEmpresa().getRazonSocial()
                 + " - " + viajePropio.getPersonal().getNombreCompleto());
         //Actualiza el viaje propio
         elementoDAO.save(viajePropio);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(ViajePropio elemento) {
         elementoDAO.delete(elemento);
     }
-    
+
     //Formatea los strings
     private ViajePropio formatearStrings(ViajePropio elemento) {
-        if(elemento.getObservacionVehiculo() != null) {
+        if (elemento.getObservacionVehiculo() != null) {
             elemento.setObservacionVehiculo(elemento.getObservacionVehiculo().trim());
         }
-        if(elemento.getObservacionVehiculoRemolque() != null) {
+        if (elemento.getObservacionVehiculoRemolque() != null) {
             elemento.setObservacionVehiculoRemolque(elemento.getObservacionVehiculoRemolque().trim());
         }
-        if(elemento.getObservacionChofer() != null) {
+        if (elemento.getObservacionChofer() != null) {
             elemento.setObservacionChofer(elemento.getObservacionChofer().trim());
         }
-        if(elemento.getObservaciones() != null) {
+        if (elemento.getObservaciones() != null) {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
         return elemento;
     }
-    
+
 }
