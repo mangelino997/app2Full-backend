@@ -111,10 +111,6 @@ public class ViajePropioTramo extends ObjetoGenerico {
     @OneToMany(mappedBy = "viajePropioTramo")
     private List<ViajeRemito> viajeRemitos;
     
-    //Define si el registro esta activo o no
-    @Column(name = "activo", nullable = false)
-    private boolean activo; 
-    
     //Getters y Setters de la clase
 
     public ViajePropio getViajePropio() {
@@ -259,14 +255,6 @@ public class ViajePropioTramo extends ObjetoGenerico {
 
     public void setViajeRemitos(List<ViajeRemito> viajeRemitos) {
         this.viajeRemitos = viajeRemitos;
-    }
-
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
     }
     
 }
