@@ -185,22 +185,12 @@ public class ViajePropioService {
         if (viajePropio.getViajePropioTramos() != null) {
             //Agrega los tramos del viaje
             for (ViajePropioTramo item : viajePropio.getViajePropioTramos()) {
-                if (item.getId() >= 0) {
-                    item.setViajePropio(viajePropio);
-                    ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.save(item);
-                    //Agrega los dadores-destinatarios
-                    for (ViajePropioTramoCliente elem : item.getViajePropioTramoClientes()) {
-                        if (elem.getId() >= 0) {
-                            elem.setViajePropioTramo(viajePropioTramo);
-                            viajePropioTramoClienteDAO.saveAndFlush(elem);
-                        } else {
-                            elem.setId(elem.getId() * (-1));
-                            viajePropioTramoClienteDAO.delete(elem);
-                        }
-                    }
-                } else {
-                    item.setId(item.getId() * (-1));
-                    viajePropioTramoDAO.delete(item);
+                item.setViajePropio(viajePropio);
+                ViajePropioTramo viajePropioTramo = viajePropioTramoDAO.save(item);
+                //Agrega los dadores-destinatarios
+                for (ViajePropioTramoCliente elem : item.getViajePropioTramoClientes()) {
+                    elem.setViajePropioTramo(viajePropioTramo);
+                    viajePropioTramoClienteDAO.saveAndFlush(elem);
                 }
             }
         }
