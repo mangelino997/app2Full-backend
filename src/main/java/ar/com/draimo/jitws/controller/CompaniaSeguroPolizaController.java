@@ -70,10 +70,10 @@ public class CompaniaSeguroPolizaController {
     }
     
     //Obtiene por compania de seguro y empresa
-    @GetMapping(value = URL + "/obtenerPorCompaniaSeguroYEmpresa/{idCompaniaSeguro}/{idEmpresa}")
+    @GetMapping(value = URL + "/listarPorCompaniaSeguroYEmpresa/{idCompaniaSeguro}/{idEmpresa}")
     @ResponseBody
-    public CompaniaSeguroPoliza obtenerPorCompaniaSeguroYEmpresa(@PathVariable int idCompaniaSeguro, @PathVariable int idEmpresa) {
-        return elementoService.obtenerPorCompaniaSeguroYEmpresa(idCompaniaSeguro, idEmpresa);
+    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguroYEmpresa(@PathVariable int idCompaniaSeguro, @PathVariable int idEmpresa) {
+        return elementoService.listarPorCompaniaSeguroYEmpresa(idCompaniaSeguro, idEmpresa);
     }
     
     //Obtiene una lista por nombre de compania de seguro

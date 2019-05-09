@@ -56,7 +56,7 @@ public class CompaniaSeguroPolizaService {
     }
     
     //Obtiene por compania de seguro y empresa
-    public CompaniaSeguroPoliza obtenerPorCompaniaSeguroYEmpresa(int idCompaniaSeguro, int idEmpresa) {
+    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguroYEmpresa(int idCompaniaSeguro, int idEmpresa) {
         Optional<CompaniaSeguro> companiaSeguro = companiaSeguroDAO.findById(idCompaniaSeguro);
         Optional<Empresa> empresa = empresaDAO.findById(idEmpresa);
         return elementoDAO.findByCompaniaSeguroAndEmpresa(companiaSeguro, empresa);
