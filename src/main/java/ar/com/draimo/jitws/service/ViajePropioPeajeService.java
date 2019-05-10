@@ -46,8 +46,8 @@ public class ViajePropioPeajeService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(ViajePropioPeaje elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
     
     //Formatea los strings

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +53,13 @@ public class ViajePropioEfectivoController {
     @ResponseBody
     public List<ViajePropioEfectivo> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista de efectivos por ViajePropio
+    @GetMapping(value = URL + "/listarEfectivos/{idViajePropio}")
+    @ResponseBody
+    public List<ViajePropioEfectivo> listarEfectivos(@PathVariable int idViajePropio) {
+        return elementoService.listarEfectivos(idViajePropio);
     }
     
     //Agrega un registro
@@ -101,10 +109,10 @@ public class ViajePropioEfectivoController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody ViajePropioEfectivo elemento) {
+    @DeleteMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
+            elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch(Exception e) {

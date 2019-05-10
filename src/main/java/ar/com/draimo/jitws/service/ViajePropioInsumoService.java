@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IViajePropioDAO;
 import ar.com.draimo.jitws.dao.IViajePropioInsumoDAO;
 import ar.com.draimo.jitws.model.ViajePropioInsumo;
 import java.util.List;
@@ -19,6 +20,10 @@ public class ViajePropioInsumoService {
     @Autowired
     IViajePropioInsumoDAO elementoDAO;
     
+    //Define la referencia al dao viaje propio
+    @Autowired
+    IViajePropioDAO viajePropioDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajePropioInsumo elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -28,6 +33,11 @@ public class ViajePropioInsumoService {
     //Obtiene la lista completa
     public List<ViajePropioInsumo> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene una lista de insumos por viaje propio
+    public List<ViajePropioInsumo> listarInsumos(int idViajePropio) {
+        return elementoDAO.findByViajePropio(viajePropioDAO.obtenerPorId(idViajePropio));
     }
     
     //Agrega un registro
@@ -46,8 +56,8 @@ public class ViajePropioInsumoService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(ViajePropioInsumo elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
     
     //Formatea los strings

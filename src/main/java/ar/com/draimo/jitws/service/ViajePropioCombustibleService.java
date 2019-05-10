@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IViajePropioCombustibleDAO;
+import ar.com.draimo.jitws.dao.IViajePropioDAO;
 import ar.com.draimo.jitws.model.ViajePropioCombustible;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class ViajePropioCombustibleService {
     @Autowired
     IViajePropioCombustibleDAO elementoDAO;
     
+    //Define la referencia al dao viaje propio
+    @Autowired
+    IViajePropioDAO viajePropioDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajePropioCombustible elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -28,6 +33,11 @@ public class ViajePropioCombustibleService {
     //Obtiene la lista completa
     public List<ViajePropioCombustible> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene una lista de tramos por viaje propio
+    public List<ViajePropioCombustible> listarCombustibles(int idViajePropio) {
+        return elementoDAO.findByViajePropio(viajePropioDAO.obtenerPorId(idViajePropio));
     }
     
     //Agrega un registro
@@ -46,8 +56,8 @@ public class ViajePropioCombustibleService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(ViajePropioCombustible elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
     
     //Formatea los strings
