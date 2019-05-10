@@ -63,8 +63,7 @@ public class VehiculoService {
 
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
     public List<Vehiculo> listarFiltro(int idEmpresa, int idTipoVehiculo, int idMarcaVehiculo) {
-        return elementoDAO.findByEmpresaAndConfiguracionVehiculo_TipoVehiculoAndConfiguracionVehiculo_MarcaVehiculo(
-                empresaDAO.findById(idEmpresa).get(), tipoVehiculoDAO.findById(idTipoVehiculo).get(), marcaVehiculoDAO.findById(idMarcaVehiculo).get());
+        return elementoDAO.listarPorConfig(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
     }
 
     //Agrega un registro

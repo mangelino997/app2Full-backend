@@ -1,12 +1,10 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
-
-import ar.com.draimo.jitws.model.Empresa;
-import ar.com.draimo.jitws.model.MarcaVehiculo;
-import ar.com.draimo.jitws.model.TipoVehiculo;
 import ar.com.draimo.jitws.model.Vehiculo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Vehiculo
@@ -29,7 +27,12 @@ public interface IVehiculoDAO extends JpaRepository<Vehiculo, Integer> {
     public List<Vehiculo> findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(String alias);
     
     //Obtiene una lista por tipo de vehiculo, marca de vehiculo y empresa
-    public List<Vehiculo> findByEmpresaAndConfiguracionVehiculo_TipoVehiculoAndConfiguracionVehiculo_MarcaVehiculo(
-            Empresa empresa, TipoVehiculo tipoVehiculo, MarcaVehiculo marcaVehiculo);
+    @Query(value = "SELECT v.* FROM vehiculo v left join configuracionvehiculo c "
+            + "on v.idConfiguracionVehiculo=c.id WHERE "
+            + "(:idEmpresa=0 OR v.idEmpresa=:idEmpresa) AND "
+            + "(:idTipoVehiculo=0 OR c.idTipoVehiculo=:idTipoVehiculo) AND "
+            + "(:idMarcaVehiculo=0 OR c.idMarcaVehiculo=:idMarcaVehiculo)", nativeQuery = true)
+    public List<Vehiculo> listarPorConfig(@Param("idEmpresa") int idEmpresa, 
+            @Param("idTipoVehiculo") int idTipoVehiculo, @Param("idMarcaVehiculo") int idMarcaVehiculo);
     
 }
