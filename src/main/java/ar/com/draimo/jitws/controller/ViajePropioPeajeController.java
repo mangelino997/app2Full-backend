@@ -55,6 +55,13 @@ public class ViajePropioPeajeController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista de peajes por ViajePropio
+    @GetMapping(value = URL + "/listarPeajes/{idViajePropio}")
+    @ResponseBody
+    public List<ViajePropioPeaje> listarPeajes(@PathVariable int idViajePropio) {
+        return elementoService.listarPeajes(idViajePropio);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajePropioPeaje elemento) {
