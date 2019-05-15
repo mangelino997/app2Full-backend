@@ -73,6 +73,13 @@ public class OrdenVentaTramoController {
         return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
     }
     
+    //Obtiene una lista de fechas por orden de venta
+    @GetMapping(value = URL + "/listarFechasPorOrdenVenta/{idOrdenVenta}")
+    @ResponseBody
+    public Object listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
+        return elementoService.listarFechasPorOrdenVenta(idOrdenVenta);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL + "/agregarLista")
     public ResponseEntity<?> agregarLista(@RequestBody List<OrdenVentaTramo> elementos) {
