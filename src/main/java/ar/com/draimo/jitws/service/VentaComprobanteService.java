@@ -128,7 +128,7 @@ public class VentaComprobanteService {
             ventaComprobanteItemFADAO.saveAndFlush(ventaComprobanteItemFA);
         }
         //Agrega item ContraReembolso
-        if (elemento.getVentaComprobanteItemCR() != null) {
+        if (elemento.getVentaComprobanteItemCR() != null && elemento.getVentaComprobanteItemCR().size() > 0) {
             elemento.getVentaComprobanteItemCRs().get(0).setVentaComprobante(vc);
             ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCRs().get(0));
         }
