@@ -66,7 +66,7 @@ public class ViajePropioCombustible extends ObjetoGenerico {
     
     //Define la cantidad
     @Column(name = "cantidad", nullable = false)
-    private short cantidad;
+    private BigDecimal cantidad;
     
     //Define el precio unitario
     @Column(name = "precioUnitario", nullable = false)
@@ -150,11 +150,11 @@ public class ViajePropioCombustible extends ObjetoGenerico {
         this.insumo = insumo;
     }
 
-    public short getCantidad() {
+    public BigDecimal getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(short cantidad) {
+    public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
 

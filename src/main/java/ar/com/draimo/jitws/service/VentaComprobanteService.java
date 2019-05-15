@@ -43,7 +43,7 @@ public class VentaComprobanteService {
     //Define la referencia a VentaComprobanteitemFADAO
     @Autowired
     IVentaComprobanteItemFADAO ventaComprobanteItemFADAO;
-    
+
     //Define la referencia a VentaComprobanteitemNCDAO
     @Autowired
     IVentaComprobanteItemNCDAO ventaComprobanteItemNCDAO;
@@ -51,15 +51,15 @@ public class VentaComprobanteService {
     //Define la referancia a RemitoDAO
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
-    
+
     //Define la referancia a MonedaDAO
     @Autowired
     IMonedaDAO monedaDAO;
-    
+
     //Define la referancia a ClienteDAO
     @Autowired
     IClienteDAO clienteDAO;
-    
+
     //Define la referancia a EmpresaDAO
     @Autowired
     IEmpresaDAO empresaDAO;
@@ -82,7 +82,7 @@ public class VentaComprobanteService {
                 .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
@@ -90,7 +90,7 @@ public class VentaComprobanteService {
     public VentaComprobante obtener(int puntoVenta, String letra, int numero) {
         return elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
     }
-    
+
     //Obtiene una lista por cliente y empresa
     public Object listarPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
         List<VentaComprobante> ventasComprobantes = elementoDAO.findByClienteAndEmpresa(
@@ -104,7 +104,7 @@ public class VentaComprobanteService {
                 .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
@@ -128,14 +128,16 @@ public class VentaComprobanteService {
             ventaComprobanteItemFADAO.saveAndFlush(ventaComprobanteItemFA);
         }
         //Agrega item ContraReembolso
-        if(elemento.getVentaComprobanteItemCR() != null) {
+        if (elemento.getVentaComprobanteItemCR() != null) {
             elemento.getVentaComprobanteItemCRs().get(0).setVentaComprobante(vc);
             ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCRs().get(0));
         }
-        //Agrega item NC
-        for(VentaComprobanteItemNC ventaComprobanteItemNC : elemento.getVentaComprobanteItemNC()) {
-            ventaComprobanteItemNC.setVentaComprobante(vc);
-            ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
+        if (elemento.getVentaComprobanteItemNC() != null) {
+            //Agrega item NC
+            for (VentaComprobanteItemNC ventaComprobanteItemNC : elemento.getVentaComprobanteItemNC()) {
+                ventaComprobanteItemNC.setVentaComprobante(vc);
+                ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
+            }
         }
         return elementoDAO.saveAndFlush(elemento);
     }
