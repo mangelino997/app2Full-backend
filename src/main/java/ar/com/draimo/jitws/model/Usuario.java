@@ -84,7 +84,7 @@ public class Usuario extends ObjetoGenerico {
         this.rol = rol;
     }
 
-    public boolean isCuentaHabilitada() {
+    public boolean getCuentaHabilitada() {
         return cuentaHabilitada;
     }
 

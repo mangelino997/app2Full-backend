@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AppUserDetailsService appUserDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
 
     public WebSecurityConfig(AppUserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.appUserDetailsService = userDetailsService;
@@ -41,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //Configura los cors
         http.addFilterBefore(corsFilter(), ChannelProcessingFilter.class);
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/jitws/socket/**", "/jitws/auth/**").permitAll()
+                .antMatchers("/jitws/socket/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
