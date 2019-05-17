@@ -1,10 +1,10 @@
 package ar.com.draimo.jitws.dto;
 
 /**
- * Define un RolDTO
+ *
  * @author blas
  */
-public class RolDTO {
+public class RolSecundarioDTO {
     
     //Define el id
     private int id;
@@ -14,9 +14,6 @@ public class RolDTO {
     
     //Define el nombre
     private String nombre;
-    
-    //Define el rol secundario
-    private RolSecundarioDTO rolSecundarioDTO;
 
     public int getId() {
         return id;
@@ -40,14 +37,6 @@ public class RolDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public RolSecundarioDTO getRolSecundarioDTO() {
-        return rolSecundarioDTO;
-    }
-
-    public void setRolSecundarioDTO(RolSecundarioDTO rolSecundarioDTO) {
-        this.rolSecundarioDTO = rolSecundarioDTO;
     }
     
 }

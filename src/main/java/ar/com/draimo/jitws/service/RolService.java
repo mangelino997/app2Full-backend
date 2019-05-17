@@ -1,18 +1,21 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IOpcionDAO;
 import ar.com.draimo.jitws.dao.IPestaniaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
+import ar.com.draimo.jitws.dao.IRolOpcionDAO;
 import ar.com.draimo.jitws.dao.IRolSubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
 import ar.com.draimo.jitws.dto.RolDTO;
+import ar.com.draimo.jitws.model.Opcion;
 import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.Rol;
+import ar.com.draimo.jitws.model.RolOpcion;
 import ar.com.draimo.jitws.model.RolSubopcion;
 import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.model.SubopcionPestania;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,10 @@ public class RolService {
     //Define la referencia al dao pestania
     @Autowired
     IPestaniaDAO pestaniaDAO;
+    
+    //Define la referencia al dao opcion
+    @Autowired
+    IOpcionDAO opcionDAO;
 
     //Define la referencia al dao rolsubopcion
     @Autowired
@@ -44,6 +51,10 @@ public class RolService {
     //Define la referencia al dao subopcionpestania
     @Autowired
     ISubopcionPestaniaDAO subopcionPestaniaDAO;
+    
+    //Define la referencia al dao rolopcion
+    @Autowired
+    IRolOpcionDAO rolOpcionDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -74,7 +85,7 @@ public class RolService {
         r.setNombre(elemento.getNombre());
         Rol rol = elementoDAO.saveAndFlush(r);
         //Verifica si el usuario copia de un rol existente
-        if (elemento.getIdRolSecundario() == 0) {
+        if (elemento.getRolSecundarioDTO() == null) {
             //Obtiene la lista completa de subopciones
             List<Subopcion> subopciones = subopcionDAO.findAll();
             //Obtiene la lista de pestanias
@@ -105,7 +116,7 @@ public class RolService {
             }
         } else {
             //Obtiene el rol secundario
-            Rol rolSecundario = elementoDAO.findById(elemento.getIdRolSecundario()).get();
+            Rol rolSecundario = elementoDAO.findById(elemento.getRolSecundarioDTO().getId()).get();
             //Obtiene la lista de subopiones del rol secundario elegido por el usuario
             List<RolSubopcion> rolSubopciones = rolSubopcionDAO.findByRol(rolSecundario);
             //Obtiene la lista de pestanias del rol secundario elegido por el usuario
@@ -135,6 +146,19 @@ public class RolService {
                 //Agrega la subopcion pestania
                 subopcionPestaniaDAO.saveAndFlush(sp);
             }
+        }
+        //Obtiene la lista de opciones
+        List<Opcion> opciones = opcionDAO.findAll();
+        //Define un rolOpcion
+        RolOpcion rolOpcion;
+        //Recorre la lista y agrega a rolOpcion
+        for(Opcion opcion : opciones) {
+            //Crea un rolopcion
+            rolOpcion = new RolOpcion();
+            rolOpcion.setRol(rol);
+            rolOpcion.setOpcion(opcion);
+            rolOpcion.setMostrar(true);
+            rolOpcionDAO.saveAndFlush(rolOpcion);
         }
         return rol;
     }
