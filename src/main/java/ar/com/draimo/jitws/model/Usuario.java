@@ -31,7 +31,7 @@ public class Usuario extends ObjetoGenerico {
     @Column(name = "password",length = 60, nullable = false)
     private String password;
     
-    //Referencia a la clase rol
+    //Referencia a la clase Rol
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRol", nullable = false)
     private Rol rol;
@@ -44,6 +44,11 @@ public class Usuario extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
+    
+    //Referencia a la clase Rol
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idRolSecundario", nullable = true)
+    private Rol rolSecundario;
     
     //Getters y Setters de la clase
 
@@ -93,6 +98,14 @@ public class Usuario extends ObjetoGenerico {
 
     public void setSucursal(Sucursal sucursal) {
         this.sucursal = sucursal;
+    }
+
+    public Rol getRolSecundario() {
+        return rolSecundario;
+    }
+
+    public void setRolSecundario(Rol rolSecundario) {
+        this.rolSecundario = rolSecundario;
     }
     
 }

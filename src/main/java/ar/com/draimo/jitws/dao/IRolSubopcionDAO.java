@@ -22,7 +22,7 @@ import org.springframework.data.repository.query.Param;
 public interface IRolSubopcionDAO extends JpaRepository<RolSubopcion, Integer> {
     
     //Obtiene una lista de subopciones por rol
-    public List<RolSubopcion> findByRol(Optional<Rol> rol);
+    public List<RolSubopcion> findByRol(Rol rol);
     
     //Obtiene una lista de RolSubopcion por rol y modulo
     public List<RolSubopcion> findByRolAndSubopcion_Submodulo_Modulo(Optional<Rol> rol, Optional<Modulo> modulo);

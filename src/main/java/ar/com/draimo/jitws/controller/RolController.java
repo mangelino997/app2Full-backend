@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.RolDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Rol;
 import ar.com.draimo.jitws.service.RolService;
@@ -64,7 +65,7 @@ public class RolController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody Rol elemento) {
+    public ResponseEntity<?> agregar(@RequestBody RolDTO elemento) {
         try {
             Rol a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
@@ -85,7 +86,7 @@ public class RolController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Rol elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody RolDTO elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

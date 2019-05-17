@@ -39,7 +39,7 @@ public class MenuService {
         MenuDTO menu = null;
         
         //Obtiene el rol por id
-        Optional<Rol> rol = rolDAO.findById(idRol);
+        Rol rol = rolDAO.findById(idRol).get();
         
         //Obtiene una lista de RolSubopcion por idRol
         List<RolSubopcion> rolSubopcionLista = rolSubopcionDAO.findByRol(rol);

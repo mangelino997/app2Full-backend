@@ -19,6 +19,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ISubopcionPestaniaDAO extends JpaRepository<SubopcionPestania, Integer> {
     
+    //Obtiene una lista por rol
+    public List<SubopcionPestania> findByRol(Rol rol);
+    
     //Obtiene una lista de pestañas por subopcion
     public List<SubopcionPestania> findByRolAndSubopcion(Optional<Rol> rol, Optional<Subopcion> subopcion);
     

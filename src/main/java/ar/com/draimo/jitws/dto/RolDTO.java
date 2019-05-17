@@ -14,6 +14,9 @@ public class RolDTO {
     
     //Define el nombre
     private String nombre;
+    
+    //Define el rol secundario
+    private int idRolSecundario;
 
     public int getId() {
         return id;
@@ -37,6 +40,14 @@ public class RolDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getIdRolSecundario() {
+        return idRolSecundario;
+    }
+
+    public void setIdRolSecundario(int idRolSecundario) {
+        this.idRolSecundario = idRolSecundario;
     }
     
 }
