@@ -71,6 +71,11 @@ public class UsuarioService {
         return elementoDAO.findByRol(rolDAO.findById(idRol));
     }
     
+    //Obtiene una lista por rol secundario
+    public List<Usuario> listarPorRolSecundario(int idRol) {
+        return elementoDAO.findByRolSecundario(rolDAO.findById(idRol).get());
+    }
+    
     //Obtiene una lista de usuarios por empresa
     public List<Usuario> listarPorEmpresa(int idEmpresa) {
         List<Usuario> usuarios = elementoDAO.listarPorEmpresaYMostrarTrue(idEmpresa);

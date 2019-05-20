@@ -17,7 +17,7 @@ public interface IUnidadMedidaDAO extends JpaRepository<UnidadMedida, Integer> {
     public UnidadMedida findTopByOrderByIdDesc();
     
     //Obtiene la lista de registros ordenada por nombre desc
-    public List<UnidadMedida> findAllByOrderByNombreDesc();
+    public List<UnidadMedida> findAllByOrderByNombreAsc();
     
     //Obtiene una lista por nombre
     public List<UnidadMedida> findByNombreContaining(String nombre);

@@ -16,8 +16,8 @@ public interface IRubroDAO extends JpaRepository<Rubro, Integer> {
     //Obtiene el siguiente id
     public Rubro findTopByOrderByIdDesc();
     
-    //Obtiene la lista de registros ordenados por nombre desc
-    public List<Rubro> findAllByOrderByNombreDesc();
+    //Obtiene la lista de registros ordenados por nombre asc
+    public List<Rubro> findAllByOrderByNombreAsc();
     
     //Obtiene una lista por nombre
     public List<Rubro> findByNombreContaining(String nombre);

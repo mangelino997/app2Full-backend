@@ -76,6 +76,13 @@ public class UsuarioController {
         return elementoService.listarPorRol(idRol);
     }
     
+    //Obtiene una lista por rol secundario
+    @GetMapping(value = URL + "/listarPorRolSecundario/{idRol}")
+    @ResponseBody
+    public List<Usuario> listarPorRolSecundario(@PathVariable int idRol) {
+        return elementoService.listarPorRolSecundario(idRol);
+    }
+    
     //Obtiene una lista de usuarios por empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody

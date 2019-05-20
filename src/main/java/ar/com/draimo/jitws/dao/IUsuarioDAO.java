@@ -34,6 +34,9 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
     //Obtiene una lista por rol
     public List<Usuario> findByRol(Optional<Rol> rol);
     
+    //Obtiene una lista por rol secundario
+    public List<Usuario> findByRolSecundario(Rol rolSecundario);
+    
     //Obtiene una lista por empresa
     @Query(value = "SELECT u.* FROM usuarioempresa e INNER JOIN usuario u ON "
             + "e.idUsuario = u.id WHERE e.idEmpresa=:idEmpresa AND e.mostrar=1 "

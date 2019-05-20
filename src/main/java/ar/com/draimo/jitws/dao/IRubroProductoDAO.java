@@ -17,7 +17,7 @@ public interface IRubroProductoDAO extends JpaRepository<RubroProducto, Integer>
     public RubroProducto findTopByOrderByIdDesc();
     
     //Obtiene la lista de registros ordenada por nombre desc
-    public List<RubroProducto> findAllByOrderByNombreDesc();
+    public List<RubroProducto> findAllByOrderByNombreAsc();
     
     //Obtiene una lista por nombre
     public List<RubroProducto> findByNombreContaining(String nombre);

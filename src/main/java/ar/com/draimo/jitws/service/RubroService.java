@@ -27,7 +27,7 @@ public class RubroService {
     
     //Obtiene la lista completa
     public List<Rubro> listar() {
-        return elementoDAO.findAllByOrderByNombreDesc();
+        return elementoDAO.findAllByOrderByNombreAsc();
     }
     
     //Obtiene una lista por nombre
