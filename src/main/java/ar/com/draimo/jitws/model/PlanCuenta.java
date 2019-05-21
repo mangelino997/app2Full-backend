@@ -63,6 +63,11 @@ public class PlanCuenta extends ObjetoGenerico {
     @Column(name = "nivel", nullable = false)
     private short nivel;
     
+    //Referencia a la clase Grupo Cuenta Contable
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idGrupoCuentaContable", nullable = true)
+    private GrupoCuentaContable grupoCuentaContable;
+    
     //Define las cuentas hijas
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "padre")
     private List<PlanCuenta> hijos;
@@ -139,6 +144,14 @@ public class PlanCuenta extends ObjetoGenerico {
 
     public void setNivel(short nivel) {
         this.nivel = nivel;
+    }
+
+    public GrupoCuentaContable getGrupoCuentaContable() {
+        return grupoCuentaContable;
+    }
+
+    public void setGrupoCuentaContable(GrupoCuentaContable grupoCuentaContable) {
+        this.grupoCuentaContable = grupoCuentaContable;
     }
     
     public List<PlanCuenta> getHijos() {

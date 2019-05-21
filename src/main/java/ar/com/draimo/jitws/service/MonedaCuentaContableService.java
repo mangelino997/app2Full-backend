@@ -6,6 +6,11 @@ import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.MonedaCuentaContable;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +44,15 @@ public class MonedaCuentaContableService {
     }
     
     //Obtiene la lista completa
-    public List<MonedaCuentaContable> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<MonedaCuentaContable> monedasCuentasContables = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(monedasCuentasContables);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista por moneda

@@ -92,6 +92,7 @@ public class PlanCuentaService {
     @Transactional(rollbackFor = Exception.class)
     public PlanCuenta agregar(PlanCuenta elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setGrupoCuentaContable(elemento.getPadre().getGrupoCuentaContable());
         return elementoDAO.save(elemento);
     }
     
