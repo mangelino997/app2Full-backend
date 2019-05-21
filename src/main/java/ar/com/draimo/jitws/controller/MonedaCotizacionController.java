@@ -84,7 +84,7 @@ public class MonedaCotizacionController {
             //Retorna mensaje de error interno en el servidor
             if(e.getMessage().equals("1")) {
                 return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                "La cotización a agregar ya existe.", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                "Cotización existente", 0), HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 return MensajeRespuesta.error();
             }

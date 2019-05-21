@@ -58,6 +58,10 @@ public class InsumoProducto extends ObjetoGenerico {
     @Column(name = "stockMinimo", nullable = true)
     private int stockMinimo;
     
+    //Define el precio unitario viaje
+    @Column(name = "precioUnitarioViaje", nullable = true)
+    private BigDecimal precioUnitarioViaje;
+    
     //Define el precio unitario venta
     @Column(name = "precioUnitarioVenta", nullable = true)
     private BigDecimal precioUnitarioVenta;
@@ -145,6 +149,14 @@ public class InsumoProducto extends ObjetoGenerico {
         this.stockMinimo = stockMinimo;
     }
 
+    public BigDecimal getPrecioUnitarioViaje() {
+        return precioUnitarioViaje;
+    }
+
+    public void setPrecioUnitarioViaje(BigDecimal precioUnitarioViaje) {
+        this.precioUnitarioViaje = precioUnitarioViaje;
+    }
+    
     public BigDecimal getPrecioUnitarioVenta() {
         return precioUnitarioVenta;
     }
