@@ -50,6 +50,10 @@ public class Usuario extends ObjetoGenerico {
     @JoinColumn(name = "idRolSecundario", nullable = true)
     private Rol rolSecundario;
     
+    //Define si es desarrollador
+    @Column(name = "esDesarrollador", nullable = false)
+    private boolean esDesarrollador;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -106,6 +110,14 @@ public class Usuario extends ObjetoGenerico {
 
     public void setRolSecundario(Rol rolSecundario) {
         this.rolSecundario = rolSecundario;
+    }
+
+    public boolean getEsDesarrollador() {
+        return esDesarrollador;
+    }
+
+    public void setEsDesarrollador(boolean esDesarrollador) {
+        this.esDesarrollador = esDesarrollador;
     }
     
 }

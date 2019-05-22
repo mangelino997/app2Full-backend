@@ -30,6 +30,7 @@ public class MensajeRespuesta {
     public static final String LONGITUD = "Cantidad caracteres excedida en";
     public static final String CERRADO = "Registro cerrado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
+    public static final String ROL_ASIGNADO = "El rol esta asignado a un usuario";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {
@@ -105,6 +106,12 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> registroNoExistente() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.NO_EXISTENTE,
                 MensajeRespuesta.NO_EXISTENTE, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    //Retorna mensaje de registro no existente
+    public static ResponseEntity<?> rolAsignado() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ROL_ASIGNADO,
+                MensajeRespuesta.ROL_ASIGNADO, 0), HttpStatus.OK);
     }
 
     //Envia mensaje de dato repetido

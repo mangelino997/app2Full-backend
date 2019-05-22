@@ -3,7 +3,6 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.Rol;
 import ar.com.draimo.jitws.model.Usuario;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,10 +28,10 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
     public Usuario findOneByUsername(String username);
     
     //Obtiene un listado por nombre
-    public List<Usuario> findByNombreContaining(String nombre);
+    public List<Usuario> findByNombreContainingAndEsDesarrolladorFalse(String nombre);
     
     //Obtiene una lista por rol
-    public List<Usuario> findByRol(Optional<Rol> rol);
+    public List<Usuario> findByRol(Rol rol);
     
     //Obtiene una lista por rol secundario
     public List<Usuario> findByRolSecundario(Rol rolSecundario);
@@ -42,4 +41,7 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
             + "e.idUsuario = u.id WHERE e.idEmpresa=:idEmpresa AND e.mostrar=1 "
             + "ORDER BY u.nombre ", nativeQuery = true)
     public List<Usuario> listarPorEmpresaYMostrarTrue(@Param("idEmpresa") int idEmpresa);
+    
+    //Obtiene todos los registros no desarrolladores
+    public List<Usuario> findAllByEsDesarrolladorFalse();
 }

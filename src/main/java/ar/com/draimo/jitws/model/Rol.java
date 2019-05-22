@@ -19,6 +19,10 @@ public class Rol extends ObjetoGenerico {
     @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
+    //Define si es desarrollador
+    @Column(name = "esDesarrollador", nullable = false)
+    private boolean esDesarrollador;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -27,6 +31,14 @@ public class Rol extends ObjetoGenerico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean getEsDesarrollador() {
+        return esDesarrollador;
+    }
+
+    public void setEsDesarrollador(boolean esDesarrollador) {
+        this.esDesarrollador = esDesarrollador;
     }
     
 }

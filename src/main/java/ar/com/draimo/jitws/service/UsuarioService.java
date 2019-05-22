@@ -49,7 +49,7 @@ public class UsuarioService {
     
     //Obtiene una lista completa
     public List<Usuario> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findAllByEsDesarrolladorFalse();
     }
     
     //Obtiene por username
@@ -60,15 +60,15 @@ public class UsuarioService {
     //Obtiene un listado por nombre
     public List<Usuario> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findAllByEsDesarrolladorFalse();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByNombreContainingAndEsDesarrolladorFalse(nombre);
         }
     }
     
     //Obtiene una lista por rol
     public List<Usuario> listarPorRol(int idRol) {
-        return elementoDAO.findByRol(rolDAO.findById(idRol));
+        return elementoDAO.findByRol(rolDAO.findById(idRol).get());
     }
     
     //Obtiene una lista por rol secundario
@@ -86,6 +86,7 @@ public class UsuarioService {
     @Transactional(rollbackFor = Exception.class)
     public Usuario agregar(Usuario elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setEsDesarrollador(false);
         elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
         //Agrega el usuario
         Usuario usuario = elementoDAO.saveAndFlush(elemento);
@@ -108,6 +109,7 @@ public class UsuarioService {
     @Transactional(rollbackFor = Exception.class)
     public Usuario actualizar(Usuario elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setEsDesarrollador(false);
         return elementoDAO.save(elemento);
     }
     

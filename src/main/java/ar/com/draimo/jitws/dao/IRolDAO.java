@@ -17,6 +17,9 @@ public interface IRolDAO extends JpaRepository<Rol, Integer> {
     public Rol findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<Rol> findByNombreContaining(String nombre);
+    public List<Rol> findByNombreContainingAndEsDesarrolladorFalse(String nombre);
+    
+    //Obtiene todos los registros no desarrolladores
+    public List<Rol> findAllByEsDesarrolladorFalse();
     
 }

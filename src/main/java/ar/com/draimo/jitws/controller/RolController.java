@@ -110,12 +110,12 @@ public class RolController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody Rol elemento) {
+    @DeleteMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
-            //Retorna mensaje de eliminado con exito
-            return MensajeRespuesta.eliminado();
+            boolean resultado = elementoService.eliminar(id);
+            //Retorna el mensaje
+            return resultado ? MensajeRespuesta.eliminado() : MensajeRespuesta.rolAsignado();
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

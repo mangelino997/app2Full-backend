@@ -49,6 +49,9 @@ public class CodigoRespuesta {
     //Define una respuesta de registro no existente
     public static final int NO_EXISTENTE = 5003;
     
+    //Define una respuesta de rol asignado a usuario
+    public static final int ROL_ASIGNADO = 5004;
+    
     
     //Define una respuesta de datos duplicados
     //Los codigos estan ordenados alfabeticamente.

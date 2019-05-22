@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.dao.IRolOpcionDAO;
 import ar.com.draimo.jitws.dao.IRolSubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
+import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.dto.RolDTO;
 import ar.com.draimo.jitws.model.Opcion;
 import ar.com.draimo.jitws.model.Pestania;
@@ -15,6 +16,7 @@ import ar.com.draimo.jitws.model.RolOpcion;
 import ar.com.draimo.jitws.model.RolSubopcion;
 import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.model.SubopcionPestania;
+import ar.com.draimo.jitws.model.Usuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,7 @@ public class RolService {
     //Define la referencia al dao pestania
     @Autowired
     IPestaniaDAO pestaniaDAO;
-    
+
     //Define la referencia al dao opcion
     @Autowired
     IOpcionDAO opcionDAO;
@@ -51,10 +53,14 @@ public class RolService {
     //Define la referencia al dao subopcionpestania
     @Autowired
     ISubopcionPestaniaDAO subopcionPestaniaDAO;
-    
+
     //Define la referencia al dao rolopcion
     @Autowired
     IRolOpcionDAO rolOpcionDAO;
+
+    //Define la referencia al dao usuario
+    @Autowired
+    IUsuarioDAO usuarioDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -64,15 +70,15 @@ public class RolService {
 
     //Obtiene la lista completa
     public List<Rol> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findAllByEsDesarrolladorFalse();
     }
 
     //Obtiene una lista por nombre
     public List<Rol> listarPorNombre(String nombre) {
         if (nombre.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findAllByEsDesarrolladorFalse();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByNombreContainingAndEsDesarrolladorFalse(nombre);
         }
     }
 
@@ -83,6 +89,7 @@ public class RolService {
         //Crea el nuevo rol
         Rol r = new Rol();
         r.setNombre(elemento.getNombre());
+        r.setEsDesarrollador(false);
         Rol rol = elementoDAO.saveAndFlush(r);
         //Verifica si el usuario copia de un rol existente
         if (elemento.getRolSecundarioDTO() == null) {
@@ -124,7 +131,7 @@ public class RolService {
             //Define una rolSubopcion
             RolSubopcion rs;
             //Recorre las subopciones del rol secundario
-            for(RolSubopcion rolSubopcion : rolSubopciones) {
+            for (RolSubopcion rolSubopcion : rolSubopciones) {
                 //Crea el nuevo rolsubopcion
                 rs = new RolSubopcion();
                 rs.setRol(rol);
@@ -136,7 +143,7 @@ public class RolService {
             //Define una subopcionPestania
             SubopcionPestania sp;
             //Recorre las pestanias del rol secundario
-            for(SubopcionPestania subopcionPestania : subopcionPestanias) {
+            for (SubopcionPestania subopcionPestania : subopcionPestanias) {
                 //Crea la nueva subopcionpestania
                 sp = new SubopcionPestania();
                 sp.setRol(rol);
@@ -152,7 +159,7 @@ public class RolService {
         //Define un rolOpcion
         RolOpcion rolOpcion;
         //Recorre la lista y agrega a rolOpcion
-        for(Opcion opcion : opciones) {
+        for (Opcion opcion : opciones) {
             //Crea un rolopcion
             rolOpcion = new RolOpcion();
             rolOpcion.setRol(rol);
@@ -171,19 +178,50 @@ public class RolService {
         rol.setId(elemento.getId());
         rol.setVersion(elemento.getVersion());
         rol.setNombre(elemento.getNombre());
+        rol.setEsDesarrollador(false);
         elementoDAO.save(rol);
     }
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(Rol elemento) {
-        Rol rol = elementoDAO.findById(elemento.getId()).get();
-        //Obtiene una lista de RolSubopcion por idRol
-        List<RolSubopcion> rolesSubopcion = rolSubopcionDAO.findByRol(rol);
-        rolesSubopcion.forEach((rolSubopcion) -> {
-            rolSubopcionDAO.delete(rolSubopcion);
-        });
-        elementoDAO.delete(elemento);
+    public boolean eliminar(int id) throws Exception {
+        //Obtiene el rol por id
+        Rol rol = elementoDAO.findById(id).get();
+        //Obtiene la lista de usuario por rol primario
+        List<Usuario> usuarios = usuarioDAO.findByRol(rol);
+        //Obtiene la lista de usuarios por rol secundario
+        List<Usuario> usuariosSecundarios = usuarioDAO.findByRolSecundario(rol);
+        //Verifica que ningun usuario tenga el rol asignado
+        if (usuarios.isEmpty() && usuariosSecundarios.isEmpty()) {
+            /*
+         * Obtiene una lista de RolSubopcion por idRol
+         * y elimina los registros correspondientes
+             */
+            List<RolSubopcion> rolesSubopcion = rolSubopcionDAO.findByRol(rol);
+            rolesSubopcion.forEach((rolSubopcion) -> {
+                rolSubopcionDAO.delete(rolSubopcion);
+            });
+            /*
+         * Obtiene una lista de RolOpcion por idRol
+         * y elimina los registros correspondientes
+             */
+            List<RolOpcion> rolesOpcion = rolOpcionDAO.findByRol(rol);
+            rolesOpcion.forEach((rolOpcion) -> {
+                rolOpcionDAO.delete(rolOpcion);
+            });
+            /*
+         * Obtiene una lista de SubopcionPestania por idRol
+         * y elimina los registros correspondientes
+             */
+            List<SubopcionPestania> subopcionPestanias = subopcionPestaniaDAO.findByRol(rol);
+            subopcionPestanias.forEach((subopcionPestania) -> {
+                subopcionPestaniaDAO.delete(subopcionPestania);
+            });
+            elementoDAO.delete(rol);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //Formatea los strings
