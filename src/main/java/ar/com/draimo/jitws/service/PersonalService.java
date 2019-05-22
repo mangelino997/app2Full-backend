@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.model.Personal;
 import java.util.List;
@@ -91,8 +92,8 @@ public class PersonalService {
     
     //Formatea los strings
     private Personal formatearStrings(Personal elemento) {
-        elemento.setNombre(elemento.getNombre().trim());
-        elemento.setApellido(elemento.getApellido().trim());
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
+        elemento.setApellido(Funcion.convertirATitulo(elemento.getApellido().trim()));
         elemento.setNombreCompleto(elemento.getApellido() + " " + elemento.getNombre());
         elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
         elemento.setCuil(elemento.getCuil().trim());

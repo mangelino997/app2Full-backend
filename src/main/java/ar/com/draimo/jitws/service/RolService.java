@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IOpcionDAO;
 import ar.com.draimo.jitws.dao.IPestaniaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
@@ -226,7 +227,7 @@ public class RolService {
 
     //Formatea los strings
     private RolDTO formatearStrings(RolDTO elemento) {
-        elemento.setNombre(elemento.getNombre().trim());
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
         return elemento;
     }
 

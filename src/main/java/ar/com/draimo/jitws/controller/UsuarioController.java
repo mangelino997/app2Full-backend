@@ -136,6 +136,20 @@ public class UsuarioController {
         }
     }
     
+    //Actualiza un registro
+    @PutMapping(value = URL + "/actualizarContrasenia")
+    public ResponseEntity<?> actualizarContrasenia(@RequestBody Usuario elemento) {
+        try {
+            //Actualiza el registro
+            elementoService.actualizarContrasenia(elemento);
+            //Retorna mensaje de actualizado con exito
+            return MensajeRespuesta.actualizado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
     //Elimina un registro
     @DeleteMapping(value = URL)
     public ResponseEntity<?> eliminar(@RequestBody Usuario elemento) {

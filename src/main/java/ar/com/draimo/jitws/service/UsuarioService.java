@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
@@ -113,6 +114,13 @@ public class UsuarioService {
         return elementoDAO.save(elemento);
     }
     
+    //Actualiza la constraseña de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public Usuario actualizarContrasenia(Usuario elemento) {
+        elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
+        return elementoDAO.save(elemento);
+    }
+    
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Usuario elemento) {
@@ -121,7 +129,7 @@ public class UsuarioService {
     
     //Formatea los strings
     private Usuario formatearStrings(Usuario elemento) {
-        elemento.setNombre(elemento.getNombre().trim());
+        elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
         elemento.setUsername(elemento.getUsername().trim().toLowerCase());
         return elemento;
     }
