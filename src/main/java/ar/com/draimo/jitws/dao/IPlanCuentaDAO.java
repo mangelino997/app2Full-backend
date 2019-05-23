@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.GrupoCuentaContable;
 import ar.com.draimo.jitws.model.PlanCuenta;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,5 +31,8 @@ public interface IPlanCuentaDAO extends JpaRepository<PlanCuenta, Integer> {
     
     //Obtiene una lista por padre
     public List<PlanCuenta> findByPadre(PlanCuenta planCuenta);
+    
+    //Obtiene por empresa y grupo cuenta contable
+    public List<PlanCuenta> findByEmpresaAndGrupoCuentaContable(Empresa empresa, GrupoCuentaContable grupoCuentaContable);
     
 }

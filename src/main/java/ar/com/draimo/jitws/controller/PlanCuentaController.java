@@ -78,6 +78,14 @@ public class PlanCuentaController {
         return elementoService.obtenerPlanCuenta(idEmpresa);
     }
     
+    //Obtiene por empresa y grupo cuenta contable
+    @GetMapping(value = URL + "/listarPorEmpresaYGrupoCuentaContable/{idEmpresa}/{idGrupoCuentaContable}")
+    @ResponseBody
+    public Object listarPorEmpresaYGrupoCuentaContable(@PathVariable int idEmpresa, @PathVariable int idGrupoCuentaContable) 
+            throws IOException {
+        return elementoService.listarPorEmpresaYGrupoCuentaContable(idEmpresa, idGrupoCuentaContable);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody PlanCuenta elemento) {

@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IGrupoCuentaContableDAO;
 import ar.com.draimo.jitws.model.PlanCuenta;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class PlanCuentaService {
     //Define la referencia al dao Empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Define la referencia al dao Empresa
+    @Autowired
+    IGrupoCuentaContableDAO grupoCuentaContableDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -63,6 +68,7 @@ public class PlanCuentaService {
         return elementoDAO.listarGrupoActivo(idEmpresa);
     }
     
+    //Obtiene el plan de cuenta
     public Object obtenerPlanCuenta(int idEmpresa) 
             throws JsonProcessingException, IOException {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
@@ -77,6 +83,7 @@ public class PlanCuentaService {
         return new ObjectMapper().readValue(string, Object.class);
     }
     
+    //Crea el plan de cuenta
     public PlanCuenta crearPlanCuenta(PlanCuenta planCuenta) {
         List<PlanCuenta> hijos = elementoDAO.findByPadre(planCuenta);
         if(!hijos.isEmpty()) {
@@ -86,6 +93,19 @@ public class PlanCuentaService {
             }
         }
         return planCuenta;
+    }
+    
+    //Obtiene por empresa y grupo cuenta contable
+    public Object listarPorEmpresaYGrupoCuentaContable(int idEmpresa, int idGrupoCuentaContable) throws IOException {
+        List<PlanCuenta> planesCuenta = elementoDAO.findByEmpresaAndGrupoCuentaContable(empresaDAO.findById(idEmpresa).get(), 
+                grupoCuentaContableDAO.findById(idGrupoCuentaContable).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planesCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Agrega un registro
