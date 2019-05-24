@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class ObraSocial extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false, unique = true)
+    @Column(name = "nombre",length = 60, nullable = false, unique = true)
     private String nombre;
     
     //Define el codigo de afip
@@ -26,6 +26,10 @@ public class ObraSocial extends ObjetoGenerico {
     //Define el sitio web
     @Column(name = "sitioWeb",length = 60, nullable = true)
     private String sitioWeb;
+    
+    //Define el alias
+    @Column(name = "alias",length = 100, nullable = true)
+    private String alias;
     
     //Getters y Setters de la clase
 
@@ -51,6 +55,14 @@ public class ObraSocial extends ObjetoGenerico {
 
     public void setSitioWeb(String sitioWeb) {
         this.sitioWeb = sitioWeb;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

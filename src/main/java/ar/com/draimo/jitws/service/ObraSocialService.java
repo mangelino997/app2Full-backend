@@ -31,17 +31,18 @@ public class ObraSocialService {
     }
     
     //Obtiene una lista por nombre
-    public List<ObraSocial> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+    public List<ObraSocial> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByNombreContaining(alias);
         }
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ObraSocial agregar(ObraSocial elemento) {
+        elemento = elementoDAO.saveAndFlush(elemento);
         elemento = formatearStrings(elemento);
         return elementoDAO.save(elemento);
     }
@@ -66,6 +67,8 @@ public class ObraSocialService {
         if(elemento.getSitioWeb() != null) {
             elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
         }
+        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
+                + " - " + elemento.getCodigoAfip());
         return elemento;
     }
     
