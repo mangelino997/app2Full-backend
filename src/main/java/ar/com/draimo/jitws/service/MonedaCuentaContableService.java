@@ -61,6 +61,18 @@ public class MonedaCuentaContableService {
         return elementoDAO.findByMoneda(elemento.get());
     }
     
+    //Obtiene una lista por nombre de moneda
+    public Object listarPorNombreMoneda(String nombre) throws IOException {
+        List<MonedaCuentaContable> monedasCuentasContables = elementoDAO.findByMoneda_NombreContaining(nombre);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(monedasCuentasContables);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
     //Obtiene una lista por moneda
     public List<MonedaCuentaContable> listarPorEmpresa(int id) {
         Optional<Empresa> elemento = empresaDAO.findById(id);

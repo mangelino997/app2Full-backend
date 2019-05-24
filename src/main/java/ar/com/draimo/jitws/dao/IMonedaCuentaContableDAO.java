@@ -18,6 +18,8 @@ public interface IMonedaCuentaContableDAO extends JpaRepository<MonedaCuentaCont
     //Obtiene el siguiente id
     public MonedaCuentaContable findTopByOrderByIdDesc();
     
+    //Obtiene por nombre de moneda
+    public List<MonedaCuentaContable> findByMoneda_NombreContaining(String nombre);
     
     //Obtiene un listado de moneda cuenta contable por moneda
     public List<MonedaCuentaContable> findByMoneda(Moneda elemento);

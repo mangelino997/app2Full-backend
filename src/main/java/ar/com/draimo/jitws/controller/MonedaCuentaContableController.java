@@ -63,6 +63,13 @@ public class MonedaCuentaContableController {
         return elementoService.listarPorMoneda(id);
     }
     
+    //Obtiene una lista por nombre de moneda
+    @GetMapping(value = URL + "/listarPorNombreMoneda/{nombre}")
+    @ResponseBody
+    public Object listarPorNombreMoneda(@PathVariable String nombre) throws IOException {
+        return elementoService.listarPorNombreMoneda(nombre);
+    }
+    
     //Obtiene una lista por empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{id}")
     @ResponseBody
