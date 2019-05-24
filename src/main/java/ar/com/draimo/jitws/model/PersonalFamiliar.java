@@ -80,6 +80,10 @@ public class PersonalFamiliar extends ObjetoGenerico {
     @Column(name = "anioBajaImpGan",length = 4, nullable = true)
     private short anioBajaImpGan;
     
+    //Define el mes de alta
+    @Column(name = "mesBajaImpGan", nullable = true)
+    private int mesBajaImpGan;
+    
     //Getters y Setters de la clase
 
     public Personal getPersonal() {
@@ -192,6 +196,14 @@ public class PersonalFamiliar extends ObjetoGenerico {
 
     public void setAnioBajaImpGan(short anioBajaImpGan) {
         this.anioBajaImpGan = anioBajaImpGan;
+    }
+
+    public int getMesBajaImpGan() {
+        return mesBajaImpGan;
+    }
+
+    public void setMesBajaImpGan(int mesBajaImpGan) {
+        this.mesBajaImpGan = mesBajaImpGan;
     }
     
 }

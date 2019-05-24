@@ -43,6 +43,14 @@ public class Cobrador extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioAlta", nullable = true)
     private Usuario usuarioAlta;
     
+    //Define si por defecto es un cliente eventual
+    @Column(name = "porDefectoClienteEventual", nullable = false)
+    private boolean porDefectoClienteEventual;
+    
+    //Define correo electronico
+    @Column(name = "correoElectronico", length = 60, nullable = true)
+    private String correoElectronico;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -83,6 +91,22 @@ public class Cobrador extends ObjetoGenerico {
 
     public void setUsuarioAlta(Usuario usuarioAlta) {
         this.usuarioAlta = usuarioAlta;
+    }
+
+    public boolean isPorDefectoClienteEventual() {
+        return porDefectoClienteEventual;
+    }
+
+    public void setPorDefectoClienteEventual(boolean porDefectoClienteEventual) {
+        this.porDefectoClienteEventual = porDefectoClienteEventual;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
     }
     
 }
