@@ -28,7 +28,7 @@ public class VendedorService {
     
     //Obtiene la lista completa
     public List<Vendedor> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findAllByOrderByNombreAsc();
     }
     
     //Obtiene una lista por nombre

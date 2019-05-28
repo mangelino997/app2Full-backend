@@ -27,7 +27,7 @@ public class ZonaService {
     
     //Obtiene la lista completa
     public List<Zona> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findAllByOrderByNombreAsc();
     }
     
     //Obtiene la lista completa ordenada

@@ -3,7 +3,6 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ICobradorDAO;
 import ar.com.draimo.jitws.model.Cobrador;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class CobradorService {
     
     //Obtiene la lista completa
     public List<Cobrador> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findAllByOrderByNombreAsc();
     }
     
     //Obtiene una lista por nombre
@@ -59,6 +58,11 @@ public class CobradorService {
     public Cobrador agregar(Cobrador elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        if(elemento.isPorDefectoClienteEventual()) {
+            Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
+            cobrador.setPorDefectoClienteEventual(false);
+            elementoDAO.save(cobrador);
+        }
         return elementoDAO.save(elemento);
     }
     
@@ -66,6 +70,11 @@ public class CobradorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Cobrador elemento) {
         elemento = formatearStrings(elemento);
+        if(elemento.isPorDefectoClienteEventual()) {
+            Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
+            cobrador.setPorDefectoClienteEventual(false);
+            elementoDAO.save(cobrador);
+        }
         elementoDAO.save(elemento);
     }
     

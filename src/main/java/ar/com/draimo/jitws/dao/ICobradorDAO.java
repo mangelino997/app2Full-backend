@@ -22,4 +22,7 @@ public interface ICobradorDAO extends JpaRepository<Cobrador, Integer> {
     //Obtiene el cobrador por defecto
     public Cobrador findByPorDefectoClienteEventualTrue();
     
+    //Obtiene un listado completo ordenado alfabeticamente
+    public List<Cobrador> findAllByOrderByNombreAsc();
+    
 }
