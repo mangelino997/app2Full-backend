@@ -35,7 +35,7 @@ public class ObraSocialService {
         if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(alias);
+            return elementoDAO.findByAliasContaining(alias);
         }
     }
     
@@ -67,8 +67,7 @@ public class ObraSocialService {
         if(elemento.getSitioWeb() != null) {
             elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
         }
-        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
-                + " - " + elemento.getCodigoAfip());
+        elemento.setAlias(elemento.getCodigoAfip()+ " - " + elemento.getNombre());
         return elemento;
     }
     

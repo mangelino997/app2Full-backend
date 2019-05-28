@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 
 /**
  * Clase Banco
@@ -72,17 +73,19 @@ public class PersonalFamiliar extends ObjetoGenerico {
     @Column(name = "anioAltaImpGan",length = 4, nullable = true)
     private short anioAltaImpGan;
     
-    //Define el mes de alta
-    @Column(name = "mesAltaImpGan", nullable = true)
-    private int mesAltaImpGan;
+    //Define la referencia a la tabla mes de alta
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idMesAltaImpGan", nullable = true)
+    private Mes mesAltaImpGan;
     
     //Define el anoi de baja
     @Column(name = "anioBajaImpGan",length = 4, nullable = true)
     private short anioBajaImpGan;
     
-    //Define el mes de alta
-    @Column(name = "mesBajaImpGan", nullable = true)
-    private int mesBajaImpGan;
+    //Define la referencia a la tabla mes de baja
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idMesBajaImpGan", nullable = true)
+    private Mes mesBajaImpGan;
     
     //Getters y Setters de la clase
 
@@ -182,11 +185,11 @@ public class PersonalFamiliar extends ObjetoGenerico {
         this.anioAltaImpGan = anioAltaImpGan;
     }
 
-    public int getMesAltaImpGan() {
+    public Mes getMesAltaImpGan() {
         return mesAltaImpGan;
     }
 
-    public void setMesAltaImpGan(int mesAltaImpGan) {
+    public void setMesAltaImpGan(Mes mesAltaImpGan) {
         this.mesAltaImpGan = mesAltaImpGan;
     }
 
@@ -198,12 +201,13 @@ public class PersonalFamiliar extends ObjetoGenerico {
         this.anioBajaImpGan = anioBajaImpGan;
     }
 
-    public int getMesBajaImpGan() {
+    public Mes getMesBajaImpGan() {
         return mesBajaImpGan;
     }
 
-    public void setMesBajaImpGan(int mesBajaImpGan) {
+    public void setMesBajaImpGan(Mes mesBajaImpGan) {
         this.mesBajaImpGan = mesBajaImpGan;
     }
     
 }
+

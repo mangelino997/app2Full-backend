@@ -19,4 +19,7 @@ public interface ICobradorDAO extends JpaRepository<Cobrador, Integer> {
     //Obtiene una lista por nombre
     public List<Cobrador> findByNombreContaining(String nombre);
     
+    //Obtiene el cobrador por defecto
+    public Cobrador findByPorDefectoClienteEventualTrue();
+    
 }

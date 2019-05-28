@@ -17,6 +17,6 @@ public interface IObraSocialDAO extends JpaRepository<ObraSocial, Integer> {
     public ObraSocial findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<ObraSocial> findByNombreContaining(String nombre);
+    public List<ObraSocial> findByAliasContaining(String nombre);
     
 }

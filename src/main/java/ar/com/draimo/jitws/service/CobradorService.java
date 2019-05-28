@@ -41,6 +41,19 @@ public class CobradorService {
         }
     }
     
+    //Obtiene la moneda principal por defecto
+    public Cobrador obtenerPorDefecto() {
+        return elementoDAO.findByPorDefectoClienteEventualTrue();
+    }
+    
+    //Establece la moneda como principal
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerCobradorPorDefecto(int idCobrador) {
+        Cobrador cobrador = elementoDAO.findById(idCobrador).get();
+        cobrador.setPorDefectoClienteEventual(false);
+        elementoDAO.save(cobrador);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Cobrador agregar(Cobrador elemento) {
