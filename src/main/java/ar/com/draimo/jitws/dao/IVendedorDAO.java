@@ -18,5 +18,8 @@ public interface IVendedorDAO extends JpaRepository<Vendedor, Integer> {
     
     //Obtiene una lista por nombre
     public List<Vendedor> findByNombreContaining(String nombre);
+ 
+    //Obtiene un listado completo ordenado alfabeticamente
+    public List<Vendedor> findAllByOrderByNombreAsc();
     
 }
