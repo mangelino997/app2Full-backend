@@ -68,6 +68,10 @@ public class OrdenVenta extends ObjetoGenerico {
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
     
+    //Define si es contado
+    @Column(name = "esContado", nullable = true)
+    private boolean esContado;
+    
     //Define la fecha desde que esta activa
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "activaDesde", nullable = true)
@@ -185,6 +189,14 @@ public class OrdenVenta extends ObjetoGenerico {
 
     public void setOrdenesVentasTramos(List<OrdenVentaTramo> ordenesVentasTramos) {
         this.ordenesVentasTramos = ordenesVentasTramos;
+    }
+
+    public boolean isEsContado() {
+        return esContado;
+    }
+
+    public void setEsContado(boolean esContado) {
+        this.esContado = esContado;
     }
     
 }
