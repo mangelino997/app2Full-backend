@@ -18,6 +18,9 @@ public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
     //Obtiene el siguiente id
     public Empresa findTopByOrderByIdDesc();
     
+    //Obtiene una lista de empresas activas
+    public List<Empresa> findByEstaActivaTrue();
+    
     //Obtiene una lista por razon social
     public List<Empresa> findByRazonSocialContaining(String razonSocial);
     

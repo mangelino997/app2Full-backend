@@ -9,79 +9,77 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase CuentaBancaria
- * Mapea con la tabla en la base de datos
+ * Clase CuentaBancaria Mapea con la tabla en la base de datos
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "cuentabancaria")
 public class CuentaBancaria extends ObjetoGenerico {
-    
+
     //Define la referencia a la tabla empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Define la referencia a la tabla sucursalBanco
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalBanco", nullable = false)
     private SucursalBanco sucursalBanco;
-    
+
     //Define la referencia a la tabla TipoCuentaBancaria
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoCuentaBancaria", nullable = false)
     private TipoCuentaBancaria tipoCuentaBancaria;
-    
+
     //Define el numeroCuenta
-    @Column(name = "numeroCuenta",length = 20, nullable = false)
+    @Column(name = "numeroCuenta", length = 20, nullable = false)
     private String numeroCuenta;
-    
+
     //Define la referencia a la tabla moneda
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMoneda", nullable = false)
     private Moneda moneda;
-    
+
     //Define el cbu
-    @Column(name = "CBU",length = 22, nullable = true)
-    private String CBU;
-    
+    @Column(name = "CBU", length = 22, nullable = true)
+    private String cbu;
+
     //Define el alias del cbu
-    @Column(name = "aliasCBU",length = 45, nullable = true)
+    @Column(name = "aliasCBU", length = 45, nullable = true)
     private String aliasCBU;
-    
+
     //Define si esta activa
-    @Column(name = "estaActiva",nullable = false)
+    @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
-    
+
     //Define la fecha de apertura
     @Column(name = "fechaApertura", nullable = true)
     private Date fechaApertura;
-    
+
     //Define la fecha de alta
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
-    
+
     //Define la referencia a la tabla usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
-    
+
     //Define la fecha de baja
-    @Column(name = "fechaBaja",nullable = true)
+    @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
-    
+
     //Define la referencia a la tabla usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
-    
-    //Define la fecha de cierre
-    @Column(name = "fechaCierre",nullable = true)
-    private Date fechaCierre;
-    
-    //Getters y Setters de la clase
 
+    //Define la fecha de cierre
+    @Column(name = "fechaCierre", nullable = true)
+    private Date fechaCierre;
+
+    //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -122,12 +120,12 @@ public class CuentaBancaria extends ObjetoGenerico {
         this.moneda = moneda;
     }
 
-    public String getCBU() {
-        return CBU;
+    public String getCbu() {
+        return cbu;
     }
 
-    public void setCBU(String CBU) {
-        this.CBU = CBU;
+    public void setCbu(String cbu) {
+        this.cbu = cbu;
     }
 
     public String getAliasCBU() {
@@ -138,7 +136,7 @@ public class CuentaBancaria extends ObjetoGenerico {
         this.aliasCBU = aliasCBU;
     }
 
-    public boolean isEstaActiva() {
+    public boolean getEstaActiva() {
         return estaActiva;
     }
 

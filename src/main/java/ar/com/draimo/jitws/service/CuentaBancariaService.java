@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.CuentaBancaria;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,7 @@ public class CuentaBancariaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CuentaBancaria agregar(CuentaBancaria elemento) {
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }
 

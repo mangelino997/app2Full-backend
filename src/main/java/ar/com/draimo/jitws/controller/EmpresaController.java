@@ -55,6 +55,13 @@ public class EmpresaController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista de empresas activas
+    @GetMapping(value = URL + "/listarActivas")
+    @ResponseBody
+    public List<Empresa> listarActivas() {
+        return elementoService.listarActivas();
+    }
+    
     //Obtiene una lista por razon social
     @GetMapping(value = URL + "/listarPorRazonSocial/{razonSocial}")
     @ResponseBody
