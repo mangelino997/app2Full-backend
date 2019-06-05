@@ -24,13 +24,13 @@ public class ViajeRemito extends ObjetoGenerico {
     
     //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idSucursalEmision", nullable = false)
-    private Sucursal sucursalEmision;
+    @JoinColumn(name = "idSucursalIngreso", nullable = false)
+    private Sucursal sucursalIngreso;
     
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idEmpresaEmision", nullable = false)
-    private Empresa empresaEmision;
+    @JoinColumn(name = "idEmpresa", nullable = false)
+    private Empresa empresa;
     
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -149,20 +149,20 @@ public class ViajeRemito extends ObjetoGenerico {
     
     //Getters y Setters de la clase
 
-    public Sucursal getSucursalEmision() {
-        return sucursalEmision;
+    public Sucursal getSucursalIngreso() {
+        return sucursalIngreso;
     }
 
-    public void setSucursalEmision(Sucursal sucursalEmision) {
-        this.sucursalEmision = sucursalEmision;
+    public void setSucursalIngreso(Sucursal sucursalIngreso) {
+        this.sucursalIngreso = sucursalIngreso;
     }
 
-    public Empresa getEmpresaEmision() {
-        return empresaEmision;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setEmpresaEmision(Empresa empresaEmision) {
-        this.empresaEmision = empresaEmision;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     public Usuario getUsuario() {
