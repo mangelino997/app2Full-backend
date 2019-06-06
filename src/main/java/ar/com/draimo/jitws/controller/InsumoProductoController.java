@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.InsumoProducto;
 import ar.com.draimo.jitws.service.InsumoProductoService;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -74,6 +75,13 @@ public class InsumoProductoController {
     @ResponseBody
     public List<InsumoProducto> listarInsumos() {
         return elementoService.listarInsumos();
+    }
+    
+    //Obtiene precio unitario por insumo
+    @GetMapping(value = URL + "/obtenerPrecioUnitario/{idInsumoProducto}")
+    @ResponseBody
+    public BigDecimal listarInsumos(@PathVariable int idInsumoProducto) {
+        return elementoService.obtenerPrecioUnitario(idInsumoProducto);
     }
 
     //Agrega un registro

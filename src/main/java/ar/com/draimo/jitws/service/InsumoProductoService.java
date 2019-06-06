@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IInsumoProductoDAO;
+import java.math.BigDecimal;
 
 /**
  * Servicio InsumoProducto
@@ -47,6 +48,12 @@ public class InsumoProductoService {
     //Obtiene una lista de insumos
     public List<InsumoProducto> listarInsumos() {
         return elementoDAO.findByRubroProducto_EsInsumoTrue();
+    }
+    
+    //Obtiene precio unitario por insumo
+    public BigDecimal obtenerPrecioUnitario(int idInsumoProducto) {
+        InsumoProducto insumoProducto = elementoDAO.findById(idInsumoProducto).get();
+        return insumoProducto.getPrecioUnitarioViaje();
     }
     
     //Agrega un registro
