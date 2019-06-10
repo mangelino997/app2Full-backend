@@ -69,6 +69,14 @@ public class OrdenRecoleccionController {
         return elementoService.listarPorAlias(alias);
     }
     
+    //Obtiene una lista por filtros
+    @GetMapping(value = URL + "/listarPorFiltros/{fechaEmision}/{idCliente}")
+    @ResponseBody
+    public List<OrdenRecoleccion> listarPorFiltros(@PathVariable String fechaEmision,
+            @PathVariable int idCliente) {
+        return elementoService.listarPorFiltros(fechaEmision, idCliente);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenRecoleccion elemento) {

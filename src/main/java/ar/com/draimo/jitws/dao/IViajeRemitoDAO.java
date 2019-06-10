@@ -8,6 +8,8 @@ import ar.com.draimo.jitws.model.ViajeTerceroTramo;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO ViajeRemito
@@ -39,6 +41,20 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
         findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion,
                 Optional<ViajePropioTramo> viajePropioTramo);
+    
+    //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino,
+    //numero camion y viajePropioTramo)
+        @Query(value = "SELECT * FROM viajeremito where ((:fechaDesde IS NULL and :fechaHasta IS  NULL) OR (fecha between "
+                + ":fechaDesde and :fechaHasta)) and (:idSucursalIngreso = 0 "
+                + "or idSucursalIngreso=:idSucursalIngreso) and (:idSucursalDestino "
+                + "=0 or idSucursalDestino=:idSucursalDestino) and (:idClienteRemitente "
+                + "=0 or idClienteRemitente=:idClienteRemitente) and (:idClienteDestinatario "
+                + "=0 or idClienteDestinatario=:idClienteDestinatario) and (:numeroCamion "
+                + "=0 or numeroCamion=:numeroCamion)", nativeQuery = true)
+    public List<ViajeRemito> listarPorFiltros(@Param("fechaDesde") String fechaDesde,
+            @Param("fechaHasta") String fechaHasta,@Param("idSucursalIngreso") int idSucursalIngreso,
+            @Param("idSucursalDestino") int idSucursalDestino,@Param("idClienteRemitente") int idClienteRemitente,
+            @Param("idClienteDestinatario") int idClienteDestinatario,@Param("numeroCamion") short numeroCamion);
     
     //Obtiene un listado de remitos por viaje propio
     public List<ViajeRemito> findByViajePropioTramoAndEstaFacturadoFalse(

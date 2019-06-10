@@ -4,8 +4,8 @@ import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeTerceroTramoDAO;
+import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.model.Sucursal;
-import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.ViajePropioTramo;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import java.util.ArrayList;
@@ -88,6 +88,22 @@ public class ViajeRemitoService {
         //Retorna los datos
         return elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
                 sucursal, sucursalDestino, numeroCamion, viajePropioTramo);
+    }
+    
+    //Obtiene un listado por filtro
+    public List<ViajeRemito> listarPorFiltros(ViajeRemitoDTO viajeRemito) {
+        List<ViajeRemito> remitos= new ArrayList<>();
+        if (viajeRemito.equals(null)) {
+            remitos= elementoDAO.findAll();
+        }else {
+            //Retorna los datos
+        remitos= elementoDAO.listarPorFiltros(viajeRemito.getFechaDesde(), 
+                viajeRemito.getFechaHasta(),viajeRemito.getIdSucursalIngreso(),
+                viajeRemito.getIdSucursalDestino(),viajeRemito.getIdClienteRemitente(),
+                viajeRemito.getIdClienteDestinatario(), viajeRemito.getNumeroCamion());
+        }
+        System.out.println("sss");
+        return remitos;
     }
     
     //Obtiene un listado de remitos por viajePropio

@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,21 @@ public class OrdenRecoleccionService {
     
     //Obtiene una lista por alias
     public List<OrdenRecoleccion> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
+            return elementoDAO.findAll();
+        }else {
         return elementoDAO.findByAliasContaining(alias);
+        }
+    }
+    
+    
+    //Obtiene una lista por alias
+    public List<OrdenRecoleccion> listarPorFiltros(String fechaEmision, int idCliente) {
+        if (fechaEmision.isEmpty() && idCliente==0) {
+            return elementoDAO.listarPorFiltros(fechaEmision, idCliente);
+        } else {
+            return elementoDAO.findAll();
+        }
     }
     
     //Agrega un registro

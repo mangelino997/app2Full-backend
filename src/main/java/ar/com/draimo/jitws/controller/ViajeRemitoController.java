@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.service.ViajeRemitoService;
@@ -93,6 +94,12 @@ public class ViajeRemitoController {
             @PathVariable int idViajePropioTramo) {
         return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, 
                 numeroCamion, idViajePropioTramo);
+    }
+    
+    //Obtiene una lista de remitos por filtro
+    @PostMapping(value = URL + "/listarPorFiltros")
+    public List<ViajeRemito> listarPorFiltros(@RequestBody ViajeRemitoDTO viajeRemitoDTO) {
+        return elementoService.listarPorFiltros(viajeRemitoDTO);
     }
     
     //Obtiene una lista de remito por viaje propio o viaje tercero

@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IChequeraDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.Chequera;
 import ar.com.draimo.jitws.model.CuentaBancaria;
 import java.sql.Date;
@@ -24,6 +25,9 @@ public class ChequeraService {
     @Autowired
     ICuentaBancariaDAO cuentaBancariaDAO;
     
+    @Autowired
+    IEmpresaDAO empresaDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Chequera elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -36,9 +40,8 @@ public class ChequeraService {
     }
     
     //Obtiene una lista por CuentaBancaria
-    public List<Chequera> listarPorCuentaBancaria(int idCtaBancaria) {
-        CuentaBancaria cuentaBancaria = cuentaBancariaDAO.findById(idCtaBancaria).get();
-            return elementoDAO.findByCuentaBancaria(cuentaBancaria);
+    public List<Chequera> listarCuentasBancarias(int idEmpresa) {
+            return elementoDAO.listarPorEmpresa(idEmpresa);
     }
 
     //Agrega un registro
