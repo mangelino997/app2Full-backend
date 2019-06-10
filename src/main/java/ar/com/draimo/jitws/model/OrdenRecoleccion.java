@@ -73,12 +73,12 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private Date fecha;
     
     //Define horaDesde
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
+    @JsonFormat(pattern = "HH:mm", timezone = "UTC-3")
     @Column(name = "horaDesde", nullable = false)
     private LocalTime horaDesde;
     
     //Define horaHasta
-    @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
+    @JsonFormat(pattern = "HH:mm", timezone = "UTC-3")
     @Column(name = "horaHasta", nullable = false)
     private LocalTime horaHasta;
     
