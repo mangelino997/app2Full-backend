@@ -3,13 +3,16 @@ package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -96,6 +99,11 @@ public class ViajeTerceroTramo extends ObjetoGenerico {
     //Define el importe
     @Column(name = "importe", nullable = false)
     private BigDecimal importe;
+    
+    //Define la lista de remitos
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "viajeTerceroTramo")
+//    private List<ViajeRemitoTramo> viajeRemitoTramos;
     
     //Getters y Setters de la clase
 
@@ -226,5 +234,13 @@ public class ViajeTerceroTramo extends ObjetoGenerico {
     public void setImporte(BigDecimal importe) {
         this.importe = importe;
     }
-    
+//
+//    public List<ViajeRemitoTramo> getViajeRemitoTramos() {
+//        return viajeRemitoTramos;
+//    }
+//
+//    public void setViajeRemitoTramos(List<ViajeRemitoTramo> viajeRemitoTramos) {
+//        this.viajeRemitoTramos = viajeRemitoTramos;
+//    }
+//    
 }

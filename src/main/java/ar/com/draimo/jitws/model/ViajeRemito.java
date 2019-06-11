@@ -1,7 +1,6 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -114,17 +113,6 @@ public class ViajeRemito extends ObjetoGenerico {
     //Define si esta pendiente
     @Column(name = "estaPendiente", nullable = false)
     private boolean estaPendiente;
-    
-    //Referencia a la clase Viaje Propio Tramo
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idViajePropioTramo", nullable = true)
-    private ViajePropioTramo viajePropioTramo;
-    
-    //Referencia a la clase Viaje Tercero Tramo
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idViajeTerceroTramo", nullable = true)
-    private ViajeTerceroTramo viajeTerceroTramo;
     
     //Define las observaciones
     @Column(name = "observaciones",length = 60, nullable = true)
@@ -315,22 +303,6 @@ public class ViajeRemito extends ObjetoGenerico {
 
     public void setEstaPendiente(boolean estaPendiente) {
         this.estaPendiente = estaPendiente;
-    }
-
-    public ViajePropioTramo getViajePropioTramo() {
-        return viajePropioTramo;
-    }
-
-    public void setViajePropioTramo(ViajePropioTramo viajePropioTramo) {
-        this.viajePropioTramo = viajePropioTramo;
-    }
-
-    public ViajeTerceroTramo getViajeTerceroTramo() {
-        return viajeTerceroTramo;
-    }
-
-    public void setViajeTerceroTramo(ViajeTerceroTramo viajeTerceroTramo) {
-        this.viajeTerceroTramo = viajeTerceroTramo;
     }
 
     public String getObservaciones() {

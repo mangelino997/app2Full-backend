@@ -107,9 +107,9 @@ public class ViajePropioTramo extends ObjetoGenerico {
     private List<ViajePropioTramoCliente> viajePropioTramoClientes;
     
     //Define la lista de remitos
-    @JsonManagedReference
-    @OneToMany(mappedBy = "viajePropioTramo")
-    private List<ViajeRemito> viajeRemitos;
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "viajePropioTramo")
+//    private List<ViajeRemitoTramo> viajeRemitoTramos;
     
     //Getters y Setters de la clase
 
@@ -249,12 +249,12 @@ public class ViajePropioTramo extends ObjetoGenerico {
         this.viajePropioTramoClientes = viajePropioTramoClientes;
     }
 
-    public List<ViajeRemito> getViajeRemitos() {
-        return viajeRemitos;
-    }
+//    public List<ViajeRemitoTramo> getViajeRemitoTramos() {
+//        return viajeRemitoTramos;
+//    }
+//
+//    public void setViajeRemitoTramos(List<ViajeRemitoTramo> viajeRemitoTramos) {
+//        this.viajeRemitoTramos = viajeRemitoTramos;
+//    }
 
-    public void setViajeRemitos(List<ViajeRemito> viajeRemitos) {
-        this.viajeRemitos = viajeRemitos;
-    }
-    
 }

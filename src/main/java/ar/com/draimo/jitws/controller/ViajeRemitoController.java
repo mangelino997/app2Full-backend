@@ -85,16 +85,16 @@ public class ViajeRemitoController {
         return elementoService.listarPendientesPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
     }
     
-    //Obtiene una lista de remitos asignados por filtro
-    @GetMapping(value = URL + "/listarAsignadosPorFiltro/{idSucursal}/{idSucursalDestino}"
-            + "/{numeroCamion}/{idViajePropioTramo}")
-    @ResponseBody
-    public List<ViajeRemito> listarAsignadosPorFiltro(@PathVariable int idSucursal, 
-            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion, 
-            @PathVariable int idViajePropioTramo) {
-        return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, 
-                numeroCamion, idViajePropioTramo);
-    }
+//    //Obtiene una lista de remitos asignados por filtro
+//    @GetMapping(value = URL + "/listarAsignadosPorFiltro/{idSucursal}/{idSucursalDestino}"
+//            + "/{numeroCamion}/{idViajePropioTramo}")
+//    @ResponseBody
+//    public List<ViajeRemito> listarAsignadosPorFiltro(@PathVariable int idSucursal, 
+//            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion, 
+//            @PathVariable int idViajePropioTramo) {
+//        return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, 
+//                numeroCamion, idViajePropioTramo);
+//    }
     
     //Obtiene una lista de remitos por filtro
     @PostMapping(value = URL + "/listarPorFiltros")
@@ -102,12 +102,12 @@ public class ViajeRemitoController {
         return elementoService.listarPorFiltros(viajeRemitoDTO);
     }
     
-    //Obtiene una lista de remito por viaje propio o viaje tercero
-    @GetMapping(value = URL + "/listarRemitos/{idViajeTramo}/{item}")
-    @ResponseBody
-    public List<ViajeRemito> listarRemitos(@PathVariable int idViajeTramo, @PathVariable int item) {
-        return elementoService.listarRemitos(idViajeTramo, item);
-    }
+//    //Obtiene una lista de remito por viaje propio o viaje tercero
+//    @GetMapping(value = URL + "/listarRemitos/{idViajeTramo}/{item}")
+//    @ResponseBody
+//    public List<ViajeRemito> listarRemitos(@PathVariable int idViajeTramo, @PathVariable int item) {
+//        return elementoService.listarRemitos(idViajeTramo, item);
+//    }
     
     //Obtiene un registro por puntoventa letra y numero
     @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")

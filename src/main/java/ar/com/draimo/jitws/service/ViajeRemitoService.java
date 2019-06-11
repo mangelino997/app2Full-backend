@@ -77,18 +77,18 @@ public class ViajeRemitoService {
         return elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(sucursal, sucursalDestino, numeroCamion);
     }
     
-    //Obtiene un listado de asignados por filtro
-    public List<ViajeRemito> listarAsignadosPorFiltro(int idSucursal, int idSucursalDestino, short numeroCamion, int idViajePropioTramo) {
-        //Obtiene la sucursal por id
-        Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
-        //Obtiene la sucursal destino por id
-        Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
-        //Obtiene el viaje propio tramo por id
-        Optional<ViajePropioTramo> viajePropioTramo = viajePropioTramoDAO.findById(idViajePropioTramo);
-        //Retorna los datos
-        return elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
-                sucursal, sucursalDestino, numeroCamion, viajePropioTramo);
-    }
+//    //Obtiene un listado de asignados por filtro
+//    public List<ViajeRemito> listarAsignadosPorFiltro(int idSucursal, int idSucursalDestino, short numeroCamion, int idViajePropioTramo) {
+//        //Obtiene la sucursal por id
+//        Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
+//        //Obtiene la sucursal destino por id
+//        Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
+//        //Obtiene el viaje propio tramo por id
+//        Optional<ViajePropioTramo> viajePropioTramo = viajePropioTramoDAO.findById(idViajePropioTramo);
+//        //Retorna los datos
+//        return elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
+//                sucursal, sucursalDestino, numeroCamion, viajePropioTramo);
+//    }
     
     //Obtiene un listado por filtro
     public List<ViajeRemito> listarPorFiltros(ViajeRemitoDTO viajeRemito) {
@@ -106,18 +106,18 @@ public class ViajeRemitoService {
         return remitos;
     }
     
-    //Obtiene un listado de remitos por viajePropio
-    public List<ViajeRemito> listarRemitos(int idViajeTramo, int item) {
-        List<ViajeRemito> viajeRemitos = new ArrayList<>();
-        if (item==1) { //ViajePropioTramo
-            viajeRemitos = elementoDAO.findByViajePropioTramoAndEstaFacturadoFalse
-        (viajePropioTramoDAO.findById(idViajeTramo));
-        } else if (item ==2){ //ViajeTerceroTramo
-            viajeRemitos = elementoDAO.findByViajeTerceroTramoAndEstaFacturadoFalse
-        (viajeTerceroTramoDAO.findById(idViajeTramo));
-        }
-        return viajeRemitos;
-    }
+//    //Obtiene un listado de remitos por viajePropio
+//    public List<ViajeRemito> listarRemitos(int idViajeTramo, int item) {
+//        List<ViajeRemito> viajeRemitos = new ArrayList<>();
+//        if (item==1) { //ViajePropioTramo
+//            viajeRemitos = elementoDAO.findByViajePropioTramoAndEstaFacturadoFalse
+//        (viajePropioTramoDAO.findById(idViajeTramo));
+//        } else if (item ==2){ //ViajeTerceroTramo
+//            viajeRemitos = elementoDAO.findByViajeTerceroTramoAndEstaFacturadoFalse
+//        (viajeTerceroTramoDAO.findById(idViajeTramo));
+//        }
+//        return viajeRemitos;
+//    }
     
     //Obtiene un registro por puntoVenta, letra y numero
     public ViajeRemito obtener(int puntoVenta, String letra, int numero) {
@@ -140,7 +140,7 @@ public class ViajeRemitoService {
         //Recorre la lista de remitos
         for(ViajeRemito viajeRemito : elementos) {
             viajeRemito.setEstaPendiente(true);
-            viajeRemito.setViajePropioTramo(null);
+            //viajeRemito.setViajePropioTramo(null);
             elementoDAO.save(viajeRemito);
         }
     }

@@ -1,10 +1,8 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IChequeraDAO;
-import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
-import ar.com.draimo.jitws.dao.IEmpresaDAO;
-import ar.com.draimo.jitws.model.Chequera;
-import java.sql.Date;
+import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
+import ar.com.draimo.jitws.dao.IViajeRemitoTramoDAO;
+import ar.com.draimo.jitws.model.ViajeRemitoTramo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,51 +14,46 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
-public class ChequeraService {
+public class ViajeRemitoTramoService {
 
     @Autowired
-    IChequeraDAO elementoDAO;
+    IViajeRemitoTramoDAO elementoDAO;
 
     @Autowired
-    ICuentaBancariaDAO cuentaBancariaDAO;
-    
-    @Autowired
-    IEmpresaDAO empresaDAO;
+    IViajeRemitoDAO viajeRemitoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        Chequera elemento = elementoDAO.findTopByOrderByIdDesc();
+        ViajeRemitoTramo elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
-    public List<Chequera> listar() {
+    public List<ViajeRemitoTramo> listar() {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por CuentaBancaria
-    public List<Chequera> listarCuentasBancarias(int idEmpresa) {
-            return elementoDAO.listarPorEmpresa(idEmpresa);
+    //Obtiene una lista por nombre
+    public List<ViajeRemitoTramo> listarPorViajeRemito(int idRemito) {
+        return elementoDAO.findByViajeRemito(viajeRemitoDAO.findById(idRemito).get());
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Chequera agregar(Chequera elemento) {
-        Date fecha = new Date(new java.util.Date().getTime());
-        elemento.setFechaAlta(fecha);
+    public ViajeRemitoTramo agregar(ViajeRemitoTramo elemento) {
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Chequera elemento) {
+    public void actualizar(ViajeRemitoTramo elemento) {
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(Chequera elemento) {
+    public void eliminar(ViajeRemitoTramo elemento) {
         elementoDAO.delete(elemento);
     }
-    
+
 }
