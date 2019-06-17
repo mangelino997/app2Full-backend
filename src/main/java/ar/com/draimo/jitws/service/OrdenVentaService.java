@@ -8,7 +8,6 @@ import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -22,38 +21,38 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio OrdenVenta
+ *
  * @author blas
  */
-
 @Service
 public class OrdenVentaService {
-    
+
     //Define la referencia al dao
     @Autowired
     IOrdenVentaDAO elementoDAO;
-    
+
     //Define la referencia al dao orden venta escala
     @Autowired
     IOrdenVentaEscalaDAO ordenVentaEscalaDAO;
-    
+
     //Define la referencia al dao orden venta tramo
     @Autowired
     IOrdenVentaTramoDAO ordenVentaTramoDAO;
-    
+
     //Define la referencia al dao cliente
     @Autowired
     IClienteDAO clienteDAO;
-    
+
     //Define la referencia al dao empresaa
     @Autowired
     IEmpresaDAO empresaDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         OrdenVenta elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<OrdenVenta> ordenesVentas = elementoDAO.findAll();
@@ -63,19 +62,19 @@ public class OrdenVentaService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(ordenesVentas);
+        String string = mapper.writer(filters).writeValueAsString(ordenesVentas);
         return new ObjectMapper().readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista por nombre
     public List<OrdenVenta> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+        if (nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
     }
-   
+
     //Obtiene una lista por cliente
     public Object listarPorCliente(int idCliente) throws IOException {
         List<OrdenVenta> ordenesVenta = elementoDAO.findByCliente(clienteDAO.findById(idCliente));
@@ -85,10 +84,10 @@ public class OrdenVentaService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(ordenesVenta);
+        String string = mapper.writer(filters).writeValueAsString(ordenesVenta);
         return new ObjectMapper().readValue(string, Object.class);
     }
-   
+
     //Obtiene una lista por empresa
     public Object listarPorEmpresa(int idEmpresa) throws IOException {
         List<OrdenVenta> ordenesVenta = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
@@ -98,15 +97,17 @@ public class OrdenVentaService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(ordenesVenta);
+        String string = mapper.writer(filters).writeValueAsString(ordenesVenta);
         return new ObjectMapper().readValue(string, Object.class);
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public OrdenVenta agregar(OrdenVenta elemento) {
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
+        //Establece precios desde (viene como parametro en atributo ActivaDesde)
+        Date preciosDesde = elemento.getActivaDesde();
         //Establece la fecha actual
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         //Establece activa en true
@@ -114,9 +115,9 @@ public class OrdenVentaService {
         //Establece ActivaDesde con fecha actual
         elemento.setActivaDesde(new Date(new java.util.Date().getTime()));
         //Agrega la orden de venta
-        OrdenVenta ordenVenta =  elementoDAO.saveAndFlush(elemento);
+        OrdenVenta ordenVenta = elementoDAO.saveAndFlush(elemento);
         //Verifica si la lista es de OrdenVentaEscala o OrdenVentaTramo
-        if(!elemento.getOrdenesVentasEscalas().isEmpty()) {
+        if (!elemento.getOrdenesVentasEscalas().isEmpty()) {
             //Recorre la lista de OrdenVentaEscala
             for (OrdenVentaEscala ove : elemento.getOrdenesVentasEscalas()) {
                 //Establece el id de orden venta
@@ -124,49 +125,52 @@ public class OrdenVentaService {
                 //Verifica que exista algun precio asignado para guardar
                 if (!(ove.getImporteFijo() == null && ove.getPrecioUnitario() == null
                         && ove.getMinimo() == null)) {
+                    //Establece precios desde
+                    ove.setPreciosDesde(preciosDesde);
                     //Agrega la orden venta escala
                     ordenVentaEscalaDAO.saveAndFlush(ove);
                 }
             }
         } else {
             //Recorre la lista de OrdenVentaTramo
-            for(OrdenVentaTramo ovt : elemento.getOrdenesVentasTramos()) {
+            for (OrdenVentaTramo ovt : elemento.getOrdenesVentasTramos()) {
                 //Establece el id de orden venta
                 ovt.setOrdenVenta(ordenVenta);
                 //Verifica que exista algun precio o importe asignado para guardar
                 if (!(ovt.getImporteFijoSeco() == null && ovt.getImporteFijoRef() == null
                         && ovt.getPrecioUnitarioSeco() == null && ovt.getPrecioUnitarioRef() == null)) {
+                    ovt.setPreciosDesde(preciosDesde);
                     //Agrega la orden venta tramo
                     ordenVentaTramoDAO.saveAndFlush(ovt);
                 }
             }
         }
         //Retorna la orden de venta almacenada
-        return elementoDAO.saveAndFlush(ordenVenta);
+        return ordenVenta;
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(OrdenVenta elemento) {
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Actualiza la orden de venta
-        OrdenVenta ordenVenta =  elementoDAO.saveAndFlush(elemento);
+        elementoDAO.saveAndFlush(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(OrdenVenta elemento) {
         elementoDAO.delete(elemento);
     }
-    
+
     //Formatea los strings
     private OrdenVenta formatearStrings(OrdenVenta elemento) {
         elemento.setNombre(elemento.getNombre().trim());
-        if(elemento.getObservaciones() != null) {
+        if (elemento.getObservaciones() != null) {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
         return elemento;
     }
-    
+
 }
