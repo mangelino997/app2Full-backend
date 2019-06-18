@@ -80,6 +80,11 @@ public class ChoferProveedor extends ObjetoGenerico {
     @Column(name = "vtoCursoCargaPeligrosa", nullable = true)
     private Date vtoCursoCargaPeligrosa;
     
+    //Define el vencimiento de psicofisico
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "vtoPsicoFisico", nullable = false)
+    private Date vtoPsicoFisico;
+    
     //Define el vencimiento de LINTI
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLINTI", nullable = false)
@@ -230,6 +235,14 @@ public class ChoferProveedor extends ObjetoGenerico {
         this.vtoCursoCargaPeligrosa = vtoCursoCargaPeligrosa;
     }
 
+    public Date getVtoPsicoFisico() {
+        return vtoPsicoFisico;
+    }
+
+    public void setVtoPsicoFisico(Date vtoPsicoFisico) {
+        this.vtoPsicoFisico = vtoPsicoFisico;
+    }
+    
     public Date getVtoLINTI() {
         return vtoLINTI;
     }
