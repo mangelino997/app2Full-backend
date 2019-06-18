@@ -1,7 +1,9 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Personal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class PersonalService {
     //Define la referencia al dao
     @Autowired
     IPersonalDAO elementoDAO;
+
+    //Define la referencia al dao de empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -37,6 +43,16 @@ public class PersonalService {
             return elementoDAO.findAll();
         } else {
             return elementoDAO.findByAliasContaining(alias);
+        }
+    }
+    
+    //Obtiene una lista por alias
+    public List<Personal> listarPorEmpresaYAlias(int idEmpresa, String alias) {
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+        if(alias.equals("***")) {
+            return elementoDAO.findByEmpresa(empresa);
+        } else {
+            return elementoDAO.findByEmpresaAndAliasContaining(empresa, alias);
         }
     }
     

@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Personal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,5 +38,11 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     //Obtiene una lista de acompañantes ordenados por nombre
     @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND alias LIKE %:alias% ORDER BY nombreCompleto ASC ", nativeQuery = true)
     public List<Personal> listarAcompaniantesPorAliasOrdenadoPorNombre(@Param("alias") String alias);
+    
+    //Obtiene un listado por alias y empresa
+    public List<Personal> findByEmpresaAndAliasContaining(Empresa empresa, String alias);
+    
+    //Obtiene un listado por empresa
+    public List<Personal> findByEmpresa(Empresa empresa);
     
 }
