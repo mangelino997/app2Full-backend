@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITalonarioReciboLoteDAO;
 import ar.com.draimo.jitws.model.TalonarioReciboLote;
 import java.sql.Date;
@@ -18,6 +19,9 @@ public class TalonarioReciboLoteService {
 
     @Autowired
     ITalonarioReciboLoteDAO elementoDAO;
+
+    @Autowired
+    IEmpresaDAO empresaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -28,6 +32,12 @@ public class TalonarioReciboLoteService {
     //Obtiene la lista completa
     public List<TalonarioReciboLote> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene la lista por empresa
+    public List<TalonarioReciboLote> listarPorEmpresaYLoteEntregadoFalse(int idEmpresa) {
+        return elementoDAO.findByEmpresaAndLoteEntregadoFalse(
+                empresaDAO.findById(idEmpresa).get());
     }
 
     //Agrega un registro

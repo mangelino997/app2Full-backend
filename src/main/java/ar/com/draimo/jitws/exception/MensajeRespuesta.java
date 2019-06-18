@@ -91,8 +91,8 @@ public class MensajeRespuesta {
     }
     
     //Retorna mensaje con ReponseEntity de sin contenido
-    public static ResponseEntity<?> sinContenido() {
-        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO,
+    public static ResponseEntity sinContenido() {
+        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO,
                 MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     

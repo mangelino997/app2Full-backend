@@ -62,6 +62,13 @@ public class CobradorController {
         return elementoService.listarPorNombre(nombre);
     }
     
+    //Obtiene una lista por activo en true
+    @GetMapping(value = URL + "/listarPorEstaActivoTrue")
+    @ResponseBody
+    public List<Cobrador> listarPorEstaActivoTrue() {
+        return elementoService.listarPorEstaActivoTrue();
+    }
+    
     //Obtiene el cobrador por defecto
     @GetMapping(value = URL + "/obtenerPorDefecto")
     @ResponseBody

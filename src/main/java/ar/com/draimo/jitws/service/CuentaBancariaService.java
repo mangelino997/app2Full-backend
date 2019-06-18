@@ -34,9 +34,9 @@ public class CuentaBancariaService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por empresa
     public List<CuentaBancaria> listarPorEmpresa(int idEmpresa) {
-       return elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
+       return elementoDAO. listarPorEmpresa( idEmpresa);
     }
 
     //Agrega un registro

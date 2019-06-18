@@ -1,8 +1,10 @@
 package ar.com.draimo.jitws.controller;
+
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.Personal;
-import ar.com.draimo.jitws.service.PersonalService;
+import ar.com.draimo.jitws.model.Soporte;
+import ar.com.draimo.jitws.service.SoporteService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,21 +18,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Clase Personal Controller
+ * Clase soporte Controller
  * @author blas
  */
 
 @RestController
-public class PersonalController {
+public class SoporteController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/personal";
+    private final String URL = RutaConstant.URL_BASE + "/soporte";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/personal";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/soporte";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -38,7 +42,7 @@ public class PersonalController {
     
     //Crea una instancia del servicio
     @Autowired
-    PersonalService elementoService;
+    SoporteService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -50,66 +54,34 @@ public class PersonalController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<Personal> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
-    //Obtiene la lista de choferes de corta distancia por alias
-    @GetMapping(value = URL + "/listarChoferesCortaDistanciaPorAlias/{alias}")
+    //Obtiene una lista por nombre
+    @GetMapping(value = URL + "/listarPorAliasYUsuario/{alias}/{idUsuario}")
     @ResponseBody
-    public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenados(@PathVariable 
-            String alias) {
-        return elementoService.listarChoferesCortaDistanciaOrdenadoPorNombre(alias);
+    public Object listarPorUsuarioYAlias(@PathVariable String alias, @PathVariable int idUsuario) throws IOException {
+        return elementoService.listarPorAliasContainingYUsuario(idUsuario, alias);
     }
     
-    //Obtiene la lista de choferes de larga distancia por alias
-    @GetMapping(value = URL + "/listarChoferesLargaDistanciaPorAlias/{alias}")
+    //Obtiene una lista por nombre
+    @GetMapping(value = URL + "/listarPorUsuario/{idUsuario}")
     @ResponseBody
-    public List<Personal> listarChoferesLargaDistanciaPorAliasOrdenados(@PathVariable 
-            String alias) {
-        return elementoService.listarChoferesLargaDistanciaOrdenadoPorNombre(alias);
-    }
-    
-    //Obtiene la lista completa
-    @GetMapping(value = URL + "/listarAcompaniantesPorAlias/{alias}")
-    @ResponseBody
-    public List<Personal> listarAcompaniantesPorAliasOrdenados(@PathVariable String alias) {
-        return elementoService.listarAcompaniantesOrdenadoPorNombre(alias);
-    }
-    
-    //Obtiene una lista por alias
-    @GetMapping(value = URL + "/listarPorAlias/{alias}")
-    @ResponseBody
-    public List<Personal> listarPorAlias(@PathVariable String alias) {
-        return elementoService.listarPorAlias(alias);
-    }
-    
-    //Obtiene una lista por alias
-    @GetMapping(value = URL + "/listarPorAliasYEmpresa/{alias}/{idEmpresa}")
-    @ResponseBody
-    public List<Personal> listarPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) {
-        return elementoService.listarPorEmpresaYAlias(idEmpresa, alias);
-    }
-    
-    //Obtiene una lista de choferes por alias
-    @GetMapping(value = URL + "/listarChoferPorAlias/{alias}")
-    @ResponseBody
-    public List<Personal> listarChoferPorNombre(@PathVariable String alias) {
-        return elementoService.listarChoferPorAlias(alias);
+    public Object listarPorUsuario(@PathVariable int idUsuario) throws IOException {
+        return elementoService.listarPorUsuario(idUsuario);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> agregar(@RequestPart("soporte") String soporteString, 
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
-            //Agrega el registro
-            Personal personal = elementoService.agregar(elemento);
-            //Actualiza inmediatamente el registro para establecer el alias
-            elementoService.establecerAlias(personal);
+            Soporte a = elementoService.agregar(soporteString, archivo);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(personal.getId());
+            return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -124,12 +96,12 @@ public class PersonalController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody Soporte elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -149,7 +121,7 @@ public class PersonalController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody Soporte elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

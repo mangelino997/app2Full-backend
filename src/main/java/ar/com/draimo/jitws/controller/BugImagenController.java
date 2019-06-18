@@ -1,11 +1,19 @@
 package ar.com.draimo.jitws.controller;
+
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
+import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.Personal;
-import ar.com.draimo.jitws.service.PersonalService;
+import ar.com.draimo.jitws.model.BugImagen;
+import ar.com.draimo.jitws.service.BugImagenService;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -16,21 +24,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Clase Personal Controller
+ * Clase Barrio Controller
  * @author blas
  */
 
 @RestController
-public class PersonalController {
+public class BugImagenController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/personal";
+    private final String URL = RutaConstant.URL_BASE + "/bugimagen";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/personal";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/bugimagen";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -38,7 +48,7 @@ public class PersonalController {
     
     //Crea una instancia del servicio
     @Autowired
-    PersonalService elementoService;
+    BugImagenService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -47,69 +57,50 @@ public class PersonalController {
         return elementoService.obtenerSiguienteId();
     }
     
-    //Obtiene la lista completa
-    @GetMapping(value = URL)
+    //Obtiene por id
+    @GetMapping(value = URL + "/obtenerImagenPorId/{id}")
     @ResponseBody
-    public List<Personal> listar() {
-        return elementoService.listar();
+    public ResponseEntity<InputStreamResource> obtenerImagenPorId(@PathVariable int id) {
+        try {
+            BugImagen imagen = elementoService.obtenerPorId(id);
+            HttpHeaders respHeaders = new HttpHeaders();
+            respHeaders.add("Content-Type", imagen.getTipo());
+            respHeaders.setContentLength(imagen.getTamanio());
+            respHeaders.setContentDispositionFormData("attachment", imagen.getNombre());
+            InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(imagen.getDatos()));
+            return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
+        } catch(Exception e) {
+            //Muestra mensaje de error interno en el servidor
+            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO, 
+                    MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
-    //Obtiene la lista de choferes de corta distancia por alias
-    @GetMapping(value = URL + "/listarChoferesCortaDistanciaPorAlias/{alias}")
+    //Obtiene por id
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
-    public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenados(@PathVariable 
-            String alias) {
-        return elementoService.listarChoferesCortaDistanciaOrdenadoPorNombre(alias);
-    }
-    
-    //Obtiene la lista de choferes de larga distancia por alias
-    @GetMapping(value = URL + "/listarChoferesLargaDistanciaPorAlias/{alias}")
-    @ResponseBody
-    public List<Personal> listarChoferesLargaDistanciaPorAliasOrdenados(@PathVariable 
-            String alias) {
-        return elementoService.listarChoferesLargaDistanciaOrdenadoPorNombre(alias);
-    }
-    
-    //Obtiene la lista completa
-    @GetMapping(value = URL + "/listarAcompaniantesPorAlias/{alias}")
-    @ResponseBody
-    public List<Personal> listarAcompaniantesPorAliasOrdenados(@PathVariable String alias) {
-        return elementoService.listarAcompaniantesOrdenadoPorNombre(alias);
-    }
-    
-    //Obtiene una lista por alias
-    @GetMapping(value = URL + "/listarPorAlias/{alias}")
-    @ResponseBody
-    public List<Personal> listarPorAlias(@PathVariable String alias) {
-        return elementoService.listarPorAlias(alias);
-    }
-    
-    //Obtiene una lista por alias
-    @GetMapping(value = URL + "/listarPorAliasYEmpresa/{alias}/{idEmpresa}")
-    @ResponseBody
-    public List<Personal> listarPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) {
-        return elementoService.listarPorEmpresaYAlias(idEmpresa, alias);
-    }
-    
-    //Obtiene una lista de choferes por alias
-    @GetMapping(value = URL + "/listarChoferPorAlias/{alias}")
-    @ResponseBody
-    public List<Personal> listarChoferPorNombre(@PathVariable String alias) {
-        return elementoService.listarChoferPorAlias(alias);
+    public ResponseEntity<InputStreamResource> obtenerPorId(@PathVariable int id) {
+        try {
+            BugImagen element = elementoService.obtenerPorId(id);
+            HttpHeaders respHeaders = new HttpHeaders();
+            respHeaders.add("Content-Type", element.getTipo());
+            respHeaders.setContentLength(element.getTamanio());
+            respHeaders.setContentDispositionFormData("attachment", element.getNombre());
+            InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(element.getDatos()));
+            return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
+        } catch(IOException e) {
+            //Muestra mensaje de error interno en el servidor
+            return  MensajeRespuesta.sinContenido();
+        }
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> agregar(@RequestParam("archivo") MultipartFile archivo) {
         try {
-            //Agrega el registro
-            Personal personal = elementoService.agregar(elemento);
-            //Actualiza inmediatamente el registro para establecer el alias
-            elementoService.establecerAlias(personal);
-            //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            BugImagen a = elementoService.agregar(archivo);
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(personal.getId());
+            return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -124,12 +115,10 @@ public class PersonalController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> actualizar(@RequestParam("idImagen") int idImagen, @RequestParam("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
-            //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            elementoService.actualizar(idImagen, archivo);
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -149,7 +138,7 @@ public class PersonalController {
     
     //Elimina un registro
     @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> eliminar(@RequestBody BugImagen elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

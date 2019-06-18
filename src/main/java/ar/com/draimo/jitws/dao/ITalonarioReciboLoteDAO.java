@@ -1,6 +1,8 @@
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.TalonarioReciboLote;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,8 @@ public interface ITalonarioReciboLoteDAO extends JpaRepository<TalonarioReciboLo
     
     //Obtiene el siguiente id
     public TalonarioReciboLote findTopByOrderByIdDesc();
+    
+    //Obtiene un listado por empresa y loteEntregadoFalse
+    public List<TalonarioReciboLote> findByEmpresaAndLoteEntregadoFalse(Empresa empresa); 
     
 }

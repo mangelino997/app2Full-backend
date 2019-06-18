@@ -40,6 +40,11 @@ public class CobradorService {
         }
     }
     
+    //Obtiene una lista por nombre
+    public List<Cobrador> listarPorEstaActivoTrue() {
+        return elementoDAO.findByEstaActivoTrueOrderByNombreAsc();
+    }
+    
     //Obtiene la moneda principal por defecto
     public Cobrador obtenerPorDefecto() {
         return elementoDAO.findByPorDefectoClienteEventualTrue();

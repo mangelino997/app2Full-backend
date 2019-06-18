@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +53,13 @@ public class TalonarioReciboLoteController {
     @ResponseBody
     public List<TalonarioReciboLote> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista por empresa y lote entregado false
+    @GetMapping(value = URL + "/listarPorEmpresaYLoteEntregadoFalse/{idEmpresa}")
+    @ResponseBody
+    public List<TalonarioReciboLote> listarPorEmpresa(@PathVariable int idEmpresa) {
+        return elementoService.listarPorEmpresaYLoteEntregadoFalse(idEmpresa);
     }
     
     //Agrega un registro
