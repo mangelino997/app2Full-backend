@@ -46,8 +46,8 @@ public class PersonalService {
         }
     }
     
-    //Obtiene una lista por alias
-    public List<Personal> listarPorEmpresaYAlias(int idEmpresa, String alias) {
+    //Obtiene una lista por alias y empresa
+    public List<Personal> listarPorAliasYEmpresa(String alias, int idEmpresa) {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
         if(alias.equals("***")) {
             return elementoDAO.findByEmpresa(empresa);

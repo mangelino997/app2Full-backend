@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Soporte;
 import ar.com.draimo.jitws.service.SoporteService;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Clase soporte Controller
+ * Clase Soporte Controller
  * @author blas
  */
 
@@ -58,10 +57,10 @@ public class SoporteController {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por alias y usuario
     @GetMapping(value = URL + "/listarPorAliasYUsuario/{alias}/{idUsuario}")
     @ResponseBody
-    public Object listarPorUsuarioYAlias(@PathVariable String alias, @PathVariable int idUsuario) throws IOException {
+    public Object listarPorAliasYUsuario(@PathVariable String alias, @PathVariable int idUsuario) throws IOException {
         return elementoService.listarPorAliasContainingYUsuario(idUsuario, alias);
     }
     

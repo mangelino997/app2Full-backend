@@ -8,7 +8,6 @@ import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.service.BugImagenService;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.DataIntegrityViolationException;

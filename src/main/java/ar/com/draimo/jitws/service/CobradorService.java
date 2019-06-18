@@ -40,7 +40,7 @@ public class CobradorService {
         }
     }
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por esta activo y ordenado por nombre
     public List<Cobrador> listarPorEstaActivoTrue() {
         return elementoDAO.findByEstaActivoTrueOrderByNombreAsc();
     }

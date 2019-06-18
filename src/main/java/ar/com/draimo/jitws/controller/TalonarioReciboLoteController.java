@@ -58,7 +58,7 @@ public class TalonarioReciboLoteController {
     //Obtiene la lista por empresa y lote entregado false
     @GetMapping(value = URL + "/listarPorEmpresaYLoteEntregadoFalse/{idEmpresa}")
     @ResponseBody
-    public List<TalonarioReciboLote> listarPorEmpresa(@PathVariable int idEmpresa) {
+    public List<TalonarioReciboLote> listarPorEmpresaYLoteEntregadoFalse(@PathVariable int idEmpresa) {
         return elementoService.listarPorEmpresaYLoteEntregadoFalse(idEmpresa);
     }
     

@@ -34,10 +34,9 @@ public class TalonarioReciboLoteService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene la lista por empresa
+    //Obtiene la lista por empresa y lote entregado false
     public List<TalonarioReciboLote> listarPorEmpresaYLoteEntregadoFalse(int idEmpresa) {
-        return elementoDAO.findByEmpresaAndLoteEntregadoFalse(
-                empresaDAO.findById(idEmpresa).get());
+        return elementoDAO.findByEmpresaAndLoteEntregadoFalse(empresaDAO.findById(idEmpresa).get());
     }
 
     //Agrega un registro

@@ -84,11 +84,11 @@ public class PersonalController {
         return elementoService.listarPorAlias(alias);
     }
     
-    //Obtiene una lista por alias
+    //Obtiene una lista por alias y empresa
     @GetMapping(value = URL + "/listarPorAliasYEmpresa/{alias}/{idEmpresa}")
     @ResponseBody
     public List<Personal> listarPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) {
-        return elementoService.listarPorEmpresaYAlias(idEmpresa, alias);
+        return elementoService.listarPorAliasYEmpresa(alias, idEmpresa);
     }
     
     //Obtiene una lista de choferes por alias

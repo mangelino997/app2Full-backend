@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author blas
  */
-
 @Service
 public class SoporteService {
 
@@ -43,52 +42,52 @@ public class SoporteService {
 
     @Autowired
     BugImagenService bugImagenService;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Soporte elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<Soporte> elementos= elementoDAO.findAll();
+        List<Soporte> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-              .serializeAllExcept("datos");
+                .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroImagen", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
-    //Obtiene una lista por nombre
+
+    //Obtiene una lista por alias y usuario
     public Object listarPorAliasContainingYUsuario(int idUsuario, String alias) throws IOException {
         Usuario usuario = usuarioDAO.findById(idUsuario).get();
-        List<Soporte> elementos= new ArrayList<>();
-        if(alias.equals("***")) {
-            elementos= elementoDAO.findByUsuario(usuario);
+        List<Soporte> elementos;
+        if (alias.equals("***")) {
+            elementos = elementoDAO.findByUsuario(usuario);
         } else {
-            elementos= elementoDAO.findByUsuarioAndAliasContaining(usuario, alias);
+            elementos = elementoDAO.findByUsuarioAndAliasContaining(usuario, alias);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-              .serializeAllExcept("datos");
+                .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroImagen", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista por nombre
     public Object listarPorUsuario(int idUsuario) throws IOException {
-        List<Soporte> elementos= elementoDAO.findByUsuario(usuarioDAO.findById(idUsuario).get());
+        List<Soporte> elementos = elementoDAO.findByUsuario(usuarioDAO.findById(idUsuario).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-              .serializeAllExcept("datos");
+                .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroImagen", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
 
@@ -100,7 +99,7 @@ public class SoporteService {
         BugImagen u = bugImagenService.agregar(archivo, false);
         BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
         elemento.setBugImagen(bugImagen);
-        String subopcion= subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
+        String subopcion = subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
         Soporte soporte = elementoDAO.saveAndFlush(elemento);
         soporte.setAlias(soporte.getId() + " - " + soporte.getFecha()
                 + " - " + subopcion);
@@ -110,12 +109,12 @@ public class SoporteService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Soporte elemento) {
-        String subopcion= subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
-        elemento.setAlias(elemento.getId() + " - " + elemento.getFecha() + " - " +
-                subopcion);
+        String subopcion = subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
+        elemento.setAlias(elemento.getId() + " - " + elemento.getFecha() + " - "
+                + subopcion);
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Soporte elemento) {
