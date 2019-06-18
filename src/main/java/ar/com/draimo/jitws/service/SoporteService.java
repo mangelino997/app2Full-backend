@@ -6,7 +6,6 @@ import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.model.Soporte;
-import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -14,7 +13,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,11 +97,7 @@ public class SoporteService {
         BugImagen u = bugImagenService.agregar(archivo, false);
         BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
         elemento.setBugImagen(bugImagen);
-        String subopcion = subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
-        Soporte soporte = elementoDAO.saveAndFlush(elemento);
-        soporte.setAlias(soporte.getId() + " - " + soporte.getFecha()
-                + " - " + subopcion);
-        return elementoDAO.save(soporte);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
@@ -119,6 +113,14 @@ public class SoporteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(Soporte elemento) {
         elementoDAO.delete(elemento);
+    }
+
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(Soporte elemento) {
+        String subopcion = subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
+        elemento.setAlias(elemento.getId() + " - " + elemento.getFecha() + " - " + subopcion);
+        elementoDAO.save(elemento);
     }
 
 }
