@@ -20,7 +20,7 @@ public interface ILocalidadDAO extends JpaRepository<Localidad, Integer> {
     public Localidad findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<Localidad> findByNombreStartingWith(String nombre);
+    public List<Localidad> findByNombreContaining(String nombre);
     
     //Obtiene una lista por id provincia
     public List<Localidad> findByProvincia(Optional<Provincia> elemento);

@@ -51,7 +51,11 @@ public class ViajeRemitoService {
     
     //Obtiene una lista por alias
     public List<ViajeRemito> listarPorAlias(String alias) {
-        return elementoDAO.findByAliasContaining(alias);
+        if(alias.equals("***")) {
+            return elementoDAO.findAll();
+        }else {
+            return elementoDAO.findByAliasContaining(alias);
+        }
     }
     
     //Obtiene un listado por numero de comprobante

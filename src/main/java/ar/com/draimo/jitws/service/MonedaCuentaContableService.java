@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,12 @@ public class MonedaCuentaContableService {
     
     //Obtiene una lista por nombre de moneda
     public Object listarPorNombreMoneda(String nombre) throws IOException {
-        List<MonedaCuentaContable> monedasCuentasContables = elementoDAO.findByMoneda_NombreContaining(nombre);
+        List<MonedaCuentaContable> monedasCuentasContables = new ArrayList<>();
+        if(nombre.equals("***")) {
+            monedasCuentasContables= elementoDAO.findAll();
+        } else {
+            monedasCuentasContables= elementoDAO.findByMoneda_NombreContaining(nombre);
+    }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");

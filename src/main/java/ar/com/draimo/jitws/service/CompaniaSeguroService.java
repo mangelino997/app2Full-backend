@@ -32,7 +32,11 @@ public class CompaniaSeguroService {
     
     //Obtiene una lista por nombre
     public List<CompaniaSeguro> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")){
+            return elementoDAO.findAll();
+        }else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
     
     //Obtiene una lista de companias de seguro por empresa (Consulta CompaniaSeguroPoliza)

@@ -35,7 +35,7 @@ public class PaisService {
         if(nombre.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreStartingWith(nombre);
+            return elementoDAO.findByNombreContaining(nombre);
         }
     }
 

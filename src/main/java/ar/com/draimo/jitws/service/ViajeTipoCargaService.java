@@ -32,7 +32,11 @@ public class ViajeTipoCargaService {
     
     //Obtiene una lista por nombre
     public List<ViajeTipoCarga> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        }else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
 
     //Agrega un registro
