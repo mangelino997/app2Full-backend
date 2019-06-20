@@ -47,12 +47,12 @@ public class Soporte extends ObjetoGenerico {
     @Column(name = "alias", length = 60, nullable = true)
     private String alias;
     
-    //Referencia a la clase Subopcion
+    //Referencia a la clase BugImagen
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBugImagen", nullable = false)
     private BugImagen bugImagen;
     
-    //Referencia a la clase soporteEstado
+    //Referencia a la clase SoporteEstado
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSoporteEstado", nullable = false)
     private SoporteEstado soporteEstado;
