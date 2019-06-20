@@ -6,17 +6,14 @@ package ar.com.draimo.jitws.dto;
  */
 public class ViajeRemitoDTO {
     
-     //Referencia a la clase Sucursal
-    private int idSucursalIngreso;
-    
     //Define la fecha
     private String fechaDesde;
     
     //Define la fecha
     private String fechaHasta;
     
-    //Define el numero de camion
-    private short numeroCamion;
+     //Referencia a la clase Sucursal
+    private int idSucursalIngreso;
     
     //Referencia a la clase Sucursal
     private int idSucursalDestino;
@@ -26,14 +23,9 @@ public class ViajeRemitoDTO {
     
     //Referencia a la clase Cliente
     private int idClienteDestinatario;
-
-    public int getIdSucursalIngreso() {
-        return idSucursalIngreso;
-    }
-
-    public void setIdSucursalIngreso(int idSucursalIngreso) {
-        this.idSucursalIngreso = idSucursalIngreso;
-    }
+    
+    //Define el numero de camion
+    private short numeroCamion;
 
     public String getFechaDesde() {
         return fechaDesde;
@@ -51,12 +43,12 @@ public class ViajeRemitoDTO {
         this.fechaHasta = fechaHasta;
     }
 
-    public short getNumeroCamion() {
-        return numeroCamion;
+    public int getIdSucursalIngreso() {
+        return idSucursalIngreso;
     }
 
-    public void setNumeroCamion(short numeroCamion) {
-        this.numeroCamion = numeroCamion;
+    public void setIdSucursalIngreso(int idSucursalIngreso) {
+        this.idSucursalIngreso = idSucursalIngreso;
     }
 
     public int getIdSucursalDestino() {
@@ -81,6 +73,14 @@ public class ViajeRemitoDTO {
 
     public void setIdClienteDestinatario(int idClienteDestinatario) {
         this.idClienteDestinatario = idClienteDestinatario;
+    }
+
+    public short getNumeroCamion() {
+        return numeroCamion;
+    }
+
+    public void setNumeroCamion(short numeroCamion) {
+        this.numeroCamion = numeroCamion;
     }
     
 }
