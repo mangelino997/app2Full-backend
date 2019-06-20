@@ -1,12 +1,16 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
+import ar.com.draimo.jitws.exception.DuplicidadError;
+import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Chequera;
 import ar.com.draimo.jitws.service.ChequeraService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -77,9 +81,10 @@ public class ChequeraController {
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch (Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
+        } catch(Exception e) {
+            //Retorna codigo y mensaje de error
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -103,8 +108,9 @@ public class ChequeraController {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch(Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
+            //Retorna codigo y mensaje de error
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     

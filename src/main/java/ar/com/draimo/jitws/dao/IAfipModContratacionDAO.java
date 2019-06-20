@@ -19,4 +19,7 @@ public interface IAfipModContratacionDAO extends JpaRepository<AfipModContrataci
     //Obtiene una lista por alias
     public List<AfipModContratacion> findByAliasContaining(String alias);
     
+    //Obtiene una lista ordenada por codigoAfip
+    public List<AfipModContratacion> findByOrderByCodigoAfipAsc();
+    
 }

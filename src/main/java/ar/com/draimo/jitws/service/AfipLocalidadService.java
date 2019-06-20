@@ -28,13 +28,13 @@ public class AfipLocalidadService {
     
     //Obtiene la lista completa
     public List<AfipLocalidad> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findByOrderByCodigoAfipAsc();
     }
     
     //Obtiene una lista por alias
     public List<AfipLocalidad> listarPorAlias(String alias) {
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByOrderByCodigoAfipAsc();
         } else {
             return elementoDAO.findByAliasContaining(alias);
         }

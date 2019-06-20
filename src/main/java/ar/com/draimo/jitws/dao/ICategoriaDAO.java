@@ -17,6 +17,9 @@ public interface ICategoriaDAO extends JpaRepository<Categoria, Integer> {
     public Categoria findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<Categoria> findByNombreContaining(String nombre);
+    public List<Categoria> findByNombreContainingOrderByNombreAsc(String nombre);
+    
+    //Obtiene la lista completa ordenada alfabeticamente
+    public List<Categoria> findByOrderByNombreAsc();
     
 }

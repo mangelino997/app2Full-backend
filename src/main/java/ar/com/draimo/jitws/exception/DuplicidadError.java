@@ -18,6 +18,8 @@ public class DuplicidadError {
     
     public static final String CUIT_UNICO = "cuit_UNIQUE";
     
+    public static final String DESDE_HASTA_UNICO = "cuenta_desde_hasta_UNIQUE";
+    
     public static final String DOCUMENTO_UNICO = "numeroDocumento_UNIQUE";
     
     public static final String DOMINIO_UNICO = "dominio_UNIQUE";

@@ -42,18 +42,53 @@ public class ChequeraService {
     public List<Chequera> listarCuentasBancarias(int idEmpresa) {
             return elementoDAO.listarPorEmpresa(idEmpresa);
     }
+    
+    //Obtiene una lista por CuentaBancaria
+    public List<Chequera> validarDesdeHasta(int idCuentaBancaria, int idTipoChequera,int desdeHasta) {
+            return elementoDAO.listarPorCtaBancariaTipoChequeraDesdeHasta(idCuentaBancaria, idTipoChequera, desdeHasta);
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Chequera agregar(Chequera elemento) {
+    public Chequera agregar(Chequera elemento) throws Exception {
         Date fecha = new Date(new java.util.Date().getTime());
         elemento.setFechaAlta(fecha);
+        if(elemento.getDesde()>elemento.getHasta()) {
+            throw new Exception("Desde-Hasta inválidos");
+        }
+        List<Chequera> chequerasDesde = validarDesdeHasta(
+                elemento.getCuentaBancaria().getId(), elemento.getTipoChequera().getId(),
+                elemento.getDesde());
+        List<Chequera> chequerasHasta = validarDesdeHasta(
+                elemento.getCuentaBancaria().getId(), elemento.getTipoChequera().getId(),
+                elemento.getHasta());
+        if(!chequerasDesde.isEmpty()) {
+            throw new Exception("Para Cuenta bancaria-Tipo chequera: desde inválido");
+        }
+        if(!chequerasHasta.isEmpty()) {
+            throw new Exception("Para Cuenta bancaria-Tipo chequera: hasta inválido");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Chequera elemento) {
+    public void actualizar(Chequera elemento) throws Exception {
+        if(elemento.getDesde()>elemento.getHasta()) {
+            throw new Exception("Desde-Hasta inválidos");
+        }
+        List<Chequera> chequerasDesde = validarDesdeHasta(
+                elemento.getCuentaBancaria().getId(), elemento.getTipoChequera().getId(),
+                elemento.getDesde());
+        List<Chequera> chequerasHasta = validarDesdeHasta(
+                elemento.getCuentaBancaria().getId(), elemento.getTipoChequera().getId(),
+                elemento.getHasta());
+        if(!chequerasDesde.isEmpty()) {
+            throw new Exception("Para Cuenta bancaria-Tipo chequera: desde inválido");
+        }
+        if(!chequerasHasta.isEmpty()) {
+            throw new Exception("Para Cuenta bancaria-Tipo chequera: hasta inválido");
+        }
         elementoDAO.save(elemento);
     }
     

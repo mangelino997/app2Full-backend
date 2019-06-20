@@ -100,7 +100,11 @@ public class ViajePropioService {
 
     //Obtiene una lista de registros por alias
     public List<ViajePropio> listarPorAlias(String alias) {
-        return elementoDAO.findByAliasContaining(alias);
+        if(alias.equals("***")) {
+            return elementoDAO.findAll();
+        }else {
+            return elementoDAO.findByAliasContaining(alias);
+        }
     }
 
     //Agrega un registro

@@ -39,7 +39,11 @@ public class ContactoProveedorService {
     
     //Obtiene una lista por nombre
     public List<ContactoProveedor> listarPorNombre(String nombre) {
-        return elementoDAO.findByNombreContaining(nombre);
+        if(nombre.equals("***")) {
+            return elementoDAO.findAll();
+        } else {
+            return elementoDAO.findByNombreContaining(nombre);
+        }
     }
     
     //Obtiene por proveedor

@@ -43,7 +43,11 @@ public class VehiculoProveedorService {
     
     //Obtiene una lista por nombre
     public List<VehiculoProveedor> listarPorAlias(String alias) {
-        return elementoDAO.findByAliasContaining(alias);
+        if(alias.equals("***")) {
+            return elementoDAO.findAll();
+        }else {
+            return elementoDAO.findByAliasContaining(alias);
+        }
     }
     
     //Obtiene una lista por alias filtro remolque

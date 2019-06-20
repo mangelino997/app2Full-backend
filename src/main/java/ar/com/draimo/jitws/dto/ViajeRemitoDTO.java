@@ -26,6 +26,9 @@ public class ViajeRemitoDTO {
     
     //Define el numero de camion
     private short numeroCamion;
+    
+    //Referencia a la clase Viaje
+    private int idViaje;
 
     public String getFechaDesde() {
         return fechaDesde;
@@ -81,6 +84,14 @@ public class ViajeRemitoDTO {
 
     public void setNumeroCamion(short numeroCamion) {
         this.numeroCamion = numeroCamion;
+    }
+    
+    public int getIdViaje() {
+        return idViaje;
+    }
+
+    public void setIdViaje(int idViaje) {
+        this.idViaje = idViaje;
     }
     
 }

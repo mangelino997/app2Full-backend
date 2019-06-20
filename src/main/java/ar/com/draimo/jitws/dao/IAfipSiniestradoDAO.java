@@ -19,4 +19,7 @@ public interface IAfipSiniestradoDAO extends JpaRepository<AfipSiniestrado, Inte
     //Obtiene una lista por alias
     public List<AfipSiniestrado> findByAliasContaining(String alias);
     
+    //Obtiene una lista ordenada por codigoAfip
+    public List<AfipSiniestrado> findByOrderByCodigoAfipAsc();
+    
 }

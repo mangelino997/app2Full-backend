@@ -25,4 +25,7 @@ public interface ICobradorDAO extends JpaRepository<Cobrador, Integer> {
     //Obtiene un listado completo ordenado alfabeticamente
     public List<Cobrador> findAllByOrderByNombreAsc();
     
+    //Obtiene un listado por esta activo true ordenado alfabeticamente por nombre
+    public List<Cobrador> findByEstaActivoTrueOrderByNombreAsc();
+    
 }

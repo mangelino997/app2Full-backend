@@ -1,68 +1,67 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.ICategoriaDAO;
-import ar.com.draimo.jitws.model.Categoria;
+import ar.com.draimo.jitws.dao.ISoporteEstadoDAO;
+import ar.com.draimo.jitws.model.SoporteEstado;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio Categoria
+ *
  * @author blas
  */
 
 @Service
-public class CategoriaService {
-    
-    //Define la referencia al dao
+public class SoporteEstadoService {
+
     @Autowired
-    ICategoriaDAO elementoDAO;
+    ISoporteEstadoDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        Categoria elemento = elementoDAO.findTopByOrderByIdDesc();
+        SoporteEstado elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
-    public List<Categoria> listar() {
-        return elementoDAO.findByOrderByNombreAsc();
+    public List<SoporteEstado> listar() {
+        return elementoDAO.findAll();
     }
     
     //Obtiene una lista por nombre
-    public List<Categoria> listarPorNombre(String nombre) {
+    public List<SoporteEstado> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
-            return elementoDAO.findByOrderByNombreAsc();
+            return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContainingOrderByNombreAsc(nombre);
+            return elementoDAO.findByNombreContaining(nombre);
         }
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Categoria agregar(Categoria elemento) {
+    public SoporteEstado agregar(SoporteEstado elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Categoria elemento) {
+    public void actualizar(SoporteEstado elemento) {
         elemento = formatearStrings(elemento);
         elementoDAO.save(elemento);
     }
     
-    //Eliminar un registro
+    //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(Categoria elemento) {
+    public void eliminar(SoporteEstado elemento) {
         elementoDAO.delete(elemento);
     }
     
     //Formatea los strings
-    private Categoria formatearStrings(Categoria elemento) {
+    private SoporteEstado formatearStrings(SoporteEstado elemento) {
         elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }
-    
+
 }

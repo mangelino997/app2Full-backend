@@ -1,18 +1,22 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
+import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TalonarioReciboLote;
 import ar.com.draimo.jitws.service.TalonarioReciboLoteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +58,20 @@ public class TalonarioReciboLoteController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista por empresa y lote entregado false
+    @GetMapping(value = URL + "/listarPorEmpresaYLoteEntregadoFalse/{idEmpresa}")
+    @ResponseBody
+    public List<TalonarioReciboLote> listarPorEmpresaYLoteEntregadoFalse(@PathVariable int idEmpresa) {
+        return elementoService.listarPorEmpresaYLoteEntregadoFalse(idEmpresa);
+    }
+    
+    //Obtiene la lista por empresa 
+    @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
+    @ResponseBody
+    public List<TalonarioReciboLote> listarPorEmpresa(@PathVariable int idEmpresa) {
+        return elementoService.listarPorEmpresa(idEmpresa);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TalonarioReciboLote elemento) {
@@ -70,8 +88,9 @@ public class TalonarioReciboLoteController {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
+            //Retorna codigo y mensaje de error
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -95,8 +114,9 @@ public class TalonarioReciboLoteController {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch(Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
+            //Retorna codigo y mensaje de error
+            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     

@@ -19,4 +19,7 @@ public interface IAfipActividadDAO extends JpaRepository<AfipActividad, Integer>
     //Obtiene una lista por alias
     public List<AfipActividad> findByAliasContaining(String alias);
     
+    //Obtiene una lista ordenada por codigoAfip
+    public List<AfipActividad> findByOrderByCodigoAfipAsc();
+    
 }

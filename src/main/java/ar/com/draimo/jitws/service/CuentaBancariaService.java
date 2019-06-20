@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author blas
  */
-
 @Service
 public class CuentaBancariaService {
 
@@ -22,21 +21,21 @@ public class CuentaBancariaService {
 
     @Autowired
     IEmpresaDAO empresaDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CuentaBancaria elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public List<CuentaBancaria> listar() {
         return elementoDAO.findAll();
     }
-    
-    //Obtiene una lista por nombre
+
+    //Obtiene una lista por empresa
     public List<CuentaBancaria> listarPorEmpresa(int idEmpresa) {
-       return elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
+        return elementoDAO.listarPorEmpresa(idEmpresa);
     }
 
     //Agrega un registro
@@ -51,7 +50,7 @@ public class CuentaBancariaService {
     public void actualizar(CuentaBancaria elemento) {
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(CuentaBancaria elemento) {

@@ -19,4 +19,7 @@ public interface IAfipCondicionDAO extends JpaRepository<AfipCondicion, Integer>
     //Obtiene una lista por alias
     public List<AfipCondicion> findByAliasContaining(String alias);
     
+    //Obtiene una lista ordenada por codigoAfip
+    public List<AfipCondicion> findByOrderByCodigoAfipAsc();
+    
 }
