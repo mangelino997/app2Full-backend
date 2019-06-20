@@ -26,4 +26,11 @@ public interface IChequeraDAO extends JpaRepository<Chequera, Integer> {
             + "c.idCuentaBancaria=b.id WHERE b.idEmpresa=:idEmpresa", nativeQuery = true)
     public List<Chequera> listarPorEmpresa(@Param("idEmpresa") int idEmpresa);
     
+    @Query(value = "SELECT * FROM chequera c WHERE c.idCuentaBancaria=:idCuentaBancaria"
+            + " AND c.idTipoChequera=:idTipoChequera and :desdeHasta BETWEEN "
+            + "c.desde AND c.hasta", nativeQuery = true)
+    public List<Chequera> listarPorCtaBancariaTipoChequeraDesdeHasta(@Param("idCuentaBancaria")
+            int idCuentaBancaria,@Param("idTipoChequera") int idTipoChequera,
+            @Param("desdeHasta") int desdeHasta);
+    
 }

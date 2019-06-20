@@ -28,13 +28,13 @@ public class AfipModContratacionService {
     
     //Obtiene la lista completa
     public List<AfipModContratacion> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findByOrderByCodigoAfipAsc();
     }
     
     //Obtiene una lista por alias
     public List<AfipModContratacion> listarPorAlias(String alias) {
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByOrderByCodigoAfipAsc();
         } else {
             return elementoDAO.findByAliasContaining(alias);
         }

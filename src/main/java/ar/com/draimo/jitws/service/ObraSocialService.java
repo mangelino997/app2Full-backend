@@ -27,15 +27,15 @@ public class ObraSocialService {
     
     //Obtiene la lista completa
     public List<ObraSocial> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findByOrderByCodigoAfipAsc();
     }
     
     //Obtiene una lista por nombre
     public List<ObraSocial> listarPorAlias(String alias) {
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByOrderByCodigoAfipAsc();
         } else {
-            return elementoDAO.findByAliasContaining(alias);
+            return elementoDAO.findByAliasContainingOrderByNombreAsc(alias);
         }
     }
     

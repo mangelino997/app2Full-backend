@@ -27,15 +27,15 @@ public class SeguridadSocialService {
     
     //Obtiene la lista completa
     public List<SeguridadSocial> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findByOrderByNombreAsc();
     }
     
     //Obtiene una lista por nombre
     public List<SeguridadSocial> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByOrderByNombreAsc();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByNombreContainingOrderByNombreAsc(nombre);
         }
     }
 

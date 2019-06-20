@@ -2,9 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Sucursal;
-import ar.com.draimo.jitws.model.ViajePropioTramo;
 import ar.com.draimo.jitws.model.ViajeRemito;
-import ar.com.draimo.jitws.model.ViajeTerceroTramo;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -50,7 +48,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
                 + "=0 or idSucursalDestino=:idSucursalDestino) and (:idClienteRemitente "
                 + "=0 or idClienteRemitente=:idClienteRemitente) and (:idClienteDestinatario "
                 + "=0 or idClienteDestinatario=:idClienteDestinatario) and (:numeroCamion "
-                + "=0 or numeroCamion=:numeroCamion)", nativeQuery = true)
+                + "=0 or numeroCamion=:numeroCamion) and (:idViaje=0 or id", nativeQuery = true)
     public List<ViajeRemito> listarPorFiltros(@Param("fechaDesde") String fechaDesde,
             @Param("fechaHasta") String fechaHasta,@Param("idSucursalIngreso") int idSucursalIngreso,
             @Param("idSucursalDestino") int idSucursalDestino,@Param("idClienteRemitente") int idClienteRemitente,

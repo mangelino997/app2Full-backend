@@ -17,6 +17,9 @@ public interface ISeguridadSocialDAO extends JpaRepository<SeguridadSocial, Inte
     public SeguridadSocial findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<SeguridadSocial> findByNombreContaining(String nombre);
+    public List<SeguridadSocial> findByNombreContainingOrderByNombreAsc(String nombre);
+    
+    //Obtiene una lista por orden alfabetico
+    public List<SeguridadSocial> findByOrderByNombreAsc();
     
 }

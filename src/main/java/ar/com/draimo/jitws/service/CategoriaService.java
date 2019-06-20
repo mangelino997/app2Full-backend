@@ -27,15 +27,15 @@ public class CategoriaService {
     
     //Obtiene la lista completa
     public List<Categoria> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findByOrderByNombreAsc();
     }
     
     //Obtiene una lista por nombre
     public List<Categoria> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByOrderByNombreAsc();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByNombreContainingOrderByNombreAsc(nombre);
         }
     }
     

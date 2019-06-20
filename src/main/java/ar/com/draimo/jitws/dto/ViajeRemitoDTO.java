@@ -26,6 +26,9 @@ public class ViajeRemitoDTO {
     
     //Referencia a la clase Cliente
     private int idClienteDestinatario;
+    
+    //Referencia a la clase Viaje
+    private int idViaje;
 
     public int getIdSucursalIngreso() {
         return idSucursalIngreso;
@@ -81,6 +84,14 @@ public class ViajeRemitoDTO {
 
     public void setIdClienteDestinatario(int idClienteDestinatario) {
         this.idClienteDestinatario = idClienteDestinatario;
+    }
+
+    public int getIdViaje() {
+        return idViaje;
+    }
+
+    public void setIdViaje(int idViaje) {
+        this.idViaje = idViaje;
     }
     
 }
