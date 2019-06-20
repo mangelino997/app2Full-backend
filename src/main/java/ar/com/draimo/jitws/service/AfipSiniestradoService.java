@@ -28,13 +28,13 @@ public class AfipSiniestradoService {
     
     //Obtiene la lista completa
     public List<AfipSiniestrado> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findByOrderByCodigoAfipAsc();
     }
     
     //Obtiene una lista por alias
     public List<AfipSiniestrado> listarPorAlias(String alias) {
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByOrderByCodigoAfipAsc();
         } else {
             return elementoDAO.findByAliasContaining(alias);
         }

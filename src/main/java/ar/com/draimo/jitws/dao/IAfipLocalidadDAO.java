@@ -19,4 +19,7 @@ public interface IAfipLocalidadDAO extends JpaRepository<AfipLocalidad, Integer>
     //Obtiene una lista por alias
     public List<AfipLocalidad> findByAliasContaining(String alias);
     
+    //Obtiene una lista ordenada por codigoAfip
+    public List<AfipLocalidad> findByOrderByCodigoAfipAsc();
+    
 }

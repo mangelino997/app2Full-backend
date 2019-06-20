@@ -1,6 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.exception;
 
+import java.util.List;
+
 /**
  * Clase Estado de respuesta Agregar
  * Define los codigos y mensajes de respuesta al realizar una operacion
@@ -8,21 +10,20 @@ package ar.com.draimo.jitws.exception;
  * @author blas
  */
 
-public class EstadoRespuestaAgregar {
+public class EstadoRespuestaChequera {
     
     //Codigo de respuesta
     private int codigo;
     
     //Mensaje de respuesta
-    private String mensaje;
+    private List<String> mensajes;
     
     //Sigueinte id
     private int id;
-    
-    //Constructor de la clase Estado de respuesta
-    public EstadoRespuestaAgregar(int codigo, String mensaje, int id) {
+
+    public EstadoRespuestaChequera(int codigo, List<String> mensajes, int id) {
         this.codigo = codigo;
-        this.mensaje = mensaje;
+        this.mensajes = mensajes;
         this.id = id;
     }
     
@@ -36,14 +37,14 @@ public class EstadoRespuestaAgregar {
         this.codigo = codigo;
     }
 
-    public String getMensaje() {
-        return mensaje;
+    public List<String> getMensajes() {
+        return mensajes;
     }
 
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+    public void setMensajes(List<String> mensajes) {
+        this.mensajes = mensajes;
     }
-
+    
     public int getId() {
         return id;
     }

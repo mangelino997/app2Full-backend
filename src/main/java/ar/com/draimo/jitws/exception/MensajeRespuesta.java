@@ -1,5 +1,7 @@
 package ar.com.draimo.jitws.exception;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,14 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> error() {
         return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                 MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    //Retorna mensaje con ReponseEntity intentalo nuevamente
+    public static ResponseEntity<?> seleccioneNuevosDatos() {
+        List<String> mensajes = new ArrayList<>();
+        mensajes.add("Para Cuenta bancaria-Tipo chequera: desde y hasta existentes");
+            mensajes.add("Por favor, seleccione otros datos");
+        return new ResponseEntity<>(new EstadoRespuestaChequera(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                mensajes, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //Retorna mensaje con ReponseEntity de error de sincronizacion
@@ -144,6 +154,10 @@ public class MensajeRespuesta {
                 case DuplicidadError.CUIT_UNICO:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CUIT;
                     plusMensaje = " CUIT";
+                    break;
+                case DuplicidadError.DESDE_HASTA_UNICO:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DESDE_HASTA;
+                    plusMensaje = " DESDE Y HASTA";
                     break;
                 case DuplicidadError.DOCUMENTO_UNICO:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO;

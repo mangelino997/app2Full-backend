@@ -3,7 +3,6 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ITalonarioReciboDAO;
 import ar.com.draimo.jitws.model.TalonarioRecibo;
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,15 +32,41 @@ public class TalonarioReciboService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public TalonarioRecibo agregar(TalonarioRecibo elemento) {
+    public TalonarioRecibo agregar(TalonarioRecibo elemento) throws Exception {
+        if(elemento.getDesde()>elemento.getHasta()) {
+            throw new Exception("Desde-Hasta inválidos");
+        }
         Date fecha = new Date(new java.util.Date().getTime());
         elemento.setFechaAlta(fecha);
+        List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(
+                elemento.getDesde());
+        List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(
+                elemento.getHasta());
+        if(!desdeList.isEmpty()) {
+            throw new Exception("Desde inválido");
+        }
+        if(!hastaList.isEmpty()) {
+            throw new Exception("Hasta inválido");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(TalonarioRecibo elemento) {
+    public void actualizar(TalonarioRecibo elemento) throws Exception {
+        if(elemento.getDesde()>elemento.getHasta()) {
+            throw new Exception("Desde-Hasta inválidos");
+        }
+        List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(
+                elemento.getDesde());
+        List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(
+                elemento.getHasta());
+        if(!desdeList.isEmpty()) {
+            throw new Exception("Desde inválido");
+        }
+        if(!hastaList.isEmpty()) {
+            throw new Exception("Hasta inválido");
+        }
         elementoDAO.save(elemento);
     }
     
