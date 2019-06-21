@@ -113,11 +113,6 @@ public class Cliente extends ObjetoGenerico {
     @JoinColumn(name = "idSituacionCliente", nullable = true)
     private SituacionCliente situacionCliente;
     
-    //Referencia a la clase Orden de venta
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idOrdenVenta", nullable = true)
-    private OrdenVenta ordenVenta;
-    
     //Referencia a la clase Sucursal lugar de pago
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalLugarPago", nullable = true)
@@ -367,14 +362,6 @@ public class Cliente extends ObjetoGenerico {
 
     public void setSituacionCliente(SituacionCliente situacionCliente) {
         this.situacionCliente = situacionCliente;
-    }
-
-    public OrdenVenta getOrdenVenta() {
-        return ordenVenta;
-    }
-
-    public void setOrdenVenta(OrdenVenta ordenVenta) {
-        this.ordenVenta = ordenVenta;
     }
     
     public Sucursal getSucursalLugarPago() {

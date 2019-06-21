@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -54,10 +55,12 @@ public class CuentaBancaria extends ObjetoGenerico {
     private boolean estaActiva;
 
     //Define la fecha de apertura
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaApertura", nullable = true)
     private Date fechaApertura;
 
     //Define la fecha de alta
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
 
@@ -67,6 +70,7 @@ public class CuentaBancaria extends ObjetoGenerico {
     private Usuario usuarioAlta;
 
     //Define la fecha de baja
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
 

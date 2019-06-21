@@ -38,6 +38,11 @@ public class CompaniaSeguroPoliza extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoPoliza", nullable = false)
     private Date vtoPoliza;
+    
+    //Referencia a la clase Pdf
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdf", nullable = true)
+    private Pdf pdf;
 
     //Getters y Setters de la clase
 
@@ -71,6 +76,14 @@ public class CompaniaSeguroPoliza extends ObjetoGenerico {
 
     public void setVtoPoliza(Date vtoPoliza) {
         this.vtoPoliza = vtoPoliza;
+    }
+
+    public Pdf getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(Pdf pdf) {
+        this.pdf = pdf;
     }
     
 }
