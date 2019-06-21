@@ -24,6 +24,10 @@ public class TipoVehiculo extends ObjetoGenerico {
     @Column(name = "esRemolque", nullable = false)
     private boolean esRemolque;
     
+    //Define vtoSanidadAlimenticia
+    @Column(name = "vtoSanidadAlimenticia", nullable = false)
+    private boolean vtoSanidadAlimenticia;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -40,6 +44,14 @@ public class TipoVehiculo extends ObjetoGenerico {
 
     public void setEsRemolque(boolean esRemolque) {
         this.esRemolque = esRemolque;
+    }
+
+    public boolean isVtoSanidadAlimenticia() {
+        return vtoSanidadAlimenticia;
+    }
+
+    public void setVtoSanidadAlimenticia(boolean vtoSanidadAlimenticia) {
+        this.vtoSanidadAlimenticia = vtoSanidadAlimenticia;
     }
     
 }

@@ -106,7 +106,7 @@ public class VehiculoService {
 
     //Formatea los strings
     private Vehiculo formatearStrings(Vehiculo elemento) {
-        elemento.setDominio(elemento.getDominio().trim());
+        elemento.setDominio(elemento.getDominio().trim().toUpperCase());
         if (elemento.getNumeroInterno() != null) {
             elemento.setNumeroInterno(elemento.getNumeroInterno().trim());
         }
