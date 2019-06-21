@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Define TalonarioReciboLote
  * @author blas
  */
 
@@ -48,19 +48,19 @@ public class TalonarioReciboLoteService {
     @Transactional(rollbackFor = Exception.class)
     public TalonarioReciboLote agregar(TalonarioReciboLote elemento) throws Exception {
         if(elemento.getDesde()>elemento.getHasta()) {
-            throw new Exception("Desde-Hasta inválidos");
+            throw new Exception("'Hasta' no puede ser mayor a 'Desde'");
         }
         Date fecha = new Date(new java.util.Date().getTime());
         elemento.setFechaAlta(fecha);
-        List<TalonarioReciboLote> desdeList = elementoDAO.listarPorDesdeHasta(
+        List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
                 elemento.getDesde());
-        List<TalonarioReciboLote> hastaList = elementoDAO.listarPorDesdeHasta(
+        List<TalonarioReciboLote> hastaLista = elementoDAO.listarPorDesdeHasta(
                 elemento.getHasta());
-        if(!desdeList.isEmpty()) {
-            throw new Exception("Desde inválido");
+        if(!desdeLista.isEmpty()) {
+            throw new Exception("'Desde' ya pertenece a otro talonario");
         }
-        if(!hastaList.isEmpty()) {
-            throw new Exception("Hasta inválido");
+        if(!hastaLista.isEmpty()) {
+            throw new Exception("'Hasta' ya pertenece a otro talonario");
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -69,17 +69,17 @@ public class TalonarioReciboLoteService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TalonarioReciboLote elemento) throws Exception {
         if(elemento.getDesde()>elemento.getHasta()) {
-            throw new Exception("Desde-Hasta inválidos");
+            throw new Exception("'Hasta' no puede ser mayor a 'Desde'");
         }
-        List<TalonarioReciboLote> desdeList = elementoDAO.listarPorDesdeHasta(
+        List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
                 elemento.getDesde());
-        List<TalonarioReciboLote> hastaList = elementoDAO.listarPorDesdeHasta(
+        List<TalonarioReciboLote> hastaLista = elementoDAO.listarPorDesdeHasta(
                 elemento.getHasta());
-        if(!desdeList.isEmpty()) {
-            throw new Exception("Desde inválido");
+        if(!desdeLista.isEmpty()) {
+            throw new Exception("'Desde' ya pertenece a otro talonario");
         }
-        if(!hastaList.isEmpty()) {
-            throw new Exception("Hasta inválido");
+        if(!hastaLista.isEmpty()) {
+            throw new Exception("'Hasta' ya pertenece a otro talonario");
         }
         elementoDAO.save(elemento);
     }
