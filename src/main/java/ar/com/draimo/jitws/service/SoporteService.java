@@ -102,10 +102,12 @@ public class SoporteService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Soporte elemento) {
-        String subopcion = subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
-        elemento.setAlias(elemento.getId() + " - " + elemento.getFecha() + " - "
-                + subopcion);
+    public void actualizar(String soporteString, MultipartFile archivo) throws IOException {
+        Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
+        BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
+        BugImagen bug = bugImagenDAO.save(f);
+        elemento.setBugImagen(bug);
+        establecerAlias(elemento);
         elementoDAO.save(elemento);
     }
 

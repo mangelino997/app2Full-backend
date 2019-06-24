@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Clase CompaniaSeguroPoliza Controller
@@ -85,9 +87,10 @@ public class CompaniaSeguroPolizaController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody CompaniaSeguroPoliza elemento) {
+    public ResponseEntity<?> agregar(@RequestPart("formulario") String soporteString,
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
-            CompaniaSeguroPoliza a = elementoService.agregar(elemento);
+            CompaniaSeguroPoliza a = elementoService.agregar(soporteString, archivo);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -106,10 +109,11 @@ public class CompaniaSeguroPolizaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody CompaniaSeguroPoliza elemento) {
+    public ResponseEntity<?> actualizar(@RequestPart("formulario") String soporteString,
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            elementoService.actualizar(soporteString, archivo);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
