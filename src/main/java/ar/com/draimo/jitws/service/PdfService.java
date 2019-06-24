@@ -2,10 +2,12 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.model.Pdf;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -36,6 +38,27 @@ public class PdfService {
         } else {
             return elementoDAO.findByNombreContaining(nombre);
         }
+    }
+    
+    //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
+    public Pdf agregar(MultipartFile archivo, boolean opcion) throws IOException {
+        Pdf foto = new Pdf();
+        foto.setNombre(archivo.getOriginalFilename());
+        foto.setTipo(archivo.getContentType());
+        foto.setTamanio(archivo.getSize());
+        foto.setDatos(archivo.getBytes());
+        return opcion ? elementoDAO.saveAndFlush(foto) : foto;
+    }
+    //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
+    public Pdf actualizar(int idPdf ,MultipartFile archivo, boolean opcion) throws IOException {
+        Pdf elemento = elementoDAO.findById(idPdf).get();
+        elemento.setNombre(archivo.getOriginalFilename());
+        elemento.setTipo(archivo.getContentType());
+        elemento.setTamanio(archivo.getSize());
+        elemento.setDatos(archivo.getBytes());
+        return opcion ? elementoDAO.saveAndFlush(elemento) : elemento;
     }
 
     //Agrega un registro

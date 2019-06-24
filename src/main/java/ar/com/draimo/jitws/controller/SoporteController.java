@@ -97,10 +97,11 @@ public class SoporteController {
 
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Soporte elemento) {
+    public ResponseEntity<?> actualizar(@RequestPart("soporte") String soporteString,
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            elementoService.actualizar(soporteString, archivo);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito

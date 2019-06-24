@@ -57,14 +57,23 @@ public class BugImagenService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(int idFoto, MultipartFile archivo) throws IOException {
-        Optional<BugImagen> i = elementoDAO.findById(idFoto);
-        BugImagen imagen = i.get();
-        imagen.setNombre(archivo.getOriginalFilename());
-        imagen.setTipo(archivo.getContentType());
-        imagen.setTamanio(archivo.getSize());
-        imagen.setDatos(archivo.getBytes());
-        elementoDAO.save(imagen);
+    public BugImagen actualizar(int idFoto, MultipartFile archivo) throws IOException {
+        BugImagen element = elementoDAO.findById(idFoto).get();
+        element.setNombre(archivo.getOriginalFilename());
+        element.setTipo(archivo.getContentType());
+        element.setTamanio(archivo.getSize());
+        element.setDatos(archivo.getBytes());
+        return elementoDAO.save(element);
+    }
+    //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
+    public BugImagen actualizar(int idFoto, MultipartFile archivo, boolean opcion) throws IOException {
+        BugImagen element = elementoDAO.findById(idFoto).get();
+        element.setNombre(archivo.getOriginalFilename());
+        element.setTipo(archivo.getContentType());
+        element.setTamanio(archivo.getSize());
+        element.setDatos(archivo.getBytes());
+        return opcion ? elementoDAO.save(element) : element;
     }
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
