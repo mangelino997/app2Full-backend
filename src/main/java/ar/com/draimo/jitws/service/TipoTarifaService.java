@@ -39,6 +39,16 @@ public class TipoTarifaService {
         }
     }
     
+    //Obtiene una lista por escala
+    public List<TipoTarifa> listarPorEscala() {
+        return elementoDAO.findByPorEscalaTrue();
+    }
+    
+    //Obtiene una lista por tramo
+    public List<TipoTarifa> listarPorTramo() {
+        return elementoDAO.findByPorEscalaFalse();
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TipoTarifa agregar(TipoTarifa elemento) {

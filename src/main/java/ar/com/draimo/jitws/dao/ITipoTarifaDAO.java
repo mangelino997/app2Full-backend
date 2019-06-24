@@ -19,4 +19,10 @@ public interface ITipoTarifaDAO extends JpaRepository<TipoTarifa, Integer> {
     //Obtiene una lista por nombre
     public List<TipoTarifa> findByNombreContaining(String nombre);
     
+    //Obtiene una lista por escala true
+    public List<TipoTarifa> findByPorEscalaTrue();
+    
+    //Obtiene una lista por escala false
+    public List<TipoTarifa> findByPorEscalaFalse();
+    
 }

@@ -62,6 +62,20 @@ public class TipoTarifaController {
         return elementoService.listarPorNombre(nombre);
     }
     
+    //Obtiene una lista por escala
+    @GetMapping(value = URL + "/listarPorEscala")
+    @ResponseBody
+    public List<TipoTarifa> listarPorEscala() {
+        return elementoService.listarPorEscala();
+    }
+    
+    //Obtiene una lista por tramo
+    @GetMapping(value = URL + "/listarPorTramo")
+    @ResponseBody
+    public List<TipoTarifa> listarPorTramo() {
+        return elementoService.listarPorTramo();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TipoTarifa elemento) {
