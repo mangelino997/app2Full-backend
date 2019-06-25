@@ -2,14 +2,19 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
+import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
+import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Vehiculo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Servicio Vehiculo
@@ -34,6 +39,14 @@ public class VehiculoService {
     //Define la referencia al dao marca vehiculo
     @Autowired
     IMarcaVehiculoDAO marcaVehiculoDAO;
+
+    //Define DAO de pdf
+    @Autowired
+    IPdfDAO pdfDAO;
+
+    //Define service de pdf
+    @Autowired
+    PdfService pdfService;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -72,15 +85,43 @@ public class VehiculoService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Vehiculo agregar(Vehiculo elemento) {
+    public Vehiculo agregar(String elementoString, MultipartFile titulo, MultipartFile cedulaIdent,
+            MultipartFile vtoRuta, MultipartFile vtoInspTecnica, MultipartFile vtoSenasa,
+            MultipartFile habBromat) throws IOException {
+        Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        Pdf pTitulo = pdfService.agregar(titulo, false);
+        Pdf pCedulaIden = pdfService.agregar(cedulaIdent, false);
+        Pdf pVtoRuta = pdfService.agregar(vtoRuta, false);
+        Pdf pVtoInspTecnica = pdfService.agregar(vtoInspTecnica, false);
+        Pdf pVtoSenasa = pdfService.agregar(vtoSenasa, false);
+        Pdf pHabBromat = pdfService.agregar(habBromat, false);
+        pTitulo.setTabla("vehiculo");
+        pCedulaIden.setTabla("vehiculo");
+        pVtoRuta.setTabla("vehiculo");
+        pVtoInspTecnica.setTabla("vehiculo");
+        pVtoSenasa.setTabla("vehiculo");
+        pHabBromat.setTabla("vehiculo");
+        Pdf pdfTitulo = pdfDAO.saveAndFlush(pTitulo);
+        Pdf pdfCedulaIden = pdfDAO.saveAndFlush(pCedulaIden);
+        Pdf pdfVtoRuta = pdfDAO.saveAndFlush(pVtoRuta);
+        Pdf pdfVtoInspTecnica = pdfDAO.saveAndFlush(pVtoInspTecnica);
+        Pdf pdfVtoSenasa = pdfDAO.saveAndFlush(pVtoSenasa);
+        Pdf pdfHabBromat = pdfDAO.saveAndFlush(pHabBromat);
+        elemento.setPdfTitulo(pdfTitulo);
+        elemento.setPdfCedulaIdent(pdfCedulaIden);
+        elemento.setPdfVtoRuta(pdfVtoRuta);
+        elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
+        elemento.setPdfVtoSenasa(pdfVtoSenasa);
+        elemento.setPdfHabBromat(pdfHabBromat);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(Vehiculo elemento) {
+    public void establecerAlias(String elementoString) throws IOException {
+        Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento.setAlias(elemento.getDominio() + " - "
             + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
             + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
@@ -89,12 +130,31 @@ public class VehiculoService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Vehiculo elemento) {
-        elemento = formatearStrings(elemento);
+    public void actualizar(String elementoString,  MultipartFile titulo, MultipartFile cedulaIdent,
+            MultipartFile vtoRuta, MultipartFile vtoInspTecnica, MultipartFile vtoSenasa,
+            MultipartFile habBromat) throws IOException {
+        Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-        elemento.setAlias(elemento.getDominio() + " - "
-            + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
-            + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
+        elemento = formatearStrings(elemento);
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        Pdf pTitulo = pdfService.actualizar(elemento.getPdfTitulo().getId(),titulo, false);
+        Pdf pdfTitulo = pdfDAO.saveAndFlush(pTitulo);
+        elemento.setPdfTitulo(pdfTitulo);
+        Pdf pCedulaIden = pdfService.actualizar(elemento.getPdfCedulaIdent().getId(),cedulaIdent, false);
+        Pdf pdfCedulaIden = pdfDAO.saveAndFlush(pCedulaIden);
+        elemento.setPdfCedulaIdent(pdfCedulaIden);
+        Pdf pVtoRuta = pdfService.actualizar(elemento.getPdfVtoRuta().getId(),vtoRuta, false);
+        Pdf pdfVtoRuta = pdfDAO.saveAndFlush(pVtoRuta);
+        elemento.setPdfVtoRuta(pdfVtoRuta);
+        Pdf pVtoInspTecnica = pdfService.actualizar(elemento.getPdfVtoInspTecnica().getId(),vtoInspTecnica, false);
+        Pdf pdfVtoInspTecnica = pdfDAO.saveAndFlush(pVtoInspTecnica);
+        elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
+        Pdf pVtoSenasa = pdfService.actualizar(elemento.getPdfVtoSenasa().getId(),vtoSenasa, false);
+        Pdf pdfVtoSenasa = pdfDAO.saveAndFlush(pVtoSenasa);
+        elemento.setPdfVtoSenasa(pdfVtoSenasa);
+        Pdf pHabBromat = pdfService.actualizar(elemento.getPdfHabBromat().getId(),habBromat, false);
+        Pdf pdfHabBromat = pdfDAO.saveAndFlush(pHabBromat);
+        elemento.setPdfHabBromat(pdfHabBromat);
         elementoDAO.save(elemento);
     }
 

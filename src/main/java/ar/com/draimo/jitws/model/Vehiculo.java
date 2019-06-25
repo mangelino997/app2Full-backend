@@ -127,6 +127,36 @@ public class Vehiculo extends ObjetoGenerico {
     @Column(name = "alias",length = 100, nullable = true)
     private String alias;
     
+    //Referencia a la clase pdf (titulo)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfTitulo", nullable = true)
+    private Pdf pdfTitulo;
+    
+    //Referencia a la clase pdf (CedulaIdent)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfCedulaIdent", nullable = true)
+    private Pdf pdfCedulaIdent;
+    
+    //Referencia a la clase pdf (VtoRuta)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfVtoRuta", nullable = true)
+    private Pdf pdfVtoRuta;
+    
+    //Referencia a la clase pdf (VtoInspTecnica)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfVtoInspTecnica", nullable = true)
+    private Pdf pdfVtoInspTecnica;
+    
+    //Referencia a la clase pdf (VtoSenasa)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfVtoSenasa", nullable = true)
+    private Pdf pdfVtoSenasa;
+    
+    //Referencia a la clase pdf (HabBromat)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfHabBromat", nullable = true)
+    private Pdf pdfHabBromat;
+    
     //Getters y Setters de la clase
 
     public ConfiguracionVehiculo getConfiguracionVehiculo() {
@@ -311,6 +341,54 @@ public class Vehiculo extends ObjetoGenerico {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public Pdf getPdfTitulo() {
+        return pdfTitulo;
+    }
+
+    public void setPdfTitulo(Pdf pdfTitulo) {
+        this.pdfTitulo = pdfTitulo;
+    }
+
+    public Pdf getPdfCedulaIdent() {
+        return pdfCedulaIdent;
+    }
+
+    public void setPdfCedulaIdent(Pdf pdfCedulaIdent) {
+        this.pdfCedulaIdent = pdfCedulaIdent;
+    }
+
+    public Pdf getPdfVtoRuta() {
+        return pdfVtoRuta;
+    }
+
+    public void setPdfVtoRuta(Pdf pdfVtoRuta) {
+        this.pdfVtoRuta = pdfVtoRuta;
+    }
+
+    public Pdf getPdfVtoInspTecnica() {
+        return pdfVtoInspTecnica;
+    }
+
+    public void setPdfVtoInspTecnica(Pdf pdfVtoInspTecnica) {
+        this.pdfVtoInspTecnica = pdfVtoInspTecnica;
+    }
+
+    public Pdf getPdfVtoSenasa() {
+        return pdfVtoSenasa;
+    }
+
+    public void setPdfVtoSenasa(Pdf pdfVtoSenasa) {
+        this.pdfVtoSenasa = pdfVtoSenasa;
+    }
+
+    public Pdf getPdfHabBromat() {
+        return pdfHabBromat;
+    }
+
+    public void setPdfHabBromat(Pdf pdfHabBromat) {
+        this.pdfHabBromat = pdfHabBromat;
     }
     
 }

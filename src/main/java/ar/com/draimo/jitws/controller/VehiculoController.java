@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Clase Vehiculo Controller
@@ -86,13 +88,19 @@ public class VehiculoController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody Vehiculo elemento) {
+    public ResponseEntity<?> agregar(@RequestPart("vehiculo") String elementoString,
+            @RequestPart("titulo") MultipartFile titulo,@RequestPart("cedulaIdent")
+                    MultipartFile cedulaIdent,@RequestPart("vtoRuta") MultipartFile vtoRuta,
+                    @RequestPart("vtoInspTecnica") MultipartFile vtoInspTecnica,
+                    @RequestPart("vtoSenasa") MultipartFile vtoSenasa,
+                    @RequestPart("habBromat") MultipartFile habBromat) {
         try {
-            Vehiculo a = elementoService.agregar(elemento);
+            Vehiculo a = elementoService.agregar(elementoString,titulo, cedulaIdent,
+                    vtoRuta, vtoInspTecnica, vtoSenasa, habBromat);
             //Actualiza inmediatamente el registro para establecer el alias
-            elementoService.establecerAlias(elemento);
+            elementoService.establecerAlias(elementoString);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -109,12 +117,18 @@ public class VehiculoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Vehiculo elemento) {
+    public ResponseEntity<?> actualizar(@RequestPart("vehiculo") String elementoString,
+            @RequestPart("titulo") MultipartFile titulo,@RequestPart("cedulaIdent")
+                    MultipartFile cedulaIdent,@RequestPart("vtoRuta") MultipartFile vtoRuta,
+                    @RequestPart("vtoInspTecnica") MultipartFile vtoInspTecnica,
+                    @RequestPart("vtoSenasa") MultipartFile vtoSenasa,
+                    @RequestPart("habBromat") MultipartFile habBromat) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            elementoService.actualizar(elementoString, titulo, cedulaIdent, vtoRuta,
+                    vtoInspTecnica, vtoSenasa, habBromat);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
