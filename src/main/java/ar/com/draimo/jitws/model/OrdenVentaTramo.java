@@ -46,8 +46,8 @@ public class OrdenVentaTramo extends ObjetoGenerico {
     
     //Referencia a la clase OrdenVentaPrecio
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idOrdenVentaPrecio", nullable = false)
-    private OrdenVentaPrecio ordenVentaPrecio;
+    @JoinColumn(name = "idOrdenVentaTarifa", nullable = false)
+    private OrdenVentaTarifa ordenVentaTarifa;
 
     //Getters y Setters de la clase
 
@@ -99,12 +99,12 @@ public class OrdenVentaTramo extends ObjetoGenerico {
         this.precioUnitarioRef = precioUnitarioRef;
     }
 
-    public OrdenVentaPrecio getOrdenVentaPrecio() {
-        return ordenVentaPrecio;
+    public OrdenVentaTarifa getOrdenVentaTarifa() {
+        return ordenVentaTarifa;
     }
 
-    public void setOrdenVentaPrecio(OrdenVentaPrecio ordenVentaPrecio) {
-        this.ordenVentaPrecio = ordenVentaPrecio;
+    public void setOrdenVentaTarifa(OrdenVentaTarifa OrdenVentaTarifa) {
+        this.ordenVentaTarifa = OrdenVentaTarifa;
     }
-    
+
 }

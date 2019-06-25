@@ -23,7 +23,7 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     public List<Personal> findByAliasContaining(String alias);
     
     //Obtiene una lista por alias y por esChofer
-    public List<Personal> findByAliasContainingAndEsChofer(String alias, int esChofer);
+    public List<Personal> findByAliasContainingAndEsChoferTrue(String alias);
     
     //Obtiene una lista de choferes de corta distancia
     @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=0 AND alias LIKE %:alias%"

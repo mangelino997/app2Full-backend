@@ -11,14 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase OrdenVentaPrecio
+ * Clase OrdenVentaTarifa
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
 @Entity
-@Table(name = "ordenventaprecio")
-public class OrdenVentaPrecio extends ObjetoGenerico {
+@Table(name = "ordenventatarifa")
+public class OrdenVentaTarifa extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
     @ManyToOne(cascade = CascadeType.REFRESH)

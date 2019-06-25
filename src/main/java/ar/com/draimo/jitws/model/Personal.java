@@ -425,6 +425,11 @@ public class Personal extends ObjetoGenerico {
     //Define el alias para las busquedas
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
+    
+    //Referencia a la clase foto
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idFoto", nullable = true)
+    private Foto foto;
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -1129,6 +1134,14 @@ public class Personal extends ObjetoGenerico {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
     }
 
 }

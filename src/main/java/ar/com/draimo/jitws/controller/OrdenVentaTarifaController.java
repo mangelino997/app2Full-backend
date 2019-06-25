@@ -2,8 +2,10 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.OrdenVentaTramo;
-import ar.com.draimo.jitws.service.OrdenVentaTramoService;
+import ar.com.draimo.jitws.model.OrdenVentaTarifa;
+import ar.com.draimo.jitws.service.OrdenVentaTarifaService;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,17 +23,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase OrdenVentaTramo Controller
+ * Clase OrdenVentaTarifa Controller
  * @author blas
  */
 
 @RestController
-public class OrdenVentaTramoController {
+public class OrdenVentaTarifaController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ordenventatramo";
+    private final String URL = RutaConstant.URL_BASE + "/ordenventatarifa";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ordenventatramo";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/ordenventatarifa";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -39,7 +41,7 @@ public class OrdenVentaTramoController {
     
     //Crea una instancia del servicio
     @Autowired
-    OrdenVentaTramoService elementoService;
+    OrdenVentaTarifaService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,31 +53,31 @@ public class OrdenVentaTramoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenVentaTramo> listar() {
+    public List<OrdenVentaTarifa> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene una lista por id de orden venta
+    @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
+    @ResponseBody
+    public List<OrdenVentaTarifa> listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
+        return elementoService.listarPorOrdenVenta(idOrdenVenta);
     }
     
     //Obtiene una lista por id de orden venta y preciosDesde
     @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
     @ResponseBody
-    public  List<OrdenVentaTramo> listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable String preciosDesde) {
+    public List<OrdenVentaTarifa> listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable Date preciosDesde) {
         return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
-    }
-    
-    //Obtiene una lista de fechas por orden de venta
-    @GetMapping(value = URL + "/listarFechasPorOrdenVenta/{idOrdenVenta}")
-    @ResponseBody
-    public  List<OrdenVentaTramo> listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta){
-        return elementoService.listarFechasPorOrdenVenta(idOrdenVenta);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody OrdenVentaTramo elemento) {
+    public ResponseEntity<?> agregar(@RequestBody OrdenVentaTarifa elemento) {
         try {
-            OrdenVentaTramo a = elementoService.agregar(elemento);
-            //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            OrdenVentaTarifa a = elementoService.agregar(elemento);
+//            template.convertAndSend(TOPIC + "/listaEscalas", 
+//                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -92,12 +94,13 @@ public class OrdenVentaTramoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody OrdenVentaTramo elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody OrdenVentaTarifa elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/listaEscalas", 
+//                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -109,20 +112,25 @@ public class OrdenVentaTramoController {
         }catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
+        
     }
     
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
+            //Elimina el registro
             elementoService.eliminar(id);
+            //Envia la nueva lista a los usuarios subscripto
+//            template.convertAndSend(TOPIC + "/listaEscalas", 
+//                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch(MessagingException e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }

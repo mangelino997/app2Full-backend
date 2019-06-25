@@ -20,7 +20,8 @@ public interface IEscalaTarifaDAO extends JpaRepository<EscalaTarifa, Integer> {
     
     //Obtiene dos escala tarifas para buscar el promedio de valoress entre cada escala
     @Query(value = "SELECT t.* FROM ordenventaescala e inner join escalatarifa t"
-            + " on t.id=e.idEscalaTarifa where e.idOrdenVenta=:idOrdenVenta order by t.valor "
+            + " on t.id=e.idEscalaTarifa inner join ordenventatarifa v on v.id=e.idOrdenVentaTarifa "
+            + "where v.idOrdenVenta=:idOrdenVenta order by t.valor "
             + "desc limit 2", nativeQuery = true)
     public List<EscalaTarifa> obtenerDosEscalasporIdOrdenVenta(
             @Param("idOrdenVenta") int idOrdenVenta);

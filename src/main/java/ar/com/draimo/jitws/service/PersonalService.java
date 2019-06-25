@@ -2,13 +2,19 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Personal;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Servicio Personal
@@ -25,6 +31,14 @@ public class PersonalService {
     //Define la referencia al dao de empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+
+    //Define la referencia al dao de foto
+    @Autowired
+    IFotoDAO fotoDAO;
+
+    //Define la referencia al service de foto
+    @Autowired
+    FotoService fotoService;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -58,7 +72,7 @@ public class PersonalService {
     
     //Obtiene un chofer por alias
     public List<Personal> listarChoferPorAlias(String alias) {
-        return elementoDAO.findByAliasContainingAndEsChofer(alias, 1);
+        return elementoDAO.findByAliasContainingAndEsChoferTrue(alias);
     }
     
     //Obtiene un listado de choferes ordenados por nombre de corta distancia
@@ -78,17 +92,25 @@ public class PersonalService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Personal agregar(Personal elemento) {
+    public Personal agregar(String elementoString, MultipartFile archivo) throws IOException {
+        Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
+        Foto p = fotoService.agregar(archivo, false);
+        p.setTabla("personal");
+        Foto f = fotoDAO.saveAndFlush(p);
+        elemento.setFoto(f);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Personal elemento) {
-        elemento = formatearStrings(elemento);
-        elemento.setAlias(elemento.getId() + " - " + elemento.getNombreCompleto() 
-                + " - " + elemento.getNumeroDocumento());
+    public void actualizar(String elementoString, MultipartFile archivo) throws IOException {
+        Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
+        Foto f = fotoService.actualizar(elemento.getFoto().getId(), archivo, false);
+        f.setTabla("personal");
+        Foto foto = fotoDAO.save(f);
+        elemento.setFoto(foto);
+        establecerAlias(elemento);
         elementoDAO.save(elemento);
     }
     

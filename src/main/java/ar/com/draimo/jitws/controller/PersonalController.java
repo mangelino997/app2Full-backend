@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Clase Personal Controller
@@ -100,14 +102,15 @@ public class PersonalController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> agregar(@RequestPart("personal") String elementoString,
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Agrega el registro
-            Personal personal = elementoService.agregar(elemento);
+            Personal personal = elementoService.agregar(elementoString, archivo);
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(personal);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(personal.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -124,12 +127,13 @@ public class PersonalController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Personal elemento) {
+    public ResponseEntity<?> actualizar(@RequestPart("personal") String elementoString,
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            elementoService.actualizar(elementoString, archivo);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
