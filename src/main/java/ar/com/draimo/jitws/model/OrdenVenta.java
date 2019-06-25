@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -46,11 +45,6 @@ public class OrdenVenta extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
-
-    //Referencia a la clase TipoTarifa
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idTipoTarifa", nullable = false)
-    private TipoTarifa tipoTarifa;
     
     //Define el seguro
     @Column(name = "seguro", nullable = false)
@@ -68,22 +62,14 @@ public class OrdenVenta extends ObjetoGenerico {
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
     
-    //Define si es contado
-    @Column(name = "esContado", nullable = true)
-    private boolean esContado;
-    
     //Define la fecha desde que esta activa
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "activaDesde", nullable = true)
     private Date activaDesde;
     
-    //Define la lista de OrdenVentaEscala
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
-    private List<OrdenVentaEscala> ordenesVentasEscalas;
-    
-    //Define la lista de OrdenVentaTramo
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
-    private List<OrdenVentaTramo> ordenesVentasTramos;
+    //Define si es contado
+    @Column(name = "esContado", nullable = true)
+    private boolean esContado;
 
     //Getters y Setters de la clase
 
@@ -126,14 +112,6 @@ public class OrdenVenta extends ObjetoGenerico {
     public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
-    
-    public TipoTarifa getTipoTarifa() {
-        return tipoTarifa;
-    }
-
-    public void setTipoTarifa(TipoTarifa tipoTarifa) {
-        this.tipoTarifa = tipoTarifa;
-    }
 
     public BigDecimal getSeguro() {
         return seguro;
@@ -159,7 +137,7 @@ public class OrdenVenta extends ObjetoGenerico {
         this.observaciones = observaciones;
     }
 
-    public boolean isEstaActiva() {
+    public boolean getEstaActiva() {
         return estaActiva;
     }
 
@@ -174,24 +152,8 @@ public class OrdenVenta extends ObjetoGenerico {
     public void setActivaDesde(Date activaDesde) {
         this.activaDesde = activaDesde;
     }
-    
-    public List<OrdenVentaEscala> getOrdenesVentasEscalas() {
-        return ordenesVentasEscalas;
-    }
 
-    public void setOrdenesVentasEscalas(List<OrdenVentaEscala> ordenesVentasEscalas) {
-        this.ordenesVentasEscalas = ordenesVentasEscalas;
-    }
-
-    public List<OrdenVentaTramo> getOrdenesVentasTramos() {
-        return ordenesVentasTramos;
-    }
-
-    public void setOrdenesVentasTramos(List<OrdenVentaTramo> ordenesVentasTramos) {
-        this.ordenesVentasTramos = ordenesVentasTramos;
-    }
-
-    public boolean isEsContado() {
+    public boolean getEsContado() {
         return esContado;
     }
 

@@ -52,7 +52,7 @@ public class OrdenVentaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public Object listar() throws IOException {
+    public List<OrdenVenta> listar() throws IOException {
         return elementoService.listar();
     }
     
@@ -66,14 +66,14 @@ public class OrdenVentaController {
     //Obtiene una lista por cliente
     @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
     @ResponseBody
-    public Object listarPorCliente(@PathVariable int idCliente) throws IOException {
+    public List<OrdenVenta> listarPorCliente(@PathVariable int idCliente) throws IOException {
         return elementoService.listarPorCliente(idCliente);
     }
     
     //Obtiene una lista por empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public Object listarPorEmpresa(@PathVariable int idEmpresa) throws IOException {
+    public List<OrdenVenta> listarPorEmpresa(@PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorEmpresa(idEmpresa);
     }
     
@@ -85,7 +85,7 @@ public class OrdenVentaController {
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return MensajeRespuesta.agregado(a.getId()-1);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -124,10 +124,10 @@ public class OrdenVentaController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody OrdenVenta elemento) {
+    @DeleteMapping(value = URL + "{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
+            elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch(Exception e) {

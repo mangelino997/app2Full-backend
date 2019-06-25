@@ -4,10 +4,6 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.service.OrdenVentaEscalaService;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -65,63 +61,11 @@ public class OrdenVentaEscalaController {
         return elementoService.listarConEscalaTarifa();
     }
     
-    //Obtiene una lista por id de orden venta
-    @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
-    @ResponseBody
-    public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
-        return elementoService.listarPorOrdenVenta(idOrdenVenta);
-    }
-    
-    //Obtiene una lista por id de orden venta y preciosDesde
-    @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
-    @ResponseBody
-    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable Date preciosDesde) 
-            throws IOException, ParseException {
-        return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
-    }
-    
-    //Obtiene una lista de fechas por orden de venta
-    @GetMapping(value = URL + "/listarFechasPorOrdenVenta/{idOrdenVenta}")
-    @ResponseBody
-    public Object listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
-        return elementoService.listarFechasPorOrdenVenta(idOrdenVenta);
-    }
-    
-    //Obtiene el precio flete
-    @GetMapping(value = URL + "/obtenerPrecioFlete/{idOrdenVenta}/{valor}")
-    @ResponseBody
-    public BigDecimal obtenerPrecioFlete(@PathVariable int idOrdenVenta, @PathVariable String valor) {
-        return elementoService.obtenerPrecioFlete(idOrdenVenta, valor);
-    }
-    
-    //Agrega un registro
-    @PostMapping(value = URL + "/agregarLista")
-    public ResponseEntity<?> agregarLista(@RequestBody List<OrdenVentaEscala> elementos) {
-        try {
-            OrdenVentaEscala a = elementoService.agregarLista(elementos);
-            //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
-        } catch (DataIntegrityViolationException dive) {
-            //Retorna mensaje de dato duplicado
-            return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
-            //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return MensajeRespuesta.errorSincSocket();
-        } catch (Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
-        }
-    }
-    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVentaEscala elemento) {
         try {
             OrdenVentaEscala a = elementoService.agregar(elemento);
-            template.convertAndSend(TOPIC + "/listaEscalas", 
-                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -143,8 +87,6 @@ public class OrdenVentaEscalaController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/listaEscalas", 
-                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -153,27 +95,27 @@ public class OrdenVentaEscalaController {
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        } catch(MessagingException e) {
+        }catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(IOException e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
     
     //Elimina un registro
-    @PutMapping(value = URL + "/eliminar")
-    public ResponseEntity<?> eliminar(@RequestBody OrdenVentaEscala elemento) {
+    @PutMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
             //Elimina el registro
-            elementoService.eliminar(elemento);
-            //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/listaEscalas", 
-                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
+            elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(IOException | MessagingException e) {
+        } catch(MessagingException e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
