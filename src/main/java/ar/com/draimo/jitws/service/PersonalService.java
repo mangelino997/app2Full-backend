@@ -3,10 +3,12 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IFotoDAO;
+import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Foto;
+import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Personal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -39,6 +41,14 @@ public class PersonalService {
     //Define la referencia al service de foto
     @Autowired
     FotoService fotoService;
+
+    //Define la referencia al dao de pdf
+    @Autowired
+    IPdfDAO pdfDAO;
+
+    //Define la referencia al service de pdf
+    @Autowired
+    PdfService pdfService;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -92,24 +102,50 @@ public class PersonalService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Personal agregar(String elementoString, MultipartFile archivo) throws IOException {
+    public Personal agregar(String elementoString, MultipartFile foto, MultipartFile licConducir,
+            MultipartFile linti, MultipartFile libSanidad) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
-        Foto p = fotoService.agregar(archivo, false);
+        Foto p = fotoService.agregar(foto, false);
+        Pdf p1 = pdfService.agregar(licConducir, false);
+        Pdf p2 = pdfService.agregar(linti, false);
+        Pdf p3 = pdfService.agregar(libSanidad, false);
         p.setTabla("personal");
+        p1.setTabla("personal");
+        p2.setTabla("personal");
+        p3.setTabla("personal");
         Foto f = fotoDAO.saveAndFlush(p);
+        Pdf pdf1 = pdfDAO.saveAndFlush(p1);
+        Pdf pdf2 = pdfDAO.saveAndFlush(p2);
+        Pdf pdf3 = pdfDAO.saveAndFlush(p3);
         elemento.setFoto(f);
+        elemento.setPdfLicConducir(pdf1);
+        elemento.setPdfLinti(pdf2);
+        elemento.setPdfLibSanidad(pdf3);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(String elementoString, MultipartFile archivo) throws IOException {
+    public void actualizar(String elementoString, MultipartFile foto, MultipartFile licConducir,
+            MultipartFile linti, MultipartFile libSanidad) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
-        Foto f = fotoService.actualizar(elemento.getFoto().getId(), archivo, false);
+        Foto f = fotoService.actualizar(elemento.getFoto().getId(), foto, false);
+        Pdf p1 = pdfService.actualizar(elemento.getPdfLicConducir().getId(), licConducir, false);
+        Pdf p2 = pdfService.actualizar(elemento.getPdfLinti().getId(), linti, false);
+        Pdf p3 = pdfService.actualizar(elemento.getPdfLibSanidad().getId(), libSanidad, false);
         f.setTabla("personal");
-        Foto foto = fotoDAO.save(f);
-        elemento.setFoto(foto);
+        p1.setTabla("personal");
+        p2.setTabla("personal");
+        p3.setTabla("personal");
+        Foto f1 = fotoDAO.save(f);
+        Pdf pdf1 = pdfDAO.save(p1);
+        Pdf pdf2 = pdfDAO.save(p2);
+        Pdf pdf3 = pdfDAO.save(p3);
+        elemento.setFoto(f1);
+        elemento.setPdfLicConducir(pdf1);
+        elemento.setPdfLinti(pdf2);
+        elemento.setPdfLibSanidad(pdf3);
         establecerAlias(elemento);
         elementoDAO.save(elemento);
     }

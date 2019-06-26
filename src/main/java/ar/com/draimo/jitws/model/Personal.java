@@ -430,6 +430,21 @@ public class Personal extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idFoto", nullable = true)
     private Foto foto;
+    
+    //Referencia a la clase pdf (LicConducir)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfLicConducir", nullable = true)
+    private Pdf pdfLicConducir;
+    
+    //Referencia a la clase pdf (Linti)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfLinti", nullable = true)
+    private Pdf pdfLinti;
+    
+    //Referencia a la clase pdf (LibSanidad)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfLibSanidad", nullable = true)
+    private Pdf pdfLibSanidad;
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -1142,6 +1157,30 @@ public class Personal extends ObjetoGenerico {
 
     public void setFoto(Foto foto) {
         this.foto = foto;
+    }
+
+    public Pdf getPdfLicConducir() {
+        return pdfLicConducir;
+    }
+
+    public void setPdfLicConducir(Pdf pdfLicConducir) {
+        this.pdfLicConducir = pdfLicConducir;
+    }
+
+    public Pdf getPdfLinti() {
+        return pdfLinti;
+    }
+
+    public void setPdfLinti(Pdf pdfLinti) {
+        this.pdfLinti = pdfLinti;
+    }
+
+    public Pdf getPdfLibSanidad() {
+        return pdfLibSanidad;
+    }
+
+    public void setPdfLibSanidad(Pdf pdfLibSanidad) {
+        this.pdfLibSanidad = pdfLibSanidad;
     }
 
 }

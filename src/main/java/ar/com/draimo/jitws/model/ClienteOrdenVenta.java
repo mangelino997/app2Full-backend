@@ -54,6 +54,11 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
     @Column(name = "fechaUltimaMod", nullable = true)
     private Date fechaUltimaMod;
     
+    //Referencia a la clase tipo tarifa
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idTipoTarifaPorDefecto", nullable = false)
+    private TipoTarifa tipoTarifaPorDefecto;
+    
     //Getters y Setters de la clase
 
     public Cliente getCliente() {
@@ -110,6 +115,14 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
 
     public void setFechaUltimaMod(Date fechaUltimaMod) {
         this.fechaUltimaMod = fechaUltimaMod;
+    }
+
+    public TipoTarifa getTipoTarifaPorDefecto() {
+        return tipoTarifaPorDefecto;
+    }
+
+    public void setTipoTarifaPorDefecto(TipoTarifa tipoTarifaPorDefecto) {
+        this.tipoTarifaPorDefecto = tipoTarifaPorDefecto;
     }
 
 }

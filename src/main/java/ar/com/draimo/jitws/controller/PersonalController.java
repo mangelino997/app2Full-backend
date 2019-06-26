@@ -103,10 +103,12 @@ public class PersonalController {
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("personal") String elementoString,
-            @RequestPart("archivo") MultipartFile archivo) {
+            @RequestPart("foto") MultipartFile foto, @RequestPart("licConducir") MultipartFile licConducir,
+             @RequestPart("linti") MultipartFile linti, @RequestPart("libSanidad") MultipartFile libSanidad) {
         try {
             //Agrega el registro
-            Personal personal = elementoService.agregar(elementoString, archivo);
+            Personal personal = elementoService.agregar(elementoString, foto,
+                    licConducir, linti, libSanidad);
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(personal);
             //Envia la nueva lista a los usuarios subscriptos
@@ -128,10 +130,11 @@ public class PersonalController {
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestPart("personal") String elementoString,
-            @RequestPart("archivo") MultipartFile archivo) {
+            @RequestPart("foto") MultipartFile foto, @RequestPart("licConducir") MultipartFile licConducir,
+             @RequestPart("linti") MultipartFile linti, @RequestPart("libSanidad") MultipartFile libSanidad) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elementoString, archivo);
+            elementoService.actualizar(elementoString, foto, licConducir, linti,libSanidad);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
