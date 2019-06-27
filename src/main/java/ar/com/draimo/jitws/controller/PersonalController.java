@@ -107,7 +107,7 @@ public class PersonalController {
              @RequestPart("linti") MultipartFile linti, @RequestPart("libSanidad") MultipartFile libSanidad) {
         try {
             //Agrega el registro
-            Personal personal = elementoService.agregar(elementoString, foto,
+             Personal personal = elementoService.agregar(elementoString, foto,
                     licConducir, linti, libSanidad);
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(personal);

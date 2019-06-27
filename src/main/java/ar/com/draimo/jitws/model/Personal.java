@@ -251,6 +251,11 @@ public class Personal extends ObjetoGenerico {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoCurso", nullable = true)
     private Date vtoCurso;
+    
+    //Define el vencimiento del psicofisico
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "vtoPsicoFisico", nullable = true)
+    private Date vtoPsicoFisico;
 
     //Define el vencimiento del curso De carga peligrosa
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
@@ -855,6 +860,14 @@ public class Personal extends ObjetoGenerico {
         this.vtoCurso = vtoCurso;
     }
 
+    public Date getVtoPsicoFisico() {
+        return vtoPsicoFisico;
+    }
+
+    public void setVtoPsicoFisico(Date vtoPsicoFisico) {
+        this.vtoPsicoFisico = vtoPsicoFisico;
+    }
+    
     public Date getVtoCursoCargaPeligrosa() {
         return vtoCursoCargaPeligrosa;
     }
