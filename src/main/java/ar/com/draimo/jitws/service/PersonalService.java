@@ -106,22 +106,30 @@ public class PersonalService {
             MultipartFile linti, MultipartFile libSanidad) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
-        Foto p = fotoService.agregar(foto, false);
-        Pdf p1 = pdfService.agregar(licConducir, false);
-        Pdf p2 = pdfService.agregar(linti, false);
-        Pdf p3 = pdfService.agregar(libSanidad, false);
-        p.setTabla("personal");
-        p1.setTabla("personal");
-        p2.setTabla("personal");
-        p3.setTabla("personal");
-        Foto f = fotoDAO.saveAndFlush(p);
-        Pdf pdf1 = pdfDAO.saveAndFlush(p1);
-        Pdf pdf2 = pdfDAO.saveAndFlush(p2);
-        Pdf pdf3 = pdfDAO.saveAndFlush(p3);
-        elemento.setFoto(f);
-        elemento.setPdfLicConducir(pdf1);
-        elemento.setPdfLinti(pdf2);
-        elemento.setPdfLibSanidad(pdf3);
+        if (!foto.getName().equals("")) {
+            Foto p = fotoService.agregar(foto, false);
+            p.setTabla("personal");
+            Foto f = fotoDAO.saveAndFlush(p);
+            elemento.setFoto(f);
+        }
+        if (!licConducir.getName().equals("")) {
+            Pdf p1 = pdfService.agregar(licConducir, false);
+            p1.setTabla("personal");
+            Pdf pdf1 = pdfDAO.saveAndFlush(p1);
+            elemento.setPdfLicConducir(pdf1);
+        }
+        if (!linti.getName().equals("")) {
+            Pdf p2 = pdfService.agregar(linti, false);
+            p2.setTabla("personal");
+            Pdf pdf2 = pdfDAO.saveAndFlush(p2);
+            elemento.setPdfLinti(pdf2);
+        }
+        if (!libSanidad.getName().equals("")) {
+            Pdf p3 = pdfService.agregar(libSanidad, false);
+            p3.setTabla("personal");
+            Pdf pdf3 = pdfDAO.saveAndFlush(p3);
+            elemento.setPdfLibSanidad(pdf3);
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -130,22 +138,30 @@ public class PersonalService {
     public void actualizar(String elementoString, MultipartFile foto, MultipartFile licConducir,
             MultipartFile linti, MultipartFile libSanidad) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
-        Foto f = fotoService.actualizar(elemento.getFoto().getId(), foto, false);
-        Pdf p1 = pdfService.actualizar(elemento.getPdfLicConducir().getId(), licConducir, false);
-        Pdf p2 = pdfService.actualizar(elemento.getPdfLinti().getId(), linti, false);
-        Pdf p3 = pdfService.actualizar(elemento.getPdfLibSanidad().getId(), libSanidad, false);
-        f.setTabla("personal");
-        p1.setTabla("personal");
-        p2.setTabla("personal");
-        p3.setTabla("personal");
-        Foto f1 = fotoDAO.save(f);
-        Pdf pdf1 = pdfDAO.save(p1);
-        Pdf pdf2 = pdfDAO.save(p2);
-        Pdf pdf3 = pdfDAO.save(p3);
-        elemento.setFoto(f1);
-        elemento.setPdfLicConducir(pdf1);
-        elemento.setPdfLinti(pdf2);
-        elemento.setPdfLibSanidad(pdf3);
+        if(!foto.getName().equals("")) {
+            Foto f = fotoService.actualizar(elemento.getFoto().getId(), foto, false);
+            f.setTabla("personal");
+            Foto f1 = fotoDAO.save(f);
+            elemento.setFoto(f1);
+        }
+        if(!foto.getName().equals("")) {
+            Pdf p1 = pdfService.actualizar(elemento.getPdfLicConducir().getId(), licConducir, false);
+            p1.setTabla("personal");
+            Pdf pdf1 = pdfDAO.save(p1);
+            elemento.setPdfLicConducir(pdf1);
+        }
+        if(!foto.getName().equals("")) {
+            Pdf p2 = pdfService.actualizar(elemento.getPdfLinti().getId(), linti, false);
+            p2.setTabla("personal");
+            Pdf pdf2 = pdfDAO.save(p2);
+            elemento.setPdfLinti(pdf2);
+        }
+        if(!foto.getName().equals("")) {
+            Pdf p3 = pdfService.actualizar(elemento.getPdfLibSanidad().getId(), libSanidad, false);
+            p3.setTabla("personal");
+            Pdf pdf3 = pdfDAO.save(p3);
+            elemento.setPdfLibSanidad(pdf3);
+        }
         establecerAlias(elemento);
         elementoDAO.save(elemento);
     }

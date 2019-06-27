@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +21,9 @@ import javax.persistence.Table;
 public class Soporte extends ObjetoGenerico {
     
     //Define fecha
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone ="UTC-3")
     @Column(name = "fecha", nullable = false)  
-    private LocalDateTime fecha;
+    private Timestamp fecha;
     
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -49,7 +50,7 @@ public class Soporte extends ObjetoGenerico {
     
     //Referencia a la clase BugImagen
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idBugImagen", nullable = false)
+    @JoinColumn(name = "idBugImagen", nullable = true)
     private BugImagen bugImagen;
     
     //Referencia a la clase SoporteEstado
@@ -59,11 +60,11 @@ public class Soporte extends ObjetoGenerico {
     
     //Getters y Setters de la clase
 
-    public LocalDateTime getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 
