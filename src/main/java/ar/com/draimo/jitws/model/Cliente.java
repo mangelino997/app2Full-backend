@@ -56,16 +56,6 @@ public class Cliente extends ObjetoGenerico {
     @Column(name = "sitioWeb", length = 60, nullable = true)
     private String sitioWeb;
     
-    //Referencia a la clase Zona
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idZona", nullable = false)
-    private Zona zona;
-    
-    //Referencia a la clase Rubro
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRubro", nullable = false)
-    private Rubro rubro;
-    
     //Referencia a la clase Cobrador
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCobrador", nullable = false)
@@ -75,6 +65,16 @@ public class Cliente extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVendedor", nullable = true)
     private Vendedor vendedor;
+    
+    //Referencia a la clase Zona
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idZona", nullable = false)
+    private Zona zona;
+    
+    //Referencia a la clase Rubro
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idRubro", nullable = false)
+    private Rubro rubro;
     
     //Referencia a la clase AfipCondicionIva
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -131,7 +131,7 @@ public class Cliente extends ObjetoGenerico {
     private BigDecimal descuentoSubtotal;
     
     //Define el seguro propio
-    @Column(name = "esSeguroPropio", nullable = true)
+    @Column(name = "esSeguroPropio", nullable = false)
     private boolean esSeguroPropio;
     
     //Referencia a la clase Compañia seguro
@@ -145,7 +145,7 @@ public class Cliente extends ObjetoGenerico {
     
     //Define el vencimiento de la poliza del seguro
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
-    @Column(name = "vencimientoPolizaSeguro", nullable = false)
+    @Column(name = "vencimientoPolizaSeguro", nullable = true)
     private Date vencimientoPolizaSeguro;
     
     //Define las observaciones

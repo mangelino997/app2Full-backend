@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +94,12 @@ public class SoporteService {
     @Transactional(rollbackFor = Exception.class)
     public Soporte agregar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
-        elemento.setFecha(LocalDateTime.now());
-        BugImagen u = bugImagenService.agregar(archivo, false);
-        BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
-        elemento.setBugImagen(bugImagen);
+        elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
+        if(!archivo.getName().equals("")) {
+            BugImagen u = bugImagenService.agregar(archivo, false);
+            BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
+            elemento.setBugImagen(bugImagen);
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -104,9 +107,11 @@ public class SoporteService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
-        BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
-        BugImagen bug = bugImagenDAO.save(f);
-        elemento.setBugImagen(bug);
+        if(!archivo.getName().equals("")) {
+            BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
+            BugImagen bug = bugImagenDAO.save(f);
+            elemento.setBugImagen(bug);
+        }
         establecerAlias(elemento);
         elementoDAO.save(elemento);
     }
