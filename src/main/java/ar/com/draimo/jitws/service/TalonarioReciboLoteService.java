@@ -48,7 +48,7 @@ public class TalonarioReciboLoteService {
     @Transactional(rollbackFor = Exception.class)
     public TalonarioReciboLote agregar(TalonarioReciboLote elemento) throws Exception {
         if(elemento.getDesde()>elemento.getHasta()) {
-            throw new Exception("'Hasta' no puede ser mayor a 'Desde'");
+            throw new Exception("'Hasta' no puede ser menor a 'Desde'");
         }
         Date fecha = new Date(new java.util.Date().getTime());
         elemento.setFechaAlta(fecha);
@@ -69,7 +69,7 @@ public class TalonarioReciboLoteService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TalonarioReciboLote elemento) throws Exception {
         if(elemento.getDesde()>elemento.getHasta()) {
-            throw new Exception("'Hasta' no puede ser mayor a 'Desde'");
+            throw new Exception("'Hasta' no puede ser menor a 'Desde'");
         }
         List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
                 elemento.getDesde());
