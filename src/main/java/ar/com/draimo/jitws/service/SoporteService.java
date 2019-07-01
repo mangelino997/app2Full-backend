@@ -78,7 +78,7 @@ public class SoporteService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene una lista por nombre
+    //Obtiene una lista por usuario
     public Object listarPorUsuario(int idUsuario) throws IOException {
         List<Soporte> elementos = elementoDAO.findByUsuario(usuarioDAO.findById(idUsuario).get());
         ObjectMapper mapper = new ObjectMapper();
@@ -95,10 +95,12 @@ public class SoporteService {
     public Soporte agregar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
         elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
-        if(!archivo.getName().equals("")) {
+        if(!archivo.getOriginalFilename().equals("")) {
             BugImagen u = bugImagenService.agregar(archivo, false);
             BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
             elemento.setBugImagen(bugImagen);
+        } else {
+            elemento.setBugImagen(null);
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -107,11 +109,16 @@ public class SoporteService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
-        if(!archivo.getName().equals("")) {
+        if(!archivo.getOriginalFilename().equals("")) {
             BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
             BugImagen bug = bugImagenDAO.save(f);
             elemento.setBugImagen(bug);
-        }
+        } else if (elemento.getBugImagen().getId()!= 0) {
+            bugImagenDAO.deleteById(elemento.getBugImagen().getId());
+            elemento.setBugImagen(null);
+            } else {
+                elemento.setBugImagen(null);
+            }
         establecerAlias(elemento);
         elementoDAO.save(elemento);
     }

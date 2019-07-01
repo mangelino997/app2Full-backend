@@ -54,6 +54,7 @@ public class LongitudError {
     public static final String OBSERVACIONES_LONGITUD = "observaciones";
     public static final String OBSERVACIONES_ANULADO_LONGITUD = "observacionesAnulado";
     public static final String PASSWORD_LONGITUD = "password";
+    public static final String PUNTO_VENTA_LONGITUD = "puntoVenta";
     public static final String RAZON_SOCIAL_LONGITUD = "razonSocial";
     public static final String RUTA_ALTERNATIVA_LONGITUD = "rutaAlternativa";
     public static final String SITIO_WEB_LONGITUD = "sitioWeb";

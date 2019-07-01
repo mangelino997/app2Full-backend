@@ -18,6 +18,10 @@ public class TipoPercepcion extends ObjetoGenerico {
     @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
+    //Define el detallePorJurisdiccion
+    @Column(name = "detallePorJurisdiccion", nullable = false)
+    private boolean detallePorJurisdiccion;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -26,6 +30,14 @@ public class TipoPercepcion extends ObjetoGenerico {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isDetallePorJurisdiccion() {
+        return detallePorJurisdiccion;
+    }
+
+    public void setDetallePorJurisdiccion(boolean detallePorJurisdiccion) {
+        this.detallePorJurisdiccion = detallePorJurisdiccion;
     }
     
 }

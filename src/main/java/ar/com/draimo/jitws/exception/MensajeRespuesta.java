@@ -384,6 +384,10 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.PASSWORD_LONGITUD;
                     plusMensaje = " PASSWORD";
                     break;
+                case LongitudError.PUNTO_VENTA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.PUNTO_VENTA_LONGITUD;
+                    plusMensaje = " PUNTO VENTA";
+                    break;
                 case LongitudError.RAZON_SOCIAL_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.RAZON_SOCIAL_LONGITUD;
                     plusMensaje = " RAZON SOCIAL";

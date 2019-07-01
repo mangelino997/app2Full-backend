@@ -84,11 +84,13 @@ public class CompaniaSeguroPolizaService {
     @Transactional(rollbackFor = Exception.class)
     public CompaniaSeguroPoliza agregar(String elementoString, MultipartFile archivo) throws IOException {
         CompaniaSeguroPoliza elemento = new ObjectMapper().readValue(elementoString, CompaniaSeguroPoliza.class);
-        if (!archivo.getName().equals("")) {
+        if (!archivo.getOriginalFilename().equals("")) {
             Pdf u = pdfService.agregar(archivo, false);
             u.setTabla("companiaseguropoliza");
             Pdf pdf = pdfDAO.saveAndFlush(u);
             elemento.setPdf(pdf);
+        } else {
+            elemento.setPdf(null);
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -98,12 +100,17 @@ public class CompaniaSeguroPolizaService {
     public void actualizar(String elementoString,MultipartFile archivo) throws IOException {
         CompaniaSeguroPoliza elemento = new ObjectMapper().readValue(elementoString, CompaniaSeguroPoliza.class);
         elemento = formatearStrings(elemento);
-        if(!archivo.getName().equals("")){
+        if(!archivo.getOriginalFilename().equals("")){
             Pdf f = pdfService.actualizar(elemento.getPdf().getId(), archivo, false);
             f.setTabla("companiaseguropoliza");
             Pdf bug = pdfDAO.save(f);
             elemento.setPdf(bug);
-        }
+        }else if (elemento.getPdf().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdf().getId());
+            elemento.setPdf(null);
+            } else {
+                elemento.setPdf(null);
+            }
         elementoDAO.save(elemento);
     }
     

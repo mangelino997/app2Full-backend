@@ -91,41 +91,53 @@ public class VehiculoService {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        if(!titulo.getName().equals("")) {
+        if(!titulo.getOriginalFilename().equals("")) {
             Pdf pTitulo = pdfService.agregar(titulo, false);
             pTitulo.setTabla("vehiculo");
             Pdf pdfTitulo = pdfDAO.saveAndFlush(pTitulo);
             elemento.setPdfTitulo(pdfTitulo);
+        } else {
+            elemento.setPdfTitulo(null);
         }
-        if(!cedulaIdent.getName().equals("")) {
+        if(!cedulaIdent.getOriginalFilename().equals("")) {
             Pdf pCedulaIden = pdfService.agregar(cedulaIdent, false);
             pCedulaIden.setTabla("vehiculo");
             Pdf pdfCedulaIden = pdfDAO.saveAndFlush(pCedulaIden);
             elemento.setPdfCedulaIdent(pdfCedulaIden);
+        }else {
+            elemento.setPdfCedulaIdent(null);
         }
-        if(!vtoRuta.getName().equals("")) {
+        if(!vtoRuta.getOriginalFilename().equals("")) {
             Pdf pVtoRuta = pdfService.agregar(vtoRuta, false);
             pVtoRuta.setTabla("vehiculo");
             Pdf pdfVtoRuta = pdfDAO.saveAndFlush(pVtoRuta);
             elemento.setPdfVtoRuta(pdfVtoRuta);
+        }else {
+            elemento.setPdfVtoRuta(null);
         }
-        if(!vtoInspTecnica.getName().equals("")) {
+        if(!vtoInspTecnica.getOriginalFilename().equals("")) {
             Pdf pVtoInspTecnica = pdfService.agregar(vtoInspTecnica, false);
             pVtoInspTecnica.setTabla("vehiculo");
             Pdf pdfVtoInspTecnica = pdfDAO.saveAndFlush(pVtoInspTecnica);
             elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
+        }else {
+            elemento.setPdfVtoInspTecnica(null);
         }
-        if(!vtoSenasa.getName().equals("")) {
+        if(!vtoSenasa.getOriginalFilename().equals("")) {
             Pdf pVtoSenasa = pdfService.agregar(vtoSenasa, false);
             pVtoSenasa.setTabla("vehiculo");
             Pdf pdfVtoSenasa = pdfDAO.saveAndFlush(pVtoSenasa);
             elemento.setPdfVtoSenasa(pdfVtoSenasa);
+        }else {
+            elemento.setPdfVtoSenasa(null);
         }
-        if(!habBromat.getName().equals("")) {
+        if(!habBromat.getOriginalFilename().equals("")) {
             Pdf pHabBromat = pdfService.agregar(habBromat, false);
             pHabBromat.setTabla("vehiculo");
             Pdf pdfHabBromat = pdfDAO.saveAndFlush(pHabBromat);
             elemento.setPdfHabBromat(pdfHabBromat);
+        }else {
+            elemento.setPdfHabBromat(null);
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -148,42 +160,72 @@ public class VehiculoService {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento = formatearStrings(elemento);
-        if(!titulo.getName().equals("")) {
+        if(!titulo.getOriginalFilename().equals("")) {
             Pdf pTitulo = pdfService.actualizar(elemento.getPdfTitulo().getId(),titulo, false);
             pTitulo.setTabla("vehiculo");
             Pdf pdfTitulo = pdfDAO.save(pTitulo);
             elemento.setPdfTitulo(pdfTitulo);
-        }
-        if(!cedulaIdent.getName().equals("")) {
+        }else if (elemento.getPdfTitulo().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfTitulo().getId());
+            elemento.setPdfTitulo(null);
+            } else {
+                elemento.setPdfTitulo(null);
+            }
+        if(!cedulaIdent.getOriginalFilename().equals("")) {
             Pdf pCedulaIden = pdfService.actualizar(elemento.getPdfCedulaIdent().getId(),cedulaIdent, false);
             pCedulaIden.setTabla("vehiculo");
             Pdf pdfCedulaIden = pdfDAO.save(pCedulaIden);
             elemento.setPdfCedulaIdent(pdfCedulaIden);
-        }
-        if(!vtoRuta.getName().equals("")) {
+        }else if (elemento.getPdfCedulaIdent().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfCedulaIdent().getId());
+            elemento.setPdfCedulaIdent(null);
+            } else {
+                elemento.setPdfCedulaIdent(null);
+            }
+        if(!vtoRuta.getOriginalFilename().equals("")) {
             Pdf pVtoRuta = pdfService.actualizar(elemento.getPdfVtoRuta().getId(),vtoRuta, false);
             pVtoRuta.setTabla("vehiculo");
             Pdf pdfVtoRuta = pdfDAO.save(pVtoRuta);
             elemento.setPdfVtoRuta(pdfVtoRuta);
-        }
-        if(!vtoInspTecnica.getName().equals("")) {
+        }else if (elemento.getPdfVtoRuta().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfVtoRuta().getId());
+            elemento.setPdfVtoRuta(null);
+            } else {
+                elemento.setPdfVtoRuta(null);
+            }
+        if(!vtoInspTecnica.getOriginalFilename().equals("")) {
             Pdf pVtoInspTecnica = pdfService.actualizar(elemento.getPdfVtoInspTecnica().getId(),vtoInspTecnica, false);
             pVtoInspTecnica.setTabla("vehiculo");
             Pdf pdfVtoInspTecnica = pdfDAO.save(pVtoInspTecnica);
             elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
-        }
-        if(!vtoSenasa.getName().equals("")) {
+        }else if (elemento.getPdfVtoInspTecnica().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfVtoInspTecnica().getId());
+            elemento.setPdfVtoInspTecnica(null);
+            } else {
+                elemento.setPdfVtoInspTecnica(null);
+            }
+        if(!vtoSenasa.getOriginalFilename().equals("")) {
             Pdf pVtoSenasa = pdfService.actualizar(elemento.getPdfVtoSenasa().getId(),vtoSenasa, false);
             pVtoSenasa.setTabla("vehiculo");
             Pdf pdfVtoSenasa = pdfDAO.save(pVtoSenasa);
             elemento.setPdfVtoSenasa(pdfVtoSenasa);
-        }
-        if(!habBromat.getName().equals("")) {
+        }else if (elemento.getPdfVtoSenasa().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfVtoSenasa().getId());
+            elemento.setPdfVtoSenasa(null);
+            } else {
+                elemento.setPdfVtoSenasa(null);
+            }
+        if(!habBromat.getOriginalFilename().equals("")) {
             Pdf pHabBromat = pdfService.actualizar(elemento.getPdfHabBromat().getId(),habBromat, false);
             pHabBromat.setTabla("vehiculo");
             Pdf pdfHabBromat = pdfDAO.save(pHabBromat);
             elemento.setPdfHabBromat(pdfHabBromat);
-        }
+        }else if (elemento.getPdfHabBromat().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfHabBromat().getId());
+            elemento.setPdfHabBromat(null);
+            } else {
+                elemento.setPdfHabBromat(null);
+            }
         elementoDAO.save(elemento);
     }
 

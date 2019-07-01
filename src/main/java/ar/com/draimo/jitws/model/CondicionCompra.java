@@ -22,6 +22,10 @@ public class CondicionCompra extends ObjetoGenerico {
     //Define si es contado
     @Column(name = "esContado", nullable = false)
     private boolean esContado;
+    
+    //Define cuotas
+    @Column(name = "cuotas", nullable = false)
+    private short cuotas;
 
     //Getters y Setters de la clase
 
@@ -39,6 +43,14 @@ public class CondicionCompra extends ObjetoGenerico {
 
     public void setEsContado(boolean esContado) {
         this.esContado = esContado;
+    }
+
+    public short getCuotas() {
+        return cuotas;
+    }
+
+    public void setCuotas(short cuotas) {
+        this.cuotas = cuotas;
     }
 
 }

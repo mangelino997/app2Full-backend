@@ -82,7 +82,7 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_VALOR = 11016;
     public static final int DATO_DUPLICADO_TRAMO = 11017;
     
-    //Ultimo codigo Longitud = 12066
+    //Ultimo codigo Longitud = 12067
     public static final int ABREVIATURA_LONGITUD = 12015;
     public static final int ALIAS_LONGITUD = 12026;
     public static final int ALIAS_CBU_LONGITUD = 12052;
@@ -129,6 +129,7 @@ public class CodigoRespuesta {
     public static final int OBSERVACIONES_LONGITUD = 12031;
     public static final int OBSERVACIONES_ANULADO_LONGITUD = 12065;
     public static final int PASSWORD_LONGITUD = 12054;
+    public static final int PUNTO_VENTA_LONGITUD = 12066;
     public static final int RAZON_SOCIAL_LONGITUD = 12027;
     public static final int RUTA_ALTERNATIVA_LONGITUD = 12053;
     public static final int SITIO_WEB_LONGITUD = 12016;

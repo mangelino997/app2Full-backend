@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
-import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
@@ -106,30 +105,38 @@ public class PersonalService {
             MultipartFile linti, MultipartFile libSanidad) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
-        if (!foto.getName().equals("")) {
+        if (!foto.getOriginalFilename().equals("")) {
             Foto p = fotoService.agregar(foto, false);
             p.setTabla("personal");
             Foto f = fotoDAO.saveAndFlush(p);
             elemento.setFoto(f);
-        }
-        if (!licConducir.getName().equals("")) {
+        }else {
+                elemento.setFoto(null);
+            }
+        if (!licConducir.getOriginalFilename().equals("")) {
             Pdf p1 = pdfService.agregar(licConducir, false);
             p1.setTabla("personal");
             Pdf pdf1 = pdfDAO.saveAndFlush(p1);
             elemento.setPdfLicConducir(pdf1);
-        }
-        if (!linti.getName().equals("")) {
+        }else {
+                elemento.setPdfLicConducir(null);
+            }
+        if (!linti.getOriginalFilename().equals("")) {
             Pdf p2 = pdfService.agregar(linti, false);
             p2.setTabla("personal");
             Pdf pdf2 = pdfDAO.saveAndFlush(p2);
             elemento.setPdfLinti(pdf2);
-        }
-        if (!libSanidad.getName().equals("")) {
+        }else {
+                elemento.setPdfLinti(null);
+            }
+        if (!libSanidad.getOriginalFilename().equals("")) {
             Pdf p3 = pdfService.agregar(libSanidad, false);
             p3.setTabla("personal");
             Pdf pdf3 = pdfDAO.saveAndFlush(p3);
             elemento.setPdfLibSanidad(pdf3);
-        }
+        }else {
+                elemento.setPdfLibSanidad(null);
+            }
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -138,30 +145,50 @@ public class PersonalService {
     public void actualizar(String elementoString, MultipartFile foto, MultipartFile licConducir,
             MultipartFile linti, MultipartFile libSanidad) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
-        if(!foto.getName().equals("")) {
+        if(!foto.getOriginalFilename().equals("")) {
             Foto f = fotoService.actualizar(elemento.getFoto().getId(), foto, false);
             f.setTabla("personal");
             Foto f1 = fotoDAO.save(f);
             elemento.setFoto(f1);
-        }
-        if(!foto.getName().equals("")) {
+        }else if (elemento.getFoto().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getFoto().getId());
+            elemento.setFoto(null);
+            } else {
+                elemento.setFoto(null);
+            }
+        if(!foto.getOriginalFilename().equals("")) {
             Pdf p1 = pdfService.actualizar(elemento.getPdfLicConducir().getId(), licConducir, false);
             p1.setTabla("personal");
             Pdf pdf1 = pdfDAO.save(p1);
             elemento.setPdfLicConducir(pdf1);
-        }
-        if(!foto.getName().equals("")) {
+        }else if (elemento.getPdfLicConducir().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfLicConducir().getId());
+            elemento.setPdfLicConducir(null);
+            } else {
+                elemento.setPdfLicConducir(null);
+            }
+        if(!foto.getOriginalFilename().equals("")) {
             Pdf p2 = pdfService.actualizar(elemento.getPdfLinti().getId(), linti, false);
             p2.setTabla("personal");
             Pdf pdf2 = pdfDAO.save(p2);
             elemento.setPdfLinti(pdf2);
-        }
-        if(!foto.getName().equals("")) {
+        }else if (elemento.getPdfLinti().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfLinti().getId());
+            elemento.setPdfLinti(null);
+            } else {
+                elemento.setPdfLinti(null);
+            }
+        if(!foto.getOriginalFilename().equals("")) {
             Pdf p3 = pdfService.actualizar(elemento.getPdfLibSanidad().getId(), libSanidad, false);
             p3.setTabla("personal");
             Pdf pdf3 = pdfDAO.save(p3);
             elemento.setPdfLibSanidad(pdf3);
-        }
+        }else if (elemento.getPdfLibSanidad().getId()!= 0) {
+            pdfDAO.deleteById(elemento.getPdfLibSanidad().getId());
+            elemento.setPdfLibSanidad(null);
+            } else {
+                elemento.setPdfLibSanidad(null);
+            }
         establecerAlias(elemento);
         elementoDAO.save(elemento);
     }
