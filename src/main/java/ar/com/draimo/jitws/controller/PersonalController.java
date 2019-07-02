@@ -3,7 +3,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Personal;
 import ar.com.draimo.jitws.service.PersonalService;
-import java.util.List;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -52,51 +52,51 @@ public class PersonalController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<Personal> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene la lista de choferes de corta distancia por alias
     @GetMapping(value = URL + "/listarChoferesCortaDistanciaPorAlias/{alias}")
     @ResponseBody
-    public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenados(@PathVariable 
-            String alias) {
+    public Object listarChoferesCortaDistanciaPorAliasOrdenados(@PathVariable 
+            String alias) throws IOException {
         return elementoService.listarChoferesCortaDistanciaOrdenadoPorNombre(alias);
     }
     
     //Obtiene la lista de choferes de larga distancia por alias
     @GetMapping(value = URL + "/listarChoferesLargaDistanciaPorAlias/{alias}")
     @ResponseBody
-    public List<Personal> listarChoferesLargaDistanciaPorAliasOrdenados(@PathVariable 
-            String alias) {
+    public Object listarChoferesLargaDistanciaPorAliasOrdenados(@PathVariable 
+            String alias) throws IOException {
         return elementoService.listarChoferesLargaDistanciaOrdenadoPorNombre(alias);
     }
     
     //Obtiene la lista completa
     @GetMapping(value = URL + "/listarAcompaniantesPorAlias/{alias}")
     @ResponseBody
-    public List<Personal> listarAcompaniantesPorAliasOrdenados(@PathVariable String alias) {
+    public Object listarAcompaniantesPorAliasOrdenados(@PathVariable String alias) throws IOException {
         return elementoService.listarAcompaniantesOrdenadoPorNombre(alias);
     }
     
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<Personal> listarPorAlias(@PathVariable String alias) {
+    public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
     
     //Obtiene una lista por alias y empresa
     @GetMapping(value = URL + "/listarPorAliasYEmpresa/{alias}/{idEmpresa}")
     @ResponseBody
-    public List<Personal> listarPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) {
+    public Object listarPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorAliasYEmpresa(alias, idEmpresa);
     }
     
     //Obtiene una lista de choferes por alias
     @GetMapping(value = URL + "/listarChoferPorAlias/{alias}")
     @ResponseBody
-    public List<Personal> listarChoferPorNombre(@PathVariable String alias) {
+    public Object listarChoferPorNombre(@PathVariable String alias) throws IOException {
         return elementoService.listarChoferPorAlias(alias);
     }
     

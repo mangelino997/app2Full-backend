@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pdf")
+@JsonFilter("filtroPdf")
 public class Pdf extends ObjetoGenerico {
     
     //Define el nombre

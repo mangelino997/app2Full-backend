@@ -10,6 +10,9 @@ import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Personal;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,47 +59,98 @@ public class PersonalService {
     }
 
     //Obtiene la lista completa
-    public List<Personal> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<Personal> elementos= elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por alias
-    public List<Personal> listarPorAlias(String alias) {
+    public Object listarPorAlias(String alias) throws IOException {
+        List<Personal> elementos;
         if (alias.equals("***")) {
-            return elementoDAO.findAll();
+            elementos =elementoDAO.findAll();
         } else {
-            return elementoDAO.findByAliasContaining(alias);
+            elementos= elementoDAO.findByAliasContaining(alias);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por alias y empresa
-    public List<Personal> listarPorAliasYEmpresa(String alias, int idEmpresa) {
+    public Object listarPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
+        List<Personal> elementos;
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
         if (alias.equals("***")) {
-            return elementoDAO.findByEmpresa(empresa);
+            elementos= elementoDAO.findByEmpresa(empresa);
         } else {
-            return elementoDAO.findByEmpresaAndAliasContaining(empresa, alias);
+            elementos= elementoDAO.findByEmpresaAndAliasContaining(empresa, alias);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene un chofer por alias
-    public List<Personal> listarChoferPorAlias(String alias) {
-        return elementoDAO.findByAliasContainingAndEsChoferTrue(alias);
+    public Object listarChoferPorAlias(String alias) throws IOException {
+        List<Personal> elementos= elementoDAO.findByAliasContainingAndEsChoferTrue(alias);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene un listado de choferes ordenados por nombre de corta distancia
-    public List<Personal> listarChoferesCortaDistanciaOrdenadoPorNombre(String alias) {
-        return elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias);
+    public Object listarChoferesCortaDistanciaOrdenadoPorNombre(String alias) throws IOException {
+        List<Personal> elementos= elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene un listado de choferes ordenados por nombre de larga distancia
-    public List<Personal> listarChoferesLargaDistanciaOrdenadoPorNombre(String alias) {
-        return elementoDAO.listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(alias);
+    public Object listarChoferesLargaDistanciaOrdenadoPorNombre(String alias) throws IOException {
+        List<Personal> elementos= elementoDAO.listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(alias);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene un listado de acompañantes ordenados por nombre
-    public List<Personal> listarAcompaniantesOrdenadoPorNombre(String alias) {
-        return elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
+    public Object listarAcompaniantesOrdenadoPorNombre(String alias) throws IOException {
+        List<Personal> elementos= elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un registro

@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Vehiculo;
 import ar.com.draimo.jitws.service.VehiculoService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -53,36 +54,36 @@ public class VehiculoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<Vehiculo> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<Vehiculo> listarPorAlias(@PathVariable String alias) {
+    public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
     
     //Obtiene una lista por alias filtro no remolque
     @GetMapping(value = URL + "/listarPorAliasYRemolqueFalse/{alias}")
     @ResponseBody
-    public List<Vehiculo> listarPorAliasYRemolqueFalse(@PathVariable String alias) {
+    public Object listarPorAliasYRemolqueFalse(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAliasYRemolqueFalse(alias);
     }
     
     //Obtiene una lista por alias filtro remolque
     @GetMapping(value = URL + "/listarPorAliasYRemolqueTrue/{alias}")
     @ResponseBody
-    public List<Vehiculo> listarPorAliasYRemolqueTrue(@PathVariable String alias) {
+    public Object listarPorAliasYRemolqueTrue(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAliasYRemolqueTrue(alias);
     }
     
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
     @GetMapping(value = URL + "/listarFiltro/{idEmpresa}/{idTipoVehiculo}/{idMarcaVehiculo}")
     @ResponseBody
-    public List<Vehiculo> listarFiltro(@PathVariable int idEmpresa, @PathVariable int idTipoVehiculo,
-            @PathVariable int idMarcaVehiculo) {
+    public Object listarFiltro(@PathVariable int idEmpresa, @PathVariable int idTipoVehiculo,
+            @PathVariable int idMarcaVehiculo) throws IOException {
         return elementoService.listarFiltro(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
     }
     

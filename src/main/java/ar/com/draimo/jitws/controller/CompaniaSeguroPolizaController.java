@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompaniaSeguroPoliza;
 import ar.com.draimo.jitws.service.CompaniaSeguroPolizaService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -53,35 +54,36 @@ public class CompaniaSeguroPolizaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<CompaniaSeguroPoliza> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{id}")
     @ResponseBody
-    public List<CompaniaSeguroPoliza> listarPorEmpresa(@PathVariable int id) {
+    public Object listarPorEmpresa(@PathVariable int id) throws IOException {
         return elementoService.listarPorEmpresa(id);
     }
     
     //Obtiene una lista por compania seguro
     @GetMapping(value = URL + "/listarPorCompaniaSeguro/{id}")
     @ResponseBody
-    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguro(@PathVariable int id) {
+    public Object listarPorCompaniaSeguro(@PathVariable int id) throws IOException {
         return elementoService.listarPorCompaniaSeguro(id);
     }
     
     //Obtiene por compania de seguro y empresa
     @GetMapping(value = URL + "/listarPorCompaniaSeguroYEmpresa/{idCompaniaSeguro}/{idEmpresa}")
     @ResponseBody
-    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguroYEmpresa(@PathVariable int idCompaniaSeguro, @PathVariable int idEmpresa) {
+    public Object listarPorCompaniaSeguroYEmpresa(@PathVariable int idCompaniaSeguro,
+            @PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorCompaniaSeguroYEmpresa(idCompaniaSeguro, idEmpresa);
     }
     
     //Obtiene una lista por nombre de compania de seguro
     @GetMapping(value = URL + "/listarPorCompaniaSeguroNombre/{nombre}")
     @ResponseBody
-    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguroNombre(@PathVariable String nombre) {
+    public Object listarPorCompaniaSeguroNombre(@PathVariable String nombre) throws IOException {
         return elementoService.listarPorCompaniaSeguroNombre(nombre);
     }
     

@@ -2,6 +2,10 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.model.Pdf;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +31,30 @@ public class PdfService {
     }
     
     //Obtiene por id
-    public Pdf obtenerPorId(int id) {
-        return elementoDAO.findById(id).get();
+    public Object obtenerPorId(int id) throws IOException {
+        Pdf pdf = elementoDAO.findById(id).get();
+        ObjectMapper mapper = new ObjectMapper();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", 
+                        SimpleBeanPropertyFilter.serializeAllExcept());
+        String string = mapper.writer(filters).writeValueAsString(pdf);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
-    public List<Pdf> listarPorNombre(String nombre) {
+    public Object listarPorNombre(String nombre) throws IOException {
+        List<Pdf> pdf;
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            pdf =  elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            pdf =  elementoDAO.findByNombreContaining(nombre);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", 
+                        SimpleBeanPropertyFilter.serializeAllExcept());
+        String string = mapper.writer(filters).writeValueAsString(pdf);
+        return mapper.readValue(string, Object.class);
     }
     
     //Agrega un registro
