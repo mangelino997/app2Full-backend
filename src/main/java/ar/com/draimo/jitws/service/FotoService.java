@@ -2,6 +2,10 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.model.Foto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +31,30 @@ public class FotoService {
     }
     
     //Obtiene por id
-    public Foto obtenerPorId(int id) {
-        return elementoDAO.findById(id).get();
+    public Object obtenerPorId(int id) throws IOException {
+        Foto foto= elementoDAO.findById(id).get();
+        ObjectMapper mapper = new ObjectMapper();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", 
+                        SimpleBeanPropertyFilter.serializeAllExcept());
+        String string = mapper.writer(filters).writeValueAsString(foto);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
-    public List<Foto> listarPorNombre(String nombre) {
+    public Object listarPorNombre(String nombre) throws IOException {
+        List<Foto> elementos;
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            elementos= elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            elementos= elementoDAO.findByNombreContaining(nombre);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", 
+                        SimpleBeanPropertyFilter.serializeAllExcept());
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Agrega un registro
