@@ -163,6 +163,10 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO;
                     plusMensaje = " DNI";
                     break;
+                case DuplicidadError.DOMINIO_UNICO:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DOMINIO;
+                    plusMensaje = " DOMINIO";
+                    break;
                 case DuplicidadError.ID_UNICO:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ID;
                     plusMensaje = " ID";
@@ -170,6 +174,10 @@ public class MensajeRespuesta {
                 case DuplicidadError.NOMBRE_UNICO:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_NOMBRE;
                     plusMensaje = " NOMBRE";
+                    break;
+                case DuplicidadError.NUMERO_INTERNO_UNICO:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_NUMERO_INTERNO;
+                    plusMensaje = " NUMERO INTERNO";
                     break;
                 case DuplicidadError.REPARTO_ORDENRECOLECCION_UNICOS:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_ORECOLECCION;
