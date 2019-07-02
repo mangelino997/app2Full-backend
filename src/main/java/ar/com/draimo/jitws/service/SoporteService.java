@@ -94,7 +94,7 @@ public class SoporteService {
     public Soporte agregar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
         elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
-        if(!archivo.getOriginalFilename().equals("")) {
+        if (!archivo.getOriginalFilename().equals("")) {
             BugImagen u = bugImagenService.agregar(archivo, false);
             BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
             elemento.setBugImagen(bugImagen);
@@ -108,16 +108,18 @@ public class SoporteService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
-        if(!archivo.getOriginalFilename().equals("")) {
-            BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
-            BugImagen bug = bugImagenDAO.save(f);
-            elemento.setBugImagen(bug);
-        } else if (elemento.getBugImagen().getId()!= 0) {
-            bugImagenDAO.deleteById(elemento.getBugImagen().getId());
-            elemento.setBugImagen(null);
+        if (archivo.getOriginalFilename().equals("")) {
+            if (elemento.getBugImagen().getId() != 0) {
+                bugImagenDAO.deleteById(elemento.getBugImagen().getId());
+                elemento.setBugImagen(null);
             } else {
                 elemento.setBugImagen(null);
             }
+        } else {
+            BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
+            BugImagen bug = bugImagenDAO.save(f);
+            elemento.setBugImagen(bug);
+        }
         establecerAlias(elemento);
         elementoDAO.save(elemento);
     }
