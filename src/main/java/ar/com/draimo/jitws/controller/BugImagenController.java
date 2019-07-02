@@ -56,41 +56,30 @@ public class BugImagenController {
         return elementoService.obtenerSiguienteId();
     }
     
-    //Obtiene por id
-    @GetMapping(value = URL + "/obtenerImagenPorId/{id}")
-    @ResponseBody
-    public ResponseEntity<InputStreamResource> obtenerImagenPorId(@PathVariable int id) {
-        try {
-            BugImagen imagen = elementoService.obtenerPorId(id);
-            HttpHeaders respHeaders = new HttpHeaders();
-            respHeaders.add("Content-Type", imagen.getTipo());
-            respHeaders.setContentLength(imagen.getTamanio());
-            respHeaders.setContentDispositionFormData("attachment", imagen.getNombre());
-            InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(imagen.getDatos()));
-            return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
-        } catch(Exception e) {
-            //Muestra mensaje de error interno en el servidor
-            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO, 
-                    MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    //Obtiene por id
+//    @GetMapping(value = URL + "/obtenerImagenPorId/{id}")
+//    @ResponseBody
+//    public ResponseEntity<InputStreamResource> obtenerImagenPorId(@PathVariable int id) {
+//        try {
+//            BugImagen imagen = elementoService.obtenerPorId(id);
+//            HttpHeaders respHeaders = new HttpHeaders();
+//            respHeaders.add("Content-Type", imagen.getTipo());
+//            respHeaders.setContentLength(imagen.getTamanio());
+//            respHeaders.setContentDispositionFormData("attachment", imagen.getNombre());
+//            InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(imagen.getDatos()));
+//            return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
+//        } catch(Exception e) {
+//            //Muestra mensaje de error interno en el servidor
+//            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO, 
+//                    MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
     
     //Obtiene por id
     @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
-    public ResponseEntity<InputStreamResource> obtenerPorId(@PathVariable int id) {
-        try {
-            BugImagen element = elementoService.obtenerPorId(id);
-            HttpHeaders respHeaders = new HttpHeaders();
-            respHeaders.add("Content-Type", element.getTipo());
-            respHeaders.setContentLength(element.getTamanio());
-            respHeaders.setContentDispositionFormData("attachment", element.getNombre());
-            InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(element.getDatos()));
-            return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
-        } catch(IOException e) {
-            //Muestra mensaje de error interno en el servidor
-            return  MensajeRespuesta.sinContenido();
-        }
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
+            return elementoService.obtenerPorId(id);
     }
     
     //Agrega un registro

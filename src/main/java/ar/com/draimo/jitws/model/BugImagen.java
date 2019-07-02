@@ -34,7 +34,7 @@ public class BugImagen extends ObjetoGenerico {
     //Define los datos
     @Lob
     @Basic(optional = false, fetch = FetchType.LAZY)
-    @Column(name = "datos", nullable = false)
+    @Column(name = "datos", nullable = true)
     private byte[] datos;
     
     //Getters y Setters de la clase

@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.service.FotoService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,14 +52,14 @@ public class FotoController {
     //Obtiene por el id
     @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
-    public Foto obtenerPorId(@PathVariable int id) {
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
         return elementoService.obtenerPorId(id);
     }
     
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<Foto> listarPorNombre(@PathVariable String nombre) {
+    public Object listarPorNombre(@PathVariable String nombre) throws IOException {
         return elementoService.listarPorNombre(nombre);
     }
     

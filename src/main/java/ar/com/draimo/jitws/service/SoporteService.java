@@ -69,10 +69,9 @@ public class SoporteService {
             elementos = elementoDAO.findByUsuarioAndAliasContaining(usuario, alias);
         }
         ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroImagen", theFilter);
+                .addFilter("filtroImagen", 
+                        SimpleBeanPropertyFilter.serializeAllExcept());
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }

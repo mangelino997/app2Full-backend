@@ -2,9 +2,11 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBugImagenDAO;
 import ar.com.draimo.jitws.model.BugImagen;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +30,14 @@ public class BugImagenService {
     }
     
     //Obtiene un registro por id
-    public BugImagen obtenerPorId(int id) throws JsonProcessingException, IOException {
-        BugImagen imagen = elementoDAO.findById(id).get();
-        return  imagen;
+    public Object obtenerPorId(int id) throws IOException  {
+        BugImagen bug = elementoDAO.findById(id).get();
+        ObjectMapper mapper = new ObjectMapper();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroImagen", 
+                        SimpleBeanPropertyFilter.serializeAllExcept());
+        String string = mapper.writer(filters).writeValueAsString(bug);
+        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un registro

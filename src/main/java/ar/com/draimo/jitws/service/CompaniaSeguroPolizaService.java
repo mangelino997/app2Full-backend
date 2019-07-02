@@ -9,6 +9,9 @@ import ar.com.draimo.jitws.model.CompaniaSeguroPoliza;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Pdf;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -52,32 +55,65 @@ public class CompaniaSeguroPolizaService {
     }
 
     //Obtiene la lista completa
-    public List<CompaniaSeguroPoliza> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<CompaniaSeguroPoliza> elementos= elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por empresa
-    public List<CompaniaSeguroPoliza> listarPorEmpresa(int id) {
-        Optional<Empresa> empresa = empresaDAO.findById(id);
-        return elementoDAO.findByEmpresa(empresa);
+    public Object listarPorEmpresa(int id) throws IOException {
+        List<CompaniaSeguroPoliza> elementos=  elementoDAO.findByEmpresa(empresaDAO.findById(id));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroImagen", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por compania de seguro
-    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguro(int idCompaniaSeguro) {
-        Optional<CompaniaSeguro> companiaSeguro = companiaSeguroDAO.findById(idCompaniaSeguro);
-        return elementoDAO.findByCompaniaSeguro(companiaSeguro);
+    public Object listarPorCompaniaSeguro(int idCompaniaSeguro) throws IOException {
+        List<CompaniaSeguroPoliza> elementos = elementoDAO.findByCompaniaSeguro(
+                companiaSeguroDAO.findById(idCompaniaSeguro));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene por compania de seguro y empresa
-    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguroYEmpresa(int idCompaniaSeguro, int idEmpresa) {
-        Optional<CompaniaSeguro> companiaSeguro = companiaSeguroDAO.findById(idCompaniaSeguro);
-        Optional<Empresa> empresa = empresaDAO.findById(idEmpresa);
-        return elementoDAO.findByCompaniaSeguroAndEmpresa(companiaSeguro, empresa);
+    public Object listarPorCompaniaSeguroYEmpresa(int idCompaniaSeguro, int idEmpresa) throws IOException {
+        List<CompaniaSeguroPoliza> elementos =  elementoDAO.findByCompaniaSeguroAndEmpresa(
+                companiaSeguroDAO.findById(idCompaniaSeguro), empresaDAO.findById(idEmpresa));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por nombre de compania de seguro
-    public List<CompaniaSeguroPoliza> listarPorCompaniaSeguroNombre(String nombre) {
-        return elementoDAO.findByCompaniaSeguro_NombreContaining(nombre);
+    public Object listarPorCompaniaSeguroNombre(String nombre) throws IOException {
+        List<CompaniaSeguroPoliza> elementos=  elementoDAO.findByCompaniaSeguro_NombreContaining(nombre);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un registro
