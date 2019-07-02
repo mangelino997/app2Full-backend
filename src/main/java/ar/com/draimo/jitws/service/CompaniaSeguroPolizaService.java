@@ -144,10 +144,17 @@ public class CompaniaSeguroPolizaService {
                 elemento.setPdf(null);
             }
         } else {
-            Pdf f = pdfService.actualizar(elemento.getPdf().getId(), archivo, false);
-            f.setTabla("companiaseguropoliza");
-            Pdf bug = pdfDAO.save(f);
-            elemento.setPdf(bug);
+            if(elemento.getPdf().getId() != 0) {
+                Pdf f = pdfService.actualizar(elemento.getPdf().getId(), archivo, false);
+                f.setTabla("companiaseguropoliza");
+                Pdf bug = pdfDAO.save(f);
+                elemento.setPdf(bug);
+            } else {
+                Pdf u = pdfService.agregar(archivo, false);
+                u.setTabla("companiaseguropoliza");
+                Pdf pdf = pdfDAO.saveAndFlush(u);
+                elemento.setPdf(pdf);
+            }
         }
         elementoDAO.save(elemento);
     }
