@@ -90,7 +90,6 @@ public class VehiculoService {
             MultipartFile habBromat) throws IOException {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento = formatearStrings(elemento);
-        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         if(!titulo.getOriginalFilename().equals("")) {
             Pdf pTitulo = pdfService.agregar(titulo, false);
             pTitulo.setTabla("vehiculo");
@@ -139,13 +138,13 @@ public class VehiculoService {
         }else {
             elemento.setPdfHabBromat(null);
         }
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(String elementoString) throws IOException {
-        Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
+    public void establecerAlias(Vehiculo elemento) throws IOException {
         elemento.setAlias(elemento.getDominio() + " - "
             + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
             + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());

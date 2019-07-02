@@ -20,30 +20,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio MonedaCuentaContable
+ *
  * @author blas
  */
-
 @Service
 public class MonedaCuentaContableService {
 
     //Define la referencia al dao
     @Autowired
     IMonedaCuentaContableDAO elementoDAO;
-    
+
     //Define la referencia al dao moneda
     @Autowired
     IMonedaDAO monedaDAO;
-    
+
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         MonedaCuentaContable elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<MonedaCuentaContable> monedasCuentasContables = elementoDAO.findAll();
@@ -52,44 +52,51 @@ public class MonedaCuentaContableService {
                 .serializeAllExcept("padre");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(monedasCuentasContables);
+        String string = mapper.writer(filters).writeValueAsString(monedasCuentasContables);
         return new ObjectMapper().readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista por moneda
     public List<MonedaCuentaContable> listarPorMoneda(int id) {
         Optional<Moneda> elemento = monedaDAO.findById(id);
         return elementoDAO.findByMoneda(elemento.get());
     }
-    
+
     //Obtiene una lista por nombre de moneda
     public Object listarPorNombreMoneda(String nombre) throws IOException {
         List<MonedaCuentaContable> monedasCuentasContables = new ArrayList<>();
-        if(nombre.equals("***")) {
-            monedasCuentasContables= elementoDAO.findAll();
+        if (nombre.equals("***")) {
+            monedasCuentasContables = elementoDAO.findAll();
         } else {
-            monedasCuentasContables= elementoDAO.findByMoneda_NombreContaining(nombre);
-    }
+            monedasCuentasContables = elementoDAO.findByMoneda_NombreContaining(nombre);
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(monedasCuentasContables);
+        String string = mapper.writer(filters).writeValueAsString(monedasCuentasContables);
         return new ObjectMapper().readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista por moneda
     public List<MonedaCuentaContable> listarPorEmpresa(int id) {
         Optional<Empresa> elemento = empresaDAO.findById(id);
         return elementoDAO.findByEmpresa(elemento.get());
     }
-    
+
     //Obtiene un registro por moneda y empresa
-    public MonedaCuentaContable obtenerPorMonedaYEmpresa(int idMoneda, int idEmpresa) {
+    public Object obtenerPorMonedaYEmpresa(int idMoneda, int idEmpresa) throws IOException {
         Moneda moneda = monedaDAO.findById(idMoneda).get();
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        return elementoDAO.findByMonedaAndEmpresa(moneda, empresa);
+        MonedaCuentaContable monedaCuentaContable = elementoDAO.findByMonedaAndEmpresa(moneda, empresa);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(monedaCuentaContable);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Agrega un registro
@@ -103,7 +110,7 @@ public class MonedaCuentaContableService {
     public void actualizar(MonedaCuentaContable elemento) {
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(MonedaCuentaContable elemento) {

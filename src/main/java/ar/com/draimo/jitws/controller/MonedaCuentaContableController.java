@@ -80,7 +80,7 @@ public class MonedaCuentaContableController {
     //Obtiene un registro por moneda y empresa
     @GetMapping(value = URL + "/obtenerPorMonedaYEmpresa/{idMoneda}/{idEmpresa}")
     @ResponseBody
-    public MonedaCuentaContable obtenerPorMonedaYEmpresa(@PathVariable int idMoneda, @PathVariable int idEmpresa) {
+    public Object obtenerPorMonedaYEmpresa(@PathVariable int idMoneda, @PathVariable int idEmpresa) throws IOException {
         return elementoService.obtenerPorMonedaYEmpresa(idMoneda, idEmpresa);
     }
     

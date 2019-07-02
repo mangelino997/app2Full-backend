@@ -98,7 +98,7 @@ public class VehiculoController {
             Vehiculo a = elementoService.agregar(elementoString,titulo, cedulaIdent,
                     vtoRuta, vtoInspTecnica, vtoSenasa, habBromat);
             //Actualiza inmediatamente el registro para establecer el alias
-            elementoService.establecerAlias(elementoString);
+            elementoService.establecerAlias(a);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
