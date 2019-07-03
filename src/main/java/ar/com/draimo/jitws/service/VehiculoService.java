@@ -64,7 +64,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -81,7 +82,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -93,7 +95,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -105,7 +108,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -117,7 +121,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
