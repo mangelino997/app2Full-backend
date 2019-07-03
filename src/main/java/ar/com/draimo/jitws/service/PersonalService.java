@@ -207,10 +207,17 @@ public class PersonalService {
                 elemento.setFoto(null);
             }
         } else {
-            Foto f = fotoService.actualizar(elemento.getFoto().getId(), foto, false);
-            f.setTabla("personal");
-            Foto f1 = fotoDAO.save(f);
-            elemento.setFoto(f1);
+            if(elemento.getFoto().getId() != 0) {
+                Foto f = fotoService.actualizar(elemento.getFoto().getId(), foto, false);
+                f.setTabla("personal");
+                Foto f1 = fotoDAO.save(f);
+                elemento.setFoto(f1);
+            } else {
+                Foto p = fotoService.agregar(foto, false);
+                p.setTabla("personal");
+                Foto f = fotoDAO.saveAndFlush(p);
+                elemento.setFoto(f);
+            }
         }
         if (licConducir.getOriginalFilename().equals("")) {
             if (elemento.getPdfLicConducir().getId() != 0) {
@@ -220,10 +227,17 @@ public class PersonalService {
                 elemento.setPdfLicConducir(null);
             }
         } else {
-            Pdf p1 = pdfService.actualizar(elemento.getPdfLicConducir().getId(), licConducir, false);
-            p1.setTabla("personal");
-            Pdf pdf1 = pdfDAO.save(p1);
-            elemento.setPdfLicConducir(pdf1);
+            if(elemento.getPdfLicConducir().getId() != 0) {
+                Pdf p1 = pdfService.actualizar(elemento.getPdfLicConducir().getId(), licConducir, false);
+                p1.setTabla("personal");
+                Pdf pdf1 = pdfDAO.save(p1);
+                elemento.setPdfLicConducir(pdf1);
+            } else {
+                Pdf p1 = pdfService.agregar(licConducir, false);
+                p1.setTabla("personal");
+                Pdf pdf1 = pdfDAO.saveAndFlush(p1);
+                elemento.setPdfLicConducir(pdf1);
+            }
         }
         if (linti.getOriginalFilename().equals("")) {
             if (elemento.getPdfLinti().getId() != 0) {
@@ -233,10 +247,17 @@ public class PersonalService {
                 elemento.setPdfLinti(null);
             }
         } else {
-            Pdf p2 = pdfService.actualizar(elemento.getPdfLinti().getId(), linti, false);
-            p2.setTabla("personal");
-            Pdf pdf2 = pdfDAO.save(p2);
-            elemento.setPdfLinti(pdf2);
+            if(elemento.getPdfLinti().getId() != 0) {
+                Pdf p2 = pdfService.actualizar(elemento.getPdfLinti().getId(), linti, false);
+                p2.setTabla("personal");
+                Pdf pdf2 = pdfDAO.save(p2);
+                elemento.setPdfLinti(pdf2);
+            } else {
+                Pdf p2 = pdfService.agregar(linti, false);
+                p2.setTabla("personal");
+                Pdf pdf2 = pdfDAO.saveAndFlush(p2);
+                elemento.setPdfLinti(pdf2);
+            }
         }
         if (libSanidad.getOriginalFilename().equals("")) {
             if (elemento.getPdfLibSanidad().getId() != 0) {
@@ -246,10 +267,17 @@ public class PersonalService {
                 elemento.setPdfLibSanidad(null);
             }
         } else {
-            Pdf p3 = pdfService.actualizar(elemento.getPdfLibSanidad().getId(), libSanidad, false);
-            p3.setTabla("personal");
-            Pdf pdf3 = pdfDAO.save(p3);
-            elemento.setPdfLibSanidad(pdf3);
+            if(elemento.getPdfLibSanidad().getId() != 0) {
+                Pdf p3 = pdfService.actualizar(elemento.getPdfLibSanidad().getId(), libSanidad, false);
+                p3.setTabla("personal");
+                Pdf pdf3 = pdfDAO.save(p3);
+                elemento.setPdfLibSanidad(pdf3);
+            } else {
+                Pdf p3 = pdfService.agregar(libSanidad, false);
+                p3.setTabla("personal");
+                Pdf pdf3 = pdfDAO.saveAndFlush(p3);
+                elemento.setPdfLibSanidad(pdf3);
+            }
         }
         establecerAlias(elemento);
         elementoDAO.save(elemento);

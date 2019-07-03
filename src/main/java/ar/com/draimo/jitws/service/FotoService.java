@@ -35,8 +35,7 @@ public class FotoService {
         Foto foto= elementoDAO.findById(id).get();
         ObjectMapper mapper = new ObjectMapper();
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", 
-                        SimpleBeanPropertyFilter.serializeAllExcept());
+                .addFilter("filtroFoto", SimpleBeanPropertyFilter.serializeAllExcept());
         String string = mapper.writer(filters).writeValueAsString(foto);
         return mapper.readValue(string, Object.class);
     }
