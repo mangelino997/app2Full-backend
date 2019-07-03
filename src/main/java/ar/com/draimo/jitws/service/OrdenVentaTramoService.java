@@ -46,12 +46,6 @@ public class OrdenVentaTramoService {
         return ordenesTramo;
     }
     
-    //Obtiene una lista por orden de venta 
-    public List<OrdenVentaTramo> listarPorOrdenVenta(int idOrdenVenta) {
-           return elementoDAO.findByOrdenVentaTarifa_OrdenVenta(
-                ordenVentaDAO.findById(idOrdenVenta).get());
-    }
-    
     //Obtiene la lista de fechas por orden de venta
     public List<OrdenVentaTramo> listarFechasPorOrdenVenta(int idOrdenVenta) {
         List<OrdenVentaTramo> ordenesTramo = elementoDAO.findByOrdenVentaTarifa_OrdenVenta(

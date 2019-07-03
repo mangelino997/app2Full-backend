@@ -22,60 +22,60 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase OrdenVentaTramo Controller
+ *
  * @author blas
  */
-
 @RestController
 public class OrdenVentaTramoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/ordenventatramo";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/ordenventatramo";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     OrdenVentaTramoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<OrdenVentaTramo> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por id de orden venta y preciosDesde
     @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody
-    public  List<OrdenVentaTramo> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
+    public List<OrdenVentaTramo> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
     }
-    
+
     //Obtiene una lista por id de orden venta y preciosDesde
     @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
     @ResponseBody
-    public  List<OrdenVentaTramo> listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable String preciosDesde) {
+    public List<OrdenVentaTramo> listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable String preciosDesde) {
         return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
     }
-    
+
     //Obtiene una lista de fechas por orden de venta
     @GetMapping(value = URL + "/listarFechasPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody
-    public  List<OrdenVentaTramo> listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta){
+    public List<OrdenVentaTramo> listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta) {
         return elementoService.listarFechasPorOrdenVenta(idOrdenVenta);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVentaTramo elemento) {
@@ -88,7 +88,7 @@ public class OrdenVentaTramoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class OrdenVentaTramoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody OrdenVentaTramo elemento) {
@@ -110,18 +110,18 @@ public class OrdenVentaTramoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -129,10 +129,10 @@ public class OrdenVentaTramoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }
