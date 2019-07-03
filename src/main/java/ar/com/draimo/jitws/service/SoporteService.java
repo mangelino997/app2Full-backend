@@ -115,9 +115,15 @@ public class SoporteService {
                 elemento.setBugImagen(null);
             }
         } else {
-            BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
-            BugImagen bug = bugImagenDAO.save(f);
-            elemento.setBugImagen(bug);
+            if(elemento.getBugImagen().getId() != 0){
+                BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
+                BugImagen bug = bugImagenDAO.save(f);
+                elemento.setBugImagen(bug);
+            }else {
+                BugImagen u = bugImagenService.agregar(archivo, false);
+                BugImagen bug = bugImagenDAO.saveAndFlush(u);
+                elemento.setBugImagen(bug);
+            }
         }
         establecerAlias(elemento);
         elementoDAO.save(elemento);

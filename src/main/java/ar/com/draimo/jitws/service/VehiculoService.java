@@ -64,7 +64,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -81,7 +82,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -93,7 +95,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -105,7 +108,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -117,7 +121,8 @@ public class VehiculoService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -206,10 +211,17 @@ public class VehiculoService {
                 elemento.setPdfTitulo(null);
             }
         } else {
-            Pdf pTitulo = pdfService.actualizar(elemento.getPdfTitulo().getId(), titulo, false);
-            pTitulo.setTabla("vehiculo");
-            Pdf pdfTitulo = pdfDAO.save(pTitulo);
-            elemento.setPdfTitulo(pdfTitulo);
+            if(elemento.getPdfTitulo().getId() != 0){
+                Pdf pTitulo = pdfService.actualizar(elemento.getPdfTitulo().getId(), titulo, false);
+                pTitulo.setTabla("vehiculo");
+                Pdf pdfTitulo = pdfDAO.save(pTitulo);
+                elemento.setPdfTitulo(pdfTitulo);
+            }else {
+                Pdf u = pdfService.agregar(titulo, false);
+                u.setTabla("vehiculo");
+                Pdf pdf1 = pdfDAO.saveAndFlush(u);
+                elemento.setPdfTitulo(pdf1);
+            }
         }
         if (cedulaIdent.getOriginalFilename().equals("")) {
             if (elemento.getPdfCedulaIdent().getId() != 0) {
@@ -219,10 +231,17 @@ public class VehiculoService {
                 elemento.setPdfCedulaIdent(null);
             }
         } else {
-            Pdf pCedulaIden = pdfService.actualizar(elemento.getPdfCedulaIdent().getId(), cedulaIdent, false);
-            pCedulaIden.setTabla("vehiculo");
-            Pdf pdfCedulaIden = pdfDAO.save(pCedulaIden);
-            elemento.setPdfCedulaIdent(pdfCedulaIden);
+            if(elemento.getPdfTitulo().getId() != 0){
+                Pdf pCedulaIden = pdfService.actualizar(elemento.getPdfCedulaIdent().getId(), cedulaIdent, false);
+                pCedulaIden.setTabla("vehiculo");
+                Pdf pdfCedulaIden = pdfDAO.save(pCedulaIden);
+                elemento.setPdfCedulaIdent(pdfCedulaIden);
+            }else {
+                Pdf u = pdfService.agregar(cedulaIdent, false);
+                u.setTabla("vehiculo");
+                Pdf pdf2 = pdfDAO.saveAndFlush(u);
+                elemento.setPdfCedulaIdent(pdf2);
+            }
         }
         if (vtoRuta.getOriginalFilename().equals("")) {
             if (elemento.getPdfVtoRuta().getId() != 0) {
@@ -232,10 +251,17 @@ public class VehiculoService {
                 elemento.setPdfVtoRuta(null);
             }
         } else {
-            Pdf pVtoRuta = pdfService.actualizar(elemento.getPdfVtoRuta().getId(), vtoRuta, false);
-            pVtoRuta.setTabla("vehiculo");
-            Pdf pdfVtoRuta = pdfDAO.save(pVtoRuta);
-            elemento.setPdfVtoRuta(pdfVtoRuta);
+            if(elemento.getPdfTitulo().getId() != 0){
+                Pdf pVtoRuta = pdfService.actualizar(elemento.getPdfVtoRuta().getId(), vtoRuta, false);
+                pVtoRuta.setTabla("vehiculo");
+                Pdf pdfVtoRuta = pdfDAO.save(pVtoRuta);
+                elemento.setPdfVtoRuta(pdfVtoRuta);
+            }else {
+                Pdf u = pdfService.agregar(vtoRuta, false);
+                u.setTabla("vehiculo");
+                Pdf pdf3 = pdfDAO.saveAndFlush(u);
+                elemento.setPdfVtoRuta(pdf3);
+            }
         }
         if (vtoInspTecnica.getOriginalFilename().equals("")) {
             if (elemento.getPdfVtoInspTecnica().getId() != 0) {
@@ -245,10 +271,17 @@ public class VehiculoService {
                 elemento.setPdfVtoInspTecnica(null);
             }
         } else {
-            Pdf pVtoInspTecnica = pdfService.actualizar(elemento.getPdfVtoInspTecnica().getId(), vtoInspTecnica, false);
-            pVtoInspTecnica.setTabla("vehiculo");
-            Pdf pdfVtoInspTecnica = pdfDAO.save(pVtoInspTecnica);
-            elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
+            if(elemento.getPdfTitulo().getId() != 0){
+                Pdf pVtoInspTecnica = pdfService.actualizar(elemento.getPdfVtoInspTecnica().getId(), vtoInspTecnica, false);
+                pVtoInspTecnica.setTabla("vehiculo");
+                Pdf pdfVtoInspTecnica = pdfDAO.save(pVtoInspTecnica);
+                elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
+            }else {
+                Pdf u = pdfService.agregar(vtoInspTecnica, false);
+                u.setTabla("vehiculo");
+                Pdf pdf4 = pdfDAO.saveAndFlush(u);
+                elemento.setPdfVtoInspTecnica(pdf4);
+            }
         }
         if (vtoSenasa.getOriginalFilename().equals("")) {
             if (elemento.getPdfVtoSenasa().getId() != 0) {
@@ -258,10 +291,17 @@ public class VehiculoService {
                 elemento.setPdfVtoSenasa(null);
             }
         } else {
-            Pdf pVtoSenasa = pdfService.actualizar(elemento.getPdfVtoSenasa().getId(), vtoSenasa, false);
-            pVtoSenasa.setTabla("vehiculo");
-            Pdf pdfVtoSenasa = pdfDAO.save(pVtoSenasa);
-            elemento.setPdfVtoSenasa(pdfVtoSenasa);
+            if(elemento.getPdfTitulo().getId() != 0){
+                Pdf pVtoSenasa = pdfService.actualizar(elemento.getPdfVtoSenasa().getId(), vtoSenasa, false);
+                pVtoSenasa.setTabla("vehiculo");
+                Pdf pdfVtoSenasa = pdfDAO.save(pVtoSenasa);
+                elemento.setPdfVtoSenasa(pdfVtoSenasa);
+            }else {
+                Pdf u = pdfService.agregar(vtoSenasa, false);
+                u.setTabla("vehiculo");
+                Pdf pdf5 = pdfDAO.saveAndFlush(u);
+                elemento.setPdfVtoSenasa(pdf5);
+            }
         }
         if (habBromat.getOriginalFilename().equals("")) {
             if (elemento.getPdfHabBromat().getId() != 0) {
@@ -271,10 +311,17 @@ public class VehiculoService {
                 elemento.setPdfHabBromat(null);
             }
         } else {
-            Pdf pHabBromat = pdfService.actualizar(elemento.getPdfHabBromat().getId(), habBromat, false);
-            pHabBromat.setTabla("vehiculo");
-            Pdf pdfHabBromat = pdfDAO.save(pHabBromat);
-            elemento.setPdfHabBromat(pdfHabBromat);
+            if(elemento.getPdfTitulo().getId() != 0){
+                Pdf pHabBromat = pdfService.actualizar(elemento.getPdfHabBromat().getId(), habBromat, false);
+                pHabBromat.setTabla("vehiculo");
+                Pdf pdfHabBromat = pdfDAO.save(pHabBromat);
+                elemento.setPdfHabBromat(pdfHabBromat);
+            }else {
+                Pdf u = pdfService.agregar(habBromat, false);
+                u.setTabla("vehiculo");
+                Pdf pdf6 = pdfDAO.saveAndFlush(u);
+                elemento.setPdfHabBromat(pdf6);
+            }
         }
         elementoDAO.save(elemento);
     }
