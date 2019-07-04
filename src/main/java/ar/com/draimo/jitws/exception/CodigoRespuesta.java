@@ -52,7 +52,6 @@ public class CodigoRespuesta {
     //Define una respuesta de rol asignado a usuario
     public static final int ROL_ASIGNADO = 5004;
     
-    
     //Define una respuesta de datos duplicados
     //Los codigos estan ordenados alfabeticamente.
     //Ultimo codigo datoDuplicado = 11024
@@ -149,5 +148,6 @@ public class CodigoRespuesta {
     public static final int URL_PRUEBA_LONGITUD = 12023;
     public static final int URL_REAL_LONGITUD = 12022;
     public static final int USERNAME_LONGITUD = 12017;
+    public static final int ARCHIVO_LONGITUD = 12067;
     
 }

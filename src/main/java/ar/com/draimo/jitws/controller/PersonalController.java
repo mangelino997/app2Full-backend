@@ -121,6 +121,9 @@ public class PersonalController {
         } catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
+        } catch (IOException e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
         } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
@@ -148,6 +151,9 @@ public class PersonalController {
         }catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
+        } catch(IOException e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
