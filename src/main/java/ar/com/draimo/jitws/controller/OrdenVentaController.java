@@ -124,7 +124,7 @@ public class OrdenVentaController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL + "{id}")
+    @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
             elementoService.eliminar(id);
