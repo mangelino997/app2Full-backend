@@ -140,6 +140,18 @@ public class PersonalService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
+    
+    //Obtiene un listado de choferes ordenados por nombre de larga distancia
+    public Object listarChoferesPorEmpresa(int idEmpresa) throws IOException {
+        List<Personal> elementos= elementoDAO.listarChoferesPorEmpresa(idEmpresa);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
 
     //Obtiene un listado de acompañantes ordenados por nombre
     public Object listarAcompaniantesOrdenadoPorNombre(String alias) throws IOException {
