@@ -59,7 +59,7 @@ public class VehiculoService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<Vehiculo> elementos= elementoDAO.findAll();
+        List<Vehiculo> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -74,9 +74,9 @@ public class VehiculoService {
     public Object listarPorAlias(String alias) throws IOException {
         List<Vehiculo> elementos;
         if (alias.equals("***")) {
-            elementos=  elementoDAO.findAll();
+            elementos = elementoDAO.findAll();
         } else {
-            elementos=  elementoDAO.findByAliasContaining(alias);
+            elementos = elementoDAO.findByAliasContaining(alias);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -90,7 +90,7 @@ public class VehiculoService {
 
     //Obtiene una lista por alias filtrado por no remolque
     public Object listarPorAliasYRemolqueFalse(String alias) throws IOException {
-        List<Vehiculo> elementos= elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueFalse(alias);
+        List<Vehiculo> elementos = elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueFalse(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -103,7 +103,7 @@ public class VehiculoService {
 
     //Obtiene una lista por alias filtrado por remolque
     public Object listarPorAliasYRemolqueTrue(String alias) throws IOException {
-        List<Vehiculo> elementos= elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(alias);
+        List<Vehiculo> elementos = elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -116,7 +116,7 @@ public class VehiculoService {
 
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
     public Object listarFiltro(int idEmpresa, int idTipoVehiculo, int idMarcaVehiculo) throws IOException {
-        List<Vehiculo> elementos=  elementoDAO.listarPorConfig(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
+        List<Vehiculo> elementos = elementoDAO.listarPorConfig(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -134,7 +134,7 @@ public class VehiculoService {
             MultipartFile habBromat) throws IOException {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento = formatearStrings(elemento);
-        if(!titulo.getOriginalFilename().equals("")) {
+        if (!titulo.getOriginalFilename().equals("")) {
             Pdf pTitulo = pdfService.agregar(titulo, false);
             pTitulo.setTabla("vehiculo");
             Pdf pdfTitulo = pdfDAO.saveAndFlush(pTitulo);
@@ -211,12 +211,12 @@ public class VehiculoService {
                 elemento.setPdfTitulo(null);
             }
         } else {
-            if(elemento.getPdfTitulo().getId() != 0){
+            if (elemento.getPdfTitulo().getId() != 0) {
                 Pdf pTitulo = pdfService.actualizar(elemento.getPdfTitulo().getId(), titulo, false);
                 pTitulo.setTabla("vehiculo");
                 Pdf pdfTitulo = pdfDAO.save(pTitulo);
                 elemento.setPdfTitulo(pdfTitulo);
-            }else {
+            } else {
                 Pdf u = pdfService.agregar(titulo, false);
                 u.setTabla("vehiculo");
                 Pdf pdf1 = pdfDAO.saveAndFlush(u);
@@ -231,12 +231,12 @@ public class VehiculoService {
                 elemento.setPdfCedulaIdent(null);
             }
         } else {
-            if(elemento.getPdfTitulo().getId() != 0){
+            if (elemento.getPdfTitulo().getId() != 0) {
                 Pdf pCedulaIden = pdfService.actualizar(elemento.getPdfCedulaIdent().getId(), cedulaIdent, false);
                 pCedulaIden.setTabla("vehiculo");
                 Pdf pdfCedulaIden = pdfDAO.save(pCedulaIden);
                 elemento.setPdfCedulaIdent(pdfCedulaIden);
-            }else {
+            } else {
                 Pdf u = pdfService.agregar(cedulaIdent, false);
                 u.setTabla("vehiculo");
                 Pdf pdf2 = pdfDAO.saveAndFlush(u);
@@ -251,12 +251,12 @@ public class VehiculoService {
                 elemento.setPdfVtoRuta(null);
             }
         } else {
-            if(elemento.getPdfTitulo().getId() != 0){
+            if (elemento.getPdfTitulo().getId() != 0) {
                 Pdf pVtoRuta = pdfService.actualizar(elemento.getPdfVtoRuta().getId(), vtoRuta, false);
                 pVtoRuta.setTabla("vehiculo");
                 Pdf pdfVtoRuta = pdfDAO.save(pVtoRuta);
                 elemento.setPdfVtoRuta(pdfVtoRuta);
-            }else {
+            } else {
                 Pdf u = pdfService.agregar(vtoRuta, false);
                 u.setTabla("vehiculo");
                 Pdf pdf3 = pdfDAO.saveAndFlush(u);
@@ -271,12 +271,12 @@ public class VehiculoService {
                 elemento.setPdfVtoInspTecnica(null);
             }
         } else {
-            if(elemento.getPdfTitulo().getId() != 0){
+            if (elemento.getPdfTitulo().getId() != 0) {
                 Pdf pVtoInspTecnica = pdfService.actualizar(elemento.getPdfVtoInspTecnica().getId(), vtoInspTecnica, false);
                 pVtoInspTecnica.setTabla("vehiculo");
                 Pdf pdfVtoInspTecnica = pdfDAO.save(pVtoInspTecnica);
                 elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
-            }else {
+            } else {
                 Pdf u = pdfService.agregar(vtoInspTecnica, false);
                 u.setTabla("vehiculo");
                 Pdf pdf4 = pdfDAO.saveAndFlush(u);
@@ -291,12 +291,12 @@ public class VehiculoService {
                 elemento.setPdfVtoSenasa(null);
             }
         } else {
-            if(elemento.getPdfTitulo().getId() != 0){
+            if (elemento.getPdfTitulo().getId() != 0) {
                 Pdf pVtoSenasa = pdfService.actualizar(elemento.getPdfVtoSenasa().getId(), vtoSenasa, false);
                 pVtoSenasa.setTabla("vehiculo");
                 Pdf pdfVtoSenasa = pdfDAO.save(pVtoSenasa);
                 elemento.setPdfVtoSenasa(pdfVtoSenasa);
-            }else {
+            } else {
                 Pdf u = pdfService.agregar(vtoSenasa, false);
                 u.setTabla("vehiculo");
                 Pdf pdf5 = pdfDAO.saveAndFlush(u);
@@ -311,12 +311,12 @@ public class VehiculoService {
                 elemento.setPdfHabBromat(null);
             }
         } else {
-            if(elemento.getPdfTitulo().getId() != 0){
+            if (elemento.getPdfTitulo().getId() != 0) {
                 Pdf pHabBromat = pdfService.actualizar(elemento.getPdfHabBromat().getId(), habBromat, false);
                 pHabBromat.setTabla("vehiculo");
                 Pdf pdfHabBromat = pdfDAO.save(pHabBromat);
                 elemento.setPdfHabBromat(pdfHabBromat);
-            }else {
+            } else {
                 Pdf u = pdfService.agregar(habBromat, false);
                 u.setTabla("vehiculo");
                 Pdf pdf6 = pdfDAO.saveAndFlush(u);
