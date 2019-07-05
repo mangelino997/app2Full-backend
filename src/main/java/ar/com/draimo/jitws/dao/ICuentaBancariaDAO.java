@@ -19,10 +19,15 @@ public interface ICuentaBancariaDAO extends JpaRepository<CuentaBancaria, Intege
     //Obtiene el siguiente id
     public CuentaBancaria findTopByOrderByIdDesc();
     
-    //Obtiene un listado por nombre
+    //Obtiene un listado por empresa
     @Query(value = "SELECT c.* FROM cuentabancaria c INNER JOIN sucursalbanco s on"
             + " c.idSucursalBanco=s.id INNER JOIN banco b on s.idBanco=b.id WHERE "
             + "idEmpresa=:idEmpresa ORDER BY b.nombre", nativeQuery = true)
     public List<CuentaBancaria> listarPorEmpresa(@Param("idEmpresa") int idEmpresa);
+    
+    //Obtiene un listado de cuentas bancarias que tengan chequeras
+    @Query(value = "SELECT b.* FROM cuentabancaria b INNER JOIN chequera c on"
+            + " b.id=c.idCuentaBancaria WHERE idEmpresa=:idEmpresa group by b.id", nativeQuery = true)
+    public List<CuentaBancaria> listarCuentasConChequeras(@Param("idEmpresa") int idEmpresa);
     
 }
