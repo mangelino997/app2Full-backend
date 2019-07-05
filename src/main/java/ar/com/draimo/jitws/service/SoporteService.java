@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.model.Soporte;
+import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -138,8 +139,11 @@ public class SoporteService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(Soporte elemento) {
-        String subopcion = subopcionDAO.findById(elemento.getSubopcion().getId()).get().getNombre();
-        elemento.setAlias(elemento.getId() + " - " + elemento.getFecha() + " - " + subopcion);
+        Subopcion s= subopcionDAO.findById(elemento.getSubopcion().getId()).get();
+        String subopcion = s.getNombre();
+        String submodulo = s.getSubmodulo().getNombre();
+        String modulo = s.getSubmodulo().getModulo().getNombre();
+        elemento.setAlias(elemento.getId() + " - " + modulo + " - " + submodulo + " - " + subopcion);
         elementoDAO.save(elemento);
     }
 

@@ -61,8 +61,14 @@ public class ChequeraController {
     //Obtiene una lista por CuentaBancaria
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public List<Chequera> listarPorCuentaBancaria(@PathVariable int idEmpresa) {
-        return elementoService.listarCuentasBancarias(idEmpresa);
+    public List<Chequera> listarPorEmpresa(@PathVariable int idEmpresa) {
+        return elementoService.listarPorEmpresa(idEmpresa);
+    }
+    //Obtiene una lista por CuentaBancaria
+    @GetMapping(value = URL + "/listarPorCuentaBancaria/{idCuentaBancaria}")
+    @ResponseBody
+    public List<Chequera> listarPorCuentaBancaria(@PathVariable int idCuentaBancaria) {
+        return elementoService.listarPorCuentaBancaria(idCuentaBancaria);
     }
     
     //Agrega un registro

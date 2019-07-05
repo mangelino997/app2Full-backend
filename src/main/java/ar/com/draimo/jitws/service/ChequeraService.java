@@ -39,8 +39,13 @@ public class ChequeraService {
     }
     
     //Obtiene una lista por CuentaBancaria
-    public List<Chequera> listarCuentasBancarias(int idEmpresa) {
+    public List<Chequera> listarPorEmpresa(int idEmpresa) {
             return elementoDAO.listarPorEmpresa(idEmpresa);
+    }
+    
+    //Obtiene una lista por CuentaBancaria
+    public List<Chequera> listarPorCuentaBancaria(int idCuentaBancaria) {
+            return elementoDAO.findByCuentaBancaria(cuentaBancariaDAO.findById(idCuentaBancaria).get());
     }
     
     //Obtiene una lista por CuentaBancaria

@@ -38,6 +38,11 @@ public class CuentaBancariaService {
         return elementoDAO.listarPorEmpresa(idEmpresa);
     }
 
+    //Obtiene una lista por empresa
+    public List<CuentaBancaria> listarCuentasConChequeras(int idEmpresa) {
+        return elementoDAO.listarCuentasConChequeras(idEmpresa);
+    }
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CuentaBancaria agregar(CuentaBancaria elemento) {
