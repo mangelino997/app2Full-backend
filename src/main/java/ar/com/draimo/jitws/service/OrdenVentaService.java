@@ -78,11 +78,11 @@ public class OrdenVentaService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(OrdenVenta elemento) {
+    public OrdenVenta actualizar(OrdenVenta elemento) {
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Actualiza la orden de venta
-        elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Elimina un registro
