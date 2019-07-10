@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -81,11 +82,11 @@ public class OrdenVentaController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVenta elemento) {
         try {
-            OrdenVenta a = elementoService.agregar(elemento);
+            OrdenVenta ordenVenta = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId()-1);
+            return new ResponseEntity(ordenVenta, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -103,11 +104,11 @@ public class OrdenVentaController {
     public ResponseEntity<?> actualizar(@RequestBody OrdenVenta elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            OrdenVenta ordenVenta = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            return new ResponseEntity(ordenVenta, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
