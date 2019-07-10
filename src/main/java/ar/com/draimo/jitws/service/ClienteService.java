@@ -43,7 +43,7 @@ public class ClienteService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("ordenventa", theFilter);
+                .addFilter("clienteordenventafiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(clientes);
         return mapper.readValue(string, Object.class);
     }
@@ -55,7 +55,7 @@ public class ClienteService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("ordenventa", theFilter);
+                .addFilter("clienteordenventafiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(clientes);
         return mapper.readValue(string, Object.class); 
     }
@@ -72,7 +72,7 @@ public class ClienteService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("ordenventa", theFilter);
+                .addFilter("clienteordenventafiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(clientes);
         return mapper.readValue(string, Object.class);
     }

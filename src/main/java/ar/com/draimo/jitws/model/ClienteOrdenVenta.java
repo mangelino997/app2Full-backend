@@ -18,8 +18,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@JsonFilter("clienteordenventa")
 @Table(name = "clienteordenventa")
+@JsonFilter("clienteordenventafiltro")
 public class ClienteOrdenVenta extends ObjetoGenerico {
 
     //Referencia a la clase cliente

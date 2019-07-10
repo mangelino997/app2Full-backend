@@ -205,7 +205,7 @@ public class Cliente extends ObjetoGenerico {
     private String alias;
    
     //Define la lista para las ordenes de venta del clientes
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "cliente")
     private List<ClienteOrdenVenta> clienteOrdenesVentas;
     
     //Getters y Setters de la clase
