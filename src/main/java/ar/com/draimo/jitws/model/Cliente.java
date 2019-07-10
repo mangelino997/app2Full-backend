@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -201,6 +202,9 @@ public class Cliente extends ObjetoGenerico {
     //Define el alias para las busquedas
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
+   
+    //Define la lista para las ordenes de venta del clientes
+    List<ClienteOrdenVenta> clienteOrdenesVentas;
     
     //Getters y Setters de la clase
 
@@ -522,6 +526,14 @@ public class Cliente extends ObjetoGenerico {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public List<ClienteOrdenVenta> getClienteOrdenesVentas() {
+        return clienteOrdenesVentas;
+    }
+
+    public void setClienteOrdenesVentas(List<ClienteOrdenVenta> clienteOrdenesVentas) {
+        this.clienteOrdenesVentas = clienteOrdenesVentas;
     }
     
 }
