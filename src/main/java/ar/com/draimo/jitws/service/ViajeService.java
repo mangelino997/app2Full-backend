@@ -111,163 +111,29 @@ public class ViajeService {
     @Transactional(rollbackFor = Exception.class)
     public Viaje agregar(Viaje elemento) {
         elemento = formatearStrings(elemento);
-        //Agrega el viaje propio
-        Viaje viajePropio = elementoDAO.saveAndFlush(elemento);
-        //Actualiza el viaje propio
-        elementoDAO.save(viajePropio);
-        //Verifica que la lista de tramos tenga elementos
-        if (elemento.getViajeTramos() != null) {
-            //Agrega los tramos del viaje
-            elemento.getViajeTramos().forEach((item) -> {
-                item.setViaje(viajePropio);
-                ViajeTramo viajePropioTramo = viajeTramoDAO.saveAndFlush(item);
-                //Agrega los dadores-destinatarios
-                item.getViajeTramoClientes().forEach((elem) -> {
-                    elem.setViajeTramo(viajePropioTramo);
-                    viajeTramoClienteDAO.saveAndFlush(elem);
-                });
-            });
-        }
-        //Verifica que la lista de combustibles tenga elementos
-        if (elemento.getViajeCombustibles() != null) {
-            //Agrega las ordenes de combustible del viaje
-            elemento.getViajeCombustibles().forEach((item) -> {
-                item.setViaje(viajePropio);
-                viajeCombustibleDAO.saveAndFlush(item);
-            });
-        }
-        //Verifica que la lista de efectivos tenga elementos
-        if (elemento.getViajeEfectivos() != null) {
-            //Agrega los adelantos de efectivo del viaje
-            elemento.getViajeEfectivos().forEach((item) -> {
-                item.setViaje(viajePropio);
-                viajeEfectivoDAO.saveAndFlush(item);
-            });
-        }
-        //Verifica que la lista de insumos tenga elementos
-        if (elemento.getViajeInsumos() != null) {
-            //Agrega las ordenes de insumo del viaje
-            elemento.getViajeInsumos().forEach((item) -> {
-                item.setViaje(viajePropio);
-                viajeInsumoDAO.saveAndFlush(item);
-            });
-        }
-        //Verifica que la lista de gatos tenga elementos
-        if (elemento.getViajeGastos() != null) {
-            //Agrega los gastos del viaje
-            elemento.getViajeGastos().forEach((item) -> {
-                item.setViaje(viajePropio);
-                viajeGastoDAO.saveAndFlush(item);
-            });
-        }
-        //Verifica que la lista de peajes tenga elementos
-        if (elemento.getViajePeajes() != null) {
-            //Agrega los peajes del viaje
-            elemento.getViajePeajes().forEach((item) -> {
-                item.setViaje(viajePropio);
-                viajePeajeDAO.saveAndFlush(item);
-            });
-        }
-        return viajePropio;
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(Viaje viaje) {
+    public Viaje establecerAlias(Viaje viaje) {
         viaje.setAlias(viaje.getId() + " - " + viaje.getFecha()
                 + " - " + viaje.getEmpresaEmision().getRazonSocial()
                 + " - " + viaje.getPersonal().getNombreCompleto());
-        elementoDAO.save(viaje);
+        return elementoDAO.save(viaje);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Viaje viajePropio) {
+    public Viaje actualizar(Viaje viaje) {
         //Formatea los strings
-        viajePropio = formatearStrings(viajePropio);
-        //Verifica que la lista de tramos tenga elementos
-        if (viajePropio.getViajeTramos() != null) {
-            //Agrega los tramos del viaje
-            for (ViajeTramo item : viajePropio.getViajeTramos()) {
-                item.setViaje(viajePropio);
-                ViajeTramo viajePropioTramo = viajeTramoDAO.save(item);
-                //Agrega los dadores-destinatarios
-                for (ViajeTramoCliente elem : item.getViajeTramoClientes()) {
-                    elem.setViajeTramo(viajePropioTramo);
-                    viajeTramoClienteDAO.saveAndFlush(elem);
-                }
-            }
-        }
-        //Verifica que la lista de combustibles tenga elementos
-        if (viajePropio.getViajeCombustibles() != null) {
-            //Agrega los combustibles del viaje
-            for (ViajeCombustible item : viajePropio.getViajeCombustibles()) {
-                if (item.getId() >= 0) {
-                    item.setViaje(viajePropio);
-                    viajeCombustibleDAO.save(item);
-                } else {
-                    item.setId(item.getId() * (-1));
-                    viajeCombustibleDAO.delete(item);
-                }
-            }
-        }
-        //Verifica que la lista de efectivos tenga elementos
-        if (viajePropio.getViajeEfectivos() != null) {
-            //Agrega los efectivos del viaje
-            for (ViajeEfectivo item : viajePropio.getViajeEfectivos()) {
-                if (item.getId() >= 0) {
-                    item.setViaje(viajePropio);
-                    viajeEfectivoDAO.save(item);
-                } else {
-                    item.setId(item.getId() * (-1));
-                    viajeEfectivoDAO.delete(item);
-                }
-            }
-        }
-        //Verifica que la lista de insumos tenga elementos
-        if (viajePropio.getViajeInsumos() != null) {
-            //Agrega los insumos del viaje
-            for (ViajeInsumo item : viajePropio.getViajeInsumos()) {
-                if (item.getId() >= 0) {
-                    item.setViaje(viajePropio);
-                    viajeInsumoDAO.save(item);
-                } else {
-                    item.setId(item.getId() * (-1));
-                    viajeInsumoDAO.delete(item);
-                }
-            }
-        }
-        //Verifica que la lista de gastos tenga elementos
-        if (viajePropio.getViajeGastos() != null) {
-            //Agrega los gastos del viaje
-            for (ViajeGasto item : viajePropio.getViajeGastos()) {
-                if (item.getId() >= 0) {
-                    item.setViaje(viajePropio);
-                    viajeGastoDAO.save(item);
-                } else {
-                    item.setId(item.getId() * (-1));
-                    viajeGastoDAO.delete(item);
-                }
-            }
-        }
-        //Verifica que la lista de peajes tenga elementos
-        if (viajePropio.getViajePeajes() != null) {
-            //Agrega los tramos del viaje
-            for (ViajePeaje item : viajePropio.getViajePeajes()) {
-                if (item.getId() >= 0) {
-                    item.setViaje(viajePropio);
-                    viajePeajeDAO.save(item);
-                } else {
-                    item.setId(item.getId() * (-1));
-                    viajePeajeDAO.delete(item);
-                }
-            }
-        }
-        viajePropio.setAlias(viajePropio.getId() + " - " + viajePropio.getFecha()
-                + " - " + viajePropio.getEmpresaEmision().getRazonSocial()
-                + " - " + viajePropio.getPersonal().getNombreCompleto());
-        //Actualiza el viaje propio
-        elementoDAO.save(viajePropio);
+        viaje = formatearStrings(viaje);
+        //Establece el alias
+        viaje.setAlias(viaje.getId() + " - " + viaje.getFecha()
+                + " - " + viaje.getEmpresaEmision().getRazonSocial()
+                + " - " + viaje.getPersonal().getNombreCompleto());
+        //Actualiza el viaje
+        return elementoDAO.save(viaje);
     }
 
     //Elimina un registro

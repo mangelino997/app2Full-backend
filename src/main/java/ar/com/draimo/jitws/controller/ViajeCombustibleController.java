@@ -58,7 +58,7 @@ public class ViajeCombustibleController {
     //Obtiene la lista de combustibles por Viaje
     @GetMapping(value = URL + "/listarCombustibles/{idViaje}")
     @ResponseBody
-    public List<ViajeCombustible> listarTramos(@PathVariable int idViaje) {
+    public List<ViajeCombustible> listarCombustibles(@PathVariable int idViaje) {
         return elementoService.listarCombustibles(idViaje);
     }
     
@@ -68,7 +68,7 @@ public class ViajeCombustibleController {
         try {
             ViajeCombustible a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -90,7 +90,7 @@ public class ViajeCombustibleController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

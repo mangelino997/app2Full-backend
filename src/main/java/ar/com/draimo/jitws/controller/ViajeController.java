@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.service.ViajeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -73,13 +74,13 @@ public class ViajeController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Viaje elemento) {
         try {
-            Viaje a = elementoService.agregar(elemento);
+            Viaje v = elementoService.agregar(elemento);
             //Actualiza inmediatamente el registro para establecer el alias
-            elementoService.establecerAlias(a);
+            Viaje viaje = elementoService.establecerAlias(v);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return new ResponseEntity(viaje, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -97,11 +98,11 @@ public class ViajeController {
     public ResponseEntity<?> actualizar(@RequestBody Viaje elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            Viaje viaje = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            return new ResponseEntity(viaje, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

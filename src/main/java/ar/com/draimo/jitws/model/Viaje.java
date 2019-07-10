@@ -46,32 +46,32 @@ public class Viaje extends ObjetoGenerico {
     
     //Referencia a la clase Vehiculo
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idVehiculo", nullable = false)
+    @JoinColumn(name = "idVehiculo", nullable = true)
     private Vehiculo vehiculo;
     
     //Referencia a la clase Personal
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idPersonal", nullable = false)
+    @JoinColumn(name = "idPersonal", nullable = true)
     private Personal personal;
     
     //Referencia a la clase Vehiculo Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idVehiculoProveedor", nullable = false)
+    @JoinColumn(name = "idVehiculoProveedor", nullable = true)
     private VehiculoProveedor vehiculoProveedor;
     
     //Referencia a la clase ChoferProveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idChoferProveedor", nullable = false)
+    @JoinColumn(name = "idChoferProveedor", nullable = true)
     private ChoferProveedor choferProveedor;
     
     //Referencia a la clase Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idProveedor", nullable = false)
+    @JoinColumn(name = "idProveedor", nullable = true)
     private Proveedor proveedor;
     
     //Referencia a la clase Afip Condicion de Iva Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipCondicionIvaProveedor", nullable = false)
+    @JoinColumn(name = "idAfipCondicionIvaProveedor", nullable = true)
     private AfipCondicionIva afipCondicionIvaProveedor;
     
     //Define si el remolque es propio
