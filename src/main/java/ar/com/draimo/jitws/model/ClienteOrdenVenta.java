@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import javax.persistence.CascadeType;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
  */
 
 @Entity
+@JsonFilter("clienteordenventa")
 @Table(name = "clienteordenventa")
 public class ClienteOrdenVenta extends ObjetoGenerico {
 

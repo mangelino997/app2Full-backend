@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -204,7 +205,8 @@ public class Cliente extends ObjetoGenerico {
     private String alias;
    
     //Define la lista para las ordenes de venta del clientes
-    List<ClienteOrdenVenta> clienteOrdenesVentas;
+    @OneToMany
+    private List<ClienteOrdenVenta> clienteOrdenesVentas;
     
     //Getters y Setters de la clase
 

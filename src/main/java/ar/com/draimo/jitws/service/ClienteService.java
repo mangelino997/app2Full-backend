@@ -3,6 +3,11 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.model.Cliente;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,22 +37,44 @@ public class ClienteService {
     }
     
     //Obtiene una lista completa
-    public List<Cliente> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<Cliente> clientes = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("ordenventa", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clientes);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene por id
-    public Cliente obtenerPorId(int id) {
-        return elementoDAO.findById(id).get();
+    public Object obtenerPorId(int id) throws IOException {
+        Cliente clientes = elementoDAO.findById(id).get();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("ordenventa", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clientes);
+        return mapper.readValue(string, Object.class); 
     }
     
     //Obtiene una lista por alias
-    public List<Cliente> listarPorAlias(String alias) {
+    public Object listarPorAlias(String alias) throws IOException {
+        List<Cliente> clientes;
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            clientes= elementoDAO.findAll();
         } else {
-            return elementoDAO.findByAliasContaining(alias);
+            clientes= elementoDAO.findByAliasContaining(alias);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("ordenventa", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clientes);
+        return mapper.readValue(string, Object.class);
     }
     
     //Agrega un cliente eventual
