@@ -66,9 +66,13 @@ public class InsumoProducto extends ObjetoGenerico {
     @Column(name = "precioUnitarioVenta", nullable = true)
     private BigDecimal precioUnitarioVenta;
     
-    //Define el coeficiente ITC
-    @Column(name = "coeficienteITC", nullable = true)
-    private BigDecimal coeficienteITC;
+    //Define el itc por litro
+    @Column(name = "itcPorLitro", nullable = true)
+    private BigDecimal itcPorLitro;
+    
+    //Define el itc neto
+    @Column(name = "itcNeto", nullable = true)
+    private BigDecimal itcNeto;
     
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -125,7 +129,7 @@ public class InsumoProducto extends ObjetoGenerico {
         this.esAsignable = esAsignable;
     }
 
-    public boolean isEsSerializable() {
+    public boolean getEsSerializable() {
         return esSerializable;
     }
 
@@ -133,7 +137,7 @@ public class InsumoProducto extends ObjetoGenerico {
         this.esSerializable = esSerializable;
     }
 
-    public boolean isEsCritico() {
+    public boolean getEsCritico() {
         return esCritico;
     }
 
@@ -165,14 +169,22 @@ public class InsumoProducto extends ObjetoGenerico {
         this.precioUnitarioVenta = precioUnitarioVenta;
     }
 
-    public BigDecimal getCoeficienteITC() {
-        return coeficienteITC;
+    public BigDecimal getItcPorLitro() {
+        return itcPorLitro;
     }
 
-    public void setCoeficienteITC(BigDecimal coeficienteITC) {
-        this.coeficienteITC = coeficienteITC;
+    public void setItcPorLitro(BigDecimal itcPorLitro) {
+        this.itcPorLitro = itcPorLitro;
     }
 
+    public BigDecimal getItcNeto() {
+        return itcNeto;
+    }
+
+    public void setItcNeto(BigDecimal itcNeto) {
+        this.itcNeto = itcNeto;
+    }
+    
     public Usuario getUsuario() {
         return usuario;
     }

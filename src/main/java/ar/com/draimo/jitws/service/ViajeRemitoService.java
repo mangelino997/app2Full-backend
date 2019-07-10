@@ -1,9 +1,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ISucursalDAO;
-import ar.com.draimo.jitws.dao.IViajePropioTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
-import ar.com.draimo.jitws.dao.IViajeTerceroTramoDAO;
 import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.ViajeRemito;
@@ -13,6 +11,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 
 /**
  * Servicio de ViajePropio
@@ -32,11 +31,7 @@ public class ViajeRemitoService {
     
     //Define la referencia al dao viaje propio tramo
     @Autowired
-    IViajePropioTramoDAO viajePropioTramoDAO;
-    
-    //Define la referencia al dao viaje tercero tramo
-    @Autowired
-    IViajeTerceroTramoDAO viajeTerceroTramoDAO;
+    IViajeTramoDAO viajePropioTramoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -95,7 +90,7 @@ public class ViajeRemitoService {
     
     //Obtiene un listado por filtro
     public List<ViajeRemito> listarPorFiltros(ViajeRemitoDTO viajeRemito) {
-        List<ViajeRemito> remitos= new ArrayList<>();
+        List<ViajeRemito> remitos;
             //Retorna los datos
         remitos= elementoDAO.listarPorFiltros(viajeRemito.getFechaDesde(), 
                 viajeRemito.getFechaHasta(),viajeRemito.getIdSucursalIngreso(),
