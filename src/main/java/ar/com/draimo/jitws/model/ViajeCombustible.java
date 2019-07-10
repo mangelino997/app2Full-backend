@@ -32,7 +32,7 @@ public class ViajeCombustible extends ObjetoGenerico {
     //Referencia a la clase Reparto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idReparto", nullable = true)
-    private RepartoPropio reparto;
+    private Reparto reparto;
     
     //Referencia a la clase Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -94,11 +94,11 @@ public class ViajeCombustible extends ObjetoGenerico {
         this.viaje = viaje;
     }
 
-    public RepartoPropio getReparto() {
+    public Reparto getReparto() {
         return reparto;
     }
 
-    public void setReparto(RepartoPropio reparto) {
+    public void setReparto(Reparto reparto) {
         this.reparto = reparto;
     }
 

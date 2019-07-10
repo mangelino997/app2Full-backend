@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.RepartoTerceroComprobante;
-import ar.com.draimo.jitws.service.RepartoTerceroComprobanteService;
+import ar.com.draimo.jitws.model.Reparto;
+import ar.com.draimo.jitws.service.RepartoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase RepartoTerceroComprobante Controller
+ * Clase Reparto Controller
  * @author blas
  */
 
 @RestController
-public class RepartoTerceroComprobanteController {
+public class RepartoController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/repartotercerocomprobante";
+    private final String URL = RutaConstant.URL_BASE + "/reparto";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/repartotercerocomprobante";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/reparto";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -39,7 +39,7 @@ public class RepartoTerceroComprobanteController {
     
     //Crea una instancia del servicio
     @Autowired
-    RepartoTerceroComprobanteService elementoService;
+    RepartoService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,45 +51,40 @@ public class RepartoTerceroComprobanteController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<RepartoTerceroComprobante> listar() {
+    public List<Reparto> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene la lista por RepartoTercero
-    @GetMapping(value = URL + "/listarComprobantes/{idRepartoTercero}")
+    //Obtiene la lista por estaCerrada
+    @GetMapping(value = URL + "/listarPorEstaCerrada/{estaCerrada}")
     @ResponseBody
-    public List<RepartoTerceroComprobante> listarComprobantes(@PathVariable int idRepartoTercero) {
-        return elementoService.listarComprobantes(idRepartoTercero);
+    public List<Reparto> listarPorEstaCerrada(@PathVariable boolean estaCerrada) {
+        return elementoService.listarPorEstaCerrada(estaCerrada);
     }
     
-    //Obtiene la lista por RepartoTercero
-    @GetMapping(value = URL + "/quitarComprobante/{id}")
-    @ResponseBody
-    public ResponseEntity<?> quitarComprobante(int id) {
-        try {
-            int rt = elementoService.quitarComprobante(id);
-            //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes",
-                    elementoService.listarComprobantes(rt));
-            //Retorna mensaje de eliminado con exito
-            return MensajeRespuesta.eliminado();
-        } catch (Exception e) {
-            //Retorna mensaje de error
+    //Cierra un repartopropio
+    @PutMapping(value = URL + "/cerrarReparto/{idReparto}")
+    public ResponseEntity<?> cerrarReparto(@PathVariable int idReparto) {
+        boolean r = elementoService.cerrarReparto(idReparto);
+        if (r == true) {
+            template.convertAndSend(TOPIC + "/lista", 
+                    elementoService.listarPorEstaCerrada(false));
+            return MensajeRespuesta.cerrado();
+        } else{
             return MensajeRespuesta.error();
         }
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody RepartoTerceroComprobante elemento) {
+    public ResponseEntity<?> agregar(@RequestBody Reparto elemento) {
         try {
-            RepartoTerceroComprobante a = elementoService.agregar(elemento);
+            Reparto a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes", 
-                    elementoService.listarComprobantes(elemento.getRepartoTercero().getId()));
-            //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
-            return a.getRepartoTercero()!=null ? MensajeRespuesta.agregado(a.getId()) 
-                    : MensajeRespuesta.registroNoExistente();
+            template.convertAndSend(TOPIC + "/listarPorEstaCerrada",
+                    elementoService.listarPorEstaCerrada(false));
+            //Retorna mensaje de agregado con exito
+            return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -104,7 +99,7 @@ public class RepartoTerceroComprobanteController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody RepartoTerceroComprobante elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody Reparto elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -128,12 +123,17 @@ public class RepartoTerceroComprobanteController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody RepartoTerceroComprobante elemento) {
+    @DeleteMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
-            //Retorna mensaje de eliminado con exito
-            return MensajeRespuesta.eliminado();
+            boolean a = elementoService.eliminar(id);
+            if(a==true){
+                template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
+                        elementoService.listarPorEstaCerrada(a));
+                return MensajeRespuesta.eliminado();
+            } else {
+                return MensajeRespuesta.error();
+            }
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

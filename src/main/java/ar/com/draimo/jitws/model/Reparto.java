@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,19 +16,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Clase Reparto Propio
+ * Clase Reparto
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
 @Entity
-@Table(name = "repartopropio")
-public class RepartoPropio extends ObjetoGenerico {
+@Table(name = "reparto")
+public class Reparto extends ObjetoGenerico {
     
     //Referencia a la claase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idEmpresa", nullable = false)
-    private Empresa empresa;
+    @JoinColumn(name = "idEmpresaEmision", nullable = false)
+    private Empresa empresaEmision;
     
     //Referencia a la clase sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -43,7 +43,7 @@ public class RepartoPropio extends ObjetoGenerico {
     //Define fechaRegistracion
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaRegistracion", nullable = false)  
-    private LocalDateTime fechaRegistracion;
+    private Timestamp fechaRegistracion;
     
     //Define fechaSalida
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
@@ -98,19 +98,53 @@ public class RepartoPropio extends ObjetoGenerico {
     @Column(name = "horaRegreso", nullable = true)
     private Time horaRegreso;
     
+    //Define si es reparto propio
+    @Column(name = "esRepartoPropio", nullable = false)
+    private boolean esRepartoPropio;
+    
+    //Referencia a la clase VehiculoProveedor
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVehiculoProveedor", nullable = true)
+    private VehiculoProveedor vehiculoProveedor;
+    
+    //Referencia a la clase VehiculoRemolqueProveedor
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVehiculoRemolqueProveedor", nullable = true)
+    private VehiculoProveedor vehiculoRemolqueProveedor;
+    
+    //Referencia a la clase ChoferProveedor
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idChoferProveedor", nullable = true)
+    private ChoferProveedor choferProveedor;
+    
+    //Referencia a la clase Proveedor
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idProveedor", nullable = true)
+    private Proveedor proveedor;
+    
+    //Referencia a la clase AfipCondicionIva
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idAfipCondicionIvaProveedor", nullable = true)
+    private AfipCondicionIva afipCondicionIvaProveedor;
+    
+    //Referencia a la clase Usuario
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioMod", nullable = true)
+    private Usuario usuarioMod;
+    
     //Define referencia a personal
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="repartoPropio")
-    private List<RepartoPropioPersonal> acompaniantes;
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="reparto")
+    private List<RepartoPersonal> acompaniantes;
     
     //Getters y Setters de la clase
 
-    public Empresa getEmpresa() {
-        return empresa;
+    public Empresa getEmpresaEmision() {
+        return empresaEmision;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setEmpresaEmision(Empresa empresaEmision) {
+        this.empresaEmision = empresaEmision;
     }
 
     public Sucursal getSucursal() {
@@ -129,11 +163,11 @@ public class RepartoPropio extends ObjetoGenerico {
         this.tipoComprobante = tipoComprobante;
     }
 
-    public LocalDateTime getFechaRegistracion() {
+    public Timestamp getFechaRegistracion() {
         return fechaRegistracion;
     }
 
-    public void setFechaRegistracion(LocalDateTime fechaRegistracion) {
+    public void setFechaRegistracion(Timestamp fechaRegistracion) {
         this.fechaRegistracion = fechaRegistracion;
     }
 
@@ -201,7 +235,7 @@ public class RepartoPropio extends ObjetoGenerico {
         this.usuarioAlta = usuarioAlta;
     }
 
-    public boolean isEstaCerrada() {
+    public boolean getEstaCerrada() {
         return estaCerrada;
     }
 
@@ -225,12 +259,68 @@ public class RepartoPropio extends ObjetoGenerico {
         this.horaRegreso = horaRegreso;
     }
 
-    public List<RepartoPropioPersonal> getAcompaniantes() {
+    public boolean isEsRepartoPropio() {
+        return esRepartoPropio;
+    }
+
+    public void setEsRepartoPropio(boolean esRepartoPropio) {
+        this.esRepartoPropio = esRepartoPropio;
+    }
+
+    public VehiculoProveedor getVehiculoProveedor() {
+        return vehiculoProveedor;
+    }
+
+    public void setVehiculoProveedor(VehiculoProveedor vehiculoProveedor) {
+        this.vehiculoProveedor = vehiculoProveedor;
+    }
+
+    public VehiculoProveedor getVehiculoRemolqueProveedor() {
+        return vehiculoRemolqueProveedor;
+    }
+
+    public void setVehiculoRemolqueProveedor(VehiculoProveedor vehiculoRemolqueProveedor) {
+        this.vehiculoRemolqueProveedor = vehiculoRemolqueProveedor;
+    }
+
+    public ChoferProveedor getChoferProveedor() {
+        return choferProveedor;
+    }
+
+    public void setChoferProveedor(ChoferProveedor choferProveedor) {
+        this.choferProveedor = choferProveedor;
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public AfipCondicionIva getAfipCondicionIvaProveedor() {
+        return afipCondicionIvaProveedor;
+    }
+
+    public void setAfipCondicionIvaProveedor(AfipCondicionIva afipCondicionIvaProveedor) {
+        this.afipCondicionIvaProveedor = afipCondicionIvaProveedor;
+    }
+
+    public Usuario getUsuarioMod() {
+        return usuarioMod;
+    }
+
+    public void setUsuarioMod(Usuario usuarioMod) {
+        this.usuarioMod = usuarioMod;
+    }
+
+    public List<RepartoPersonal> getAcompaniantes() {
         return acompaniantes;
     }
 
-    public void setAcompaniantes(List<RepartoPropioPersonal> acompaniantes) {
+    public void setAcompaniantes(List<RepartoPersonal> acompaniantes) {
         this.acompaniantes = acompaniantes;
     }
-
+    
 }

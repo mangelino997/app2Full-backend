@@ -8,20 +8,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase reparto propio personal
+ * Clase reparto personal
  * Mapea con la tabla en la base de datos
  * @author blas
  */
 
 @Entity
-@Table(name = "repartopropiopersonal")
-public class RepartoPropioPersonal extends ObjetoGenerico {
+@Table(name = "repartopersonal")
+public class RepartoPersonal extends ObjetoGenerico {
     
-    //Referencia a la clase reparto propio
+    //Referencia a la clase reparto
     @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRepartoPropio", nullable = false)
-    private RepartoPropio repartoPropio;
+    @JoinColumn(name = "idReparto", nullable = false)
+    private Reparto reparto;
     
     //Referencia a la clase personal
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -30,12 +30,12 @@ public class RepartoPropioPersonal extends ObjetoGenerico {
     
     //Getters y Setters de la clase
 
-    public RepartoPropio getRepartoPropio() {
-        return repartoPropio;
+    public Reparto getReparto() {
+        return reparto;
     }
 
-    public void setRepartoPropio(RepartoPropio repartoPropio) {
-        this.repartoPropio = repartoPropio;
+    public void setReparto(Reparto reparto) {
+        this.reparto = reparto;
     }
 
     public Personal getPersonal() {

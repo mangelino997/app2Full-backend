@@ -7,19 +7,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase reparto propio comprobante
+ * Clase reparto comprobante
  * Mapea con la tabla en la base de datos
  * @author blas
  */
 
 @Entity
-@Table(name = "repartopropiocomprobante")
-public class RepartoPropioComprobante extends ObjetoGenerico {
+@Table(name = "repartocomprobante")
+public class RepartoComprobante extends ObjetoGenerico {
     
     //Referencia a la clase reparto propio
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idRepartoPropio", nullable = false)
-    private RepartoPropio repartoPropio;
+    @JoinColumn(name = "idReparto", nullable = false)
+    private Reparto reparto;
     
     //Referencia a la clase VentaComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -38,12 +38,12 @@ public class RepartoPropioComprobante extends ObjetoGenerico {
     
     //Getters y Setters de la clase
 
-    public RepartoPropio getRepartoPropio() {
-        return repartoPropio;
+    public Reparto getReparto() {
+        return reparto;
     }
 
-    public void setRepartoPropio(RepartoPropio repartoPropio) {
-        this.repartoPropio = repartoPropio;
+    public void setReparto(Reparto reparto) {
+        this.reparto = reparto;
     }
 
     public VentaComprobante getVentaComprobante() {

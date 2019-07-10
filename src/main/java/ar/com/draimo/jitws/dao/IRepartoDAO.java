@@ -1,25 +1,25 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.RepartoPropio;
+import ar.com.draimo.jitws.model.Reparto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * Interfaz DAO Reparto Propio
+ * Interfaz DAO Reparto
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface IRepartoPropioDAO extends JpaRepository<RepartoPropio, Integer> {
+public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
     
     //Obtiene el siguiente id
-    public RepartoPropio findTopByOrderByIdDesc();
+    public Reparto findTopByOrderByIdDesc();
     
     //Obtiene u listado por estaCerrada falso
-    @Query(value = "SELECT * FROM repartopropio WHERE estaCerrada=:estaCerrada", nativeQuery = true )
-    public List<RepartoPropio> listarPorEstaCerrada(@Param("estaCerrada") boolean estaCerrada);
+    @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada", nativeQuery = true )
+    public List<Reparto> listarPorEstaCerrada(@Param("estaCerrada") boolean estaCerrada);
     
 }
