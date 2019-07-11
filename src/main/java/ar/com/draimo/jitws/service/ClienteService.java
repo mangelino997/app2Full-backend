@@ -1,8 +1,11 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
+import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
+import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.model.Cliente;
+import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -29,6 +32,14 @@ public class ClienteService {
     //Define la referencia al dao CondicionVenta
     @Autowired
     ICondicionVentaDAO condicionVentaDAO;
+    
+    //Define la referencia al dao ClienteOrdenVentaDAO
+    @Autowired
+    IClienteOrdenVentaDAO clienteOrdenVentaDAO;
+    
+    //Define la referencia al dao TipoTarifaDAO
+    @Autowired
+    ITipoTarifaDAO tipoTarifaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -94,7 +105,18 @@ public class ClienteService {
     public Cliente agregar(Cliente elemento) {
         elemento = formatearString(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        return elementoDAO.saveAndFlush(elemento);
+        Cliente cliente = elementoDAO.saveAndFlush(elemento);
+        //Agrega la lista de ordenes de venta del cliente
+        if(elemento.getClienteOrdenesVentas() != null) {
+            for(ClienteOrdenVenta clienteOrdenVenta : elemento.getClienteOrdenesVentas()) {
+                clienteOrdenVenta.setCliente(cliente);
+                clienteOrdenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
+                clienteOrdenVenta.setUsuarioAlta(elemento.getUsuarioAlta());
+                clienteOrdenVenta.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
+                clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
+            }
+        }
+        return cliente;
     }
     
     //Actualiza un registro

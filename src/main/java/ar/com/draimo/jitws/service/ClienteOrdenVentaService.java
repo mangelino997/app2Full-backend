@@ -3,9 +3,16 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
+import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVenta;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +38,10 @@ public class ClienteOrdenVentaService {
     @Autowired
     IClienteOrdenVentaDAO elementoDAO;
     
+    //Define la referencia al dao TipoTarifaDAO
+    @Autowired
+    ITipoTarifaDAO tipoTarifaDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ClienteOrdenVenta elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -43,9 +54,15 @@ public class ClienteOrdenVentaService {
     }
     
     //Obtiene una lista por Cliente
-    public List<ClienteOrdenVenta> listarPorCliente(int idCliente) {
-        Cliente cliente = clienteDAO.findById(idCliente).get();
-        return elementoDAO.findByCliente(cliente);
+    public Object listarPorCliente(int idCliente) throws IOException {
+        List<ClienteOrdenVenta> clienteOrdenesVentas = elementoDAO.findByCliente(clienteDAO.findById(idCliente).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clienteOrdenesVentas);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por OrdenVenta
@@ -64,19 +81,22 @@ public class ClienteOrdenVentaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ClienteOrdenVenta agregar(ClienteOrdenVenta elemento) {
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        elemento.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ClienteOrdenVenta elemento) {
+        elemento.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
         elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(ClienteOrdenVenta elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
     
 }

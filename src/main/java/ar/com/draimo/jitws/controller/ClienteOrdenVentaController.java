@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.service.ClienteOrdenVentaService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -58,7 +59,7 @@ public class ClienteOrdenVentaController {
     //Obtiene una lista por Cliente
     @GetMapping(value = URL + "/listarPorCliente/{id}")
     @ResponseBody
-    public List<ClienteOrdenVenta> listarPorCliente(@PathVariable int id) {
+    public Object listarPorCliente(@PathVariable int id) throws IOException {
         return elementoService.listarPorCliente(id);
     }
     
@@ -82,7 +83,7 @@ public class ClienteOrdenVentaController {
         try {
             ClienteOrdenVenta a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -104,7 +105,7 @@ public class ClienteOrdenVentaController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -123,10 +124,10 @@ public class ClienteOrdenVentaController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody ClienteOrdenVenta elemento) {
+    @DeleteMapping(value = URL + "/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
-            elementoService.eliminar(elemento);
+            elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch(Exception e) {
