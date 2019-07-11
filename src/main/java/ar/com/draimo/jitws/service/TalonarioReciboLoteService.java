@@ -53,14 +53,11 @@ public class TalonarioReciboLoteService {
         Date fecha = new Date(new java.util.Date().getTime());
         elemento.setFechaAlta(fecha);
         List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getDesde());
+                elemento.getDesde(), elemento.getPuntoVenta(), elemento.getLetra());
         List<TalonarioReciboLote> hastaLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getHasta());
-        if(!desdeLista.isEmpty()) {
-            throw new Exception("'Desde' ya pertenece a otro talonario");
-        }
-        if(!hastaLista.isEmpty()) {
-            throw new Exception("'Hasta' ya pertenece a otro talonario");
+                elemento.getHasta(), elemento.getPuntoVenta(), elemento.getLetra());
+        if(!desdeLista.isEmpty() || !hastaLista.isEmpty()) {
+            throw new Exception("'Desde' y/ó 'Hasta' ya pertenecen a otro talonario");
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -72,14 +69,11 @@ public class TalonarioReciboLoteService {
             throw new Exception("'Hasta' no puede ser menor a 'Desde'");
         }
         List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getDesde());
+                elemento.getDesde(), elemento.getPuntoVenta(), elemento.getLetra());
         List<TalonarioReciboLote> hastaLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getHasta());
-        if(!desdeLista.isEmpty()) {
-            throw new Exception("'Desde' ya pertenece a otro talonario");
-        }
-        if(!hastaLista.isEmpty()) {
-            throw new Exception("'Hasta' ya pertenece a otro talonario");
+                elemento.getHasta(), elemento.getPuntoVenta(), elemento.getLetra());
+        if(!desdeLista.isEmpty() || !hastaLista.isEmpty()) {
+            throw new Exception("'Desde' y/ó 'Hasta' ya pertenecen a otro talonario");
         }
         elementoDAO.save(elemento);
     }

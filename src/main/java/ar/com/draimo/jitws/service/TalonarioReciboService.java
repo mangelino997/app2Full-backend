@@ -44,6 +44,9 @@ public class TalonarioReciboService {
         if (!hastaLista.isEmpty()) {
             throw new Exception("'Hasta' ya pertenece a otro talonario");
         }
+        if (elemento.getHasta()> elemento.getTalonarioReciboLote().getHasta()) {
+            throw new Exception("'Desde - Hasta' supera el rango de 'Talonario Recibo Lote'");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
