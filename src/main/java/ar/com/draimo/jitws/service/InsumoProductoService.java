@@ -60,6 +60,10 @@ public class InsumoProductoService {
     @Transactional(rollbackFor = Exception.class)
     public InsumoProducto agregar(InsumoProducto elemento) {
         elemento = formatearStrings(elemento);
+        elemento.setPrecioUnitarioVenta(new BigDecimal(0));
+        elemento.setPrecioUnitarioViaje(new BigDecimal(0));
+        elemento.setItcNeto(new BigDecimal(0));
+        elemento.setItcPorLitro(new BigDecimal(0));
         return elementoDAO.save(elemento);
     }
     
