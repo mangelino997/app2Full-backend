@@ -168,7 +168,7 @@ public class PersonalService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Personal agregar(String elementoString, MultipartFile foto, MultipartFile licConducir,
-            MultipartFile linti, MultipartFile libSanidad) throws IOException {
+            MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
         if (!foto.getOriginalFilename().equals("")) {
@@ -203,13 +203,29 @@ public class PersonalService {
         } else {
             elemento.setPdfLibSanidad(null);
         }
+        if (!dni.getOriginalFilename().equals("")) {
+            Pdf p4 = pdfService.agregar(dni, false);
+            p4.setTabla("personal");
+            Pdf pdf4 = pdfDAO.saveAndFlush(p4);
+            elemento.setPdfDni(pdf4);
+        } else {
+            elemento.setPdfDni(null);
+        }
+        if (!altaTemprana.getOriginalFilename().equals("")) {
+            Pdf p5 = pdfService.agregar(altaTemprana, false);
+            p5.setTabla("personal");
+            Pdf pdf5 = pdfDAO.saveAndFlush(p5);
+            elemento.setPdfAltaTemprana(pdf5);
+        } else {
+            elemento.setPdfAltaTemprana(null);
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(String elementoString, MultipartFile foto, MultipartFile licConducir,
-            MultipartFile linti, MultipartFile libSanidad) throws IOException {
+            MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         if (foto.getOriginalFilename().equals("")) {
             if (elemento.getFoto().getId() != 0) {
@@ -289,6 +305,46 @@ public class PersonalService {
                 p3.setTabla("personal");
                 Pdf pdf3 = pdfDAO.saveAndFlush(p3);
                 elemento.setPdfLibSanidad(pdf3);
+            }
+        }
+        if (dni.getOriginalFilename().equals("")) {
+            if (elemento.getPdfDni().getId() != 0) {
+                pdfDAO.deleteById(elemento.getPdfDni().getId());
+                elemento.setPdfDni(null);
+            } else {
+                elemento.setPdfDni(null);
+            }
+        } else {
+            if(elemento.getPdfDni().getId() != 0) {
+                Pdf p4 = pdfService.actualizar(elemento.getPdfDni().getId(), dni, false);
+                p4.setTabla("personal");
+                Pdf pdf4 = pdfDAO.save(p4);
+                elemento.setPdfDni(pdf4);
+            } else {
+                Pdf p4 = pdfService.agregar(dni, false);
+                p4.setTabla("personal");
+                Pdf pdf4 = pdfDAO.saveAndFlush(p4);
+                elemento.setPdfDni(pdf4);
+            }
+        }
+        if (altaTemprana.getOriginalFilename().equals("")) {
+            if (elemento.getPdfAltaTemprana().getId() != 0) {
+                pdfDAO.deleteById(elemento.getPdfAltaTemprana().getId());
+                elemento.setPdfAltaTemprana(null);
+            } else {
+                elemento.setPdfAltaTemprana(null);
+            }
+        } else {
+            if(elemento.getPdfAltaTemprana().getId() != 0) {
+                Pdf p5 = pdfService.actualizar(elemento.getPdfAltaTemprana().getId(), altaTemprana, false);
+                p5.setTabla("personal");
+                Pdf pdf5 = pdfDAO.save(p5);
+                elemento.setPdfAltaTemprana(pdf5);
+            } else {
+                Pdf p5 = pdfService.agregar(altaTemprana, false);
+                p5.setTabla("personal");
+                Pdf pdf5 = pdfDAO.saveAndFlush(p5);
+                elemento.setPdfAltaTemprana(pdf5);
             }
         }
         establecerAlias(elemento);
