@@ -111,11 +111,12 @@ public class PersonalController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("personal") String elementoString,
             @RequestPart("foto") MultipartFile foto, @RequestPart("licConducir") MultipartFile licConducir,
-             @RequestPart("linti") MultipartFile linti, @RequestPart("libSanidad") MultipartFile libSanidad) {
+             @RequestPart("linti") MultipartFile linti, @RequestPart("libSanidad") MultipartFile libSanidad,
+             @RequestPart("dni") MultipartFile dni, @RequestPart("altaTemprana") MultipartFile altaTemprana) {
         try {
             //Agrega el registro
              Personal personal = elementoService.agregar(elementoString, foto,
-                    licConducir, linti, libSanidad);
+                    licConducir, linti, libSanidad, dni, altaTemprana);
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(personal);
             //Envia la nueva lista a los usuarios subscriptos
@@ -141,10 +142,12 @@ public class PersonalController {
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestPart("personal") String elementoString,
             @RequestPart("foto") MultipartFile foto, @RequestPart("licConducir") MultipartFile licConducir,
-             @RequestPart("linti") MultipartFile linti, @RequestPart("libSanidad") MultipartFile libSanidad) {
+             @RequestPart("linti") MultipartFile linti, @RequestPart("libSanidad") MultipartFile libSanidad,
+             @RequestPart("dni") MultipartFile dni, @RequestPart("altaTemprana") MultipartFile altaTemprana) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elementoString, foto, licConducir, linti,libSanidad);
+            elementoService.actualizar(elementoString, foto, licConducir, linti,
+                    libSanidad, dni, altaTemprana);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito

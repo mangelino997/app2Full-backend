@@ -450,6 +450,16 @@ public class Personal extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPdfLibSanidad", nullable = true)
     private Pdf pdfLibSanidad;
+    
+    //Referencia a la clase pdf (dni)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfDni", nullable = true)
+    private Pdf pdfDni;
+    
+    //Referencia a la clase pdf (AltaTemprana)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfAltaTemprana", nullable = true)
+    private Pdf pdfAltaTemprana;
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -1194,6 +1204,22 @@ public class Personal extends ObjetoGenerico {
 
     public void setPdfLibSanidad(Pdf pdfLibSanidad) {
         this.pdfLibSanidad = pdfLibSanidad;
+    }
+
+    public Pdf getPdfDni() {
+        return pdfDni;
+    }
+
+    public void setPdfDni(Pdf pdfDni) {
+        this.pdfDni = pdfDni;
+    }
+
+    public Pdf getPdfAltaTemprana() {
+        return pdfAltaTemprana;
+    }
+
+    public void setPdfAltaTemprana(Pdf pdfAltaTemprana) {
+        this.pdfAltaTemprana = pdfAltaTemprana;
     }
 
 }
