@@ -38,14 +38,14 @@ public class ViajeTramoClienteService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeTramoCliente elemento) {
-        elementoDAO.save(elemento);
+    public ViajeTramoCliente actualizar(ViajeTramoCliente elemento) {
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(ViajeTramoCliente elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
 
 }
