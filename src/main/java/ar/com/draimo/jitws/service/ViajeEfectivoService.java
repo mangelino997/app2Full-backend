@@ -49,9 +49,9 @@ public class ViajeEfectivoService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeEfectivo elemento) {
+    public ViajeEfectivo actualizar(ViajeEfectivo elemento) {
         elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro

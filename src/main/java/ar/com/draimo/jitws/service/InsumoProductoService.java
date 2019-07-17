@@ -71,6 +71,7 @@ public class InsumoProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(InsumoProducto elemento) {
         elemento = formatearStrings(elemento);
+        establecerAlias(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -78,6 +79,13 @@ public class InsumoProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(InsumoProducto elemento) {
         elementoDAO.delete(elemento);
+    }
+    
+    //Establece el alias
+    public void establecerAlias(InsumoProducto elemento) {
+        elemento.setAlias(elemento.getId() +" - "+ elemento.getNombre() + " - "+
+                elemento.getRubroProducto().getNombre() + " - " + 
+                elemento.getMarcaProducto().getNombre());
     }
     
     //Formatea los strings

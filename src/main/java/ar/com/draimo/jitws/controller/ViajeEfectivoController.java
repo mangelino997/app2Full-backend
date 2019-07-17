@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.service.ViajeEfectivoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -70,7 +71,7 @@ public class ViajeEfectivoController {
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -88,11 +89,11 @@ public class ViajeEfectivoController {
     public ResponseEntity<?> actualizar(@RequestBody ViajeEfectivo elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
-            //Envia la nueva lista a los usuarios subscripto
+            ViajeEfectivo a = elementoService.actualizar(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            //Retorna mensaje de Actualizado con exito
+            return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

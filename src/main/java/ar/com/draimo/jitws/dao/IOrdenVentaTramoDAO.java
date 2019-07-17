@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.OrdenVenta;
+import ar.com.draimo.jitws.model.OrdenVentaTarifa;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
 import java.sql.Date;
 import java.util.List;
@@ -21,6 +22,10 @@ public interface IOrdenVentaTramoDAO extends JpaRepository<OrdenVentaTramo, Inte
     public List<OrdenVentaTramo> findByOrdenVentaTarifa_OrdenVentaAndOrdenVentaTarifa_PreciosDesde(
             OrdenVenta ordenVenta, Date preciosDesde);
     
+    //Obtiene un listado por la orden de venta ordenVentaTarifa
     public List<OrdenVentaTramo> findByOrdenVentaTarifa_OrdenVenta(OrdenVenta ordenVenta);
+    
+    //Elimina los registro por ordenVentaTarifa
+    public List<OrdenVentaTramo> deleteByOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa);
     
 }

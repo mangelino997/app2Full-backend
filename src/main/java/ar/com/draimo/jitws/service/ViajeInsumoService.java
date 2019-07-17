@@ -49,9 +49,9 @@ public class ViajeInsumoService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeInsumo elemento) {
+    public ViajeInsumo actualizar(ViajeInsumo elemento) {
         elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro

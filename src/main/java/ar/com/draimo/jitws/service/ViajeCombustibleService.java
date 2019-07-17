@@ -49,9 +49,9 @@ public class ViajeCombustibleService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeCombustible elemento) {
+    public ViajeCombustible actualizar(ViajeCombustible elemento) {
         elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro

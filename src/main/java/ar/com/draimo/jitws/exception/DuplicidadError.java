@@ -42,6 +42,8 @@ public class DuplicidadError {
     
     public static final String TELEFONO_MOVIL_EMPRESA_UNICO = "telefonoMovilEmpresa_UNIQUE";
     
+    public static final String TIPO_TARIFA_UNICO = "tipotarifa_UNIQUE";
+    
     public static final String USERNAME_UNICO = "usuario_UNIQUE";
     
     public static final String VALOR_UNICO = "valor_UNIQUE";

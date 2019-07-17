@@ -75,9 +75,9 @@ public class CompraComprobanteItem extends ObjetoGenerico {
     @JoinColumn(name = "idCuentaContable", nullable = true)
     private PlanCuenta cuentaContable;
     
-    //Define coeficienteITC
-    @Column(name = "coeficienteITC", nullable = true)
-    private BigDecimal coeficienteITC;
+    //Define itcPorLitro
+    @Column(name = "itcPorLitro", nullable = true)
+    private BigDecimal itcPorLitro;
     
     //Define importeITC
     @Column(name = "importeITC", nullable = true)
@@ -193,12 +193,12 @@ public class CompraComprobanteItem extends ObjetoGenerico {
         this.cuentaContable = cuentaContable;
     }
 
-    public BigDecimal getCoeficienteITC() {
-        return coeficienteITC;
+    public BigDecimal getItcPorLitro() {
+        return itcPorLitro;
     }
 
-    public void setCoeficienteITC(BigDecimal coeficienteITC) {
-        this.coeficienteITC = coeficienteITC;
+    public void setItcPorLitro(BigDecimal itcPorLitro) {
+        this.itcPorLitro = itcPorLitro;
     }
 
     public BigDecimal getImporteITC() {

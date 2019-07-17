@@ -177,7 +177,7 @@ public class PersonalService {
             Foto f = fotoDAO.saveAndFlush(p);
             elemento.setFoto(f);
         } else {
-            elemento.setFoto(null);
+            elemento.setFoto(fotoDAO.findById(1).get());
         }
         if (!licConducir.getOriginalFilename().equals("")) {
             Pdf p1 = pdfService.agregar(licConducir, false);
@@ -230,9 +230,9 @@ public class PersonalService {
         if (foto.getOriginalFilename().equals("")) {
             if (elemento.getFoto().getId() != 0) {
                 pdfDAO.deleteById(elemento.getFoto().getId());
-                elemento.setFoto(null);
+                elemento.setFoto(fotoDAO.findById(1).get());
             } else {
-                elemento.setFoto(null);
+                elemento.setFoto(fotoDAO.findById(1).get());
             }
         } else {
             if(elemento.getFoto().getId() != 0) {

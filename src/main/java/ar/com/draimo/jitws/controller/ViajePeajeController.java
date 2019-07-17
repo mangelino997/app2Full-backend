@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.service.ViajePeajeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -70,7 +71,7 @@ public class ViajePeajeController {
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -88,11 +89,11 @@ public class ViajePeajeController {
     public ResponseEntity<?> actualizar(@RequestBody ViajePeaje elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            ViajePeaje a =elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
+import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 
 /**
  * Servicio ViajePropioTramoCliente
@@ -19,10 +20,19 @@ public class ViajeTramoClienteService {
     @Autowired
     IViajeTramoClienteDAO elementoDAO;
     
+    //Define la referencia al dao de viaje tramo
+    @Autowired
+    IViajeTramoDAO viajeTramoDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeTramoCliente elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId()+1 : 1;
+    }
+    
+    //Obtiene el registro por id
+    public List<ViajeTramoCliente> listarPorViajeTramo(int idViajeTramo) {
+        return elementoDAO.findByViajeTramo(viajeTramoDAO.findById(idViajeTramo));
     }
     
     //Obtiene la lista completa

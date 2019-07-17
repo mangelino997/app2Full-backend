@@ -49,6 +49,13 @@ public class ViajeTramoClienteController {
         return elementoService.obtenerSiguienteId();
     }
     
+    //Obtiene el regusstro por id
+    @GetMapping(value = URL + "/listarPorViajeTramo/{idViajeTramo}")
+    @ResponseBody
+    public List<ViajeTramoCliente> listarPorViajeTramo(@PathVariable int idViajeTramo) {
+        return elementoService.listarPorViajeTramo(idViajeTramo);
+    }
+    
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody

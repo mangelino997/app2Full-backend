@@ -78,6 +78,10 @@ public class InsumoProducto extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
+    
+    //Define alias
+    @Column(name = "alias",length = 150, nullable = true)
+    private String alias;
 
     //Getters y Setters de la clase
 
@@ -191,6 +195,14 @@ public class InsumoProducto extends ObjetoGenerico {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

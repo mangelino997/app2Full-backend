@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEscalaTarifaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
+import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
 import java.io.IOException;
 import java.sql.Date;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
+import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 
 /**
  * Servicio OrdenVentaTarifa
@@ -30,6 +32,14 @@ public class OrdenVentaTarifaService {
     //Define la referencia al dao escala tarifa
     @Autowired
     IEscalaTarifaDAO escalaTarifaDAO;
+    
+    //Define la referencia al dao ordenVentaescala
+    @Autowired
+    IOrdenVentaEscalaDAO ordenVentaEscalaDAO;
+    
+    //Define la referencia al dao ordenVentaTramo
+    @Autowired
+    IOrdenVentaTramoDAO ordenVentaTramoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -67,6 +77,12 @@ public class OrdenVentaTarifaService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
+        OrdenVentaTarifa elemento = elementoDAO.findById(id).get();
+        if(elemento.getTipoTarifa().isPorEscala()){
+            ordenVentaEscalaDAO.deleteByOrdenVentaTarifa(elemento);
+        } else {
+            ordenVentaTramoDAO.deleteByOrdenVentaTarifa(elemento);
+        }
         elementoDAO.deleteById(id);
     }
     

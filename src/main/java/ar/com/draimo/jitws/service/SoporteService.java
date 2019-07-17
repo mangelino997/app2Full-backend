@@ -94,7 +94,7 @@ public class SoporteService {
     public Soporte agregar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
         elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
-        if (!archivo.getOriginalFilename().equals("")) {
+        if (!archivo.getOriginalFilename().equals("")||!archivo.getName().equals("null")) {
             BugImagen u = bugImagenService.agregar(archivo, false);
             BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
             elemento.setBugImagen(bugImagen);
