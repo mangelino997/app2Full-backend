@@ -71,7 +71,7 @@ public class SoporteService {
         }
         ObjectMapper mapper = new ObjectMapper();
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroImagen", 
+                .addFilter("filtroImagen",
                         SimpleBeanPropertyFilter.serializeAllExcept());
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
@@ -94,7 +94,7 @@ public class SoporteService {
     public Soporte agregar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
         elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
-        if (!archivo.getOriginalFilename().equals("")||!archivo.getName().equals("null")) {
+        if (!archivo.getOriginalFilename().equals("")) {
             BugImagen u = bugImagenService.agregar(archivo, false);
             BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
             elemento.setBugImagen(bugImagen);
@@ -116,11 +116,11 @@ public class SoporteService {
                 elemento.setBugImagen(null);
             }
         } else {
-            if(elemento.getBugImagen().getId() != 0){
+            if (elemento.getBugImagen().getId() != 0) {
                 BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
                 BugImagen bug = bugImagenDAO.save(f);
                 elemento.setBugImagen(bug);
-            }else {
+            } else {
                 BugImagen u = bugImagenService.agregar(archivo, false);
                 BugImagen bug = bugImagenDAO.saveAndFlush(u);
                 elemento.setBugImagen(bug);
@@ -139,7 +139,7 @@ public class SoporteService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(Soporte elemento) {
-        Subopcion s= subopcionDAO.findById(elemento.getSubopcion().getId()).get();
+        Subopcion s = subopcionDAO.findById(elemento.getSubopcion().getId()).get();
         String subopcion = s.getNombre();
         String submodulo = s.getSubmodulo().getNombre();
         String modulo = s.getSubmodulo().getModulo().getNombre();
