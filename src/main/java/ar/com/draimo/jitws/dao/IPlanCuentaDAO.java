@@ -32,7 +32,10 @@ public interface IPlanCuentaDAO extends JpaRepository<PlanCuenta, Integer> {
     //Obtiene una lista por padre
     public List<PlanCuenta> findByPadre(PlanCuenta planCuenta);
     
-    //Obtiene por empresa y grupo cuenta contable
+    //Lista por empresa y grupo cuenta contable
     public List<PlanCuenta> findByEmpresaAndGrupoCuentaContable(Empresa empresa, GrupoCuentaContable grupoCuentaContable);
+    
+    //Obtiene por empresa, grupo cuenta contable y nivel 2
+    public PlanCuenta findByEmpresaAndGrupoCuentaContableAndNivel(Empresa empresa, GrupoCuentaContable grupoCuentaContable, short nivel);
     
 }

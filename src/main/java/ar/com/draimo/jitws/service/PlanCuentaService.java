@@ -95,7 +95,7 @@ public class PlanCuentaService {
         return planCuenta;
     }
     
-    //Obtiene por empresa y grupo cuenta contable
+    //Lista por empresa y grupo cuenta contable
     public Object listarPorEmpresaYGrupoCuentaContable(int idEmpresa, int idGrupoCuentaContable) throws IOException {
         List<PlanCuenta> planesCuenta = elementoDAO.findByEmpresaAndGrupoCuentaContable(empresaDAO.findById(idEmpresa).get(), 
                 grupoCuentaContableDAO.findById(idGrupoCuentaContable).get());
@@ -105,6 +105,19 @@ public class PlanCuentaService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(planesCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
+    //Obtiene por empresa y grupo cuenta contable
+    public Object obtenerPorEmpresaYGrupoCuentaContable(int idEmpresa, int idGrupoCuentaContable) throws IOException {
+        PlanCuenta planCuenta = elementoDAO.findByEmpresaAndGrupoCuentaContableAndNivel(empresaDAO.findById(idEmpresa).get(), 
+                grupoCuentaContableDAO.findById(idGrupoCuentaContable).get(), (short)2);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planCuenta);
         return new ObjectMapper().readValue(string, Object.class);
     }
     
