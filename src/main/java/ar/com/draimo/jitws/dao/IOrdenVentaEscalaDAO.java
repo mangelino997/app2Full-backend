@@ -30,6 +30,9 @@ public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, In
     //Obtiene un listado por orden venta de orvenVentaTarifa
     public List<OrdenVentaEscala> findByOrdenVentaTarifa_OrdenVenta(OrdenVenta ordenVenta);
     
+    //Obtiene un listado por orvenVentaTarifa
+    public List<OrdenVentaEscala> findByOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa);
+    
     //elimina un listado por ordenVentaTarifa
     public List<OrdenVentaEscala> deleteByOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa);
     

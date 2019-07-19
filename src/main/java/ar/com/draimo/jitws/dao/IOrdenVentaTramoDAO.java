@@ -25,6 +25,9 @@ public interface IOrdenVentaTramoDAO extends JpaRepository<OrdenVentaTramo, Inte
     //Obtiene un listado por la orden de venta ordenVentaTarifa
     public List<OrdenVentaTramo> findByOrdenVentaTarifa_OrdenVenta(OrdenVenta ordenVenta);
     
+    //Obtiene un listado por la orden de venta ordenVentaTarifa
+    public List<OrdenVentaTramo> findByOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa);
+    
     //Elimina los registro por ordenVentaTarifa
     public List<OrdenVentaTramo> deleteByOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa);
     

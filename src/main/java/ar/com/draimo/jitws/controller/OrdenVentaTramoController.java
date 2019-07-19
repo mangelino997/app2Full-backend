@@ -55,6 +55,13 @@ public class OrdenVentaTramoController {
         return elementoService.listar();
     }
 
+    //Obtiene una lista por id de orden venta tarifa
+    @GetMapping(value = URL + "/listarPorOrdenVentaTarifa/{id}")
+    @ResponseBody
+    public List<OrdenVentaTramo> listarPorOrdenVentaTarifa(@PathVariable int id) {
+        return elementoService.listarPorOrdenVentaTarifa(id);
+    }
+
     //Obtiene una lista por id de orden venta y preciosDesde
     @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody

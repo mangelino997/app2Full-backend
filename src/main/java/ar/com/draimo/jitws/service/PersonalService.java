@@ -227,16 +227,17 @@ public class PersonalService {
     public void actualizar(String elementoString, MultipartFile foto, MultipartFile licConducir,
             MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
+        Personal personal = elementoDAO.findById(elemento.getId()).get();
         if (foto.getOriginalFilename().equals("")) {
-            if (elemento.getFoto().getId() != 0) {
-                pdfDAO.deleteById(elemento.getFoto().getId());
+            if (personal.getFoto() != null) {
+                pdfDAO.deleteById(personal.getFoto().getId());
                 elemento.setFoto(fotoDAO.findById(1).get());
             } else {
                 elemento.setFoto(fotoDAO.findById(1).get());
             }
         } else {
-            if(elemento.getFoto().getId() != 0) {
-                Foto f = fotoService.actualizar(elemento.getFoto().getId(), foto, false);
+            if(personal.getFoto() != null) {
+                Foto f = fotoService.actualizar(personal.getFoto().getId(), foto, false);
                 f.setTabla("personal");
                 Foto f1 = fotoDAO.save(f);
                 elemento.setFoto(f1);
@@ -248,15 +249,15 @@ public class PersonalService {
             }
         }
         if (licConducir.getOriginalFilename().equals("")) {
-            if (elemento.getPdfLicConducir().getId() != 0) {
-                pdfDAO.deleteById(elemento.getPdfLicConducir().getId());
+            if (personal.getPdfLicConducir().getId() != 0) {
+                pdfDAO.deleteById(personal.getPdfLicConducir().getId());
                 elemento.setPdfLicConducir(null);
             } else {
                 elemento.setPdfLicConducir(null);
             }
         } else {
-            if(elemento.getPdfLicConducir().getId() != 0) {
-                Pdf p1 = pdfService.actualizar(elemento.getPdfLicConducir().getId(), licConducir, false);
+            if(personal.getPdfLicConducir()!= null) {
+                Pdf p1 = pdfService.actualizar(personal.getPdfLicConducir().getId(), licConducir, false);
                 p1.setTabla("personal");
                 Pdf pdf1 = pdfDAO.save(p1);
                 elemento.setPdfLicConducir(pdf1);
@@ -268,15 +269,15 @@ public class PersonalService {
             }
         }
         if (linti.getOriginalFilename().equals("")) {
-            if (elemento.getPdfLinti().getId() != 0) {
-                pdfDAO.deleteById(elemento.getPdfLinti().getId());
+            if (personal.getPdfLinti() != null) {
+                pdfDAO.deleteById(personal.getPdfLinti().getId());
                 elemento.setPdfLinti(null);
             } else {
                 elemento.setPdfLinti(null);
             }
         } else {
-            if(elemento.getPdfLinti().getId() != 0) {
-                Pdf p2 = pdfService.actualizar(elemento.getPdfLinti().getId(), linti, false);
+            if(personal.getPdfLinti()!= null) {
+                Pdf p2 = pdfService.actualizar(personal.getPdfLinti().getId(), linti, false);
                 p2.setTabla("personal");
                 Pdf pdf2 = pdfDAO.save(p2);
                 elemento.setPdfLinti(pdf2);
@@ -288,15 +289,15 @@ public class PersonalService {
             }
         }
         if (libSanidad.getOriginalFilename().equals("")) {
-            if (elemento.getPdfLibSanidad().getId() != 0) {
-                pdfDAO.deleteById(elemento.getPdfLibSanidad().getId());
+            if (personal.getPdfLibSanidad() != null) {
+                pdfDAO.deleteById(personal.getPdfLibSanidad().getId());
                 elemento.setPdfLibSanidad(null);
             } else {
                 elemento.setPdfLibSanidad(null);
             }
         } else {
-            if(elemento.getPdfLibSanidad().getId() != 0) {
-                Pdf p3 = pdfService.actualizar(elemento.getPdfLibSanidad().getId(), libSanidad, false);
+            if(personal.getPdfLibSanidad() != null) {
+                Pdf p3 = pdfService.actualizar(personal.getPdfLibSanidad().getId(), libSanidad, false);
                 p3.setTabla("personal");
                 Pdf pdf3 = pdfDAO.save(p3);
                 elemento.setPdfLibSanidad(pdf3);
@@ -308,15 +309,15 @@ public class PersonalService {
             }
         }
         if (dni.getOriginalFilename().equals("")) {
-            if (elemento.getPdfDni().getId() != 0) {
-                pdfDAO.deleteById(elemento.getPdfDni().getId());
+            if (personal.getPdfDni() != null) {
+                pdfDAO.deleteById(personal.getPdfDni().getId());
                 elemento.setPdfDni(null);
             } else {
                 elemento.setPdfDni(null);
             }
         } else {
-            if(elemento.getPdfDni().getId() != 0) {
-                Pdf p4 = pdfService.actualizar(elemento.getPdfDni().getId(), dni, false);
+            if(personal.getPdfDni() != null) {
+                Pdf p4 = pdfService.actualizar(personal.getPdfDni().getId(), dni, false);
                 p4.setTabla("personal");
                 Pdf pdf4 = pdfDAO.save(p4);
                 elemento.setPdfDni(pdf4);
@@ -328,15 +329,15 @@ public class PersonalService {
             }
         }
         if (altaTemprana.getOriginalFilename().equals("")) {
-            if (elemento.getPdfAltaTemprana().getId() != 0) {
-                pdfDAO.deleteById(elemento.getPdfAltaTemprana().getId());
+            if (personal.getPdfAltaTemprana()!=null) {
+                pdfDAO.deleteById(personal.getPdfAltaTemprana().getId());
                 elemento.setPdfAltaTemprana(null);
             } else {
                 elemento.setPdfAltaTemprana(null);
             }
         } else {
-            if(elemento.getPdfAltaTemprana().getId() != 0) {
-                Pdf p5 = pdfService.actualizar(elemento.getPdfAltaTemprana().getId(), altaTemprana, false);
+            if(personal.getPdfAltaTemprana() != null) {
+                Pdf p5 = pdfService.actualizar(personal.getPdfAltaTemprana().getId(), altaTemprana, false);
                 p5.setTabla("personal");
                 Pdf pdf5 = pdfDAO.save(p5);
                 elemento.setPdfAltaTemprana(pdf5);

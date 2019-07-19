@@ -62,6 +62,13 @@ public class OrdenVentaEscalaController {
         return elementoService.listarConEscalaTarifa();
     }
     
+    //Obtiene una lista con escalas tarifas asignadas
+    @GetMapping(value = URL + "/listarPorOrdenVentaTarifa/{id}")
+    @ResponseBody
+    public List<OrdenVentaEscala> listarPorOrdenVentaTarifa(@PathVariable int id) {
+        return elementoService.listarPorOrdenVentaTarifa(id);
+    }
+    
     //Obtiene una lista por id de orden venta
     @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody

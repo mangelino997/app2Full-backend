@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IEscalaTarifaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
+import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
 import ar.com.draimo.jitws.model.EscalaTarifa;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import java.math.BigDecimal;
@@ -34,6 +35,10 @@ public class OrdenVentaEscalaService {
     //Define la referencia al dao ordenVenta
     @Autowired
     IOrdenVentaDAO ordenVentaDAO;
+    
+    //Define la referencia al dao ordenVentaTarifa
+    @Autowired
+    IOrdenVentaTarifaDAO ordenVentaTarifaDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -72,6 +77,13 @@ public class OrdenVentaEscalaService {
     public List<OrdenVentaEscala> listarPorOrdenVenta(int idOrdenVenta) {
         List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVentaTarifa_OrdenVenta(
              ordenVentaDAO.findById(idOrdenVenta).get());
+        return ordenesEscala;
+    }
+    
+    //Obtiene un listado por ordenVentaTarifa
+    public List<OrdenVentaEscala> listarPorOrdenVentaTarifa(int idOrdenVentaTarifa) {
+        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVentaTarifa(
+             ordenVentaTarifaDAO.findById(idOrdenVentaTarifa).get());
         return ordenesEscala;
     }
     
