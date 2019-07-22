@@ -60,7 +60,7 @@ public class PersonalService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<Personal> elementos= elementoDAO.findAll();
+        List<Personal> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -74,9 +74,9 @@ public class PersonalService {
     public Object listarPorAlias(String alias) throws IOException {
         List<Personal> elementos;
         if (alias.equals("***")) {
-            elementos =elementoDAO.findAll();
+            elementos = elementoDAO.findAll();
         } else {
-            elementos= elementoDAO.findByAliasContaining(alias);
+            elementos = elementoDAO.findByAliasContaining(alias);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -92,9 +92,9 @@ public class PersonalService {
         List<Personal> elementos;
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
         if (alias.equals("***")) {
-            elementos= elementoDAO.findByEmpresa(empresa);
+            elementos = elementoDAO.findByEmpresa(empresa);
         } else {
-            elementos= elementoDAO.findByEmpresaAndAliasContaining(empresa, alias);
+            elementos = elementoDAO.findByEmpresaAndAliasContaining(empresa, alias);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -108,23 +108,25 @@ public class PersonalService {
     //Obtiene un registro por id
     public Object obtenerPorId(int id) throws IOException {
         Personal elemento = elementoDAO.findById(id).get();
-        if(elemento.getPdfAltaTemprana()==null){
-            elemento.setPdfAltaTemprana(new Pdf());
+        Pdf pdf = new Pdf();
+        if (elemento.getPdfAltaTemprana() == null) {
+            elemento.setPdfAltaTemprana(pdf);
         }
-        if(elemento.getPdfDni()==null){
-            elemento.setPdfDni(new Pdf());
+        if (elemento.getPdfDni() == null) {
+            elemento.setPdfDni(pdf);
         }
-        if(elemento.getPdfLibSanidad()==null){
-            elemento.setPdfLibSanidad(new Pdf());
+        if (elemento.getPdfLibSanidad() == null) {
+            elemento.setPdfLibSanidad(pdf);
         }
-        if(elemento.getPdfLicConducir()==null){
-            elemento.setPdfLicConducir(new Pdf());
+        if (elemento.getPdfLicConducir() == null) {
+            elemento.setPdfLicConducir(pdf);
         }
-        if(elemento.getPdfLinti()==null){
-            elemento.setPdfLinti(new Pdf());
+        if (elemento.getPdfLinti() == null) {
+            elemento.setPdfLinti(pdf);
         }
-        if(elemento.getFoto()==null){
-            elemento.setFoto(new Foto());
+        if (elemento.getFoto() == null) {
+            Foto foto = fotoDAO.findById(1).get();
+            elemento.setFoto(foto);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -137,7 +139,7 @@ public class PersonalService {
 
     //Obtiene un chofer por alias
     public Object listarChoferPorAlias(String alias) throws IOException {
-        List<Personal> elementos= elementoDAO.findByAliasContainingAndEsChoferTrue(alias);
+        List<Personal> elementos = elementoDAO.findByAliasContainingAndEsChoferTrue(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -149,7 +151,7 @@ public class PersonalService {
 
     //Obtiene un listado de choferes ordenados por nombre de corta distancia
     public Object listarChoferesCortaDistanciaOrdenadoPorNombre(String alias) throws IOException {
-        List<Personal> elementos= elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias);
+        List<Personal> elementos = elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -161,7 +163,7 @@ public class PersonalService {
 
     //Obtiene un listado de choferes ordenados por nombre de larga distancia
     public Object listarChoferesLargaDistanciaOrdenadoPorNombre(String alias) throws IOException {
-        List<Personal> elementos= elementoDAO.listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(alias);
+        List<Personal> elementos = elementoDAO.listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -170,10 +172,10 @@ public class PersonalService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene un listado de choferes ordenados por nombre de larga distancia
     public Object listarChoferesPorEmpresa(int idEmpresa) throws IOException {
-        List<Personal> elementos= elementoDAO.listarChoferesPorEmpresa(idEmpresa);
+        List<Personal> elementos = elementoDAO.listarChoferesPorEmpresa(idEmpresa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -185,7 +187,7 @@ public class PersonalService {
 
     //Obtiene un listado de acompañantes ordenados por nombre
     public Object listarAcompaniantesOrdenadoPorNombre(String alias) throws IOException {
-        List<Personal> elementos= elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
+        List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -266,7 +268,7 @@ public class PersonalService {
                 elemento.setFoto(fotoDAO.findById(1).get());
             }
         } else {
-            if(personal.getFoto() != null) {
+            if (personal.getFoto() != null) {
                 Foto f = fotoService.actualizar(personal.getFoto().getId(), foto, false);
                 f.setTabla("personal");
                 Foto f1 = fotoDAO.save(f);
@@ -286,7 +288,7 @@ public class PersonalService {
                 elemento.setPdfLicConducir(null);
             }
         } else {
-            if(personal.getPdfLicConducir()!= null) {
+            if (personal.getPdfLicConducir() != null) {
                 Pdf p1 = pdfService.actualizar(personal.getPdfLicConducir().getId(), licConducir, false);
                 p1.setTabla("personal");
                 Pdf pdf1 = pdfDAO.save(p1);
@@ -306,7 +308,7 @@ public class PersonalService {
                 elemento.setPdfLinti(null);
             }
         } else {
-            if(personal.getPdfLinti()!= null) {
+            if (personal.getPdfLinti() != null) {
                 Pdf p2 = pdfService.actualizar(personal.getPdfLinti().getId(), linti, false);
                 p2.setTabla("personal");
                 Pdf pdf2 = pdfDAO.save(p2);
@@ -326,7 +328,7 @@ public class PersonalService {
                 elemento.setPdfLibSanidad(null);
             }
         } else {
-            if(personal.getPdfLibSanidad() != null) {
+            if (personal.getPdfLibSanidad() != null) {
                 Pdf p3 = pdfService.actualizar(personal.getPdfLibSanidad().getId(), libSanidad, false);
                 p3.setTabla("personal");
                 Pdf pdf3 = pdfDAO.save(p3);
@@ -346,7 +348,7 @@ public class PersonalService {
                 elemento.setPdfDni(null);
             }
         } else {
-            if(personal.getPdfDni() != null) {
+            if (personal.getPdfDni() != null) {
                 Pdf p4 = pdfService.actualizar(personal.getPdfDni().getId(), dni, false);
                 p4.setTabla("personal");
                 Pdf pdf4 = pdfDAO.save(p4);
@@ -359,14 +361,14 @@ public class PersonalService {
             }
         }
         if (altaTemprana.getOriginalFilename().equals("")) {
-            if (personal.getPdfAltaTemprana()!=null) {
+            if (personal.getPdfAltaTemprana() != null) {
                 pdfDAO.deleteById(personal.getPdfAltaTemprana().getId());
                 elemento.setPdfAltaTemprana(null);
             } else {
                 elemento.setPdfAltaTemprana(null);
             }
         } else {
-            if(personal.getPdfAltaTemprana() != null) {
+            if (personal.getPdfAltaTemprana() != null) {
                 Pdf p5 = pdfService.actualizar(personal.getPdfAltaTemprana().getId(), altaTemprana, false);
                 p5.setTabla("personal");
                 Pdf pdf5 = pdfDAO.save(p5);
