@@ -5,13 +5,17 @@ import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.ViajeRemito;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import ar.com.draimo.jitws.dao.IViajeTramoRemitoDAO;
+import ar.com.draimo.jitws.model.ViajeTramo;
+import ar.com.draimo.jitws.model.ViajeTramoRemito;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 /**
  * Servicio de ViajePropio
@@ -32,6 +36,10 @@ public class ViajeRemitoService {
     //Define la referencia al dao viaje propio tramo
     @Autowired
     IViajeTramoDAO viajePropioTramoDAO;
+    
+    //Define la referencia al dao viaje remito tramo
+    @Autowired
+    IViajeTramoRemitoDAO viajeRemitoTramoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -56,6 +64,11 @@ public class ViajeRemitoService {
     //Obtiene un listado por numero de comprobante
     public List<ViajeRemito> listarPorNumero(int numero) {
         return elementoDAO.findByNumero(numero);
+    }
+    
+    //Obtiene un listado de no pendientes por viajeTramo
+    public List<ViajeRemito> listarAsignadosPorViajeTramo(int idViajeTramo) {
+        return elementoDAO.listarAsignadosPorViajeTramo(idViajeTramo);
     }
     
     //Obtiene un listado de pendientes por sucursal
@@ -119,23 +132,36 @@ public class ViajeRemitoService {
     
     //Asigna los remitos
     @Transactional(rollbackFor = Exception.class)
-    public void asignar(List<ViajeRemito> elementos) {
+    public void asignar(String elementosString, String idViajeTramo) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<ViajeRemito> elementos =mapper.readValue(elementosString , mapper.getTypeFactory().constructCollectionType(List.class, ViajeRemito.class));
+        //Obtiene el viajeRemito
+        ViajeTramo viajeTramo = viajePropioTramoDAO.findById(Integer.valueOf(idViajeTramo)).get();
+        ViajeTramoRemito tramoRemito ;
         //Recorre la lista de remitos
         for(ViajeRemito viajeRemito : elementos) {
             viajeRemito.setEstaPendiente(false);
+            tramoRemito = new ViajeTramoRemito();
+            tramoRemito.setViajeRemito(viajeRemito);
+            tramoRemito.setViajeTramo(viajeTramo);
+            viajeRemitoTramoDAO.saveAndFlush(tramoRemito);
             elementoDAO.save(viajeRemito);
         }
     }
     
     //Quita los remitos
     @Transactional(rollbackFor = Exception.class)
-    public void quitar(List<ViajeRemito> elementos) {
-        //Recorre la lista de remitos
-        for(ViajeRemito viajeRemito : elementos) {
-            viajeRemito.setEstaPendiente(true);
-            //viajeRemito.setViajePropioTramo(null);
-            elementoDAO.save(viajeRemito);
-        }
+    public void quitar(int idViajeRemito, int idViajeTramo) {
+        //Obtiene el viajeTramo
+        ViajeTramo viajeTramo = viajePropioTramoDAO.findById(idViajeTramo).get();
+        //Obtiene el viajeRemito
+        ViajeRemito viajeRemito = elementoDAO.findById(idViajeRemito).get();
+        //Obtiene el viajeTramoRemito por Tramo y remito
+        ViajeTramoRemito tramoRemito = viajeRemitoTramoDAO.findByViajeRemitoAndViajeTramo(viajeRemito, viajeTramo);
+        //Elimina el viajeTramoRemito por tramo y remito
+        viajeRemitoTramoDAO.delete(tramoRemito);
+        viajeRemito.setEstaPendiente(true);
+        elementoDAO.save(viajeRemito);
     }
     
     //Agrega un registro

@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.ViajeRemito;
+import ar.com.draimo.jitws.model.ViajeTramo;
 import ar.com.draimo.jitws.model.ViajeTramoRemito;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +19,10 @@ public interface IViajeTramoRemitoDAO extends JpaRepository<ViajeTramoRemito, In
     //Obtiene el siguiente id
     public ViajeTramoRemito findTopByOrderByIdDesc();
     
-    //Obtiene un listado por nombre
+    //Obtiene un listado por viajeRemito
     public List<ViajeTramoRemito> findByViajeRemito(ViajeRemito viajeRemito);
+    
+    //Obtiene un listado por viajeRemito y viajeTramo
+    public ViajeTramoRemito findByViajeRemitoAndViajeTramo(ViajeRemito viajeRemito, ViajeTramo viajeTramo);
     
 }

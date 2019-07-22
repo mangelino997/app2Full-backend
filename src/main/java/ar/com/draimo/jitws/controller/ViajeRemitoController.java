@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -70,6 +71,13 @@ public class ViajeRemitoController {
         return elementoService.listarPorNumero(numero);
     }
     
+    //Obtiene una lista de remitos no pendientes por viajeTramo
+    @GetMapping(value = URL + "/listarAsignadosPorViajeTramo/{idViajeTramo}")
+    @ResponseBody
+    public List<ViajeRemito> listarAsignadosPorViajeTramo(@PathVariable int idViajeTramo) {
+        return elementoService.listarAsignadosPorViajeTramo(idViajeTramo);
+    }
+    
     //Obtiene una lista de remitos pendientes por sucursal
     @GetMapping(value = URL + "/listarPendientesPorSucursal/{idSucursal}")
     @ResponseBody
@@ -118,9 +126,9 @@ public class ViajeRemitoController {
     
     //Asigna remitos
     @PutMapping(value = URL + "/asignar")
-    public ResponseEntity<?> asignar(@RequestBody List<ViajeRemito> elementos) {
+    public ResponseEntity<?> asignar(@RequestPart("elementos") String elementos,@RequestPart("viajeTramo") String idViajeTramo) {
         try {
-            elementoService.asignar(elementos);
+            elementoService.asignar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
@@ -141,11 +149,11 @@ public class ViajeRemitoController {
     }
     
     //Quita remitos
-    @PutMapping(value = URL + "/quitar")
-    public ResponseEntity<?> quitar(@RequestBody List<ViajeRemito> elementos) {
+    @DeleteMapping(value = URL + "/quitar/{elemento}/{idViajeTramo}")
+    public ResponseEntity<?> quitar(@PathVariable int elemento,@PathVariable int idViajeTramo) {
         try {
             //Quita el registro
-            elementoService.quitar(elementos);
+            elementoService.quitar(elemento,idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito

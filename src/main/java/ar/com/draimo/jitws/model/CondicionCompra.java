@@ -26,6 +26,10 @@ public class CondicionCompra extends ObjetoGenerico {
     //Define cuotas
     @Column(name = "cuotas", nullable = false)
     private short cuotas;
+    
+    //Define dias
+    @Column(name = "dias", nullable = false)
+    private short dias;
 
     //Getters y Setters de la clase
 

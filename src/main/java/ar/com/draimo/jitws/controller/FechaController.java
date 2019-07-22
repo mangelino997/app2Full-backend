@@ -55,4 +55,19 @@ public class FechaController {
         return anios;
     }
     
+    //Obtiene un listado de anios de el actual, el anterior y el posterior
+    @GetMapping(value = URL + "/listarAniosMasMenosUno")
+    @ResponseBody
+    public List<Short> listarAniosMasMenosUno() {
+        List<Short> anios = new ArrayList<>();
+        int iAnio = LocalDate.now().getYear();
+        short anio = Short.parseShort(String.valueOf(iAnio));
+        short anioAnterior = Short.parseShort(String.valueOf(iAnio-1));
+        short anioPosterior =Short.parseShort(String.valueOf(iAnio +1));
+        anios.add(anioAnterior);
+        anios.add(anio);
+        anios.add(anioPosterior);
+        return anios;
+    }
+    
 }

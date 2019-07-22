@@ -105,6 +105,36 @@ public class PersonalService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Obtiene un registro por id
+    public Object obtenerPorId(int id) throws IOException {
+        Personal elemento = elementoDAO.findById(id).get();
+        if(elemento.getPdfAltaTemprana()==null){
+            elemento.setPdfAltaTemprana(new Pdf());
+        }
+        if(elemento.getPdfDni()==null){
+            elemento.setPdfDni(new Pdf());
+        }
+        if(elemento.getPdfLibSanidad()==null){
+            elemento.setPdfLibSanidad(new Pdf());
+        }
+        if(elemento.getPdfLicConducir()==null){
+            elemento.setPdfLicConducir(new Pdf());
+        }
+        if(elemento.getPdfLinti()==null){
+            elemento.setPdfLinti(new Pdf());
+        }
+        if(elemento.getFoto()==null){
+            elemento.setFoto(new Foto());
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return mapper.readValue(string, Object.class);
+    }
+
     //Obtiene un chofer por alias
     public Object listarChoferPorAlias(String alias) throws IOException {
         List<Personal> elementos= elementoDAO.findByAliasContainingAndEsChoferTrue(alias);

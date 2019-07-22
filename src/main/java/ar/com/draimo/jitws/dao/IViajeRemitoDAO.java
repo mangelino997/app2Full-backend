@@ -62,5 +62,10 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
 //            Optional<ViajeTerceroTramo> viajeTerceroTramo);
     //Obtiene un registro por puntoVenta, letra y nroComprobante
     public ViajeRemito findByPuntoVentaAndLetraAndNumero(int puntoVenta, String letra, int numero);
+    
+    //Obtiene un listado por estaPendienteFalse y idViajeRemito de la tabla viajeTramoRemito
+    @Query(value = "SELECT v.* FROM viajeremito v INNER JOIN viajetramoremito t ON t.idViajeRemito=v.id"
+            + " WHERE t.idViajeTramo=:idViajeTramo AND v.estaPendiente=false", nativeQuery = true)
+    public List<ViajeRemito> listarAsignadosPorViajeTramo(@Param("idViajeTramo") int idViajeRemito);
 
 }

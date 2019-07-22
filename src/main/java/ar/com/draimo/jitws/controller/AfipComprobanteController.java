@@ -55,6 +55,13 @@ public class AfipComprobanteController {
         return elementoService.listar();
     }
     
+    //Obtiene por codigoAfip
+    @GetMapping(value = URL + "/obtenerPorCodigoAfip/{codigoAfip}")
+    @ResponseBody
+    public AfipComprobante obtenerPorCodigoAfip(@PathVariable String codigoAfip) {
+        return elementoService.obtenerPorCodigoAfip(codigoAfip);
+    }
+    
     //Obtiene el codigo afip
     @GetMapping(value = URL + "/obtenerCodigoAfip/{idTipoComprobante}/{letra}")
     @ResponseBody

@@ -43,6 +43,11 @@ public class AfipComprobanteService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene por codigoAfip
+    public AfipComprobante obtenerPorCodigoAfip(String codigoAfip) {
+        return elementoDAO.findByCodigoAfip(codigoAfip);
+    }
+    
     //Obtiene el codigo afip
     public String obtenerCodigoAfip(int idTipoComprobante, String letra) {
         Optional<TipoComprobante> tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante);

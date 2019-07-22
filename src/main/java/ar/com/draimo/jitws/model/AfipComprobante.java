@@ -28,7 +28,7 @@ public class AfipComprobante extends ObjetoGenerico {
     private String letra;
     
     //Define el codigo afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip", nullable = false, unique = true)
     private String codigoAfip;
 
     //Getters y Setters de la clase
