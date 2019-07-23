@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class EscalaTarifa extends ObjetoGenerico {
 
     //Define el nombre
-    @Column(name = "valor", nullable = false)
+    @Column(name = "valor", nullable = false, unique = true)
     private BigDecimal valor;
 
     //Getters y Setters de la clase

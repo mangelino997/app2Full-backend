@@ -54,7 +54,7 @@ public class CodigoRespuesta {
     
     //Define una respuesta de datos duplicados
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo datoDuplicado = 11025
+    //Ultimo codigo datoDuplicado = 11026
     public static final int DATO_DUPLICADO = 11020;
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
     public static final int DATO_DUPLICADO_CBU = 11011;
@@ -65,6 +65,7 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_DESDE_HASTA = 11024;
     public static final int DATO_DUPLICADO_DOCUMENTO = 11010;
     public static final int DATO_DUPLICADO_DOMINIO = 11017;
+    public static final int DATO_DUPLICADO_ESCALA_TARIFA = 11025;
     public static final int DATO_DUPLICADO_ID = 11001;
     public static final int DATO_DUPLICADO_NOMBRE = 11002;
     public static final int DATO_DUPLICADO_NUMERO_INTERNO = 11018;

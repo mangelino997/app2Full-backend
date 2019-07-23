@@ -82,7 +82,7 @@ public class OrdenVentaEscalaService {
     
     //Obtiene un listado por ordenVentaTarifa
     public List<OrdenVentaEscala> listarPorOrdenVentaTarifa(int idOrdenVentaTarifa) {
-        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVentaTarifa(
+        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVentaTarifaOrderByEscalaTarifa_ValorAsc(
              ordenVentaTarifaDAO.findById(idOrdenVentaTarifa).get());
         return ordenesEscala;
     }

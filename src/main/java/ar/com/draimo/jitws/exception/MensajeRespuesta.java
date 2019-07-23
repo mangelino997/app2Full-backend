@@ -167,6 +167,10 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DOMINIO;
                     plusMensaje = " DOMINIO";
                     break;
+                case DuplicidadError.ESCALA_TARIFA_UNICO:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ESCALA_TARIFA;
+                    plusMensaje = ": ESCALA YA EXISTENTE EN LA TABLA";
+                    break;
                 case DuplicidadError.ID_UNICO:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ID;
                     plusMensaje = " ID";

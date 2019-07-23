@@ -24,6 +24,8 @@ public class DuplicidadError {
     
     public static final String DOMINIO_UNICO = "dominio_UNIQUE";
     
+    public static final String ESCALA_TARIFA_UNICO = "ordenventatarifa_escalatarifa_UNIQUE";
+    
     public static final String ID_UNICO = "id_UNIQUE";
     
     public static final String NOMBRE_UNICO = "nombre_UNIQUE";
