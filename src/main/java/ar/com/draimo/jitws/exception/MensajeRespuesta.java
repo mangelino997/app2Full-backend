@@ -199,6 +199,10 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TIPO_TARIFA;
                     plusMensaje = ": TIPO TARIFA YA EXISTE EN LA TABLA";
                     break;
+                case DuplicidadError.TRAMO_UNICO:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TRAMO;
+                    plusMensaje = ": TRAMO YA EXISTENTE EN LA TABLA";
+                    break;
                 case DuplicidadError.USERNAME_UNICO:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_USERNAME;
                     plusMensaje = " USUARIO";

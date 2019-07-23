@@ -46,6 +46,8 @@ public class DuplicidadError {
     
     public static final String TIPO_TARIFA_UNICO = "tipotarifa_UNIQUE";
     
+    public static final String TRAMO_UNICO = "ordenventatarifa_tramo_UNIQUE";
+    
     public static final String USERNAME_UNICO = "usuario_UNIQUE";
     
     public static final String VALOR_UNICO = "valor_UNIQUE";
