@@ -281,7 +281,7 @@ public class PersonalService {
             }
         }
         if (licConducir.getOriginalFilename().equals("")) {
-            if (personal.getPdfLicConducir().getId() != 0) {
+            if (personal.getPdfLicConducir()!= null) {
                 pdfDAO.deleteById(personal.getPdfLicConducir().getId());
                 elemento.setPdfLicConducir(null);
             } else {
