@@ -50,6 +50,13 @@ public class CompaniaSeguroPolizaController {
         return elementoService.obtenerSiguienteId();
     }
     
+    //Obtiene la poliza por id
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
+        return elementoService.obtenerPorId(id);
+    }
+    
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody

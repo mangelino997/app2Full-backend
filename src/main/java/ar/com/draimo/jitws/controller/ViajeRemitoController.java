@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.service.ViajeRemitoService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -53,43 +54,43 @@ public class ViajeRemitoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<ViajeRemito> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<ViajeRemito> listarPorAlias(@PathVariable String alias) {
+    public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
     
     //Obtiene una lista por numero
     @GetMapping(value = URL + "/listarPorNumero/{numero}")
     @ResponseBody
-    public List<ViajeRemito> listarPorNumero(@PathVariable int numero) {
+    public Object listarPorNumero(@PathVariable int numero) throws IOException {
         return elementoService.listarPorNumero(numero);
     }
     
     //Obtiene una lista de remitos no pendientes por viajeTramo
     @GetMapping(value = URL + "/listarAsignadosPorViajeTramo/{idViajeTramo}")
     @ResponseBody
-    public List<ViajeRemito> listarAsignadosPorViajeTramo(@PathVariable int idViajeTramo) {
+    public Object listarAsignadosPorViajeTramo(@PathVariable int idViajeTramo) throws IOException {
         return elementoService.listarAsignadosPorViajeTramo(idViajeTramo);
     }
     
     //Obtiene una lista de remitos pendientes por sucursal
     @GetMapping(value = URL + "/listarPendientesPorSucursal/{idSucursal}")
     @ResponseBody
-    public List<ViajeRemito> listarPendientesPorSucursal(@PathVariable int idSucursal) {
+    public Object listarPendientesPorSucursal(@PathVariable int idSucursal) throws IOException {
         return elementoService.listarPendientesPorSucursal(idSucursal);
     }
     
     //Obtiene una lista de remitos pendientes por filtro
     @GetMapping(value = URL + "/listarPendientesPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
     @ResponseBody
-    public List<ViajeRemito> listarPendientesPorFiltro(@PathVariable int idSucursal, 
-            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) {
+    public Object listarPendientesPorFiltro(@PathVariable int idSucursal, 
+            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
         return elementoService.listarPendientesPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
     }
     
@@ -102,11 +103,11 @@ public class ViajeRemitoController {
 //            @PathVariable int idViajePropioTramo) {
 //        return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, 
 //                numeroCamion, idViajePropioTramo);
-//    }
+//    }clienteordenventafiltro
     
     //Obtiene una lista de remitos por filtro
     @PostMapping(value = URL + "/listarPorFiltros")
-    public List<ViajeRemito> listarPorFiltros(@RequestBody ViajeRemitoDTO viajeRemitoDTO) {
+    public Object listarPorFiltros(@RequestBody ViajeRemitoDTO viajeRemitoDTO) throws IOException {
         return elementoService.listarPorFiltros(viajeRemitoDTO);
     }
     
@@ -181,7 +182,7 @@ public class ViajeRemitoController {
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {

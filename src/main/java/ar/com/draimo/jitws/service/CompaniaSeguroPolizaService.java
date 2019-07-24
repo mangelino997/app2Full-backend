@@ -63,6 +63,18 @@ public class CompaniaSeguroPolizaService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Obtiene la lista completa
+    public Object obtenerPorId(int id) throws IOException {
+        CompaniaSeguroPoliza elemento= elementoDAO.findById(id).get();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return mapper.readValue(string, Object.class);
+    }
+
     //Obtiene una lista por empresa
     public Object listarPorEmpresa(int id) throws IOException {
         List<CompaniaSeguroPoliza> elementos=  elementoDAO.findByEmpresa(empresaDAO.findById(id));
