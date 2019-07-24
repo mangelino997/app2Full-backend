@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobanteVencimiento;
 import ar.com.draimo.jitws.service.CompraComprobanteVencimientoService;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +14,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +54,14 @@ public class CompraComprobanteVencimientoController {
     @ResponseBody
     public List<CompraComprobanteVencimiento> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/generarTablaVencimientos/{cantidadCuotas}/{totalImporte}/{idCondicionCompra}")
+    @ResponseBody
+    public List<CompraComprobanteVencimiento> generarTablaVencimientos(@PathVariable int cantidadCuotas,
+            @PathVariable BigDecimal totalImporte,@PathVariable int idCondicionCompra) {
+        return elementoService.generarTablaVencimientos(cantidadCuotas, totalImporte, idCondicionCompra);
     }
     
     //Agrega un registro

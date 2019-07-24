@@ -57,4 +57,12 @@ public class CondicionCompra extends ObjetoGenerico {
         this.cuotas = cuotas;
     }
 
+    public short getDias() {
+        return dias;
+    }
+
+    public void setDias(short dias) {
+        this.dias = dias;
+    }
+
 }
