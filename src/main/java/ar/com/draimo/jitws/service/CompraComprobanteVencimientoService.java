@@ -46,6 +46,8 @@ public class CompraComprobanteVencimientoService {
         //obtiene la condicion de compra por id
         CondicionCompra condicion = condicionCompraDAO.findById(idCondicionCompra).get();
         CompraComprobanteVencimiento vencimiento;
+        BigDecimal total=new BigDecimal(0);
+        BigDecimal dif=new BigDecimal(0);
         //Obtiene la cantidad de dias de condicionCompra
         short cantDias = condicion.getDias();
         //Obtiene la fechaActual
@@ -60,6 +62,15 @@ public class CompraComprobanteVencimientoService {
             fechaString = LocalDate.parse(fechaString).plusDays(cantDias).toString();
             vencimiento.setFecha(Date.valueOf(fechaString));
             vencimientos.add(vencimiento);
+            total = total.add(importe);
+        }
+        if(total.compareTo(totalImporte) == 1) {
+            dif = total.subtract(totalImporte);
+            vencimientos.get(cantidadCuotas-1).setImporte(importe.subtract(dif));
+            
+        } else if(total.compareTo(totalImporte) == -1){
+            dif = totalImporte.subtract(total);
+            vencimientos.get(cantidadCuotas-1).setImporte(importe.add(dif));
         }
         return vencimientos;
     }

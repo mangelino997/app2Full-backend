@@ -67,14 +67,14 @@ public class OrdenVentaController {
     //Obtiene una lista por cliente
     @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
     @ResponseBody
-    public List<OrdenVenta> listarPorCliente(@PathVariable int idCliente) throws IOException {
+    public Object listarPorCliente(@PathVariable int idCliente) throws IOException {
         return elementoService.listarPorCliente(idCliente);
     }
     
     //Obtiene una lista por empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public List<OrdenVenta> listarPorEmpresa(@PathVariable int idEmpresa) throws IOException {
+    public Object listarPorEmpresa(@PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorEmpresa(idEmpresa);
     }
     

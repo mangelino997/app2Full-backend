@@ -4,6 +4,10 @@ import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.model.OrdenVenta;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
@@ -52,13 +56,27 @@ public class OrdenVentaService {
     }
 
     //Obtiene una lista por cliente
-    public List<OrdenVenta> listarPorCliente(int idCliente) throws IOException {
-        return elementoDAO.findByCliente(clienteDAO.findById(idCliente));
+    public Object listarPorCliente(int idCliente) throws IOException {
+        List<OrdenVenta> remitos = elementoDAO.findByCliente(clienteDAO.findById(idCliente));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(remitos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por empresa
-    public List<OrdenVenta> listarPorEmpresa(int idEmpresa) throws IOException {
-        return elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
+    public Object listarPorEmpresa(int idEmpresa) throws IOException {
+        List<OrdenVenta> remitos = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(remitos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un registro
