@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,17 +43,32 @@ public class OrdenVentaService {
     }
 
     //Obtiene la lista completa
-    public List<OrdenVenta> listar() throws IOException {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<OrdenVenta> ordenes = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ordenes);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por nombre
-    public List<OrdenVenta> listarPorNombre(String nombre) {
+    public Object listarPorNombre(String nombre) throws IOException {
+        List<OrdenVenta> ordenes =new ArrayList<>();
         if (nombre.equals("***")) {
-            return elementoDAO.findAll();
+            ordenes= elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            ordenes= elementoDAO.findByNombreContaining(nombre);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ordenes);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por cliente

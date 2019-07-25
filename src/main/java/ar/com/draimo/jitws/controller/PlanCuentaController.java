@@ -60,14 +60,14 @@ public class PlanCuentaController {
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<PlanCuenta> listarPorNombre(@PathVariable String nombre) {
+    public Object listarPorNombre(@PathVariable String nombre) throws IOException {
         return elementoService.listarPorNombre(nombre);
     }
     
     //Obtiene un listado de grupoActivo por idEmpresa
     @GetMapping(value = URL + "/listarGrupoActivo/{idEmpresa}")
     @ResponseBody
-    public List<PlanCuenta> listarGrupoActivo(@PathVariable int idEmpresa) {
+    public Object listarGrupoActivo(@PathVariable int idEmpresa) throws IOException {
         return elementoService.listarGrupoActivo(idEmpresa);
     }
     

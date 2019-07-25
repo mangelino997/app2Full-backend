@@ -75,20 +75,33 @@ public class VentaComprobanteService {
         List<VentaComprobante> ventasComprobantes = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta");
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
                 .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
         String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene un registro por puntoVenta, letra y numero
-    public VentaComprobante obtener(int puntoVenta, String letra, int numero) {
-        return elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+    public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
+        VentaComprobante ventasComprobantes = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene una lista por cliente y empresa
@@ -97,12 +110,13 @@ public class VentaComprobanteService {
                 clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta");
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
                 .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
         String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
         return new ObjectMapper().readValue(string, Object.class);

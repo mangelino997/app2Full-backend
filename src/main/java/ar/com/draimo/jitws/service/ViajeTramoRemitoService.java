@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoRemitoDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 
 /**
  *
@@ -29,13 +34,27 @@ public class ViajeTramoRemitoService {
     }
     
     //Obtiene la lista completa
-    public List<ViajeTramoRemito> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<ViajeTramoRemito> elementos=elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
-    public List<ViajeTramoRemito> listarPorViajeRemito(int idRemito) {
-        return elementoDAO.findByViajeRemito(viajeRemitoDAO.findById(idRemito).get());
+    public Object listarPorViajeRemito(int idRemito) throws IOException {
+         List<ViajeTramoRemito> elementos=elementoDAO.findByViajeRemito(viajeRemitoDAO.findById(idRemito).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un registro

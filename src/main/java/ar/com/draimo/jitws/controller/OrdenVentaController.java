@@ -53,14 +53,14 @@ public class OrdenVentaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenVenta> listar() throws IOException {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<OrdenVenta> listarPorNombre(@PathVariable String nombre) {
+    public Object listarPorNombre(@PathVariable String nombre) throws IOException {
         return elementoService.listarPorNombre(nombre);
     }
     

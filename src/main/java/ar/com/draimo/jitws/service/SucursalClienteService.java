@@ -4,6 +4,12 @@ import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.ISucursalClienteDAO;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.SucursalCliente;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,29 +39,58 @@ public class SucursalClienteService {
     }
     
     //Obtiene la lista completa
-    public List<SucursalCliente> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<SucursalCliente> elementos = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
-    public List<SucursalCliente> listarPorNombre(String nombre) {
+    public Object listarPorNombre(String nombre) throws IOException {
+        List<SucursalCliente> elementos = new ArrayList<>();
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            elementos = elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            elementos = elementoDAO.findByNombreContaining(nombre);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre de banco
-    public List<SucursalCliente> listarPorCliente(int idCliente) {
+    public Object listarPorCliente(int idCliente) throws IOException {
         //Obtiene el cliente por id
         Optional<Cliente> cliente = clienteDAO.findById(idCliente);
-        return elementoDAO.findByCliente(cliente);
+        List<SucursalCliente> elementos = elementoDAO.findByCliente(cliente);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por alias del cliente
-    public List<SucursalCliente> listarPorAliasCliente(String alias) {
-        return elementoDAO.findByCliente_AliasContaining(alias);
+    public Object listarPorAliasCliente(String alias) throws IOException {
+        List<SucursalCliente> elementos = elementoDAO.findByCliente_AliasContaining(alias); 
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Agrega un registro

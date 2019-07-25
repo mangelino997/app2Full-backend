@@ -52,7 +52,7 @@ public class ClienteOrdenVentaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<ClienteOrdenVenta> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
@@ -66,14 +66,14 @@ public class ClienteOrdenVentaController {
     //Obtiene una lista por OrdenVenta
     @GetMapping(value = URL + "/listarPorOrdenVenta/{id}")
     @ResponseBody
-    public List<ClienteOrdenVenta> listarPorOrdenVenta(@PathVariable int id) {
+    public Object listarPorOrdenVenta(@PathVariable int id) throws IOException {
         return elementoService.listarPorOrdenVenta(id);
     }
     
     //Obtiene por compania de Cliente y OrdenVenta
     @GetMapping(value = URL + "/listarPorClienteYOrdenVenta/{idCliente}/{idOrdenVenta}")
     @ResponseBody
-    public List<ClienteOrdenVenta> listarPorClienteYOrdenVenta(@PathVariable int idCliente, @PathVariable int idOrdenVenta) {
+    public Object listarPorClienteYOrdenVenta(@PathVariable int idCliente, @PathVariable int idOrdenVenta) throws IOException {
         return elementoService.listarPorClienteYOrdenVenta(idCliente, idOrdenVenta);
     }
     

@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.service.OrdenRecoleccionService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,29 +52,29 @@ public class OrdenRecoleccionController {
     //Obtiene un registro por id
     @GetMapping(value = URL + "/obtenerPorId/{idOrdenRecoleccion}")
     @ResponseBody
-    public OrdenRecoleccion obtenerPorId(@PathVariable int idOrdenRecoleccion) {
+    public Object obtenerPorId(@PathVariable int idOrdenRecoleccion) throws IOException {
         return elementoService.obtenerPorId(idOrdenRecoleccion);
     }
     
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenRecoleccion> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<OrdenRecoleccion> listarPorAlias(@PathVariable String alias) {
+    public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
     
     //Obtiene una lista por filtros
     @GetMapping(value = URL + "/listarPorFiltros/{fechaEmision}/{idCliente}")
     @ResponseBody
-    public List<OrdenRecoleccion> listarPorFiltros(@PathVariable String fechaEmision,
-            @PathVariable int idCliente) {
+    public Object listarPorFiltros(@PathVariable String fechaEmision,
+            @PathVariable int idCliente) throws IOException {
         return elementoService.listarPorFiltros(fechaEmision, idCliente);
     }
     

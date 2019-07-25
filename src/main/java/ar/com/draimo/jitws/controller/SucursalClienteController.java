@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.SucursalCliente;
 import ar.com.draimo.jitws.service.SucursalClienteService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,28 +52,28 @@ public class SucursalClienteController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<SucursalCliente> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<SucursalCliente> listarPorNombre(@PathVariable String nombre) {
+    public Object listarPorNombre(@PathVariable String nombre) throws IOException {
         return elementoService.listarPorNombre(nombre);
     }
     
     //Obtiene una lista por cliente
     @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
     @ResponseBody
-    public List<SucursalCliente> listarPorCliente(@PathVariable int idCliente) {
+    public Object listarPorCliente(@PathVariable int idCliente) throws IOException {
         return elementoService.listarPorCliente(idCliente);
     }
     
     //Obtiene una lista por alias del cliente
     @GetMapping(value = URL + "/listarPorAliasCliente/{alias}")
     @ResponseBody
-    public List<SucursalCliente> listarPorAliasCliente(@PathVariable String alias) {
+    public Object listarPorAliasCliente(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAliasCliente(alias);
     }
     

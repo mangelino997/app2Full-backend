@@ -4,7 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeTramoRemito;
 import ar.com.draimo.jitws.service.ViajeTramoRemitoService;
-import java.util.List;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -51,14 +51,14 @@ public class ViajeTramoRemitoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<ViajeTramoRemito> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por viajeRemito
     @GetMapping(value = URL + "/listarPorViajeRemito/{idRemito}")
     @ResponseBody
-    public List<ViajeTramoRemito> listarPorViajeRemito(@PathVariable int idRemito) {
+    public Object listarPorViajeRemito(@PathVariable int idRemito) throws IOException {
         return elementoService.listarPorViajeRemito(idRemito);
     }
     

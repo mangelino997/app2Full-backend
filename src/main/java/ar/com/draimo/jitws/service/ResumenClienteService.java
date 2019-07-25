@@ -28,6 +28,7 @@ public class ResumenClienteService {
     //Obtiene la lista completa
     public List<ResumenCliente> listar() {
         return elementoDAO.findAll();
+        
     }
     
     //Obtiene una lista por nombre

@@ -178,8 +178,15 @@ public class ViajeRemitoService {
 //    }
     
     //Obtiene un registro por puntoVenta, letra y numero
-    public ViajeRemito obtener(int puntoVenta, String letra, int numero) {
-        return elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+    public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
+        ViajeRemito remitos=elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(remitos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Asigna los remitos

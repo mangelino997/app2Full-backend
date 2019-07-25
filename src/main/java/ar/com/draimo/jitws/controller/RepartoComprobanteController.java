@@ -52,7 +52,7 @@ public class RepartoComprobanteController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<RepartoComprobante> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
