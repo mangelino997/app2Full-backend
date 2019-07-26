@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajePeaje;
 import ar.com.draimo.jitws.service.ViajePeajeService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -52,14 +53,14 @@ public class ViajePeajeController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<ViajePeaje> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene la lista de peajes por ViajePropio
     @GetMapping(value = URL + "/listarPeajes/{idViaje}")
     @ResponseBody
-    public List<ViajePeaje> listarPeajes(@PathVariable int idViaje) {
+    public Object listarPeajes(@PathVariable int idViaje) throws IOException {
         return elementoService.listarPeajes(idViaje);
     }
     
