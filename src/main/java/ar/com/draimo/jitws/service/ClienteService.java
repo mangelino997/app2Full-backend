@@ -112,7 +112,6 @@ public class ClienteService {
                 clienteOrdenVenta.setCliente(cliente);
                 clienteOrdenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
                 clienteOrdenVenta.setUsuarioAlta(elemento.getUsuarioAlta());
-                clienteOrdenVenta.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
                 clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
             }
         }

@@ -102,15 +102,32 @@ public class ClienteOrdenVentaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ClienteOrdenVenta agregar(ClienteOrdenVenta elemento) {
+        ClienteOrdenVenta clienteOrdenVenta;
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        elemento.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
+        if(elemento.isEsOrdenVentaPorDefecto()){
+            clienteOrdenVenta= elementoDAO.findByClienteAndEsOrdenVentaPorDefectoTrue(
+                    elemento.getCliente());
+            if (clienteOrdenVenta!=null) {
+                clienteOrdenVenta.setEsOrdenVentaPorDefecto(false);
+                elementoDAO.save(clienteOrdenVenta);
+            }
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ClienteOrdenVenta elemento) {
-        elemento.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
+        ClienteOrdenVenta clienteOrdenVenta;
+        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
+        if(elemento.isEsOrdenVentaPorDefecto()){
+            clienteOrdenVenta= elementoDAO.findByClienteAndEsOrdenVentaPorDefectoTrue(
+                    elemento.getCliente());
+            if (clienteOrdenVenta!=null) {
+                clienteOrdenVenta.setEsOrdenVentaPorDefecto(false);
+                elementoDAO.save(clienteOrdenVenta);
+            }
+        }
         elementoDAO.save(elemento);
     }
     

@@ -61,6 +61,10 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
     @JoinColumn(name = "idOrdenVentaTarifaPorDefecto", nullable = false)
     private OrdenVentaTarifa ordenVentaTarifaPorDefecto;
     
+    //Define si es orden vetna por defecto
+    @Column(name = "esOrdenVentaPorDefecto", nullable = false)
+    private boolean esOrdenVentaPorDefecto;
+    
     //Getters y Setters de la clase
 
     public Cliente getCliente() {
@@ -125,6 +129,14 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
 
     public void setOrdenVentaTarifaPorDefecto(OrdenVentaTarifa ordenVentaTarifaPorDefecto) {
         this.ordenVentaTarifaPorDefecto = ordenVentaTarifaPorDefecto;
+    }
+
+    public boolean isEsOrdenVentaPorDefecto() {
+        return esOrdenVentaPorDefecto;
+    }
+
+    public void setEsOrdenVentaPorDefecto(boolean esOrdenVentaPorDefecto) {
+        this.esOrdenVentaPorDefecto = esOrdenVentaPorDefecto;
     }
 
 }
