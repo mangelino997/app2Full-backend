@@ -32,6 +32,8 @@ public class DuplicidadError {
     
     public static final String NUMERO_INTERNO_UNICO = "numeroInterno_UNIQUE";
     
+    public static final String ORDEN_VENTA_UNICO = "cliente_ordenventa_clienteordenventa_UNIQUE";
+    
     public static final String RAZONSOCIAL_UNICO = "razonsocial_UNIQUE";
     
     public static final String SITIOWEB_UNICO = "sitioWeb_UNIQUE";

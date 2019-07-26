@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RetiroDepositoComprobante;
 import ar.com.draimo.jitws.service.RetiroDepositoComprobanteService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,14 +52,14 @@ public class RetiroDepositoComprobanteController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<RetiroDepositoComprobante> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene la lista por RetiroDeposito
     @GetMapping(value = URL + "/listarComprobantes/{idRetiroDeposito}")
     @ResponseBody
-    public List<RetiroDepositoComprobante> listarComprobantes(@PathVariable int idRetiroDeposito) {
+    public Object listarComprobantes(@PathVariable int idRetiroDeposito) throws IOException {
         return elementoService.listarComprobantes(idRetiroDeposito);
     }
     

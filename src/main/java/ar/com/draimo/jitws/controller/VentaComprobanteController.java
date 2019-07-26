@@ -66,7 +66,7 @@ public class VentaComprobanteController {
     //Obtiene un registro por puntoventa letra y numero
     @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")
     @ResponseBody
-    public VentaComprobante obtener(int puntoVenta, String letra, int numero) {
+    public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
         return elementoService.obtener(puntoVenta, letra, numero);
     }
     

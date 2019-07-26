@@ -27,10 +27,6 @@ public class VentaTipoItem extends ObjetoGenerico {
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
 
-    //Define si es contra Reembolso
-    @Column(name = "esContraReembolso", nullable = false)
-    private boolean esContrareembolso;
-
     //Referencia a la clase AfipConcepto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipConcepto", nullable = false)
@@ -60,14 +56,6 @@ public class VentaTipoItem extends ObjetoGenerico {
 
     public void setTipoComprobante(TipoComprobante tipoComprobante) {
         this.tipoComprobante = tipoComprobante;
-    }
-
-    public boolean getEsContrareembolso() {
-        return esContrareembolso;
-    }
-
-    public void setEsContrareembolso(boolean esContrareembolso) {
-        this.esContrareembolso = esContrareembolso;
     }
 
     public AfipConcepto getAfipConcepto() {

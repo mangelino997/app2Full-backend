@@ -64,16 +64,16 @@ public class MonedaCuentaContableController {
     }
     
     //Obtiene una lista por nombre de moneda
-    @GetMapping(value = URL + "/listarPorNombreMoneda/{nombre}")
+    @GetMapping(value = URL + "/listarPorNombreMoneda/{nombre}/{idEmpresa}")
     @ResponseBody
-    public Object listarPorNombreMoneda(@PathVariable String nombre) throws IOException {
-        return elementoService.listarPorNombreMoneda(nombre);
+    public Object listarPorNombreMoneda(@PathVariable String nombre, @PathVariable int idEmpresa) throws IOException {
+        return elementoService.listarPorNombreMoneda(nombre, idEmpresa);
     }
     
     //Obtiene una lista por empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{id}")
     @ResponseBody
-    public List<MonedaCuentaContable> listarPorEmpresa(@PathVariable int id) {
+    public Object listarPorEmpresa(@PathVariable int id) throws IOException {
         return elementoService.listarPorEmpresa(id);
     }
     

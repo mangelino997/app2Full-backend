@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IRepartoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoDAO;
+import ar.com.draimo.jitws.model.VentaComprobante;
 
 /**
  * Servicio RepartoComprobante
@@ -51,8 +52,20 @@ public class RepartoComprobanteService {
     }
     
     //Obtiene la lista completa
-    public List<RepartoComprobante> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<RepartoComprobante> ventasComprobantes = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene la lista por repartoPropio
@@ -60,9 +73,13 @@ public class RepartoComprobanteService {
         List<RepartoComprobante> comprobantes = elementoDAO.findByReparto(repartoPropioDAO.findById(idReparto).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenVenta");
+                .serializeAllExcept("ventaComprobante","ordenVenta","cliente");
         FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(comprobantes);
         return new ObjectMapper().readValue(string, Object.class);

@@ -4,7 +4,13 @@ import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.TipoComprobante;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,32 +39,62 @@ public class OrdenRecoleccionService {
     }
     
     //Obtiene un registro por id
-    public OrdenRecoleccion obtenerPorId(int idOrdenRecoleccion) {
-        return (elementoDAO.findById(idOrdenRecoleccion).get());
+    public Object obtenerPorId(int idOrdenRecoleccion) throws IOException {
+        OrdenRecoleccion orden= (elementoDAO.findById(idOrdenRecoleccion).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(orden);
+        return mapper.readValue(string, Object.class);
     } 
     
     //Obtiene la lista completa
-    public List<OrdenRecoleccion> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<OrdenRecoleccion> ordenes = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ordenes);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por alias
-    public List<OrdenRecoleccion> listarPorAlias(String alias) {
+    public Object listarPorAlias(String alias) throws IOException {
+        List<OrdenRecoleccion> ordenes = elementoDAO.findAll();
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            ordenes= elementoDAO.findAll();
         }else {
-        return elementoDAO.findByAliasContaining(alias);
+            ordenes= elementoDAO.findByAliasContaining(alias);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ordenes);
+        return mapper.readValue(string, Object.class);
     }
     
     
     //Obtiene una lista por alias
-    public List<OrdenRecoleccion> listarPorFiltros(String fechaEmision, int idCliente) {
+    public Object listarPorFiltros(String fechaEmision, int idCliente) throws IOException {
+        List<OrdenRecoleccion> ordenes = new ArrayList<>();
         if (fechaEmision.isEmpty() && idCliente==0) {
-            return elementoDAO.listarPorFiltros(fechaEmision, idCliente);
+            ordenes= elementoDAO.listarPorFiltros(fechaEmision, idCliente);
         } else {
-            return elementoDAO.findAll();
+            ordenes= elementoDAO.findAll();
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ordenes);
+        return mapper.readValue(string, Object.class);
     }
     
     //Agrega un registro

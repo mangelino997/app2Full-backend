@@ -183,6 +183,10 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_NUMERO_INTERNO;
                     plusMensaje = " NUMERO INTERNO";
                     break;
+                case DuplicidadError.ORDEN_VENTA_UNICO:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ORDEN_VENTA;
+                    plusMensaje = " ORDEN VENTA";
+                    break;
                 case DuplicidadError.REPARTO_ORDENRECOLECCION_UNICOS:
                     codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_ORECOLECCION;
                     plusMensaje = " REPARTO Y ORDEN RECOLECCION";

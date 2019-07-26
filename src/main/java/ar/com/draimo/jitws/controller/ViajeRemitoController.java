@@ -6,7 +6,6 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.service.ViajeRemitoService;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -121,7 +120,7 @@ public class ViajeRemitoController {
     //Obtiene un registro por puntoventa letra y numero
     @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")
     @ResponseBody
-    public ViajeRemito obtener(int puntoVenta, String letra, int numero) {
+    public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
         return elementoService.obtener(puntoVenta, letra, numero);
     }
     

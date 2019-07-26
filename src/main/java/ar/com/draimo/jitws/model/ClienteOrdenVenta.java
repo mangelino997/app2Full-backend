@@ -58,8 +58,12 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
     
     //Referencia a la clase tipo tarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idTipoTarifaPorDefecto", nullable = false)
-    private TipoTarifa tipoTarifaPorDefecto;
+    @JoinColumn(name = "idOrdenVentaTarifaPorDefecto", nullable = false)
+    private OrdenVentaTarifa ordenVentaTarifaPorDefecto;
+    
+    //Define si es orden vetna por defecto
+    @Column(name = "esOrdenVentaPorDefecto", nullable = false)
+    private boolean esOrdenVentaPorDefecto;
     
     //Getters y Setters de la clase
 
@@ -119,12 +123,20 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
         this.fechaUltimaMod = fechaUltimaMod;
     }
 
-    public TipoTarifa getTipoTarifaPorDefecto() {
-        return tipoTarifaPorDefecto;
+    public OrdenVentaTarifa getOrdenVentaTarifaPorDefecto() {
+        return ordenVentaTarifaPorDefecto;
     }
 
-    public void setTipoTarifaPorDefecto(TipoTarifa tipoTarifaPorDefecto) {
-        this.tipoTarifaPorDefecto = tipoTarifaPorDefecto;
+    public void setOrdenVentaTarifaPorDefecto(OrdenVentaTarifa ordenVentaTarifaPorDefecto) {
+        this.ordenVentaTarifaPorDefecto = ordenVentaTarifaPorDefecto;
+    }
+
+    public boolean isEsOrdenVentaPorDefecto() {
+        return esOrdenVentaPorDefecto;
+    }
+
+    public void setEsOrdenVentaPorDefecto(boolean esOrdenVentaPorDefecto) {
+        this.esOrdenVentaPorDefecto = esOrdenVentaPorDefecto;
     }
 
 }

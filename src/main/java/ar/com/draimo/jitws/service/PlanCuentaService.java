@@ -55,17 +55,32 @@ public class PlanCuentaService {
     }
     
     //Obtiene una lista por nombre
-    public List<PlanCuenta> listarPorNombre(String nombre) {
+    public Object listarPorNombre(String nombre) throws IOException {
+        List<PlanCuenta> planesCuenta = elementoDAO.findAll();
         if(nombre.equals("***")) {
-            return elementoDAO.findAll();
+            planesCuenta= elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            planesCuenta= elementoDAO.findByNombreContaining(nombre);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planesCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene un listado por grupocuentacontable y estaactivo
-    public List<PlanCuenta> listarGrupoActivo(int idEmpresa) {
-        return elementoDAO.listarGrupoActivo(idEmpresa);
+    public Object listarGrupoActivo(int idEmpresa) throws IOException {
+        List<PlanCuenta> planesCuenta =  elementoDAO.listarGrupoActivo(idEmpresa);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planesCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene el plan de cuenta
@@ -73,7 +88,7 @@ public class PlanCuentaService {
             throws JsonProcessingException, IOException {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
         PlanCuenta planCuenta = elementoDAO.findByEmpresaAndNivel(empresa, (short)1);
-        PlanCuenta pc = crearPlanCuenta(planCuenta);
+        Object pc = crearPlanCuenta(planCuenta);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -84,15 +99,21 @@ public class PlanCuentaService {
     }
     
     //Crea el plan de cuenta
-    public PlanCuenta crearPlanCuenta(PlanCuenta planCuenta) {
+    public Object crearPlanCuenta(PlanCuenta planCuenta) throws IOException {
         List<PlanCuenta> hijos = elementoDAO.findByPadre(planCuenta);
         if(!hijos.isEmpty()) {
             planCuenta.setHijos(hijos);
             for(PlanCuenta pc : planCuenta.getHijos()) {
-                pc = crearPlanCuenta(pc);
+                pc = (PlanCuenta) crearPlanCuenta(pc);
             }
         }
-        return planCuenta;
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Lista por empresa y grupo cuenta contable

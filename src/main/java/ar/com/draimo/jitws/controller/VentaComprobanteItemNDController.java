@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.VentaComprobanteItemND;
 import ar.com.draimo.jitws.service.VentaComprobanteItemNDService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -50,7 +51,7 @@ public class VentaComprobanteItemNDController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<VentaComprobanteItemND> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     

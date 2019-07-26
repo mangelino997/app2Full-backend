@@ -49,8 +49,15 @@ public class ClienteOrdenVentaService {
     }
     
     //Obtiene la lista completa
-    public List<ClienteOrdenVenta> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<ClienteOrdenVenta> clienteOrdenesVentas = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clienteOrdenesVentas);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene una lista por Cliente
@@ -66,30 +73,61 @@ public class ClienteOrdenVentaService {
     }
     
     //Obtiene una lista por OrdenVenta
-    public List<ClienteOrdenVenta> listarPorOrdenVenta(int idOrdenVenta) {
+    public Object listarPorOrdenVenta(int idOrdenVenta) throws IOException {
         OrdenVenta ordenVenta = ordenVentaDAO.findById(idOrdenVenta).get();
-        return elementoDAO.findByOrdenVenta(ordenVenta);
+        List<ClienteOrdenVenta> clienteOrdenesVentas =  elementoDAO.findByOrdenVenta(ordenVenta);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clienteOrdenesVentas);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene por compania de Cliente y OrdenVenta
-    public List<ClienteOrdenVenta> listarPorClienteYOrdenVenta(int idCliente, int idOrdenVenta) {
+    public Object listarPorClienteYOrdenVenta(int idCliente, int idOrdenVenta) throws IOException {
         Cliente cliente = clienteDAO.findById(idCliente).get();
         OrdenVenta ordenVenta = ordenVentaDAO.findById(idOrdenVenta).get();
-        return elementoDAO.findByClienteAndOrdenVenta(cliente, ordenVenta);
+        List<ClienteOrdenVenta> clienteOrdenesVentas = elementoDAO.findByClienteAndOrdenVenta(cliente, ordenVenta);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clienteOrdenesVentas);
+        return mapper.readValue(string, Object.class);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ClienteOrdenVenta agregar(ClienteOrdenVenta elemento) {
+        ClienteOrdenVenta clienteOrdenVenta;
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        elemento.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
+        if(elemento.isEsOrdenVentaPorDefecto()){
+            clienteOrdenVenta= elementoDAO.findByClienteAndEsOrdenVentaPorDefectoTrue(
+                    elemento.getCliente());
+            if (clienteOrdenVenta!=null) {
+                clienteOrdenVenta.setEsOrdenVentaPorDefecto(false);
+                elementoDAO.save(clienteOrdenVenta);
+            }
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ClienteOrdenVenta elemento) {
-        elemento.setTipoTarifaPorDefecto(tipoTarifaDAO.findById(1).get());
+        ClienteOrdenVenta clienteOrdenVenta;
+        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
+        if(elemento.isEsOrdenVentaPorDefecto()){
+            clienteOrdenVenta= elementoDAO.findByClienteAndEsOrdenVentaPorDefectoTrue(
+                    elemento.getCliente());
+            if (clienteOrdenVenta!=null) {
+                clienteOrdenVenta.setEsOrdenVentaPorDefecto(false);
+                elementoDAO.save(clienteOrdenVenta);
+            }
+        }
         elementoDAO.save(elemento);
     }
     

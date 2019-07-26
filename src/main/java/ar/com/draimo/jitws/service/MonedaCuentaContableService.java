@@ -63,12 +63,13 @@ public class MonedaCuentaContableService {
     }
 
     //Obtiene una lista por nombre de moneda
-    public Object listarPorNombreMoneda(String nombre) throws IOException {
+    public Object listarPorNombreMoneda(String nombre, int idEmpresa) throws IOException {
         List<MonedaCuentaContable> monedasCuentasContables = new ArrayList<>();
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
         if (nombre.equals("***")) {
-            monedasCuentasContables = elementoDAO.findAll();
+            monedasCuentasContables = elementoDAO.findByEmpresa(empresa);
         } else {
-            monedasCuentasContables = elementoDAO.findByMoneda_NombreContaining(nombre);
+            monedasCuentasContables = elementoDAO.findByMoneda_NombreContainingAndEmpresa(nombre, empresa);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -80,9 +81,16 @@ public class MonedaCuentaContableService {
     }
 
     //Obtiene una lista por moneda
-    public List<MonedaCuentaContable> listarPorEmpresa(int id) {
+    public Object listarPorEmpresa(int id) throws IOException {
         Optional<Empresa> elemento = empresaDAO.findById(id);
-        return elementoDAO.findByEmpresa(elemento.get());
+        List<MonedaCuentaContable> monedas= elementoDAO.findByEmpresa(elemento.get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(monedas);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene un registro por moneda y empresa
@@ -115,6 +123,10 @@ public class MonedaCuentaContableService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(MonedaCuentaContable elemento) {
         elementoDAO.delete(elemento);
+    }
+
+    public Object listarPorNombreMoneda(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
