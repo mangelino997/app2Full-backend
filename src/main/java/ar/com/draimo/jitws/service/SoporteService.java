@@ -62,6 +62,9 @@ public class SoporteService {
     //Obtiene la lista completa
     public Object obtenerPorId(int id) throws IOException {
         Soporte elemento = elementoDAO.findById(id).get();
+        if (elemento.getBugImagen()==null) {
+            elemento.setBugImagen(new BugImagen());
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept();
