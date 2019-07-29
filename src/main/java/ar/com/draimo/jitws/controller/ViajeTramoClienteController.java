@@ -49,18 +49,18 @@ public class ViajeTramoClienteController {
         return elementoService.obtenerSiguienteId();
     }
     
-    //Obtiene el regusstro por id
-    @GetMapping(value = URL + "/listarPorViajeTramo/{idViajeTramo}")
-    @ResponseBody
-    public Object listarPorViajeTramo(@PathVariable int idViajeTramo) throws IOException {
-        return elementoService.listarPorViajeTramo(idViajeTramo);
-    }
-    
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
+    }
+    
+    //Obtiene el regusstro por id
+    @GetMapping(value = URL + "/listarPorViajeTramo/{idViajeTramo}")
+    @ResponseBody
+    public Object listarPorViajeTramo(@PathVariable int idViajeTramo) throws IOException {
+        return elementoService.listarPorViajeTramo(idViajeTramo);
     }
     
     //Agrega un registro

@@ -186,7 +186,7 @@ public class PersonalService {
     }
 
     //Obtiene un listado de acompañantes ordenados por nombre
-    public Object listarAcompaniantesOrdenadoPorNombre(String alias) throws IOException {
+    public Object listarAcompaniantesPorAliasOrdenadosPorNombre(String alias) throws IOException {
         List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

@@ -94,7 +94,7 @@ public class UsuarioEmpresaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody  UsuarioDTO elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody UsuarioDTO elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

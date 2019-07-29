@@ -39,8 +39,8 @@ public class CuentaBancariaService {
     }
 
     //Obtiene una lista por empresa
-    public List<CuentaBancaria> listarCuentasConChequeras(int idEmpresa) {
-        return elementoDAO.listarCuentasConChequeras(idEmpresa);
+    public List<CuentaBancaria> listarConChequerasPorEmpresa(int idEmpresa) {
+        return elementoDAO.listarConChequerasPorEmpresa(idEmpresa);
     }
 
     //Agrega un registro
