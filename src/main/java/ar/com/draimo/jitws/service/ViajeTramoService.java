@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 
 /**
  * Servicio ViajeTramo
@@ -31,13 +36,27 @@ public class ViajeTramoService {
     }
     
     //Obtiene una lista de tramos por viaje propio
-    public List<ViajeTramo> listarTramos(int idViaje) {
-        return elementoDAO.findByViaje(viajePropioDAO.obtenerPorId(idViaje));
+    public Object listarTramos(int idViaje) throws IOException {
+        List<ViajeTramo>  elementos= elementoDAO.findByViaje(viajePropioDAO.obtenerPorId(idViaje));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene la lista completa
-    public List<ViajeTramo> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<ViajeTramo>  elementos= elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Agrega un registro

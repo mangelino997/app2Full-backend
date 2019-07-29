@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import ar.com.draimo.jitws.service.ViajeTramoClienteService;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -50,18 +49,18 @@ public class ViajeTramoClienteController {
         return elementoService.obtenerSiguienteId();
     }
     
-    //Obtiene el regusstro por id
-    @GetMapping(value = URL + "/listarPorViajeTramo/{idViajeTramo}")
-    @ResponseBody
-    public Object listarPorViajeTramo(@PathVariable int idViajeTramo) throws IOException {
-        return elementoService.listarPorViajeTramo(idViajeTramo);
-    }
-    
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
+    }
+    
+    //Obtiene el regusstro por id
+    @GetMapping(value = URL + "/listarPorViajeTramo/{idViajeTramo}")
+    @ResponseBody
+    public Object listarPorViajeTramo(@PathVariable int idViajeTramo) throws IOException {
+        return elementoService.listarPorViajeTramo(idViajeTramo);
     }
     
     //Agrega un registro

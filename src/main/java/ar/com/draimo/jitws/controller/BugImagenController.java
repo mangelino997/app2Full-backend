@@ -1,18 +1,12 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
-import ar.com.draimo.jitws.exception.EstadoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.service.BugImagenService;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -55,25 +49,6 @@ public class BugImagenController {
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
-//    //Obtiene por id
-//    @GetMapping(value = URL + "/obtenerImagenPorId/{id}")
-//    @ResponseBody
-//    public ResponseEntity<InputStreamResource> obtenerImagenPorId(@PathVariable int id) {
-//        try {
-//            BugImagen imagen = elementoService.obtenerPorId(id);
-//            HttpHeaders respHeaders = new HttpHeaders();
-//            respHeaders.add("Content-Type", imagen.getTipo());
-//            respHeaders.setContentLength(imagen.getTamanio());
-//            respHeaders.setContentDispositionFormData("attachment", imagen.getNombre());
-//            InputStreamResource isr = new InputStreamResource(new ByteArrayInputStream(imagen.getDatos()));
-//            return new ResponseEntity<InputStreamResource>(isr, respHeaders, HttpStatus.OK);
-//        } catch(Exception e) {
-//            //Muestra mensaje de error interno en el servidor
-//            return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO, 
-//                    MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
     
     //Obtiene por id
     @GetMapping(value = URL + "/obtenerPorId/{id}")

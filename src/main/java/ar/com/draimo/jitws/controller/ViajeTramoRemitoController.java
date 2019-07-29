@@ -56,10 +56,10 @@ public class ViajeTramoRemitoController {
     }
     
     //Obtiene una lista por viajeRemito
-    @GetMapping(value = URL + "/listarPorViajeRemito/{idRemito}")
+    @GetMapping(value = URL + "/listarPorViajeRemito/{idViajeRemito}")
     @ResponseBody
-    public Object listarPorViajeRemito(@PathVariable int idRemito) throws IOException {
-        return elementoService.listarPorViajeRemito(idRemito);
+    public Object listarPorViajeRemito(@PathVariable int idViajeRemito) throws IOException {
+        return elementoService.listarPorViajeRemito(idViajeRemito);
     }
     
     //Agrega un registro

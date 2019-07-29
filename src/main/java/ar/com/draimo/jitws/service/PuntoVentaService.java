@@ -70,8 +70,7 @@ public class PuntoVentaService {
 
     //Obtiene una lista por sucursal y empresa y agrega letra a cada registro
     public List<PuntoVenta> listarPorSucursalYEmpresaLetra(int idSucursal, int idEmpresa) {
-        List<PuntoVenta> puntosVentas = elementoDAO.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
-        return puntosVentas;
+        return elementoDAO.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
     }
 
     //Obtiene una lista por sucursal y empresa

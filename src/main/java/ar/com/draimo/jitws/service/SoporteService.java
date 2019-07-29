@@ -59,6 +59,20 @@ public class SoporteService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
+    //Obtiene la lista completa
+    public Object obtenerPorId(int id) throws IOException {
+        Soporte elemento = elementoDAO.findById(id).get();
+        if (elemento.getBugImagen()==null) {
+            elemento.setBugImagen(new BugImagen());
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroImagen", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return mapper.readValue(string, Object.class);
+    }
 
     //Obtiene una lista por alias y usuario
     public Object listarPorAliasContainingYUsuario(int idUsuario, String alias) throws IOException {

@@ -65,7 +65,7 @@ public class AfipWSController {
     //Solicita CAE anticipado
     @GetMapping(value = URL + "/solicitarFECAEA/{anio}/{mes}/{quincena}")
     @ResponseBody
-    public void listarPorNombre(@PathVariable int anio, @PathVariable int mes, @PathVariable short quincena) {
+    public void solicitarFECAEA(@PathVariable int anio, @PathVariable int mes, @PathVariable short quincena) {
         elementoService.solicitarFECAEA(anio, mes, quincena);
     }
 

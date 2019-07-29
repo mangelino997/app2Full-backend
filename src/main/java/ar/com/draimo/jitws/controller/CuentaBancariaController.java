@@ -55,10 +55,10 @@ public class CuentaBancariaController {
         return elementoService.listar();
     }
     //Obtiene la lista completa
-    @GetMapping(value = URL + "/listarCuentasConChequeraPorEmpresa/{idEmpresa}")
+    @GetMapping(value = URL + "/listarConChequerasPorEmpresa/{idEmpresa}")
     @ResponseBody
     public List<CuentaBancaria> listarConChequerasPorEmpresa(@PathVariable int idEmpresa) {
-        return elementoService.listarCuentasConChequeras(idEmpresa);
+        return elementoService.listarConChequerasPorEmpresa(idEmpresa);
     }
     
     //Obtiene una lista por empresa

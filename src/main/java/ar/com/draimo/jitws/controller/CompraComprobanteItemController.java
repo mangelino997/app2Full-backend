@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobanteItem;
 import ar.com.draimo.jitws.service.CompraComprobanteItemService;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;

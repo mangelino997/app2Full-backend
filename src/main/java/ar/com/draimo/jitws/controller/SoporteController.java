@@ -57,6 +57,13 @@ public class SoporteController {
         return elementoService.listar();
     }
 
+    //Obtiene un registro por id
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
+        return elementoService.obtenerPorId(id);
+    }
+
     //Obtiene una lista por alias y usuario
     @GetMapping(value = URL + "/listarPorAliasYUsuario/{alias}/{idUsuario}")
     @ResponseBody

@@ -24,109 +24,91 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase ViajeRemito Controller
+ *
  * @author blas
  */
-
 @RestController
 public class ViajeRemitoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/viajeremito";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/viajeremito";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     ViajeRemitoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
-    
+
     //Obtiene una lista por numero
     @GetMapping(value = URL + "/listarPorNumero/{numero}")
     @ResponseBody
     public Object listarPorNumero(@PathVariable int numero) throws IOException {
         return elementoService.listarPorNumero(numero);
     }
-    
+
     //Obtiene una lista de remitos no pendientes por viajeTramo
     @GetMapping(value = URL + "/listarAsignadosPorViajeTramo/{idViajeTramo}")
     @ResponseBody
     public Object listarAsignadosPorViajeTramo(@PathVariable int idViajeTramo) throws IOException {
         return elementoService.listarAsignadosPorViajeTramo(idViajeTramo);
     }
-    
+
     //Obtiene una lista de remitos pendientes por sucursal
     @GetMapping(value = URL + "/listarPendientesPorSucursal/{idSucursal}")
     @ResponseBody
     public Object listarPendientesPorSucursal(@PathVariable int idSucursal) throws IOException {
         return elementoService.listarPendientesPorSucursal(idSucursal);
     }
-    
+
     //Obtiene una lista de remitos pendientes por filtro
     @GetMapping(value = URL + "/listarPendientesPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
     @ResponseBody
-    public Object listarPendientesPorFiltro(@PathVariable int idSucursal, 
+    public Object listarPendientesPorFiltro(@PathVariable int idSucursal,
             @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
         return elementoService.listarPendientesPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
     }
-    
-//    //Obtiene una lista de remitos asignados por filtro
-//    @GetMapping(value = URL + "/listarAsignadosPorFiltro/{idSucursal}/{idSucursalDestino}"
-//            + "/{numeroCamion}/{idViajePropioTramo}")
-//    @ResponseBody
-//    public List<ViajeRemito> listarAsignadosPorFiltro(@PathVariable int idSucursal, 
-//            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion, 
-//            @PathVariable int idViajePropioTramo) {
-//        return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, 
-//                numeroCamion, idViajePropioTramo);
-//    }clienteordenventafiltro
-    
+
     //Obtiene una lista de remitos por filtro
     @PostMapping(value = URL + "/listarPorFiltros")
     public Object listarPorFiltros(@RequestBody ViajeRemitoDTO viajeRemitoDTO) throws IOException {
         return elementoService.listarPorFiltros(viajeRemitoDTO);
     }
-    
-//    //Obtiene una lista de remito por viaje propio o viaje tercero
-//    @GetMapping(value = URL + "/listarRemitos/{idViajeTramo}/{item}")
-//    @ResponseBody
-//    public List<ViajeRemito> listarRemitos(@PathVariable int idViajeTramo, @PathVariable int item) {
-//        return elementoService.listarRemitos(idViajeTramo, item);
-//    }
-    
+
     //Obtiene un registro por puntoventa letra y numero
     @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")
     @ResponseBody
     public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
         return elementoService.obtener(puntoVenta, letra, numero);
     }
-    
+
     //Asigna remitos
     @PutMapping(value = URL + "/asignar")
-    public ResponseEntity<?> asignar(@RequestPart("elementos") String elementos,@RequestPart("viajeTramo") String idViajeTramo) {
+    public ResponseEntity<?> asignar(@RequestPart("elementos") String elementos, @RequestPart("viajeTramo") String idViajeTramo) {
         try {
             elementoService.asignar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
@@ -136,24 +118,24 @@ public class ViajeRemitoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Quita remitos
-    @DeleteMapping(value = URL + "/quitar/{elemento}/{idViajeTramo}")
-    public ResponseEntity<?> quitar(@PathVariable int elemento,@PathVariable int idViajeTramo) {
+    @DeleteMapping(value = URL + "/quitar/{idViajeRemito}/{idViajeTramo}")
+    public ResponseEntity<?> quitar(@PathVariable int idViajeRemito, @PathVariable int idViajeTramo) {
         try {
             //Quita el registro
-            elementoService.quitar(elemento,idViajeTramo);
+            elementoService.quitar(idViajeRemito, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
@@ -161,18 +143,18 @@ public class ViajeRemitoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeRemito elemento) {
@@ -187,7 +169,7 @@ public class ViajeRemitoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -195,7 +177,7 @@ public class ViajeRemitoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody ViajeRemito elemento) {
@@ -209,18 +191,18 @@ public class ViajeRemitoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL)
     public ResponseEntity<?> eliminar(@RequestBody ViajeRemito elemento) {
@@ -228,10 +210,10 @@ public class ViajeRemitoController {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

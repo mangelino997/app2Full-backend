@@ -20,6 +20,11 @@ import ar.com.draimo.jitws.dao.IViajeInsumoDAO;
 import ar.com.draimo.jitws.dao.IViajePeajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 
 /**
  * Servicio Viaje
@@ -68,12 +73,19 @@ public class ViajeService {
     }
 
     //Obtiene la lista completa
-    public List<Viaje> listar() {
-        return elementoDAO.obtenerTodos();
+    public Object listar() throws IOException {
+        List<Viaje>  viajes =  elementoDAO.obtenerTodos();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(viajes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene por id
-    public Viaje obtenerPorId(int id) {
+    public Object obtenerPorId(int id) throws IOException {
         //Obtiene un viaje propio por id
         Viaje viaje = elementoDAO.obtenerPorId(id);
         //Obtiene la lista de tramos del viaje
@@ -95,16 +107,30 @@ public class ViajeService {
         List<ViajePeaje> viajePropioPeaje = viajePeajeDAO.findByViaje(viaje);
         viaje.setViajePeajes(viajePropioPeaje);
         //Retorna los datos
-        return viaje;
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(viaje);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene una lista de registros por alias
-    public List<Viaje> listarPorAlias(String alias) {
+    public Object listarPorAlias(String alias) throws IOException {
+        List<Viaje>  viajes;
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            viajes = elementoDAO.findAll();
         }else {
-            return elementoDAO.findByAliasContaining(alias);
+            viajes = elementoDAO.findByAliasContaining(alias);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(viajes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Agrega un registro

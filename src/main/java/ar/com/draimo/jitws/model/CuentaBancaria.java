@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase CuentaBancaria Mapea con la tabla en la base de datos
- *
+ * Clase CuentaBancaria
+ * Mapea con la tabla de base de datos
  * @author blas
  */
 @Entity

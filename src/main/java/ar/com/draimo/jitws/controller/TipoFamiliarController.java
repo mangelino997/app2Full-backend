@@ -2,9 +2,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.Barrio;
 import ar.com.draimo.jitws.model.TipoFamiliar;
-import ar.com.draimo.jitws.service.BarrioService;
 import ar.com.draimo.jitws.service.TipoFamiliarService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

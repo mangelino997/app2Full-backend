@@ -80,7 +80,7 @@ public class InsumoProductoController {
     //Obtiene precio unitario por insumo
     @GetMapping(value = URL + "/obtenerPrecioUnitario/{idInsumoProducto}")
     @ResponseBody
-    public BigDecimal listarInsumos(@PathVariable int idInsumoProducto) {
+    public BigDecimal obtenerPrecioUnitario(@PathVariable int idInsumoProducto) {
         return elementoService.obtenerPrecioUnitario(idInsumoProducto);
     }
 

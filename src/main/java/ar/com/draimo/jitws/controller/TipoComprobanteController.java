@@ -70,7 +70,7 @@ public class TipoComprobanteController {
     }
     
     //Obtiene una lista por esta activo Reparto igual true
-    @GetMapping(value = URL + "/listarPorEstaRepartoTrue")
+    @GetMapping(value = URL + "/listarPorEstaActivoRepartoTrue")
     @ResponseBody
     public List<TipoComprobante> listarPorEstaActivoRepartoTrue() {
         return elementoService.listarPorEstaActivoRepartoTrue();

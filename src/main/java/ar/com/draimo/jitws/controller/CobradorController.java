@@ -77,7 +77,7 @@ public class CobradorController {
     }
     
     //Establece al cobrador por defecto false
-    @PutMapping(value = URL + "/establecerCobradorporDefecto/{idCobrador}")
+    @PutMapping(value = URL + "/establecerCobradorPorDefecto/{idCobrador}")
     public ResponseEntity<?> establecerCobradorPorDefecto(@PathVariable int idCobrador) {
         try {
             //Actualiza el registro

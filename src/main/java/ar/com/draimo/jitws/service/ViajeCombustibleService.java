@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 
 /**
  * Servicio ViajeCombustible
@@ -31,13 +36,27 @@ public class ViajeCombustibleService {
     }
     
     //Obtiene la lista completa
-    public List<ViajeCombustible> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<ViajeCombustible>  elementos= elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista de tramos por viaje
-    public List<ViajeCombustible> listarCombustibles(int idViaje) {
-        return elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
+    public Object listarCombustibles(int idViaje) throws IOException {
+        List<ViajeCombustible>  elementos= elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Agrega un registro
