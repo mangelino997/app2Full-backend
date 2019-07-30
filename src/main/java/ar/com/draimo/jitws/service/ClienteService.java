@@ -72,6 +72,23 @@ public class ClienteService {
     }
     
     //Obtiene una lista por alias
+    public Object listarPorAliasListaPrecio(String alias, int idCliente) throws IOException {
+        List<Cliente> clientes;
+        if(alias.equals("***")) {
+            clientes= elementoDAO.findByIdNot(idCliente);
+        } else {
+            clientes= elementoDAO.findByAliasContainingAndIdNot(alias, idCliente);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clientes);
+        return mapper.readValue(string, Object.class);
+    }
+    
+    //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
         List<Cliente> clientes;
         if(alias.equals("***")) {

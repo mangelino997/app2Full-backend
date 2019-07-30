@@ -4,9 +4,11 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
 import ar.com.draimo.jitws.service.OrdenVentaTramoService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -51,35 +53,35 @@ public class OrdenVentaTramoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenVentaTramo> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
 
     //Obtiene una lista por id de orden venta tarifa
     @GetMapping(value = URL + "/listarPorOrdenVentaTarifa/{id}")
     @ResponseBody
-    public List<OrdenVentaTramo> listarPorOrdenVentaTarifa(@PathVariable int id) {
+    public Object listarPorOrdenVentaTarifa(@PathVariable int id) throws IOException {
         return elementoService.listarPorOrdenVentaTarifa(id);
     }
 
     //Obtiene una lista por id de orden venta y preciosDesde
     @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody
-    public List<OrdenVentaTramo> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
+    public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
     }
 
     //Obtiene una lista por id de orden venta y preciosDesde
     @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
     @ResponseBody
-    public List<OrdenVentaTramo> listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable String preciosDesde) {
+    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable String preciosDesde) throws IOException {
         return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
     }
 
     //Obtiene una lista de fechas por orden de venta
     @GetMapping(value = URL + "/listarFechasPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody
-    public List<OrdenVentaTramo> listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta) {
+    public Object listarFechasPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
         return elementoService.listarFechasPorOrdenVenta(idOrdenVenta);
     }
 
@@ -87,11 +89,11 @@ public class OrdenVentaTramoController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVentaTramo elemento) {
         try {
-            OrdenVentaTramo a = elementoService.agregar(elemento);
+            Object a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -109,11 +111,11 @@ public class OrdenVentaTramoController {
     public ResponseEntity<?> actualizar(@RequestBody OrdenVentaTramo elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            Object a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

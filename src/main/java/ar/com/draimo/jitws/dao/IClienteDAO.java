@@ -19,4 +19,10 @@ public interface IClienteDAO extends JpaRepository<Cliente, Integer> {
     //Obtiene una lista por alias
     public List<Cliente> findByAliasContaining(String alias);
     
+    //Obtiene una lista por alias
+    public List<Cliente> findByIdNot(int id);
+    
+    //Obtiene una lista por alias
+    public List<Cliente> findByAliasContainingAndIdNot(String alias, int id);
+    
 }

@@ -81,7 +81,7 @@ public class OrdenVentaController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVenta elemento) {
         try {
-            OrdenVenta ordenVenta = elementoService.agregar(elemento);
+            Object ordenVenta = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -103,7 +103,7 @@ public class OrdenVentaController {
     public ResponseEntity<?> actualizar(@RequestBody OrdenVenta elemento) {
         try {
             //Actualiza el registro
-            OrdenVenta ordenVenta = elementoService.actualizar(elemento);
+            Object ordenVenta = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
