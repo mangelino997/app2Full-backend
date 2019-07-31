@@ -70,7 +70,7 @@ public class OrdenVentaTramoService {
     public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, String preciosDesde) throws IOException {
         Date precios = Date.valueOf(preciosDesde) ;
         List<OrdenVentaTramo> elementos = 
-            elementoDAO.findByOrdenVentaTarifa_OrdenVentaAndOrdenVentaTarifa_PreciosDesde(
+            elementoDAO.findByOrdenVentaTarifa_OrdenVentaAndPreciosDesde(
                 ordenVentaDAO.findById(idOrdenVenta).get(), precios);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -102,8 +102,8 @@ public class OrdenVentaTramoService {
         List<OrdenVentaTramo> elementos = new ArrayList<>();
         List<Date> fechas = new ArrayList<>();
         for(OrdenVentaTramo elemento : ordenesTramo) {
-            if(!fechas.contains(elemento.getOrdenVentaTarifa().getPreciosDesde())) {
-                fechas.add(elemento.getOrdenVentaTarifa().getPreciosDesde());
+            if(!fechas.contains(elemento.getPreciosDesde())) {
+                fechas.add(elemento.getPreciosDesde());
                 elementos.add(elemento);
             }
         }

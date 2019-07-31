@@ -69,7 +69,7 @@ public class ViajeGastoController {
         try {
             ViajeGasto a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
@@ -91,9 +91,9 @@ public class ViajeGastoController {
             //Actualiza el registro
             ViajeGasto a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return new ResponseEntity(a, HttpStatus.CREATED);
+            return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

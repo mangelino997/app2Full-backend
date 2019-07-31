@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,25 +64,12 @@ public class OrdenVentaController {
         return elementoService.listarPorNombre(nombre);
     }
     
-    //Obtiene una lista por cliente
-    @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
-    @ResponseBody
-    public Object listarPorCliente(@PathVariable int idCliente) throws IOException {
-        return elementoService.listarPorCliente(idCliente);
-    }
-    
-    //Obtiene una lista por empresa
-    @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
-    @ResponseBody
-    public Object listarPorEmpresa(@PathVariable int idEmpresa) throws IOException {
-        return elementoService.listarPorEmpresa(idEmpresa);
-    }
-    
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody OrdenVenta elemento) {
+    public ResponseEntity<?> agregar(@RequestPart("ordenVenta") String elementoString,
+            @RequestPart("clienteOrdenVenta") String clienteString,@RequestPart("empresaOrdenVenta") String empresaString) {
         try {
-            Object ordenVenta = elementoService.agregar(elemento);
+            Object ordenVenta = elementoService.agregar(elementoString, clienteString, empresaString);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito

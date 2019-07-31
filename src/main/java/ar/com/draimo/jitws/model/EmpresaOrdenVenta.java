@@ -53,8 +53,8 @@ public class EmpresaOrdenVenta extends ObjetoGenerico {
 
     //Define fechaUltimaMod
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
-    @Column(name = "fechaUltMod", nullable = true)
-    private Date fechaUltMod;
+    @Column(name = "fechaUltimaMod", nullable = true)
+    private Date fechaUltimaMod;
     
     //Getters y Setters de la clase
     
@@ -106,12 +106,12 @@ public class EmpresaOrdenVenta extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public Date getFechaUltMod() {
-        return fechaUltMod;
+    public Date getFechaUltimaMod() {
+        return fechaUltimaMod;
     }
 
-    public void setFechaUltMod(Date fechaUltMod) {
-        this.fechaUltMod = fechaUltMod;
+    public void setFechaUltimaMod(Date fechaUltimaMod) {
+        this.fechaUltimaMod = fechaUltimaMod;
     }
-
+    
 }

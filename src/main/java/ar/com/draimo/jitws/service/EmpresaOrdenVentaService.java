@@ -116,7 +116,7 @@ public class EmpresaOrdenVentaService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public Object actualizar(EmpresaOrdenVenta elemento) throws IOException {
-        elemento.setFechaUltMod(new Date(new java.util.Date().getTime()));
+        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
             elementoDAO.save(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

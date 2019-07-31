@@ -93,7 +93,7 @@ public class ViajeCombustibleController {
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return new ResponseEntity(a, HttpStatus.CREATED);
+            return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

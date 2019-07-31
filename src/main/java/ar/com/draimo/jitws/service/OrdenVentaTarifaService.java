@@ -75,17 +75,17 @@ public class OrdenVentaTarifaService {
         return mapper.readValue(string, Object.class);
     }
     
-    //Obtiene una lista por orden de venta y precios desde
-    public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, Date preciosDesde) throws IOException {
-         List<OrdenVentaTarifa>  elementos = elementoDAO.findByOrdenVentaAndPreciosDesde(ordenVentaDAO.findById(idOrdenVenta).get(), preciosDesde);ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-        
-    }
+//    //Obtiene una lista por orden de venta y precios desde
+//    public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, Date preciosDesde) throws IOException {
+//         List<OrdenVentaTarifa>  elementos = elementoDAO.findByOrdenVentaAndPreciosDesde(ordenVentaDAO.findById(idOrdenVenta).get(), preciosDesde);ObjectMapper mapper = new ObjectMapper();
+//        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+//                .serializeAllExcept("cliente");
+//        FilterProvider filters = new SimpleFilterProvider()
+//                .addFilter("clienteordenventafiltro", theFilter);
+//        String string = mapper.writer(filters).writeValueAsString(elementos);
+//        return mapper.readValue(string, Object.class);
+//        
+//    }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

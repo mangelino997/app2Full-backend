@@ -1,8 +1,10 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IClienteDAO;
-import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
+import ar.com.draimo.jitws.dao.IEmpresaOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
+import ar.com.draimo.jitws.model.ClienteOrdenVenta;
+import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -28,13 +30,13 @@ public class OrdenVentaService {
     @Autowired
     IOrdenVentaDAO elementoDAO;
 
-    //Define la referencia al dao cliente
+    //Define la referencia al dao
     @Autowired
-    IClienteDAO clienteDAO;
+    IClienteOrdenVentaDAO clienteOrdenVentaDAO;
 
-    //Define la referencia al dao empresaa
+    //Define la referencia al dao
     @Autowired
-    IEmpresaDAO empresaDAO;
+    IEmpresaOrdenVentaDAO empresaOrdenVentaDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -45,13 +47,7 @@ public class OrdenVentaService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<OrdenVenta> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return elementos;
     }
 
     //Obtiene una lista por nombre
@@ -71,33 +67,12 @@ public class OrdenVentaService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene una lista por cliente
-    public Object listarPorCliente(int idCliente) throws IOException {
-        List<OrdenVenta> elementos = elementoDAO.findByCliente(clienteDAO.findById(idCliente));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene una lista por empresa
-    public Object listarPorEmpresa(int idEmpresa) throws IOException {
-        List<OrdenVenta> elementos = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(OrdenVenta elemento) throws IOException {
+    public OrdenVenta agregar(String elementoString, String clienteString, String empresaString) throws IOException {
+        OrdenVenta elemento = new ObjectMapper().readValue(elementoString, OrdenVenta.class);
+        ClienteOrdenVenta clienteOrdenVenta = new ObjectMapper().readValue(clienteString, ClienteOrdenVenta.class);
+        EmpresaOrdenVenta empresaOrdenVenta = new ObjectMapper().readValue(empresaString, EmpresaOrdenVenta.class);
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Establece la fecha actual
@@ -106,16 +81,21 @@ public class OrdenVentaService {
         elemento.setEstaActiva(true);
         //Establece ActivaDesde con fecha actual
         elemento.setActivaDesde(new Date(new java.util.Date().getTime()));
-        
         //Agrega la orden de venta
-        elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        elemento = elementoDAO.saveAndFlush(elemento);
+        if(clienteOrdenVenta!=null) {
+            clienteOrdenVenta.setOrdenVenta(elemento);
+            clienteOrdenVenta.setFechaAlta(elemento.getFechaAlta());
+            clienteOrdenVenta.setEstaActiva(true);
+            clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
+        }
+        if(empresaOrdenVenta!=null) {
+            empresaOrdenVenta.setOrdenVenta(elemento);
+            empresaOrdenVenta.setFechaAlta(elemento.getFechaAlta());
+            empresaOrdenVenta.setEstaActiva(true);
+            empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
+        }
+        return elemento;
     }
 
     //Actualiza un registro

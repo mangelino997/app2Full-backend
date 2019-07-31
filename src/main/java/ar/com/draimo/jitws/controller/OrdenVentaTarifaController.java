@@ -64,12 +64,12 @@ public class OrdenVentaTarifaController {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
     }
     
-    //Obtiene una lista por id de orden venta y preciosDesde
-    @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
-    @ResponseBody
-    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable Date preciosDesde) throws IOException {
-        return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
-    }
+//    //Obtiene una lista por id de orden venta y preciosDesde
+//    @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
+//    @ResponseBody
+//    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable Date preciosDesde) throws IOException {
+//        return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
+//    }
     
     //Agrega un registro
     @PostMapping(value = URL)

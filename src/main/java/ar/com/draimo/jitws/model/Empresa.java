@@ -2,15 +2,21 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Clase Empresa
@@ -92,6 +98,15 @@ public class Empresa extends ObjetoGenerico {
     //Define fe
     @Column(name = "fe", nullable = false)
     private boolean fe;
+    
+    //Referencia al a clase ordenVenta
+    @ManyToMany(cascade = CascadeType.REFRESH)
+    @JoinTable(name = "empresaordenventa",
+        joinColumns = @JoinColumn(name = "idEmpresa"),
+        inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"),
+        uniqueConstraints={@UniqueConstraint(columnNames={"idEmpresa", "idOrdenVenta"})})  
+    @JsonIgnoreProperties(value = {"clientes","empresas"})
+    private List<OrdenVenta> ordenesVentas = new ArrayList<>();
     
     //Getters y Setters de la clase
 
@@ -221,6 +236,14 @@ public class Empresa extends ObjetoGenerico {
 
     public void setFe(boolean fe) {
         this.fe = fe;
+    }
+
+    public List<OrdenVenta> getOrdenesVentas() {
+        return ordenesVentas;
+    }
+
+    public void setOrdenesVentas(List<OrdenVenta> ordenesVentas) {
+        this.ordenesVentas = ordenesVentas;
     }
     
 }

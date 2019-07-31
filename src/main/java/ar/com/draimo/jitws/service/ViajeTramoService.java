@@ -61,16 +61,30 @@ public class ViajeTramoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public ViajeTramo agregar(ViajeTramo elemento) {
+    public Object agregar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
-        return elementoDAO.saveAndFlush(elemento);
+        ObjectMapper mapper = new ObjectMapper();
+        elementoDAO.saveAndFlush(elemento);
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elemento);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public ViajeTramo actualizar(ViajeTramo elemento) {
+    public Object actualizar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        ObjectMapper mapper = new ObjectMapper();
+        elementoDAO.save(elemento);
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elemento);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Elimina un registro
