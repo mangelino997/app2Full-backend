@@ -64,12 +64,30 @@ public class OrdenVentaController {
         return elementoService.listarPorNombre(nombre);
     }
     
+    //Obtiene una lista por idEmpresa
+    @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
+    @ResponseBody
+    public Object listarPorEmpresa(@PathVariable int idEmpresa) {
+        return elementoService.listarPorEmpresa(idEmpresa);
+    }
+    
+    //Obtiene una lista por idCliente
+    @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
+    @ResponseBody
+    public Object listarPorCliente(@PathVariable int idCliente) {
+        return elementoService.listarPorCliente(idCliente);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("ordenVenta") String elementoString,
-            @RequestPart("clienteOrdenVenta") String clienteString,@RequestPart("empresaOrdenVenta") String empresaString) {
+            @RequestPart("clienteOrdenVenta") String clienteString,@RequestPart("empresaOrdenVenta") String empresaString,
+            @RequestPart("ordenesVentasTarifas") String ordenesVentasTarifasString,
+            @RequestPart("ordenesVentasEscalas") String ordenesVentasEscalasString,
+            @RequestPart("ordenesVentasTramos") String ordenesVentasTramosString) {
         try {
-            Object ordenVenta = elementoService.agregar(elementoString, clienteString, empresaString);
+            Object ordenVenta = elementoService.agregar(elementoString, clienteString, empresaString,
+                    ordenesVentasTarifasString, ordenesVentasEscalasString, ordenesVentasTramosString);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito

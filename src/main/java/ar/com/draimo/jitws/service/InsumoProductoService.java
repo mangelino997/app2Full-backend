@@ -60,10 +60,18 @@ public class InsumoProductoService {
     @Transactional(rollbackFor = Exception.class)
     public InsumoProducto agregar(InsumoProducto elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setPrecioUnitarioVenta(new BigDecimal(0));
-        elemento.setPrecioUnitarioViaje(new BigDecimal(0));
-        elemento.setItcNeto(new BigDecimal(0));
-        elemento.setItcPorLitro(new BigDecimal(0));
+        if(elemento.getPrecioUnitarioVenta()== null){
+            elemento.setPrecioUnitarioVenta(new BigDecimal(0));
+        }
+        if(elemento.getPrecioUnitarioViaje()== null){
+            elemento.setPrecioUnitarioViaje(new BigDecimal(0));
+        }
+        if(elemento.getItcNeto()== null){
+            elemento.setItcNeto(new BigDecimal(0));
+        }
+        if(elemento.getItcPorLitro()== null){
+            elemento.setItcPorLitro(new BigDecimal(0));
+        }
         return elementoDAO.save(elemento);
     }
     
@@ -71,6 +79,18 @@ public class InsumoProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(InsumoProducto elemento) {
         elemento = formatearStrings(elemento);
+        if(elemento.getPrecioUnitarioVenta()== null){
+            elemento.setPrecioUnitarioVenta(new BigDecimal(0));
+        }
+        if(elemento.getPrecioUnitarioViaje()== null){
+            elemento.setPrecioUnitarioViaje(new BigDecimal(0));
+        }
+        if(elemento.getItcNeto()== null){
+            elemento.setItcNeto(new BigDecimal(0));
+        }
+        if(elemento.getItcPorLitro()== null){
+            elemento.setItcPorLitro(new BigDecimal(0));
+        }
         establecerAlias(elemento);
         elementoDAO.save(elemento);
     }

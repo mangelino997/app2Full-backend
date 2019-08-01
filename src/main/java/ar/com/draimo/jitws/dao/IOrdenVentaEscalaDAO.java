@@ -45,4 +45,15 @@ public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, In
             @Param("idOrdenVenta") int idOrdenVenta, @Param("valor") BigDecimal valor,
             @Param("valorHasta") BigDecimal valorHasta);
     
+    //Obtiene un listado de fechas por ordenVentaTarifa
+    @Query(value = "SELECT * FROM ordenventaescala where idOrdenVentaTarifa=:idOrdenVentaTarifa "
+            + "and preciosDesde=:preciosDesde", nativeQuery = true)
+    public List<OrdenVentaEscala> listarPorOrdenVentaTarifaYPreciosDesde(@Param("idOrdenVentaTarifa") int idOrdenVentaTarifa,
+            @Param("preciosDesde") Date preciosDesde);
+    
+    //Obtiene un listado de fechas por ordenVentaTarifa
+    @Query(value = "SELECT preciosDesde FROM ordenventaescala where idOrdenVentaTarifa=:idOrdenVentaTarifa "
+            + "group by preciosDesde", nativeQuery = true)
+    public List<Date> listarPreciosDesdePorOrdenVentaTarifa(@Param("idOrdenVentaTarifa") int idOrdenVentaTarifa);
+    
 }

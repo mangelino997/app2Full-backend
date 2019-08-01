@@ -117,39 +117,13 @@ public class OrdenVentaEscalaService {
     }
     
     //Obtiene una lista por orden de venta y precios desde
-    public Object listarPorOrdenVentaYPreciosDesde(int idOrdenVenta, String preciosDesde) throws IOException {
-        Date precios = Date.valueOf(preciosDesde) ;
-        List<OrdenVentaEscala> elementos = 
-            elementoDAO.findByOrdenVentaTarifa_OrdenVentaAndPreciosDesde(
-                ordenVentaDAO.findById(idOrdenVenta).get(), precios);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+    public List<OrdenVentaEscala> listarPorOrdenVentaTarifaYPreciosDesde(int idOrdenVentaTarifa, String preciosDesde) {
+        return elementoDAO.listarPorOrdenVentaTarifaYPreciosDesde(idOrdenVentaTarifa, Date.valueOf(preciosDesde));
     }
     
-    //Obtiene la lista de fechas por orden de venta
-    public Object listarFechasPorOrdenVenta(int idOrdenVenta) throws IOException {
-        List<OrdenVentaEscala> ordenesEscala = elementoDAO.findByOrdenVentaTarifa_OrdenVenta(
-                ordenVentaDAO.findById(idOrdenVenta).get());
-        List<OrdenVentaEscala> elementos = new ArrayList<>();
-        List<Date> fechas = new ArrayList<>();
-        for(OrdenVentaEscala elemento : ordenesEscala) {
-            if(!fechas.contains(elemento.getPreciosDesde())) {
-                fechas.add(elemento.getPreciosDesde());
-                elementos.add(elemento);
-            }
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+    //Obtiene un listado de fechas de preciosDesde por ordenVentaTarifa
+    public List<Date> listarPreciosDesdePorOrdenVentaTarifa(int idOrdenVentaTarifa) {
+        return elementoDAO.listarPreciosDesdePorOrdenVentaTarifa(idOrdenVentaTarifa);
     }
     
     //Obtiene el precio del flete

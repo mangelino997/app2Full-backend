@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
 import ar.com.draimo.jitws.service.OrdenVentaTarifaService;
 import java.io.IOException;
-import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

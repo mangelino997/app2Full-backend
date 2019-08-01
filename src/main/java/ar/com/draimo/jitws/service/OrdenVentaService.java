@@ -3,9 +3,15 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
+import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
+import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
+import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVenta;
+import ar.com.draimo.jitws.model.OrdenVentaEscala;
+import ar.com.draimo.jitws.model.OrdenVentaTarifa;
+import ar.com.draimo.jitws.model.OrdenVentaTramo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -38,6 +44,18 @@ public class OrdenVentaService {
     @Autowired
     IEmpresaOrdenVentaDAO empresaOrdenVentaDAO;
 
+    //Define la referencia al dao
+    @Autowired
+    IOrdenVentaTramoDAO ordenVentaTramoDAO;
+
+    //Define la referencia al dao
+    @Autowired
+    IOrdenVentaEscalaDAO ordenVentaEscalaDAO;
+
+    //Define la referencia al dao
+    @Autowired
+    IOrdenVentaTarifaDAO ordenVentaTarifaDAO;
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         OrdenVenta elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -48,6 +66,16 @@ public class OrdenVentaService {
     public Object listar() throws IOException {
         List<OrdenVenta> elementos = elementoDAO.findAll();
         return elementos;
+    }
+
+    //Obtiene la lista por empresa
+    public List<OrdenVenta> listarPorEmpresa(int idEmpresa) {
+        return elementoDAO.listarPorEmpresa(idEmpresa);
+    }
+
+    //Obtiene la lista por cliente
+    public List<OrdenVenta> listarPorCliente(int idCliente) {
+        return elementoDAO.listarPorCliente(idCliente);
     }
 
     //Obtiene una lista por nombre
@@ -69,10 +97,18 @@ public class OrdenVentaService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public OrdenVenta agregar(String elementoString, String clienteString, String empresaString) throws IOException {
-        OrdenVenta elemento = new ObjectMapper().readValue(elementoString, OrdenVenta.class);
-        ClienteOrdenVenta clienteOrdenVenta = new ObjectMapper().readValue(clienteString, ClienteOrdenVenta.class);
-        EmpresaOrdenVenta empresaOrdenVenta = new ObjectMapper().readValue(empresaString, EmpresaOrdenVenta.class);
+    public OrdenVenta agregar(String elementoString, String clienteString, String empresaString,
+            String ordenesVentasTramosString, String ordenesVentasEscalasString,
+            String ordenesVentasTarifasString) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        OrdenVenta elemento = mapper.readValue(elementoString, OrdenVenta.class);
+        ClienteOrdenVenta clienteOrdenVenta = mapper.readValue(clienteString, ClienteOrdenVenta.class);
+        EmpresaOrdenVenta empresaOrdenVenta = mapper.readValue(empresaString, EmpresaOrdenVenta.class);
+        OrdenVentaTarifa ordenVentaTarifa = mapper.readValue(ordenesVentasTarifasString, OrdenVentaTarifa.class);
+        List<OrdenVentaEscala> ordenVentaEscala = mapper.readValue(ordenesVentasEscalasString, 
+                mapper.getTypeFactory().constructCollectionType(List.class, OrdenVentaEscala.class));
+        List<OrdenVentaTramo> ordenVentaTramo = mapper.readValue(ordenesVentasTramosString, 
+                mapper.getTypeFactory().constructCollectionType(List.class, OrdenVentaTramo.class));
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Establece la fecha actual
@@ -83,6 +119,20 @@ public class OrdenVentaService {
         elemento.setActivaDesde(new Date(new java.util.Date().getTime()));
         //Agrega la orden de venta
         elemento = elementoDAO.saveAndFlush(elemento);
+        ordenVentaTarifa.setOrdenVenta(elemento);
+        ordenVentaTarifaDAO.saveAndFlush(ordenVentaTarifa);
+        if (!ordenVentaTramo.isEmpty()) {
+            for (OrdenVentaTramo ordenVentaTramo1 : ordenVentaTramo) {
+                ordenVentaTramo1.setOrdenVentaTarifa(ordenVentaTarifa);
+                ordenVentaTramoDAO.saveAndFlush(ordenVentaTramo1);
+            }
+        }
+        if (!ordenVentaEscala.isEmpty()) {
+            for (OrdenVentaEscala ordenVentaEscala1 : ordenVentaEscala) {
+                ordenVentaEscala1.setOrdenVentaTarifa(ordenVentaTarifa);
+                ordenVentaEscalaDAO.saveAndFlush(ordenVentaEscala1);
+            }
+        }
         if(clienteOrdenVenta!=null) {
             clienteOrdenVenta.setOrdenVenta(elemento);
             clienteOrdenVenta.setFechaAlta(elemento.getFechaAlta());
