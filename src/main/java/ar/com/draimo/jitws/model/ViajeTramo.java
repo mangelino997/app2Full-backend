@@ -1,7 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "viajetramo")
+@JsonFilter("viajetramofiltro")
 public class ViajeTramo extends ObjetoGenerico {
 
     //Referencia a la clase Viaje
@@ -99,7 +101,6 @@ public class ViajeTramo extends ObjetoGenerico {
     private BigDecimal importe;
     
     //Define la lista de tramos de clientes
-    @JsonManagedReference
     @OneToMany(mappedBy = "viajeTramo", cascade = CascadeType.REMOVE)
     private List<ViajeTramoCliente> viajeTramoClientes;
     

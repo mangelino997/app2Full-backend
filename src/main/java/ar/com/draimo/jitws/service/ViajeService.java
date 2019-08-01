@@ -76,9 +76,11 @@ public class ViajeService {
         List<Viaje>  viajes =  elementoDAO.obtenerTodos();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
+                .serializeAllExcept("cliente", "viaje");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("viajetramofiltro", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(viajes);
         return new ObjectMapper().readValue(string, Object.class);
     }
