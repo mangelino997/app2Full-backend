@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
+import ar.com.draimo.jitws.model.OrdenVenta;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -72,6 +73,23 @@ public class ClienteService {
     }
     
     //Obtiene una lista por alias
+    public Object listarPorAliasListaPrecio(String alias, int idCliente) throws IOException {
+        List<Cliente> clientes;
+        if(alias.equals("***")) {
+            clientes= elementoDAO.findByIdNot(idCliente);
+        } else {
+            clientes= elementoDAO.findByAliasContainingAndIdNot(alias, idCliente);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(clientes);
+        return mapper.readValue(string, Object.class);
+    }
+    
+    //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
         List<Cliente> clientes;
         if(alias.equals("***")) {
@@ -106,12 +124,15 @@ public class ClienteService {
         elemento = formatearString(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         Cliente cliente = elementoDAO.saveAndFlush(elemento);
+        ClienteOrdenVenta clienteOrdenVenta  = new ClienteOrdenVenta();
         //Agrega la lista de ordenes de venta del cliente
-        if(elemento.getClienteOrdenesVentas() != null) {
-            for(ClienteOrdenVenta clienteOrdenVenta : elemento.getClienteOrdenesVentas()) {
+        if(elemento.getOrdenesVentas() != null) {
+            for(OrdenVenta ordenVenta : elemento.getOrdenesVentas()) {
                 clienteOrdenVenta.setCliente(cliente);
+                clienteOrdenVenta.setOrdenVenta(ordenVenta);
                 clienteOrdenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
                 clienteOrdenVenta.setUsuarioAlta(elemento.getUsuarioAlta());
+                clienteOrdenVenta.setEstaActiva(true);
                 clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
             }
         }

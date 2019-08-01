@@ -69,6 +69,13 @@ public class ClienteController {
         return elementoService.listarPorAlias(alias);
     }
     
+    //Obtiene una lista por nombre para la lista de precios
+    @GetMapping(value = URL + "/listarPorAliasListaPrecio/{alias}/{idCliente}")
+    @ResponseBody
+    public Object listarPorAliasListaPrecio(@PathVariable String alias, @PathVariable int idCliente) throws IOException {
+        return elementoService.listarPorAliasListaPrecio(alias, idCliente);
+    }
+    
     //Agrega un cliente eventual
     @PostMapping(value = URL + "/agregarClienteEventual")
     public ResponseEntity<?> agregarClienteEventual(@RequestBody Cliente elemento) {

@@ -12,19 +12,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase ClienteOrdenVenta
+ * Clase EmpresaOrdenVenta
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
 @Entity
-@Table(name = "clienteordenventa")
-public class ClienteOrdenVenta extends ObjetoGenerico {
+@Table(name = "empresaordenventa")
+@JsonFilter("empresaordenventafiltro")
+public class EmpresaOrdenVenta extends ObjetoGenerico {
 
     //Referencia a la clase cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCliente", nullable = false)
-    private Cliente cliente;
+    @JoinColumn(name = "idEmpresa", nullable = false)
+    private Empresa empresa;
     
     //Referencia a la clase ordenVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -56,13 +57,13 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
     private Date fechaUltimaMod;
     
     //Getters y Setters de la clase
-
-    public Cliente getCliente() {
-        return cliente;
+    
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     public OrdenVenta getOrdenVenta() {

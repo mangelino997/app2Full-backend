@@ -25,7 +25,7 @@ public class Proveedor extends ObjetoGenerico {
     private String razonSocial;
     
     //Define el nombre de fantasia
-    @Column(name = "nombreFantasia", length = 45,nullable = false)
+    @Column(name = "nombreFantasia", length = 45,nullable = true)
     private String nombreFantasia;
     
     //Define el domicilio

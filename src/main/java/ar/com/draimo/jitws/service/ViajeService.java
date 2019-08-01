@@ -7,7 +7,6 @@ import ar.com.draimo.jitws.model.ViajeGasto;
 import ar.com.draimo.jitws.model.ViajeInsumo;
 import ar.com.draimo.jitws.model.ViajePeaje;
 import ar.com.draimo.jitws.model.ViajeTramo;
-import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -169,7 +168,7 @@ public class ViajeService {
     }
 
     //Formatea los strings
-    private Viaje formatearStrings(Viaje elemento) {
+    public Viaje formatearStrings(Viaje elemento) {
         if (elemento.getObservacionVehiculo() != null) {
             elemento.setObservacionVehiculo(elemento.getObservacionVehiculo().trim());
         }

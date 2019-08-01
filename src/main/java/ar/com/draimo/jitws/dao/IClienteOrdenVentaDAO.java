@@ -27,7 +27,4 @@ public interface IClienteOrdenVentaDAO extends JpaRepository<ClienteOrdenVenta, 
     //Obtiene por compania de cliente y ordenVenta
     public List<ClienteOrdenVenta> findByClienteAndOrdenVenta(Cliente cliente, OrdenVenta ordenVenta);
     
-    //Obtiene por compania de cliente y ordenVenta por defecto
-    public ClienteOrdenVenta findByClienteAndEsOrdenVentaPorDefectoTrue(Cliente cliente);
-    
 }

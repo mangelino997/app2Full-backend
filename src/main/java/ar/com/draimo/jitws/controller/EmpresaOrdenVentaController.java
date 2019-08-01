@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.ViajeCombustible;
-import ar.com.draimo.jitws.service.ViajeCombustibleService;
+import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
+import ar.com.draimo.jitws.service.EmpresaOrdenVentaService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,26 +13,26 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase ViajeCombustible Controller
+ * Clase EmpresaOrdenVenta Controller
  * @author blas
  */
 
 @RestController
-public class ViajeCombustibleController {
+public class EmpresaOrdenVentaController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/viajecombustible";
+    private final String URL = RutaConstant.URL_BASE + "/empresaordenventa";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/viajecombustible";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/empresaordenventa";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -40,7 +40,7 @@ public class ViajeCombustibleController {
     
     //Crea una instancia del servicio
     @Autowired
-    ViajeCombustibleService elementoService;
+    EmpresaOrdenVentaService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -56,20 +56,34 @@ public class ViajeCombustibleController {
         return elementoService.listar();
     }
     
-    //Obtiene la lista de combustibles por Viaje
-    @GetMapping(value = URL + "/listarCombustibles/{idViaje}")
+    //Obtiene una lista por Cliente
+    @GetMapping(value = URL + "/listarPorEmpresa/{id}")
     @ResponseBody
-    public Object listarCombustibles(@PathVariable int idViaje) throws IOException {
-        return elementoService.listarCombustibles(idViaje);
+    public Object listarPorEmpresa(@PathVariable int id) throws IOException {
+        return elementoService.listarPorEmpresa(id);
+    }
+    
+    //Obtiene una lista por OrdenVenta
+    @GetMapping(value = URL + "/listarPorOrdenVenta/{id}")
+    @ResponseBody
+    public Object listarPorOrdenVenta(@PathVariable int id) throws IOException {
+        return elementoService.listarPorOrdenVenta(id);
+    }
+    
+    //Obtiene por compania de Empresa y OrdenVenta
+    @GetMapping(value = URL + "/listarPorEmpresaYOrdenVenta/{idEmpresa}/{idOrdenVenta}")
+    @ResponseBody
+    public Object listarPorEmpresaYOrdenVenta(@PathVariable int idEmpresa, @PathVariable int idOrdenVenta) throws IOException {
+        return elementoService.listarPorEmpresaYOrdenVenta(idEmpresa, idOrdenVenta);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody ViajeCombustible elemento) {
+    public ResponseEntity<?> agregar(@RequestBody EmpresaOrdenVenta elemento) {
         try {
-            ViajeCombustible a = elementoService.agregar(elemento);
+            Object a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
@@ -86,12 +100,12 @@ public class ViajeCombustibleController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody ViajeCombustible elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody EmpresaOrdenVenta elemento) {
         try {
             //Actualiza el registro
-            ViajeCombustible a = elementoService.actualizar(elemento);
-            //Envia la nueva lista a los usuarios subscriptos
-            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            Object a = elementoService.actualizar(elemento);
+            //Envia la nueva lista a los usuarios subscripto
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {

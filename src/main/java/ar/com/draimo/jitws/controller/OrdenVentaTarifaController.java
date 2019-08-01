@@ -6,9 +6,9 @@ import ar.com.draimo.jitws.model.OrdenVentaTarifa;
 import ar.com.draimo.jitws.service.OrdenVentaTarifaService;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -53,33 +53,33 @@ public class OrdenVentaTarifaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenVentaTarifa> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por id de orden venta
     @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody
-    public List<OrdenVentaTarifa> listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
+    public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
     }
     
-    //Obtiene una lista por id de orden venta y preciosDesde
-    @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
-    @ResponseBody
-    public List<OrdenVentaTarifa> listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable Date preciosDesde) {
-        return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
-    }
+//    //Obtiene una lista por id de orden venta y preciosDesde
+//    @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
+//    @ResponseBody
+//    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable Date preciosDesde) throws IOException {
+//        return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
+//    }
     
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVentaTarifa elemento) {
         try {
-            OrdenVentaTarifa a = elementoService.agregar(elemento);
+            Object a = elementoService.agregar(elemento);
 //            template.convertAndSend(TOPIC + "/listaEscalas", 
 //                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -97,12 +97,12 @@ public class OrdenVentaTarifaController {
     public ResponseEntity<?> actualizar(@RequestBody OrdenVentaTarifa elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            Object a =elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/listaEscalas", 
 //                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

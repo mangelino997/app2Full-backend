@@ -24,7 +24,7 @@ public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, In
     public OrdenVentaEscala findTopByOrderByIdDesc();
     
     //Obtiene un listapo por los precios desde y orden venta de orden venta tarifa
-    public List<OrdenVentaEscala> findByOrdenVentaTarifa_OrdenVentaAndOrdenVentaTarifa_PreciosDesde(
+    public List<OrdenVentaEscala> findByOrdenVentaTarifa_OrdenVentaAndPreciosDesde(
             OrdenVenta ordenVenta, Date preciosDesde);
     
     //Obtiene un listado por orden venta de orvenVentaTarifa

@@ -1,7 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
+import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,6 +51,11 @@ public class OrdenVentaTramo extends ObjetoGenerico {
     @JoinColumn(name = "idOrdenVentaTarifa", nullable = false)
     private OrdenVentaTarifa ordenVentaTarifa;
 
+    //Define la fecha desde que estan los precios
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "preciosDesde", nullable = false)
+    private Date preciosDesde;
+    
     //Getters y Setters de la clase
 
     public Tramo getTramo() {
@@ -105,6 +112,14 @@ public class OrdenVentaTramo extends ObjetoGenerico {
 
     public void setOrdenVentaTarifa(OrdenVentaTarifa OrdenVentaTarifa) {
         this.ordenVentaTarifa = OrdenVentaTarifa;
+    }
+
+    public Date getPreciosDesde() {
+        return preciosDesde;
+    }
+
+    public void setPreciosDesde(Date preciosDesde) {
+        this.preciosDesde = preciosDesde;
     }
 
 }

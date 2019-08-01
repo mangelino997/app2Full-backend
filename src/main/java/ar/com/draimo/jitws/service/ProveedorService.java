@@ -45,8 +45,7 @@ public class ProveedorService {
     public Proveedor agregar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        elementoDAO.saveAndFlush(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Establece el alias de un registro
@@ -76,9 +75,11 @@ public class ProveedorService {
     //Formatea los strings
     private Proveedor formatearStrings(Proveedor elemento) {
         elemento.setRazonSocial(elemento.getRazonSocial().trim().toUpperCase());
-        elemento.setNombreFantasia(elemento.getNombreFantasia().trim());
         elemento.setDomicilio(elemento.getDomicilio().trim());
         elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
+        if(elemento.getNombreFantasia()!= null) {
+        elemento.setNombreFantasia(elemento.getNombreFantasia().trim());
+        }
         if(elemento.getNumeroIIBB() != null) {
             elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
         }
