@@ -168,7 +168,7 @@ public class ViajeService {
     }
 
     //Formatea los strings
-    private Viaje formatearStrings(Viaje elemento) {
+    public Viaje formatearStrings(Viaje elemento) {
         if (elemento.getObservacionVehiculo() != null) {
             elemento.setObservacionVehiculo(elemento.getObservacionVehiculo().trim());
         }

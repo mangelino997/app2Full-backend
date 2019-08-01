@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import ar.com.draimo.jitws.model.Viaje;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -27,7 +28,11 @@ public class ViajeTramoService {
     
     //Define la referencia al dao de viaje
     @Autowired
-    IViajeDAO viajePropioDAO; 
+    IViajeDAO viajeDAO; 
+    
+    //Define la referencia al service de Viaje
+    @Autowired
+    ViajeService viajeService; 
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -37,7 +42,7 @@ public class ViajeTramoService {
     
     //Obtiene una lista de tramos por viaje propio
     public Object listarTramos(int idViaje) throws IOException {
-        List<ViajeTramo>  elementos= elementoDAO.findByViaje(viajePropioDAO.obtenerPorId(idViaje));
+        List<ViajeTramo>  elementos= elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -63,8 +68,15 @@ public class ViajeTramoService {
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
-        ObjectMapper mapper = new ObjectMapper();
+        Viaje viaje = new Viaje();
+        if(elemento.getViaje().getId()==0) {
+           viaje = viajeService.formatearStrings(elemento.getViaje());
+           viaje = viajeDAO.saveAndFlush(viaje);
+           viaje = viajeService.establecerAlias(viaje);
+           elemento.setViaje(viaje);
+        }
         elementoDAO.saveAndFlush(elemento);
+        ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
