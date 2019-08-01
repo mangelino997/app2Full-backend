@@ -1,8 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -23,6 +23,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "viaje")
+@JsonFilter("viajefiltro")
 public class Viaje extends ObjetoGenerico {
 
     //Referencia a la clase Empresa
@@ -157,32 +158,26 @@ public class Viaje extends ObjetoGenerico {
     private String alias;
     
     //Define la lista de tramos
-    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
     private List<ViajeTramo> viajeTramos;
     
     //Define la lista de ordenes de combustible
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
     private List<ViajeCombustible> viajeCombustibles;
     
     //Define la lista de adelantos de efectivo
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
     private List<ViajeEfectivo> viajeEfectivos;
     
     //Define la lista de ordenes de insumo
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
     private List<ViajeInsumo> viajeInsumos;
     
     //Define la lista de gastos
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
     private List<ViajeGasto> viajeGastos;
     
     //Define la lista de peajes
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
     private List<ViajePeaje> viajePeajes;
 

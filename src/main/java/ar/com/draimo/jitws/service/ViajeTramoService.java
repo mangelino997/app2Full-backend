@@ -54,19 +54,20 @@ public class ViajeTramoService {
     
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<ViajeTramo>  elementos= elementoDAO.findAll();
+        List<ViajeTramo> elementos= elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
+                .serializeAllExcept("viajeTramos", "viajeCombustibles","viajeInsumos",
+                        "viajeGastos", "viajePeajes", "viajeEfectivos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
+                .addFilter("viajefiltro", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(ViajeTramo elemento) throws IOException {
+    public ViajeTramo agregar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
         Viaje viaje = new Viaje();
         if(elemento.getViaje().getId()==0) {
@@ -75,28 +76,15 @@ public class ViajeTramoService {
            viaje = viajeService.establecerAlias(viaje);
            elemento.setViaje(viaje);
         }
-        elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elemento);
-        return new ObjectMapper().readValue(string, Object.class);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(ViajeTramo elemento) throws IOException {
+    public ViajeTramo actualizar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
         ObjectMapper mapper = new ObjectMapper();
-        elementoDAO.save(elemento);
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elemento);
-        return new ObjectMapper().readValue(string, Object.class);
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro

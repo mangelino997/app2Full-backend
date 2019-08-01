@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeTramo;
 import ar.com.draimo.jitws.service.ViajeTramoService;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -67,7 +68,7 @@ public class ViajeTramoController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeTramo elemento) {
         try {
-            Object viajeTramo = elementoService.agregar(elemento);
+            ViajeTramo viajeTramo = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -89,7 +90,7 @@ public class ViajeTramoController {
     public ResponseEntity<?> actualizar(@RequestBody ViajeTramo elemento) {
         try {
             //Actualiza el registro
-            Object viajeTramo = elementoService.actualizar(elemento);
+            ViajeTramo viajeTramo = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
