@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author blas
  */
-
 @Service
 public class CompraComprobanteVencimientoService {
 
@@ -27,13 +26,13 @@ public class CompraComprobanteVencimientoService {
 
     @Autowired
     ICondicionCompraDAO condicionCompraDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CompraComprobanteVencimiento elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public List<CompraComprobanteVencimiento> listar() {
         return elementoDAO.findAll();
@@ -54,7 +53,7 @@ public class CompraComprobanteVencimientoService {
         String fechaString = new Date(new java.util.Date().getTime()).toString();
         BigDecimal cuotas = BigDecimal.valueOf(cantidadCuotas);
         //Obtiene el importe por cuota
-        BigDecimal importe = totalImporte.divide(cuotas,2, RoundingMode.HALF_UP);
+        BigDecimal importe = totalImporte.divide(cuotas, 2, RoundingMode.HALF_UP);
         //Establece los datos a vencimiento y lo agrega a la lista
         for (int i = 0; i < cantidadCuotas; i++) {
             vencimiento = new CompraComprobanteVencimiento();
@@ -74,7 +73,7 @@ public class CompraComprobanteVencimientoService {
         }
         return vencimientos;
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CompraComprobanteVencimiento agregar(CompraComprobanteVencimiento elemento) {
@@ -86,7 +85,7 @@ public class CompraComprobanteVencimientoService {
     public void actualizar(CompraComprobanteVencimiento elemento) {
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(CompraComprobanteVencimiento elemento) {

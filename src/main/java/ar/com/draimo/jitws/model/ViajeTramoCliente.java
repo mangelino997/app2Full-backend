@@ -1,7 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "viajetramocliente")
+@JsonFilter("viajetramoclientefiltro")
 public class ViajeTramoCliente extends ObjetoGenerico {
 
     //Referencia a la clase Cliente
@@ -29,7 +30,6 @@ public class ViajeTramoCliente extends ObjetoGenerico {
     private Cliente clienteDestinatario;
     
     //Referencia a la clase Viaje Tramo
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTramo", nullable = false)
     private ViajeTramo viajeTramo;

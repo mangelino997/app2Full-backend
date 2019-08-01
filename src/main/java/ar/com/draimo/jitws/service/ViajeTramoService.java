@@ -57,10 +57,9 @@ public class ViajeTramoService {
         List<ViajeTramo> elementos= elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("viajeTramos", "viajeCombustibles","viajeInsumos",
-                        "viajeGastos", "viajePeajes", "viajeEfectivos");
+                .serializeAllExcept("viaje");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajefiltro", theFilter);
+                .addFilter("viajetramofiltro", theFilter);
         String string =  mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }

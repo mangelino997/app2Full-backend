@@ -162,23 +162,23 @@ public class Viaje extends ObjetoGenerico {
     private List<ViajeTramo> viajeTramos;
     
     //Define la lista de ordenes de combustible
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
     private List<ViajeCombustible> viajeCombustibles;
     
     //Define la lista de adelantos de efectivo
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
     private List<ViajeEfectivo> viajeEfectivos;
     
     //Define la lista de ordenes de insumo
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
     private List<ViajeInsumo> viajeInsumos;
     
     //Define la lista de gastos
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
     private List<ViajeGasto> viajeGastos;
     
     //Define la lista de peajes
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
     private List<ViajePeaje> viajePeajes;
 
     //Getters y Setters de la clase

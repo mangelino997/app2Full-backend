@@ -25,45 +25,44 @@ import org.springframework.web.bind.annotation.RestController;
  * Clase CompraComprobanteVencimiento Controller
  * @author blas
  */
-
 @RestController
 public class CompraComprobanteVencimientoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/compracomprobantevencimiento";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/compracomprobantevencimiento";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     CompraComprobanteVencimientoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<CompraComprobanteVencimiento> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL + "/generarTablaVencimientos/{cantidadCuotas}/{totalImporte}/{idCondicionCompra}")
     @ResponseBody
     public List<CompraComprobanteVencimiento> generarTablaVencimientos(@PathVariable int cantidadCuotas,
-            @PathVariable BigDecimal totalImporte,@PathVariable int idCondicionCompra) {
+            @PathVariable BigDecimal totalImporte, @PathVariable int idCondicionCompra) {
         return elementoService.generarTablaVencimientos(cantidadCuotas, totalImporte, idCondicionCompra);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody CompraComprobanteVencimiento elemento) {
@@ -76,7 +75,7 @@ public class CompraComprobanteVencimientoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -84,7 +83,7 @@ public class CompraComprobanteVencimientoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody CompraComprobanteVencimiento elemento) {
@@ -98,18 +97,18 @@ public class CompraComprobanteVencimientoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL)
     public ResponseEntity<?> eliminar(@RequestBody CompraComprobanteVencimiento elemento) {
@@ -117,10 +116,10 @@ public class CompraComprobanteVencimientoController {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }
