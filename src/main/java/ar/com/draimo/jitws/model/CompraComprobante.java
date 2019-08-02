@@ -138,6 +138,10 @@ public class CompraComprobante extends ObjetoGenerico {
     @Column(name = "monedaCotizacion", nullable = false)
     private BigDecimal monedaCotizacion;
     
+    //Define codigoAfip
+    @Column(name = "observaciones",length = 100, nullable = true)
+    private String observaciones;
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -354,6 +358,14 @@ public class CompraComprobante extends ObjetoGenerico {
 
     public void setMonedaCotizacion(BigDecimal monedaCotizacion) {
         this.monedaCotizacion = monedaCotizacion;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
 }
