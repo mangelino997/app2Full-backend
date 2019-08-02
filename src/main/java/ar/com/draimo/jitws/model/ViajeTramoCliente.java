@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -31,6 +32,7 @@ public class ViajeTramoCliente extends ObjetoGenerico {
     
     //Referencia a la clase Viaje Tramo
     @ManyToOne(cascade = CascadeType.REFRESH)
+    @JsonIgnoreProperties("viajeTramoClientes")
     @JoinColumn(name = "idViajeTramo", nullable = false)
     private ViajeTramo viajeTramo;
 

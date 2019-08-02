@@ -74,9 +74,9 @@ public class ViajeController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Viaje elemento) {
         try {
-            Viaje v = elementoService.agregar(elemento);
+            Object v = elementoService.agregar(elemento);
             //Actualiza inmediatamente el registro para establecer el alias
-            Viaje viaje = elementoService.establecerAlias(v);
+            Viaje viaje = elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -98,7 +98,7 @@ public class ViajeController {
     public ResponseEntity<?> actualizar(@RequestBody Viaje elemento) {
         try {
             //Actualiza el registro
-            Viaje viaje = elementoService.actualizar(elemento);
+            Object viaje = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito

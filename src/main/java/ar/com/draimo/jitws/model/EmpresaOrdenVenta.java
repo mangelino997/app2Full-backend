@@ -1,8 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +19,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "empresaordenventa")
-@JsonFilter("empresaordenventafiltro")
 public class EmpresaOrdenVenta extends ObjetoGenerico {
 
     //Referencia a la clase cliente
@@ -28,6 +27,7 @@ public class EmpresaOrdenVenta extends ObjetoGenerico {
     private Empresa empresa;
     
     //Referencia a la clase ordenVenta
+    @JsonIgnoreProperties(value = {"clientes","empresas"})
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;

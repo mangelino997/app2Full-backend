@@ -1,8 +1,8 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
@@ -24,7 +24,8 @@ import javax.persistence.Table;
 public class ViajeGasto extends ObjetoGenerico {
 
     //Referencia a la clase Viaje
-    @JsonBackReference
+    @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
+        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idViaje", nullable = true)
     private Viaje viaje;

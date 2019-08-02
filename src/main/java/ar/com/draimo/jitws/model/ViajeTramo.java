@@ -2,7 +2,7 @@
 package ar.com.draimo.jitws.model;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -27,6 +27,8 @@ import javax.persistence.Table;
 public class ViajeTramo extends ObjetoGenerico {
 
     //Referencia a la clase Viaje
+    @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
+        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idViaje", nullable = false)
     private Viaje viaje;
@@ -101,6 +103,7 @@ public class ViajeTramo extends ObjetoGenerico {
     private BigDecimal importe;
     
     //Define la lista de tramos de clientes
+    @JsonIgnoreProperties("viajeTramo")
     @OneToMany(mappedBy = "viajeTramo", cascade = CascadeType.REMOVE)
     private List<ViajeTramoCliente> viajeTramoClientes;
     
