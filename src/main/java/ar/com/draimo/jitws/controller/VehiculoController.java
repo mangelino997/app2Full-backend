@@ -50,7 +50,14 @@ public class VehiculoController {
         return elementoService.obtenerSiguienteId();
     }
     
-    //Obtiene la lista completa
+    //Obtiene un registro por id
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
+        return elementoService.obtenerPorId(id);
+    }
+    
+    //Obtiene un re
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {

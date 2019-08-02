@@ -111,7 +111,7 @@ public class ViajeService {
         //Retorna los datos
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo", "viaje","datos");
+                .serializeAllExcept("viajeTramo", "viaje");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)

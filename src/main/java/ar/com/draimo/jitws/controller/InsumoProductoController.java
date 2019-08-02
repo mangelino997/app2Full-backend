@@ -57,10 +57,10 @@ public class InsumoProductoController {
     }
 
     //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
+    @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<InsumoProducto> listarPorNombre(@PathVariable String nombre) {
-        return elementoService.listarPorNombre(nombre);
+    public List<InsumoProducto> listarPorAlias(@PathVariable String alias) {
+        return elementoService.listarPorAlias(alias);
     }
 
     //Obtiene una lista de combustibles
@@ -92,7 +92,7 @@ public class InsumoProductoController {
             //Establece el alias despues de agregar
             elementoService.establecerAlias(a);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {

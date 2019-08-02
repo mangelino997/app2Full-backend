@@ -67,7 +67,7 @@ public class ViajeCombustibleController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeCombustible elemento) {
         try {
-            ViajeCombustible a = elementoService.agregar(elemento);
+            Object a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -89,7 +89,7 @@ public class ViajeCombustibleController {
     public ResponseEntity<?> actualizar(@RequestBody ViajeCombustible elemento) {
         try {
             //Actualiza el registro
-            ViajeCombustible a = elementoService.actualizar(elemento);
+            Object a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito

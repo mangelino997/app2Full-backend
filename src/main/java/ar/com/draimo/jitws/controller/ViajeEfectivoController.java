@@ -67,7 +67,7 @@ public class ViajeEfectivoController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeEfectivo elemento) {
         try {
-            ViajeEfectivo a = elementoService.agregar(elemento);
+            Object a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -89,7 +89,7 @@ public class ViajeEfectivoController {
     public ResponseEntity<?> actualizar(@RequestBody ViajeEfectivo elemento) {
         try {
             //Actualiza el registro
-            ViajeEfectivo a = elementoService.actualizar(elemento);
+            Object a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de Actualizado con exito

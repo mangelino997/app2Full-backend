@@ -32,11 +32,11 @@ public class InsumoProductoService {
     }
     
     //Obtiene una lista por nombre
-    public List<InsumoProducto> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
+    public List<InsumoProducto> listarPorAlias(String alias) {
+        if(alias.equals("***")) {
             return elementoDAO.findAll();
         } else {
-            return elementoDAO.findByNombreContaining(nombre);
+            return elementoDAO.findByAliasContaining(alias);
         }
     }
     

@@ -70,6 +70,37 @@ public class VehiculoService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Obtiene un registro por id
+    public Object obtenerPorId(int id) throws IOException {
+        Vehiculo elemento = elementoDAO.findById(id).get();
+        if (elemento.getPdfTitulo()==null) {
+            elemento.setPdfTitulo(new Pdf());
+        }
+        if (elemento.getPdfCedulaIdent()==null) {
+            elemento.setPdfCedulaIdent(new Pdf());
+        }
+        if (elemento.getPdfHabBromat()==null) {
+            elemento.setPdfHabBromat(new Pdf());
+        }
+        if (elemento.getPdfVtoInspTecnica()==null) {
+            elemento.setPdfVtoInspTecnica(new Pdf());
+        }
+        if (elemento.getPdfVtoRuta()==null) {
+            elemento.setPdfVtoRuta(new Pdf());
+        }
+        if (elemento.getPdfVtoSenasa()==null) {
+            elemento.setPdfVtoSenasa(new Pdf());
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return mapper.readValue(string, Object.class);
+    }
+
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
         List<Vehiculo> elementos;
