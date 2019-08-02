@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Banco
+ * Interfaz DAO RubroProductoCuentaContable
  * Define los metodos particulares contra la base de datos
  * @author blas
  */

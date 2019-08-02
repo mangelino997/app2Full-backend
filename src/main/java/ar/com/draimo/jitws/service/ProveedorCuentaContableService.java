@@ -2,9 +2,9 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPlanCuentaDAO;
-import ar.com.draimo.jitws.dao.IRubroProductoCuentaContableDAO;
-import ar.com.draimo.jitws.dao.IRubroProductoDAO;
-import ar.com.draimo.jitws.model.RubroProductoCuentaContable;
+import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
+import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.model.ProveedorCuentaContable;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -16,16 +16,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio RubroProductoCuentaContable
+ * Servicio ProveedorCuentaContable
  * @author blas
  */
 
 @Service
-public class RubroProductoCuentaContableService {
+public class ProveedorCuentaContableService {
     
     //Define la referencia al dao
     @Autowired
-    IRubroProductoCuentaContableDAO elementoDAO;
+    IProveedorCuentaContableDAO elementoDAO;
     
     //Define la referencia a empresaDAO
     @Autowired
@@ -37,17 +37,17 @@ public class RubroProductoCuentaContableService {
     
     //Define la referencia a rubroProductoDAO
     @Autowired
-    IRubroProductoDAO rubroProductoDAO;
+    IProveedorDAO proveedorDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        RubroProductoCuentaContable elemento = elementoDAO.findTopByOrderByIdDesc();
+        ProveedorCuentaContable elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento.getId()+1;
     }
     
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<RubroProductoCuentaContable> elementos = elementoDAO.findAll();
+        List<ProveedorCuentaContable> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -57,9 +57,9 @@ public class RubroProductoCuentaContableService {
         return new ObjectMapper().readValue(string, Object.class);
     }
     
-    //Obtiene una lista por Empresa
+    //Obtiene una lista por EmpresaEmpresa
     public Object listarPorEmpresa(int idEmpresa) throws IOException {
-        List<RubroProductoCuentaContable> elementos = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
+        List<ProveedorCuentaContable> elementos = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -71,7 +71,7 @@ public class RubroProductoCuentaContableService {
     
     //Obtiene una lista por PlanCuenta
     public Object listarPorPlanCuenta(int idPlanCuenta) throws IOException {
-        List<RubroProductoCuentaContable> elementos = elementoDAO.findByPlanCuenta(
+        List<ProveedorCuentaContable> elementos = elementoDAO.findByPlanCuenta(
                 planCuentaDAO.findById(idPlanCuenta).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -82,9 +82,9 @@ public class RubroProductoCuentaContableService {
         return new ObjectMapper().readValue(string, Object.class);
     }
     
-    //Obtiene una lista por RubroProducto
-    public Object listarPorRubroProducto(int idRubroProducto) throws IOException {
-        List<RubroProductoCuentaContable> elementos = elementoDAO.findByRubroProducto(rubroProductoDAO.findById(idRubroProducto).get());
+    //Obtiene una lista por Proveedor
+    public Object listarPorProveedor(int idProveedor) throws IOException {
+        List<ProveedorCuentaContable> elementos = elementoDAO.findByProveedor(proveedorDAO.findById(idProveedor).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -96,7 +96,7 @@ public class RubroProductoCuentaContableService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(RubroProductoCuentaContable elemento) throws IOException {
+    public Object agregar(ProveedorCuentaContable elemento) throws IOException {
         elemento = elementoDAO.save(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -109,7 +109,7 @@ public class RubroProductoCuentaContableService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(RubroProductoCuentaContable elemento) throws IOException {
+    public Object actualizar(ProveedorCuentaContable elemento) throws IOException {
         elemento = elementoDAO.save(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -122,7 +122,7 @@ public class RubroProductoCuentaContableService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(RubroProductoCuentaContable elemento) {
+    public void eliminar(ProveedorCuentaContable elemento) {
         elementoDAO.delete(elemento);
     }
     
