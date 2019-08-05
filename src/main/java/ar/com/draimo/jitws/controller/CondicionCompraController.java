@@ -109,12 +109,15 @@ public class CondicionCompraController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody CondicionCompra elemento) {
+    @DeleteMapping(value = URL +"/{elemento}")
+    public ResponseEntity<?> eliminar(@PathVariable int elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
+        }catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

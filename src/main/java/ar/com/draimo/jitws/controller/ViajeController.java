@@ -75,12 +75,10 @@ public class ViajeController {
     public ResponseEntity<?> agregar(@RequestBody Viaje elemento) {
         try {
             Object v = elementoService.agregar(elemento);
-            //Actualiza inmediatamente el registro para establecer el alias
-            Viaje viaje = elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return new ResponseEntity(viaje, HttpStatus.CREATED);
+            return new ResponseEntity(v, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

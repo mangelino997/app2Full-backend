@@ -65,6 +65,10 @@ public class ViajeService {
     @Autowired
     IViajePeajeDAO viajePeajeDAO;
 
+    //Define la referencia al service de Viaje
+    @Autowired
+    ViajeTramoService viajeTramoService;
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Viaje elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -73,10 +77,10 @@ public class ViajeService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<Viaje>  viajes =  elementoDAO.obtenerTodos();
+        List<Viaje> viajes = elementoDAO.obtenerTodos();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo", "viaje","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -123,15 +127,15 @@ public class ViajeService {
 
     //Obtiene una lista de registros por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<Viaje>  viajes;
-        if(alias.equals("***")) {
+        List<Viaje> viajes;
+        if (alias.equals("***")) {
             viajes = elementoDAO.findAll();
-        }else {
+        } else {
             viajes = elementoDAO.findByAliasContaining(alias);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo", "viaje","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -144,10 +148,26 @@ public class ViajeService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(Viaje elemento) throws IOException {
+        ViajeTramo viaje = new ViajeTramo();
         elemento = elementoDAO.saveAndFlush(elemento);
+        List<ViajeTramo> viajeTramos = elemento.getViajeTramos();
+        for (ViajeTramo viajeTramo : viajeTramos) {
+            if (viajeTramo != null) {
+                if (viajeTramo.getId() == 0) {
+                    viaje = viajeTramoService.formatearStrings(viajeTramo);
+                    viajeTramo.setViaje(elemento);
+                    viaje = viajeTramoDAO.saveAndFlush(viaje);
+                    elemento.getViajeTramos().clear();
+                    elemento.getViajeTramos().add(viaje);
+                }
+            }
+            
+        elemento = elementoDAO.save(elemento);
+           elemento = establecerAlias(elemento);
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo", "viaje","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -177,10 +197,10 @@ public class ViajeService {
                 + " - " + viaje.getEmpresaEmision().getRazonSocial()
                 + " - " + viaje.getPersonal().getNombreCompleto());
         //Actualiza el viaje
-        viaje= elementoDAO.save(viaje);
+        viaje = elementoDAO.save(viaje);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo", "viaje","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)

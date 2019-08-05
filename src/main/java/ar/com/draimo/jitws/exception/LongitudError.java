@@ -15,7 +15,7 @@ public class LongitudError {
     public static final String CODIGO_AFIP_LONGITUD = "codigoAfip";
     public static final String CODIGO_AREA_LONGITUD = "codigoArea";
     public static final String CODIGO_AREA_ALT_LONGITUD = "codigoAreaAlt";
-    public static final String CORREO_ELECTRONICO_LONGITUD = "correoElectronico";
+    public static final String CORREO_ELECTRONICO_LONGITUD = "correoelectronico";
     public static final String CUIL_LONGITUD = "cuil";
     public static final String CUIT_LONGITUD = "cuit";
     public static final String DESCRIPCION_LONGITUD = "descripcion";

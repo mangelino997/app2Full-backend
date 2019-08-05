@@ -33,6 +33,8 @@ public class MensajeRespuesta {
     public static final String CERRADO = "Registro cerrado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
     public static final String ROL_ASIGNADO = "El rol esta asignado a un usuario";
+    public static final String ELEMENTO_ASIGNADO = "El registro esta asignado en otro módulo.";
+    public static final String ELEMENTO_NO_NULL = "No puede estar vacío.";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {
@@ -128,6 +130,7 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> datoDuplicado(DataIntegrityViolationException dive) {
         //Obtiene el mensaje de duplicidad de datos
         String[] partes = dive.getMostSpecificCause().getMessage().split("'");
+        String[] partes2 = dive.getMostSpecificCause().getMessage().split("`");
         String mensajeRespuesta;
         String plusMensaje;
         int codigoRespuesta;
@@ -220,7 +223,21 @@ public class MensajeRespuesta {
                     plusMensaje = " ";
                     break;
             }
-        } else {
+        } else if(partes.length==1){
+            mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
+            codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
+                    plusMensaje = " ";
+        } else if(partes2.length==13){
+            switch(partes[7]) {
+                case InexistenciaError.AFIP_ACTIVIDAD_INEXISTENTE:
+                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TRAMO;
+                    plusMensaje = "";
+                    break;
+            }
+            mensajeRespuesta = MensajeRespuesta.ELEMENTO_NO_NULL;
+            codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
+                    plusMensaje = " ";
+        }else {
             //Determina la longitud de la columna 
             mensajeRespuesta = MensajeRespuesta.LONGITUD;
             switch (partes[1]) {

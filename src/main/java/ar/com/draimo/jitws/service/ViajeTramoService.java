@@ -107,7 +107,7 @@ public class ViajeTramoService {
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
                 .addFilter("viajetramoclientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
+        String string = mapper.writer(filters).writeValueAsString(elemento.getViaje());
         return mapper.readValue(string, Object.class);
     }
     
@@ -118,7 +118,7 @@ public class ViajeTramoService {
     }
     
     //Formatea los strings
-    private ViajeTramo formatearStrings(ViajeTramo elemento) {
+    public ViajeTramo formatearStrings(ViajeTramo elemento) {
         if(elemento.getObservaciones() != null) {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
