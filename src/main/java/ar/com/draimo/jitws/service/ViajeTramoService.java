@@ -99,6 +99,9 @@ public class ViajeTramoService {
     @Transactional(rollbackFor = Exception.class)
     public Object actualizar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
+        Viaje viaje = new Viaje();
+           viaje = viajeDAO.findById(elemento.getViaje().getId()).get();
+           elemento.setViaje(viaje);
         elemento= elementoDAO.save(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
