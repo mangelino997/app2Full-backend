@@ -100,6 +100,7 @@ public class ViajeTramoService {
     public Object actualizar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
         Viaje viaje = new Viaje();
+           elemento = elementoDAO.findById(elemento.getId()).get();
            viaje = viajeDAO.findById(elemento.getViaje().getId()).get();
            elemento.setViaje(viaje);
         elemento= elementoDAO.save(elemento);
