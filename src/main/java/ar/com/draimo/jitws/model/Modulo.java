@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Modulo extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Getters y Setters de la clase

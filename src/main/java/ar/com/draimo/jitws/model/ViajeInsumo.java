@@ -70,7 +70,7 @@ public class ViajeInsumo extends ObjetoGenerico {
     private short cantidad;
     
     //Define el precio unitario
-    @Column(name = "precioUnitario", nullable = false)
+    @Column(name = "precioUnitario", nullable = true)
     private BigDecimal precioUnitario;
     
     //Define el importe

@@ -91,7 +91,7 @@ public class Viaje extends ObjetoGenerico {
     private VehiculoProveedor vehiculoRemolqueProveedor;
     
     //Define un numero de documentacion
-    @Column(name = "numeroDocumentacion", nullable = true)
+    @Column(name = "numeroDocumentacion",length = 10, nullable = true)
     private int numeroDocumentacion;
     
     //Defina una fecha de documentacion
@@ -105,7 +105,7 @@ public class Viaje extends ObjetoGenerico {
     private Usuario usuarioDocumentacion;
     
     //Define un numero de liquidacion
-    @Column(name = "numeroLiquidacion", nullable = true)
+    @Column(name = "numeroLiquidacion",length = 10, nullable = true)
     private int numeroLiquidacion;
     
     //Define una fecha de liquidacion

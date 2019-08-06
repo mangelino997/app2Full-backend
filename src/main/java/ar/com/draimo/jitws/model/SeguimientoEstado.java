@@ -15,7 +15,7 @@ import javax.persistence.Table;
 class SeguimientoEstado extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define si es entregado

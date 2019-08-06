@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class AfipCondicionIva extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define la abreviatura

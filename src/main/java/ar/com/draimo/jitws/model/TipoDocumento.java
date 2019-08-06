@@ -16,15 +16,15 @@ import javax.persistence.Table;
 public class TipoDocumento extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define la abreviatura del nombre
-    @Column(name = "abreviatura", nullable = false, unique = true)
+    @Column(name = "abreviatura",length = 5, nullable = false, unique = true)
     private String abreviatura;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     
     //Getters y Setters de la clase

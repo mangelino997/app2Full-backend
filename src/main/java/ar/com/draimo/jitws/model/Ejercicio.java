@@ -37,7 +37,7 @@ public class Ejercicio extends ObjetoGenerico {
     private Mes mesInicio;
     
     //Define cantidad meses
-    @Column(name = "cantidadMeses", nullable = false)
+    @Column(name = "cantidadMeses",length = 2, nullable = false)
     private short cantidadMeses;
     
     //Define porDefecto

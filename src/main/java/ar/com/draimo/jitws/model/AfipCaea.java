@@ -27,15 +27,15 @@ public class AfipCaea extends ObjetoGenerico {
     private Empresa empresa;
     
     //Define el anio
-    @Column(name = "anio", nullable = false)
+    @Column(name = "anio",length = 4, nullable = false)
     private short anio;
     
     //Define el mes
-    @Column(name = "mes", nullable = false)
+    @Column(name = "mes",length = 2, nullable = false)
     private short mes;
     
     //Define la quincena
-    @Column(name = "quincena", nullable = false)
+    @Column(name = "quincena", length = 1, nullable = false)
     private short quincena;
     
     //Define el numero caea

@@ -41,7 +41,7 @@ public class Tramo extends ObjetoGenerico {
     private boolean excluirLiqChofer;
     
     //Define la ruta alternativa
-    @Column(name = "rutaAlternativa", nullable = true)
+    @Column(name = "rutaAlternativa",length = 20, nullable = true)
     private String rutaAlternativa;
     
     //Getters y Setters de la clase

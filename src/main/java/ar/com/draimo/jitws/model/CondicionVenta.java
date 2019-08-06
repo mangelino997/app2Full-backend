@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class CondicionVenta extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre",length = 45, nullable = false)
     private String nombre;
     
     //Define si es contado

@@ -49,7 +49,7 @@ public class ChoferProveedor extends ObjetoGenerico {
     private TipoDocumento tipoDocumento;
     
     //Define el numero de documento
-    @Column(name = "numeroDocumento", nullable = false, unique = true)
+    @Column(name = "numeroDocumento",length = 15, nullable = false, unique = true)
     private String numeroDocumento;
     
     //Define la fecha de nacimiento
@@ -58,11 +58,11 @@ public class ChoferProveedor extends ObjetoGenerico {
     private Date fechaNacimiento;
     
     //Define el telefono fijo
-    @Column(name = "telefonoFijo", nullable = true, unique = true)
+    @Column(name = "telefonoFijo",length = 45, nullable = true, unique = true)
     private String telefonoFijo;
     
     //Define el telefono movil
-    @Column(name = "telefonoMovil", nullable = true, unique = true)
+    @Column(name = "telefonoMovil",length = 45, nullable = true, unique = true)
     private String telefonoMovil;
     
     //Define el vencimiento del carnet
@@ -126,7 +126,7 @@ public class ChoferProveedor extends ObjetoGenerico {
     private Date fechaBaja;
     
     //Define el alias para las busquedas
-    @Column(name = "alias", nullable = true)
+    @Column(name = "alias",length = 100, nullable = true)
     private String alias;
     
     //Getters y Setters de la clase

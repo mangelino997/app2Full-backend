@@ -21,7 +21,7 @@ public class AfipAlicuotaIva extends ObjetoGenerico {
     private BigDecimal alicuota;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     
     //Define la alicuota por defecto

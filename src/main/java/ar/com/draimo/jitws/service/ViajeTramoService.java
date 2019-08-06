@@ -97,23 +97,10 @@ public class ViajeTramoService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(ViajeTramo elemento) throws IOException {
+    public void actualizar(ViajeTramo elemento) throws IOException {
         elemento = formatearStrings(elemento);
-//        Viaje viaje = viajeDAO.findById(elemento.getViaje().getId()).get();
-//        elemento.setViaje(viaje);
-        elemento = elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("viaje", "cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
-                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        elementoDAO.save(elemento);
+        
     }
 
     //Elimina un registro

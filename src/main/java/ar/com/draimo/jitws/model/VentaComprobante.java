@@ -35,15 +35,15 @@ public class VentaComprobante extends ObjetoGenerico {
     private Sucursal sucursal;
     
     //Define el punto de venta
-    @Column(name = "puntoVenta", nullable = false)
+    @Column(name = "puntoVenta",length = 5, nullable = false)
     private int puntoVenta;
     
     //Define la letra
-    @Column(name = "letra", nullable = false)
+    @Column(name = "letra",length = 1, nullable = false)
     private String letra;
     
     //Define el numero
-    @Column(name = "numero", nullable = false)
+    @Column(name = "numero",length = 8, nullable = false)
     private int numero;
     
     //Referencia a la clase TipoComprobante
@@ -52,7 +52,7 @@ public class VentaComprobante extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = false)
+    @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     
     //Define la fecha de emision

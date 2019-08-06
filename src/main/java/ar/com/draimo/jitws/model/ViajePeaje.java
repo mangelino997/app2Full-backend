@@ -41,7 +41,7 @@ public class ViajePeaje extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Define el punto de venta
-    @Column(name = "puntoVenta", nullable = false)
+    @Column(name = "puntoVenta",length = 5, nullable = false)
     private int puntoVenta;
     
     //Define el letra
@@ -49,7 +49,7 @@ public class ViajePeaje extends ObjetoGenerico {
     private String letra;
     
     //Define el numero
-    @Column(name = "numeroComprobante", nullable = false)
+    @Column(name = "numeroComprobante",length = 8, nullable = false)
     private int numeroComprobante;
     
     //Define la fecha

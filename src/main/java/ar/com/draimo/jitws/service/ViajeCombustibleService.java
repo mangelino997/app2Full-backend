@@ -84,19 +84,9 @@ public class ViajeCombustibleService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(ViajeCombustible elemento) throws IOException {
+    public void actualizar(ViajeCombustible elemento) throws IOException {
         elemento = formatearStrings(elemento);
-        elemento = elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        elementoDAO.save(elemento);
     }
     
     //Elimina un registro

@@ -24,11 +24,11 @@ public class AfipComprobante extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Define la letra
-    @Column(name = "letra", nullable = false)
+    @Column(name = "letra",length = 1, nullable = false)
     private String letra;
     
     //Define el codigo afip
-    @Column(name = "codigoAfip", nullable = false, unique = true)
+    @Column(name = "codigoAfip",length = 3, nullable = false, unique = true)
     private String codigoAfip;
 
     //Getters y Setters de la clase

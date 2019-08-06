@@ -56,7 +56,7 @@ public class ViajeRemito extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Define el punto de venta
-    @Column(name = "puntoVenta", nullable = false)
+    @Column(name = "puntoVenta",length = 5, nullable = false)
     private int puntoVenta;
     
     //Define la letra
@@ -64,7 +64,7 @@ public class ViajeRemito extends ObjetoGenerico {
     private String letra;
     
     //Define el numero
-    @Column(name = "numero", nullable = false)
+    @Column(name = "numero",length = 8, nullable = false)
     private int numero;
     
     //Referencia a la clase Cliente
@@ -132,7 +132,7 @@ public class ViajeRemito extends ObjetoGenerico {
     private boolean estaEnReparto;
     
     //Define el alias para las busquedas
-    @Column(name = "alias",length = 100, nullable = true)
+    @Column(name = "alias",length = 200, nullable = true)
     private String alias;
     
     //Getters y Setters de la clase

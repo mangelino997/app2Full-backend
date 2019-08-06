@@ -43,7 +43,7 @@ public class Personal extends ObjetoGenerico {
     private String numeroDocumento;
 
     //Define el cuil
-    @Column(name = "cuil", length = 15, nullable = false, unique = true)
+    @Column(name = "cuil", length = 11, nullable = false, unique = true)
     private String cuil;
 
     //Referencia a la clase Empresa

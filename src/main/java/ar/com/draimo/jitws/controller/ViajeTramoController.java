@@ -89,11 +89,11 @@ public class ViajeTramoController {
     public ResponseEntity<?> actualizar(@RequestBody ViajeTramo elemento) {
         try {
             //Actualiza el registro
-            Object viajeTramo = elementoService.actualizar(elemento);
+            elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return new ResponseEntity(viajeTramo, HttpStatus.OK);
+            return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

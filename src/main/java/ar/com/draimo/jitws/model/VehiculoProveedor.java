@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class VehiculoProveedor extends ObjetoGenerico {
     
     //Define el dominio
-    @Column(name = "dominio", nullable = false)
+    @Column(name = "dominio",length = 10, nullable = false)
     private String dominio;
     
     //Referencia a la clase Proveedor
@@ -54,11 +54,11 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private short anioFabricacion;
     
     //Define el numero de motor
-    @Column(name = "numeroMotor", nullable = true)
+    @Column(name = "numeroMotor",length = 25, nullable = true)
     private String numeroMotor;
     
     //Define el numero de chasis
-    @Column(name = "numeroChasis", nullable = true)
+    @Column(name = "numeroChasis",length = 25, nullable = true)
     private String numeroChasis;
     
     //Referencia a la clase Compañia de seguro
@@ -67,7 +67,7 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private CompaniaSeguro companiaSeguro;
     
     //Define el numero de poliza
-    @Column(name = "numeroPoliza", nullable = false)
+    @Column(name = "numeroPoliza",length = 15, nullable = false)
     private String numeroPoliza;
     
     //Define el vencimiento de la poliza
@@ -130,7 +130,7 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private Date fechaUltimaMod;
     
     //Define el alias
-    @Column(name = "alias", nullable = true)
+    @Column(name = "alias",length = 100, nullable = true)
     private String alias;
     
     //Getters y Setters de la clase

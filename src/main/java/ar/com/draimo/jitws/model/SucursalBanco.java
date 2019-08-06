@@ -24,7 +24,7 @@ public class SucursalBanco extends ObjetoGenerico {
     private Banco banco;
 
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
 
     //Getters y Setters de la clase

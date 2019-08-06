@@ -44,7 +44,7 @@ public class Soporte extends ObjetoGenerico {
     private String mensaje;
     
     //Define el alias
-    @Column(name = "alias", length = 60, nullable = true)
+    @Column(name = "alias", length = 100, nullable = true)
     private String alias;
     
     //Referencia a la clase BugImagen

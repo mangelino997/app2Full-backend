@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Cascade;
 
 /**
  * Clase Banco
@@ -52,7 +51,7 @@ public class PersonalFamiliar extends ObjetoGenerico {
     private String cuil;
     
     //Define el numero de cuil
-    @Column(name = "alias",length = 60, nullable = false)
+    @Column(name = "alias",length = 150, nullable = false)
     private String alias;
     
     //Define la fecha de nacimiento

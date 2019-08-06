@@ -21,7 +21,7 @@ public class Categoria extends ObjetoGenerico {
     private String nombre;
     
     //Define el adicional por vacaciones
-    @Column(name = "adicionalBasicoVacaciones", nullable = false)
+    @Column(name = "adicionalBasicoVacaciones",length = 45, nullable = false)
     private BigDecimal adicionalBasicoVacaciones;
     
     //Define el tope de adelantos

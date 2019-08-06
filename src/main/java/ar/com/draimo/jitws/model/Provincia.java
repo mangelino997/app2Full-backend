@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class Provincia extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
     //Define el codigo de ingresos brutos
@@ -27,7 +27,7 @@ public class Provincia extends ObjetoGenerico {
     private int codigoIIBB;
     
     //Define el codigo de afip
-    @Column(name = "codigoAfip", nullable = true)
+    @Column(name = "codigoAfip",length = 3, nullable = true)
     private String codigoAfip;
     
     //Referencia a la clase Pais
