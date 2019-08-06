@@ -69,7 +69,7 @@ public class ViajeEfectivoController {
         try {
             Object a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
@@ -91,7 +91,7 @@ public class ViajeEfectivoController {
             //Actualiza el registro
             Object a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de Actualizado con exito
             return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {

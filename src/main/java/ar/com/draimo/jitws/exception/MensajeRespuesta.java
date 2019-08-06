@@ -57,11 +57,12 @@ public class MensajeRespuesta {
         return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                 MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     //Retorna mensaje con ReponseEntity intentalo nuevamente
     public static ResponseEntity<?> seleccioneNuevosDatos() {
         List<String> mensajes = new ArrayList<>();
         mensajes.add("Para Cuenta bancaria-Tipo chequera: desde y hasta existentes");
-            mensajes.add("Por favor, seleccione otros datos");
+        mensajes.add("Por favor, seleccione otros datos");
         return new ResponseEntity<>(new EstadoRespuestaChequera(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                 mensajes, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -89,37 +90,37 @@ public class MensajeRespuesta {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK,
                 MensajeRespuesta.ASIGNADOS, 0), HttpStatus.OK);
     }
-    
+
     //Retorna mensaje con ReponseEntity de quitado
     public static ResponseEntity<?> quitado() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK,
                 MensajeRespuesta.QUITADOS, 0), HttpStatus.OK);
     }
-        
+
     //Retorna mensaje con ReponseEntity de cerrado
     public static ResponseEntity<?> cerrado() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CERRADO_CON_EXITO,
                 MensajeRespuesta.CERRADO, 0), HttpStatus.OK);
     }
-    
+
     //Retorna mensaje con ReponseEntity de sin contenido
     public static ResponseEntity sinContenido() {
         return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO,
                 MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     //Retorna mensaje de dato duplicado 
     public static ResponseEntity<?> datoDuplicado() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.DATO_DUPLICADO,
                 MensajeRespuesta.DATO_DUPLICADO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     //Retorna mensaje de registro no existente
     public static ResponseEntity<?> registroNoExistente() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.NO_EXISTENTE,
                 MensajeRespuesta.NO_EXISTENTE, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
+
     //Retorna mensaje de registro no existente
     public static ResponseEntity<?> rolAsignado() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ROL_ASIGNADO,
@@ -223,21 +224,610 @@ public class MensajeRespuesta {
                     plusMensaje = " ";
                     break;
             }
-        } else if(partes.length==1){
+        } else if (partes.length == 1) {
+            if (partes2.length == 13) {
+                mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
+                switch (partes2[7]) {
+                    case InexistenciaError.AFIP_ACTIVIDAD_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_ACTIVIDAD_INEXISTENTE;
+                        plusMensaje = ": AFIP ACTIVIDAD";
+                        break;
+                    case InexistenciaError.AFIP_ALICUOTA_IVA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_ALICUOTA_IVA_INEXISTENTE;
+                        plusMensaje = ": AFIP ALICUOTA IVA";
+                        break;
+                    case InexistenciaError.AFIP_COMPROBANTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_COMPROBANTE_INEXISTENTE;
+                        plusMensaje = ": AFIP COMPROBANTE";
+                        break;
+                    case InexistenciaError.AFIP_CONCEPTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_CONCEPTO_INEXISTENTE;
+                        plusMensaje = ": AFIP CONCEPTO";
+                        break;
+                    case InexistenciaError.AFIP_CONDICION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_INEXISTENTE;
+                        plusMensaje = ": AFIP CONDICION";
+                        break;
+                    case InexistenciaError.AFIP_CONDICION_IVA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_IVA_INEXISTENTE;
+                        plusMensaje = ": AFIP CONDICION IVA";
+                        break;
+                    case InexistenciaError.AFIP_CONDICION_IVA_PROVEEDOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_IVA_PROVEEDOR_INEXISTENTE;
+                        plusMensaje = ": AFIP CONDICION IVA PROVEEDOR";
+                        break;
+                    case InexistenciaError.AFIP_LOCALIDAD_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_LOCALIDAD_INEXISTENTE;
+                        plusMensaje = ": AFIP LOCALIDAD";
+                        break;
+                    case InexistenciaError.AFIP_MOD_CONTRATACION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_MOD_CONTRATACION_INEXISTENTE;
+                        plusMensaje = ": AFIP MODALIDAD CONTRATACIÓN";
+                        break;
+                    case InexistenciaError.AFIP_SINIESTRADO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_SINIESTRADO_INEXISTENTE;
+                        plusMensaje = ": AFIP SINIESTRADO";
+                        break;
+                    case InexistenciaError.AFIP_SITUACION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AFIP_SITUACION_INEXISTENTE;
+                        plusMensaje = ": AFIP SITUACION";
+                        break;
+                    case InexistenciaError.AREA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.AREA_INEXISTENTE;
+                        plusMensaje = ": AREA";
+                        break;
+                    case InexistenciaError.BANCO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.BANCO_INEXISTENTE;
+                        plusMensaje = ": BANCO";
+                        break;
+                    case InexistenciaError.BARRIO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.BARRIO_INEXISTENTE;
+                        plusMensaje = ": BARRIO";
+                        break;
+                    case InexistenciaError.BUG_IMAGEN_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.BUG_IMAGEN_INEXISTENTE;
+                        plusMensaje = ": IMAGEN DEL BUG";
+                        break;
+                    case InexistenciaError.CATEGORIA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CATEGORIA_INEXISTENTE;
+                        plusMensaje = ": CATEGORIA";
+                        break;
+                    case InexistenciaError.CHEQUE_CARTERA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CHEQUE_CARTERA_INEXISTENTE;
+                        plusMensaje = ": CHEQUE CARTERA";
+                        break;
+                    case InexistenciaError.CHOFER_PROVEEDOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CHOFER_PROVEEDOR_INEXISTENTE;
+                        plusMensaje = ": CHOFER PROVEEDOR";
+                        break;
+                    case InexistenciaError.CLIENTE_DESTINATARIO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CLIENTE_DESTINATARIO_INEXISTENTE;
+                        plusMensaje = ": CLIENTE DESTINATARIO";
+                        break;
+                    case InexistenciaError.CLIENTE_DESTINATARIO_SUC_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CLIENTE_DESTINATARIO_SUC_INEXISTENTE;
+                        plusMensaje = ": CLIENTE DESTINATARIO SUCURSAL";
+                        break;
+                    case InexistenciaError.CLIENTE_GRUPO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CLIENTE_GRUPO_INEXISTENTE;
+                        plusMensaje = ": CLIENTE GRUPO";
+                        break;
+                    case InexistenciaError.CLIENTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CLIENTE_INEXISTENTE;
+                        plusMensaje = ": CLIENTE";
+                        break;
+                    case InexistenciaError.CLIENTE_REMITENTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CLIENTE_REMITENTE_INEXISTENTE;
+                        plusMensaje = ": CLIENTE REMITENTE";
+                        break;
+                    case InexistenciaError.COBRADOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.COBRADOR_INEXISTENTE;
+                        plusMensaje = ": COBRADOR";
+                        break;
+                    case InexistenciaError.COMPANIA_SEGURO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.COMPANIA_SEGURO_INEXISTENTE;
+                        plusMensaje = ": COMPAÑIA SEGURO";
+                        break;
+                    case InexistenciaError.COMPANIA_SEGURO_POLIZA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.COMPANIA_SEGURO_POLIZA_INEXISTENTE;
+                        plusMensaje = ": COMPAÑIA SEGURO POLIZA";
+                        break;
+                    case InexistenciaError.COMPRA_COMPROBANTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.COMPRA_COMPROBANTE_INEXISTENTE;
+                        plusMensaje = ": COMPRA COMPROBANTE";
+                        break;
+                    case InexistenciaError.COMPRA_COMPROBANTE_PERCEPCION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.COMPRA_COMPROBANTE_PERCEPCION_INEXISTENTE;
+                        plusMensaje = ": COMPRA COMPROBANTE PERCEPCION";
+                        break;
+                    case InexistenciaError.CONDICION_COMPRA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CONDICION_COMPRA_INEXISTENTE;
+                        plusMensaje = ": CONDICION COMPRA";
+                        break;
+                    case InexistenciaError.CONDICION_VENTA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CONDICION_VENTA_INEXISTENTE;
+                        plusMensaje = ": CONDICION VENTA";
+                        break;
+                    case InexistenciaError.CONFIGURACION_VEHICULO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CONFIGURACION_VEHICULO_INEXISTENTE;
+                        plusMensaje = ": CONFIGURACIÓN VEHÍCULO";
+                        break;
+                    case InexistenciaError.CUENTA_BANCARIA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CUENTA_BANCARIA_INEXISTENTE;
+                        plusMensaje = ": CUENTA BANCARIA";
+                        break;
+                    case InexistenciaError.CUENTA_CONTABLE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CUENTA_CONTABLE_INEXISTENTE;
+                        plusMensaje = ": CUENTA CONTABLE";
+                        break;
+                    case InexistenciaError.CUENTA_GRUPO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.CUENTA_GRUPO_INEXISTENTE;
+                        plusMensaje = ": CUENTA GRUPO";
+                        break;
+                    case InexistenciaError.DEPOSITO_INSUMO_PRODUCTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.DEPOSITO_INSUMO_PRODUCTO_INEXISTENTE;
+                        plusMensaje = ": DEPOSITO INSUMO PRODUCTO";
+                        break;
+                    case InexistenciaError.DESTINO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.DESTINO_INEXISTENTE;
+                        plusMensaje = ": DESTINO";
+                        break;
+                    case InexistenciaError.EMPRESA_C_FISCAL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.EMPRESA_C_FISCAL_INEXISTENTE;
+                        plusMensaje = ": EMPRESA C FISCAL";
+                        break;
+                    case InexistenciaError.EMPRESA_EMISION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.EMPRESA_EMISION_INEXISTENTE;
+                        plusMensaje = ": EMPRESA EMISIÓN";
+                        break;
+                    case InexistenciaError.EMPRESA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.EMPRESA_INEXISTENTE;
+                        plusMensaje = ": EMPRESA";
+                        break;
+                    case InexistenciaError.ESCALA_TARIFA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ESCALA_TARIFA_INEXISTENTE;
+                        plusMensaje = ": ESCALA TARIFA";
+                        break;
+                    case InexistenciaError.ESTADO_CIVIL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ESTADO_CIVIL_INEXISTENTE;
+                        plusMensaje = ": ESTADO CIVIL";
+                        break;
+                    case InexistenciaError.FOTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.FOTO_INEXISTENTE;
+                        plusMensaje = ": FOTO";
+                        break;
+                    case InexistenciaError.GRUPO_CUENTA_CONTABLE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.GRUPO_CUENTA_CONTABLE_INEXISTENTE;
+                        plusMensaje = ": GRUPO CUENTA CONTABLE";
+                        break;
+                    case InexistenciaError.INSUMO_PRODUCTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.INSUMO_PRODUCTO_INEXISTENTE;
+                        plusMensaje = ": INSUMO PRODUCTO";
+                        break;
+                    case InexistenciaError.LOCALIDAD_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.LOCALIDAD_INEXISTENTE;
+                        plusMensaje = ": LOCALIDAD";
+                        break;
+                    case InexistenciaError.LOCALIDAD_NACIMIENTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.LOCALIDAD_NACIMIENTO_INEXISTENTE;
+                        plusMensaje = ": LOCALIDAD NACIMIENTO";
+                        break;
+                    case InexistenciaError.MARCA_PRODUCTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.MARCA_PRODUCTO_INEXISTENTE;
+                        plusMensaje = ": MARCA PRODUCTO";
+                        break;
+                    case InexistenciaError.MARCA_VEHICULO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.MARCA_VEHICULO_INEXISTENTE;
+                        plusMensaje = ": MARCA VEHÍCULO";
+                        break;
+                    case InexistenciaError.MES_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.MES_INEXISTENTE;
+                        plusMensaje = ": MES";
+                        break;
+                    case InexistenciaError.MES_INICIO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.MES_INICIO_INEXISTENTE;
+                        plusMensaje = ": MES INICIO";
+                        break;
+                    case InexistenciaError.MODULO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.MODULO_INEXISTENTE;
+                        plusMensaje = ": MÓDULO";
+                        break;
+                    case InexistenciaError.MONEDA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.MONEDA_INEXISTENTE;
+                        plusMensaje = ": MONEDA";
+                        break;
+                    case InexistenciaError.OBRA_SOCIAL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.OBRA_SOCIAL_INEXISTENTE;
+                        plusMensaje = ": OBRA SOCIAL";
+                        break;
+                    case InexistenciaError.OPCION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.OPCION_INEXISTENTE;
+                        plusMensaje = ": OPCIÓN";
+                        break;
+                    case InexistenciaError.ORDEN_RECOLECCION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ORDEN_RECOLECCION_INEXISTENTE;
+                        plusMensaje = ": ORDEN RECOLECCCIÓN";
+                        break;
+                    case InexistenciaError.ORDEN_VENTA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ORDEN_VENTA_INEXISTENTE;
+                        plusMensaje = ": ORDEN VENTA";
+                        break;
+                    case InexistenciaError.ORDEN_VENTA_TARIFA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ORDEN_VENTA_TARIFA_INEXISTENTE;
+                        plusMensaje = ": ORDEN VENTA TARIFA";
+                        break;
+                    case InexistenciaError.ORIGEN_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ORIGEN_INEXISTENTE;
+                        plusMensaje = ": ORIGEN";
+                        break;
+                    case InexistenciaError.PADRE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PADRE_INEXISTENTE;
+                        plusMensaje = ": PADRE";
+                        break;
+                    case InexistenciaError.PAIS_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PAIS_INEXISTENTE;
+                        plusMensaje = ": PAÍS";
+                        break;
+                    case InexistenciaError.PDF_ALTA_TEMPRANA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_ALTA_TEMPRANA_INEXISTENTE;
+                        plusMensaje = ": PDF ALTA TEMPRANA";
+                        break;
+                    case InexistenciaError.PDF_CEDULA_IDENT_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_CEDULA_IDENT_INEXISTENTE;
+                        plusMensaje = ": PDF CÉDULA IDENTIFICACIÓN";
+                        break;
+                    case InexistenciaError.PDF_DNI_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_DNI_INEXISTENTE;
+                        plusMensaje = ": PDF DNI";
+                        break;
+                    case InexistenciaError.PDF_HAB_BROMAT_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_HAB_BROMAT_INEXISTENTE;
+                        plusMensaje = ": PDF HABILITACIÓN BROMATOLÓGICA";
+                        break;
+                    case InexistenciaError.PDF_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_INEXISTENTE;
+                        plusMensaje = ": PDF";
+                        break;
+                    case InexistenciaError.PDF_LIB_SANIDAD_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_LIB_SANIDAD_INEXISTENTE;
+                        plusMensaje = ": PDF LIBRETA SANIDAD";
+                        break;
+                    case InexistenciaError.PDF_LIC_CONDUCIR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_LIC_CONDUCIR_INEXISTENTE;
+                        plusMensaje = ": PDF LICENCIA CONDUCIR";
+                        break;
+                    case InexistenciaError.PDF_LINTI_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_LINTI_INEXISTENTE;
+                        plusMensaje = ": PDF LINTI";
+                        break;
+                    case InexistenciaError.PDF_SENASA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_SENASA_INEXISTENTE;
+                        plusMensaje = ": PDF SENASA";
+                        break;
+                    case InexistenciaError.PDF_TITULO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_TITULO_INEXISTENTE;
+                        plusMensaje = ": PDF TÍTULO";
+                        break;
+                    case InexistenciaError.PDF_VTO_INSP_TECNICA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_VTO_INSP_TECNICA_INEXISTENTE;
+                        plusMensaje = ": PDF INSPECCIÓN TÉCNICA";
+                        break;
+                    case InexistenciaError.PDF_VTO_RUTA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PDF_VTO_RUTA_INEXISTENTE;
+                        plusMensaje = ": PDF VENCIMIENTO RUTA";
+                        break;
+                    case InexistenciaError.PERSONAL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PERSONAL_INEXISTENTE;
+                        plusMensaje = ": PERSONAL";
+                        break;
+                    case InexistenciaError.PESTANIA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PESTANIA_INEXISTENTE;
+                        plusMensaje = ": PESTANIA";
+                        break;
+                    case InexistenciaError.PLAN_DE_CUENTA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PLAN_DE_CUENTA_INEXISTENTE;
+                        plusMensaje = ": PLAN DE CUENTA";
+                        break;
+                    case InexistenciaError.PROVEEDOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PROVEEDOR_INEXISTENTE;
+                        plusMensaje = ": PROVEEDOR";
+                        break;
+                    case InexistenciaError.PROVINCIA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.PROVINCIA_INEXISTENTE;
+                        plusMensaje = ": PROVINCIA";
+                        break;
+                    case InexistenciaError.REGISTRO_C_FISCAL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.REGISTRO_C_FISCAL_INEXISTENTE;
+                        plusMensaje = ": REGISTRO C FISCAL";
+                        break;
+                    case InexistenciaError.REPARTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.REPARTO_INEXISTENTE;
+                        plusMensaje = ": REPARTO";
+                        break;
+                    case InexistenciaError.RESUMEN_CLIENTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.RESUMEN_CLIENTE_INEXISTENTE;
+                        plusMensaje = ": RESUMEN CLIENTE";
+                        break;
+                    case InexistenciaError.RETIRO_DEPOSITO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.RETIRO_DEPOSITO_INEXISTENTE;
+                        plusMensaje = ": RETIRO DEPOSITO";
+                        break;
+                    case InexistenciaError.ROL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ROL_INEXISTENTE;
+                        plusMensaje = ": ROL";
+                        break;
+                    case InexistenciaError.RUBRO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.RUBRO_INEXISTENTE;
+                        plusMensaje = ": RUBRO";
+                        break;
+                    case InexistenciaError.RUBRO_PRODUCTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.RUBRO_PRODUCTO_INEXISTENTE;
+                        plusMensaje = ": RUBRO PRODUCTO";
+                        break;
+                    case InexistenciaError.ROL_SECUNDARIO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ROL_SECUNDARIO_INEXISTENTE;
+                        plusMensaje = ": ROL SECUNDARIO";
+                        break;
+                    case InexistenciaError.SEGUIMIENTO_ESTADO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_ESTADO_INEXISTENTE;
+                        plusMensaje = ": SEGUIMIENTO ESTADO";
+                        break;
+                    case InexistenciaError.SEGUIMIENTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_INEXISTENTE;
+                        plusMensaje = ": SEGUIMIENTO";
+                        break;
+                    case InexistenciaError.SEGUIMIENTO_SITUACION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_SITUACION_INEXISTENTE;
+                        plusMensaje = ": SEGUIMIENTO SITUACIÓN";
+                        break;
+                    case InexistenciaError.SEGURIDAD_SOCIAL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SEGURIDAD_SOCIAL_INEXISTENTE;
+                        plusMensaje = ": SEGURIDAD SOCIAL";
+                        break;
+                    case InexistenciaError.SEXO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SEXO_INEXISTENTE;
+                        plusMensaje = ": SEXO";
+                        break;
+                    case InexistenciaError.SINDICATO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SINDICATO_INEXISTENTE;
+                        plusMensaje = ": SINDICATO";
+                        break;
+                    case InexistenciaError.SITUACION_CLIENTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SITUACION_CLIENTE_INEXISTENTE;
+                        plusMensaje = ": SITUACION CLIENTE";
+                        break;
+                    case InexistenciaError.SOPORTE_ESTADO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SOPORTE_ESTADO_INEXISTENTE;
+                        plusMensaje = ": SOPORTE ESTADO";
+                        break;
+                    case InexistenciaError.SUBMODULO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUBMODULO_INEXISTENTE;
+                        plusMensaje = ": SUBMÓDULO";
+                        break;
+                    case InexistenciaError.SUBOPCION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUBOPCION_INEXISTENTE;
+                        plusMensaje = ": SUBOPCIÓN";
+                        break;
+                    case InexistenciaError.SUCURSAL_BANCO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUCURSAL_BANCO_INEXISTENTE;
+                        plusMensaje = ": SUCURSAL BANCO";
+                        break;
+                    case InexistenciaError.SUCURSAL_CLIENTE_DES_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUCURSAL_CLIENTE_DES_INEXISTENTE;
+                        plusMensaje = ": SUCURSAL CLIENTE DESTINATARIO";
+                        break;
+                    case InexistenciaError.SUCURSAL_CLIENTE_REM_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUCURSAL_CLIENTE_REM_INEXISTENTE;
+                        plusMensaje = ": SUCURSAL CLIENTE REMITENTE";
+                        break;
+                    case InexistenciaError.SUCURSAL_DESTINO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUCURSAL_DESTINO_INEXISTENTE;
+                        plusMensaje = ": SUCURSAL DESTINO";
+                        break;
+                    case InexistenciaError.SUCURSAL_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUCURSAL_INEXISTENTE;
+                        plusMensaje = ": SUCURSAL";
+                        break;
+                    case InexistenciaError.SUCURSAL_INGRESO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUCURSAL_INGRESO_INEXISTENTE;
+                        plusMensaje = ": SUCURSAL INGRESO";
+                        break;
+                    case InexistenciaError.SUCURSAL_LUGAR_PAGO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.SUCURSAL_LUGAR_PAGO_INEXISTENTE;
+                        plusMensaje = ": SUCURSAL LUGAR PAGO";
+                        break;
+                    case InexistenciaError.TALONARIO_RECIBO_LOTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TALONARIO_RECIBO_LOTE_INEXISTENTE;
+                        plusMensaje = ": TALONARIO RECIBO LOTE";
+                        break;
+                    case InexistenciaError.TIPO_CHEQUERA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_CHEQUERA_INEXISTENTE;
+                        plusMensaje = ": TIPO CHEQUERA";
+                        break;
+                    case InexistenciaError.TIPO_COMPROBANTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_COMPROBANTE_INEXISTENTE;
+                        plusMensaje = ": TIPO COMPROBANTE";
+                        break;
+                    case InexistenciaError.TIPO_CONTACTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_CONTACTO_INEXISTENTE;
+                        plusMensaje = ": TIPO CONTACTO";
+                        break;
+                    case InexistenciaError.TIPO_CUENTA_BANCARIA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_CUENTA_BANCARIA_INEXISTENTE;
+                        plusMensaje = ": TIPO CUENTA BANCARIA";
+                        break;
+                    case InexistenciaError.TIPO_CUENTA_CONTABLE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_CUENTA_CONTABLE_INEXISTENTE;
+                        plusMensaje = ": TIPO CUENTA CONTABLE";
+                        break;
+                    case InexistenciaError.TIPO_DOCUMENTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_DOCUMENTO_INEXISTENTE;
+                        plusMensaje = ": TIPO DOCUMENTO";
+                        break;
+                    case InexistenciaError.TIPO_PROVEEDOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_PROVEEDOR_INEXISTENTE;
+                        plusMensaje = ": TIPO PROVEEDOR";
+                        break;
+                    case InexistenciaError.TIPO_PERCEPCION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_PERCEPCION_INEXISTENTE;
+                        plusMensaje = ": TIPO PERCEPCIÓN";
+                        break;
+                    case InexistenciaError.TIPO_TARIFA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_TARIFA_INEXISTENTE;
+                        plusMensaje = ": TIPO TARIFA";
+                        break;
+                    case InexistenciaError.TIPO_VEHICULO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TIPO_VEHICULO_INEXISTENTE;
+                        plusMensaje = ": TIPO VEHÍCULO";
+                        break;
+                    case InexistenciaError.TRAMO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.TRAMO_INEXISTENTE;
+                        plusMensaje = ": TRAMO";
+                        break;
+                    case InexistenciaError.UNIDAD_MEDIDA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.UNIDAD_MEDIDA_INEXISTENTE;
+                        plusMensaje = ": UNIDAD MEDIDA";
+                        break;
+                    case InexistenciaError.USUARIO_ALTA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_ALTA_INEXISTENTE;
+                        plusMensaje = ": USUARIO ALTA";
+                        break;
+                    case InexistenciaError.USUARIO_BAJA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_BAJA_INEXISTENTE;
+                        plusMensaje = ": USUARIO BAJA";
+                        break;
+                    case InexistenciaError.USUARIO_CHOFER_AUTORIZADO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_CHOFER_AUTORIZADO_INEXISTENTE;
+                        plusMensaje = ": USUARIO CHOFER AUTORIZADO";
+                        break;
+                    case InexistenciaError.USUARIO_DOCUMENTACION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_DOCUMENTACION_INEXISTENTE;
+                        plusMensaje = ": USUARIO DOCUMENTACIÓN";
+                        break;
+                    case InexistenciaError.USUARIO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_INEXISTENTE;
+                        plusMensaje = ": USUARIO";
+                        break;
+                    case InexistenciaError.USUARIO_LIQUIDACION_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_LIQUIDACION_INEXISTENTE;
+                        plusMensaje = ": USUARIO LIQUIDACIÓN";
+                        break;
+                    case InexistenciaError.USUARIO_MOD_CURSO_CP_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_MOD_CURSO_CP_INEXISTENTE;
+                        plusMensaje = ": USUARIO MODIFICACIÓN CURSO CARGA PELIGROSA";
+                        break;
+                    case InexistenciaError.USUARIO_MOD_CURSO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_MOD_CURSO_INEXISTENTE;
+                        plusMensaje = ": USUARIO MODIFICACIÓN CURSO";
+                        break;
+                    case InexistenciaError.USUARIO_MOD_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_MOD_INEXISTENTE;
+                        plusMensaje = ": USUARIO MODIFICACIÓN";
+                        break;
+                    case InexistenciaError.USUARIO_MOD_LC_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_MOD_LC_INEXISTENTE;
+                        plusMensaje = ": USUARIO MODIFICACIÓN LICENCIA CONDUCIR";
+                        break;
+                    case InexistenciaError.USUARIO_MOD_LINTI_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_MOD_LINTI_INEXISTENTE;
+                        plusMensaje = ": USUARIO MODIFICACIÓN LINTI";
+                        break;
+                    case InexistenciaError.USUARIO_MOD_LS_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.USUARIO_MOD_LS_INEXISTENTE;
+                        plusMensaje = ": USUARIO MODIFICACIÓN LIB. SANIDAD";
+                        break;
+                    case InexistenciaError.VEHICULO_AUTORIZADO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VEHICULO_AUTORIZADO_INEXISTENTE;
+                        plusMensaje = ": VEHÍCULO AUTORIZADO";
+                        break;
+                    case InexistenciaError.VEHICULO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VEHICULO_INEXISTENTE;
+                        plusMensaje = ": VEHÍCULO";
+                        break;
+                    case InexistenciaError.VEHICULO_PROVEEDOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VEHICULO_PROVEEDOR_INEXISTENTE;
+                        plusMensaje = ": VEHÍCULO PROVEEDOR";
+                        break;
+                    case InexistenciaError.VEHICULO_REMOLQUE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VEHICULO_REMOLQUE_INEXISTENTE;
+                        plusMensaje = ": VEHÍCULO REMOLQUE";
+                        break;
+                    case InexistenciaError.VEHICULO_REMOLQUE_PROVEEDOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VEHICULO_REMOLQUE_PROVEEDOR_INEXISTENTE;
+                        plusMensaje = ": VEHÍCULO REMOLQUE PROVEEDOR";
+                        break;
+                    case InexistenciaError.VEHICULO_REM_AUTORIZADO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VEHICULO_REM_AUTORIZADO_INEXISTENTE;
+                        plusMensaje = ": VEHÍCULO REMOLQUE AUTORIZADO";
+                        break;
+                    case InexistenciaError.VENDEDOR_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VENDEDOR_INEXISTENTE;
+                        plusMensaje = ": VENDEDOR";
+                        break;
+                    case InexistenciaError.VENTA_COMPROBANTE_APLICADO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VENTA_COMPROBANTE_APLICADO_INEXISTENTE;
+                        plusMensaje = ": VENTA COMPROBANTE APLICADO";
+                        break;
+                    case InexistenciaError.VENTA_COMPROBANTE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VENTA_COMPROBANTE_INEXISTENTE;
+                        plusMensaje = ": VENTA COMPROBANTE";
+                        break;
+                    case InexistenciaError.VENTA_TIPO_ITEM_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VENTA_TIPO_ITEM_INEXISTENTE;
+                        plusMensaje = ": VENTA TIPO ITEM";
+                        break;
+                    case InexistenciaError.VENTA_ITEM_CONCEPTO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VENTA_ITEM_CONCEPTO_INEXISTENTE;
+                        plusMensaje = ": VENTA ITEM CONCEPTO";
+                        break;
+                    case InexistenciaError.VIAJE_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VIAJE_INEXISTENTE;
+                        plusMensaje = ": VIAJE";
+                        break;
+                    case InexistenciaError.VIAJE_REMITO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VIAJE_REMITO_INEXISTENTE;
+                        plusMensaje = ": VIAJE REMITO";
+                        break;
+                    case InexistenciaError.VIAJE_TARIFA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VIAJE_TARIFA_INEXISTENTE;
+                        plusMensaje = ": VIAJE TARIFA";
+                        break;
+                    case InexistenciaError.VIAJE_TIPO_CARGA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VIAJE_TIPO_CARGA_INEXISTENTE;
+                        plusMensaje = ": VIAJE TIPO CARGA";
+                        break;
+                    case InexistenciaError.VIAJE_TIPO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VIAJE_TIPO_INEXISTENTE;
+                        plusMensaje = ": VIAJE TIPO";
+                        break;
+                    case InexistenciaError.VIAJE_TRAMO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VIAJE_TRAMO_INEXISTENTE;
+                        plusMensaje = ": VIAJE TRAMO";
+                        break;
+                    case InexistenciaError.VIAJE_UNIDAD_NEGOCIO_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.VIAJE_UNIDAD_NEGOCIO_INEXISTENTE;
+                        plusMensaje = ": VIAJE UNIDAD NEGOCIO";
+                        break;
+                    case InexistenciaError.ZONA_INEXISTENTE:
+                        codigoRespuesta = CodigoRespuesta.ZONA_INEXISTENTE;
+                        plusMensaje = ": ZONA";
+                        break;
+                    default:
+                        mensajeRespuesta = MensajeRespuesta.ELEMENTO_NO_NULL;
+                        codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
+                        plusMensaje = " ";
+
+                }
+            } else {
+                mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
+                codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
+                plusMensaje = " ";
+            }
+        } else {
+
             mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
             codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
-                    plusMensaje = " ";
-        } else if(partes2.length==13){
-            switch(partes[7]) {
-                case InexistenciaError.AFIP_ACTIVIDAD_INEXISTENTE:
-                    codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TRAMO;
-                    plusMensaje = "";
-                    break;
-            }
-            mensajeRespuesta = MensajeRespuesta.ELEMENTO_NO_NULL;
-            codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
-                    plusMensaje = " ";
-        }else {
+            plusMensaje = " ";
             //Determina la longitud de la columna 
             mensajeRespuesta = MensajeRespuesta.LONGITUD;
             switch (partes[1]) {
@@ -498,8 +1088,8 @@ public class MensajeRespuesta {
                     plusMensaje = "";
             }
         }
-            return new ResponseEntity<>(new EstadoRespuesta(codigoRespuesta, 
-                    mensajeRespuesta + plusMensaje, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new EstadoRespuesta(codigoRespuesta,
+                mensajeRespuesta + plusMensaje, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
