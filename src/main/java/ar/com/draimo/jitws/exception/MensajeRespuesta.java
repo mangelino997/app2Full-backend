@@ -835,6 +835,14 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.ABREVIATURA_LONGITUD;
                     plusMensaje = " ABREVIATURA";
                     break;
+                case LongitudError.ADICIONAL_BASICO_VACACIONES_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.ADICIONAL_BASICO_VACACIONES_LONGITUD;
+                    plusMensaje = " ADICIONAL BASICO VACACIONES";
+                    break;
+                case LongitudError.ANCHO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.ANCHO_LONGITUD;
+                    plusMensaje = " ANCHO";
+                    break;
                 case LongitudError.ALIAS_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.ALIAS_LONGITUD;
                     plusMensaje = " ALIAS";
@@ -843,9 +851,45 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.ALIAS_CBU_LONGITUD;
                     plusMensaje = " ALIAS CBU";
                     break;
+                case LongitudError.ALICUOTA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.ALICUOTA_LONGITUD;
+                    plusMensaje = " ALICUOTA";
+                    break;
+                case LongitudError.ALICUOTA_IVA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.ALICUOTA_IVA_LONGITUD;
+                    plusMensaje = " ALICUOTA IVA";
+                    break;
+                case LongitudError.ALTURA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.ALTURA_LONGITUD;
+                    plusMensaje = " ALTURA";
+                    break;
                 case LongitudError.APELLIDO_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.APELLIDO_LONGITUD;
                     plusMensaje = " APELLIDO";
+                    break;
+                case LongitudError.APORTE_ADIC_OBRA_SOCIAL_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.APORTE_ADIC_OBRA_SOCIAL_LONGITUD;
+                    plusMensaje = " APORTE ADIC. OBRA SOCIAL";
+                    break;
+                case LongitudError.APORTE_ADIC_SEG_SOCIAL_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.APORTE_ADIC_SEG_SOCIAL_LONGITUD;
+                    plusMensaje = " APORTE ADIC. SEGURIDAD SOCIAL";
+                    break;
+                case LongitudError.APORTE_DIF_SEG_SOCIAL_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.APORTE_DIF_SEG_SOCIAL_LONGITUD;
+                    plusMensaje = " APORTE DIF. SEGURIDAD SOCIAL";
+                    break;
+                case LongitudError.BASICO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.BASICO_LONGITUD;
+                    plusMensaje = " BASICO";
+                    break;
+                case LongitudError.CANTIDAD_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.CANTIDAD_LONGITUD;
+                    plusMensaje = " CANTIDAD";
+                    break;
+                case LongitudError.CAPACIDAD_CARGA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.CAPACIDAD_CARGA_LONGITUD;
+                    plusMensaje = " CAPACIDAD CARGA";
                     break;
                 case LongitudError.CODIGO_AFIP_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.CODIGO_AFIP_LONGITUD;
@@ -859,9 +903,41 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.CODIGO_AREA_ALT_LONGITUD;
                     plusMensaje = " CODIGO DE AREA ALT";
                     break;
+                case LongitudError.COMISION_CR_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.COMISION_CR_LONGITUD;
+                    plusMensaje = " COMISION CR";
+                    break;
+                case LongitudError.CONTRIB_ADIC_OBRA_SOCIAL_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.CONTRIB_ADIC_OBRA_SOCIAL_LONGITUD;
+                    plusMensaje = " CONTRIB. ADIC. OBRA SOCIAL";
+                    break;
+                case LongitudError.CONTRIB_TAREA_DIF_SEG_SOCIAL_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.CONTRIB_TAREA_DIF_SEG_SOCIAL_LONGITUD;
+                    plusMensaje = " CONTRIB. TAREA DIF. SEGURIDAD SOCIAL";
+                    break;
                 case LongitudError.CORREO_ELECTRONICO_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.CORREO_ELECTRONICO_LONGITUD;
                     plusMensaje = " CORREO ELECTRONICO";
+                    break;
+                case LongitudError.COSTO_POR_KM_PROPIO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_PROPIO_LONGITUD;
+                    plusMensaje = " COSTO POR KM. PROPIO";
+                    break;
+                case LongitudError.COSTO_POR_KM_TERCERO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_TERCERO_LONGITUD;
+                    plusMensaje = " COSTO POR KM. TERCERO";
+                    break;
+                case LongitudError.COSTO_PROPIO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.COSTO_PROPIO_LONGITUD;
+                    plusMensaje = " COSTO PROPIO";
+                    break;
+                case LongitudError.COSTO_TERCERO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.COSTO_TERCERO_LONGITUD;
+                    plusMensaje = " COSTO TERCERO";
+                    break;
+                case LongitudError.CREDITO_LIMITE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.CREDITO_LIMITE_LONGITUD;
+                    plusMensaje = " CRÉDITO LÍMITE";
                     break;
                 case LongitudError.CUIL_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.CUIL_LONGITUD;
@@ -874,6 +950,14 @@ public class MensajeRespuesta {
                 case LongitudError.DESCRIPCION_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.DESCRIPCION_LONGITUD;
                     plusMensaje = " DESCRIPCION";
+                    break;
+                case LongitudError.DESCUENTO_FLETE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.DESCUENTO_FLETE_LONGITUD;
+                    plusMensaje = " DESCUENTO FLETE";
+                    break;
+                case LongitudError.DESCUENTO_SUBTOTAL_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.DESCUENTO_SUBTOTAL_LONGITUD;
+                    plusMensaje = " DESCUENTO SUBTOTAL";
                     break;
                 case LongitudError.DOCUMENTO_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.DOCUMENTO_LONGITUD;
@@ -891,13 +975,125 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.DOMINIO_LONGITUD;
                     plusMensaje = " DOMINIO";
                     break;
+                case LongitudError.FLETE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FLETE_LONGITUD;
+                    plusMensaje = " FLETE";
+                    break;
+                case LongitudError.FOLIO_LIBRO_SUELDOS_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FOLIO_LIBRO_SUELDOS_LONGITUD;
+                    plusMensaje = " FOLIO LIBRO SUELDOS";
+                    break;
+                case LongitudError.IMPORTE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_LONGITUD;
+                    plusMensaje = " IMPORTE";
+                    break;
+                case LongitudError.IMPORTE_CONTRA_REEMBOLSO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_CONTRA_REEMBOLSO_LONGITUD;
+                    plusMensaje = " IMPORTE CONTRA REEMBOLSO";
+                    break;
+                case LongitudError.IMPORTE_ENTREGA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_ENTREGA_LONGITUD;
+                    plusMensaje = " IMPORTE ENTREGA";
+                    break;
+                case LongitudError.IMPORTE_EXENTO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_EXENTO_LONGITUD;
+                    plusMensaje = " IMPORTE EXENTO";
+                    break;
+                case LongitudError.IMPORTE_FIJO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_LONGITUD;
+                    plusMensaje = " IMPORTE FIJO";
+                    break;
+                case LongitudError.IMPORTE_FIJO_REF_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_REF_LONGITUD;
+                    plusMensaje = " IMPORTE FIJO REF";
+                    break;
+                case LongitudError.IMPORTE_FIJO_SECO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_SECO_LONGITUD;
+                    plusMensaje = " IMPORTE FIJO SECO";
+                    break;
+                case LongitudError.IMPORTE_IMPUESTO_INTERNO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_IMPUESTO_INTERNO_LONGITUD;
+                    plusMensaje = " IMPORTE IMPUESTO INTERNO";
+                    break;
+                case LongitudError.IMPORTE_ITC_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_ITC_LONGITUD;
+                    plusMensaje = " IMPORTE ITC";
+                    break;
+                case LongitudError.IMPORTE_IVA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_IVA_LONGITUD;
+                    plusMensaje = " IMPORTE IVA";
+                    break;
+                case LongitudError.IMPORTE_NETO_GRAVADO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_NETO_GRAVADO_LONGITUD;
+                    plusMensaje = " IMPORTE NETO GRAVADO";
+                    break;
+                case LongitudError.IMPORTE_NO_GRAVADO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_NO_GRAVADO_LONGITUD;
+                    plusMensaje = " IMPORTE NO GRAVADO";
+                    break;
+                case LongitudError.IMPORTE_OTROS_TRIBUTOS_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_OTROS_TRIBUTOS_LONGITUD;
+                    plusMensaje = " IMPORTE OTROS TRIBUTOS";
+                    break;
+                case LongitudError.IMPORTE_PERCEPCION_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_PERCEPCION_LONGITUD;
+                    plusMensaje = " IMPORTE PERCEPCION";
+                    break;
+                case LongitudError.IMPORTE_RETIRO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_RETIRO_LONGITUD;
+                    plusMensaje = " IMPORTE RETIRO";
+                    break;
+                case LongitudError.IMPORTE_SALDO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_SALDO_LONGITUD;
+                    plusMensaje = " IMPORTE SALDO";
+                    break;
+                case LongitudError.IMPORTE_SEGURO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_SEGURO_LONGITUD;
+                    plusMensaje = " IMPORTE SEGURO";
+                    break;
+                case LongitudError.IMPORTE_TOTAL_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_TOTAL_LONGITUD;
+                    plusMensaje = " IMPORTE TOTAL";
+                    break;
+                case LongitudError.IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD;
+                    plusMensaje = " IMPORTE VENTA ITEM CONCEPTO";
+                    break;
+                case LongitudError.ITC_NETO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.ITC_NETO_LONGITUD;
+                    plusMensaje = " ITC NETO";
+                    break;
+                case LongitudError.ITC_POR_LITRO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.ITC_POR_LITRO_LONGITUD;
+                    plusMensaje = " ITC POR LITRO";
+                    break;
+                case LongitudError.KILOS_AFORADO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.KILOS_AFORADO_LONGITUD;
+                    plusMensaje = " KILOS AFORADO";
+                    break;
+                case LongitudError.KILOS_EFECTIVO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.KILOS_EFECTIVO_LONGITUD;
+                    plusMensaje = " KILOS EFECTIVO";
+                    break;
+                case LongitudError.LARGO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.LARGO_LONGITUD;
+                    plusMensaje = " LARGO";
+                    break;
                 case LongitudError.LETRA_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.LETRA_LONGITUD;
                     plusMensaje = " LETRA";
                     break;
+                case LongitudError.M3_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.M3_LONGITUD;
+                    plusMensaje = " M3";
+                    break;
                 case LongitudError.MODELO_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.MODELO_LONGITUD;
                     plusMensaje = " MODELO";
+                    break;
+                case LongitudError.MONEDA_COTIZACION_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.MONEDA_COTIZACION_LONGITUD;
+                    plusMensaje = " MONEDA COTIZACION";
                     break;
                 case LongitudError.NOMBRE_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.NOMBRE_LONGITUD;
@@ -1015,6 +1211,34 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.PASSWORD_LONGITUD;
                     plusMensaje = " PASSWORD";
                     break;
+                case LongitudError.P_COMISION_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.P_COMISION_LONGITUD;
+                    plusMensaje = " P. COMISIÓN";
+                    break;
+                case LongitudError.P_SEGURO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.P_SEGURO_LONGITUD;
+                    plusMensaje = " P. SEGURO";
+                    break;
+                case LongitudError.PRECIO_UNITARIO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_LONGITUD;
+                    plusMensaje = " PRECIO UNITARIO";
+                    break;
+                case LongitudError.PRECIO_UNITARIO_VENTA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VENTA_LONGITUD;
+                    plusMensaje = " PRECIO UNITARIO VENTA";
+                    break;
+                case LongitudError.PRECIO_UNITARIO_VIAJE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VIAJE_LONGITUD;
+                    plusMensaje = " PRECIO UNITARIO VIAJE";
+                    break;
+                case LongitudError.PRECIO_UNITARIO_REF_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_REF_LONGITUD;
+                    plusMensaje = " PRECIO UNITARIO REF";
+                    break;
+                case LongitudError.PRECIO_UNITARIO_SECO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_SECO_LONGITUD;
+                    plusMensaje = " PRECIO UNITARIO SECO";
+                    break;
                 case LongitudError.PUNTO_VENTA_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.PUNTO_VENTA_LONGITUD;
                     plusMensaje = " PUNTO VENTA";
@@ -1026,6 +1250,10 @@ public class MensajeRespuesta {
                 case LongitudError.RUTA_ALTERNATIVA_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.RUTA_ALTERNATIVA_LONGITUD;
                     plusMensaje = " RUTA ALTERNATIVA";
+                    break;
+                case LongitudError.SEGURO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.SEGURO_LONGITUD;
+                    plusMensaje = " SEGURO";
                     break;
                 case LongitudError.SITIO_WEB_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.SITIO_WEB_LONGITUD;
@@ -1042,6 +1270,10 @@ public class MensajeRespuesta {
                 case LongitudError.TALLE_PANTALON_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.TALLE_PANTALON_LONGITUD;
                     plusMensaje = " TALLE PANTALON";
+                    break;
+                case LongitudError.TARA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.TARA_LONGITUD;
+                    plusMensaje = " TARA";
                     break;
                 case LongitudError.TELEFONO_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.TELEFONO_LONGITUD;
@@ -1071,6 +1303,10 @@ public class MensajeRespuesta {
                     codigoRespuesta = CodigoRespuesta.TITULAR_LONGITUD;
                     plusMensaje = " TITULAR";
                     break;
+                case LongitudError.TOPE_BASICO_ADELANTOS_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.TOPE_BASICO_ADELANTOS_LONGITUD;
+                    plusMensaje = " TOPE BASICO ADELANTOS";
+                    break;
                 case LongitudError.USERNAME_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.USERNAME_LONGITUD;
                     plusMensaje = " USUARIO";
@@ -1082,6 +1318,14 @@ public class MensajeRespuesta {
                 case LongitudError.URL_REAL_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.URL_REAL_LONGITUD;
                     plusMensaje = " URL REAL";
+                    break;
+                case LongitudError.VALOR_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VALOR_LONGITUD;
+                    plusMensaje = " VALOR";
+                    break;
+                case LongitudError.VALOR_DECLARADO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VALOR_DECLARADO_LONGITUD;
+                    plusMensaje = " VALOR DECLARADO";
                     break;
                 default:
                     codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
