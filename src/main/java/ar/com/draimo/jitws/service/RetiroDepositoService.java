@@ -88,8 +88,8 @@ public class RetiroDepositoService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(RetiroDeposito elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
     
     private RetiroDeposito formatearStrings(RetiroDeposito e) {

@@ -54,8 +54,8 @@ public class TipoPercepcionService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(TipoPercepcion elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
     
     //Formatea los strings

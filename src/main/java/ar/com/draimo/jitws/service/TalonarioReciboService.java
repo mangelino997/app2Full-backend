@@ -71,8 +71,8 @@ public class TalonarioReciboService {
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(TalonarioRecibo elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
 
 }

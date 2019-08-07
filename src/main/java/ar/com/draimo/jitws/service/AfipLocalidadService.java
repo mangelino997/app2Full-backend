@@ -66,8 +66,8 @@ public class AfipLocalidadService {
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(AfipLocalidad elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
     
     //Formatea los string 

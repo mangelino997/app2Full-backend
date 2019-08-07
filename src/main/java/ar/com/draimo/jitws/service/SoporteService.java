@@ -147,8 +147,8 @@ public class SoporteService {
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(Soporte elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
 
     //Establece el alias de un registro

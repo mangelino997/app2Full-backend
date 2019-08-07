@@ -823,8 +823,178 @@ public class MensajeRespuesta {
                 codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
                 plusMensaje = " ";
             }
-        } else {
-
+        }else if(partes.length==5){
+            mensajeRespuesta = MensajeRespuesta.LONGITUD;
+            switch(partes[3]){
+                case LongitudError.FECHA_ALTA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_ALTA_LONGITUD;
+                    plusMensaje = " FECHA ALTA";
+                    break;
+                case LongitudError.FECHA_BAJA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_BAJA_LONGITUD;
+                    plusMensaje = " FECHA BAJA";
+                    break;
+                case LongitudError.FECHA_CAJA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_CAJA_LONGITUD;
+                    plusMensaje = " FECHA CAJA";
+                    break;
+                case LongitudError.FECHA_CIERRE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_CIERRE_LONGITUD;
+                    plusMensaje = " FECHA CIERRE";
+                    break;
+                case LongitudError.FECHA_COBRO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_COBRO_LONGITUD;
+                    plusMensaje = " FECHA COBRO";
+                    break;
+                case LongitudError.FECHA_CONTABLE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_CONTABLE_LONGITUD;
+                    plusMensaje = " FECHA CONTABLE";
+                    break;
+                case LongitudError.FECHA_DESDE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_DESDE_LONGITUD;
+                    plusMensaje = " FECHA DESDE";
+                    break;
+                case LongitudError.FECHA_EMISION_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_EMISION_LONGITUD;
+                    plusMensaje = " FECHA EMISION";
+                    break;
+                case LongitudError.FECHA_FIN_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_FIN_LONGITUD;
+                    plusMensaje = " FECHA FIN";
+                    break;
+                case LongitudError.FECHA_HASTA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_HASTA_LONGITUD;
+                    plusMensaje = " FECHA HASTA";
+                    break;
+                case LongitudError.FECHA_INICIO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_INICIO_LONGITUD;
+                    plusMensaje = " FECHA INICIO";
+                    break;
+                case LongitudError.FECHA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_LONGITUD;
+                    plusMensaje = " FECHA";
+                    break;
+                case LongitudError.FECHA_MOD_CURSO_CP_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_CP_LONGITUD;
+                    plusMensaje = " FECHA MOD CURSO CP";
+                    break;
+                case LongitudError.FECHA_MOD_CURSO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_LONGITUD;
+                    plusMensaje = " FECHA MOD CURSO";
+                    break;
+                case LongitudError.FECHA_MOD_LC_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_MOD_LC_LONGITUD;
+                    plusMensaje = " FECHA MOD LIC. CONDUCIR";
+                    break;
+                case LongitudError.FECHA_MOD_LINTI_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_MOD_LINTI_LONGITUD;
+                    plusMensaje = " FECHA MOD LINTI";
+                    break;
+                case LongitudError.FECHA_MOD_LS_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_MOD_LS_LONGITUD;
+                    plusMensaje = " FECHA MOD LS";
+                    break;
+                case LongitudError.FECHA_NACIMIENTO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_NACIMIENTO_LONGITUD;
+                    plusMensaje = " FECHA NACIMIENTO";
+                    break;
+                case LongitudError.FECHA_PAGO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_PAGO_LONGITUD;
+                    plusMensaje = " FECHA PAGO";
+                    break;
+                case LongitudError.FECHA_REGRESO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_REGRESO_LONGITUD;
+                    plusMensaje = " FECHA REGRESO";
+                    break;
+                case LongitudError.FECHA_SALIDA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_SALIDA_LONGITUD;
+                    plusMensaje = " FECHA SALIDA";
+                    break;
+                case LongitudError.FECHA_TOPE_INFORMAR_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_TOPE_INFORMAR_LONGITUD;
+                    plusMensaje = " FECHA TOPE INFORMAR";
+                    break;
+                case LongitudError.FECHA_TRAMO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_TRAMO_LONGITUD;
+                    plusMensaje = " FECHA TRAMO";
+                    break;
+                case LongitudError.FECHA_ULTIMA_MOD_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_ULTIMA_MOD_LONGITUD;
+                    plusMensaje = " FECHA ULTIMA MOD.";
+                    break;
+                case LongitudError.FECHA_VTO_PAGO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.FECHA_VTO_PAGO_LONGITUD;
+                    plusMensaje = " FECHA VTO. PAGO";
+                    break;
+                case LongitudError.INICIO_ACTIVIDAD_LONGITUD :
+                    codigoRespuesta = CodigoRespuesta.INICIO_ACTIVIDAD_LONGITUD;
+                    plusMensaje = " INICIO ACTIVIDAD";
+                    break;
+                case LongitudError.PRECIOS_DESDE_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.PRECIOS_DESDE_LONGITUD;
+                    plusMensaje = " PRECIOS DESDE";
+                    break;
+                case LongitudError.TELEFONO_MOVIL_FECHA_DEVOLUCION_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_DEVOLUCION_LONGITUD;
+                    plusMensaje = " TELEFONO MOVIL FECHA DEVOLUCION";
+                    break;
+                case LongitudError.TELEFONO_MOVIL_FECHA_ENTREGA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_ENTREGA_LONGITUD;
+                    plusMensaje = " TELEFONO MOVIL FECHA ENTREGA";
+                    break;
+                case LongitudError.VTO_CURSO_CARGA_PELIGROSA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_CURSO_CARGA_PELIGROSA_LONGITUD;
+                    plusMensaje = " VTO. CURSO CARGA PELIGROSA";
+                    break;
+                case LongitudError.VTO_CURSO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_CURSO_LONGITUD;
+                    plusMensaje = " VTO. CURSO";
+                    break;
+                case LongitudError.VTO_HAB_BROMATOLOGICA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_HAB_BROMATOLOGICA_LONGITUD;
+                    plusMensaje = " VTO. HAB. BROMATOLÓGICA";
+                    break;
+                case LongitudError.VTO_LIB_SANIDAD_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_LIB_SANIDAD_LONGITUD;
+                    plusMensaje = " VTO. LIB. SANIDAD";
+                    break;
+                case LongitudError.VTO_LIC_CONDUCIR_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_LIC_CONDUCIR_LONGITUD;
+                    plusMensaje = " VTO. LIC. CONDUCIR";
+                    break;
+                case LongitudError.VTO_LINTI_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_LINTI_LONGITUD;
+                    plusMensaje = " VTO. LINTI";
+                    break;
+                case LongitudError.VTO_POLIZA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_POLIZA_LONGITUD;
+                    plusMensaje = " VTO. POLIZA";
+                    break;
+                case LongitudError.VTO_POLIZA_SEGURO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_POLIZA_SEGURO_LONGITUD;
+                    plusMensaje = " VTO. POLIZA SEGURO";
+                    break;
+                case LongitudError.VTO_PSICOFISICO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_PSICOFISICO_LONGITUD;
+                    plusMensaje = " VTO. PSICO-FÍSICO";
+                    break;
+                case LongitudError.VTO_RTO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_RTO_LONGITUD;
+                    plusMensaje = " VTO. RTO";
+                    break;
+                case LongitudError.VTO_RUTA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_RUTA_LONGITUD;
+                    plusMensaje = " VTO. RUTA";
+                    break;
+                case LongitudError.VTO_SENASA_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.VTO_SENASA_LONGITUD;
+                    plusMensaje = " VTO. SENASA";
+                    break;
+                default:
+                    codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
+                    plusMensaje = "";
+            }
+        }else {
             mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
             codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
             plusMensaje = " ";
@@ -1254,6 +1424,10 @@ public class MensajeRespuesta {
                 case LongitudError.SEGURO_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.SEGURO_LONGITUD;
                     plusMensaje = " SEGURO";
+                    break;
+                case LongitudError.SIMBOLO_LONGITUD:
+                    codigoRespuesta = CodigoRespuesta.SIMBOLO_LONGITUD;
+                    plusMensaje = " SIMBOLO";
                     break;
                 case LongitudError.SITIO_WEB_LONGITUD:
                     codigoRespuesta = CodigoRespuesta.SITIO_WEB_LONGITUD;

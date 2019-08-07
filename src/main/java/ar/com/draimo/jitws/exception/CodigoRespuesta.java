@@ -129,6 +129,31 @@ public class CodigoRespuesta {
     public static final int DOMICILIO_LONGITUD = 12008;
     public static final int DOMICILIO_ALT_LONGITUD = 12009;
     public static final int DOMINIO_LONGITUD = 12055;
+    public static final int FECHA_LONGITUD = 12139;
+    public static final int FECHA_ALTA_LONGITUD = 12140;
+    public static final int FECHA_BAJA_LONGITUD = 12141;
+    public static final int FECHA_CAJA_LONGITUD = 12142;
+    public static final int FECHA_CIERRE_LONGITUD = 12143;
+    public static final int FECHA_COBRO_LONGITUD = 12144;
+    public static final int FECHA_CONTABLE_LONGITUD = 12145;
+    public static final int FECHA_DESDE_LONGITUD = 12146;
+    public static final int FECHA_EMISION_LONGITUD = 12147;
+    public static final int FECHA_FIN_LONGITUD = 12148;
+    public static final int FECHA_HASTA_LONGITUD = 12149;
+    public static final int FECHA_INICIO_LONGITUD = 12150;
+    public static final int FECHA_MOD_CURSO_LONGITUD = 12151;
+    public static final int FECHA_MOD_CURSO_CP_LONGITUD = 12152;
+    public static final int FECHA_MOD_LC_LONGITUD = 12153;
+    public static final int FECHA_MOD_LINTI_LONGITUD = 12154;
+    public static final int FECHA_MOD_LS_LONGITUD = 12155;
+    public static final int FECHA_NACIMIENTO_LONGITUD = 12156;
+    public static final int FECHA_PAGO_LONGITUD = 12157;
+    public static final int FECHA_REGRESO_LONGITUD = 12158;
+    public static final int FECHA_SALIDA_LONGITUD = 12159;
+    public static final int FECHA_TOPE_INFORMAR_LONGITUD = 12160;
+    public static final int FECHA_TRAMO_LONGITUD = 12161;
+    public static final int FECHA_ULTIMA_MOD_LONGITUD = 12162;
+    public static final int FECHA_VTO_PAGO_LONGITUD = 12163;
     public static final int FLETE_LONGITUD = 12090;
     public static final int FOLIO_LIBRO_SUELDOS_LONGITUD = 12091;
     public static final int HASTA_LONGITUD = 12092;
@@ -152,6 +177,7 @@ public class CodigoRespuesta {
     public static final int IMPORTE_SEGURO_LONGITUD = 12110;
     public static final int IMPORTE_TOTAL_LONGITUD = 12111;
     public static final int IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD = 12112;
+    public static final int INICIO_ACTIVIDAD_LONGITUD = 12164;
     public static final int ITC_NETO_LONGITUD = 12113;
     public static final int ITC_POR_LITRO_LONGITUD = 12114;
     public static final int KILOS_AFORADO_LONGITUD = 12115;
@@ -191,6 +217,7 @@ public class CodigoRespuesta {
     public static final int OBSERVACIONES_ANULADO_LONGITUD = 12065;
     public static final int PASSWORD_LONGITUD = 12054;
     public static final int P_COMISION_LONGITUD = 12122;
+    public static final int PRECIOS_DESDE_LONGITUD = 12165;
     public static final int PRECIO_UNITARIO_LONGITUD = 12123;
     public static final int PRECIO_UNITARIO_SECO_LONGITUD = 12137;
     public static final int PRECIO_UNITARIO_REF_LONGITUD = 12138;
@@ -216,6 +243,8 @@ public class CodigoRespuesta {
     public static final int TELEFONO_FIJO_LONGITUD = 12024;
     public static final int TELEFONO_MOVIL_LONGITUD = 12025;
     public static final int TELEFONO_MOVIL_EMPRESA_LONGITUD = 12045;
+    public static final int TELEFONO_MOVIL_FECHA_ENTREGA_LONGITUD = 12165;
+    public static final int TELEFONO_MOVIL_FECHA_DEVOLUCION_LONGITUD = 12166;
     public static final int TELEFONO_MOVIL_OBSERVACION_LONGITUD = 12046;
     public static final int TITULAR_LONGITUD = 12050;
     public static final int TOPE_BASICO_ADELANTOS_LONGITUD = 12131;
@@ -225,7 +254,19 @@ public class CodigoRespuesta {
     public static final int USERNAME_LONGITUD = 12017;
     public static final int VALOR_LONGITUD = 12133;
     public static final int VALOR_DECLARADO_LONGITUD = 12134;
+    public static final int VTO_POLIZA_SEGURO_LONGITUD = 12167;
     public static final int VENTA_COMPROBANTE_APLICADO_LONGITUD = 12135;
+    public static final int VTO_CURSO_LONGITUD = 12168;
+    public static final int VTO_CURSO_CARGA_PELIGROSA_LONGITUD = 12169;
+    public static final int VTO_HAB_BROMATOLOGICA_LONGITUD = 12170;
+    public static final int VTO_LIB_SANIDAD_LONGITUD = 12171;
+    public static final int VTO_LIC_CONDUCIR_LONGITUD = 12172;
+    public static final int VTO_LINTI_LONGITUD = 12173;
+    public static final int VTO_POLIZA_LONGITUD = 12174;
+    public static final int VTO_PSICOFISICO_LONGITUD = 12175;
+    public static final int VTO_RTO_LONGITUD = 12176;
+    public static final int VTO_RUTA_LONGITUD = 12177;
+    public static final int VTO_SENASA_LONGITUD = 12178;
     
     
     

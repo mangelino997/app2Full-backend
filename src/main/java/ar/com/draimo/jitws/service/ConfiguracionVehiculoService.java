@@ -74,8 +74,8 @@ public class ConfiguracionVehiculoService {
     
     //Eliminar un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(ConfiguracionVehiculo elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
     
     //Formatea los strings

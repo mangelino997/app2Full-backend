@@ -134,6 +134,9 @@ public class RepartoController {
             } else {
                 return MensajeRespuesta.error();
             }
+        }catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

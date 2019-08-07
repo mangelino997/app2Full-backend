@@ -129,6 +129,9 @@ public class OrdenVentaTarifaController {
 //                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
+        }catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
         } catch(MessagingException e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

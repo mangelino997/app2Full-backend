@@ -9,6 +9,7 @@ package ar.com.draimo.jitws.exception;
 public class LongitudError {
 
     public static final String ABREVIATURA_LONGITUD = "abreviatura";
+    public static final String ACTIVA_DESDE_LONGITUD = "activaDesde";
     public static final String ADICIONAL_BASICO_VACACIONES_LONGITUD = "adicionalBasicoVacaciones";
     public static final String ALIAS_LONGITUD = "alias";
     public static final String ALIAS_CBU_LONGITUD = "aliasCBU";
@@ -24,7 +25,9 @@ public class LongitudError {
     public static final String BASICO_LONGITUD = "basico";
     public static final String CAE_LONGITUD = "CAE";
     public static final String CAE_ESTADO_LONGITUD = "CAEEstado";
+    public static final String CAE_VENCIMIENTO_LONGITUD = "CAEVencimiento";
     public static final String CAI_LONGITUD = "cai";
+    public static final String CAI_VENCIMIENTO_LONGITUD = "caiVencimiento";
     public static final String CANTIDAD_LONGITUD = "cantidad";
     public static final String CAPACIDAD_CARGA_LONGITUD = "capacidadCarga";
     public static final String CBU_LONGITUD = "cbu";
@@ -54,6 +57,31 @@ public class LongitudError {
     public static final String DOMICILIO_LONGITUD = "domicilio";
     public static final String DOMICILIO_ALT_LONGITUD = "domicilioAlt";
     public static final String DOMINIO_LONGITUD = "dominio";
+    public static final String FECHA_LONGITUD = "fecha";
+    public static final String FECHA_ALTA_LONGITUD = "fechaAlta";
+    public static final String FECHA_BAJA_LONGITUD = "fechaBaja";
+    public static final String FECHA_CAJA_LONGITUD = "fechaCaja";
+    public static final String FECHA_CIERRE_LONGITUD = "fechaCierre";
+    public static final String FECHA_COBRO_LONGITUD = "fechaCobro";
+    public static final String FECHA_CONTABLE_LONGITUD = "fechaContable";
+    public static final String FECHA_DESDE_LONGITUD = "fechaDesde";
+    public static final String FECHA_EMISION_LONGITUD = "fechaEmision";
+    public static final String FECHA_FIN_LONGITUD = "fechaFin";
+    public static final String FECHA_HASTA_LONGITUD = "fechaHasta";
+    public static final String FECHA_INICIO_LONGITUD = "fechaInicio";
+    public static final String FECHA_MOD_CURSO_LONGITUD = "fechaModCurso";
+    public static final String FECHA_MOD_CURSO_CP_LONGITUD = "fechaModCursoCP";
+    public static final String FECHA_MOD_LC_LONGITUD = "fechaModLC";
+    public static final String FECHA_MOD_LINTI_LONGITUD = "fechaModLINTI";
+    public static final String FECHA_MOD_LS_LONGITUD = "fechaModLS";
+    public static final String FECHA_NACIMIENTO_LONGITUD = "fechaNacimiento";
+    public static final String FECHA_PAGO_LONGITUD = "fechaPago";
+    public static final String FECHA_REGRESO_LONGITUD = "fechaRegreso";
+    public static final String FECHA_SALIDA_LONGITUD = "fechaSalida";
+    public static final String FECHA_TOPE_INFORMAR_LONGITUD = "fechaTopeInformar";
+    public static final String FECHA_TRAMO_LONGITUD = "fechaTramo";
+    public static final String FECHA_ULTIMA_MOD_LONGITUD = "fechaUltimaMod";
+    public static final String FECHA_VTO_PAGO_LONGITUD = "fechaVtoPago";
     public static final String FLETE_LONGITUD = "flete";
     public static final String FOLIO_LIBRO_SUELDOS_LONGITUD = "folioLibroSueldos";
     public static final String HASTA_LONGITUD = "hasta";
@@ -77,6 +105,7 @@ public class LongitudError {
     public static final String IMPORTE_SEGURO_LONGITUD = "importeSeguro";
     public static final String IMPORTE_TOTAL_LONGITUD = "importeTotal";
     public static final String IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD = "importeVentaItemConcepto";
+    public static final String INICIO_ACTIVIDAD_LONGITUD = "inicioActividad";
     public static final String ITC_NETO_LONGITUD = "itcNeto";
     public static final String ITC_POR_LITRO_LONGITUD = "itcPorLitro";
     public static final String KILOS_AFORADO_LONGITUD = "kilosAforado";
@@ -121,6 +150,7 @@ public class LongitudError {
     public static final String OBSERVACIONES_ANULADO_LONGITUD = "observacionesAnulado";
     public static final String PASSWORD_LONGITUD = "password";
     public static final String P_COMISION_LONGITUD = "pComision";
+    public static final String PRECIOS_DESDE_LONGITUD = "preciosDesde";
     public static final String PRECIO_UNITARIO_LONGITUD = "precioUnitario";
     public static final String PRECIO_UNITARIO_VIAJE_LONGITUD = "precioUnitarioViaje";
     public static final String PRECIO_UNITARIO_VENTA_LONGITUD = "precioUnitarioVenta";
@@ -148,6 +178,8 @@ public class LongitudError {
     public static final String TELEFONO_FIJO_LONGITUD = "telefonoFijo";
     public static final String TELEFONO_MOVIL_LONGITUD = "telefonoMovil";
     public static final String TELEFONO_MOVIL_EMPRESA_LONGITUD = "telefonoMovilEmpresa";
+    public static final String TELEFONO_MOVIL_FECHA_ENTREGA_LONGITUD = "telefonoMovilFechaEntrega";
+    public static final String TELEFONO_MOVIL_FECHA_DEVOLUCION_LONGITUD = "telefonoMovilFechaDevolucion";
     public static final String TELEFONO_MOVIL_OBSERVACION_LONGITUD = "telefonoMovilObservacion";
     public static final String TIPO_LONGITUD = "tipo";
     public static final String TITULAR_LONGITUD = "titular";
@@ -158,6 +190,18 @@ public class LongitudError {
     public static final String USERNAME_LONGITUD = "username";
     public static final String VALOR_LONGITUD = "valor";
     public static final String VALOR_DECLARADO_LONGITUD = "valorDeclarado";
+    public static final String VTO_POLIZA_SEGURO_LONGITUD = "vencimientoPolizaSeguro";
     public static final String VENTA_COMPROBANTE_APLICADO_LONGITUD = "ventaComprobanteAplicado";
+    public static final String VTO_CURSO_LONGITUD = "vtoCurso";
+    public static final String VTO_CURSO_CARGA_PELIGROSA_LONGITUD = "vtoCursoCargaPeligrosa";
+    public static final String VTO_HAB_BROMATOLOGICA_LONGITUD = "vtoHabBromatologica";
+    public static final String VTO_LIB_SANIDAD_LONGITUD = "vtoLibretaSanidad";
+    public static final String VTO_LIC_CONDUCIR_LONGITUD = "vtoLicenciaConducir";
+    public static final String VTO_LINTI_LONGITUD = "vtoLINTI";
+    public static final String VTO_POLIZA_LONGITUD = "vtoPoliza";
+    public static final String VTO_PSICOFISICO_LONGITUD = "vtoPsicoFisico";
+    public static final String VTO_RTO_LONGITUD = "vtoRTO";
+    public static final String VTO_RUTA_LONGITUD = "vtoRuta";
+    public static final String VTO_SENASA_LONGITUD = "vtoSenasa";
     
 }

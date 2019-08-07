@@ -116,6 +116,9 @@ public class RolController {
             boolean resultado = elementoService.eliminar(id);
             //Retorna el mensaje
             return resultado ? MensajeRespuesta.eliminado() : MensajeRespuesta.rolAsignado();
+        }catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

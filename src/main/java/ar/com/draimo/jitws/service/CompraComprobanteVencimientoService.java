@@ -88,8 +88,8 @@ public class CompraComprobanteVencimientoService {
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(CompraComprobanteVencimiento elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
 
 }

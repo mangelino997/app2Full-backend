@@ -137,8 +137,8 @@ public class AfipWSController {
     }
     
     //Elimina un registro
-    @DeleteMapping(value = URL)
-    public ResponseEntity<?> eliminar(@RequestBody AfipWS elemento) {
+    @DeleteMapping(value = URL + "/{elemento}")
+    public ResponseEntity<?> eliminar(@PathVariable int elemento) {
         try {
             elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito

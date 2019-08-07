@@ -121,8 +121,8 @@ public class MonedaCuentaContableService {
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(MonedaCuentaContable elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
 
     public Object listarPorNombreMoneda(String nombre) {

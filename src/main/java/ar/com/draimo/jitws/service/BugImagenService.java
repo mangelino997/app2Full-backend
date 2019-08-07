@@ -84,8 +84,8 @@ public class BugImagenService {
     }
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(BugImagen elemento) {
-        elementoDAO.delete(elemento);
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
     }
 
 }
