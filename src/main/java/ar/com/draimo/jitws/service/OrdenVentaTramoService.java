@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,7 +119,12 @@ public class OrdenVentaTramoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(OrdenVentaTramo elemento) throws IOException {
+    public Object agregar(OrdenVentaTramo elemento) throws IOException, Exception {
+        String kmPactado = String.valueOf(elemento.getKmPactado());
+        //Obtiene longitud de kmPactado, si es mayor a 4retorna error
+        if (kmPactado.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM PACTADO");
+        }
         elementoDAO.saveAndFlush(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -131,7 +137,12 @@ public class OrdenVentaTramoService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(OrdenVentaTramo elemento) throws IOException {
+    public Object actualizar(OrdenVentaTramo elemento) throws IOException, Exception {
+        String kmPactado = String.valueOf(elemento.getKmPactado());
+        //Obtiene longitud de kmPactado, si es mayor a 4retorna error
+        if (kmPactado.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM PACTADO");
+        }
         elementoDAO.save(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

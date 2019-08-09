@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.model.OrigenDestino;
 import ar.com.draimo.jitws.model.Tramo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,18 +66,28 @@ public class TramoService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Tramo agregar(Tramo elemento) {
+    public Tramo agregar(Tramo elemento) throws Exception {
         elemento = formatearStrings(elemento);
         if(elemento.getRutaAlternativa() == null) {
             elemento.setRutaAlternativa("-");
+        }
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String km = String.valueOf(elemento.getKm());
+        if (km.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
         }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Tramo elemento) {
+    public void actualizar(Tramo elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String km = String.valueOf(elemento.getKm());
+        if (km.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
+        }
         elementoDAO.save(elemento);
     }
     

@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -200,7 +201,7 @@ public class PersonalService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Personal agregar(String elementoString, MultipartFile foto, MultipartFile licConducir,
-            MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException {
+            MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException, Exception {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
         if (!foto.getOriginalFilename().equals("")) {
@@ -251,6 +252,23 @@ public class PersonalService {
         } else {
             elemento.setPdfAltaTemprana(null);
         }
+        //Obtiene AntiguedadAntAnio, si es mayor a 60 retorna error
+        if (elemento.getAntiguedadAntAnio()>60) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. AÑO");
+        }
+        //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
+        if (elemento.getAntiguedadAntMes()>11) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. MES");
+        }
+        //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
+        if (elemento.getAdherenteObraSocial()>12) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ADHERENTE OBRA SOCIAL");
+        }
+        //Obtiene longitud de anio, si es mayor a 2 retorna error
+        String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
+        if (cuotasPr.length()>2) {
+            throw new Exception("Cantidad caracteres excedida en CUOTAS PRESTAMO");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -260,6 +278,23 @@ public class PersonalService {
             MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         Personal personal = elementoDAO.findById(elemento.getId()).get();
+        //Obtiene AntiguedadAntAnio, si es mayor a 60 retorna error
+        if (elemento.getAntiguedadAntAnio()>60) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. AÑO");
+        }
+        //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
+        if (elemento.getAntiguedadAntMes()>11) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. MES");
+        }
+        //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
+        if (elemento.getAdherenteObraSocial()>12) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ADHERENTE OBRA SOCIAL");
+        }
+        //Obtiene longitud de anio, si es mayor a 2 retorna error
+        String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
+        if (cuotasPr.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CUOTAS PRESTAMO");
+        }
         if (foto.getOriginalFilename().equals("")) {
             if (personal.getFoto() != null) {
                 pdfDAO.deleteById(personal.getFoto().getId());

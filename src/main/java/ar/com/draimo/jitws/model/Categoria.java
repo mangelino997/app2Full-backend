@@ -29,11 +29,11 @@ public class Categoria extends ObjetoGenerico {
     private BigDecimal topeBasicoAdelantos;
     
     //Define los dias laborables
-    @Column(name = "diasLaborables", nullable = false)
+    @Column(name = "diasLaborables", length = 2, nullable = false)
     private short diasLaborables;
     
     //Define las horas laborables
-    @Column(name = "horasLaborables", nullable = false)
+    @Column(name = "horasLaborables",length = 2, nullable = false)
     private short horasLaborables;
     
     //Getters y Setters de la clase

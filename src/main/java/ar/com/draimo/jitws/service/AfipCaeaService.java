@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IAfipCaeaDAO;
 import java.util.ArrayList;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio AfipCaea
@@ -54,15 +55,45 @@ public class AfipCaeaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public AfipCaea agregar(AfipCaea elemento) {
+    public AfipCaea agregar(AfipCaea elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        String anio = String.valueOf(elemento.getAnio());
+        String quincena = String.valueOf(elemento.getQuincena());
+        String mes = String.valueOf(elemento.getMes());
+        //Obtiene la longitud del anio, si supera 4 retorna mensaje de error
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
+        //Obtiene la longitud de quincena, si supera 1 retorna mensaje de error
+        if (quincena.length()>1) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en QUINCENA");
+        }
+        //obtiene longitud de mes, si supera dos, retorna mensaje de error
+        if (mes.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en MES");
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(AfipCaea elemento) {
+    public void actualizar(AfipCaea elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        String anio = String.valueOf(elemento.getAnio());
+        String quincena = String.valueOf(elemento.getQuincena());
+        String mes = String.valueOf(elemento.getMes());
+        //Obtiene la longitud del anio, si supera 4 retorna mensaje de error
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
+        //Obtiene la longitud de quincena, si supera 1 retorna mensaje de error
+        if (quincena.length()>1) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en QUINCENA");
+        }
+        //obtiene longitud de mes, si supera dos, retorna mensaje de error
+        if (mes.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en MES");
+        }
         elementoDAO.save(elemento);
     }
     

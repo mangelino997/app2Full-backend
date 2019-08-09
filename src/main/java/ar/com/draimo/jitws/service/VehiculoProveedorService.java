@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.model.VehiculoProveedor;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,9 +58,14 @@ public class VehiculoProveedorService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VehiculoProveedor agregar(VehiculoProveedor elemento) {
+    public VehiculoProveedor agregar(VehiculoProveedor elemento) throws Exception {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String anio = String.valueOf(elemento.getAnioFabricacion());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
+        }
         elementoDAO.saveAndFlush(elemento);
         return elementoDAO.save(elemento);
     }
@@ -73,10 +79,15 @@ public class VehiculoProveedorService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VehiculoProveedor elemento) {
+    public void actualizar(VehiculoProveedor elemento) throws Exception {
         elemento = formatearStrings(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento.setAlias(elemento.getDominio());
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String anio = String.valueOf(elemento.getAnioFabricacion());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
+        }
         elementoDAO.save(elemento);
     }
     

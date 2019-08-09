@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
-import ar.com.draimo.jitws.model.VentaComprobante;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio VentaComprobanteItem
@@ -50,15 +50,25 @@ public class VentaComprobanteItemFAService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VentaComprobanteItemFA agregar(VentaComprobanteItemFA elemento) {
+    public VentaComprobanteItemFA agregar(VentaComprobanteItemFA elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length()>6) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VentaComprobanteItemFA elemento) {
+    public void actualizar(VentaComprobanteItemFA elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length()>6) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+        }
         elementoDAO.save(elemento);
     }
     

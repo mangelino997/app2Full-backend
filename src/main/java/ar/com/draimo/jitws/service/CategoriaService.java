@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.dao.ICategoriaDAO;
 import ar.com.draimo.jitws.model.Categoria;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,15 +42,35 @@ public class CategoriaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Categoria agregar(Categoria elemento) {
+    public Categoria agregar(Categoria elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de dias laborables, si supera 31 retorna error
+        Integer dLab = Integer.valueOf(elemento.getDiasLaborables());
+        if (dLab>31) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS LABORABLES");
+        }
+        //Obtiene longitud de horas laborables, si supera 24 retorna error
+        Integer hLab = Integer.valueOf(elemento.getHorasLaborables());
+        if (hLab>24) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en HORAS LABORABLES");
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Categoria elemento) {
+    public void actualizar(Categoria elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de dias laborables, si supera 31 retorna error
+        Integer dLab = Integer.valueOf(elemento.getDiasLaborables());
+        if (dLab>31) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS LABORABLES");
+        }
+        //Obtiene longitud de horas laborables, si supera 24 retorna error
+        Integer hLab = Integer.valueOf(elemento.getHorasLaborables());
+        if (hLab>24) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en HORAS LABORABLES");
+        }
         elementoDAO.save(elemento);
     }
     

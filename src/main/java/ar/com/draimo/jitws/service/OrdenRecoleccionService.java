@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,12 +100,17 @@ public class OrdenRecoleccionService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public OrdenRecoleccion agregar(OrdenRecoleccion elemento) {
+    public OrdenRecoleccion agregar(OrdenRecoleccion elemento) throws Exception {
         elemento = formatearStrings(elemento);
         elemento.setFechaEmision(LocalDateTime.now());
         elemento.setEstaEnReparto(false);
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(13).get();
         elemento.setTipoComprobante(tipoComprobante);
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length()>6) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
     
@@ -118,10 +124,15 @@ public class OrdenRecoleccionService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(OrdenRecoleccion elemento) {
+    public void actualizar(OrdenRecoleccion elemento) throws Exception {
         elemento = formatearStrings(elemento);
         elemento.setAlias(elemento.getId() + " | " + elemento.getCliente().getId() 
                 + " - " + elemento.getCliente().getRazonSocial() + " | " + elemento.getFecha());
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length()>6) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+        }
         elementoDAO.save(elemento);
     }
     

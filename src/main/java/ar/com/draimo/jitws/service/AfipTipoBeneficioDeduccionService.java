@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.IAfipTipoBeneficioDeduccionDAO;
 import ar.com.draimo.jitws.model.AfipTipoBeneficioDeduccion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,13 +53,23 @@ public class AfipTipoBeneficioDeduccionService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public AfipTipoBeneficioDeduccion agregar(AfipTipoBeneficioDeduccion elemento) {
+    public AfipTipoBeneficioDeduccion agregar(AfipTipoBeneficioDeduccion elemento) throws Exception {
+        String anio = String.valueOf(elemento.getAnio());
+        //Obtiene longitud de anio, si supera 4 retorna error
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(AfipTipoBeneficioDeduccion elemento) {
+    public void actualizar(AfipTipoBeneficioDeduccion elemento) throws Exception {
+        String anio = String.valueOf(elemento.getAnio());
+        //Obtiene longitud de anio, si supera 4 retorna error
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
         elementoDAO.save(elemento);
     }
     

@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IPersonalFamiliarDAO;
 import ar.com.draimo.jitws.model.PersonalFamiliar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,8 +50,18 @@ public class PersonalFamiliarService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public PersonalFamiliar agregar(PersonalFamiliar elemento) {
+    public PersonalFamiliar agregar(PersonalFamiliar elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de anioAlta, si es mayor a 4 retorna error
+        String anioAlt = String.valueOf(elemento.getAnioAltaImpGan());
+        if (anioAlt.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO ALTA IMP. GANANCIAS");
+        }
+        //Obtiene longitud de anioBaja, si es mayor a 4 retorna error
+        String anioBaja = String.valueOf(elemento.getAnioBajaImpGan());
+        if (anioBaja.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO BAJA IMP. GANANCIAS");
+        }
         elemento = elementoDAO.saveAndFlush(elemento);
         elemento.setAlias(String.valueOf(elemento.getId()) + " - " + 
                 elemento.getApellido() + " " + elemento.getNombre() + " - " + 
@@ -60,8 +71,18 @@ public class PersonalFamiliarService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(PersonalFamiliar elemento) {
+    public void actualizar(PersonalFamiliar elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de anioAlta, si es mayor a 4 retorna error
+        String anioAlt = String.valueOf(elemento.getAnioAltaImpGan());
+        if (anioAlt.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO ALTA IMP. GANANCIAS");
+        }
+        //Obtiene longitud de anioBaja, si es mayor a 4 retorna error
+        String anioBaja = String.valueOf(elemento.getAnioBajaImpGan());
+        if (anioBaja.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO BAJA IMP. GANANCIAS");
+        }
         elemento.setAlias(String.valueOf(elemento.getId()) + " - " + 
                 elemento.getApellido() + " " + elemento.getNombre() 
                 + " - " + elemento.getPersonal().getNombreCompleto());

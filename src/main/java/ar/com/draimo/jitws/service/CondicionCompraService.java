@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
 import ar.com.draimo.jitws.model.CondicionCompra;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,15 +42,33 @@ public class CondicionCompraService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public CondicionCompra agregar(CondicionCompra elemento) {
+    public CondicionCompra agregar(CondicionCompra elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        String cuotas = String.valueOf(elemento.getCuotas());
+        if (cuotas.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CUOTAS");
+        }
+        String dias = String.valueOf(elemento.getDias());
+        if (dias.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(CondicionCompra elemento) {
+    public void actualizar(CondicionCompra elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de cuotas, si supera 3 retorna error
+        String cuotas = String.valueOf(elemento.getCuotas());
+        if (cuotas.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CUOTAS");
+        }
+        //Obtiene longitud de dias, si supera 2 retorna error
+        String dias = String.valueOf(elemento.getDias());
+        if (dias.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS");
+        }
         elementoDAO.save(elemento);
     }
     

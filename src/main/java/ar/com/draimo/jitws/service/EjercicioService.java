@@ -8,6 +8,7 @@ import ar.com.draimo.jitws.model.Empresa;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,15 +61,32 @@ public class EjercicioService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Ejercicio agregar(Ejercicio elemento) {
+    public Ejercicio agregar(Ejercicio elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        String anio = String.valueOf(elemento.getAnioInicio());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO INICIO");
+        }
+        //Obtiene longitud de meses, si supera 12 retorna error
+        if (elemento.getCantidadMeses()>12) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD MESES");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Ejercicio elemento) {
+    public void actualizar(Ejercicio elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de anioInicio, si supera 4 retorna error
+        String anio = String.valueOf(elemento.getAnioInicio());
+        if (anio.length()>4) {
+            throw new Exception("Cantidad caracteres excedida en AÑO INICIO");
+        }
+        //Obtiene longitud de meses, si supera 12 retorna error
+        if (elemento.getCantidadMeses()>12) {
+            throw new Exception("Cantidad caracteres excedida en CANTIDAD MESES");
+        }
         elementoDAO.save(elemento);
     }
     

@@ -9,6 +9,7 @@ import ar.com.draimo.jitws.model.TipoVehiculo;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,15 +61,25 @@ public class ConfiguracionVehiculoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public ConfiguracionVehiculo agregar(ConfiguracionVehiculo elemento) {
+    public ConfiguracionVehiculo agregar(ConfiguracionVehiculo elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de cant. ejes, si supera 2 retorna error
+        String ejes = String.valueOf(elemento.getCantidadEjes());
+        if (ejes.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD EJES");
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ConfiguracionVehiculo elemento) {
+    public void actualizar(ConfiguracionVehiculo elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de cant. ejes, si supera 2 retorna error
+        String ejes = String.valueOf(elemento.getCantidadEjes());
+        if (ejes.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD EJES");
+        }
         elementoDAO.save(elemento);
     }
     

@@ -6,13 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeDAO;
+import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.model.Viaje;
+import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.util.ArrayList;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio ViajeTramo
@@ -25,6 +29,10 @@ public class ViajeTramoService {
     //Define la referencia al dao
     @Autowired
     IViajeTramoDAO elementoDAO;
+    
+    //Define la referencia al dao de viaje tramo cliente
+    @Autowired
+    IViajeTramoClienteDAO viajeTramoClienteDAO;
 
     //Define la referencia al dao de viaje
     @Autowired
@@ -72,7 +80,7 @@ public class ViajeTramoService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(ViajeTramo elemento) throws IOException {
+    public Object agregar(ViajeTramo elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
         Viaje viaje = new Viaje();
         if (elemento.getViaje().getId() == 0) {
@@ -81,7 +89,34 @@ public class ViajeTramoService {
             viaje = viajeService.establecerAlias(viaje);
             elemento.setViaje(viaje);
         }
+        //Obtiene longitud de numeroOrden, si supera 3 retorna error
+        String numOrden = String.valueOf(elemento.getNumeroOrden());
+        if (numOrden.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO ORDEN");
+        }
+        //Obtiene longitud de km, si supera 4 retorna error
+        String km = String.valueOf(elemento.getKm());
+        if (km.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
+        }
+        //Obtiene longitud de cantidad, si supera 4 retorna error
+        String cantidad = String.valueOf(elemento.getCantidad());
+        if (cantidad.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD");
+        }
         elemento = elementoDAO.saveAndFlush(elemento);
+        List<ViajeTramoCliente> vtCliente = new ArrayList<>();
+        for (ViajeTramoCliente viajeTramoCliente : elemento.getViajeTramoClientes()) {
+            if(viajeTramoCliente.getId()!= 0){
+                viajeTramoCliente.setViajeTramo(elemento);
+                vtCliente.add(viajeTramoCliente);
+            }else {
+                viajeTramoCliente.setViajeTramo(elemento);
+                viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
+                vtCliente.add(viajeTramoCliente);
+            }
+        }
+        elemento.setViajeTramoClientes(vtCliente);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
@@ -97,10 +132,36 @@ public class ViajeTramoService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeTramo elemento) throws IOException {
+    public void actualizar(ViajeTramo elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de numeroOrden, si supera 2 retorna error
+        String numOrden = String.valueOf(elemento.getNumeroOrden());
+        if (numOrden.length()>2) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO ORDEN");
+        }
+        //Obtiene longitud de km, si supera 4 retorna error
+        String km = String.valueOf(elemento.getKm());
+        if (km.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
+        }
+        //Obtiene longitud de cantidad, si supera 4 retorna error
+        String cantidad = String.valueOf(elemento.getCantidad());
+        if (cantidad.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD");
+        }
         elementoDAO.save(elemento);
-        
+        List<ViajeTramoCliente> vtCliente = new ArrayList<>();
+        for (ViajeTramoCliente viajeTramoCliente : elemento.getViajeTramoClientes()) {
+            if(viajeTramoCliente.getId()!= 0){
+                viajeTramoCliente.setViajeTramo(elemento);
+                vtCliente.add(viajeTramoCliente);
+            }else {
+                viajeTramoCliente.setViajeTramo(elemento);
+                viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
+                vtCliente.add(viajeTramoCliente);
+            }
+        }
+        elemento.setViajeTramoClientes(vtCliente);
     }
 
     //Elimina un registro

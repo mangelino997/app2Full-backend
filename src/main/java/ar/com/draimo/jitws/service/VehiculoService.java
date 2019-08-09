@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -162,9 +163,14 @@ public class VehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public Vehiculo agregar(String elementoString, MultipartFile titulo, MultipartFile cedulaIdent,
             MultipartFile vtoRuta, MultipartFile vtoInspTecnica, MultipartFile vtoSenasa,
-            MultipartFile habBromat) throws IOException {
+            MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String anio = String.valueOf(elemento.getAnioFabricacion());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
+        }
         if (!titulo.getOriginalFilename().equals("")) {
             Pdf pTitulo = pdfService.agregar(titulo, false);
             pTitulo.setTabla("vehiculo");
@@ -230,11 +236,16 @@ public class VehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(String elementoString, MultipartFile titulo, MultipartFile cedulaIdent,
             MultipartFile vtoRuta, MultipartFile vtoInspTecnica, MultipartFile vtoSenasa,
-            MultipartFile habBromat) throws IOException {
+            MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         Vehiculo vehiculo = elementoDAO.findById(elemento.getId()).get();
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String anio = String.valueOf(elemento.getAnioFabricacion());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
+        }
         if (titulo.getOriginalFilename().equals("")) {
             if (vehiculo.getPdfTitulo() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "seguimientoestado")
-class SeguimientoEstado extends ObjetoGenerico {
+public class SeguimientoEstado extends ObjetoGenerico {
     
     //Define el nombre
     @Column(name = "nombre",length = 45, nullable = false, unique = true)

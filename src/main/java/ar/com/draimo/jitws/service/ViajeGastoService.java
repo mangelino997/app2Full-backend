@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio ViajeGasto
@@ -67,8 +68,13 @@ public class ViajeGastoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(ViajeGasto elemento) throws IOException {
+    public Object agregar(ViajeGasto elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de cantidad, si supera 3 retorna error
+        String cant = String.valueOf(elemento.getCantidad());
+        if (cant.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD");
+        }
         elemento =  elementoDAO.saveAndFlush(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -85,8 +91,13 @@ public class ViajeGastoService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeGasto elemento) throws IOException {
+    public void actualizar(ViajeGasto elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de cantidad, si supera 3 retorna error
+        String cant = String.valueOf(elemento.getCantidad());
+        if (cant.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD");
+        }
         elementoDAO.save(elemento);
     }
     

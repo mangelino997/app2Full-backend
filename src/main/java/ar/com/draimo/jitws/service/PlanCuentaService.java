@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio PlandeCuenta
@@ -138,15 +139,25 @@ public class PlanCuentaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public PlanCuenta agregar(PlanCuenta elemento) {
+    public PlanCuenta agregar(PlanCuenta elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de nivel, si es mayor a 1 retorna error
+        String nivel = String.valueOf(elemento.getNivel());
+        if (nivel.length()>1) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NIVEL");
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(PlanCuenta elemento) throws IOException {
+    public Object actualizar(PlanCuenta elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de nivel, si es mayor a 1 retorna error
+        String nivel = String.valueOf(elemento.getNivel());
+        if (nivel.length()>1) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NIVEL");
+        }
         PlanCuenta planCuenta = elementoDAO.saveAndFlush(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

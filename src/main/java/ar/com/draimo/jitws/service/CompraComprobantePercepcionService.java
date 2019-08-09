@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.dao.ICompraComprobantePercepcionDAO;
 import ar.com.draimo.jitws.model.CompraComprobantePercepcion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,13 +32,23 @@ public class CompraComprobantePercepcionService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public CompraComprobantePercepcion agregar(CompraComprobantePercepcion elemento) {
+    public CompraComprobantePercepcion agregar(CompraComprobantePercepcion elemento) throws Exception {
+        //Obtiene longitud de anio, si supera 4 retorna error
+        String anio = String.valueOf(elemento.getAnio());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(CompraComprobantePercepcion elemento) {
+    public void actualizar(CompraComprobantePercepcion elemento) throws Exception {
+        //Obtiene longitud de anio, si supera 4 retorna error
+        String anio = String.valueOf(elemento.getAnio());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
         elementoDAO.save(elemento);
     }
     

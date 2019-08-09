@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio de ViajePropio
@@ -225,11 +226,21 @@ public class ViajeRemitoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public ViajeRemito agregar(ViajeRemito elemento) {
+    public ViajeRemito agregar(ViajeRemito elemento) throws Exception {
         //Establece valores por defecto
         elemento.setEstaPendiente(true);
         elemento.setEstaFacturado(false);
         elemento.setEstaEnReparto(false);
+        //Obtiene longitud de numrtoCamion, si supera 3 retorna error
+        String numCamion = String.valueOf(elemento.getNumeroCamion());
+        if (numCamion.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO CAMION");
+        }
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length()>6) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+        }
         //Formatea los strings
         elemento = formatearStrings(elemento);
         return elementoDAO.saveAndFlush(elemento);
@@ -245,8 +256,18 @@ public class ViajeRemitoService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeRemito elemento) {
+    public void actualizar(ViajeRemito elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        //Obtiene longitud de numrtoCamion, si supera 3 retorna error
+        String numCamion = String.valueOf(elemento.getNumeroCamion());
+        if (numCamion.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO CAMION");
+        }
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length()>6) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+        }
         elemento.setAlias(elemento.getNumero() + " - (R: " + elemento.getClienteRemitente().getAlias() + ") - " 
                 + "(D: " + elemento.getClienteDestinatario().getAlias() + ")");
         elementoDAO.save(elemento);

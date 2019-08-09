@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "seguimiento")
-class Seguimiento extends ObjetoGenerico {
+public class Seguimiento extends ObjetoGenerico {
     
     //Define la fecha
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")

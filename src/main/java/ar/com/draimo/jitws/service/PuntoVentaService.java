@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -108,13 +109,23 @@ public class PuntoVentaService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public PuntoVenta agregar(PuntoVenta elemento) {
+    public PuntoVenta agregar(PuntoVenta elemento) throws Exception {
+        //Obtiene longitud de anio, si es mayor a 1 retorna error
+        String copias = String.valueOf(elemento.getCopias());
+        if (copias.length()>1) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en COPIAS");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(PuntoVenta elemento) {
+    public void actualizar(PuntoVenta elemento) throws Exception {
+        //Obtiene longitud de anio, si es mayor a 1 retorna error
+        String copias = String.valueOf(elemento.getCopias());
+        if (copias.length()>1) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en COPIAS");
+        }
         elementoDAO.save(elemento);
     }
 

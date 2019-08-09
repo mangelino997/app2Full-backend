@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.dao.IVentaConfigDAO;
 import ar.com.draimo.jitws.model.VentaConfig;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,13 +38,23 @@ public class VentaConfigService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VentaConfig agregar(VentaConfig elemento) {
+    public VentaConfig agregar(VentaConfig elemento) throws Exception {
+        //Obtiene longitud de aforo, si supera 3 retorna error
+        String aforo = String.valueOf(elemento.getAforo());
+        if (aforo.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AFORO");
+        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VentaConfig elemento) {
+    public void actualizar(VentaConfig elemento) throws Exception {
+        //Obtiene longitud de aforo, si supera 3 retorna error
+        String aforo = String.valueOf(elemento.getAforo());
+        if (aforo.length()>3) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AFORO");
+        }
         elementoDAO.save(elemento);
     }
     

@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.ICategoriaDAO;
 import ar.com.draimo.jitws.model.BasicoCategoria;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,13 +57,23 @@ public class BasicoCategoriaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public BasicoCategoria agregar(BasicoCategoria elemento) {
+    public BasicoCategoria agregar(BasicoCategoria elemento) throws Exception {
+        //Obtiene longitud de anio, si supera 4 retorna error
+        String anio = String.valueOf(elemento.getAnio());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(BasicoCategoria elemento) {
+    public void actualizar(BasicoCategoria elemento) throws Exception {
+        //Obtiene longitud de anio, si supera 4 retorna error
+        String anio = String.valueOf(elemento.getAnio());
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        }
         elementoDAO.save(elemento);
     }
     

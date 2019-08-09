@@ -87,7 +87,8 @@ public class CodigoRespuesta {
     
     //Define una respuesta de datos que superan su longitud
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo Longitud = 12138
+    //Ultimo codigo Longitud = 12139
+    public static final int LONGITUD = 12139;
     public static final int ABREVIATURA_LONGITUD = 12015;
     public static final int ADICIONAL_BASICO_VACACIONES_LONGITUD = 12068;
     public static final int ALIAS_LONGITUD = 12026;
