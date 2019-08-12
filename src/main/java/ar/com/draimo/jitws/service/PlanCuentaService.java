@@ -84,6 +84,18 @@ public class PlanCuentaService {
         return new ObjectMapper().readValue(string, Object.class);
     }
     
+    //Obtiene el plan de cuenta por grupo Estado de Resultados por empresa
+    public Object listarGrupoEstadoResultados(int idEmpresa) throws IOException {
+        List<PlanCuenta> planesCuenta =  elementoDAO.listarGrupoEstadoResultados(idEmpresa);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(planesCuenta);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
     //Obtiene el plan de cuenta
     public Object obtenerPlanCuenta(int idEmpresa) 
             throws JsonProcessingException, IOException {

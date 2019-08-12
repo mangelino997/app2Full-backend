@@ -70,6 +70,13 @@ public class PlanCuentaController {
         return elementoService.listarGrupoActivo(idEmpresa);
     }
     
+    //Obtiene un listado de estado resultado por idEmpresa
+    @GetMapping(value = URL + "/listarGrupoEstadoResultados/{idEmpresa}")
+    @ResponseBody
+    public Object listarGrupoEstadoResultados(@PathVariable int idEmpresa) throws IOException {
+        return elementoService.listarGrupoEstadoResultados(idEmpresa);
+    }
+    
     //Obtiene el plan de cuenta
     @GetMapping(value = URL + "/obtenerPlanCuentaPorEmpresa/{idEmpresa}")
     @ResponseBody
