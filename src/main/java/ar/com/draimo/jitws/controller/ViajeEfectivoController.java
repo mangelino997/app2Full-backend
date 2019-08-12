@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.ViajeCombustible;
 import ar.com.draimo.jitws.model.ViajeEfectivo;
 import ar.com.draimo.jitws.service.ViajeEfectivoService;
 import java.io.IOException;
@@ -61,6 +62,20 @@ public class ViajeEfectivoController {
     @ResponseBody
     public Object listarEfectivos(@PathVariable int idViaje) throws IOException {
         return elementoService.listarEfectivos(idViaje);
+    }
+    
+    //anula un Efectivo
+    @PutMapping(value = URL + "/anularEfectivo")
+    @ResponseBody
+    public ResponseEntity<?> anularEfectivo(@RequestBody ViajeEfectivo efectivo) throws IOException {
+            try {
+            elementoService.anularEfectivo(efectivo);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro

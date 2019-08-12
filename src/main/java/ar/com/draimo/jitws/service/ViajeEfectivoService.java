@@ -65,6 +65,13 @@ public class ViajeEfectivoService {
         return mapper.readValue(string, Object.class);
     }
     
+    //Anula un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void anularEfectivo(ViajeEfectivo elemento) throws IOException {
+        elemento.setEstaAnulado(true);
+        elementoDAO.save(elemento);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeEfectivo elemento) throws IOException {

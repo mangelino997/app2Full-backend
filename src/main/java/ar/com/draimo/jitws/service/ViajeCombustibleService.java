@@ -65,6 +65,13 @@ public class ViajeCombustibleService {
         return mapper.readValue(string, Object.class);
     }
     
+    //Anula un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void anularCombustible(ViajeCombustible elemento) throws IOException {
+        elemento.setEstaAnulado(true);
+        elementoDAO.save(elemento);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeCombustible elemento) throws IOException {

@@ -63,6 +63,20 @@ public class ViajeCombustibleController {
         return elementoService.listarCombustibles(idViaje);
     }
     
+    //anula un combustible
+    @PutMapping(value = URL + "/anularCombustible")
+    @ResponseBody
+    public ResponseEntity<?> anularCombustible(@RequestBody ViajeCombustible combustible) throws IOException {
+        try {
+            elementoService.anularCombustible(combustible);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeCombustible elemento) {

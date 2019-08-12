@@ -157,8 +157,7 @@ public class MensajeRespuesta {
                         plusMensaje = "";
                         break;
                     case 13:
-                        datoInexistente(parte3[1], partes2[7]);
-                        break;
+                        return datoInexistente(parte3[1], dive.getMostSpecificCause().getMessage());
                 }
                 break;
             case 4:
@@ -929,15 +928,20 @@ public class MensajeRespuesta {
     }
 
     public static ResponseEntity<?> datoInexistente(String a, String b) {
+        String[] partes2 = b.split(" ");
+        String[] partes = b.split("`");
+        String s = partes2[3].substring(partes[2].indexOf("l.") + 1);
+        s = s.substring(0, s.indexOf(" ") );
         String mensajeRespuesta = "";
         int codigoRespuesta = 0;
         String plusMensaje = "";
+        System.out.println(partes2[2]);
         if (a.equals("delete")) {
             mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
         } else {
             mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
         }
-        switch (b) {
+        switch (partes[7]) {
             case InexistenciaError.AFIP_ACTIVIDAD_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.AFIP_ACTIVIDAD_INEXISTENTE;
                 plusMensaje = ": AFIP ACTIVIDAD";
