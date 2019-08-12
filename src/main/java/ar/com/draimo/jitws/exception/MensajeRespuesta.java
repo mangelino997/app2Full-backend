@@ -930,8 +930,8 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> datoInexistente(String a, String b) {
         String[] partes2 = b.split(" ");
         String[] partes = b.split("`");
-        String s = partes2[3].substring(partes[2].indexOf("l.") + 1);
-        s = s.substring(0, s.indexOf(" ") );
+//        String s = partes2[3].substring(partes[2].indexOf("l.") + 1);
+//        s = s.substring(0, s.indexOf(" ") );
         String mensajeRespuesta = "";
         int codigoRespuesta = 0;
         String plusMensaje = "";

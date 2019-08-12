@@ -119,38 +119,26 @@ public class OrdenVentaTramoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(OrdenVentaTramo elemento) throws IOException, Exception {
+    public int agregar(OrdenVentaTramo elemento) throws IOException, Exception {
         String kmPactado = String.valueOf(elemento.getKmPactado());
         //Obtiene longitud de kmPactado, si es mayor a 4retorna error
         if (kmPactado.length()>4) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM PACTADO");
         }
-        elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        elemento = elementoDAO.saveAndFlush(elemento);
+        return elemento.getId();
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(OrdenVentaTramo elemento) throws IOException, Exception {
+    public int actualizar(OrdenVentaTramo elemento) throws IOException, Exception {
         String kmPactado = String.valueOf(elemento.getKmPactado());
         //Obtiene longitud de kmPactado, si es mayor a 4retorna error
         if (kmPactado.length()>4) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM PACTADO");
         }
-        elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        elemento = elementoDAO.save(elemento);
+        return elemento.getId();
     }
     
     //Elimina un registro

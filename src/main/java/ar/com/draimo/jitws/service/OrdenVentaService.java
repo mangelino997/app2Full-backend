@@ -97,18 +97,11 @@ public class OrdenVentaService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public OrdenVenta agregar(String elementoString, String clienteString, String empresaString,
-            String ordenesVentasTramosString, String ordenesVentasEscalasString,
-            String ordenesVentasTarifasString) throws IOException {
+    public int agregar(String elementoString, String clienteString, String empresaString,
+            String ordenVentaTarifaString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         OrdenVenta elemento = mapper.readValue(elementoString, OrdenVenta.class);
-        ClienteOrdenVenta clienteOrdenVenta = mapper.readValue(clienteString, ClienteOrdenVenta.class);
-        EmpresaOrdenVenta empresaOrdenVenta = mapper.readValue(empresaString, EmpresaOrdenVenta.class);
-        OrdenVentaTarifa ordenVentaTarifa = mapper.readValue(ordenesVentasTarifasString, OrdenVentaTarifa.class);
-        List<OrdenVentaEscala> ordenVentaEscala = mapper.readValue(ordenesVentasEscalasString, 
-                mapper.getTypeFactory().constructCollectionType(List.class, OrdenVentaEscala.class));
-        List<OrdenVentaTramo> ordenVentaTramo = mapper.readValue(ordenesVentasTramosString, 
-                mapper.getTypeFactory().constructCollectionType(List.class, OrdenVentaTramo.class));
+        OrdenVentaTarifa ordenVentaTarifa = mapper.readValue(ordenVentaTarifaString, OrdenVentaTarifa.class);
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Establece la fecha actual
@@ -120,32 +113,22 @@ public class OrdenVentaService {
         //Agrega la orden de venta
         elemento = elementoDAO.saveAndFlush(elemento);
         ordenVentaTarifa.setOrdenVenta(elemento);
-        ordenVentaTarifaDAO.saveAndFlush(ordenVentaTarifa);
-        if (!ordenVentaTramo.isEmpty()) {
-            for (OrdenVentaTramo ordenVentaTramo1 : ordenVentaTramo) {
-                ordenVentaTramo1.setOrdenVentaTarifa(ordenVentaTarifa);
-                ordenVentaTramoDAO.saveAndFlush(ordenVentaTramo1);
-            }
-        }
-        if (!ordenVentaEscala.isEmpty()) {
-            for (OrdenVentaEscala ordenVentaEscala1 : ordenVentaEscala) {
-                ordenVentaEscala1.setOrdenVentaTarifa(ordenVentaTarifa);
-                ordenVentaEscalaDAO.saveAndFlush(ordenVentaEscala1);
-            }
-        }
-        if(clienteOrdenVenta!=null) {
+        ordenVentaTarifa = ordenVentaTarifaDAO.saveAndFlush(ordenVentaTarifa);
+        if(clienteString!=null) {
+            ClienteOrdenVenta clienteOrdenVenta = mapper.readValue(clienteString, ClienteOrdenVenta.class);
             clienteOrdenVenta.setOrdenVenta(elemento);
             clienteOrdenVenta.setFechaAlta(elemento.getFechaAlta());
             clienteOrdenVenta.setEstaActiva(true);
             clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
         }
-        if(empresaOrdenVenta!=null) {
+        if(empresaString!=null) {
+            EmpresaOrdenVenta empresaOrdenVenta = mapper.readValue(empresaString, EmpresaOrdenVenta.class);
             empresaOrdenVenta.setOrdenVenta(elemento);
             empresaOrdenVenta.setFechaAlta(elemento.getFechaAlta());
             empresaOrdenVenta.setEstaActiva(true);
             empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
         }
-        return elemento;
+        return ordenVentaTarifa.getId();
     }
 
     //Actualiza un registro

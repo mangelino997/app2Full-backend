@@ -82,12 +82,10 @@ public class OrdenVentaController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("ordenVenta") String elementoString,
             @RequestPart("clienteOrdenVenta") String clienteString,@RequestPart("empresaOrdenVenta") String empresaString,
-            @RequestPart("ordenesVentasTarifas") String ordenesVentasTarifasString,
-            @RequestPart("ordenesVentasEscalas") String ordenesVentasEscalasString,
-            @RequestPart("ordenesVentasTramos") String ordenesVentasTramosString) {
+            @RequestPart("ordenVentaTarifa") String ordenVentaTarifaString) {
         try {
             Object ordenVenta = elementoService.agregar(elementoString, clienteString, empresaString,
-                    ordenesVentasTarifasString, ordenesVentasEscalasString, ordenesVentasTramosString);
+                    ordenVentaTarifaString);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito

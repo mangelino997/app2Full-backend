@@ -146,28 +146,16 @@ public class OrdenVentaEscalaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(OrdenVentaEscala elemento) throws IOException {
-        elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+    public int agregar(OrdenVentaEscala elemento) throws IOException {
+        elemento = elementoDAO.saveAndFlush(elemento);
+        return elemento.getId();
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(OrdenVentaEscala elemento) throws IOException {
+    public int actualizar(OrdenVentaEscala elemento) throws IOException {
         elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return elemento.getId();
     }
     
     //Elimina un registro

@@ -89,15 +89,9 @@ public class OrdenVentaTarifaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(OrdenVentaTarifa elemento) throws IOException {
-        elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+    public int agregar(OrdenVentaTarifa elemento) throws IOException {
+        elemento = elementoDAO.saveAndFlush(elemento);
+        return elemento.getId();
     }
     
     //Actualiza un registro
