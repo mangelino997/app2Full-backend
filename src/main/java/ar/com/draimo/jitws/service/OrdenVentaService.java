@@ -128,7 +128,7 @@ public class OrdenVentaService {
             empresaOrdenVenta.setEstaActiva(true);
             empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
         }
-        return ordenVentaTarifa.getId();
+        return elemento.getId();
     }
 
     //Actualiza un registro

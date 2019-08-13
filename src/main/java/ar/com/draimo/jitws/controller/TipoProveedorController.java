@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -96,6 +97,9 @@ public class TipoProveedorController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
+        } catch (JpaObjectRetrievalFailureException jorfe) {
+            //Retorna mensaje de dato inexistente
+            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();

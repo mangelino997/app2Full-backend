@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,7 +71,7 @@ public class AfipSiniestradoController {
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -92,12 +93,15 @@ public class AfipSiniestradoController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
+        } catch (JpaObjectRetrievalFailureException jorfe) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();

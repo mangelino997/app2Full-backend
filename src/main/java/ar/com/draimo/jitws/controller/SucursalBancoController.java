@@ -115,15 +115,15 @@ public class SucursalBancoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
+        } catch (JpaObjectRetrievalFailureException jorfe) {
+            //Retorna mensaje de dato inexistente
+            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
 //        } catch(ObjectOptimisticLockingFailureException oolfe) {
 //            //Retorna mensaje de transaccion no actualizada
 //            return MensajeRespuesta.transaccionNoActualizada();
 //        }catch(MessagingException e) {
 //            //Retorna codigo y mensaje de error de sicronizacion mediante socket
 //            return MensajeRespuesta.errorSincSocket();
-        }catch(JpaObjectRetrievalFailureException enfe) {
-            //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return MensajeRespuesta.ssssssss(enfe);
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

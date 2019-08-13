@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -100,6 +101,9 @@ public class ContactoBancoController {
             template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
+        } catch (JpaObjectRetrievalFailureException jorfe) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

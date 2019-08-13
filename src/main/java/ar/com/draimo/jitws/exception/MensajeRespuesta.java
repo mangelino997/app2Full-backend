@@ -930,18 +930,24 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> datoInexistente(String a, String b) {
         String[] partes2 = b.split(" ");
         String[] partes = b.split("`");
-//        String s = partes2[3].substring(partes[2].indexOf("l.") + 1);
-//        s = s.substring(0, s.indexOf(" ") );
+        String s ;
         String mensajeRespuesta = "";
+        String[] partes3 = partes2[3].split(".");
         int codigoRespuesta = 0;
         String plusMensaje = "";
         System.out.println(partes2[2]);
         if (a.equals("delete")) {
             mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
-        } else {
+            s = partes[7];
+        }else if(a.equals("a")) {
+            s = partes2[3].substring(26);
+            s = "id" + s;
             mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
+        }else {
+            mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
+             s = partes[7];
         }
-        switch (partes[7]) {
+        switch (s) {
             case InexistenciaError.AFIP_ACTIVIDAD_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.AFIP_ACTIVIDAD_INEXISTENTE;
                 plusMensaje = ": AFIP ACTIVIDAD";
