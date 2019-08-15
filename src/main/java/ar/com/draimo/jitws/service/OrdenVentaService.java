@@ -81,11 +81,11 @@ public class OrdenVentaService {
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<OrdenVenta> elementos =new ArrayList<>();
+        List<OrdenVenta> elementos = new ArrayList<>();
         if (nombre.equals("***")) {
-            elementos= elementoDAO.findAll();
+            elementos = elementoDAO.findAll();
         } else {
-            elementos= elementoDAO.findByNombreContaining(nombre);
+            elementos = elementoDAO.findByNombreContaining(nombre);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -104,6 +104,8 @@ public class OrdenVentaService {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OrdenVenta elemento = mapper.readValue(elementoString, OrdenVenta.class);
         OrdenVentaTarifa ordenVentaTarifa = mapper.readValue(ordenVentaTarifaString, OrdenVentaTarifa.class);
+        ClienteOrdenVenta clienteOrdenVenta = new ClienteOrdenVenta();
+        EmpresaOrdenVenta empresaOrdenVenta = new EmpresaOrdenVenta();
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Establece la fecha actual
@@ -116,18 +118,18 @@ public class OrdenVentaService {
         elemento = elementoDAO.saveAndFlush(elemento);
         ordenVentaTarifa.setOrdenVenta(elemento);
         ordenVentaTarifa = ordenVentaTarifaDAO.saveAndFlush(ordenVentaTarifa);
-        if(clienteString!=null) {
-            ClienteOrdenVenta clienteOrdenVenta = mapper.readValue(clienteString, ClienteOrdenVenta.class);
-            clienteOrdenVenta.setOrdenVenta(elemento);
+        if (!clienteString.equals("null")) {
+            clienteOrdenVenta = mapper.readValue(clienteString, ClienteOrdenVenta.class);
             clienteOrdenVenta.setFechaAlta(elemento.getFechaAlta());
             clienteOrdenVenta.setEstaActiva(true);
+            clienteOrdenVenta.setOrdenVenta(elemento);
             clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
         }
-        if(empresaString!=null) {
-            EmpresaOrdenVenta empresaOrdenVenta = mapper.readValue(empresaString, EmpresaOrdenVenta.class);
-            empresaOrdenVenta.setOrdenVenta(elemento);
+        if (!empresaString.equals("null")) {
+            empresaOrdenVenta = mapper.readValue(empresaString, EmpresaOrdenVenta.class);
             empresaOrdenVenta.setFechaAlta(elemento.getFechaAlta());
             empresaOrdenVenta.setEstaActiva(true);
+            empresaOrdenVenta.setOrdenVenta(elemento);
             empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
         }
         return elemento.getId();
@@ -139,8 +141,8 @@ public class OrdenVentaService {
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Actualiza la orden de venta
-         elementoDAO.save(elemento);
-         ObjectMapper mapper = new ObjectMapper();
+        elementoDAO.save(elemento);
+        ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
