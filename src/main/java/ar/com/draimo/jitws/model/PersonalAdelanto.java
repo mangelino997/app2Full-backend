@@ -1,57 +1,58 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase PersonalAdelanto
- * Define el modelo (columnas) de la base de datos.
+ * Clase PersonalAdelanto Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "personaladelanto")
+@JsonFilter("personaladelantofiltro")
 public class PersonalAdelanto extends ObjetoGenerico {
 
     //Referencia a empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Referencia a personal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPersonal", nullable = false)
     private Personal personal;
-    
+
     //Referencia a tipoComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
-    
+
     //Define Fecha de emision
     @Column(name = "fechaEmision", nullable = false)
     private Date fechaEmision;
-    
+
     //Define Fecha de vencimiento
     @Column(name = "fechaVto", nullable = false)
     private Date fechaVto;
-    
+
     //Define el importe
     @Column(name = "importe", nullable = false)
     private BigDecimal importe;
-    
+
     //Define cuota
     @Column(name = "cuota", nullable = false)
     private short cuota;
-    
+
     //Define Totalcuotas
     @Column(name = "totalCuotas", nullable = false)
     private short totalCuotas;
@@ -60,47 +61,44 @@ public class PersonalAdelanto extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
-    
+
     //Define observaciones
-    @Column(name = "observaciones",length = 60, nullable = true)
+    @Column(name = "observaciones", length = 60, nullable = true)
     private String observaciones;
-    
+
     //Define esta anulado
     @Column(name = "estaAnulado", nullable = true)
     private boolean estaAnulado;
 
     //Define observaciones anulado
-    @Column(name = "observacionesAnulado",length = 60, nullable = true)
+    @Column(name = "observacionesAnulado", length = 60, nullable = true)
     private String observacionesAnulado;
-    
+
     //Referencia a usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
-    
+
     //Referencia a usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
-    
+
     //Define numero de lote
     @Column(name = "numeroLote", nullable = true)
     private int numeroLote;
-    
+
     //Referencia a viaje
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
-        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idViaje", nullable = true)
     private Viaje viaje;
-    
+
     //Referencia a reparto
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idReparto", nullable = true)
     private Reparto reparto;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;
     }
