@@ -66,6 +66,7 @@ public class InexistenciaError {
     public static final String ORDEN_VENTA_TARIFA_INEXISTENTE = "idOrdenVentaTarifa";
     public static final String ORDEN_RECOLECCION_INEXISTENTE = "idOrdenRecoleccion";
     public static final String ORIGEN_INEXISTENTE = "idOrigen";
+    public static final String ORIGEN_DESTINO_INEXISTENTE = "idOrigenDestino";
     public static final String PADRE_INEXISTENTE = "idPadre";
     public static final String PAIS_INEXISTENTE = "idPais";
     public static final String PDF_INEXISTENTE = "idPdf";

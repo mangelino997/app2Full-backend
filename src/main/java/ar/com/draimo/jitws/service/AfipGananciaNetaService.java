@@ -40,7 +40,22 @@ public class AfipGananciaNetaService {
     
     //Obtiene una lista por idAlicuotaGanancia
     public List<AfipGananciaNeta> listarPorAfipAlicuotaGanancia(int idAlicuotaGanancia) {
-        return elementoDAO.findByAfipAlicuotaGanancia(gananciaDAO.findById(idAlicuotaGanancia).get());
+        return elementoDAO.findByAfipAlicuotaGananciaOrderByImporte(gananciaDAO.findById(idAlicuotaGanancia).get());
+    }
+    
+    //Obtiene una lista por AnioFiscal
+    public List<AfipGananciaNeta> listarPorAnioFiscal(short anioFiscal) {
+        String anio = String.valueOf(anioFiscal);
+        //Obtiene longitud de anio, si supera 4 retorna error
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+        } 
+        List<AfipGananciaNeta> ganancias = elementoDAO.findByAnioOrderByImporte(anioFiscal);
+        if(ganancias.isEmpty()) {
+             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+        }else {
+            return ganancias;
+        }
     }
     
     //Agrega un registro
@@ -48,8 +63,8 @@ public class AfipGananciaNetaService {
     public AfipGananciaNeta agregar(AfipGananciaNeta elemento) throws Exception {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
         return elementoDAO.save(elemento);
     }
@@ -59,8 +74,8 @@ public class AfipGananciaNetaService {
     public void actualizar(AfipGananciaNeta elemento) throws Exception {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
         elementoDAO.save(elemento);
     }

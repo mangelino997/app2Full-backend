@@ -2,7 +2,6 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.ViajeCombustible;
 import ar.com.draimo.jitws.model.ViajeInsumo;
 import ar.com.draimo.jitws.service.ViajeInsumoService;
 import java.io.IOException;
@@ -72,7 +71,7 @@ public class ViajeInsumoController {
         try {
             elementoService.anularInsumo(insumo);
             //Retorna mensaje de eliminado con exito
-            return MensajeRespuesta.eliminado();
+            return MensajeRespuesta.anulado();
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

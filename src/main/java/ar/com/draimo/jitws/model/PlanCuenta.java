@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "plandecuenta")
+@Table(name = "plancuenta")
 @JsonFilter("filtroPlanCuenta")
 public class PlanCuenta extends ObjetoGenerico {
 

@@ -24,8 +24,8 @@ import javax.persistence.Table;
 public class ViajeEfectivo extends ObjetoGenerico {
     
     //Referencia a la clase Viaje
-//    @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
-//        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
+    @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
+        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idViaje", nullable = true)
     private Viaje viaje;

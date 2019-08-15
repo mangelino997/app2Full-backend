@@ -113,9 +113,9 @@ public class PersonalService {
         if (elemento.getPdfAltaTemprana() == null) {
             elemento.setPdfAltaTemprana(pdf);
         }
-        if (elemento.getPdfDni() == null) {
-            elemento.setPdfDni(pdf);
-        }
+//        if (elemento.getPdfDni() == null) {
+//            elemento.setPdfDni(pdf);
+//        }
         if (elemento.getPdfLibSanidad() == null) {
             elemento.setPdfLibSanidad(pdf);
         }
@@ -236,14 +236,14 @@ public class PersonalService {
         } else {
             elemento.setPdfLibSanidad(null);
         }
-        if (!dni.getOriginalFilename().equals("")) {
-            Pdf p4 = pdfService.agregar(dni, false);
-            p4.setTabla("personal");
-            Pdf pdf4 = pdfDAO.saveAndFlush(p4);
-            elemento.setPdfDni(pdf4);
-        } else {
-            elemento.setPdfDni(null);
-        }
+//        if (!dni.getOriginalFilename().equals("")) {
+//            Pdf p4 = pdfService.agregar(dni, false);
+//            p4.setTabla("personal");
+//            Pdf pdf4 = pdfDAO.saveAndFlush(p4);
+//            elemento.setPdfDni(pdf4);
+//        } else {
+//            elemento.setPdfDni(null);
+//        }
         if (!altaTemprana.getOriginalFilename().equals("")) {
             Pdf p5 = pdfService.agregar(altaTemprana, false);
             p5.setTabla("personal");
@@ -375,26 +375,26 @@ public class PersonalService {
                 elemento.setPdfLibSanidad(pdf3);
             }
         }
-        if (dni.getOriginalFilename().equals("")) {
-            if (personal.getPdfDni() != null) {
-                pdfDAO.deleteById(personal.getPdfDni().getId());
-                elemento.setPdfDni(null);
-            } else {
-                elemento.setPdfDni(null);
-            }
-        } else {
-            if (personal.getPdfDni() != null) {
-                Pdf p4 = pdfService.actualizar(personal.getPdfDni().getId(), dni, false);
-                p4.setTabla("personal");
-                Pdf pdf4 = pdfDAO.save(p4);
-                elemento.setPdfDni(pdf4);
-            } else {
-                Pdf p4 = pdfService.agregar(dni, false);
-                p4.setTabla("personal");
-                Pdf pdf4 = pdfDAO.saveAndFlush(p4);
-                elemento.setPdfDni(pdf4);
-            }
-        }
+//        if (dni.getOriginalFilename().equals("")) {
+//            if (personal.getPdfDni() != null) {
+//                pdfDAO.deleteById(personal.getPdfDni().getId());
+//                elemento.setPdfDni(null);
+//            } else {
+//                elemento.setPdfDni(null);
+//            }
+//        } else {
+//            if (personal.getPdfDni() != null) {
+//                Pdf p4 = pdfService.actualizar(personal.getPdfDni().getId(), dni, false);
+//                p4.setTabla("personal");
+//                Pdf pdf4 = pdfDAO.save(p4);
+//                elemento.setPdfDni(pdf4);
+//            } else {
+//                Pdf p4 = pdfService.agregar(dni, false);
+//                p4.setTabla("personal");
+//                Pdf pdf4 = pdfDAO.saveAndFlush(p4);
+//                elemento.setPdfDni(pdf4);
+//            }
+//        }
         if (altaTemprana.getOriginalFilename().equals("")) {
             if (personal.getPdfAltaTemprana() != null) {
                 pdfDAO.deleteById(personal.getPdfAltaTemprana().getId());

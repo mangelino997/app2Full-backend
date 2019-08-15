@@ -98,8 +98,18 @@ public class SubopcionController {
     //Elimina una subopcion por id de todos los roles
     @GetMapping(value = URL + "/eliminarSubopcionDeRoles/{idSubopcion}")
     @ResponseBody
-    public void eliminarSubopcionDeRoles(@PathVariable int idSubopcion) {
+    public ResponseEntity<?> eliminarSubopcionDeRoles(@PathVariable int idSubopcion) {
+        try{
         elementoService.eliminarSubopcionDeRoles(idSubopcion);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
+        }catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro

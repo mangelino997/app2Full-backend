@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -83,6 +84,10 @@ public class OrdenVenta extends ObjetoGenerico {
          uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idEmpresa"})})  
     @JsonIgnoreProperties("ordenesVentas")
     private List<Empresa> empresas = new ArrayList<>();
+    
+    //Referencia a la clase empresa
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
+    private List<OrdenVentaTarifa> ordenesVentasTarifas = new ArrayList<>();
 
     //Getters y Setters de la clase
 

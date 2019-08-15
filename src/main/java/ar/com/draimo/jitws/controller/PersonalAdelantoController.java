@@ -2,38 +2,37 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.ViajeEfectivo;
-import ar.com.draimo.jitws.service.ViajeEfectivoService;
-import java.io.IOException;
+import ar.com.draimo.jitws.model.PersonalAdelanto;
+import ar.com.draimo.jitws.service.PersonalAdelantoService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase ViajeEfectivo Controller
+ * Clase PersonalAdelanto Controller
  * @author blas
  */
 
 @RestController
-public class ViajeEfectivoController {
+public class PersonalAdelantoController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/viajeefectivo";
+    private final String URL = RutaConstant.URL_BASE + "/personaladelanto";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/viajeefectivo";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/personaladelanto";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -41,7 +40,7 @@ public class ViajeEfectivoController {
     
     //Crea una instancia del servicio
     @Autowired
-    ViajeEfectivoService elementoService;
+    PersonalAdelantoService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -53,40 +52,19 @@ public class ViajeEfectivoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public Object listar() throws IOException {
+    public List<PersonalAdelanto> listar() {
         return elementoService.listar();
-    }
-    
-    //Obtiene la lista de efectivos por ViajePropio
-    @GetMapping(value = URL + "/listarEfectivos/{idViaje}")
-    @ResponseBody
-    public Object listarEfectivos(@PathVariable int idViaje) throws IOException {
-        return elementoService.listarEfectivos(idViaje);
-    }
-    
-    //anula un Efectivo
-    @PutMapping(value = URL + "/anularEfectivo")
-    @ResponseBody
-    public ResponseEntity<?> anularEfectivo(@RequestBody ViajeEfectivo efectivo) throws IOException {
-            try {
-            elementoService.anularEfectivo(efectivo);
-            //Retorna mensaje de eliminado con exito
-            return MensajeRespuesta.anulado();
-        } catch(Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
-        }
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody ViajeEfectivo elemento) {
+    public ResponseEntity<?> agregar(@RequestBody PersonalAdelanto elemento) {
         try {
-            Object a = elementoService.agregar(elemento);
+            PersonalAdelanto a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return new ResponseEntity(a, HttpStatus.CREATED);
+            return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
@@ -101,19 +79,19 @@ public class ViajeEfectivoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody ViajeEfectivo elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody PersonalAdelanto elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
-            //Envia la nueva lista a los usuarios subscriptos
-            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            //Retorna mensaje de Actualizado con exito
+            //Envia la nueva lista a los usuarios subscripto
+            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
         } catch (JpaObjectRetrievalFailureException jorfe) {
-            //Retorna mensaje de dato inexistente
+            //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
@@ -134,6 +112,9 @@ public class ViajeEfectivoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
+        }catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

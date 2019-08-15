@@ -17,6 +17,9 @@ public interface IAfipGananciaNetaDAO extends JpaRepository<AfipGananciaNeta, In
     public AfipGananciaNeta findTopByOrderByIdDesc();
     
     //Obtiene una lista por AfipTipoBeneficio
-    public List<AfipGananciaNeta> findByAfipAlicuotaGanancia(AfipAlicuotaGanancia afipAlicuotaGanancia);
+    public List<AfipGananciaNeta> findByAfipAlicuotaGananciaOrderByImporte(AfipAlicuotaGanancia afipAlicuotaGanancia);
+    
+    //Obtiene una lista por anio
+    public List<AfipGananciaNeta> findByAnioOrderByImporte(short anio);
     
 }

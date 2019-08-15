@@ -1,44 +1,43 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.model.AfipAlicuotaGanancia;
+import ar.com.draimo.jitws.dao.IPersonalAdelantoDAO;
+import ar.com.draimo.jitws.model.PersonalAdelanto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ar.com.draimo.jitws.dao.IAfipAlicuotaGananciaDAO;
 
 /**
- * Servicio AfipAlicuotaGanancia
+ *
  * @author blas
  */
 
 @Service
-public class AfipAlicuotaGananciaService {
-    
-    //Define la referencia al dao
+public class PersonalAdelantoService {
+
     @Autowired
-    IAfipAlicuotaGananciaDAO elementoDAO;
+    IPersonalAdelantoDAO elementoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        AfipAlicuotaGanancia elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        PersonalAdelanto elemento = elementoDAO.findTopByOrderByIdDesc();
+        return elemento != null ? elemento.getId()+1 : 1;
     }
     
     //Obtiene la lista completa
-    public List<AfipAlicuotaGanancia> listar() {
-        return elementoDAO.findAllByOrderByAlicuotaAsc();
+    public List<PersonalAdelanto> listar() {
+        return elementoDAO.findAll();
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public AfipAlicuotaGanancia agregar(AfipAlicuotaGanancia elemento) {
-        return elementoDAO.save(elemento);
+    public PersonalAdelanto agregar(PersonalAdelanto elemento) {
+        return elementoDAO.saveAndFlush(elemento);
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(AfipAlicuotaGanancia elemento) {
+    public void actualizar(PersonalAdelanto elemento) {
         elementoDAO.save(elemento);
     }
     
@@ -47,5 +46,5 @@ public class AfipAlicuotaGananciaService {
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-    
+
 }

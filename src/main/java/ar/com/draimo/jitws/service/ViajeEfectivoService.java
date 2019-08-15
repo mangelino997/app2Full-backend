@@ -40,7 +40,8 @@ public class ViajeEfectivoService {
         List<ViajeEfectivo>  elementos= elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos");
+                .serializeAllExcept("cliente","viajeTramo","datos","viajeTramos","viajeCombustibles",
+        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -55,7 +56,8 @@ public class ViajeEfectivoService {
         List<ViajeEfectivo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos");
+                .serializeAllExcept("cliente","viajeTramo","datos","viajeTramos","viajeCombustibles",
+        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)

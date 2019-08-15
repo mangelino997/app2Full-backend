@@ -1,7 +1,6 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.AfipAlicuotaGanancia;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,8 @@ public interface IAfipAlicuotaGananciaDAO extends JpaRepository<AfipAlicuotaGana
     
     //Obtiene el siguiente id
     public AfipAlicuotaGanancia findTopByOrderByIdDesc();
+    
+    //Obtiene todos los registros ordenados de mayor a menor
+    public List<AfipAlicuotaGanancia> findAllByOrderByAlicuotaAsc();
     
 }

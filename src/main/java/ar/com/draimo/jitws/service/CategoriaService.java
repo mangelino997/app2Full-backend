@@ -46,12 +46,12 @@ public class CategoriaService {
         elemento = formatearStrings(elemento);
         //Obtiene longitud de dias laborables, si supera 31 retorna error
         Integer dLab = Integer.valueOf(elemento.getDiasLaborables());
-        if (dLab>31) {
+        if (dLab>31 || String.valueOf(elemento.getDiasLaborables()).length()>2) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS LABORABLES");
         }
         //Obtiene longitud de horas laborables, si supera 24 retorna error
         Integer hLab = Integer.valueOf(elemento.getHorasLaborables());
-        if (hLab>24) {
+        if (hLab>24 || String.valueOf(elemento.getDiasLaborables()).length()>2) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en HORAS LABORABLES");
         }
         return elementoDAO.save(elemento);
@@ -63,12 +63,12 @@ public class CategoriaService {
         elemento = formatearStrings(elemento);
         //Obtiene longitud de dias laborables, si supera 31 retorna error
         Integer dLab = Integer.valueOf(elemento.getDiasLaborables());
-        if (dLab>31) {
+        if (dLab>31 || String.valueOf(elemento.getDiasLaborables()).length()>2) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS LABORABLES");
         }
         //Obtiene longitud de horas laborables, si supera 24 retorna error
         Integer hLab = Integer.valueOf(elemento.getHorasLaborables());
-        if (hLab>24) {
+        if (hLab>24 || String.valueOf(elemento.getDiasLaborables()).length()>2) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en HORAS LABORABLES");
         }
         elementoDAO.save(elemento);

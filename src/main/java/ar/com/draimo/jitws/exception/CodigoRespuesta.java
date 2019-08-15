@@ -273,7 +273,7 @@ public class CodigoRespuesta {
     
     //Define una respuesta de datos inexistentes
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo datoDuplicado = 13146
+    //Ultimo codigo datoDuplicado = 13147
     public static final int AFIP_ACTIVIDAD_INEXISTENTE = 13001;
     public static final int AFIP_ALICUOTA_IVA_INEXISTENTE = 13002;
     public static final int AFIP_COMPROBANTE_INEXISTENTE = 13003;
@@ -332,6 +332,7 @@ public class CodigoRespuesta {
     public static final int ORDEN_VENTA_TARIFA_INEXISTENTE = 13056;
     public static final int ORDEN_RECOLECCION_INEXISTENTE = 13057;
     public static final int ORIGEN_INEXISTENTE = 13058;
+    public static final int ORIGEN_DESTINO_INEXISTENTE = 13147;
     public static final int PADRE_INEXISTENTE = 13059;
     public static final int PAIS_INEXISTENTE = 13060;
     public static final int PDF_INEXISTENTE = 13061;

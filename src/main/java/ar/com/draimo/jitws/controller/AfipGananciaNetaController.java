@@ -63,6 +63,13 @@ public class AfipGananciaNetaController {
         return elementoService.listarPorAfipAlicuotaGanancia(idAfipAlicuotaGanancia);
     }
     
+    //Obtiene una lista por anio
+    @GetMapping(value = URL + "/listarPorAnio/{anio}")
+    @ResponseBody
+    public List<AfipGananciaNeta> listarPorAnio(@PathVariable short anio) {
+        return elementoService.listarPorAnioFiscal(anio);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody AfipGananciaNeta elemento) {

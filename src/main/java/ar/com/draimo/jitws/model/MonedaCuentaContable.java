@@ -29,7 +29,7 @@ public class MonedaCuentaContable extends ObjetoGenerico {
     
     //Instancia de la clase Plan de cuenta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idPlandeCuenta", nullable = false)
+    @JoinColumn(name = "idPlanCuenta", nullable = false)
     private PlanCuenta planCuenta;
 
     public Moneda getMoneda() {

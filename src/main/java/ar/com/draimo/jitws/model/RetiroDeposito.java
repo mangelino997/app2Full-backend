@@ -73,6 +73,11 @@ public class RetiroDeposito extends ObjetoGenerico {
     @Column(name = "numeroDocumento", length = 15, nullable = false)
     private String numeroDocumento;
 
+    //Referencia a la clase Pdf
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idPdfDni", nullable = true)
+    private Pdf pdfDni;
+    
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -159,6 +164,14 @@ public class RetiroDeposito extends ObjetoGenerico {
 
     public void setNumeroDocumento(String numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
+    }
+
+    public Pdf getPdfDni() {
+        return pdfDni;
+    }
+
+    public void setPdfDni(Pdf pdfDni) {
+        this.pdfDni = pdfDni;
     }
     
 }

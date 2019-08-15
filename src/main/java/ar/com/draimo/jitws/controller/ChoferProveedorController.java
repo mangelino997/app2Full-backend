@@ -57,7 +57,7 @@ public class ChoferProveedorController {
     }
     
     //Obtiene una lista por alias
-    @GetMapping(value = URL + "/listarPorAlias/{nombre}")
+    @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public List<ChoferProveedor> listarPorAlias(@PathVariable String alias) {
         return elementoService.listarPorAlias(alias);

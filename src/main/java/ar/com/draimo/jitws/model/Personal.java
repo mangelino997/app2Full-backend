@@ -451,10 +451,10 @@ public class Personal extends ObjetoGenerico {
     @JoinColumn(name = "idPdfLibSanidad", nullable = true)
     private Pdf pdfLibSanidad;
     
-    //Referencia a la clase pdf (dni)
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idPdfDni", nullable = true)
-    private Pdf pdfDni;
+//    //Referencia a la clase pdf (dni)
+//    @ManyToOne(cascade = CascadeType.REFRESH)
+//    @JoinColumn(name = "idPdfDni", nullable = true)
+//    private Pdf pdfDni;
     
     //Referencia a la clase pdf (AltaTemprana)
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -1206,13 +1206,13 @@ public class Personal extends ObjetoGenerico {
         this.pdfLibSanidad = pdfLibSanidad;
     }
 
-    public Pdf getPdfDni() {
-        return pdfDni;
-    }
-
-    public void setPdfDni(Pdf pdfDni) {
-        this.pdfDni = pdfDni;
-    }
+//    public Pdf getPdfDni() {
+//        return pdfDni;
+//    }
+//
+//    public void setPdfDni(Pdf pdfDni) {
+//        this.pdfDni = pdfDni;
+//    }
 
     public Pdf getPdfAltaTemprana() {
         return pdfAltaTemprana;

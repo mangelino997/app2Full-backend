@@ -32,6 +32,7 @@ public class MensajeRespuesta {
     public static final String TABLA_REESTABLECIDA = "Tabla reestablecida con éxito";
     public static final String LONGITUD = "Cantidad caracteres excedida en";
     public static final String CERRADO = "Registro cerrado con exito";
+    public static final String ANULADO = "Registro anulado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
     public static final String ROL_ASIGNADO = "El rol esta asignado a un usuario";
     public static final String ELEMENTO_ASIGNADO = "El registro esta asignado en otro módulo";
@@ -51,6 +52,11 @@ public class MensajeRespuesta {
     //Retorna mensaje con Response Entity de eliminado con exito
     public static ResponseEntity<?> eliminado() {
         return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.ELIMINADO, 0), HttpStatus.OK);
+    }
+    
+    //Retorna mensaje con Response Entity de eliminado con exito
+    public static ResponseEntity<?> anulado() {
+        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.ANULADO, 0), HttpStatus.OK);
     }
 
     //Retorna mensaje con ReponseEntity de error interno en el servidor
@@ -849,6 +855,10 @@ public class MensajeRespuesta {
                         codigoRespuesta = CodigoRespuesta.SITIO_WEB_LONGITUD;
                         plusMensaje = " SITIO WEB";
                         break;
+                    case LongitudError.SMVM_LONGITUD:
+                        codigoRespuesta = CodigoRespuesta.SMVM_LONGITUD;
+                        plusMensaje = " SMVM";
+                        break;
                     case LongitudError.TALLE_CAMISA_LONGITUD:
                         codigoRespuesta = CodigoRespuesta.TALLE_CAMISA_LONGITUD;
                         plusMensaje = " TALLE CAMISA";
@@ -930,22 +940,21 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> datoInexistente(String a, String b) {
         String[] partes2 = b.split(" ");
         String[] partes = b.split("`");
-        String s ;
+        String s;
         String mensajeRespuesta = "";
         String[] partes3 = partes2[3].split(".");
         int codigoRespuesta = 0;
         String plusMensaje = "";
-        System.out.println(partes2[2]);
         if (a.equals("delete")) {
             mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
             s = partes[7];
-        }else if(a.equals("a")) {
+        } else if (a.equals("a")) {
             s = partes2[3].substring(26);
             s = "id" + s;
             mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
-        }else {
+        } else {
             mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
-             s = partes[7];
+            s = partes[7];
         }
         switch (s) {
             case InexistenciaError.AFIP_ACTIVIDAD_INEXISTENTE:
@@ -1179,6 +1188,9 @@ public class MensajeRespuesta {
             case InexistenciaError.ORIGEN_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.ORIGEN_INEXISTENTE;
                 plusMensaje = ": ORIGEN";
+            case InexistenciaError.ORIGEN_DESTINO_INEXISTENTE:
+                codigoRespuesta = CodigoRespuesta.ORIGEN_DESTINO_INEXISTENTE;
+                plusMensaje = ": ORIGEN - DESTINO";
                 break;
             case InexistenciaError.PADRE_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.PADRE_INEXISTENTE;
@@ -1533,7 +1545,7 @@ public class MensajeRespuesta {
                 plusMensaje = ": ZONA";
                 break;
             default:
-                mensajeRespuesta = MensajeRespuesta.ELEMENTO_NO_NULL;
+                mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
                 codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
                 plusMensaje = " ";
 

@@ -12,6 +12,7 @@ import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -100,6 +101,7 @@ public class OrdenVentaService {
     public int agregar(String elementoString, String clienteString, String empresaString,
             String ordenVentaTarifaString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OrdenVenta elemento = mapper.readValue(elementoString, OrdenVenta.class);
         OrdenVentaTarifa ordenVentaTarifa = mapper.readValue(ordenVentaTarifaString, OrdenVentaTarifa.class);
         //Formatea los string de OrdenVenta

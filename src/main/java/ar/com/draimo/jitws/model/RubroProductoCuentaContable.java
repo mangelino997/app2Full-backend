@@ -24,7 +24,7 @@ public class RubroProductoCuentaContable extends ObjetoGenerico {
     
     //Referencia a la clase PlanCuenta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idPlandeCuenta", nullable = false)
+    @JoinColumn(name = "idPlanCuenta", nullable = false)
     private PlanCuenta planCuenta;
     
     //Referencia a la clase RubroProducto

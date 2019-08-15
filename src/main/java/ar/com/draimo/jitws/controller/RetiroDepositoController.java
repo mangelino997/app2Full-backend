@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Clase RetiroDeposito Controller
@@ -86,9 +88,10 @@ public class RetiroDepositoController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody RetiroDeposito elemento) {
+    public ResponseEntity<?> agregar(@RequestPart("retiroDeposito") String retiroString,
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
-            RetiroDeposito a = elementoService.agregar(elemento);
+            RetiroDeposito a = elementoService.agregar(retiroString,archivo);
             //Envia la nueva lista a los usuarios subscriptos
             template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de agregado con exito
@@ -107,10 +110,11 @@ public class RetiroDepositoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody RetiroDeposito elemento) {
+    public ResponseEntity<?> actualizar(@RequestPart("retiroDeposito") String retiroString,
+            @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            elementoService.actualizar(retiroString,archivo);
             //Envia la nueva lista a los usuarios subscripto
             template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de actualizado con exito
