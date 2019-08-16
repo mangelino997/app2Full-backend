@@ -85,12 +85,12 @@ public class OrdenVentaController {
             @RequestPart("clienteOrdenVenta") String clienteString,@RequestPart("empresaOrdenVenta") String empresaString,
             @RequestPart("ordenVentaTarifa") String ordenVentaTarifaString) {
         try {
-            int ordenVenta = elementoService.agregar(elementoString, clienteString, empresaString,
-                    ordenVentaTarifaString);
+            int id = elementoService.agregar(elementoString, clienteString, 
+                    empresaString, ordenVentaTarifaString);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(ordenVenta);
+            return MensajeRespuesta.agregado(id-1);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

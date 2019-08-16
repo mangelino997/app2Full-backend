@@ -153,7 +153,6 @@ public class MensajeRespuesta {
         String mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
         int codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
         String plusMensaje = " ";
-        System.out.println(partes.length);
         switch (partes.length) {
             case 1:
                 switch (partes2.length) {

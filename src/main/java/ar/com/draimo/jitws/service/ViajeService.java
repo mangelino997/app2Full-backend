@@ -19,6 +19,7 @@ import ar.com.draimo.jitws.dao.IViajeInsumoDAO;
 import ar.com.draimo.jitws.dao.IViajePeajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -157,11 +158,14 @@ public class ViajeService {
                     viaje = viajeTramoService.formatearStrings(viajeTramo);
                     viajeTramo.setViaje(elemento);
                     viaje = viajeTramoDAO.saveAndFlush(viaje);
+                    for (ViajeTramoCliente viajeTramoCliente : viajeTramo.getViajeTramoClientes()) {
+                        viajeTramoCliente.setViajeTramo(viajeTramo);
+                        viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
+                    }
                     elemento.getViajeTramos().clear();
                     elemento.getViajeTramos().add(viaje);
                 }
             }
-            
         elemento = elementoDAO.save(elemento);
            elemento = establecerAlias(elemento);
         }

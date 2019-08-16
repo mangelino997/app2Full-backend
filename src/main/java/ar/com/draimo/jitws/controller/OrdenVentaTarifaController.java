@@ -75,11 +75,11 @@ public class OrdenVentaTarifaController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenVentaTarifa elemento) {
         try {
-            Object a = elementoService.agregar(elemento);
+            int id = elementoService.agregar(elemento);
 //            template.convertAndSend(TOPIC + "/listaEscalas", 
 //                    elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
             //Retorna mensaje de agregado con exito
-            return new ResponseEntity(a, HttpStatus.CREATED);
+            return MensajeRespuesta.agregado(id-1);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

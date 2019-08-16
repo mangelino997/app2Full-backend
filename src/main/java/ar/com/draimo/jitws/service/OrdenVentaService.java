@@ -130,6 +130,7 @@ public class OrdenVentaService {
             empresaOrdenVenta.setFechaAlta(elemento.getFechaAlta());
             empresaOrdenVenta.setEstaActiva(true);
             empresaOrdenVenta.setOrdenVenta(elemento);
+            System.out.println(empresaOrdenVenta.getUsuarioAlta().getId());
             empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
         }
         return elemento.getId();
