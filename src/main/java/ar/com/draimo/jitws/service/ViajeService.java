@@ -149,26 +149,26 @@ public class ViajeService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(Viaje elemento) throws IOException {
-        ViajeTramo viaje = new ViajeTramo();
+        ViajeTramo vTramo;
         elemento = elementoDAO.saveAndFlush(elemento);
         List<ViajeTramo> viajeTramos = elemento.getViajeTramos();
         for (ViajeTramo viajeTramo : viajeTramos) {
             if (viajeTramo != null) {
                 if (viajeTramo.getId() == 0) {
-                    viaje = viajeTramoService.formatearStrings(viajeTramo);
-                    viajeTramo.setViaje(elemento);
-                    viaje = viajeTramoDAO.saveAndFlush(viaje);
+                    vTramo = viajeTramoService.formatearStrings(viajeTramo);
+                    vTramo.setViaje(elemento);
+                    vTramo = viajeTramoDAO.saveAndFlush(vTramo);
                     for (ViajeTramoCliente viajeTramoCliente : viajeTramo.getViajeTramoClientes()) {
                         viajeTramoCliente.setViajeTramo(viajeTramo);
                         viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
                     }
-                    elemento.getViajeTramos().clear();
-                    elemento.getViajeTramos().add(viaje);
+//                    elemento.getViajeTramos().clear();
+//                    elemento.getViajeTramos().add(viaje);
                 }
             }
-        elemento = elementoDAO.save(elemento);
-           elemento = establecerAlias(elemento);
+//            elemento = elementoDAO.save(elemento);
         }
+        elemento = establecerAlias(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");

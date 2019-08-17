@@ -41,11 +41,11 @@ public class TalonarioReciboLote extends ObjetoGenerico {
     private int hasta;
     
     //Define el CAI
-        @Column(name = "CAI",length = 14, nullable = true)
+    @Column(name = "CAI",length = 14, nullable = true)
     private String cai;
     
     //Define el CAIVencimiento
-        @Column(name = "CAIVencimiento", nullable = true)
+    @Column(name = "CAIVencimiento", nullable = true)
     private Date caiVencimiento;
     
     //Define el loteEntregado
@@ -58,7 +58,7 @@ public class TalonarioReciboLote extends ObjetoGenerico {
     private Usuario UsuarioAlta;
     
     //Define el fechaAlta
-        @Column(name = "fechaAlta", nullable = true)
+    @Column(name = "fechaAlta", nullable = true)
     private Date fechaAlta;
     
     //Getters y Setters de la clase

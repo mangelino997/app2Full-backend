@@ -31,9 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlanCuentaController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/plandecuenta";
+    private final String URL = RutaConstant.URL_BASE + "/plancuenta";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/plandecuenta";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/plancuenta";
     
     //Define el template para el envio de datos por socket
     @Autowired

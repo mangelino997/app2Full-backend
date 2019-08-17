@@ -88,7 +88,7 @@ public class RetiroDepositoController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestPart("retiroDeposito") String retiroString,
+    public ResponseEntity<?> agregar(@RequestPart("formulario") String retiroString,
             @RequestPart("archivo") MultipartFile archivo) {
         try {
             RetiroDeposito a = elementoService.agregar(retiroString,archivo);
@@ -110,7 +110,7 @@ public class RetiroDepositoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestPart("retiroDeposito") String retiroString,
+    public ResponseEntity<?> actualizar(@RequestPart("formulario") String retiroString,
             @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
