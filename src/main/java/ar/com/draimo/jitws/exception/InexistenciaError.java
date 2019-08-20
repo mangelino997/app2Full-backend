@@ -9,16 +9,20 @@ package ar.com.draimo.jitws.exception;
 public class InexistenciaError {
 
     public static final String AFIP_ACTIVIDAD_INEXISTENTE = "idAfipActividad";
+    public static final String AFIP_ALICUOTA_GANANCIA_INEXISTENTE = "idAfipAlicuotaGanancia";
     public static final String AFIP_ALICUOTA_IVA_INEXISTENTE = "idAfipAlicuotaIva";
     public static final String AFIP_COMPROBANTE_INEXISTENTE = "idAfipComprobante";
     public static final String AFIP_CONCEPTO_INEXISTENTE = "idAfipConcepto";
     public static final String AFIP_CONDICION_INEXISTENTE = "idAfipCondicion";
     public static final String AFIP_CONDICION_IVA_INEXISTENTE = "idAfipCondicionIva";
     public static final String AFIP_CONDICION_IVA_PROVEEDOR_INEXISTENTE = "idAfipCondicionIvaProveedor";
+    public static final String AFIP_DEDUCCION_GENERAL_INEXISTENTE = "idAfipDeduccionGeneral";
+    public static final String AFIP_DEDUCCION_PERSONAL_INEXISTENTE = "idAfipDeduccionPersonal";
     public static final String AFIP_LOCALIDAD_INEXISTENTE = "idAfipLocalidad";
     public static final String AFIP_MOD_CONTRATACION_INEXISTENTE = "idAfipModContratacion";
     public static final String AFIP_SINIESTRADO_INEXISTENTE = "idAfipSiniestrado";
     public static final String AFIP_SITUACION_INEXISTENTE = "idAfipSituacion";
+    public static final String AFIP_TIPO_BENEFICIO_INEXISTENTE = "idAfipTipoBeneficio";
     public static final String AREA_INEXISTENTE = "idArea";
     public static final String BANCO_INEXISTENTE = "idBanco";
     public static final String BARRIO_INEXISTENTE = "idBarrio";

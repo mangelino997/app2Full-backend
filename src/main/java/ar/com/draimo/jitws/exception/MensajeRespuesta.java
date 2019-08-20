@@ -1016,6 +1016,10 @@ public class MensajeRespuesta {
                 codigoRespuesta = CodigoRespuesta.AFIP_ACTIVIDAD_INEXISTENTE;
                 plusMensaje = ": AFIP ACTIVIDAD";
                 break;
+            case InexistenciaError.AFIP_ALICUOTA_GANANCIA_INEXISTENTE:
+                codigoRespuesta = CodigoRespuesta.AFIP_ALICUOTA_GANANCIA_INEXISTENTE;
+                plusMensaje = ": AFIP ALICUOTA GANANCIA";
+                break;
             case InexistenciaError.AFIP_ALICUOTA_IVA_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.AFIP_ALICUOTA_IVA_INEXISTENTE;
                 plusMensaje = ": AFIP ALICUOTA IVA";
@@ -1040,6 +1044,14 @@ public class MensajeRespuesta {
                 codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_IVA_PROVEEDOR_INEXISTENTE;
                 plusMensaje = ": AFIP CONDICION IVA PROVEEDOR";
                 break;
+            case InexistenciaError.AFIP_DEDUCCION_GENERAL_INEXISTENTE:
+                codigoRespuesta = CodigoRespuesta.AFIP_DEDUCCION_GENERAL_INEXISTENTE;
+                plusMensaje = ": AFIP DEDUCCION GENERAL";
+                break;
+            case InexistenciaError.AFIP_DEDUCCION_PERSONAL_INEXISTENTE:
+                codigoRespuesta = CodigoRespuesta.AFIP_DEDUCCION_PERSONAL_INEXISTENTE;
+                plusMensaje = ": AFIP DEDUCCION PERSONAL";
+                break;
             case InexistenciaError.AFIP_LOCALIDAD_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.AFIP_LOCALIDAD_INEXISTENTE;
                 plusMensaje = ": AFIP LOCALIDAD";
@@ -1055,6 +1067,10 @@ public class MensajeRespuesta {
             case InexistenciaError.AFIP_SITUACION_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.AFIP_SITUACION_INEXISTENTE;
                 plusMensaje = ": AFIP SITUACION";
+                break;
+            case InexistenciaError.AFIP_TIPO_BENEFICIO_INEXISTENTE:
+                codigoRespuesta = CodigoRespuesta.AFIP_TIPO_BENEFICIO_INEXISTENTE;
+                plusMensaje = ": AFIP TIPO BENEFICIO";
                 break;
             case InexistenciaError.AREA_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.AREA_INEXISTENTE;

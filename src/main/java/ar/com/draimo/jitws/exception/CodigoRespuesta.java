@@ -290,16 +290,20 @@ public class CodigoRespuesta {
     //Los codigos estan ordenados alfabeticamente.
     //Ultimo codigo datoDuplicado = 13147
     public static final int AFIP_ACTIVIDAD_INEXISTENTE = 13001;
+    public static final int AFIP_ALICUOTA_GANANCIA_INEXISTENTE = 13148;
     public static final int AFIP_ALICUOTA_IVA_INEXISTENTE = 13002;
     public static final int AFIP_COMPROBANTE_INEXISTENTE = 13003;
     public static final int AFIP_CONCEPTO_INEXISTENTE = 13004;
     public static final int AFIP_CONDICION_INEXISTENTE = 13005;
     public static final int AFIP_CONDICION_IVA_INEXISTENTE = 13006;
     public static final int AFIP_CONDICION_IVA_PROVEEDOR_INEXISTENTE = 13007;
+    public static final int AFIP_DEDUCCION_GENERAL_INEXISTENTE = 13149;
+    public static final int AFIP_DEDUCCION_PERSONAL_INEXISTENTE = 13150;
     public static final int AFIP_LOCALIDAD_INEXISTENTE = 13008;
     public static final int AFIP_MOD_CONTRATACION_INEXISTENTE = 13009;
     public static final int AFIP_SINIESTRADO_INEXISTENTE = 13010;
     public static final int AFIP_SITUACION_INEXISTENTE = 13011;
+    public static final int AFIP_TIPO_BENEFICIO_INEXISTENTE = 13151;
     public static final int AREA_INEXISTENTE = 13012;
     public static final int BANCO_INEXISTENTE = 13013;
     public static final int BARRIO_INEXISTENTE = 13014;
