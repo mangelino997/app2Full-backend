@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IAfipDeduccionGeneralTopeDAO;
 import ar.com.draimo.jitws.model.AfipDeduccionGeneralTope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,10 +49,15 @@ public class AfipDeduccionGeneralTopeService {
     @Transactional(rollbackFor = Exception.class)
     public AfipDeduccionGeneralTope agregar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        String anio = String.valueOf(elemento.getAnio());
+        //Obtiene longitud de anio, si supera 4 retorna error
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+        } 
         if(elementoDAO.findByAnioAndAfipDeduccionGeneral(elemento.getAnio(), elemento.getAfipDeduccionGeneral()).isEmpty()){
             return elementoDAO.saveAndFlush(elemento);
         } else {
-            throw new Exception("Deducción General existente para el año fiscal.");
+            throw new DataIntegrityViolationException("Deducción General existente para el año fiscal.");
         }
     }
     
@@ -59,10 +65,15 @@ public class AfipDeduccionGeneralTopeService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        String anio = String.valueOf(elemento.getAnio());
+        //Obtiene longitud de anio, si supera 4 retorna error
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+        } 
         if(elementoDAO.findByAnioAndAfipDeduccionGeneral(elemento.getAnio(), elemento.getAfipDeduccionGeneral()).isEmpty()){
             elementoDAO.save(elemento);
         } else {
-            throw new Exception("Deducción General existente para el año fiscal.");
+            throw new DataIntegrityViolationException("Deducción General existente para el año fiscal.");
         }
     }
     

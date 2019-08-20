@@ -23,6 +23,10 @@ public interface IAfipTipoBeneficioDeduccionDAO extends JpaRepository<AfipTipoBe
     //Obtiene una lista por AfipTipoBeneficio
     public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficio(short anio, AfipTipoBeneficio afipTipoBeneficio);
     
+    //Obtiene una lista por AfipTipoBeneficio, anio y deduccionPersonal
+    public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonal(
+            short anio, AfipTipoBeneficio afipTipoBeneficio, AfipDeduccionPersonal afipDeduccionPersonal);
+    
     //Obtiene una lista por filtros
     @Query(value = "SELECT id, version, anio, idAfipTipoBeneficio,  "
             + "idAfipDeduccionPersonal, CASE(:idMes) when 0 then importe else "

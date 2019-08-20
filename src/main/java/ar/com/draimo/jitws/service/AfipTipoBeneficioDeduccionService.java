@@ -70,10 +70,15 @@ public class AfipTipoBeneficioDeduccionService {
     public AfipTipoBeneficioDeduccion agregar(AfipTipoBeneficioDeduccion elemento) throws Exception {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+        } 
+        if(elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonal(elemento.getAnio(),
+                elemento.getAfipTipoBeneficio(), elemento.getAfipDeduccionPersonal()).isEmpty()){
+            return elementoDAO.saveAndFlush(elemento);
+        } else {
+            throw new DataIntegrityViolationException("Deducción Personal y Tipo Beneficio existente para el año fiscal.");
         }
-        return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
@@ -81,10 +86,15 @@ public class AfipTipoBeneficioDeduccionService {
     public void actualizar(AfipTipoBeneficioDeduccion elemento) throws Exception {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+        } 
+        if(elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonal(elemento.getAnio(),
+                elemento.getAfipTipoBeneficio(), elemento.getAfipDeduccionPersonal()).isEmpty()){
+           elementoDAO.saveAndFlush(elemento);
+        } else {
+            throw new DataIntegrityViolationException("Deducción General existente para el año fiscal.");
         }
-        elementoDAO.save(elemento);
     }
     
     //Elimina un registro
