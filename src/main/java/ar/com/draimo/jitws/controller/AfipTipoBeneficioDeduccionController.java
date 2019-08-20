@@ -56,6 +56,22 @@ public class AfipTipoBeneficioDeduccionController {
         return elementoService.listar();
     }
     
+    //Obtiene una lista por filtros
+    @GetMapping(value = URL + "/listarPorFiltros/{anio}/{idTipoBeneficio}/{idMes}")
+    @ResponseBody
+    public List<AfipTipoBeneficioDeduccion> listarPorFiltros(@PathVariable 
+            short anio, @PathVariable int idTipoBeneficio, @PathVariable int idMes) throws Exception {
+        return elementoService.listarPorFiltros(anio, idTipoBeneficio, idMes);
+    }
+    
+    //Obtiene una lista por anio y tipo de beneficio
+    @GetMapping(value = URL + "/listarPorAnioYTipoBeneficio/{anio}/{idTipoBeneficio}")
+    @ResponseBody
+    public List<AfipTipoBeneficioDeduccion> listarPorAnioYTipoBeneficio(@PathVariable 
+            short anio, @PathVariable int idTipoBeneficio) {
+        return elementoService.listarPorAnioYBeneficio(anio, idTipoBeneficio);
+    }
+    
     //Obtiene una lista por Deduccion
     @GetMapping(value = URL + "/listarPorDeduccionPersonal/{idDeduccion}")
     @ResponseBody

@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.AfipGananciaNeta;
-import ar.com.draimo.jitws.service.AfipGananciaNetaService;
+import ar.com.draimo.jitws.model.AfipDeduccionGeneralTope;
+import ar.com.draimo.jitws.service.AfipDeduccionGeneralTopeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,17 +22,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase AfipGananciaNeta Controller
+ * Clase AfipDeduccionGeneralTope Controller
  * @author blas
  */
 
 @RestController
-public class AfipGananciaNetaController {
+public class AfipDeduccionGeneralTopeController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/afipganancianeta";
+    private final String URL = RutaConstant.URL_BASE + "/afipdeducciongeneraltope";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/afipganancianeta";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/afipdeducciongeneraltope";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -40,7 +40,7 @@ public class AfipGananciaNetaController {
     
     //Crea una instancia del servicio
     @Autowired
-    AfipGananciaNetaService elementoService;
+    AfipDeduccionGeneralTopeService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -52,36 +52,22 @@ public class AfipGananciaNetaController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<AfipGananciaNeta> listar() {
+    public List<AfipDeduccionGeneralTope> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por filtros
-    @GetMapping(value = URL + "/listarPorFiltros/{anio}/{idMes}")
+    //Obtiene una lista por descripcion
+    @GetMapping(value = URL + "/listarPorDescripcion/{descripcion}")
     @ResponseBody
-    public List<AfipGananciaNeta> listarPorFiltros(@PathVariable short anio, @PathVariable int idMes) throws Exception {
-        return elementoService.listarPorFiltros(anio, idMes);
-    }
-    
-    //Obtiene una lista por AfipAlicuotaGanancia
-    @GetMapping(value = URL + "/listarPorAfipAlicuotaGanancia/{idAfipAlicuotaGanancia}")
-    @ResponseBody
-    public List<AfipGananciaNeta> listarPorAfipAlicuotaGanancia(@PathVariable int idAfipAlicuotaGanancia) {
-        return elementoService.listarPorAfipAlicuotaGanancia(idAfipAlicuotaGanancia);
-    }
-    
-    //Obtiene una lista por anio
-    @GetMapping(value = URL + "/listarPorAnio/{anio}")
-    @ResponseBody
-    public List<AfipGananciaNeta> listarPorAnio(@PathVariable short anio) {
-        return elementoService.listarPorAnioFiscal(anio);
+    public List<AfipDeduccionGeneralTope> listarPorDescripcion(@PathVariable String descripcion) {
+        return elementoService.listarPorDescripcion(descripcion);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody AfipGananciaNeta elemento) {
+    public ResponseEntity<?> agregar(@RequestBody AfipDeduccionGeneralTope elemento) {
         try {
-            AfipGananciaNeta a = elementoService.agregar(elemento);
+            AfipDeduccionGeneralTope a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -100,7 +86,7 @@ public class AfipGananciaNetaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody AfipGananciaNeta elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody AfipDeduccionGeneralTope elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

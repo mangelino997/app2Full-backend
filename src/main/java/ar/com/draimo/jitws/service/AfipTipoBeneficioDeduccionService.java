@@ -41,6 +41,20 @@ public class AfipTipoBeneficioDeduccionService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene una lista por anio y idTipoBeneficio
+    public List<AfipTipoBeneficioDeduccion> listarPorAnioYBeneficio(short anio, int idBeneficio) {
+        return elementoDAO.findByAnioAndAfipTipoBeneficio(anio, beneficioDAO.findById(idBeneficio).get());
+    }
+    
+    //Obtiene una lista por filtros
+    public List<AfipTipoBeneficioDeduccion> listarPorFiltros(short anio, int idBeneficio, int idMes) throws Exception {
+        if(idMes> 12){
+            throw new Exception("Mes inexistente");
+        }else {
+        return elementoDAO.listarPorFiltros(anio, idBeneficio, idMes);
+        }
+    }
+    
     //Obtiene una lista por idTipoBeneficio
     public List<AfipTipoBeneficioDeduccion> listarPorBeneficio(int idBeneficio) {
         return elementoDAO.findByAfipTipoBeneficio(beneficioDAO.findById(idBeneficio).get());

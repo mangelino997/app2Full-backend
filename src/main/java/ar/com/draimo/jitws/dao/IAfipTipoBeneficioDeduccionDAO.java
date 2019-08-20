@@ -6,6 +6,8 @@ import ar.com.draimo.jitws.model.AfipTipoBeneficio;
 import ar.com.draimo.jitws.model.AfipTipoBeneficioDeduccion;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO AfipTipoBeneficioDeduccion
@@ -17,6 +19,17 @@ public interface IAfipTipoBeneficioDeduccionDAO extends JpaRepository<AfipTipoBe
     
     //Obtiene el siguiente id
     public AfipTipoBeneficioDeduccion findTopByOrderByIdDesc();
+    
+    //Obtiene una lista por AfipTipoBeneficio
+    public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficio(short anio, AfipTipoBeneficio afipTipoBeneficio);
+    
+    //Obtiene una lista por filtros
+    @Query(value = "SELECT id, version, anio, idAfipTipoBeneficio,  "
+            + "idAfipDeduccionPersonal, CASE(:idMes) when 0 then importe else "
+            + "ROUND(importe/12*:idMes, 2) end as importe FROM afiptipobeneficiodeduccion "
+            + "WHERE idAfipTipoBeneficio=:idAfipTipoBeneficio AND anio=:anio", nativeQuery = true)
+    public List<AfipTipoBeneficioDeduccion> listarPorFiltros(@Param("anio") short anio,
+            @Param("idAfipTipoBeneficio")int idAfipTipoBeneficio,@Param("idMes") int idMes);
     
     //Obtiene una lista por AfipTipoBeneficio
     public List<AfipTipoBeneficioDeduccion> findByAfipTipoBeneficio(AfipTipoBeneficio afipTipoBeneficio);

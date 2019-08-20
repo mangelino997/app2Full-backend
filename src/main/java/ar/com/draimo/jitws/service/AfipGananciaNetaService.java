@@ -1,8 +1,6 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipAlicuotaGananciaDAO;
-import ar.com.draimo.jitws.dao.IAfipDeduccionPersonalDAO;
-import ar.com.draimo.jitws.dao.IAfipTipoBeneficioDAO;
 import ar.com.draimo.jitws.dao.IAfipGananciaNetaDAO;
 import ar.com.draimo.jitws.model.AfipGananciaNeta;
 import java.util.List;
@@ -36,6 +34,15 @@ public class AfipGananciaNetaService {
     //Obtiene la lista completa
     public List<AfipGananciaNeta> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene una lista por filtros
+    public List<AfipGananciaNeta> listarPorFiltros(short anio, int idMes) throws Exception {
+        if(idMes> 12){
+            throw new Exception("Mes inexistente");
+        }else {
+            return elementoDAO.listarPorFiltros(anio, idMes);
+        }
     }
     
     //Obtiene una lista por idAlicuotaGanancia
