@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.AfipDeduccionGeneral;
 import ar.com.draimo.jitws.model.AfipDeduccionGeneralTope;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,5 +19,9 @@ public interface IAfipDeduccionGeneralTopeDAO extends JpaRepository<AfipDeduccio
     
     //Obtiene una lista por descripcion
     public List<AfipDeduccionGeneralTope> findByDescripcionContaining(String descripcion);
+    
+    //Obtiene una lista por anio y afipDeduccionGeneral
+    public List<AfipDeduccionGeneralTope> findByAnioAndAfipDeduccionGeneral(short anio,
+            AfipDeduccionGeneral afipDeduccionGeneral);
     
 }

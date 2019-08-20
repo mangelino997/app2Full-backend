@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipDeduccionGeneralDAO;
 import ar.com.draimo.jitws.dao.IAfipDeduccionGeneralTopeDAO;
 import ar.com.draimo.jitws.model.AfipDeduccionGeneralTope;
 import java.util.List;
@@ -18,6 +19,10 @@ public class AfipDeduccionGeneralTopeService {
     //Define la referencia al dao
     @Autowired
     IAfipDeduccionGeneralTopeDAO elementoDAO;
+    
+    //Define la referencia al dao de afipDeduccionGeneral
+    @Autowired
+    IAfipDeduccionGeneralDAO afipDeduccionGeneralDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -41,16 +46,24 @@ public class AfipDeduccionGeneralTopeService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public AfipDeduccionGeneralTope agregar(AfipDeduccionGeneralTope elemento) {
+    public AfipDeduccionGeneralTope agregar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        if(elementoDAO.findByAnioAndAfipDeduccionGeneral(elemento.getAnio(), elemento.getAfipDeduccionGeneral()).isEmpty()){
+            return elementoDAO.saveAndFlush(elemento);
+        } else {
+            throw new Exception("Deducción General existente para el año fiscal.");
+        }
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(AfipDeduccionGeneralTope elemento) {
+    public void actualizar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        if(elementoDAO.findByAnioAndAfipDeduccionGeneral(elemento.getAnio(), elemento.getAfipDeduccionGeneral()).isEmpty()){
+            elementoDAO.save(elemento);
+        } else {
+            throw new Exception("Deducción General existente para el año fiscal.");
+        }
     }
     
     //Elimina un registro
