@@ -19,6 +19,10 @@ import javax.persistence.Table;
 @Table(name = "afiptipobeneficiodeduccion")
 public class AfipTipoBeneficioDeduccion extends ObjetoGenerico {
 
+    //Define el anio
+    @Column(name = "anio", length = 4, nullable = false)
+    private short anio;
+
     //Referencia a afiptipobeneficio
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipTipoBeneficio", nullable = false)
@@ -29,13 +33,18 @@ public class AfipTipoBeneficioDeduccion extends ObjetoGenerico {
     @JoinColumn(name = "idAfipDeduccionPersonal", nullable = false)
     private AfipDeduccionPersonal afipDeduccionPersonal;
 
-    //Define el anio
-    @Column(name = "anio", length = 4, nullable = false)
-    private short anio;
-
     //Define el importe
     @Column(name = "importe", nullable = false)
     private BigDecimal importe;
+
+    //Define el importe anual mensual
+    @Column(name = "importeAnualMensual", nullable = false)
+    private boolean importeAnualMensual;
+
+    //Referencia a mes
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idMes", nullable = true)
+    private Mes mes;
 
     //Getters y Setters de la clase
 
@@ -69,6 +78,22 @@ public class AfipTipoBeneficioDeduccion extends ObjetoGenerico {
 
     public void setImporte(BigDecimal importe) {
         this.importe = importe;
+    }
+
+    public boolean isImporteAnualMensual() {
+        return importeAnualMensual;
+    }
+
+    public void setImporteAnualMensual(boolean importeAnualMensual) {
+        this.importeAnualMensual = importeAnualMensual;
+    }
+
+    public Mes getMes() {
+        return mes;
+    }
+
+    public void setMes(Mes mes) {
+        this.mes = mes;
     }
     
 }

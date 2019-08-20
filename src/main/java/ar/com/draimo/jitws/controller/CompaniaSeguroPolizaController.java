@@ -95,10 +95,10 @@ public class CompaniaSeguroPolizaController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestPart("formulario") String soporteString,
+    public ResponseEntity<?> agregar(@RequestPart("formulario") String polizaString,
             @RequestPart("archivo") MultipartFile archivo) {
         try {
-            CompaniaSeguroPoliza a = elementoService.agregar(soporteString, archivo);
+            CompaniaSeguroPoliza a = elementoService.agregar(polizaString, archivo);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -117,11 +117,11 @@ public class CompaniaSeguroPolizaController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestPart("formulario") String soporteString,
+    public ResponseEntity<?> actualizar(@RequestPart("formulario") String polizaString,
             @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(soporteString, archivo);
+            elementoService.actualizar(polizaString, archivo);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
