@@ -33,7 +33,7 @@ public interface IAfipTipoBeneficioDeduccionDAO extends JpaRepository<AfipTipoBe
     //Obtiene una lista por filtros
     @Query(value = "SELECT id, version, anio, idAfipTipoBeneficio,  "
             + "idAfipDeduccionPersonal, CASE(:idMes) when 0 then importe else "
-            + "ROUND(importe/12*:idMes, 2) end as importe FROM afiptipobeneficiodeduccion "
+            + "ROUND(importe/12*:idMes, 2) end as importe, importeAnualMensual , idMes FROM afiptipobeneficiodeduccion "
             + "WHERE idAfipTipoBeneficio=:idAfipTipoBeneficio AND anio=:anio", nativeQuery = true)
     public List<AfipTipoBeneficioDeduccion> listarPorFiltros(@Param("anio") short anio,
             @Param("idAfipTipoBeneficio")int idAfipTipoBeneficio,@Param("idMes") int idMes);
