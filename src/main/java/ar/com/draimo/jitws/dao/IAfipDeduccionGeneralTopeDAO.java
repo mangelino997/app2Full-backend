@@ -21,7 +21,7 @@ public interface IAfipDeduccionGeneralTopeDAO extends JpaRepository<AfipDeduccio
     public List<AfipDeduccionGeneralTope> findByDescripcionContaining(String descripcion);
     
     //Obtiene una lista por anio y afipDeduccionGeneral
-    public List<AfipDeduccionGeneralTope> findByAnioAndAfipDeduccionGeneral(short anio,
+    public List<AfipDeduccionGeneralTope> findByAnioAndAfipDeduccionGeneralOrderByAfipDeduccionGeneral_Id(short anio,
             AfipDeduccionGeneral afipDeduccionGeneral);
     
 }

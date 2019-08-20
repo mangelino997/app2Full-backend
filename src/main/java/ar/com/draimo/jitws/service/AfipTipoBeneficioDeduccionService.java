@@ -38,12 +38,13 @@ public class AfipTipoBeneficioDeduccionService {
     
     //Obtiene la lista completa
     public List<AfipTipoBeneficioDeduccion> listar() {
-        return elementoDAO.findAll();
+        return elementoDAO.findAllByOrderByAfipDeduccionPersonal_Id();
     }
     
     //Obtiene una lista por anio y idTipoBeneficio
     public List<AfipTipoBeneficioDeduccion> listarPorAnioYBeneficio(short anio, int idBeneficio) {
-        return elementoDAO.findByAnioAndAfipTipoBeneficio(anio, beneficioDAO.findById(idBeneficio).get());
+        return elementoDAO.findByAnioAndAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(
+                anio, beneficioDAO.findById(idBeneficio).get());
     }
     
     //Obtiene una lista por filtros
@@ -57,12 +58,14 @@ public class AfipTipoBeneficioDeduccionService {
     
     //Obtiene una lista por idTipoBeneficio
     public List<AfipTipoBeneficioDeduccion> listarPorBeneficio(int idBeneficio) {
-        return elementoDAO.findByAfipTipoBeneficio(beneficioDAO.findById(idBeneficio).get());
+        return elementoDAO.findByAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(
+                beneficioDAO.findById(idBeneficio).get());
     }
     
     //Obtiene una lista por idDedudccionPersonal
     public List<AfipTipoBeneficioDeduccion> listarPorDeduccionPersonal(int idDedudccion) {
-        return elementoDAO.findByAfipDeduccionPersonal(deduccionDAO.findById(idDedudccion).get());
+        return elementoDAO.findByAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
+                deduccionDAO.findById(idDedudccion).get());
     }
     
     //Agrega un registro
@@ -73,8 +76,9 @@ public class AfipTipoBeneficioDeduccionService {
         if (anio.length()>4 || anio.length()<4) {
             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         } 
-        if(elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonal(elemento.getAnio(),
-                elemento.getAfipTipoBeneficio(), elemento.getAfipDeduccionPersonal()).isEmpty()){
+        if(elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
+                elemento.getAnio(),elemento.getAfipTipoBeneficio(),
+                elemento.getAfipDeduccionPersonal()).isEmpty()){
             return elementoDAO.saveAndFlush(elemento);
         } else {
             throw new DataIntegrityViolationException("Deducción Personal y Tipo Beneficio existente para el año fiscal.");
@@ -89,8 +93,9 @@ public class AfipTipoBeneficioDeduccionService {
         if (anio.length()>4 || anio.length()<4) {
             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         } 
-        if(elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonal(elemento.getAnio(),
-                elemento.getAfipTipoBeneficio(), elemento.getAfipDeduccionPersonal()).isEmpty()){
+        if(elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
+                elemento.getAnio(), elemento.getAfipTipoBeneficio(), 
+                elemento.getAfipDeduccionPersonal()).isEmpty()){
            elementoDAO.saveAndFlush(elemento);
         } else {
             throw new DataIntegrityViolationException("Deducción General existente para el año fiscal.");

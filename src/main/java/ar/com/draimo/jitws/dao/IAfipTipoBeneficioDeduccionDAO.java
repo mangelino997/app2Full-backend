@@ -20,11 +20,14 @@ public interface IAfipTipoBeneficioDeduccionDAO extends JpaRepository<AfipTipoBe
     //Obtiene el siguiente id
     public AfipTipoBeneficioDeduccion findTopByOrderByIdDesc();
     
+    //Obtiene todos los registros ordenados
+    public List<AfipTipoBeneficioDeduccion> findAllByOrderByAfipDeduccionPersonal_Id();
+    
     //Obtiene una lista por AfipTipoBeneficio
-    public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficio(short anio, AfipTipoBeneficio afipTipoBeneficio);
+    public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(short anio, AfipTipoBeneficio afipTipoBeneficio);
     
     //Obtiene una lista por AfipTipoBeneficio, anio y deduccionPersonal
-    public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonal(
+    public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
             short anio, AfipTipoBeneficio afipTipoBeneficio, AfipDeduccionPersonal afipDeduccionPersonal);
     
     //Obtiene una lista por filtros
@@ -36,9 +39,9 @@ public interface IAfipTipoBeneficioDeduccionDAO extends JpaRepository<AfipTipoBe
             @Param("idAfipTipoBeneficio")int idAfipTipoBeneficio,@Param("idMes") int idMes);
     
     //Obtiene una lista por AfipTipoBeneficio
-    public List<AfipTipoBeneficioDeduccion> findByAfipTipoBeneficio(AfipTipoBeneficio afipTipoBeneficio);
+    public List<AfipTipoBeneficioDeduccion> findByAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(AfipTipoBeneficio afipTipoBeneficio);
     
     //Obtiene una lista por AfipDeduccionPersonal
-    public List<AfipTipoBeneficioDeduccion> findByAfipDeduccionPersonal(AfipDeduccionPersonal afipDeduccionPersonal);
+    public List<AfipTipoBeneficioDeduccion> findByAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(AfipDeduccionPersonal afipDeduccionPersonal);
     
 }
