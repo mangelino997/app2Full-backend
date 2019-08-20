@@ -63,6 +63,13 @@ public class AfipDeduccionGeneralTopeController {
         return elementoService.listarPorDescripcion(descripcion);
     }
     
+    //Obtiene una lista por anio
+    @GetMapping(value = URL + "/listarPorAnio/{anio}")
+    @ResponseBody
+    public List<AfipDeduccionGeneralTope> listarPorAnio(@PathVariable short anio) {
+        return elementoService.listarPorAnio(anio);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody AfipDeduccionGeneralTope elemento) {

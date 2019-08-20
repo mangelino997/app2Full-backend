@@ -54,12 +54,19 @@ public class CodigoRespuesta {
     
     //Define una respuesta de datos duplicados
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo datoDuplicado = 11027
+    //Ultimo codigo datoDuplicado = 11042
     public static final int DATO_DUPLICADO = 11020;
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
+    public static final int DATO_DUPLICADO_ANIO_AFIP_DEDUCCION_GENERAL = 11029;
+    public static final int DATO_DUPLICADO_ANIO_BENEFICIO_DEDUCCION = 11030;
+    public static final int DATO_DUPLICADO_ANIO_IMPORTE = 11031;
     public static final int DATO_DUPLICADO_CBU = 11011;
+    public static final int DATO_DUPLICADO_CLIENTE_ORDEN_VENTA = 11032;
+    public static final int DATO_DUPLICADO_CLIENTE_ORDEN_VENTA_CLIENTEORDENVENTA = 11033;
     public static final int DATO_DUPLICADO_CODIGO_AFIP = 11019;
+    public static final int DATO_DUPLICADO_COMPRA_COMPROBANTE = 11034;
     public static final int DATO_DUPLICADO_CORREOELECTRONICO = 11003;
+    public static final int DATO_DUPLICADO_CUENTA_DESDE_HASTA = 11035;
     public static final int DATO_DUPLICADO_CUIL = 11012;
     public static final int DATO_DUPLICADO_CUIT = 11007;
     public static final int DATO_DUPLICADO_DESDE_HASTA = 11024;
@@ -67,13 +74,21 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_DOMINIO = 11017;
     public static final int DATO_DUPLICADO_ESCALA_TARIFA = 11025;
     public static final int DATO_DUPLICADO_ID = 11001;
+    public static final int DATO_DUPLICADO_MONEDA_EMPRESA = 11036;
+    public static final int DATO_DUPLICADO_MONEDA_FECHA = 11037;
     public static final int DATO_DUPLICADO_NOMBRE = 11002;
     public static final int DATO_DUPLICADO_NUMERO_INTERNO = 11018;
     public static final int DATO_DUPLICADO_ORDEN_VENTA = 11027;
+    public static final int DATO_DUPLICADO_ORDEN_VENTA_TARIFA = 11038;
+    public static final int DATO_DUPLICADO_ORDEN_VENTA_TARIFA_ESCALA = 11039;
+    public static final int DATO_DUPLICADO_ORDEN_VENTA_TARIFA_TRAMO = 11041;
+    public static final int DATO_DUPLICADO_PROVEEDOR_EMPRESA = 11040;
+    public static final int DATO_DUPLICADO_PROVEEDOR_TIPO_COMPROBANTE_NUMERO_COMPROBANTE = 11028;
     public static final int DATO_DUPLICADO_RAZONSOCIAL = 11006;
     public static final int DATO_DUPLICADO_REPARTO_VCOMPROBANTE = 11021;
     public static final int DATO_DUPLICADO_REPARTO_ORECOLECCION = 11022;
     public static final int DATO_DUPLICADO_REPARTO_VREMITO = 11023;
+    public static final int DATO_DUPLICADO_RUBRO_PRODUCTO = 11042;
     public static final int DATO_DUPLICADO_SITIOWEB = 11008;
     public static final int DATO_DUPLICADO_TELEFONO = 11009;
     public static final int DATO_DUPLICADO_TELEFONO_FIJO = 11013;

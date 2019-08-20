@@ -36,6 +36,11 @@ public class AfipDeduccionGeneralTopeService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene la lista por anio
+    public List<AfipDeduccionGeneralTope> listarPorAnio(short anio) {
+        return elementoDAO.findByAnioOrderByAfipDeduccionGeneral_Id(anio);
+    }
+    
     //Obtiene una lista por Descripcion
     public List<AfipDeduccionGeneralTope> listarPorDescripcion(String descripcion) {
         if(descripcion.equals("***")) {

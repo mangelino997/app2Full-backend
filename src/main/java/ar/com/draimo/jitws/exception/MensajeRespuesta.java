@@ -221,38 +221,94 @@ public class MensajeRespuesta {
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ORDEN_VENTA;
                         plusMensaje = " ORDEN VENTA";
                         break;
-                    case DuplicidadError.REPARTO_ORDENRECOLECCION_UNICOS:
-                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_ORECOLECCION;
-                        plusMensaje = " REPARTO Y ORDEN RECOLECCION";
-                        break;
-                    case DuplicidadError.REPARTO_VENTACOMPROBANTE_UNICOS:
-                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_VCOMPROBANTE;
-                        plusMensaje = " REPARTO Y VENTA COMPROBANTE";
-                        break;
-                    case DuplicidadError.REPARTO_VIAJEREMITO_UNICOS:
-                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_VREMITO;
-                        plusMensaje = " REPARTO Y VIAJE REMITO";
-                        break;
                     case DuplicidadError.TIPO_TARIFA_UNICO:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TIPO_TARIFA;
                         plusMensaje = ": TIPO TARIFA YA EXISTE EN LA TABLA";
-                        break;
-                    case DuplicidadError.TRAMO_UNICO:
-                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TRAMO;
-                        plusMensaje = ": TRAMO YA EXISTENTE EN LA TABLA";
                         break;
                     case DuplicidadError.USERNAME_UNICO:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_USERNAME;
                         plusMensaje = " USUARIO";
                         break;
+                    default:
+                    switch (partes[3]){
+                        case DuplicidadError.ANIO_AFIP_DEDUCCION_GENERAL_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ANIO_AFIP_DEDUCCION_GENERAL;
+                            plusMensaje = " AÑO Y DEDUCCION GENERAL";
+                            break;
+                        case DuplicidadError.ANIO_BENEFICIO_DEDUCCION_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ANIO_BENEFICIO_DEDUCCION;
+                            plusMensaje = " AÑO Y BENEFICIO DEDUCCION";
+                            break;
+                        case DuplicidadError.ANIO_IMPORTE_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ANIO_IMPORTE;
+                            plusMensaje = " AÑO E IMPORTE";
+                            break;
+                        case DuplicidadError.CLIENTE_ORDEN_VENTA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CLIENTE_ORDEN_VENTA;
+                            plusMensaje = " CLIENTE Y ORDEN VENTA";
+                            break;
+                        case DuplicidadError.ORDEN_VENTA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CLIENTE_ORDEN_VENTA_CLIENTEORDENVENTA;
+                            plusMensaje = " CLIENTE Y ORDEN VENTA";
+                            break;
+                        case DuplicidadError.COMPRA_COMPROBANTE_PERCEPCION_PROVINCIA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_COMPRA_COMPROBANTE;
+                            plusMensaje = " COMPRA COMPROBANTE PERCEPCION Y JURISDICCIÓN";
+                            break;
+                        case DuplicidadError.CUENTA_DESDE_HASTA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CUENTA_DESDE_HASTA;
+                            plusMensaje = " DESDE, HASTA Y CUENTA";
+                            break;
+                        case DuplicidadError.MONEDA_EMPRESA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_MONEDA_EMPRESA;
+                            plusMensaje = " MONEDA Y EMPRESA";
+                            break;
+                        case DuplicidadError.MONEDA_FECHA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_MONEDA_FECHA;
+                            plusMensaje = " MONEDA Y FECHA";
+                            break;
+                        case DuplicidadError.ORDEN_VENTA_TARIFA_ESCALA_TARIFA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ORDEN_VENTA_TARIFA_ESCALA;
+                            plusMensaje = " ORDEN VENTA TARIFA Y ESCALA TARIFA";
+                            break;
+                        case DuplicidadError.ORDEN_VENTA_TARIFA_TRAMO_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ORDEN_VENTA_TARIFA_TRAMO;
+                            plusMensaje = " ORDEN VENTA TARIFA Y TRAMO";
+                            break;
+                        case DuplicidadError.PROVEEDOR_EMPRESA_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_PROVEEDOR_EMPRESA;
+                            plusMensaje = " PROVEEDOR Y EMPRESA";
+                            break;
+                        case DuplicidadError.PROVEEDOR_TIPO_COMPROBANTE_NUMERO_COMPROBANTE_UNICO:
+                            codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_PROVEEDOR_TIPO_COMPROBANTE_NUMERO_COMPROBANTE;
+                            plusMensaje = " PROVEEDOR, TIPO COMPROBANTE Y NUMERO DE COMPROBANTE";
+                            break;
+                    case DuplicidadError.REPARTO_ORDEN_RECOLECCION_UNICO:
+                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_ORECOLECCION;
+                        plusMensaje = " REPARTO Y ORDEN RECOLECCION";
+                        break;
+                    case DuplicidadError.REPARTO_VENTA_COMPROBANTE_UNICO:
+                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_VCOMPROBANTE;
+                        plusMensaje = " REPARTO Y VENTA COMPROBANTE";
+                        break;
+                    case DuplicidadError.REPARTO_VIAJE_REMITO_UNICO:
+                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_REPARTO_VREMITO;
+                        plusMensaje = " REPARTO Y VIAJE REMITO";
+                        break;
+                    case DuplicidadError.RUBRO_PRODUCTO_CUENTA_CONTABLE_UNICO:
+                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_RUBRO_PRODUCTO;
+                        plusMensaje = ": RUBRO PRODUCTO Y EMPRESA";
+                        break;
                     case DuplicidadError.UNICIDAD_TABLA:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TRAMO;
                         plusMensaje = "";
                         break;
-                    default:
+                        default:
                         codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
                         plusMensaje = " ";
                         break;
+                            
+                    }
                 }
                 break;
             case 3:
