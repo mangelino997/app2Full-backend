@@ -14,7 +14,7 @@ public class LongitudError {
     public static final String ALIAS_LONGITUD = "alias";
     public static final String ALIAS_CBU_LONGITUD = "aliasCBU";
     public static final String ALICUOTA_LONGITUD = "alicuota";
-    public static final String ALICUOTA_IVA_LONGITUD = "alicuotaiva";
+    public static final String ALICUOTA_IVA_LONGITUD = "alicuotaIva";
     public static final String ALTURA_LONGITUD = "altura";
     public static final String ANCHO_LONGITUD = "ancho";
     public static final String APELLIDO_LONGITUD = "apellido";

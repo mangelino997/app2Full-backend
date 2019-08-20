@@ -35,8 +35,8 @@ public class CompraComprobantePercepcionService {
     public CompraComprobantePercepcion agregar(CompraComprobantePercepcion elemento) throws Exception {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -46,8 +46,8 @@ public class CompraComprobantePercepcionService {
     public void actualizar(CompraComprobantePercepcion elemento) throws Exception {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+        if (anio.length()>4 || anio.length()<4) {
+            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
         elementoDAO.save(elemento);
     }
