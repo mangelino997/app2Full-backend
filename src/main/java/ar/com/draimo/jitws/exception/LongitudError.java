@@ -157,6 +157,7 @@ public class LongitudError {
     public static final String PRECIO_UNITARIO_REF_LONGITUD = "precioUnitarioSeco";
     public static final String PRECIO_UNITARIO_SECO_LONGITUD = "precioUnitarioRef";
     public static final String PORCENTAJE_LONGITUD = "porcentaje";
+    public static final String PORCENTAJE_GANANCIA_NETA_LONGITUD = "porcentajeGananciaNeta";
     public static final String P_SEGURO_LONGITUD = "pSeguro";
     public static final String PUNTO_VENTA_LONGITUD = "puntoVenta";
     public static final String RAZON_SOCIAL_LONGITUD = "razonSocial";

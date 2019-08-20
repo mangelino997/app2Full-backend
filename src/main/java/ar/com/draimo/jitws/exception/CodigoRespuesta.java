@@ -102,7 +102,7 @@ public class CodigoRespuesta {
     
     //Define una respuesta de datos que superan su longitud
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo Longitud = 12139
+    //Ultimo codigo Longitud = 12140
     public static final int LONGITUD = 12139;
     public static final int ABREVIATURA_LONGITUD = 12015;
     public static final int ADICIONAL_BASICO_VACACIONES_LONGITUD = 12068;
@@ -240,6 +240,7 @@ public class CodigoRespuesta {
     public static final int PRECIO_UNITARIO_VIAJE_LONGITUD = 12124;
     public static final int PRECIO_UNITARIO_VENTA_LONGITUD = 12125;
     public static final int PORCENTAJE_LONGITUD = 12126;
+    public static final int PORCENTAJE_GANANCIA_NETA_LONGITUD = 12140;
     public static final int P_SEGURO_LONGITUD = 12127;
     public static final int PUNTO_VENTA_LONGITUD = 12066;
     public static final int RAZON_SOCIAL_LONGITUD = 12027;

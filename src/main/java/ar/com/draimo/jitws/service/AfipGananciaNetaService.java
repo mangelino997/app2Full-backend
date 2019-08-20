@@ -105,11 +105,7 @@ public class AfipGananciaNetaService {
         if (anio.length() > 4 || anio.length() < 4) {
             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
-        if (elementoDAO.findByAnioAndImporte(elemento.getAnio(), elemento.getImporte()).isEmpty()) {
             elementoDAO.save(elemento);
-        } else {
-            throw new DataIntegrityViolationException("Ganancia neta acumulada existente para el año fiscal.");
-        }
         elementoDAO.save(elemento);
     }
 

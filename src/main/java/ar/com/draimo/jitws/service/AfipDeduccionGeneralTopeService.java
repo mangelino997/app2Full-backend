@@ -76,12 +76,7 @@ public class AfipDeduccionGeneralTopeService {
         if (anio.length()>4 || anio.length()<4) {
             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         } 
-        if(elementoDAO.findByAnioAndAfipDeduccionGeneralOrderByAfipDeduccionGeneral_Id(
-                elemento.getAnio(), elemento.getAfipDeduccionGeneral()).isEmpty()){
             elementoDAO.save(elemento);
-        } else {
-            throw new DataIntegrityViolationException("Deducción General existente para el año fiscal.");
-        }
     }
     
     //Elimina un registro
