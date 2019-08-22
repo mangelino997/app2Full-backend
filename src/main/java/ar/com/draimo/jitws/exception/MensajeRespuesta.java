@@ -237,7 +237,7 @@ public class MensajeRespuesta {
                             break;
                         case DuplicidadError.ANIO_BENEFICIO_DEDUCCION_UNICO:
                             codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ANIO_BENEFICIO_DEDUCCION;
-                            plusMensaje = " AÑO Y BENEFICIO DEDUCCION";
+                            plusMensaje = " AÑO, TIPO DE BENEFICIO, DEDUCCIÓN PERSONAL Y MES";
                             break;
                         case DuplicidadError.ANIO_IMPORTE_UNICO:
                             codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_ANIO_IMPORTE;

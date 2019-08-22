@@ -33,7 +33,7 @@ public class AfipTipoBeneficioDeduccionService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         AfipTipoBeneficioDeduccion elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId() + 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
 
     //Obtiene la lista completa
@@ -76,12 +76,19 @@ public class AfipTipoBeneficioDeduccionService {
         if (anio.length() > 4 || anio.length() < 4) {
             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
-        if (elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
-                elemento.getAnio(), elemento.getAfipTipoBeneficio(),
-                elemento.getAfipDeduccionPersonal()).isEmpty()) {
+        if (!elemento.isImporteAnualMensual()) {
+            if (elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
+                    elemento.getAnio(), elemento.getAfipTipoBeneficio(),
+                    elemento.getAfipDeduccionPersonal()).isEmpty()) {
+                elemento.setMes(null);
+                return elementoDAO.saveAndFlush(elemento);
+            } else {
+                throw new DataIntegrityViolationException("Deducción Personal y Tipo Beneficio existente para el año fiscal.");
+            }
+        } else if (elemento.getMes() != null) {
             return elementoDAO.saveAndFlush(elemento);
         } else {
-            throw new DataIntegrityViolationException("Deducción Personal y Tipo Beneficio existente para el año fiscal.");
+            throw new DataIntegrityViolationException("MES no puede estar vacío");
         }
     }
 
@@ -93,8 +100,16 @@ public class AfipTipoBeneficioDeduccionService {
         if (anio.length() > 4 || anio.length() < 4) {
             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
-        elementoDAO.saveAndFlush(elemento);
-        throw new DataIntegrityViolationException("Deducción General existente para el año fiscal.");
+        if(elemento.isImporteAnualMensual()){
+            if (elemento.getMes() != null) {
+            elementoDAO.save(elemento);
+        } else {
+            throw new DataIntegrityViolationException("MES no puede estar vacío");
+        }
+        }else {
+            elemento.setMes(null);
+            elementoDAO.save(elemento);
+        }
     }
 
     //Elimina un registro

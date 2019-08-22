@@ -8,7 +8,7 @@ public class DuplicidadError {
     
     public static final String ABREVIATURA_UNICO = "abreviatura_UNIQUE";
     
-    public static final String ANIO_BENEFICIO_DEDUCCION_UNICO = "anio_beneficio_deduccion_UNIQUE";
+    public static final String ANIO_BENEFICIO_DEDUCCION_UNICO = "anio_beneficio_deduccion_mes_UNIQUE";
     
     public static final String ANIO_AFIP_DEDUCCION_GENERAL_UNICO = "anio_afipdeducciongeneral_UNIQUE";
     
