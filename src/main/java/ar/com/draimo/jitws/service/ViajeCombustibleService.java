@@ -72,6 +72,14 @@ public class ViajeCombustibleService {
         elementoDAO.save(elemento);
     }
     
+    //Normaliza un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void normalizarCombustible(ViajeCombustible elemento) throws IOException {
+        elemento.setEstaAnulado(false);
+        elemento.setObservacionesAnulado(null);
+        elementoDAO.save(elemento);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeCombustible elemento) throws IOException {

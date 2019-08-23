@@ -64,7 +64,7 @@ public class ViajeCombustibleController {
         return elementoService.listarCombustibles(idViaje);
     }
     
-    //anula un combustible
+    //Anula un registro
     @PutMapping(value = URL + "/anularCombustible")
     @ResponseBody
     public ResponseEntity<?> anularCombustible(@RequestBody ViajeCombustible combustible) throws IOException {
@@ -72,6 +72,20 @@ public class ViajeCombustibleController {
             elementoService.anularCombustible(combustible);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.anulado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
+    //Normaliza un registro
+    @PutMapping(value = URL + "/normalizarCombustible")
+    @ResponseBody
+    public ResponseEntity<?> normalizarCombustible(@RequestBody ViajeCombustible combustible) throws IOException {
+        try {
+            elementoService.normalizarCombustible(combustible);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.normalizado();
         } catch(Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
