@@ -113,9 +113,9 @@ public class PersonalService {
         if (elemento.getPdfAltaTemprana() == null) {
             elemento.setPdfAltaTemprana(pdf);
         }
-//        if (elemento.getPdfDni() == null) {
-//            elemento.setPdfDni(pdf);
-//        }
+        if (elemento.getPdfDni() == null) {
+            elemento.setPdfDni(pdf);
+        }
         if (elemento.getPdfLibSanidad() == null) {
             elemento.setPdfLibSanidad(pdf);
         }
