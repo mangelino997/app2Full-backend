@@ -73,6 +73,14 @@ public class ViajeInsumoService {
         elementoDAO.save(elemento);
     }
     
+    //Normaliza un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void normalizarInsumo(ViajeInsumo elemento) throws IOException {
+        elemento.setEstaAnulado(false);
+        elemento.setObservacionesAnulado(null);
+        elementoDAO.save(elemento);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeInsumo elemento) throws IOException, Exception {

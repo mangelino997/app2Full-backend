@@ -78,6 +78,20 @@ public class ViajeInsumoController {
         }
     }
     
+    //Normaliza un registro
+    @PutMapping(value = URL + "/normalizarInsumo")
+    @ResponseBody
+    public ResponseEntity<?> normalizarInsumo(@RequestBody ViajeInsumo insumo) throws IOException {
+        try {
+            elementoService.normalizarInsumo(insumo);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.normalizado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeInsumo elemento) {
