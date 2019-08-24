@@ -460,6 +460,10 @@ public class Personal extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPdfAltaTemprana", nullable = true)
     private Pdf pdfAltaTemprana;
+    
+    //Define esta activa
+    @Column(name = "estaActiva", nullable = false)
+    private boolean estaActiva;
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -1222,4 +1226,12 @@ public class Personal extends ObjetoGenerico {
         this.pdfAltaTemprana = pdfAltaTemprana;
     }
 
+    public boolean getEstaActiva() {
+        return estaActiva;
+    }
+
+    public void setEstaActiva(boolean estaActiva) {
+        this.estaActiva = estaActiva;
+    }
+    
 }

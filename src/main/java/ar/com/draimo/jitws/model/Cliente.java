@@ -179,11 +179,6 @@ public class Cliente extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
 
-    //Define la fecha de baja del cliente
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
-    @Column(name = "fechaAlta", nullable = false)
-    private Date fechaAlta;
-    
     //Referencia a la clase Usuario (Baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
@@ -207,6 +202,15 @@ public class Cliente extends ObjetoGenerico {
     //Define el alias para las busquedas
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
+    
+    //Define la fecha de baja del cliente
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
+    @Column(name = "fechaAlta", nullable = false)
+    private Date fechaAlta;
+    
+    //Define esta activa
+    @Column(name = "estaActiva", nullable = false)
+    private boolean estaActiva;
    
     //Referencia al a clase ordenVenta
     @ManyToMany(cascade = CascadeType.REFRESH)
@@ -539,6 +543,14 @@ public class Cliente extends ObjetoGenerico {
         this.alias = alias;
     }
 
+    public boolean getEstaActiva() {
+        return estaActiva;
+    }
+
+    public void setEstaActiva(boolean estaActiva) {
+        this.estaActiva = estaActiva;
+    }
+    
     public List<OrdenVenta> getOrdenesVentas() {
         return ordenesVentas;
     }

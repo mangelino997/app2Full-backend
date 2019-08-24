@@ -78,6 +78,20 @@ public class ViajeEfectivoController {
         }
     }
     
+    //Normaliza un registro
+    @PutMapping(value = URL + "/normalizarEfectivo")
+    @ResponseBody
+    public ResponseEntity<?> normalizarEfectivo(@RequestBody ViajeEfectivo efectivo) throws IOException {
+        try {
+            elementoService.normalizarEfectivo(efectivo);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.normalizado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeEfectivo elemento) {

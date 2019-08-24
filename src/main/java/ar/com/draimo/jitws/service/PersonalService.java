@@ -236,14 +236,14 @@ public class PersonalService {
         } else {
             elemento.setPdfLibSanidad(null);
         }
-//        if (!dni.getOriginalFilename().equals("")) {
-//            Pdf p4 = pdfService.agregar(dni, false);
-//            p4.setTabla("personal");
-//            Pdf pdf4 = pdfDAO.saveAndFlush(p4);
-//            elemento.setPdfDni(pdf4);
-//        } else {
-//            elemento.setPdfDni(null);
-//        }
+        if (!dni.getOriginalFilename().equals("")) {
+            Pdf p4 = pdfService.agregar(dni, false);
+            p4.setTabla("personal");
+            Pdf pdf4 = pdfDAO.saveAndFlush(p4);
+            elemento.setPdfDni(pdf4);
+        } else {
+            elemento.setPdfDni(null);
+        }
         if (!altaTemprana.getOriginalFilename().equals("")) {
             Pdf p5 = pdfService.agregar(altaTemprana, false);
             p5.setTabla("personal");

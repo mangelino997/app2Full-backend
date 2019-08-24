@@ -122,11 +122,6 @@ public class ViajeRemito extends ObjetoGenerico {
     @Column(name = "estaFacturado", nullable = false)
     private boolean estaFacturado;
     
-    //Referencia a la clase Seguimiento
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idSeguimiento", nullable = true)
-    private Seguimiento siguimiento;
-    
     //Define si esta en reparto
     @Column(name = "estaEnReparto", nullable = false)
     private boolean estaEnReparto;
@@ -297,7 +292,7 @@ public class ViajeRemito extends ObjetoGenerico {
         this.importeEntrega = importeEntrega;
     }
 
-    public boolean isEstaPendiente() {
+    public boolean getEstaPendiente() {
         return estaPendiente;
     }
 
@@ -313,7 +308,7 @@ public class ViajeRemito extends ObjetoGenerico {
         this.observaciones = observaciones;
     }
 
-    public boolean isEstaFacturado() {
+    public boolean getEstaFacturado() {
         return estaFacturado;
     }
 
@@ -321,15 +316,7 @@ public class ViajeRemito extends ObjetoGenerico {
         this.estaFacturado = estaFacturado;
     }
 
-    public Seguimiento getSiguimiento() {
-        return siguimiento;
-    }
-
-    public void setSiguimiento(Seguimiento siguimiento) {
-        this.siguimiento = siguimiento;
-    }
-
-    public boolean isEstaEnReparto() {
+    public boolean getEstaEnReparto() {
         return estaEnReparto;
     }
 

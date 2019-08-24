@@ -146,9 +146,9 @@ public class Proveedor extends ObjetoGenerico {
     @JoinColumn(name = "idTipoProveedor", nullable = false)
     private TipoProveedor tipoProveedor;
     
-    //Define si esta activo
-    @Column(name = "estaActivo", nullable = false)
-    private boolean estaActivo;
+    //Define si esta activa
+    @Column(name = "estaActiva", nullable = false)
+    private boolean estaActiva;
     
     //Define el alias
     @Column(name = "alias",length = 100, nullable = true)
@@ -381,11 +381,11 @@ public class Proveedor extends ObjetoGenerico {
     }
 
     public boolean getEstaActivo() {
-        return estaActivo;
+        return estaActiva;
     }
 
     public void setEstaActivo(boolean estaActivo) {
-        this.estaActivo = estaActivo;
+        this.estaActiva = estaActivo;
     }
 
     public String getAlias() {

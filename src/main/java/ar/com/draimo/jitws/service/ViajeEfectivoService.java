@@ -74,6 +74,14 @@ public class ViajeEfectivoService {
         elementoDAO.save(elemento);
     }
     
+    //Normaliza un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void normalizarEfectivo(ViajeEfectivo elemento) throws IOException {
+        elemento.setEstaAnulado(false);
+        elemento.setObservacionesAnulado(null);
+        elementoDAO.save(elemento);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeEfectivo elemento) throws IOException {
