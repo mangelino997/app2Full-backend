@@ -113,6 +113,34 @@ public class ViajeGastoController {
         }
     }
     
+    //anula un Efectivo
+    @PutMapping(value = URL + "/anular")
+    @ResponseBody
+    public ResponseEntity<?> anular(@RequestBody ViajeGasto elemento) throws IOException {
+            try {
+            elementoService.anular(elemento);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.anulado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
+    //Normaliza un registro
+    @PutMapping(value = URL + "/normalizar")
+    @ResponseBody
+    public ResponseEntity<?> normalizar(@RequestBody ViajeGasto elemento) throws IOException {
+        try {
+            elementoService.normalizar(elemento);
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.normalizado();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {

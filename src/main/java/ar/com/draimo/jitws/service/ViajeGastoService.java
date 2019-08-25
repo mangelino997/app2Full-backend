@@ -107,6 +107,21 @@ public class ViajeGastoService {
         elementoDAO.deleteById(id);
     }
     
+    //Anula un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void anular(ViajeGasto elemento) throws IOException {
+        elemento.setEstaAnulado(true);
+        elementoDAO.save(elemento);
+    }
+    
+    //Normaliza un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void normalizar(ViajeGasto elemento) throws IOException {
+        elemento.setEstaAnulado(false);
+        elemento.setObservacionesAnulado(null);
+        elementoDAO.save(elemento);
+    }
+    
     //Formatea los strings
     private ViajeGasto formatearStrings(ViajeGasto elemento) {
         if(elemento.getObservaciones() != null) {
