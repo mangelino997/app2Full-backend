@@ -29,6 +29,14 @@ public class CompraComprobanteService {
     public List<CompraComprobante> listar() {
         return elementoDAO.findAll();
     }
+    
+    public boolean verificarUnicidadComprobante(int idProveedor, String codigoAfip, int puntoVenta, int numero) {
+        if(!elementoDAO.verificarUnicidad(idProveedor, codigoAfip, puntoVenta, numero).isEmpty()) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

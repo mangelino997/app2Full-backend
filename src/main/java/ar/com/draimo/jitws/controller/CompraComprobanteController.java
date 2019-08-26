@@ -56,6 +56,14 @@ public class CompraComprobanteController {
         return elementoService.listar();
     }
     
+    //retorna si se cumple o no la unicidad
+    @GetMapping(value = URL + "/verificarUnicidadComprobante/{idProveedor}/{codigoAfip}/{puntoVenta}/{numero}")
+    @ResponseBody
+    public boolean verificarUnicidadComprobante(@PathVariable int idProveedor,
+            @PathVariable String codigoAfip, @PathVariable int puntoVenta, @PathVariable int numero) {
+        return elementoService.verificarUnicidadComprobante(idProveedor, codigoAfip, puntoVenta, numero);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody CompraComprobante elemento) {
