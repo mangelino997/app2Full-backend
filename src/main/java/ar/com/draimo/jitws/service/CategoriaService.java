@@ -45,13 +45,13 @@ public class CategoriaService {
     public Categoria agregar(Categoria elemento) throws Exception {
         elemento = formatearStrings(elemento);
         //Obtiene longitud de dias laborables, si supera 31 retorna error
-        Integer dLab = Integer.valueOf(elemento.getDiasLaborables());
-        if (dLab>31 || String.valueOf(elemento.getDiasLaborables()).length()>2) {
+        String dLab = String.valueOf(elemento.getDiasLaborables());
+        if (dLab.length()>2 || Integer.valueOf(dLab)> 31) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS LABORABLES");
         }
         //Obtiene longitud de horas laborables, si supera 24 retorna error
-        Integer hLab = Integer.valueOf(elemento.getHorasLaborables());
-        if (hLab>24 || String.valueOf(elemento.getDiasLaborables()).length()>2) {
+        String hLab = String.valueOf(elemento.getHorasLaborables());
+        if (hLab.length()>2 || Integer.valueOf(hLab)>24) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en HORAS LABORABLES");
         }
         return elementoDAO.save(elemento);
