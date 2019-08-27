@@ -1,7 +1,6 @@
 package ar.com.draimo.jitws.exception;
 
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,8 +30,13 @@ public class Excepcion {
     @ResponseBody
     public ResponseEntity<?> tamanioShortExcedido(HttpMessageNotReadableException e) {
         System.out.println(e.getCause());
+        String s;
         String[] elementos = e.getCause().getLocalizedMessage().split(" ");
-        String s = elementos[19].substring(elementos[19].indexOf("[") + 2);
+        if(elementos[7].equals("Java")){
+            s = elementos[19].substring(elementos[19].indexOf("[") + 2);
+        }else {
+        s = elementos[18].substring(elementos[18].indexOf("[") + 2);
+        }
         s = s.substring(0, s.indexOf("]") -1);
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.LONGITUD, 
                 "Tamaño " + s + " excedido", 0), HttpStatus.INTERNAL_SERVER_ERROR);
