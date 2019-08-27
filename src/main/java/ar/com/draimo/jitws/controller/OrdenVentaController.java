@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.service.OrdenVentaService;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -68,14 +69,14 @@ public class OrdenVentaController {
     //Obtiene una lista por idEmpresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public Object listarPorEmpresa(@PathVariable int idEmpresa) {
+    public List<OrdenVenta> listarPorEmpresa(@PathVariable int idEmpresa) {
         return elementoService.listarPorEmpresa(idEmpresa);
     }
     
     //Obtiene una lista por idCliente
     @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
     @ResponseBody
-    public Object listarPorCliente(@PathVariable int idCliente) {
+    public List<OrdenVenta> listarPorCliente(@PathVariable int idCliente) {
         return elementoService.listarPorCliente(idCliente);
     }
     
@@ -108,11 +109,11 @@ public class OrdenVentaController {
     public ResponseEntity<?> actualizar(@RequestBody OrdenVenta elemento) {
         try {
             //Actualiza el registro
-            Object ordenVenta = elementoService.actualizar(elemento);
+            elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return new ResponseEntity(ordenVenta, HttpStatus.OK);
+            return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

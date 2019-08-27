@@ -2,21 +2,14 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Clase OrdenVenta
@@ -68,26 +61,26 @@ public class OrdenVenta extends ObjetoGenerico {
     private boolean esContado;
     
     //Referencia a la clase cliente
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    @JoinTable(name = "clienteordenventa",
-        joinColumns = @JoinColumn(name = "idOrdenVenta"),
-        inverseJoinColumns = @JoinColumn(name = "idCliente"),
-         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idCliente"})})  
-    @JsonIgnoreProperties("ordenesVentas")
-    private List<Cliente>  clientes = new ArrayList<>();
+//    @ManyToMany(cascade = CascadeType.REFRESH)
+//    @JoinTable(name = "clienteordenventa",
+//        joinColumns = @JoinColumn(name = "idOrdenVenta"),
+//        inverseJoinColumns = @JoinColumn(name = "idCliente"),
+//         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idCliente"})})  
+//    @JsonIgnoreProperties("ordenesVentas")
+//    private List<Cliente>  clientes = new ArrayList<>();
     
     //Referencia a la clase empresa
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    @JoinTable(name = "empresaordenventa",
-        joinColumns = @JoinColumn(name = "idOrdenVenta"),
-        inverseJoinColumns = @JoinColumn(name = "idEmpresa"),
-         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idEmpresa"})})  
-    @JsonIgnoreProperties("ordenesVentas")
-    private List<Empresa> empresas = new ArrayList<>();
+//    @ManyToMany(cascade = CascadeType.REFRESH)
+//    @JoinTable(name = "empresaordenventa",
+//        joinColumns = @JoinColumn(name = "idOrdenVenta"),
+//        inverseJoinColumns = @JoinColumn(name = "idEmpresa"),
+//         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idEmpresa"})})  
+//    @JsonIgnoreProperties("ordenesVentas")
+//    private List<Empresa> empresas = new ArrayList<>();
     
     //Referencia a la clase empresa
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
-    private List<OrdenVentaTarifa> ordenesVentasTarifas = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
+//    private List<OrdenVentaTarifa> ordenesVentasTarifas = new ArrayList<>();
 
     //Getters y Setters de la clase
 
@@ -163,20 +156,4 @@ public class OrdenVenta extends ObjetoGenerico {
         this.esContado = esContado;
     }
 
-    public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
-    }
-
-    public List<Empresa> getEmpresas() {
-        return empresas;
-    }
-
-    public void setEmpresas(List<Empresa> empresas) {
-        this.empresas = empresas;
-    }
-    
 }

@@ -102,38 +102,37 @@ public class OrdenVentaService {
             String ordenVentaTarifaString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        OrdenVenta elemento = mapper.readValue(elementoString, OrdenVenta.class);
+        OrdenVenta ordenVenta = mapper.readValue(elementoString, OrdenVenta.class);
         OrdenVentaTarifa ordenVentaTarifa = mapper.readValue(ordenVentaTarifaString, OrdenVentaTarifa.class);
-        ClienteOrdenVenta clienteOrdenVenta = new ClienteOrdenVenta();
-        EmpresaOrdenVenta empresaOrdenVenta = new EmpresaOrdenVenta();
+        ClienteOrdenVenta clienteOrdenVenta;
+        EmpresaOrdenVenta empresaOrdenVenta;
         //Formatea los string de OrdenVenta
-        elemento = formatearStrings(elemento);
+        ordenVenta = formatearStrings(ordenVenta);
         //Establece la fecha actual
-        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        ordenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
         //Establece activa en true
-        elemento.setEstaActiva(true);
+        ordenVenta.setEstaActiva(true);
         //Establece ActivaDesde con fecha actual
-        elemento.setActivaDesde(new Date(new java.util.Date().getTime()));
+        ordenVenta.setActivaDesde(new Date(new java.util.Date().getTime()));
         //Agrega la orden de venta
-        elemento = elementoDAO.saveAndFlush(elemento);
-        ordenVentaTarifa.setOrdenVenta(elemento);
+        ordenVenta = elementoDAO.saveAndFlush(ordenVenta);
+        ordenVentaTarifa.setOrdenVenta(ordenVenta);
         ordenVentaTarifa = ordenVentaTarifaDAO.saveAndFlush(ordenVentaTarifa);
         if (!clienteString.equals("null")) {
             clienteOrdenVenta = mapper.readValue(clienteString, ClienteOrdenVenta.class);
-            clienteOrdenVenta.setFechaAlta(elemento.getFechaAlta());
+            clienteOrdenVenta.setFechaAlta(ordenVenta.getFechaAlta());
             clienteOrdenVenta.setEstaActiva(true);
-            clienteOrdenVenta.setOrdenVenta(elemento);
+            clienteOrdenVenta.setOrdenVenta(ordenVenta);
             clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
         }
         if (!empresaString.equals("null")) {
             empresaOrdenVenta = mapper.readValue(empresaString, EmpresaOrdenVenta.class);
-            empresaOrdenVenta.setFechaAlta(elemento.getFechaAlta());
+            empresaOrdenVenta.setFechaAlta(ordenVenta.getFechaAlta());
             empresaOrdenVenta.setEstaActiva(true);
-            empresaOrdenVenta.setOrdenVenta(elemento);
-            System.out.println(empresaOrdenVenta.getUsuarioAlta().getId());
+            empresaOrdenVenta.setOrdenVenta(ordenVenta);
             empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
         }
-        return elemento.getId();
+        return ordenVenta.getId();
     }
 
     //Actualiza un registro
