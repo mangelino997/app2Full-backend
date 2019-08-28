@@ -313,7 +313,6 @@ public class MensajeRespuesta {
                         codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
                         plusMensaje = " ";
                         break;
-                            
                     }
                 }
                 break;
