@@ -125,7 +125,7 @@ public class OrdenVentaEscalaController {
     public ResponseEntity<?> actualizar(@RequestBody OrdenVentaEscala elemento) {
         try {
             //Actualiza el registro
-            Object a = elementoService.actualizar(elemento);
+            int a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
             //Retorna mensaje de actualizado con exito
             return new ResponseEntity(a, HttpStatus.OK);
