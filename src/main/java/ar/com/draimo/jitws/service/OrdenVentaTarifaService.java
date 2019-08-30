@@ -111,7 +111,7 @@ public class OrdenVentaTarifaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
         OrdenVentaTarifa elemento = elementoDAO.findById(id).get();
-        if(elemento.getTipoTarifa().isPorEscala()){
+        if(elemento.getTipoTarifa().getPorEscala()){
             ordenVentaEscalaDAO.deleteByOrdenVentaTarifa(elemento);
         } else {
             ordenVentaTramoDAO.deleteByOrdenVentaTarifa(elemento);

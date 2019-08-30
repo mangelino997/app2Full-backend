@@ -27,4 +27,7 @@ public interface IEmpresaOrdenVentaDAO extends JpaRepository<EmpresaOrdenVenta, 
     //Obtiene por compania de empresa y ordenVenta
     public List<EmpresaOrdenVenta> findByEmpresaAndOrdenVenta(Empresa empresa, OrdenVenta ordenVenta);
     
+    //Elimina por orden de venta
+    public void deleteByOrdenVenta(OrdenVenta ordenVenta);
+    
 }

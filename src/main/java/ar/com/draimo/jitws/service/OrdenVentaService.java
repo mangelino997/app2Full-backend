@@ -9,9 +9,7 @@ import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVenta;
-import ar.com.draimo.jitws.model.OrdenVentaEscala;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
-import ar.com.draimo.jitws.model.OrdenVentaTramo;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -154,6 +152,27 @@ public class OrdenVentaService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
+        //Obtiene la orden de venta por id
+        OrdenVenta ordenVenta = elementoDAO.findById(id).get();
+        //Obtiene las ordenes de venta tarifa por id orden venta
+        List<OrdenVentaTarifa> ordenesVentasTarifas = ordenVentaTarifaDAO.findByOrdenVenta(ordenVenta);
+        //Recorre las ordenes de ventas tarifas para eliminar escalas o tramos referenciados
+        for(OrdenVentaTarifa ordenVentaTarifa : ordenesVentasTarifas) {
+            //Verifica si se trata de por escala o por tramo
+            if(ordenVentaTarifa.getTipoTarifa().getPorEscala()) {
+                //Elimina las escalas por orden venta tarifa
+                ordenVentaEscalaDAO.deleteByOrdenVentaTarifa(ordenVentaTarifa);
+            } else {
+                ordenVentaTramoDAO.deleteByOrdenVentaTarifa(ordenVentaTarifa);
+            }
+            //Elimina la orden venta tarifa
+            ordenVentaTarifaDAO.delete(ordenVentaTarifa);
+        }
+        //Busca ordenes de venta asignada a empresa y si existe, elimina
+        empresaOrdenVentaDAO.deleteByOrdenVenta(ordenVenta);
+        //Busca ordenes de venta asignada a cliente y si existe, elimina
+        clienteOrdenVentaDAO.deleteByOrdenVenta(ordenVenta);
+        //Elimina la orden de venta
         elementoDAO.deleteById(id);
     }
 

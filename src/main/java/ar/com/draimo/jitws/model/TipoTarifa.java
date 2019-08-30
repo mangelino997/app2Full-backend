@@ -37,7 +37,7 @@ public class TipoTarifa extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public boolean isPorEscala() {
+    public boolean getPorEscala() {
         return porEscala;
     }
 
@@ -45,7 +45,7 @@ public class TipoTarifa extends ObjetoGenerico {
         this.porEscala = porEscala;
     }
 
-    public boolean isPorPorcentaje() {
+    public boolean getPorPorcentaje() {
         return porPorcentaje;
     }
 
