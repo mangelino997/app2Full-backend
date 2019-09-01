@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.service.ProveedorService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -52,14 +53,14 @@ public class ProveedorController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<Proveedor> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<Proveedor> listarPorAlias(@PathVariable String alias) {
+    public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
     
@@ -69,9 +70,9 @@ public class ProveedorController {
         try {
             Proveedor a = elementoService.agregar(elemento);
             //Actualiza inmediatamente el registro para establecer el alias
-            elementoService.establecerAlias(elemento);
+            elementoService.establecerAlias(a);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -93,7 +94,7 @@ public class ProveedorController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

@@ -1,8 +1,12 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,6 +31,10 @@ public class RubroProducto extends ObjetoGenerico {
     @Column(name = "esCombustible", nullable = false)
     private boolean esCombustible;
     
+    @JsonIgnoreProperties("rubroProducto")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rubroProducto")
+    private List<RubroProductoCuentaContable> rubrosProductosCuentasContables;
+    
     //Getters y Setters de la clase
 
     public String getNombre() {
@@ -37,7 +45,7 @@ public class RubroProducto extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public boolean isEsInsumo() {
+    public boolean getEsInsumo() {
         return esInsumo;
     }
 
@@ -45,12 +53,20 @@ public class RubroProducto extends ObjetoGenerico {
         this.esInsumo = esInsumo;
     }
 
-    public boolean isEsCombustible() {
+    public boolean getEsCombustible() {
         return esCombustible;
     }
 
     public void setEsCombustible(boolean esCombustible) {
         this.esCombustible = esCombustible;
+    }
+
+    public List<RubroProductoCuentaContable> getRubrosProductosCuentasContables() {
+        return rubrosProductosCuentasContables;
+    }
+
+    public void setRubrosProductosCuentasContables(List<RubroProductoCuentaContable> rubrosProductosCuentasContables) {
+        this.rubrosProductosCuentasContables = rubrosProductosCuentasContables;
     }
     
 }

@@ -1,7 +1,14 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.Proveedor;
+import ar.com.draimo.jitws.model.ProveedorCuentaContable;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +27,10 @@ public class ProveedorService {
     @Autowired
     IProveedorDAO elementoDAO;
     
+    //Define la referencia al dao ProveedorCuentaContableDAO
+    @Autowired
+    IProveedorCuentaContableDAO proveedorCuentaContableDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Proveedor elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -27,17 +38,32 @@ public class ProveedorService {
     }
     
     //Obtiene la lista completa
-    public List<Proveedor> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<Proveedor> proveedores = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(proveedores);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
-    public List<Proveedor> listarPorAlias(String alias) {
+    public Object listarPorAlias(String alias) throws IOException {
+        List<Proveedor> proveedores = null;
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            proveedores = elementoDAO.findAll();
         } else {
-            return elementoDAO.findByAliasContaining(alias);
+            proveedores = elementoDAO.findByAliasContaining(alias);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(proveedores);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Agrega un registro
@@ -45,7 +71,12 @@ public class ProveedorService {
     public Proveedor agregar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        return elementoDAO.saveAndFlush(elemento);
+        Proveedor proveedor = elementoDAO.saveAndFlush(elemento);
+        for(ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
+            pcc.setProveedor(proveedor);
+            proveedorCuentaContableDAO.saveAndFlush(pcc);
+        }
+        return proveedor;
     }
     
     //Establece el alias de un registro
@@ -63,7 +94,11 @@ public class ProveedorService {
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
-        elementoDAO.save(elemento);
+        Proveedor proveedor = elementoDAO.save(elemento);
+        for(ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
+            pcc.setProveedor(proveedor);
+            proveedorCuentaContableDAO.save(pcc);
+        }
     }
     
     //Elimina un registro

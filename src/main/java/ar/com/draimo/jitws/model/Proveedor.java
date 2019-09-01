@@ -2,12 +2,16 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -153,6 +157,10 @@ public class Proveedor extends ObjetoGenerico {
     //Define el alias
     @Column(name = "alias",length = 100, nullable = true)
     private String alias;
+    
+    @JsonIgnoreProperties("proveedor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
+    private List<ProveedorCuentaContable> proveedorCuentasContables;
     
     //Getters y Setters de la clase
 
@@ -380,20 +388,28 @@ public class Proveedor extends ObjetoGenerico {
         this.tipoProveedor = tipoProveedor;
     }
 
-    public boolean getEstaActivo() {
-        return estaActiva;
-    }
-
-    public void setEstaActivo(boolean estaActivo) {
-        this.estaActiva = estaActivo;
-    }
-
     public String getAlias() {
         return alias;
     }
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public boolean getEstaActiva() {
+        return estaActiva;
+    }
+
+    public void setEstaActiva(boolean estaActiva) {
+        this.estaActiva = estaActiva;
+    }
+
+    public List<ProveedorCuentaContable> getProveedorCuentasContables() {
+        return proveedorCuentasContables;
+    }
+
+    public void setProveedorCuentasContables(List<ProveedorCuentaContable> proveedorCuentasContables) {
+        this.proveedorCuentasContables = proveedorCuentasContables;
     }
     
 }
