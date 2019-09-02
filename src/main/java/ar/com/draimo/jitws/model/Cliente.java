@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "cliente")
+@JsonFilter("clientefiltro")
 public class Cliente extends ObjetoGenerico {
     
     //Define la razon social

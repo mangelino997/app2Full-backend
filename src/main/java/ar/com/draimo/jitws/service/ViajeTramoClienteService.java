@@ -44,7 +44,8 @@ public class ViajeTramoClienteService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -58,7 +59,8 @@ public class ViajeTramoClienteService {
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }

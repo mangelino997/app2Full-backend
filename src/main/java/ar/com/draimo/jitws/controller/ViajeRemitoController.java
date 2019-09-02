@@ -113,7 +113,7 @@ public class ViajeRemitoController {
         try {
             elementoService.asignar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.asignado();
         } catch (DataIntegrityViolationException dive) {

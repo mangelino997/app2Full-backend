@@ -58,7 +58,8 @@ public class ViajeTramoService {
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -73,7 +74,8 @@ public class ViajeTramoService {
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -125,7 +127,8 @@ public class ViajeTramoService {
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elemento);
         return mapper.readValue(string, Object.class);
     }
