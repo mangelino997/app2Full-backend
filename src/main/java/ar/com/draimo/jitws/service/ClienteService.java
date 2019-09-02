@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,13 +124,26 @@ public class ClienteService {
     public Cliente agregar(Cliente elemento) {
         elemento = formatearString(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        List<OrdenVenta> ordenes = elemento.getOrdenesVentas();
+        elemento.setOrdenesVentas(null);
+        Cliente c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
+        elemento.setCuentaGrupo(null);
+        if(c!=null){
+                    elemento.setCuentaGrupo(c);
+                }else {
+                    throw new DataIntegrityViolationException("Registro no existente: CUENTA GRUPO");
+                }
         Cliente cliente = elementoDAO.saveAndFlush(elemento);
         ClienteOrdenVenta clienteOrdenVenta  = new ClienteOrdenVenta();
         //Agrega la lista de ordenes de venta del cliente
-        if(elemento.getOrdenesVentas() != null) {
-            for(OrdenVenta ordenVenta : elemento.getOrdenesVentas()) {
+        if(!ordenes.isEmpty()) {
+            for(OrdenVenta ordenVenta : ordenes) {
                 clienteOrdenVenta.setCliente(cliente);
-                clienteOrdenVenta.setOrdenVenta(ordenVenta);
+                if(clienteOrdenVentaDAO.findById(ordenVenta.getId())!=null){
+                    clienteOrdenVenta.setOrdenVenta(ordenVenta);
+                }else {
+                    throw new DataIntegrityViolationException("Registro no existente: ORDEN VENTA");
+                }
                 clienteOrdenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
                 clienteOrdenVenta.setUsuarioAlta(elemento.getUsuarioAlta());
                 clienteOrdenVenta.setEstaActiva(true);
@@ -146,6 +160,12 @@ public class ClienteService {
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
+        Cliente c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
+        if(c!=null){
+                    elemento.setCuentaGrupo(c);
+                }else {
+                    throw new DataIntegrityViolationException("Registro no existente: CUENTA GRUPO");
+                }
         elementoDAO.save(elemento);
     }
     

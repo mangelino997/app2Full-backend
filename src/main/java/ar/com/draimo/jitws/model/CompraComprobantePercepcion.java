@@ -2,11 +2,13 @@
 package ar.com.draimo.jitws.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -53,6 +55,10 @@ public class CompraComprobantePercepcion extends ObjetoGenerico {
     //Define numero
     @Column(name = "numero",length = 8, nullable = true)
     private int numero;
+    
+    //Referencia a la clase compraComprobanteVencimientos
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobantePercepcion")
+    private List<CompraCptePercepcionJurisd> compraCptePercepcionJurisdicciones;
     
     //Getters y Setters de la clase
 
@@ -118,6 +124,14 @@ public class CompraComprobantePercepcion extends ObjetoGenerico {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public List<CompraCptePercepcionJurisd> getCompraCptePercepcionJurisdicciones() {
+        return compraCptePercepcionJurisdicciones;
+    }
+
+    public void setCompraCptePercepcionJurisdicciones(List<CompraCptePercepcionJurisd> compraCptePercepcionJurisdicciones) {
+        this.compraCptePercepcionJurisdicciones = compraCptePercepcionJurisdicciones;
     }
 
 }

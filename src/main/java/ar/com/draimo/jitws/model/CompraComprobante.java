@@ -3,11 +3,14 @@ package ar.com.draimo.jitws.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -141,6 +144,18 @@ public class CompraComprobante extends ObjetoGenerico {
     //Define codigoAfip
     @Column(name = "observaciones",length = 100, nullable = true)
     private String observaciones;
+    
+    //Referencia a la clase compraComprobanteItems
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
+    private List<CompraComprobanteItem> compraComprobanteItems;
+    
+    //Referencia a la clase compraComprobantePercepciones
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
+    private List<CompraComprobantePercepcion> compraComprobantePercepciones;
+    
+    //Referencia a la clase compraComprobanteVencimientos
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
+    private List<CompraComprobanteVencimiento> compraComprobanteVencimientos;
     
     //Getters y Setters de la clase
 
@@ -366,6 +381,30 @@ public class CompraComprobante extends ObjetoGenerico {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public List<CompraComprobanteItem> getCompraComprobanteItems() {
+        return compraComprobanteItems;
+    }
+
+    public void setCompraComprobanteItems(List<CompraComprobanteItem> compraComprobanteItems) {
+        this.compraComprobanteItems = compraComprobanteItems;
+    }
+
+    public List<CompraComprobantePercepcion> getCompraComprobantePercepciones() {
+        return compraComprobantePercepciones;
+    }
+
+    public void setCompraComprobantePercepciones(List<CompraComprobantePercepcion> compraComprobantePercepciones) {
+        this.compraComprobantePercepciones = compraComprobantePercepciones;
+    }
+
+    public List<CompraComprobanteVencimiento> getCompraComprobanteVencimientos() {
+        return compraComprobanteVencimientos;
+    }
+
+    public void setCompraComprobanteVencimientos(List<CompraComprobanteVencimiento> compraComprobanteVencimientos) {
+        this.compraComprobanteVencimientos = compraComprobanteVencimientos;
     }
 
 }

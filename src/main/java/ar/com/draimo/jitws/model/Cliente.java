@@ -211,6 +211,10 @@ public class Cliente extends ObjetoGenerico {
     //Define esta activa
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
+    
+    //Define es recepto FCE
+    @Column(name = "esReceptorFCE", nullable = false)
+    private boolean esReceptorFCE;
    
     //Referencia al a clase ordenVenta
     @ManyToMany(cascade = CascadeType.REFRESH)
@@ -557,6 +561,14 @@ public class Cliente extends ObjetoGenerico {
 
     public void setOrdenesVentas(List<OrdenVenta> ordenesVentas) {
         this.ordenesVentas = ordenesVentas;
+    }
+
+    public boolean isEsReceptorFCE() {
+        return esReceptorFCE;
+    }
+
+    public void setEsReceptorFCE(boolean esReceptorFCE) {
+        this.esReceptorFCE = esReceptorFCE;
     }
 
 }

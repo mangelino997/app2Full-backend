@@ -1,10 +1,20 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompraComprobanteDAO;
+import ar.com.draimo.jitws.dao.ICompraComprobanteItemDAO;
+import ar.com.draimo.jitws.dao.ICompraComprobantePercepcionDAO;
+import ar.com.draimo.jitws.dao.ICompraComprobanteVencimientoDAO;
+import ar.com.draimo.jitws.dao.ICompraCptePercepcionJurisdDAO;
 import ar.com.draimo.jitws.model.CompraComprobante;
+import ar.com.draimo.jitws.model.CompraComprobanteItem;
+import ar.com.draimo.jitws.model.CompraComprobantePercepcion;
+import ar.com.draimo.jitws.model.CompraComprobanteVencimiento;
+import ar.com.draimo.jitws.model.CompraCptePercepcionJurisd;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +28,18 @@ public class CompraComprobanteService {
 
     @Autowired
     ICompraComprobanteDAO elementoDAO;
+
+    @Autowired
+    ICompraComprobanteVencimientoDAO vencimientoDAO;
+
+    @Autowired
+    ICompraComprobantePercepcionDAO percepcionDAO;
+
+    @Autowired
+    ICompraComprobanteItemDAO itemDAO;
+
+    @Autowired
+    ICompraCptePercepcionJurisdDAO jurisdiccionDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -43,7 +65,53 @@ public class CompraComprobanteService {
     public CompraComprobante agregar(CompraComprobante elemento) {
         Timestamp fechaRegistracion= new Timestamp(new java.util.Date().getTime());
         elemento.setFechaRegistracion(fechaRegistracion);
-        return elementoDAO.saveAndFlush(elemento);
+        elemento.setAfipCondicionIva(elemento.getProveedor().getAfipCondicionIva());
+        elemento.getMoneda().setId(1);
+        elemento.setImporteSaldo(BigDecimal.ZERO);
+        elemento.setMonedaCotizacion(BigDecimal.ZERO);
+        elemento.setTipoDocumento(elemento.getProveedor().getTipoDocumento());
+        elemento.setNumeroDocumento(elemento.getProveedor().getNumeroDocumento());
+        elemento.setCondicionCompra(elemento.getProveedor().getCondicionCompra());
+        List<CompraComprobanteItem> items = elemento.getCompraComprobanteItems();
+        List<CompraComprobantePercepcion> percepciones = elemento.getCompraComprobantePercepciones();
+        List<CompraComprobanteVencimiento> vencimientos = elemento.getCompraComprobanteVencimientos();
+        elemento.setCompraComprobanteItems(null);
+        elemento.setCompraComprobantePercepciones(null);
+        elemento.setCompraComprobanteVencimientos(null);
+        elemento = elementoDAO.saveAndFlush(elemento);
+        if(!elemento.getCompraComprobanteItems().isEmpty()){
+            for (CompraComprobanteItem item : items) {
+                item.setObservaciones("");
+                item.setCompraComprobante(elemento);
+                itemDAO.save(item);
+            }
+        }else {
+            throw new DataIntegrityViolationException("La lista de ITEMS no puede estar vacia");
+        }
+        if(!elemento.getCompraComprobantePercepciones().isEmpty()){
+            for (CompraComprobantePercepcion percepcion : percepciones) {
+                percepcion.setCompraComprobante(elemento);
+                percepcion.setLetra(elemento.getLetra());
+                percepcion.setPuntoVenta(elemento.getPuntoVenta());
+                percepcion.setNumero(elemento.getNumero());
+                List<CompraCptePercepcionJurisd> jurisdicciones =percepcion.getCompraCptePercepcionJurisdicciones();
+                percepcion.setCompraCptePercepcionJurisdicciones(null);
+                percepcionDAO.save(percepcion);
+                if(!jurisdicciones.isEmpty()){
+                    for (CompraCptePercepcionJurisd cteJurisdicciones : jurisdicciones) {
+                        cteJurisdicciones.setCompraComprobantePercepcion(percepcion);
+                        jurisdiccionDAO.save(cteJurisdicciones);
+                    }
+                }
+            }
+        }
+        if(!elemento.getCompraComprobanteVencimientos().isEmpty()){
+            for (CompraComprobanteVencimiento vencimiento : vencimientos) {
+                vencimiento.setCompraComprobante(elemento);
+                vencimientoDAO.save(vencimiento);
+            }
+        }
+        return elemento;
     }
 
     //Actualiza un registro
