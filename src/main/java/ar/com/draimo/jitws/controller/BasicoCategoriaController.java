@@ -63,6 +63,13 @@ public class BasicoCategoriaController {
         return elementoService.listarPorCategoriaNombre(nombre);
     }
     
+    //Obtiene el ultimo registro por categoria
+    @GetMapping(value = URL + "/obtenerPorCategoria/{idCategoria}")
+    @ResponseBody
+    public BasicoCategoria obtenerPorCategoria(@PathVariable int idCategoria) {
+        return elementoService.obtenerPorCategoria(idCategoria);
+    }
+    
     //Obtiene una lista por categoria
     @GetMapping(value = URL + "/listarPorCategoria/{idCategoria}")
     @ResponseBody

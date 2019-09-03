@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.PersonalAdelanto;
+import java.sql.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +26,8 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
     @Query(value = "SELECT idReparto FROM personaladelanto WHERE id=:idPersonalAdelanto", nativeQuery = true)
     public String obtenerIdReparto(@Param("idPersonalAdelanto") int idPersonalAdelanto);
     
+    //Obtiene un listado por lote y/o fechaEmision
+    @Query(value = "SELECT numeroLote, importe, observaciones, idUsuarioAlta FROM personaladelanto WHERE (:numeroLote=0 OR "
+            + "numeroLote=:numeroLote) AND (:fechaEmision IS NULL OR fechaEmision=:fechaEmision) GROUP BY numeroLote", nativeQuery = true)
+    public Object listarPorNumeroLote(@Param("numeroLote") int numeroLote, @Param("fechaEmision") Date fechaEmision);
 }

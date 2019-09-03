@@ -45,6 +45,11 @@ public class BasicoCategoriaService {
         }
     }
     
+    //Obtiene el ultimo registro por categoria
+    public BasicoCategoria obtenerPorCategoria(int idCategoria) {
+        return elementoDAO.obtenerPorCategoria(idCategoria);
+    }
+    
     //Obtiene una lista por nombre
     public List<BasicoCategoria> listarPorCategoria(int idCategoria) {
         return elementoDAO.findByCategoria(categoriaDAO.findById(idCategoria).get());

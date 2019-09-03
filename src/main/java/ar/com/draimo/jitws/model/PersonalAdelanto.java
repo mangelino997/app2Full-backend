@@ -27,6 +27,11 @@ public class PersonalAdelanto extends ObjetoGenerico {
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
 
+    //Referencia a sucursal
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idSucursal", nullable = false)
+    private Sucursal sucursal;
+
     //Referencia a personal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPersonal", nullable = false)
@@ -105,6 +110,14 @@ public class PersonalAdelanto extends ObjetoGenerico {
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
+    }
+
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 
     public Personal getPersonal() {
