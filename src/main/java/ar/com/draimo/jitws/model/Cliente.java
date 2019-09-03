@@ -26,7 +26,6 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "cliente")
-@JsonFilter("clientefiltro")
 public class Cliente extends ObjetoGenerico {
     
     //Define la razon social

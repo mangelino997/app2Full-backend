@@ -25,4 +25,7 @@ public interface IViajeTramoRemitoDAO extends JpaRepository<ViajeTramoRemito, In
     //Obtiene un listado por viajeRemito y viajeTramo
     public ViajeTramoRemito findByViajeRemitoAndViajeTramo(ViajeRemito viajeRemito, ViajeTramo viajeTramo);
     
+    //Elimina viajeRemito y viajeTramo
+    public void deleteByViajeRemitoAndViajeTramo(ViajeRemito viajeRemito, ViajeTramo viajeTramo);
+    
 }

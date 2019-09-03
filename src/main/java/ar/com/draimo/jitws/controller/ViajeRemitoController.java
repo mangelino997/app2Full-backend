@@ -93,6 +93,14 @@ public class ViajeRemitoController {
             @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
         return elementoService.listarPendientesPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
     }
+    
+    //Obtiene una lista de remitos asignados por filtro
+    @GetMapping(value = URL + "/listarAsignadosPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
+    @ResponseBody
+    public Object listarAsignadosPorFiltro(@PathVariable int idSucursal,
+            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
+        return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
+    }
 
     //Obtiene una lista de remitos por filtro
     @PostMapping(value = URL + "/listarPorFiltros")
@@ -132,13 +140,13 @@ public class ViajeRemitoController {
     }
 
     //Quita remitos
-    @DeleteMapping(value = URL + "/quitar/{idViajeRemito}/{idViajeTramo}")
-    public ResponseEntity<?> quitar(@PathVariable int idViajeRemito, @PathVariable int idViajeTramo) {
+    @PutMapping(value = URL + "/quitar")
+    public ResponseEntity<?> quitar(@RequestPart("elementos") String elementos, @RequestPart("viajeTramo") String idViajeTramo) {
         try {
             //Quita el registro
-            elementoService.quitar(idViajeRemito, idViajeTramo);
+            elementoService.quitar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.quitado();
         } catch (DataIntegrityViolationException dive) {

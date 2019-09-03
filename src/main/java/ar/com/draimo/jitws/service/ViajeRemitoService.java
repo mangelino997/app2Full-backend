@@ -43,7 +43,7 @@ public class ViajeRemitoService {
 
     //Define la referencia al dao viaje remito tramo
     @Autowired
-    IViajeTramoRemitoDAO viajeRemitoTramoDAO;
+    IViajeTramoRemitoDAO viajeTramoRemitoDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -128,9 +128,24 @@ public class ViajeRemitoService {
         List<ViajeRemito> remitos = elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(sucursal, sucursalDestino, numeroCamion);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider();
+        String string = mapper.writer(filters).writeValueAsString(remitos);
+        return mapper.readValue(string, Object.class);
+    }
+    
+    //Obtiene un listado de asignados por filtro
+    public Object listarAsignadosPorFiltro(int idSucursal, int idSucursalDestino, short numeroCamion) throws IOException {
+        //Obtiene la sucursal por id
+        Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
+        //Obtiene la sucursal destino por id
+        Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
+        //Retorna los datos
+        List<ViajeRemito> remitos = elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(sucursal, sucursalDestino, numeroCamion);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider();
         String string = mapper.writer(filters).writeValueAsString(remitos);
         return mapper.readValue(string, Object.class);
     }
@@ -202,7 +217,7 @@ public class ViajeRemitoService {
                 tramoRemito = new ViajeTramoRemito();
                 tramoRemito.setViajeRemito(viajeRemito);
                 tramoRemito.setViajeTramo(viajeTramo);
-                viajeRemitoTramoDAO.saveAndFlush(tramoRemito);
+                viajeTramoRemitoDAO.saveAndFlush(tramoRemito);
                 elementoDAO.save(viajeRemito);
             }
         }
@@ -210,17 +225,20 @@ public class ViajeRemitoService {
 
     //Quita los remitos
     @Transactional(rollbackFor = Exception.class)
-    public void quitar(int idViajeRemito, int idViajeTramo) {
-        //Obtiene el viajeTramo
-        ViajeTramo viajeTramo = viajeTramoDAO.findById(idViajeTramo).get();
-        //Obtiene el viajeRemito
-        ViajeRemito viajeRemito = elementoDAO.findById(idViajeRemito).get();
-        //Obtiene el viajeTramoRemito por Tramo y remito
-        ViajeTramoRemito tramoRemito = viajeRemitoTramoDAO.findByViajeRemitoAndViajeTramo(viajeRemito, viajeTramo);
-        //Elimina el viajeTramoRemito por tramo y remito
-        viajeRemitoTramoDAO.delete(tramoRemito);
-        viajeRemito.setEstaPendiente(true);
-        elementoDAO.save(viajeRemito);
+    public void quitar(String elementosString, String idViajeTramo) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<ViajeRemito> elementos = mapper.readValue(elementosString, mapper.getTypeFactory().constructCollectionType(List.class, ViajeRemito.class));
+        //Obtiene el viaje tramo
+        ViajeTramo viajeTramo = viajeTramoDAO.findById(Integer.valueOf(idViajeTramo)).get();
+        //Recorre la lista de remitos
+        for (ViajeRemito viajeRemito : elementos) {
+            if(viajeRemito.getEstaPendiente()) {
+                //Elimina el viaje tramo remito
+                viajeTramoRemitoDAO.deleteByViajeRemitoAndViajeTramo(viajeRemito, viajeTramo);
+                //Actualiza el remito
+                elementoDAO.save(viajeRemito);
+            }
+        }
     }
 
     //Agrega un registro
