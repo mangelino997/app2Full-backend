@@ -25,6 +25,12 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     //Obtiene una lista por alias y por esChofer
     public List<Personal> findByAliasContainingAndEsChoferTrue(String alias);
     
+    //Obtiene una lista Personales para adelantos
+    @Query(value = "SELECT * FROM personal WHERE idEmpresa=:idEmpresa AND idSucursal=:idSucursal"
+            + " AND (:idCategoria=0 OR idCategoria=:idCategoria) ORDER BY nombreCompleto ASC", nativeQuery = true)
+    public List<Personal> listarPersonalesParaAdelanto(@Param("idEmpresa") int idEmpresa,
+            @Param("idSucursal") int idSucursal, @Param("idCategoria") int idCategoria);
+    
     //Obtiene una lista de choferes de corta distancia
     @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=0 AND alias LIKE %:alias%"
             + " ORDER BY nombreCompleto ASC", nativeQuery = true)

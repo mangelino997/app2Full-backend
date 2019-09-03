@@ -50,6 +50,15 @@ public class TalonarioReciboLoteService {
         if(elemento.getDesde()>elemento.getHasta()) {
             throw new Exception("'Hasta' no puede ser menor a 'Desde'");
         }
+        if(String.valueOf(elemento.getDesde()).length()>8) {
+            throw new Exception("Cantidad excedida en DESDE");
+        }
+        if(String.valueOf(elemento.getHasta()).length()>8) {
+            throw new Exception("Cantidad excedida en HASTA");
+        }
+        if(String.valueOf(elemento.getPuntoVenta()).length()>8) {
+            throw new Exception("Cantidad excedida en PUNTO DE VENTA");
+        }
         Date fecha = new Date(new java.util.Date().getTime());
         elemento.setFechaAlta(fecha);
         List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
@@ -67,6 +76,15 @@ public class TalonarioReciboLoteService {
     public void actualizar(TalonarioReciboLote elemento) throws Exception {
         if(elemento.getDesde()>elemento.getHasta()) {
             throw new Exception("'Hasta' no puede ser menor a 'Desde'");
+        }
+        if(String.valueOf(elemento.getDesde()).length()>8) {
+            throw new Exception("Cantidad excedida en DESDE");
+        }
+        if(String.valueOf(elemento.getHasta()).length()>8) {
+            throw new Exception("Cantidad excedida en HASTA");
+        }
+        if(String.valueOf(elemento.getPuntoVenta()).length()>8) {
+            throw new Exception("Cantidad excedida en PUNTO DE VENTA");
         }
         List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
                 elemento.getDesde(), elemento.getPuntoVenta(), elemento.getLetra());

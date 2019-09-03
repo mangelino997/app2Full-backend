@@ -1,10 +1,14 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.PersonalAdelantoLoteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PersonalAdelanto;
 import ar.com.draimo.jitws.service.PersonalAdelantoService;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -56,13 +60,27 @@ public class PersonalAdelantoController {
         return elementoService.listar();
     }
     
+    //Obtiene una lista por lote o fecha emision
+    @GetMapping(value = URL + "/listarPorLote/{fechaEmision}/{numeroLote}")
+    @ResponseBody
+    public Object listarPorLote(@PathVariable Date fechaEmision, @PathVariable int numeroLote ) throws IOException {
+        return elementoService.listarPorLote(fechaEmision, numeroLote);
+    }
+    
+    //Agrega un lote
+    @PostMapping(value = URL + "/agregarLote")
+    @ResponseBody
+    public Object agregarLote(@RequestBody PersonalAdelantoLoteDTO personalAdelanto) throws IOException {
+        return elementoService.agregarLote(personalAdelanto);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody PersonalAdelanto elemento) {
         try {
             PersonalAdelanto a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
