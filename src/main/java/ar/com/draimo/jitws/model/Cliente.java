@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -217,7 +218,7 @@ public class Cliente extends ObjetoGenerico {
     @Column(name = "esReceptorFCE", nullable = false)
     private boolean esReceptorFCE;
    
-    //Referencia al a clase ordenVenta
+    //Referencia a la clase ordenVenta
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "clienteordenventa",
         joinColumns = @JoinColumn(name = "idCliente"),
@@ -225,6 +226,14 @@ public class Cliente extends ObjetoGenerico {
         uniqueConstraints={@UniqueConstraint(columnNames={"idCliente", "idOrdenVenta"})})  
     @JsonIgnoreProperties(value = {"clientes","empresas"})
     private List<OrdenVenta> ordenesVentas = new ArrayList<>();
+    
+    @ManyToMany(cascade = CascadeType.REFRESH)
+    @JoinTable(name = "clientecuentabancaria",
+        joinColumns = @JoinColumn(name = "idCliente"),
+        inverseJoinColumns = @JoinColumn(name = "idCuentaBancaria"),
+        uniqueConstraints={@UniqueConstraint(columnNames={"idCliente", "idCuentaBancaria"})})  
+    @JsonIgnoreProperties(value = {"cliente"})
+    private List<CuentaBancaria> cuentasBancarias = new ArrayList<>();
     
     //Getters y Setters de la clase
 
@@ -564,7 +573,7 @@ public class Cliente extends ObjetoGenerico {
         this.ordenesVentas = ordenesVentas;
     }
 
-    public boolean isEsReceptorFCE() {
+    public boolean getEsReceptorFCE() {
         return esReceptorFCE;
     }
 
@@ -572,4 +581,12 @@ public class Cliente extends ObjetoGenerico {
         this.esReceptorFCE = esReceptorFCE;
     }
 
+    public List<CuentaBancaria> getCuentasBancarias() {
+        return cuentasBancarias;
+    }
+
+    public void setCuentasBancarias(List<CuentaBancaria> cuentasBancarias) {
+        this.cuentasBancarias = cuentasBancarias;
+    }
+    
 }

@@ -82,6 +82,14 @@ public class CuentaBancaria extends ObjetoGenerico {
     //Define la fecha de cierre
     @Column(name = "fechaCierre", nullable = true)
     private Date fechaCierre;
+    
+//    @ManyToMany(cascade = CascadeType.REFRESH)
+//    @JoinTable(name = "clientecuentabancaria",
+//        joinColumns = @JoinColumn(name = "idCuentaBancaria"),
+//        inverseJoinColumns = @JoinColumn(name = "idCliente"),
+//         uniqueConstraints={@UniqueConstraint(columnNames={"idCuentaBancaria", "idCliente"})})  
+//    @JsonIgnoreProperties("cuentaBancaria")
+//    private List<Cliente> clientes = new ArrayList<>();
 
     //Getters y Setters de la clase
     public Empresa getEmpresa() {
