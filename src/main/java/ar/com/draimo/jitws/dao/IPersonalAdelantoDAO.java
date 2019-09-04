@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.PersonalAdelanto;
 import java.sql.Date;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,7 +28,19 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
     public String obtenerIdReparto(@Param("idPersonalAdelanto") int idPersonalAdelanto);
     
     //Obtiene un listado por lote y/o fechaEmision
-    @Query(value = "SELECT numeroLote, importe, observaciones, idUsuarioAlta FROM personaladelanto WHERE (:numeroLote=0 OR "
-            + "numeroLote=:numeroLote) AND (:fechaEmision IS NULL OR fechaEmision=:fechaEmision) GROUP BY numeroLote", nativeQuery = true)
+    @Query(value = "SELECT numeroLote, importe, observaciones, idUsuarioAlta FROM "
+            + "personaladelanto WHERE (:numeroLote=0 OR numeroLote=:numeroLote) AND "
+            + "(:fechaEmision IS NULL OR fechaEmision=:fechaEmision) GROUP BY numeroLote", nativeQuery = true)
     public Object listarPorNumeroLote(@Param("numeroLote") int numeroLote, @Param("fechaEmision") Date fechaEmision);
+    
+    //Obtiene un listado por filtros
+    @Query(value = "SELECT * FROM personaladelanto a INNER JOIN personal p ON "
+            + "p.id=a.idPersonal WHERE idEmpresa=:idEmpresa AND idSucursal=:idSucursal "
+            + "AND fechaEmision BETWEEN :fechaDesde AND :fechaHasta AND estaAnulado=:estaAnulado "
+            + "AND (estado>:estado OR estado=1)AND alias LIKE %:alias%", nativeQuery = true)
+    public List<PersonalAdelanto> listarPorFiltros(@Param("idEmpresa") int idEmpresa,
+            @Param("idSucursal") int idSucursal, @Param("fechaDesde") Date fechaDesde,
+            @Param("fechaHasta") Date fechaHasta, @Param("estaAnulado") boolean estaAnulado,
+            @Param("alias") String alias, @Param("estado") int estado);
+    
 }

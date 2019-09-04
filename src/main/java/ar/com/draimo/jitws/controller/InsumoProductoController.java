@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.InsumoProducto;
 import ar.com.draimo.jitws.service.InsumoProductoService;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,28 +54,28 @@ public class InsumoProductoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<InsumoProducto> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
 
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public List<InsumoProducto> listarPorAlias(@PathVariable String alias) {
+    public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
 
     //Obtiene una lista de combustibles
     @GetMapping(value = URL + "/listarCombustibles")
     @ResponseBody
-    public List<InsumoProducto> listarCombustibles() {
+    public Object listarCombustibles() throws IOException {
         return elementoService.listarCombustibles();
     }
     
     //Obtiene una lista de insumos
     @GetMapping(value = URL + "/listarInsumos")
     @ResponseBody
-    public List<InsumoProducto> listarInsumos() {
+    public Object listarInsumos() throws IOException {
         return elementoService.listarInsumos();
     }
     
@@ -89,13 +90,13 @@ public class InsumoProductoController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody InsumoProducto elemento) {
         try {
-            InsumoProducto a = elementoService.agregar(elemento);
+            int a = elementoService.agregar(elemento);
             //Establece el alias despues de agregar
-            elementoService.establecerAlias(a);
+            elementoService.establecerAlias(a, elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return MensajeRespuesta.agregado(a);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

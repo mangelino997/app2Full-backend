@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IInsumoProductoDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
@@ -27,27 +32,56 @@ public class InsumoProductoService {
     }
     
     //Obtiene la lista completa
-    public List<InsumoProducto> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<InsumoProducto> elementos = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista por nombre
-    public List<InsumoProducto> listarPorAlias(String alias) {
+    public Object listarPorAlias(String alias) throws IOException {
+        List<InsumoProducto> elementos;
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            elementos = elementoDAO.findAll();
         } else {
-            return elementoDAO.findByAliasContaining(alias);
+            elementos = elementoDAO.findByAliasContaining(alias);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista de combustibles
-    public List<InsumoProducto> listarCombustibles() {
-        return elementoDAO.findByRubroProducto_EsCombustibleTrue();
+    public Object listarCombustibles() throws IOException {
+        List<InsumoProducto> elementos = elementoDAO.findByRubroProducto_EsCombustibleTrue();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene una lista de insumos
-    public List<InsumoProducto> listarInsumos() {
-        return elementoDAO.findByRubroProducto_EsInsumoTrue();
+    public Object listarInsumos() throws IOException {
+        List<InsumoProducto> elementos = elementoDAO.findByRubroProducto_EsInsumoTrue();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     //Obtiene precio unitario por insumo
@@ -58,7 +92,7 @@ public class InsumoProductoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public InsumoProducto agregar(InsumoProducto elemento) {
+    public int agregar(InsumoProducto elemento) throws IOException {
         elemento = formatearStrings(elemento);
         if(elemento.getPrecioUnitarioVenta()== null){
             elemento.setPrecioUnitarioVenta(new BigDecimal(0));
@@ -72,7 +106,8 @@ public class InsumoProductoService {
         if(elemento.getItcPorLitro()== null){
             elemento.setItcPorLitro(new BigDecimal(0));
         }
-        return elementoDAO.save(elemento);
+        elementoDAO.saveAndFlush(elemento);
+        return elemento.getId();
     }
     
     //Actualiza un registro
@@ -91,7 +126,7 @@ public class InsumoProductoService {
         if(elemento.getItcPorLitro()== null){
             elemento.setItcPorLitro(new BigDecimal(0));
         }
-        establecerAlias(elemento);
+        establecerAlias(elemento.getId(), elemento);
         elementoDAO.save(elemento);
     }
     
@@ -102,8 +137,8 @@ public class InsumoProductoService {
     }
     
     //Establece el alias
-    public void establecerAlias(InsumoProducto elemento) {
-        elemento.setAlias(elemento.getId() +" - "+ elemento.getNombre() + " - "+
+    public void establecerAlias(int id, InsumoProducto elemento) {
+        elemento.setAlias(id +" - "+ elemento.getNombre() + " - "+
                 elemento.getRubroProducto().getNombre() + " - " + 
                 elemento.getMarcaProducto().getNombre());
     }

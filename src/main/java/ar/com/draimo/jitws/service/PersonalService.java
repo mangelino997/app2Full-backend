@@ -5,10 +5,12 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Personal;
+import ar.com.draimo.jitws.model.Sucursal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -36,6 +38,10 @@ public class PersonalService {
     //Define la referencia al dao de empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+
+    //Define la referencia al dao de sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
 
     //Define la referencia al dao de foto
     @Autowired
@@ -96,6 +102,29 @@ public class PersonalService {
             elementos = elementoDAO.findByEmpresa(empresa);
         } else {
             elementos = elementoDAO.findByEmpresaAndAliasContaining(empresa, alias);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+
+    //Obtiene una lista por alias, empresa y sucursal
+    public Object listarActivosPorAliasEmpresaYSucursal(String alias, int idEmpresa, int idSucursal) throws IOException, Exception {
+        List<Personal> elementos;
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+        Sucursal sucursal = sucursalDAO.findById(idSucursal).get();
+        if (alias.equals("***")) {
+            elementos = elementoDAO.findByEmpresa(empresa);
+        } else {
+            elementos = 
+            elementoDAO.findByEmpresaAndAliasContainingAndSucursalAndEstaActivaTrue(empresa, alias,sucursal);
+        }
+        if (elementos.isEmpty()) {
+            throw new Exception("No se encontraron registros.");
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

@@ -108,6 +108,14 @@ public class Empresa extends ObjetoGenerico {
     @JsonIgnoreProperties(value = {"clientes","empresas"})
     private List<OrdenVenta> ordenesVentas = new ArrayList<>();
     
+    //Define token
+    @Column(name = "token", length = 1000)
+    private String token;
+    
+    //Define firma
+    @Column(name = "firma", length = 300)
+    private String firma;
+    
     //Getters y Setters de la clase
 
     public String getRazonSocial() {
@@ -244,6 +252,22 @@ public class Empresa extends ObjetoGenerico {
 
     public void setOrdenesVentas(List<OrdenVenta> ordenesVentas) {
         this.ordenesVentas = ordenesVentas;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
     }
     
 }

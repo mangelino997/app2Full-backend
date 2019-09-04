@@ -31,12 +31,14 @@ public class AfipCaea extends ObjetoGenerico {
     private short anio;
     
     //Define el mes
-    @Column(name = "mes",length = 2, nullable = false)
-    private short mes;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "mes", nullable = false)
+    private Mes mes;
     
     //Define la quincena
-    @Column(name = "quincena", length = 1, nullable = false)
-    private short quincena;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "quincena", nullable = false)
+    private Quincena quincena;
     
     //Define el numero caea
     @Column(name = "numeroCAEA",length = 14, nullable = false)
@@ -80,19 +82,19 @@ public class AfipCaea extends ObjetoGenerico {
         this.anio = anio;
     }
 
-    public short getMes() {
+    public Mes getMes() {
         return mes;
     }
 
-    public void setMes(short mes) {
+    public void setMes(Mes mes) {
         this.mes = mes;
     }
 
-    public short getQuincena() {
+    public Quincena getQuincena() {
         return quincena;
     }
 
-    public void setQuincena(short quincena) {
+    public void setQuincena(Quincena quincena) {
         this.quincena = quincena;
     }
 

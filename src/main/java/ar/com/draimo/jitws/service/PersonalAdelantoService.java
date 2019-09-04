@@ -19,7 +19,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,19 +91,97 @@ public class PersonalAdelantoService {
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept();
+                .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajefiltro", theFilter)
-                .addFilter("personaladelantofiltro", theFilter);
+                .addFilter("personaladelantofiltro", theFilter)
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(personalAdelantos);
         return mapper.readValue(string, Object.class);
     }
+    
+    
+    //Genera la tabla de cuotas
+    public Object listarCoutas(PersonalAdelanto personalAdelanto) throws IOException {
+        List<PersonalAdelanto> cuotasAdelantos = new ArrayList<>();
+        PersonalAdelanto cuota;
+        BigDecimal total=new BigDecimal(0);
+        BigDecimal dif=new BigDecimal(0);
+        //Establece la cantidad de dias
+        short cantDias = 30;
+        //Obtiene la fechaActual
+        String fechaString = new Date(new java.util.Date().getTime()).toString();
+        Date fecha = new Date(new java.util.Date().getTime());
+        BigDecimal cuotas = BigDecimal.valueOf(personalAdelanto.getTotalCuotas());
+        //Obtiene el importe por cuota
+        BigDecimal importe = personalAdelanto.getImporte().divide(cuotas, 2, RoundingMode.HALF_UP);
+        //Establece los datos a vencimiento y lo agrega a la lista
+        for (int i = 0; i < personalAdelanto.getTotalCuotas(); i++) {
+            cuota = new PersonalAdelanto();
+            cuota.setImporte(importe);
+            fechaString = LocalDate.parse(fechaString).plusDays(cantDias).toString();
+            cuota.setFechaVto(Date.valueOf(fechaString));
+            cuota.setFechaEmision(fecha);
+            cuota.setCuota((short) (i+1));
+            cuota.setEmpresa(personalAdelanto.getEmpresa());
+            cuota.setPersonal(personalAdelanto.getPersonal());
+            cuota.setSucursal(personalAdelanto.getSucursal());
+            cuota.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
+            cuota.setObservaciones(personalAdelanto.getObservaciones());
+            cuota.setTotalCuotas(personalAdelanto.getTotalCuotas());
+            cuota.setUsuarioAlta(personalAdelanto.getUsuarioAlta());
+            cuota.setNumeroLote(0);
+            cuota.setEstaAnulado(false);
+            cuotasAdelantos.add(cuota);
+            total = total.add(importe);
+        }
+        if(total.compareTo(personalAdelanto.getImporte()) == 1) {
+            dif = total.subtract(personalAdelanto.getImporte());
+            cuotasAdelantos.get(personalAdelanto.getTotalCuotas()-1).setImporte(importe.subtract(dif));
+            
+        } else if(total.compareTo(personalAdelanto.getImporte()) == -1){
+            dif = personalAdelanto.getImporte().subtract(total);
+            cuotasAdelantos.get(personalAdelanto.getTotalCuotas()-1).setImporte(importe.add(dif));
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("personaladelantofiltro", theFilter)
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(cuotasAdelantos);
+        return mapper.readValue(string, Object.class);
+    }
+    
+    //Obtiene la lista por filtro
+    public Object listarPorFiltros(int idEmpresa, int idSucursal,Date fechaDesde,
+            Date fechaHasta,boolean estaAnulado, String alias, int estado) throws IOException, Exception {
+        List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(idEmpresa, idSucursal,fechaDesde,fechaHasta,
+                estaAnulado,alias,estado);
+        if (adelantos.isEmpty()) {
+            throw new Exception("No se encontraron registros.");
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("personaladelantofiltro", theFilter)
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(adelantos);
+        return mapper.readValue(string, Object.class);
+    }
+    
     
     //Obtiene la lista completa
     public Object listarPorLote(Date fechaEmision, int numeroLote) throws IOException {
         return elementoDAO.listarPorNumeroLote(numeroLote, fechaEmision);
     }
-
+    
     //Agrega un lote
     @Transactional(rollbackFor = Exception.class)
     public Object agregarLote(PersonalAdelantoLoteDTO adelantos) throws IOException {
@@ -144,17 +224,38 @@ public class PersonalAdelantoService {
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept();
+                .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajefiltro", theFilter)
-                .addFilter("personaladelantofiltro", theFilter);
+                .addFilter("personaladelantofiltro", theFilter)
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(adelantosFallados);
         return mapper.readValue(string, Object.class);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
+    public List<PersonalAdelanto> agregarPrestamo(List<PersonalAdelanto> elementos) {
+        for (PersonalAdelanto elemento : elementos) {
+            elemento.setFechaVto(new Date(new java.util.Date().getTime()));
+            elemento.setCuota((short)1);
+            elemento.setEstaAnulado(false);
+            elemento.setNumeroLote(0);
+            elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
+            elementoDAO.saveAndFlush(elemento);
+        }
+        return elementos;
+    }
+    
+    //Agrega un registro
+    @Transactional(rollbackFor = Exception.class)
     public PersonalAdelanto agregar(PersonalAdelanto elemento) {
+        elemento.setFechaVto(new Date(new java.util.Date().getTime()));
+        elemento.setCuota((short)1);
+        elemento.setEstaAnulado(false);
+        elemento.setNumeroLote(0);
+        elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
         return elementoDAO.saveAndFlush(elemento);
     }
 

@@ -107,6 +107,14 @@ public class PersonalController {
         return elementoService.listarPorAliasYEmpresa(alias, idEmpresa);
     }
     
+    //Obtiene una lista por alias, sucursal y empresa
+    @GetMapping(value = URL + "/listarActivosPorAliasEmpresaYSucursal/{alias}/{idEmpresa}/{idSucursal}")
+    @ResponseBody
+    public Object listarActivosPorAliasEmpresaYSucursal(@PathVariable String alias, @PathVariable
+            int idEmpresa, @PathVariable int idSucursal) throws IOException {
+        return elementoService.listarActivosPorAliasEmpresaYSucursal(alias, idEmpresa, idSucursal);
+    }
+    
     //Obtiene una lista de choferes por alias
     @GetMapping(value = URL + "/listarChoferPorAlias/{alias}")
     @ResponseBody

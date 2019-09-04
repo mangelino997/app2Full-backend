@@ -60,6 +60,13 @@ public class PersonalAdelantoController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista de cuotas
+    @PostMapping(value = URL + "/listarCuotas")
+    @ResponseBody
+    public Object listarCuotas(@RequestBody PersonalAdelanto personalAdelanto) throws IOException {
+        return elementoService.listarCoutas(personalAdelanto);
+    }
+    
     //Obtiene una lista por lote o fecha emision
     @GetMapping(value = URL + "/listarPorLote/{fechaEmision}/{numeroLote}")
     @ResponseBody
@@ -67,11 +74,53 @@ public class PersonalAdelantoController {
         return elementoService.listarPorLote(fechaEmision, numeroLote);
     }
     
+    //Obtiene una lista por filtros
+    @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{idSucursal}/{fechaDesde}/{fechaHasta}/{adelanto}/{estado}/{alias}")
+    @ResponseBody
+    public Object listarPorFiltros(@PathVariable int idEmpresa,@PathVariable int idSucursal,
+            @PathVariable Date fechaDesde,@PathVariable Date fechaHasta,@PathVariable boolean adelanto,
+            @PathVariable int estado, @PathVariable String alias) throws IOException, Exception {
+        return elementoService.listarPorFiltros(idEmpresa,idSucursal,fechaDesde, fechaHasta, adelanto,alias, estado);
+    }
+    
     //Agrega un lote
     @PostMapping(value = URL + "/agregarLote")
     @ResponseBody
     public Object agregarLote(@RequestBody PersonalAdelantoLoteDTO personalAdelanto) throws IOException {
-        return elementoService.agregarLote(personalAdelanto);
+        try {
+            //Retorna mensaje de agregado con exito
+            return elementoService.agregarLote(personalAdelanto);
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
+    //Agrega un registro con prestamo
+    @PostMapping(value = URL + "/agregarPrestamo")
+    public ResponseEntity<?> agregarPrestamo(@RequestBody List<PersonalAdelanto> elementos) {
+        try {
+            List<PersonalAdelanto> a = elementoService.agregarPrestamo(elementos);
+            //Envia la nueva lista a los usuarios subscriptos
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de agregado con exito
+            return MensajeRespuesta.agregado(a.get(a.size()-1).getId());
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un registro

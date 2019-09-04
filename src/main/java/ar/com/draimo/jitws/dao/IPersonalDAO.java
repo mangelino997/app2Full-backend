@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Personal;
+import ar.com.draimo.jitws.model.Sucursal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -52,6 +53,9 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     
     //Obtiene un listado por alias y empresa
     public List<Personal> findByEmpresaAndAliasContaining(Empresa empresa, String alias);
+    
+    //Obtiene un listado por alias, sucursal y empresa
+    public List<Personal> findByEmpresaAndAliasContainingAndSucursalAndEstaActivaTrue(Empresa empresa, String alias, Sucursal sucursal);
     
     //Obtiene un listado por empresa
     public List<Personal> findByEmpresa(Empresa empresa);
