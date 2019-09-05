@@ -4,7 +4,6 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.Localidad;
 import ar.com.draimo.jitws.model.Provincia;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -23,6 +22,6 @@ public interface ILocalidadDAO extends JpaRepository<Localidad, Integer> {
     public List<Localidad> findByNombreContaining(String nombre);
     
     //Obtiene una lista por id provincia
-    public List<Localidad> findByProvincia(Optional<Provincia> elemento);
+    public List<Localidad> findByProvincia(Provincia elemento);
     
 }
