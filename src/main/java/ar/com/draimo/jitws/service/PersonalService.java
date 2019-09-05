@@ -120,8 +120,8 @@ public class PersonalService {
         if (alias.equals("***")) {
             elementos = elementoDAO.findByEmpresa(empresa);
         } else {
-            elementos = 
-            elementoDAO.findByEmpresaAndAliasContainingAndSucursalAndEstaActivaTrue(empresa, alias,sucursal);
+            elementos
+                    = elementoDAO.findByEmpresaAndAliasContainingAndSucursalAndEstaActivaTrue(empresa, alias, sucursal);
         }
         if (elementos.isEmpty()) {
             throw new Exception("No se encontraron registros.");
@@ -282,20 +282,20 @@ public class PersonalService {
             elemento.setPdfAltaTemprana(null);
         }
         //Obtiene AntiguedadAntAnio, si es mayor a 60 retorna error
-        if (elemento.getAntiguedadAntAnio()>60) {
+        if (elemento.getAntiguedadAntAnio() > 60) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. AÑO");
         }
         //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
-        if (elemento.getAntiguedadAntMes()>11) {
+        if (elemento.getAntiguedadAntMes() > 11) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. MES");
         }
         //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
-        if (elemento.getAdherenteObraSocial()>12) {
+        if (elemento.getAdherenteObraSocial() > 12) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en ADHERENTE OBRA SOCIAL");
         }
         //Obtiene longitud de anio, si es mayor a 2 retorna error
         String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
-        if (cuotasPr.length()>2) {
+        if (cuotasPr.length() > 2) {
             throw new Exception("Cantidad caracteres excedida en CUOTAS PRESTAMO");
         }
         return elementoDAO.saveAndFlush(elemento);
@@ -308,20 +308,20 @@ public class PersonalService {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         Personal personal = elementoDAO.findById(elemento.getId()).get();
         //Obtiene AntiguedadAntAnio, si es mayor a 60 retorna error
-        if (elemento.getAntiguedadAntAnio()>60) {
+        if (elemento.getAntiguedadAntAnio() > 60) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. AÑO");
         }
         //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
-        if (elemento.getAntiguedadAntMes()>11) {
+        if (elemento.getAntiguedadAntMes() > 11) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. MES");
         }
         //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
-        if (elemento.getAdherenteObraSocial()>12) {
+        if (elemento.getAdherenteObraSocial() > 12) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en ADHERENTE OBRA SOCIAL");
         }
         //Obtiene longitud de anio, si es mayor a 2 retorna error
         String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
-        if (cuotasPr.length()>2) {
+        if (cuotasPr.length() > 2) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en CUOTAS PRESTAMO");
         }
         if (foto.getOriginalFilename().equals("")) {
@@ -345,7 +345,7 @@ public class PersonalService {
             }
         }
         if (licConducir.getOriginalFilename().equals("")) {
-            if (personal.getPdfLicConducir()!= null) {
+            if (personal.getPdfLicConducir() != null) {
                 pdfDAO.deleteById(personal.getPdfLicConducir().getId());
                 elemento.setPdfLicConducir(null);
             } else {
