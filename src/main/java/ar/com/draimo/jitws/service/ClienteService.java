@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -138,7 +139,7 @@ public class ClienteService {
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         List<OrdenVenta> ordenes = elemento.getOrdenesVentas();
         elemento.setOrdenesVentas(null);
-        Cliente c = null;
+        Cliente c;
         if (elemento.getCuentaGrupo() != null) {
             c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
             if (c != null) {
@@ -147,8 +148,6 @@ public class ClienteService {
                 throw new DataIntegrityViolationException("Registro no existente: CUENTA GRUPO");
             }
         }
-        List<CuentaBancaria> cuentasBancarias = elemento.getCuentasBancarias();
-        elemento.setCuentasBancarias(null);
         Cliente cliente = elementoDAO.saveAndFlush(elemento);
         ClienteOrdenVenta clienteOrdenVenta = new ClienteOrdenVenta();
         //Agrega la lista de ordenes de venta del cliente
@@ -166,17 +165,10 @@ public class ClienteService {
                 clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
             }
         }
-        ClienteCuentaBancaria clienteCuentaBancaria;
-        CuentaBancaria cb;
-        //Recorre la lista de cuentas bancarias
-        if (!cuentasBancarias.isEmpty()) {
-            for (CuentaBancaria cuentaBancaria : cuentasBancarias) {
-                cb = cuentaBancaria.getId() != 0 ? cuentaBancariaDAO.findById(cuentaBancaria.getId()).get() : null;
-                clienteCuentaBancaria = new ClienteCuentaBancaria();
-                clienteCuentaBancaria.setCliente(cliente);
-                clienteCuentaBancaria.setCuentaBancaria(cb);
-                clienteCuentaBancariaDAO.saveAndFlush(clienteCuentaBancaria);
-            }
+        //Recorre la lista de cliente cuenta bancaria y agrega registros
+        for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
+            ccb.setCliente(cliente);
+            clienteCuentaBancariaDAO.saveAndFlush(ccb);
         }
         return cliente;
     }
@@ -188,13 +180,21 @@ public class ClienteService {
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
-        Cliente c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
-        if (c != null) {
-            elemento.setCuentaGrupo(c);
-        } else {
-            throw new DataIntegrityViolationException("Registro no existente: CUENTA GRUPO");
+        Cliente c;
+        if (elemento.getCuentaGrupo() != null) {
+            c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
+            if (c != null) {
+                elemento.setCuentaGrupo(c);
+            } else {
+                throw new DataIntegrityViolationException("Registro no existente: CUENTA GRUPO");
+            }
         }
-        elementoDAO.save(elemento);
+        Cliente cliente = elementoDAO.save(elemento);
+        //Recorre la lista de cliente cuenta bancaria y agrega registros
+        for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
+            ccb.setCliente(cliente);
+            clienteCuentaBancariaDAO.saveAndFlush(ccb);
+        }
     }
 
     //Establece el alias de un registro

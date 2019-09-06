@@ -1,7 +1,6 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
@@ -16,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -227,13 +227,9 @@ public class Cliente extends ObjetoGenerico {
     @JsonIgnoreProperties(value = {"clientes","empresas"})
     private List<OrdenVenta> ordenesVentas = new ArrayList<>();
     
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    @JoinTable(name = "clientecuentabancaria",
-        joinColumns = @JoinColumn(name = "idCliente"),
-        inverseJoinColumns = @JoinColumn(name = "idCuentaBancaria"),
-        uniqueConstraints={@UniqueConstraint(columnNames={"idCliente", "idCuentaBancaria"})})  
-    @JsonIgnoreProperties(value = {"cliente"})
-    private List<CuentaBancaria> cuentasBancarias = new ArrayList<>();
+    @JsonIgnoreProperties("cliente")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
+    private List<ClienteCuentaBancaria> clienteCuentasBancarias;
     
     //Getters y Setters de la clase
 
@@ -581,12 +577,12 @@ public class Cliente extends ObjetoGenerico {
         this.esReceptorFCE = esReceptorFCE;
     }
 
-    public List<CuentaBancaria> getCuentasBancarias() {
-        return cuentasBancarias;
+    public List<ClienteCuentaBancaria> getClienteCuentasBancarias() {
+        return clienteCuentasBancarias;
     }
 
-    public void setCuentasBancarias(List<CuentaBancaria> cuentasBancarias) {
-        this.cuentasBancarias = cuentasBancarias;
+    public void setClienteCuentasBancarias(List<ClienteCuentaBancaria> clienteCuentasBancarias) {
+        this.clienteCuentasBancarias = clienteCuentasBancarias;
     }
     
 }

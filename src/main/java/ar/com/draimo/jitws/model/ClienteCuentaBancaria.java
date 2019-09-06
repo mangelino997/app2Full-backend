@@ -16,6 +16,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "clientecuentabancaria")
 public class ClienteCuentaBancaria extends ObjetoGenerico {
+    
+    //Referencia a la clase empresa
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idEmpresa", nullable = false)
+    private Empresa empresa;
 
     //Referencia a la clase cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -24,10 +29,18 @@ public class ClienteCuentaBancaria extends ObjetoGenerico {
     
     //Referencia a la clase cuentaBancaria
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCuentaBancaria", nullable = false)
+    @JoinColumn(name = "idCuentaBancaria", nullable = true)
     private CuentaBancaria cuentaBancaria;
     
     //Getters y Setters de la clase
+    
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {    
+        this.empresa = empresa;
+    }
 
     public Cliente getCliente() {
         return cliente;
