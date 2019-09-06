@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -162,7 +163,7 @@ public class PersonalAdelantoService {
         List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(idEmpresa, idSucursal,fechaDesde,fechaHasta,
                 estaAnulado,alias,estado);
         if (adelantos.isEmpty()) {
-            throw new Exception("No se encontraron registros.");
+            throw new DataIntegrityViolationException("No se encontraron registros.");
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

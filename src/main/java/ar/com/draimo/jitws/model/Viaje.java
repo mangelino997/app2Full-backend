@@ -160,32 +160,32 @@ public class Viaje extends ObjetoGenerico {
     
     //Define la lista de tramos
     @JsonIgnoreProperties("viaje")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeTramo> viajeTramos;
     
     //Define la lista de ordenes de combustible
     @JsonIgnoreProperties("viaje")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeCombustible> viajeCombustibles;
     
     //Define la lista de adelantos de efectivo
     @JsonIgnoreProperties("viaje")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeEfectivo> viajeEfectivos;
     
     //Define la lista de ordenes de insumo
     @JsonIgnoreProperties("viaje")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeInsumo> viajeInsumos;
     
     //Define la lista de gastos
     @JsonIgnoreProperties("viaje")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeGasto> viajeGastos;
     
     //Define la lista de peajes
     @JsonIgnoreProperties("viaje")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajePeaje> viajePeajes;
 
     //Getters y Setters de la clase

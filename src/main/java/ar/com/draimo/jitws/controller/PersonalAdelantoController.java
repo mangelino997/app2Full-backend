@@ -6,7 +6,6 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PersonalAdelanto;
 import ar.com.draimo.jitws.service.PersonalAdelantoService;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

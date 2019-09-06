@@ -73,22 +73,22 @@ public class VehiculoProveedorService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(VehiculoProveedor elemento) {
-        elemento.setAlias(elemento.getDominio());
+        elemento.setAlias(elemento.getId() + " - " + elemento.getProveedor().getNombreFantasia()
+                + " - " + elemento.getDominio() + " - " + elemento.getMarcaVehiculo().getNombre());
         elementoDAO.save(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VehiculoProveedor elemento) throws Exception {
+    public VehiculoProveedor actualizar(VehiculoProveedor elemento) throws Exception {
         elemento = formatearStrings(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-        elemento.setAlias(elemento.getDominio());
         //Obtiene longitud de anio, si es mayor a 4 retorna error
         String anio = String.valueOf(elemento.getAnioFabricacion());
         if (anio.length()>4) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
         }
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro

@@ -35,9 +35,10 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
     
     //Obtiene un listado por filtros
     @Query(value = "SELECT * FROM personaladelanto a INNER JOIN personal p ON "
-            + "p.id=a.idPersonal WHERE idEmpresa=:idEmpresa AND idSucursal=:idSucursal "
-            + "AND fechaEmision BETWEEN :fechaDesde AND :fechaHasta AND estaAnulado=:estaAnulado "
-            + "AND (estado>:estado OR estado=1)AND alias LIKE %:alias%", nativeQuery = true)
+            + "p.id=a.idPersonal WHERE (:idEmpresa = 0 OR a.idEmpresa=:idEmpresa) AND "
+            + "(:idSucursal =0 OR a.idSucursal=:idSucursal) AND a.fechaEmision BETWEEN"
+            + " :fechaDesde AND :fechaHasta AND (:estaAnulado IS NULL OR a.estaAnulado=:estaAnulado) "
+            + "AND (:estado=0 OR (a.totalCuotas>:estado OR a.totalCuotas=1))AND p.alias LIKE %:alias%", nativeQuery = true)
     public List<PersonalAdelanto> listarPorFiltros(@Param("idEmpresa") int idEmpresa,
             @Param("idSucursal") int idSucursal, @Param("fechaDesde") Date fechaDesde,
             @Param("fechaHasta") Date fechaHasta, @Param("estaAnulado") boolean estaAnulado,

@@ -32,12 +32,12 @@ public class AfipCaea extends ObjetoGenerico {
     
     //Define el mes
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "mes", nullable = false)
+    @JoinColumn(name = "idMes", nullable = false)
     private Mes mes;
     
     //Define la quincena
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "quincena", nullable = false)
+    @JoinColumn(name = "idQuincena", nullable = false)
     private Quincena quincena;
     
     //Define el numero caea

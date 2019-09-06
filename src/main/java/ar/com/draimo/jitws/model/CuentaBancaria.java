@@ -47,7 +47,7 @@ public class CuentaBancaria extends ObjetoGenerico {
     private String cbu;
 
     //Define el alias del cbu
-    @Column(name = "aliasCBU", length = 45, nullable = true)
+    @Column(name = "aliasCBU", length = 20, nullable = true)
     private String aliasCBU;
 
     //Define si esta activa

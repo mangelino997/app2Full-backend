@@ -86,8 +86,8 @@ public class RetiroDepositoComprobanteController {
         try {
             RetiroDepositoComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes", 
-                    elementoService.listarComprobantes(a.getRetiroDeposito().getId()));
+            //template.convertAndSend(TOPIC + "/listarComprobantes", 
+            //        elementoService.listarComprobantes(a.getRetiroDeposito().getId()));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -109,8 +109,8 @@ public class RetiroDepositoComprobanteController {
             //Actualiza el registro
             RetiroDepositoComprobante a =  elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/listarComprobantes", 
-                    elementoService.listarComprobantes(a.getRetiroDeposito().getId()));
+            //template.convertAndSend(TOPIC + "/listarComprobantes", 
+            //        elementoService.listarComprobantes(a.getRetiroDeposito().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

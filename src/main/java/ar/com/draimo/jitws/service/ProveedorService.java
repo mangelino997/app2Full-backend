@@ -17,26 +17,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio Proveedor
+ *
  * @author blas
  */
-
 @Service
 public class ProveedorService {
 
     //Define la referencia al dao
     @Autowired
     IProveedorDAO elementoDAO;
-    
+
     //Define la referencia al dao ProveedorCuentaContableDAO
     @Autowired
     IProveedorCuentaContableDAO proveedorCuentaContableDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Proveedor elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<Proveedor> proveedores = elementoDAO.findAll();
@@ -45,14 +45,14 @@ public class ProveedorService {
                 .serializeAllExcept("padre");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(proveedores);
+        String string = mapper.writer(filters).writeValueAsString(proveedores);
         return new ObjectMapper().readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
         List<Proveedor> proveedores = null;
-        if(alias.equals("***")) {
+        if (alias.equals("***")) {
             proveedores = elementoDAO.findAll();
         } else {
             proveedores = elementoDAO.findByAliasContaining(alias);
@@ -62,7 +62,7 @@ public class ProveedorService {
                 .serializeAllExcept("padre");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(proveedores);
+        String string = mapper.writer(filters).writeValueAsString(proveedores);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
@@ -72,17 +72,19 @@ public class ProveedorService {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         Proveedor proveedor = elementoDAO.saveAndFlush(elemento);
-        for(ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
-            pcc.setProveedor(proveedor);
-            proveedorCuentaContableDAO.saveAndFlush(pcc);
+        if (elemento.getProveedorCuentasContables() != null) {
+            for (ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
+                pcc.setProveedor(proveedor);
+                proveedorCuentaContableDAO.saveAndFlush(pcc);
+            }
         }
         return proveedor;
     }
-    
+
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(Proveedor elemento) {
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
+        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);
     }
@@ -92,57 +94,59 @@ public class ProveedorService {
     public void actualizar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() 
+        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
                 + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         Proveedor proveedor = elementoDAO.save(elemento);
-        for(ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
-            pcc.setProveedor(proveedor);
-            proveedorCuentaContableDAO.save(pcc);
+        if (elemento.getProveedorCuentasContables() != null) {
+            for (ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
+                pcc.setProveedor(proveedor);
+                proveedorCuentaContableDAO.save(pcc);
+            }
         }
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-    
+
     //Formatea los strings
     private Proveedor formatearStrings(Proveedor elemento) {
         elemento.setRazonSocial(elemento.getRazonSocial().trim().toUpperCase());
         elemento.setDomicilio(elemento.getDomicilio().trim());
         elemento.setNumeroDocumento(elemento.getNumeroDocumento().trim());
-        if(elemento.getNombreFantasia()!= null) {
-        elemento.setNombreFantasia(elemento.getNombreFantasia().trim());
+        if (elemento.getNombreFantasia() != null) {
+            elemento.setNombreFantasia(elemento.getNombreFantasia().trim());
         }
-        if(elemento.getNumeroIIBB() != null) {
+        if (elemento.getNumeroIIBB() != null) {
             elemento.setNumeroIIBB(elemento.getNumeroIIBB().trim());
         }
-        if(elemento.getSitioWeb() != null) {
+        if (elemento.getSitioWeb() != null) {
             elemento.setSitioWeb(elemento.getSitioWeb().trim().toLowerCase());
         }
-        if(elemento.getTelefono() != null) {
+        if (elemento.getTelefono() != null) {
             elemento.setTelefono(elemento.getTelefono().trim());
         }
-        if(elemento.getObservaciones() != null) {
+        if (elemento.getObservaciones() != null) {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
-        if(elemento.getNotaIngresarComprobante() != null) {
+        if (elemento.getNotaIngresarComprobante() != null) {
             elemento.setNotaIngresarComprobante(elemento.getNotaIngresarComprobante().trim());
         }
-        if(elemento.getNotaImpresionOrdenPago() != null) {
+        if (elemento.getNotaImpresionOrdenPago() != null) {
             elemento.setNotaImpresionOrdenPago(elemento.getNotaImpresionOrdenPago().trim());
         }
-        if(elemento.getNumeroCuenta() != null) {
+        if (elemento.getNumeroCuenta() != null) {
             elemento.setNumeroCuenta(elemento.getNumeroCuenta().trim());
         }
-        if(elemento.getTitular() != null) {
+        if (elemento.getTitular() != null) {
             elemento.setTitular(elemento.getTitular().trim());
         }
-        if(elemento.getNumeroCBU() != null) {
+        if (elemento.getNumeroCBU() != null) {
             elemento.setNumeroCBU(elemento.getNumeroCBU().trim());
         }
-        if(elemento.getAliasCBU() != null) {
+        if (elemento.getAliasCBU() != null) {
             elemento.setAliasCBU(elemento.getAliasCBU().trim());
         }
         return elemento;
