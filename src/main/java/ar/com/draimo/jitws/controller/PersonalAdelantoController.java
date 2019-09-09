@@ -67,19 +67,47 @@ public class PersonalAdelantoController {
     }
     
     //Obtiene una lista por lote o fecha emision
-    @GetMapping(value = URL + "/listarPorLote/{fechaEmision}/{numeroLote}")
+    @GetMapping(value = URL + "/listarLotes/{fechaDesde}/{fechaHasta}/{idEmpresa}")
     @ResponseBody
-    public Object listarPorLote(@PathVariable Date fechaEmision, @PathVariable int numeroLote ) throws IOException {
-        return elementoService.listarPorLote(fechaEmision, numeroLote);
+    public List<PersonalAdelantoLoteDTO> listarLotes(@PathVariable Date fechaDesde, @PathVariable Date fechaHasta,
+            @PathVariable int idEmpresa ) throws IOException {
+        return elementoService.listarLotes(fechaDesde, fechaHasta, idEmpresa);
     }
     
     //Obtiene una lista por filtros
     @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{idSucursal}/{fechaDesde}/{fechaHasta}/{adelanto}/{estado}/{alias}")
     @ResponseBody
     public Object listarPorFiltros(@PathVariable int idEmpresa,@PathVariable int idSucursal,
-            @PathVariable Date fechaDesde,@PathVariable Date fechaHasta,@PathVariable boolean adelanto,
+            @PathVariable Date fechaDesde,@PathVariable Date fechaHasta,@PathVariable int adelanto,
             @PathVariable int estado, @PathVariable String alias) throws IOException, Exception {
         return elementoService.listarPorFiltros(idEmpresa,idSucursal,fechaDesde, fechaHasta, adelanto,alias, estado);
+    }
+    //Actualiza un registro
+    @PutMapping(value = URL + "/anularLote")
+    public ResponseEntity<?> anularLote(@RequestBody PersonalAdelanto elemento) {
+        try {
+            //Actualiza el registro
+            elementoService.anularLote(elemento);
+            //Envia la nueva lista a los usuarios subscripto
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de actualizado con exito
+            return MensajeRespuesta.anulado();
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (JpaObjectRetrievalFailureException jorfe) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
+        } catch(ObjectOptimisticLockingFailureException oolfe) {
+            //Retorna mensaje de transaccion no actualizada
+            return MensajeRespuesta.transaccionNoActualizada();
+        }catch(MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch(Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
     }
     
     //Agrega un lote

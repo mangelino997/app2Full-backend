@@ -44,4 +44,17 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
             @Param("fechaHasta") Date fechaHasta, @Param("estaAnulado") boolean estaAnulado,
             @Param("alias") String alias, @Param("estado") int estado);
     
-}
+    //Obtiene un listado de lotes
+    @Query(value = "SELECT numeroLote, count(id) as legajos, idEmpresa, idSucursal, "
+            + "importe, observaciones, fechaEmision,idUsuarioAlta FROM personaladelanto "
+            + "where numeroLote > 0 and fechaEmision between :fechaDesde and :fechaHasta "
+            + "and idEmpresa=:idEmpresa and estaAnulado= false group by numeroLote, idEmpresa, idSucursal, importe, "
+            + "observaciones, fechaEmision, idUsuarioAlta", nativeQuery = true)
+    public Object[] listarLotes(@Param("fechaDesde") Date fechaDesde, @Param("fechaHasta")
+            Date fechaHasta, @Param("idEmpresa") int idEmpresa);
+    
+    //Anula los adelantos por lote
+    @Query(value = "select * from personaladelanto  where numeroLote =:numeroLote", nativeQuery = true)
+    public void anularPorLote(@Param("numeroLote") int numeroLote);
+    
+    }
