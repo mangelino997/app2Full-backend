@@ -71,7 +71,7 @@ public class ProveedorCuentaContableService {
     
     //Obtiene una lista por PlanCuenta
     public Object listarPorPlanCuenta(int idPlanCuenta) throws IOException {
-        List<ProveedorCuentaContable> elementos = elementoDAO.findByPlanCuenta(
+        List<ProveedorCuentaContable> elementos = elementoDAO.findByPlanCuentaCompra(
                 planCuentaDAO.findById(idPlanCuenta).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

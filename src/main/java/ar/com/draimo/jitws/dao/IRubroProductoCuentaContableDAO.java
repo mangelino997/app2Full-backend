@@ -26,6 +26,6 @@ public interface IRubroProductoCuentaContableDAO extends JpaRepository<RubroProd
     public List<RubroProductoCuentaContable> findByRubroProducto(RubroProducto rubroProducto);
     
     //Obtiene una lista por PlanCuenta
-    public List<RubroProductoCuentaContable> findByPlanCuenta(PlanCuenta planCuenta);
+    public List<RubroProductoCuentaContable> findByPlanCuentaCompra(PlanCuenta planCuenta);
     
 }

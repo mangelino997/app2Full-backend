@@ -24,8 +24,8 @@ public class ProveedorCuentaContable extends ObjetoGenerico {
     
     //Referencia a la clase PlanCuenta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idPlanCuenta", nullable = true)
-    private PlanCuenta planCuenta;
+    @JoinColumn(name = "idPlanCuentaCompra", nullable = true)
+    private PlanCuenta planCuentaCompra;
     
     //Referencia a la clase Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -42,12 +42,12 @@ public class ProveedorCuentaContable extends ObjetoGenerico {
         this.empresa = empresa;
     }
 
-    public PlanCuenta getPlanCuenta() {
-        return planCuenta;
+    public PlanCuenta getPlanCuentaCompra() {
+        return planCuentaCompra;
     }
 
-    public void setPlanCuenta(PlanCuenta planCuenta) {
-        this.planCuenta = planCuenta;
+    public void setPlanCuentaCompra(PlanCuenta planCuentaCompra) {
+        this.planCuentaCompra = planCuentaCompra;
     }
 
     public Proveedor getProveedor() {
