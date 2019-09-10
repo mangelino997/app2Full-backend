@@ -159,9 +159,15 @@ public class PersonalAdelantoService {
     
     //Obtiene la lista por filtro
     public Object listarPorFiltros(int idEmpresa, int idSucursal,Date fechaDesde,
-            Date fechaHasta,boolean estaAnulado, String alias, int estado) throws IOException, Exception {
-        List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(idEmpresa, idSucursal,fechaDesde,fechaHasta,
-                estaAnulado,alias,estado);
+            Date fechaHasta,int estaAnulado, String alias, int estado) throws IOException, Exception {
+        Boolean anulado = new Boolean(null);
+        if (estaAnulado==1) {
+            anulado = false;
+        }else if(estaAnulado==2) {
+            anulado = true;
+        }
+        List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(idEmpresa,
+                idSucursal,fechaDesde,fechaHasta, anulado,alias,estado);
         if (adelantos.isEmpty()) {
             throw new DataIntegrityViolationException("No se encontraron registros.");
         }
@@ -181,6 +187,31 @@ public class PersonalAdelantoService {
     //Obtiene la lista completa
     public Object listarPorLote(Date fechaEmision, int numeroLote) throws IOException {
         return elementoDAO.listarPorNumeroLote(numeroLote, fechaEmision);
+    }
+    
+  //Agrega un lote
+    @Transactional(rollbackFor = Exception.class)
+    public List<PersonalAdelantoLoteDTO> listarLotes(Date fechaDesde, Date fechaHasta, int idEmpresa) throws IOException {
+        //Obtiene un listado de personales por filtros
+         PersonalAdelantoLoteDTO palDto;
+         List<PersonalAdelantoLoteDTO> adelantosDto = new ArrayList<>();
+       Object[] adelantos = elementoDAO.listarLotes(fechaDesde,fechaHasta, idEmpresa);
+       Object[] elementos;
+       for (Object elemento : adelantos) {
+           elementos = (Object[]) elemento;
+           palDto = new PersonalAdelantoLoteDTO();
+           palDto.setNumeroLote((Integer) elementos[0]);
+           palDto.setLegajos((BigInteger) elementos[1]);
+           palDto.setIdEmpresa((Integer) elementos[2]);
+           palDto.setIdSucursal((Integer) elementos[3]);
+           palDto.setIdUsuarioAlta((Integer) elementos[7]);
+           palDto.setImporte((BigDecimal) elementos[4]);
+           palDto.setObservaciones((String) elementos[5]);
+           palDto.setFechaEmision((Date) elementos[6]);
+           palDto.setImporteTotal(palDto.getImporte().multiply(BigDecimal.valueOf(palDto.getNumeroLote())));
+           adelantosDto.add(palDto);
+       }
+       return adelantosDto;
     }
     
     //Agrega un lote
@@ -247,6 +278,15 @@ public class PersonalAdelantoService {
             elementoDAO.saveAndFlush(elemento);
         }
         return elementos;
+    }
+    
+    //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void anularLote(PersonalAdelanto elemento) {
+//        List<PersonalAdelanto> adel = elementoDAO.anularPorLote(elemento.getNumeroLote());
+//        for (PersonalAdelanto per : adel) {
+//            
+//        }
     }
     
     //Agrega un registro

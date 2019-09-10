@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
@@ -43,10 +44,12 @@ public class PersonalAdelanto extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
 
     //Define Fecha de emision
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaEmision", nullable = false)
     private Date fechaEmision;
 
     //Define Fecha de vencimiento
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaVto", nullable = false)
     private Date fechaVto;
 
