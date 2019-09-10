@@ -75,12 +75,10 @@ public class PersonalAdelantoController {
     }
     
     //Obtiene una lista por filtros
-    @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{idSucursal}/{fechaDesde}/{fechaHasta}/{adelanto}/{estado}/{alias}")
+    @PostMapping(value = URL + "/listarPorFiltros")
     @ResponseBody
-    public Object listarPorFiltros(@PathVariable int idEmpresa,@PathVariable int idSucursal,
-            @PathVariable Date fechaDesde,@PathVariable Date fechaHasta,@PathVariable int adelanto,
-            @PathVariable int estado, @PathVariable String alias) throws IOException, Exception {
-        return elementoService.listarPorFiltros(idEmpresa,idSucursal,fechaDesde, fechaHasta, adelanto,alias, estado);
+    public Object listarPorFiltros(@RequestBody PersonalAdelantoLoteDTO personalAdelanto) throws IOException, Exception {
+        return elementoService.listarPorFiltros(personalAdelanto);
     }
     //Actualiza un registro
     @PutMapping(value = URL + "/anularLote")

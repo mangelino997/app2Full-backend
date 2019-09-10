@@ -39,6 +39,22 @@ public class PersonalAdelantoLoteDTO {
 
     //Define la fecha de emision
     private Date fechaEmision;
+    
+    //Atributos faltantes para el metodo listarPorFiltros
+    //Define la fecha de emision
+    private Date fechaDesde;
+    
+    //Define la fecha de emision
+    private Date fechaHasta;
+    
+    //Define estado
+    private int estado;
+    
+    //Define adelanto
+    private int adelanto;
+    
+    //Define alias
+    private String alias;
 
     public int getIdEmpresa() {
         return idEmpresa;
@@ -118,6 +134,46 @@ public class PersonalAdelantoLoteDTO {
 
     public void setFechaEmision(Date fechaEmision) {
         this.fechaEmision = fechaEmision;
+    }
+
+    public Date getFechaDesde() {
+        return fechaDesde;
+    }
+
+    public void setFechaDesde(Date fechaDesde) {
+        this.fechaDesde = fechaDesde;
+    }
+
+    public Date getFechaHasta() {
+        return fechaHasta;
+    }
+
+    public void setFechaHasta(Date fechaHasta) {
+        this.fechaHasta = fechaHasta;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estadp) {
+        this.estado = estadp;
+    }
+
+    public int getAdelanto() {
+        return adelanto;
+    }
+
+    public void setAdelanto(int adelanto) {
+        this.adelanto = adelanto;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
     
 }

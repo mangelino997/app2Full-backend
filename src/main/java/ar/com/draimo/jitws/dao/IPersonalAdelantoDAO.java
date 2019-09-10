@@ -33,16 +33,22 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
             + "(:fechaEmision IS NULL OR fechaEmision=:fechaEmision) GROUP BY numeroLote", nativeQuery = true)
     public Object listarPorNumeroLote(@Param("numeroLote") int numeroLote, @Param("fechaEmision") Date fechaEmision);
     
-    //Obtiene un listado por filtros
-    @Query(value = "SELECT * FROM personaladelanto a INNER JOIN personal p ON "
-            + "p.id=a.idPersonal WHERE (:idEmpresa = 0 OR a.idEmpresa=:idEmpresa) AND "
-            + "(:idSucursal =0 OR a.idSucursal=:idSucursal) AND a.fechaEmision BETWEEN"
-            + " :fechaDesde AND :fechaHasta AND (:estaAnulado IS NULL OR a.estaAnulado=:estaAnulado) "
-            + "AND (:estado=0 OR (a.totalCuotas>:estado OR a.totalCuotas=1))AND p.alias LIKE %:alias%", nativeQuery = true)
-    public List<PersonalAdelanto> listarPorFiltros(@Param("idEmpresa") int idEmpresa,
-            @Param("idSucursal") int idSucursal, @Param("fechaDesde") Date fechaDesde,
-            @Param("fechaHasta") Date fechaHasta, @Param("estaAnulado") boolean estaAnulado,
-            @Param("alias") String alias, @Param("estado") int estado);
+    /*Obtiene un listado de adelantos por empresa, sucursal, una fecha de emision que se
+   encuentre entre una fecha (fechaDesde) y otra (FechaHasta), esta anulado, que depende
+   de dos variables (anulado) y (estaAnulado): Si la variable anulado llega en false, lista
+   por todos los registros anulados y no anulados. si llega en true lista por anulado o no
+   segun lo que la varioable estaAnulado contenga. Estado es para saber si es o no un prestamo
+   si llega cero lista todo, si llega mayor 2 lista prestamos y si llega 1 lista adelantos normales.
+   Tambien lista por alias del personal que recibe el prestamo. */
+   @Query(value = "SELECT * FROM personaladelanto a INNER JOIN personal p ON "
+           + "p.id=a.idPersonal WHERE (:idEmpresa = 0 OR a.idEmpresa=:idEmpresa) AND "
+           + "(:idSucursal =0 OR a.idSucursal=:idSucursal) AND a.fechaEmision BETWEEN"
+           + " :fechaDesde AND :fechaHasta AND (:estaAnulado=2 OR a.estaAnulado=:estaAnulado) "
+           + "AND (:estado=0 OR (a.totalCuotas>:estado OR a.totalCuotas=1))AND p.alias LIKE %:alias%", nativeQuery = true)
+   public List<PersonalAdelanto> listarPorFiltros(@Param("idEmpresa") int idEmpresa,
+           @Param("idSucursal") int idSucursal, @Param("fechaDesde") Date fechaDesde,
+           @Param("fechaHasta") Date fechaHasta, @Param("estaAnulado") int estaAnulado,
+           @Param("alias") String alias, @Param("estado") int estado);
     
     //Obtiene un listado de lotes
     @Query(value = "SELECT numeroLote, count(id) as legajos, idEmpresa, idSucursal, "
