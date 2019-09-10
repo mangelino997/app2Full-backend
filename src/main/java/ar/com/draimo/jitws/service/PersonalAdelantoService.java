@@ -31,9 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Define PersonalAdelantoService
+ *
  * @author blas
  */
-
 @Service
 public class PersonalAdelantoService {
 
@@ -60,13 +60,13 @@ public class PersonalAdelantoService {
     //Referencia al DAO de TipoComprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         PersonalAdelanto elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<PersonalAdelanto> personalAdelantos = elementoDAO.findAll();
@@ -76,10 +76,10 @@ public class PersonalAdelantoService {
         /*
         * Recorre la lista de personal adelantos para obtener el idViaje o idReparto de cada item
         * Esto se realiza para evitar error de inner join de mas de 61 tablas
-        */
-        for(PersonalAdelanto personalAdelanto : personalAdelantos) {
+         */
+        for (PersonalAdelanto personalAdelanto : personalAdelantos) {
             id = elementoDAO.obtenerIdViaje(personalAdelanto.getId());
-            if(id != null) {
+            if (id != null) {
                 viaje = new Viaje();
                 viaje.setId(Integer.parseInt(id));
                 personalAdelanto.setViaje(viaje);
@@ -101,14 +101,13 @@ public class PersonalAdelantoService {
         String string = mapper.writer(filters).writeValueAsString(personalAdelantos);
         return mapper.readValue(string, Object.class);
     }
-    
-    
+
     //Genera la tabla de cuotas
     public Object listarCoutas(PersonalAdelanto personalAdelanto) throws IOException {
         List<PersonalAdelanto> cuotasAdelantos = new ArrayList<>();
         PersonalAdelanto cuota;
-        BigDecimal total=new BigDecimal(0);
-        BigDecimal dif=new BigDecimal(0);
+        BigDecimal total = new BigDecimal(0);
+        BigDecimal dif = new BigDecimal(0);
         //Establece la cantidad de dias
         short cantDias = 30;
         //Obtiene la fechaActual
@@ -124,7 +123,7 @@ public class PersonalAdelantoService {
             fechaString = LocalDate.parse(fechaString).plusDays(cantDias).toString();
             cuota.setFechaVto(Date.valueOf(fechaString));
             cuota.setFechaEmision(fecha);
-            cuota.setCuota((short) (i+1));
+            cuota.setCuota((short) (i + 1));
             cuota.setEmpresa(personalAdelanto.getEmpresa());
             cuota.setPersonal(personalAdelanto.getPersonal());
             cuota.setSucursal(personalAdelanto.getSucursal());
@@ -137,13 +136,13 @@ public class PersonalAdelantoService {
             cuotasAdelantos.add(cuota);
             total = total.add(importe);
         }
-        if(total.compareTo(personalAdelanto.getImporte()) == 1) {
+        if (total.compareTo(personalAdelanto.getImporte()) == 1) {
             dif = total.subtract(personalAdelanto.getImporte());
-            cuotasAdelantos.get(personalAdelanto.getTotalCuotas()-1).setImporte(importe.subtract(dif));
-            
-        } else if(total.compareTo(personalAdelanto.getImporte()) == -1){
+            cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(importe.subtract(dif));
+
+        } else if (total.compareTo(personalAdelanto.getImporte()) == -1) {
             dif = personalAdelanto.getImporte().subtract(total);
-            cuotasAdelantos.get(personalAdelanto.getTotalCuotas()-1).setImporte(importe.add(dif));
+            cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(importe.add(dif));
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -156,21 +155,13 @@ public class PersonalAdelantoService {
         String string = mapper.writer(filters).writeValueAsString(cuotasAdelantos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene la lista por filtro
-    public Object listarPorFiltros(int idEmpresa, int idSucursal,Date fechaDesde,
-            Date fechaHasta,int estaAnulado, String alias, int estado) throws IOException, Exception {
-        boolean a= false;
-        boolean anulado = false;
-        if (estaAnulado==1) {
-            anulado = false;
-            a = true;
-        }else if(estaAnulado==2) {
-            anulado = true;
-            a = true;
-        }
-        List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(idEmpresa,
-                idSucursal,fechaDesde,fechaHasta, anulado,alias,estado, a);
+    public Object listarPorFiltros(PersonalAdelantoLoteDTO personalAdelanto) throws IOException, Exception {
+        List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(personalAdelanto.getIdEmpresa(),
+               personalAdelanto.getIdSucursal(), personalAdelanto.getFechaDesde(),
+               personalAdelanto.getFechaHasta(), personalAdelanto.getEstado(), personalAdelanto.getAlias(), 
+               personalAdelanto.getAdelanto());
         if (adelantos.isEmpty()) {
             throw new DataIntegrityViolationException("No se encontraron registros.");
         }
@@ -185,33 +176,32 @@ public class PersonalAdelantoService {
         String string = mapper.writer(filters).writeValueAsString(adelantos);
         return mapper.readValue(string, Object.class);
     }
-    
-    
-  //Agrega un lote
+
+    //Agrega un lote
     @Transactional(rollbackFor = Exception.class)
     public List<PersonalAdelantoLoteDTO> listarLotes(Date fechaDesde, Date fechaHasta, int idEmpresa) throws IOException {
         //Obtiene un listado de personales por filtros
-         PersonalAdelantoLoteDTO palDto;
-         List<PersonalAdelantoLoteDTO> adelantosDto = new ArrayList<>();
-       Object[] adelantos = elementoDAO.listarLotes(fechaDesde,fechaHasta, idEmpresa);
-       Object[] elementos;
-       for (Object elemento : adelantos) {
-           elementos = (Object[]) elemento;
-           palDto = new PersonalAdelantoLoteDTO();
-           palDto.setNumeroLote((Integer) elementos[0]);
-           palDto.setLegajos((BigInteger) elementos[1]);
-           palDto.setIdEmpresa((Integer) elementos[2]);
-           palDto.setIdSucursal((Integer) elementos[3]);
-           palDto.setIdUsuarioAlta((Integer) elementos[7]);
-           palDto.setImporte((BigDecimal) elementos[4]);
-           palDto.setObservaciones((String) elementos[5]);
-           palDto.setFechaEmision((Date) elementos[6]);
-           palDto.setImporteTotal(palDto.getImporte().multiply(BigDecimal.valueOf(palDto.getNumeroLote())));
-           adelantosDto.add(palDto);
-       }
-       return adelantosDto;
+        PersonalAdelantoLoteDTO palDto;
+        List<PersonalAdelantoLoteDTO> adelantosDto = new ArrayList<>();
+        Object[] adelantos = elementoDAO.listarLotes(fechaDesde, fechaHasta, idEmpresa);
+        Object[] elementos;
+        for (Object elemento : adelantos) {
+            elementos = (Object[]) elemento;
+            palDto = new PersonalAdelantoLoteDTO();
+            palDto.setNumeroLote((Integer) elementos[0]);
+            palDto.setLegajos((BigInteger) elementos[1]);
+            palDto.setIdEmpresa((Integer) elementos[2]);
+            palDto.setIdSucursal((Integer) elementos[3]);
+            palDto.setIdUsuarioAlta((Integer) elementos[7]);
+            palDto.setImporte((BigDecimal) elementos[4]);
+            palDto.setObservaciones((String) elementos[5]);
+            palDto.setFechaEmision((Date) elementos[6]);
+            palDto.setImporteTotal(palDto.getImporte().multiply(BigDecimal.valueOf(palDto.getNumeroLote())));
+            adelantosDto.add(palDto);
+        }
+        return adelantosDto;
     }
-    
+
     //Agrega un lote
     @Transactional(rollbackFor = Exception.class)
     public Object agregarLote(PersonalAdelantoLoteDTO adelantos) throws IOException {
@@ -223,11 +213,11 @@ public class PersonalAdelantoService {
         PersonalAdelanto adelanto;
         int lote = elementoDAO.findTopByOrderByNumeroLoteDesc().getNumeroLote() + 1;
         BigDecimal importeCategoria = new BigDecimal(BigInteger.ZERO);
-        BasicoCategoria basico ;
+        BasicoCategoria basico;
         for (Personal personal : personales) {
             basico = basicoCategoriaDAO.obtenerPorCategoria(personal.getCategoria().getId());
             importeCategoria = basico.getBasico().multiply(basico.getCategoria().getTopeBasicoAdelantos().divide(new BigDecimal(100.00)));
-            if(importeCategoria.compareTo(adelantos.getImporte()) >= 0) {
+            if (importeCategoria.compareTo(adelantos.getImporte()) >= 0) {
                 adelanto = new PersonalAdelanto();
                 adelanto.setEmpresa(personal.getEmpresa());
                 adelanto.setPersonal(personal);
@@ -243,7 +233,7 @@ public class PersonalAdelantoService {
                 adelanto.setNumeroLote(lote);
                 adelanto.setSucursal(sucursalDAO.findById(adelantos.getIdSucursal()).get());
                 elementoDAO.saveAndFlush(adelanto);
-            } else{
+            } else {
                 adelanto = new PersonalAdelanto();
                 adelanto.setEmpresa(personal.getEmpresa());
                 adelanto.setPersonal(personal);
@@ -270,7 +260,7 @@ public class PersonalAdelantoService {
     public List<PersonalAdelanto> agregarPrestamo(List<PersonalAdelanto> elementos) {
         for (PersonalAdelanto elemento : elementos) {
             elemento.setFechaVto(new Date(new java.util.Date().getTime()));
-            elemento.setCuota((short)1);
+            elemento.setCuota((short) 1);
             elemento.setEstaAnulado(false);
             elemento.setNumeroLote(0);
             elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
@@ -278,7 +268,7 @@ public class PersonalAdelantoService {
         }
         return elementos;
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void anularLote(PersonalAdelanto elemento) {
@@ -289,12 +279,12 @@ public class PersonalAdelantoService {
             per.setObservacionesAnulado(elemento.getObservacionesAnulado());
         }
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public PersonalAdelanto agregar(PersonalAdelanto elemento) {
         elemento.setFechaVto(new Date(new java.util.Date().getTime()));
-        elemento.setCuota((short)1);
+        elemento.setCuota((short) 1);
         elemento.setEstaAnulado(false);
         elemento.setNumeroLote(0);
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
@@ -306,7 +296,7 @@ public class PersonalAdelantoService {
     public void actualizar(PersonalAdelanto elemento) {
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
