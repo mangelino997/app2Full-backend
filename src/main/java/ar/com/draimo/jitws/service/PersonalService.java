@@ -72,7 +72,8 @@ public class PersonalService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
