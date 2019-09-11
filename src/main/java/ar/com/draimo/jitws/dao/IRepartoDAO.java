@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Reparto;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,13 @@ public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
     @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada", nativeQuery = true )
     public List<Reparto> listarPorEstaCerrada(@Param("estaCerrada") boolean estaCerrada);
     
+    //Obtiene un listado por filtros
+    @Query(value = "SELECT * FROM reparto WHERE esRepartoPropio=:esRepartoPropio "
+            + "AND fechaRegistracion BETWEEN :fechaDesde AND :fechaHasta AND CASE "
+            + ":esRepartoPropio WHEN true THEN idPersonal=:idChofer WHEN false THEN "
+            + "idChoferProveedor=:idChofer END AND estaCerrada=:estaCerrada AND idEmpresaEmision=:idEmpresa", nativeQuery = true)
+    public List<Reparto> listarPorFiltros(@Param("esRepartoPropio") boolean esRepartoPropio, 
+            @Param("fechaDesde") Date fechaDesde, @Param("fechaHasta") Date fechaHasta,
+            @Param("idChofer") int idChofer, @Param("estaCerrada") boolean estaCerrada,
+            @Param("idEmpresa") int idEmpresa);
 }

@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.service.RepartoService;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -63,6 +64,15 @@ public class RepartoController {
         return elementoService.listarPorEstaCerrada(estaCerrada);
     }
     
+    //Obtiene la lista por filtros
+    @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{tipoViaje}/{fechaDesde}/{fechaHasta}/{idChofer}/{estaCerrada}")
+    @ResponseBody
+    public List<Reparto> listarPorFiltros(@PathVariable int idEmpresa, @PathVariable boolean tipoViaje,
+            @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable 
+                    int idChofer,@PathVariable boolean estaCerrada) {
+        return elementoService.listarPorFiltros(idEmpresa,tipoViaje,fechaDesde,fechaHasta,idChofer,estaCerrada);
+    }
+    
     //Cierra un repartopropio
     @PutMapping(value = URL + "/cerrarReparto/{idReparto}")
     public ResponseEntity<?> cerrarReparto(@PathVariable int idReparto) {
@@ -71,6 +81,19 @@ public class RepartoController {
             template.convertAndSend(TOPIC + "/lista", 
                     elementoService.listarPorEstaCerrada(false));
             return MensajeRespuesta.cerrado();
+        } else{
+            return MensajeRespuesta.error();
+        }
+    }
+    
+    //Abre un repartopropio
+    @PutMapping(value = URL + "/abrirReparto/{idReparto}")
+    public ResponseEntity<?> abrirReparto(@PathVariable int idReparto) {
+        boolean r = elementoService.abrirReparto(idReparto);
+        if (r == true) {
+            template.convertAndSend(TOPIC + "/lista", 
+                    elementoService.listarPorEstaCerrada(true));
+            return MensajeRespuesta.abierto();
         } else{
             return MensajeRespuesta.error();
         }

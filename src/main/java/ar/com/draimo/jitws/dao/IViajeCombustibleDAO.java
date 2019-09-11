@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.Viaje;
 import ar.com.draimo.jitws.model.ViajeCombustible;
 import java.util.List;
@@ -19,5 +20,8 @@ public interface IViajeCombustibleDAO extends JpaRepository<ViajeCombustible, In
     
     //Obtiene una lista por viaje propio
     public List<ViajeCombustible> findByViaje(Viaje viaje);
+    
+    //Obtiene una lista por Reparto propio
+    public List<ViajeCombustible> findByReparto(Reparto reparto);
     
 }

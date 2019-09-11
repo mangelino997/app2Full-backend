@@ -1,5 +1,7 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IRepartoDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.ViajeCombustible;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,14 @@ public class ViajeCombustibleService {
     //Define la referencia al dao viaje
     @Autowired
     IViajeDAO viajeDAO;
+    
+    //Define la referencia al dao reparto
+    @Autowired
+    IRepartoDAO repartoDAO;
+    
+    //Define la referencia al dao tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -65,6 +75,21 @@ public class ViajeCombustibleService {
         return mapper.readValue(string, Object.class);
     }
     
+    //Obtiene una lista de combustibles por reparto
+    public Object listarCombustiblesReparto(int idReparto) throws IOException {
+        List<ViajeCombustible>  elementos= elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente","viajeTramo","datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+    
     //Anula un registro
     @Transactional(rollbackFor = Exception.class)
     public void anularCombustible(ViajeCombustible elemento) throws IOException {
@@ -84,6 +109,7 @@ public class ViajeCombustibleService {
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeCombustible elemento) throws IOException {
         elemento = formatearStrings(elemento);
+        elemento.setTipoComprobante(tipoComprobanteDAO.findById(15).get());
         elemento = elementoDAO.saveAndFlush(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

@@ -1,5 +1,6 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Vehiculo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +19,13 @@ public interface IVehiculoDAO extends JpaRepository<Vehiculo, Integer> {
     public Vehiculo findTopByOrderByIdDesc();
     
     //Obtiene un listado por alias
-    public List<Vehiculo> findByAliasContaining(String alias);
+    public List<Vehiculo> findByAliasContainingOrderByAlias(String alias);
+    
+    //Obtiene un listado por empresa
+    public List<Vehiculo> findByEmpresaOrderByAlias(Empresa empresa);
+    
+    //Obtiene un listado por alias y empresa
+    public List<Vehiculo> findByAliasContainingAndEmpresaOrderByAlias(String alias, Empresa empresa);
     
     //Obtiene un listado por alias filtrado por tipo de vehiculo no remolque
     public List<Vehiculo> findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueFalse(String alias);

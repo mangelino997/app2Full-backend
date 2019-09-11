@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.service.VentaComprobanteService;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,13 @@ public class VentaComprobanteController {
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
+    }
+    
+    //Obtiene la lista de letras
+    @GetMapping(value = URL + "/listarLetras")
+    @ResponseBody
+    public List<String> listarLetras() throws IOException {
+        return elementoService.listarLetras();
     }
     
     //Obtiene la lista completa
