@@ -63,6 +63,13 @@ public class ChoferProveedorController {
         return elementoService.listarPorAlias(alias);
     }
     
+    //Obtiene una lista activos por alias  
+    @GetMapping(value = URL + "/listarActivosPorAlias/{alias}")
+    @ResponseBody
+    public List<ChoferProveedor> listarActivosPorAlias(@PathVariable String alias) {
+        return elementoService.listarActivosPorAlias(alias);
+    }
+    
     //Obtiene una lista por proveedor
     @GetMapping(value = URL + "/listarPorProveedor/{id}")
     @ResponseBody

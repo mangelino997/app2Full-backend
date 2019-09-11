@@ -46,6 +46,9 @@ public class CodigoRespuesta {
     //Define una respuesta de Cerrado con exito
     public static final int CERRADO_CON_EXITO = 5002;
     
+    //Define una respuesta de abierto con exito
+    public static final int ABIERTO_CON_EXITO = 5005;
+    
     //Define una respuesta de registro no existente
     public static final int NO_EXISTENTE = 5003;
     

@@ -19,6 +19,9 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
     //Obtiene el siguiente id
     public PersonalAdelanto findTopByOrderByIdDesc();
     
+    //Obtiene el siguiente numero de lote
+    public PersonalAdelanto findTopByOrderByNumeroLoteDesc();
+    
     //Obtiene el id viaje del personal adelanto
     @Query(value = "SELECT idViaje FROM personaladelanto WHERE id=:idPersonalAdelanto", nativeQuery = true)
     public String obtenerIdViaje(@Param("idPersonalAdelanto") int idPersonalAdelanto);
@@ -27,11 +30,6 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
     @Query(value = "SELECT idReparto FROM personaladelanto WHERE id=:idPersonalAdelanto", nativeQuery = true)
     public String obtenerIdReparto(@Param("idPersonalAdelanto") int idPersonalAdelanto);
     
-    //Obtiene un listado por lote y/o fechaEmision
-    @Query(value = "SELECT numeroLote, importe, observaciones, idUsuarioAlta FROM "
-            + "personaladelanto WHERE (:numeroLote=0 OR numeroLote=:numeroLote) AND "
-            + "(:fechaEmision IS NULL OR fechaEmision=:fechaEmision) GROUP BY numeroLote", nativeQuery = true)
-    public Object listarPorNumeroLote(@Param("numeroLote") int numeroLote, @Param("fechaEmision") Date fechaEmision);
     
     /*Obtiene un listado de adelantos por empresa, sucursal, una fecha de emision que se
    encuentre entre una fecha (fechaDesde) y otra (FechaHasta), esta anulado, que depende
@@ -50,7 +48,8 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
            @Param("fechaHasta") Date fechaHasta, @Param("estaAnulado") int estaAnulado,
            @Param("alias") String alias, @Param("estado") int estado);
     
-    //Obtiene un listado de lotes
+    /*Obtiene un listado agrupado por lotes de: empresa, sucursal, cantidad de legajos, 
+    usuario alta, observaciones y fecha de emision*/
     @Query(value = "SELECT numeroLote, count(id) as legajos, idEmpresa, idSucursal, "
             + "importe, observaciones, fechaEmision,idUsuarioAlta FROM personaladelanto "
             + "where numeroLote > 0 and fechaEmision between :fechaDesde and :fechaHasta "
@@ -61,6 +60,6 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
     
     //Anula los adelantos por lote
     @Query(value = "select * from personaladelanto  where numeroLote =:numeroLote", nativeQuery = true)
-    public void anularPorLote(@Param("numeroLote") int numeroLote);
+    public List<PersonalAdelanto> anularPorLote(@Param("numeroLote") int numeroLote);
     
     }

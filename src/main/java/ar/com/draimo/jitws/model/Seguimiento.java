@@ -34,6 +34,21 @@ public class Seguimiento extends ObjetoGenerico {
     @JoinColumn(name = "idSeguimientoEstado", nullable = false)
     private SeguimientoEstado seguimientoEstado;
     
+    //Refrencia a la clase venta comprobante
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaComprobante", nullable = false)
+    private VentaComprobante ventaComprobante;
+    
+    //Refrencia a la clase orden recoleccion
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idOrdenRecoleccion", nullable = false)
+    private OrdenRecoleccion ordenRecoleccion;
+    
+    //Refrencia a la clase ViajeRemito
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idViajeRemito", nullable = false)
+    private ViajeRemito viajeRemito;
+    
     //Refrencia a la clase Seguimiento Situacion
 //    @ManyToOne(cascade = CascadeType.REFRESH)
 //    @JoinColumn(name = "idSeguimientoSituacion", nullable = false)
@@ -72,5 +87,29 @@ public class Seguimiento extends ObjetoGenerico {
 //    public void setSeguimientoSituacion(SeguimientoSituacion seguimientoSituacion) {
 //        this.seguimientoSituacion = seguimientoSituacion;
 //    }
+
+    public VentaComprobante getVentaComprobante() {
+        return ventaComprobante;
+    }
+
+    public void setVentaComprobante(VentaComprobante ventaComprobante) {
+        this.ventaComprobante = ventaComprobante;
+    }
+
+    public OrdenRecoleccion getOrdenRecoleccion() {
+        return ordenRecoleccion;
+    }
+
+    public void setOrdenRecoleccion(OrdenRecoleccion ordenRecoleccion) {
+        this.ordenRecoleccion = ordenRecoleccion;
+    }
+
+    public ViajeRemito getViajeRemito() {
+        return viajeRemito;
+    }
+
+    public void setViajeRemito(ViajeRemito viajeRemito) {
+        this.viajeRemito = viajeRemito;
+    }
     
 }

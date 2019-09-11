@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Vehiculo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -108,7 +109,26 @@ public class VehiculoService {
         if (alias.equals("***")) {
             elementos = elementoDAO.findAll();
         } else {
-            elementos = elementoDAO.findByAliasContaining(alias);
+            elementos = elementoDAO.findByAliasContainingOrderByAlias(alias);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+
+    //Obtiene una lista por alias y empresa
+    public Object listarPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
+        List<Vehiculo> elementos;
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+        if (alias.equals("***")) {
+            elementos = elementoDAO.findByEmpresaOrderByAlias(empresa);
+        } else {
+            elementos = elementoDAO.findByAliasContainingAndEmpresaOrderByAlias(alias, empresa);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

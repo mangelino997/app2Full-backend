@@ -122,6 +122,11 @@ public class VentaComprobanteService {
         return new ObjectMapper().readValue(string, Object.class);
     }
 
+    //Obtiene una lista de letras
+    public List<String> listarLetras() {
+        return elementoDAO.listarLetras();
+    }
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public VentaComprobante agregar(VentaComprobante elemento) {

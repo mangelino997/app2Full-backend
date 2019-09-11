@@ -26,6 +26,12 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     //Obtiene una lista por alias y por esChofer
     public List<Personal> findByAliasContainingAndEsChoferTrue(String alias);
     
+    //Obtiene una lista por alias , empresa y por esChofer activo
+    public List<Personal> findByAliasContainingAndEsChoferTrueAndEmpresaAndFechaFinIsNull(String alias, Empresa empresa);
+    
+    //Obtiene una lista por empresa y por esChofer activo
+    public List<Personal> findByEmpresaAndEsChoferTrueAndFechaFinIsNull(Empresa empresa);
+    
     //Obtiene una lista Personales para adelantos
     @Query(value = "SELECT * FROM personal WHERE idEmpresa=:idEmpresa AND idSucursal=:idSucursal"
             + " AND (:idCategoria=0 OR idCategoria=:idCategoria) ORDER BY nombreCompleto ASC", nativeQuery = true)
@@ -33,12 +39,14 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
             @Param("idSucursal") int idSucursal, @Param("idCategoria") int idCategoria);
     
     //Obtiene una lista de choferes de corta distancia
-    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=0 AND alias LIKE %:alias%"
+    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=0 "
+            + "AND alias LIKE %:alias%"
             + " ORDER BY nombreCompleto ASC", nativeQuery = true)
     public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(@Param("alias") String alias);
     
     //Obtiene una lista de choferes de corta distancia
-    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=1 AND alias LIKE %:alias%"
+    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=1 "
+            + "AND alias LIKE %:alias%"
             + " ORDER BY nombreCompleto ASC", nativeQuery = true)
     public List<Personal> listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(@Param("alias") String alias);
     
@@ -48,8 +56,14 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     public List<Personal> listarChoferesPorEmpresa(@Param("idEmpresa") int idEmpresa);
     
     //Obtiene una lista de acompañantes ordenados por nombre
-    @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND alias LIKE %:alias% ORDER BY nombreCompleto ASC ", nativeQuery = true)
+    @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND alias LIKE"
+            + " %:alias% ORDER BY nombreCompleto ASC ", nativeQuery = true)
     public List<Personal> listarAcompaniantesPorAliasOrdenadoPorNombre(@Param("alias") String alias);
+    
+    //Obtiene una lista de acompañantes por empresa ordenados por nombre
+    @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND idEmpresa=:idEmpresa "
+            + "AND fechaFin IS NULL ORDER BY nombreCompleto ASC ", nativeQuery = true)
+    public List<Personal> listarAcompaniantesPorEmpresaOrdenadoPorNombre(@Param("idEmpresa") int idEmpresa);
     
     //Obtiene un listado por alias y empresa
     public List<Personal> findByEmpresaAndAliasContaining(Empresa empresa, String alias);

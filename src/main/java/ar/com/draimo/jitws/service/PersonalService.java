@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -72,7 +73,8 @@ public class PersonalService {
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -179,6 +181,25 @@ public class PersonalService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Obtiene un chofer por alias y empresa
+    public Object listarChoferPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+        List<Personal> elementos = new ArrayList<>();
+        if (alias.equals("***")) {
+            elementos = elementoDAO.findByEmpresaAndEsChoferTrueAndFechaFinIsNull(empresa);
+        } else {
+            elementos = elementoDAO.findByAliasContainingAndEsChoferTrueAndEmpresaAndFechaFinIsNull(
+                    alias, empresa);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+
     //Obtiene un listado de choferes ordenados por nombre de corta distancia
     public Object listarChoferesCortaDistanciaOrdenadoPorNombre(String alias) throws IOException {
         List<Personal> elementos = elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias);
@@ -218,6 +239,18 @@ public class PersonalService {
     //Obtiene un listado de acompañantes ordenados por nombre
     public Object listarAcompaniantesPorAliasOrdenadosPorNombre(String alias) throws IOException {
         List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+
+    //Obtiene un listado de acompañantes por empresa ordenados por nombre
+    public Object listarAcompaniantesPorEmpresa(int idEmpresa) throws IOException {
+        List<Personal> elementos = elementoDAO.listarAcompaniantesPorEmpresaOrdenadoPorNombre(idEmpresa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

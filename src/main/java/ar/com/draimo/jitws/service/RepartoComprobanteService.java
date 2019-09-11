@@ -15,7 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IRepartoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoDAO;
+import ar.com.draimo.jitws.dao.ISeguimientoDAO;
+import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
+import ar.com.draimo.jitws.model.Seguimiento;
 import ar.com.draimo.jitws.model.VentaComprobante;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * Servicio RepartoComprobante
@@ -44,6 +49,14 @@ public class RepartoComprobanteService {
     //Define la referencia al dao de RepartoPropio
     @Autowired
     IOrdenRecoleccionDAO ordenRecoleccionDAO;
+    
+    //define la referencia al dao de seguimientoEstado
+    @Autowired
+    ISeguimientoEstadoDAO seguimientoEstadoDAO;
+    
+    //define la referencia al dao de seguimiento
+    @Autowired
+    ISeguimientoDAO seguimientoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -95,18 +108,31 @@ public class RepartoComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoComprobante agregar(RepartoComprobante c) {
+        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
+        Seguimiento seguimiento = new Seguimiento();
+            seguimiento.setFecha(LocalDateTime.parse(String.valueOf(fecha)));
+            seguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
+            seguimiento.setSucursal(c.getReparto().getSucursal());
         if(c.getVentaComprobante()!= null) {
             c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
                 c.getVentaComprobante().getPuntoVenta(),c.getVentaComprobante().getLetra(),
                 c.getVentaComprobante().getNumero()));
+                seguimiento.setVentaComprobante(c.getVentaComprobante());
         }else if(c.getViajeRemito()!=null){
             c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
                     c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
                     c.getViajeRemito().getNumero()));
+                    seguimiento.setViajeRemito(c.getViajeRemito());
+        }else if(c.getOrdenRecoleccion()!=null) {
+            
+            seguimiento.setOrdenRecoleccion(c.getOrdenRecoleccion());
         }
-        return (c.getOrdenRecoleccion() == null && c.getViajeRemito()== null
-                && c.getVentaComprobante() == null ? new RepartoComprobante()
-                : elementoDAO.saveAndFlush(c));
+        RepartoComprobante rc = (c.getOrdenRecoleccion() == null && c.getViajeRemito()== null
+                && c.getVentaComprobante() == null ? null : elementoDAO.saveAndFlush(c));
+        if(rc!=null) {
+            seguimientoDAO.saveAndFlush(seguimiento);
+        }
+        return rc;
     }
     
     //Actualiza un registro

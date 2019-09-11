@@ -64,6 +64,13 @@ public class ViajeCombustibleController {
         return elementoService.listarCombustibles(idViaje);
     }
     
+    //Obtiene la lista de combustibles por reparto
+    @GetMapping(value = URL + "/listarCombustiblesReparto/{idReparto}")
+    @ResponseBody
+    public Object listarCombustiblesReparto(@PathVariable int idReparto) throws IOException {
+        return elementoService.listarCombustibles(idReparto);
+    }
+    
     //Anula un registro
     @PutMapping(value = URL + "/anularCombustible")
     @ResponseBody

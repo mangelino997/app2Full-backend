@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO VentaComprobante
@@ -23,5 +24,9 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
     
     //Obtiene una lista por cliente y empresa
     public List<VentaComprobante> findByClienteAndEmpresa(Cliente cliente, Empresa empresa);
+    
+    //Obtiene un listado de letras que corresponden a los comprobantes de ventas cargados
+    @Query(value = "SELECT letra FROM ventacomprobante group by letra", nativeQuery = true)
+    public List<String> listarLetras();
     
 }

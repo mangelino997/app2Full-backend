@@ -32,6 +32,7 @@ public class MensajeRespuesta {
     public static final String TABLA_REESTABLECIDA = "Tabla reestablecida con éxito";
     public static final String LONGITUD = "Cantidad caracteres excedida en";
     public static final String CERRADO = "Registro cerrado con exito";
+    public static final String ABIERTO = "Registro abierto con exito";
     public static final String ANULADO = "Registro anulado con exito";
     public static final String NORMALIZADO = "Registro normalizado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
@@ -123,6 +124,12 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> cerrado() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CERRADO_CON_EXITO,
                 MensajeRespuesta.CERRADO, 0), HttpStatus.OK);
+    }
+
+    //Retorna mensaje con ReponseEntity de abierto
+    public static ResponseEntity<?> abierto() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ABIERTO_CON_EXITO,
+                MensajeRespuesta.ABIERTO, 0), HttpStatus.OK);
     }
 
     //Retorna mensaje con ReponseEntity de sin contenido

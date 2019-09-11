@@ -18,10 +18,10 @@ public interface IVehiculoProveedorDAO extends JpaRepository<VehiculoProveedor, 
     public VehiculoProveedor findTopByOrderByIdDesc();
     
     //Obtiene un listado por alias
-    public List<VehiculoProveedor> findByAliasContaining(String alias);
+    public List<VehiculoProveedor> findByAliasContainingOrderByAlias(String alias);
     
     //Obtiene un listado por filtro remolque
-    public List<VehiculoProveedor> findByAliasContainingAndTipoVehiculo_EsRemolqueTrue(String alias);
+    public List<VehiculoProveedor> findByAliasContainingAndTipoVehiculo_EsRemolqueTrueOrderByAlias(String alias);
     
     //Obtiene una lista por proveedor
     public List<VehiculoProveedor> findByProveedor(Proveedor proveedor);

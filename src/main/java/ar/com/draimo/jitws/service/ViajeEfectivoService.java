@@ -1,5 +1,7 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IRepartoDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.ViajeEfectivo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Date;
 
 /**
  * Servicio ViajeEfectivo
@@ -28,6 +31,14 @@ public class ViajeEfectivoService {
     //Define la referencia al dao viaje
     @Autowired
     IViajeDAO viajeDAO;
+    
+    //Define la referencia al dao reparto
+    @Autowired
+    IRepartoDAO repartoDAO;
+    
+    //Define la referencia al dao tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -67,6 +78,22 @@ public class ViajeEfectivoService {
         return mapper.readValue(string, Object.class);
     }
     
+    //Obtiene una lista de efectivos por reparto
+    public Object listarEfectivosReparto(int idReparto) throws IOException {
+        List<ViajeEfectivo> elementos = elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente","viajeTramo","datos","viajeTramos","viajeCombustibles",
+        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+    
     //Anula un registro
     @Transactional(rollbackFor = Exception.class)
     public void anularEfectivo(ViajeEfectivo elemento) throws IOException {
@@ -86,6 +113,8 @@ public class ViajeEfectivoService {
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeEfectivo elemento) throws IOException {
         elemento = formatearStrings(elemento);
+        elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
+        elemento.setFecha(new Date(new java.util.Date().getTime()));
         elemento = elementoDAO.saveAndFlush(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

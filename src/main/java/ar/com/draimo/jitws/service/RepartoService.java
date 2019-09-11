@@ -12,6 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IRepartoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoDAO;
 import ar.com.draimo.jitws.dao.IRepartoPersonalDAO;
+import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.model.Seguimiento;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * Servicio RepartoPropio
@@ -37,6 +42,10 @@ public class RepartoService {
     @Autowired
     IRepartoComprobanteDAO repartoPropioComprobanteDAO;
     
+    //define la referencia al dao de tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Reparto elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -53,6 +62,12 @@ public class RepartoService {
         return elementoDAO.listarPorEstaCerrada(estaCerrada);
     }
     
+    //Obtiene la lista por filtros
+    public List<Reparto> listarPorFiltros(int idEmpresa, boolean tipoViaje, 
+            Date fechaDesde, Date fechaHasta, int idChofer,boolean estaCerrada) {
+        return elementoDAO.listarPorFiltros(tipoViaje,fechaDesde,fechaHasta,idChofer,estaCerrada,idEmpresa);
+    }
+    
     //Cierra un reparto
     public boolean cerrarReparto(int idReparto) {
         Reparto r = elementoDAO.findById(idReparto).get();
@@ -66,11 +81,25 @@ public class RepartoService {
         }
     }
     
+    //Abre un reparto
+    public boolean abrirReparto(int idReparto) {
+        Reparto r = elementoDAO.findById(idReparto).get();
+            r.setEstaCerrada(false);
+            elementoDAO.save(r);
+            return true;
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Reparto agregar(Reparto elemento) {
-        elemento.setFechaRegistracion(new Timestamp(new java.util.Date().getTime()));
+        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
+        elemento.setFechaRegistracion(fecha);
         elemento.setEstaCerrada(false);
+        elemento.setTipoComprobante(tipoComprobanteDAO.findById(12).get());
+        if(elemento.getChoferProveedor()!=null){
+            elemento.setProveedor(elemento.getChoferProveedor().getProveedor());
+            elemento.setAfipCondicionIvaProveedor(elemento.getChoferProveedor().getProveedor().getAfipCondicionIva());
+        }
         elementoDAO.saveAndFlush(elemento);
         if (!elemento.getAcompaniantes().isEmpty()) {
             for (RepartoPersonal acompaniante : elemento.getAcompaniantes()) {

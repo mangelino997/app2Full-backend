@@ -64,6 +64,13 @@ public class ViajeEfectivoController {
         return elementoService.listarEfectivos(idViaje);
     }
     
+    //Obtiene la lista de efectivos por reparto
+    @GetMapping(value = URL + "/listarEfectivosReparto/{idReparto}")
+    @ResponseBody
+    public Object listarEfectivosReparto(@PathVariable int idReparto) throws IOException {
+        return elementoService.listarEfectivos(idReparto);
+    }
+    
     //anula un Efectivo
     @PutMapping(value = URL + "/anularEfectivo")
     @ResponseBody
