@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.CompraComprobante;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +27,19 @@ public interface ICompraComprobanteDAO extends JpaRepository<CompraComprobante, 
             @Param("codigoAfip") String codigoAfip,@Param("puntoVenta") int puntoVenta,
             @Param("numero") int numero);
     
+    //Obtiene un listado de registros por filtro
+    @Query(value = "SELECT * FROM compracomprobante where Case :fechaTipo when 1 then "
+            + "(:idEmpresa=0 OR idEmpresa=:idEmpresa) and (:idProveedor=0 OR idProveedor=:idProveedor)"
+            + " and fechaEmision between :fechaDesde and :fechaHasta and "
+            + "(:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) when 2 "
+            + "then (:idEmpresa=0 OR idEmpresa=:idEmpresa) and (:idProveedor=0 OR "
+            + "idProveedor=:idProveedor) and fechaContable between :fechaDesde and "
+            + ":fechaHasta and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) "
+            + "when 0 then (:idEmpresa=0 OR idEmpresa =:idEmpresa) and (:idProveedor=0 "
+            + "OR idProveedor=:idProveedor) and fechaRegistracion between :fechaDesde "
+            + "and :fechaHasta and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) end", nativeQuery = true)
+    public List<CompraComprobante> listarPorFiltros(@Param("idEmpresa") int idEmpresa,
+            @Param("idProveedor") int idProveedor, @Param("fechaDesde") Date fechaDesde,
+            @Param("fechaHasta") Date fechaHasta, @Param("idTipoComprobante") int idTipoComprobante,
+            @Param("fechaTipo") int fechaTipo);
 }

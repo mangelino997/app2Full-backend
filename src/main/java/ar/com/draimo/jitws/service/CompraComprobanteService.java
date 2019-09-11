@@ -11,6 +11,7 @@ import ar.com.draimo.jitws.model.CompraComprobantePercepcion;
 import ar.com.draimo.jitws.model.CompraComprobanteVencimiento;
 import ar.com.draimo.jitws.model.CompraCptePercepcionJurisd;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,13 @@ public class CompraComprobanteService {
     //Obtiene la lista completa
     public List<CompraComprobante> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Obtiene la lista por filtros
+    public List<CompraComprobante> listarPorFiltros(int idEmpresa, int idProveedor, 
+            int fechaTipo, Date fechaDesde, Date fechaHasta, int idTipoComprobante) {
+        return elementoDAO.listarPorFiltros(idEmpresa, idProveedor, fechaDesde, fechaHasta,
+                idTipoComprobante, fechaTipo);
     }
     
     public boolean verificarUnicidadComprobante(int idProveedor, String codigoAfip, int puntoVenta, int numero) {
