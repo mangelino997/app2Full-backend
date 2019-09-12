@@ -57,6 +57,20 @@ public class RepartoController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista de registros propios abiertos
+    @GetMapping(value = URL + "/listarAbiertosPropios")
+    @ResponseBody
+    public List<Reparto> listarAbiertosPropios() {
+        return elementoService.listar();
+    }
+    
+    //Obtiene la lista de registros terceros abiertos
+    @GetMapping(value = URL + "/listarAbiertosTerceros")
+    @ResponseBody
+    public List<Reparto> listarAbiertosTerceros() {
+        return elementoService.listar();
+    }
+    
     //Obtiene la lista por estaCerrada
     @GetMapping(value = URL + "/listarPorEstaCerrada/{estaCerrada}")
     @ResponseBody

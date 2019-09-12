@@ -30,6 +30,11 @@ public class SeguimientoEstadoService {
         return elementoDAO.findAll();
     }
     
+    //Obtiene la lista de estados para reparto
+    public List<SeguimientoEstado> listarParaReparto() {
+        return elementoDAO.findByRepartoMostrarTrue();
+    }
+    
     //Obtiene una lista por nombre
     public List<SeguimientoEstado> listarPorNombre(String nombre) {
         if(nombre.equals("***")) {

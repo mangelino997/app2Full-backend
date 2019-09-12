@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobante;
 import ar.com.draimo.jitws.service.CompraComprobanteService;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +61,9 @@ public class CompraComprobanteController {
     //Obtiene la lista por filtros
     @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{idProveedor}/{fechaTipo}/{fechaDesde}/{fechaHasta}/{idTipoComprobante}")
     @ResponseBody
-    public List<CompraComprobante> listarPorFiltros(@PathVariable int idEmpresa, 
+    public Object listarPorFiltros(@PathVariable int idEmpresa, 
             @PathVariable int idProveedor, @PathVariable int fechaTipo, 
-            @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable int idTipoComprobante) {
+            @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable int idTipoComprobante) throws IOException {
         return elementoService.listarPorFiltros(idEmpresa, idProveedor, fechaTipo, fechaDesde, fechaHasta, idTipoComprobante);
     }
     

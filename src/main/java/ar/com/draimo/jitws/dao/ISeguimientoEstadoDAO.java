@@ -19,4 +19,7 @@ public interface ISeguimientoEstadoDAO extends JpaRepository<SeguimientoEstado, 
     //Obtiene una lista por nombre
     public List<SeguimientoEstado> findByNombreContaining(String nombre);
     
+    //Obtiene una lista por repartoMostrar = true
+    public List<SeguimientoEstado> findByRepartoMostrarTrue();
+    
 }

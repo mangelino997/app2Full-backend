@@ -21,6 +21,9 @@ public interface ISeguimientoDAO extends JpaRepository<Seguimiento, Integer> {
     //Obtiene una lista por sucursal
     public List<Seguimiento> findBySucursal(Sucursal sucursal);
     
+    //Obtiene un registro por ventaCte
+    public List<Seguimiento> findByVentaComprobante(Sucursal sucursal);
+    
     //Obtiene una lista por SeguimientoEstado
     public List<Seguimiento> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
     

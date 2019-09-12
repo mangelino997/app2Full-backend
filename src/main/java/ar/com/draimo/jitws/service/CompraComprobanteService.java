@@ -6,11 +6,18 @@ import ar.com.draimo.jitws.dao.ICompraComprobantePercepcionDAO;
 import ar.com.draimo.jitws.dao.ICompraComprobanteVencimientoDAO;
 import ar.com.draimo.jitws.dao.ICompraCptePercepcionJurisdDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
+import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.CompraComprobante;
 import ar.com.draimo.jitws.model.CompraComprobanteItem;
 import ar.com.draimo.jitws.model.CompraComprobantePercepcion;
 import ar.com.draimo.jitws.model.CompraComprobanteVencimiento;
 import ar.com.draimo.jitws.model.CompraCptePercepcionJurisd;
+import ar.com.draimo.jitws.model.Proveedor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -46,6 +53,9 @@ public class CompraComprobanteService {
     @Autowired
     IMonedaDAO monedaDAO;
     
+    @Autowired
+    IProveedorDAO proveedorDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CompraComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -58,10 +68,17 @@ public class CompraComprobanteService {
     }
     
     //Obtiene la lista por filtros
-    public List<CompraComprobante> listarPorFiltros(int idEmpresa, int idProveedor, 
-            int fechaTipo, Date fechaDesde, Date fechaHasta, int idTipoComprobante) {
-        return elementoDAO.listarPorFiltros(idEmpresa, idProveedor, fechaDesde, fechaHasta,
+    public Object listarPorFiltros(int idEmpresa, int idProveedor, 
+            int fechaTipo, Date fechaDesde, Date fechaHasta, int idTipoComprobante) throws IOException {
+        List<CompraComprobante> comprobantes= elementoDAO.listarPorFiltros(idEmpresa, idProveedor, fechaDesde, fechaHasta,
                 idTipoComprobante, fechaTipo);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(comprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
     
     public boolean verificarUnicidadComprobante(int idProveedor, String codigoAfip, int puntoVenta, int numero) {
@@ -77,13 +94,14 @@ public class CompraComprobanteService {
     public CompraComprobante agregar(CompraComprobante elemento) {
         Timestamp fechaRegistracion= new Timestamp(new java.util.Date().getTime());
         elemento.setFechaRegistracion(fechaRegistracion);
-        elemento.setAfipCondicionIva(elemento.getProveedor().getAfipCondicionIva());
+        Proveedor p = proveedorDAO.findById(elemento.getProveedor().getId()).get();
+        elemento.setAfipCondicionIva(p.getAfipCondicionIva());
         elemento.setMoneda(monedaDAO.findById(1).get());
         elemento.setImporteSaldo(BigDecimal.ZERO);
         elemento.setMonedaCotizacion(BigDecimal.ZERO);
-        elemento.setTipoDocumento(elemento.getProveedor().getTipoDocumento());
-        elemento.setNumeroDocumento(elemento.getProveedor().getNumeroDocumento());
-        elemento.setCondicionCompra(elemento.getProveedor().getCondicionCompra());
+        elemento.setTipoDocumento(p.getTipoDocumento());
+        elemento.setNumeroDocumento(p.getNumeroDocumento());
+        elemento.setCondicionCompra(p.getCondicionCompra());
         List<CompraComprobanteItem> items = elemento.getCompraComprobanteItems();
         List<CompraComprobantePercepcion> percepciones = elemento.getCompraComprobantePercepciones();
         List<CompraComprobanteVencimiento> vencimientos = elemento.getCompraComprobanteVencimientos();
