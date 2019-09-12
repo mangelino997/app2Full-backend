@@ -128,24 +128,6 @@ public class VentaComprobanteService {
         return new ObjectMapper().readValue(string, Object.class);
     }
 
-    //Obtiene una orden de recoleccion por numero
-    public Object obtenerRecoleccion(int numero) throws IOException {
-        TipoComprobante tc = tipoComprobanteDAO.findById(13).get();
-        VentaComprobante ventasComprobantes = elementoDAO.findByTipoComprobanteAndNumero(tc, numero);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
-        return new ObjectMapper().readValue(string, Object.class);
-    }
-
     //Obtiene una lista por cliente y empresa
     public Object listarPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
         List<VentaComprobante> ventasComprobantes = elementoDAO.findByClienteAndEmpresa(

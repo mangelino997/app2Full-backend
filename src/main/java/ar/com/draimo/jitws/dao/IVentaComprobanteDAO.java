@@ -23,9 +23,6 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
     //Obtiene un registro por puntoVenta, letra y nroComprobante
     public VentaComprobante findByPuntoVentaAndLetraAndNumero(int puntoVenta,String letra, int numero);
     
-    //Obtiene una orden de recoleccion por numero
-    public VentaComprobante findByTipoComprobanteAndNumero(TipoComprobante tipoComprobante, int numero);
-    
     //Obtiene una lista por tipos de comprobantes
     public List<VentaComprobante> findByTipoComprobante(TipoComprobante tipoComprobante);
     

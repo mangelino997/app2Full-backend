@@ -87,12 +87,6 @@ public class VentaComprobanteController {
         return elementoService.obtener(puntoVenta, letra, numero);
     }
     
-    //Obtiene una orden de recoleccion por numero
-    @GetMapping(value = URL + "/obtenerRecoleccion/{numero}")
-    @ResponseBody
-    public Object obtenerRecoleccion(@PathVariable int numero) throws IOException {
-        return elementoService.obtenerRecoleccion(numero);
-    }
     
     //Agrega un registro
     @PostMapping(value = URL)
