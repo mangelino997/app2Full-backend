@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,12 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
     
     //Obtiene un registro por puntoVenta, letra y nroComprobante
     public VentaComprobante findByPuntoVentaAndLetraAndNumero(int puntoVenta,String letra, int numero);
+    
+    //Obtiene una orden de recoleccion por numero
+    public VentaComprobante findByTipoComprobanteAndNumero(TipoComprobante tipoComprobante, int numero);
+    
+    //Obtiene una lista por tipos de comprobantes
+    public List<VentaComprobante> findByTipoComprobante(TipoComprobante tipoComprobante);
     
     //Obtiene una lista por cliente y empresa
     public List<VentaComprobante> findByClienteAndEmpresa(Cliente cliente, Empresa empresa);

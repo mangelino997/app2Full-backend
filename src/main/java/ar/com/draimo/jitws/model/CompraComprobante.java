@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -146,14 +147,17 @@ public class CompraComprobante extends ObjetoGenerico {
     
     //Referencia a la clase compraComprobanteItems
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
+    @JsonIgnoreProperties("compraComprobante")
     private List<CompraComprobanteItem> compraComprobanteItems;
     
     //Referencia a la clase compraComprobantePercepciones
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
+    @JsonIgnoreProperties("compraComprobante")
     private List<CompraComprobantePercepcion> compraComprobantePercepciones;
     
     //Referencia a la clase compraComprobanteVencimientos
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
+    @JsonIgnoreProperties("compraComprobante")
     private List<CompraComprobanteVencimiento> compraComprobanteVencimientos;
     
     //Getters y Setters de la clase

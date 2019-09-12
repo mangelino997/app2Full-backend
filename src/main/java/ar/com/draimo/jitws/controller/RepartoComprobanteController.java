@@ -5,8 +5,10 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RepartoComprobante;
 import ar.com.draimo.jitws.service.RepartoComprobanteService;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -79,16 +81,38 @@ public class RepartoComprobanteController {
         }
     }
 
+    //Agrega un listado de registros
+    @PostMapping(value = URL + "/agregarComprobantes")
+    public ResponseEntity<?> agregarComprobantes(@RequestBody List<RepartoComprobante> elementos) {
+        try {
+            List<RepartoComprobante> a = elementoService.agregarComprobantes(elementos);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/listarComprobantes",
+                    elementoService.listarComprobantes(elementos.get(0).getReparto().getId()));
+            //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
+            return new ResponseEntity(elementos, HttpStatus.ACCEPTED);
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody RepartoComprobante elemento) {
         try {
-            RepartoComprobante a = elementoService.agregar(elemento);
+            int a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes",
-                    elementoService.listarComprobantes(elemento.getReparto().getId()));
+//            template.convertAndSend(TOPIC + "/listarComprobantes",
+//                    elementoService.listarComprobantes(elemento.getReparto().getId()));
             //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
-            return a.getReparto() != null ? MensajeRespuesta.agregado(a.getId())
+            return a != 0 ? MensajeRespuesta.agregado(a)
                     : MensajeRespuesta.registroNoExistente();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
@@ -109,8 +133,8 @@ public class RepartoComprobanteController {
             //Actualiza el registro
             RepartoComprobante a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/listarComprobantes",
-                    elementoService.listarComprobantes(elemento.getReparto().getId()));
+//            template.convertAndSend(TOPIC + "/listarComprobantes",
+//                    elementoService.listarComprobantes(elemento.getReparto().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

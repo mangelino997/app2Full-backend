@@ -12,11 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IRepartoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoDAO;
 import ar.com.draimo.jitws.dao.IRepartoPersonalDAO;
-import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
-import ar.com.draimo.jitws.model.Seguimiento;
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 /**
  * Servicio RepartoPropio
@@ -55,6 +52,18 @@ public class RepartoService {
     //Obtiene la lista completa
     public List<Reparto> listar() {
         return elementoDAO.findAll();
+    }
+    
+    
+    //Obtiene la lista de registros propios abiertos
+    public List<Reparto> listarAbiertosPropios() {
+        return elementoDAO.listarPorEstaCerradaYReparto(false, true);
+    }
+    
+    
+    //Obtiene la lista de registros terceros abiertos
+    public List<Reparto> listarAbiertosTerceros() {
+        return elementoDAO.listarPorEstaCerradaYReparto(false, false);
     }
     
     //Obtiene la lista por EstaCerrada 

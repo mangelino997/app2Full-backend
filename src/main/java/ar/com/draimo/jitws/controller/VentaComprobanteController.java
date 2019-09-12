@@ -57,6 +57,13 @@ public class VentaComprobanteController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista por tipo de comprobante
+    @GetMapping(value = URL + "/listarPorTipoComprobante/{idTipoComprobante}")
+    @ResponseBody
+    public Object listarPorTipoComprobante(@PathVariable int idTipoComprobante) throws IOException {
+        return elementoService.listarPorTipoComprobante(idTipoComprobante);
+    }
+    
     //Obtiene la lista de letras
     @GetMapping(value = URL + "/listarLetras")
     @ResponseBody
@@ -78,6 +85,13 @@ public class VentaComprobanteController {
     public Object obtener(@PathVariable int puntoVenta,@PathVariable String letra,
             @PathVariable int numero) throws IOException {
         return elementoService.obtener(puntoVenta, letra, numero);
+    }
+    
+    //Obtiene una orden de recoleccion por numero
+    @GetMapping(value = URL + "/obtenerRecoleccion/{numero}")
+    @ResponseBody
+    public Object obtenerRecoleccion(@PathVariable int numero) throws IOException {
+        return elementoService.obtenerRecoleccion(numero);
     }
     
     //Agrega un registro

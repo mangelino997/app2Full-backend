@@ -50,6 +50,7 @@ public class SeguimientoService {
         return elementoDAO.findBySucursal(sucursalDAO.findById(id).get());
     }
     
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Seguimiento agregar(Seguimiento elemento) {

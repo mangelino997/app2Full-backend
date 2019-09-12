@@ -57,6 +57,20 @@ public class RepartoController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista de registros propios abiertos
+    @GetMapping(value = URL + "/listarAbiertosPropios")
+    @ResponseBody
+    public List<Reparto> listarAbiertosPropios() {
+        return elementoService.listar();
+    }
+    
+    //Obtiene la lista de registros terceros abiertos
+    @GetMapping(value = URL + "/listarAbiertosTerceros")
+    @ResponseBody
+    public List<Reparto> listarAbiertosTerceros() {
+        return elementoService.listar();
+    }
+    
     //Obtiene la lista por estaCerrada
     @GetMapping(value = URL + "/listarPorEstaCerrada/{estaCerrada}")
     @ResponseBody
@@ -105,8 +119,8 @@ public class RepartoController {
         try {
             Reparto a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarPorEstaCerrada",
-                    elementoService.listarPorEstaCerrada(false));
+//            template.convertAndSend(TOPIC + "/listarPorEstaCerrada",
+//                    elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -128,7 +142,7 @@ public class RepartoController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

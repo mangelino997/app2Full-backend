@@ -3,11 +3,13 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
+import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import ar.com.draimo.jitws.model.VentaComprobanteItemNC;
@@ -52,6 +54,10 @@ public class VentaComprobanteService {
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
 
+    //Define la referancia a tipoComprobante DAO
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
+
     //Define la referancia a MonedaDAO
     @Autowired
     IMonedaDAO monedaDAO;
@@ -87,9 +93,45 @@ public class VentaComprobanteService {
         return new ObjectMapper().readValue(string, Object.class);
     }
 
+    //Obtiene la lista por tipo de comprobante
+    public Object listarPorTipoComprobante(int idTipoComprobante) throws IOException {
+        TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante).get();
+        List<VentaComprobante> ventasComprobantes = elementoDAO.findByTipoComprobante(tipoComprobante);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
         VentaComprobante ventasComprobantes = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+
+    //Obtiene una orden de recoleccion por numero
+    public Object obtenerRecoleccion(int numero) throws IOException {
+        TipoComprobante tc = tipoComprobanteDAO.findById(13).get();
+        VentaComprobante ventasComprobantes = elementoDAO.findByTipoComprobanteAndNumero(tc, numero);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
