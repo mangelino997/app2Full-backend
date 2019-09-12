@@ -109,8 +109,8 @@ public class RepartoComprobanteController {
         try {
             int a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes",
-                    elementoService.listarComprobantes(elemento.getReparto().getId()));
+//            template.convertAndSend(TOPIC + "/listarComprobantes",
+//                    elementoService.listarComprobantes(elemento.getReparto().getId()));
             //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
             return a != 0 ? MensajeRespuesta.agregado(a)
                     : MensajeRespuesta.registroNoExistente();
@@ -133,8 +133,8 @@ public class RepartoComprobanteController {
             //Actualiza el registro
             RepartoComprobante a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/listarComprobantes",
-                    elementoService.listarComprobantes(elemento.getReparto().getId()));
+//            template.convertAndSend(TOPIC + "/listarComprobantes",
+//                    elementoService.listarComprobantes(elemento.getReparto().getId()));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

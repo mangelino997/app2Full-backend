@@ -6,6 +6,8 @@ import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.Sucursal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Seguimiento
@@ -22,7 +24,11 @@ public interface ISeguimientoDAO extends JpaRepository<Seguimiento, Integer> {
     public List<Seguimiento> findBySucursal(Sucursal sucursal);
     
     //Obtiene un registro por ventaCte
-    public List<Seguimiento> findByVentaComprobante(Sucursal sucursal);
+    @Query(value = "SELECT s.* FROM repartocomprobante c ,seguimiento s where "
+            + "(s.idVentaComprobante=c.idVentaComprobante or "
+            + "s.idOrdenRecoleccion=c.idOrdenRecoleccion or s.idViajeRemito=c.idViajeRemito)"
+            + " and c.idReparto=:idReparto", nativeQuery = true)
+    public List<Seguimiento> listarPorReparto(@Param("idReparto") int idReparto);
     
     //Obtiene una lista por SeguimientoEstado
     public List<Seguimiento> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);

@@ -17,8 +17,10 @@ import ar.com.draimo.jitws.dao.IRepartoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.Seguimiento;
+import ar.com.draimo.jitws.model.Sucursal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,15 +41,19 @@ public class RepartoComprobanteService {
     @Autowired
     IRepartoDAO repartoDAO;
 
-    //Define la referencia al dao de RepartoPropio
+    //Define la referencia al dao de sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
+
+    //Define la referencia al dao de venta comprobante
     @Autowired
     IVentaComprobanteDAO ventaComprobanteDAO;
 
-    //Define la referencia al dao de RepartoPropio
+    //Define la referencia al dao de viaje remito
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
 
-    //Define la referencia al dao de RepartoPropio
+    //Define la referencia al dao de orden recoleccion
     @Autowired
     IOrdenRecoleccionDAO ordenRecoleccionDAO;
 
@@ -145,9 +151,7 @@ public class RepartoComprobanteService {
         Timestamp fecha = new Timestamp(new java.util.Date().getTime());
         Seguimiento seguimiento = new Seguimiento();
         seguimiento.setFecha(LocalDateTime.now());
-        Reparto r = repartoDAO.findById(c.getReparto().getId()).get();
         seguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-        seguimiento.setSucursal(r.getSucursal());
         if (c.getVentaComprobante() != null) {
             c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
                     c.getVentaComprobante().getPuntoVenta(), c.getVentaComprobante().getLetra(),
@@ -159,9 +163,10 @@ public class RepartoComprobanteService {
                     c.getViajeRemito().getNumero()));
             seguimiento.setViajeRemito(c.getViajeRemito());
         } else if (c.getOrdenRecoleccion() != null) {
-
             seguimiento.setOrdenRecoleccion(c.getOrdenRecoleccion());
         }
+        Sucursal s = sucursalDAO.obtenerPorReparto(c.getReparto().getId());
+        seguimiento.setSucursal(s);
         RepartoComprobante rc = (c.getOrdenRecoleccion() == null && c.getViajeRemito() == null
                 && c.getVentaComprobante() == null ? null : elementoDAO.saveAndFlush(c));
         if (rc != null) {
