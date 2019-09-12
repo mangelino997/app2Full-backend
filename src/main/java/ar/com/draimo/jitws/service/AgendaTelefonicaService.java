@@ -72,7 +72,9 @@ public class AgendaTelefonicaService {
         if(elemento.getTelefonoMovil() != null) {
             elemento.setTelefonoMovil(elemento.getTelefonoMovil().trim());
         }
-        elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase().trim());
+        if(elemento.getCorreoelectronico() != null) {
+            elemento.setCorreoelectronico(elemento.getCorreoelectronico().toLowerCase().trim());
+        }
         return elemento;
     }
     
