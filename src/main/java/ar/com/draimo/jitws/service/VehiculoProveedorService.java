@@ -1,7 +1,10 @@
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.IVehiculoProveedorDAO;
+import ar.com.draimo.jitws.model.MarcaVehiculo;
+import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.VehiculoProveedor;
 import java.sql.Date;
 import java.util.List;
@@ -25,6 +28,10 @@ public class VehiculoProveedorService {
     //Define la referencia al dao
     @Autowired
     IProveedorDAO proveedorDAO;
+    
+    //Define la referencia al dao de marcaVehiculo
+    @Autowired
+    IMarcaVehiculoDAO marcaVehiculoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -73,8 +80,10 @@ public class VehiculoProveedorService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(VehiculoProveedor elemento) {
-        elemento.setAlias(elemento.getId() + " - " + elemento.getProveedor().getNombreFantasia()
-                + " - " + elemento.getDominio() + " - " + elemento.getMarcaVehiculo().getNombre());
+        Proveedor p = proveedorDAO.findById(elemento.getProveedor().getId()).get();
+        MarcaVehiculo m = marcaVehiculoDAO.findById(elemento.getMarcaVehiculo().getId()).get();
+        elemento.setAlias(elemento.getId() + " - " + p.getNombreFantasia()
+                + " - " + elemento.getDominio() + " - " + m.getNombre());
         elementoDAO.save(elemento);
     }
 

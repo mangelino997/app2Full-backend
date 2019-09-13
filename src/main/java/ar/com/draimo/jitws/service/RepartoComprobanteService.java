@@ -21,6 +21,8 @@ import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.Seguimiento;
 import ar.com.draimo.jitws.model.Sucursal;
+import ar.com.draimo.jitws.model.VentaComprobante;
+import ar.com.draimo.jitws.model.ViajeRemito;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -118,20 +120,27 @@ public class RepartoComprobanteService {
         Timestamp fecha = new Timestamp(new java.util.Date().getTime());
         Seguimiento seguimiento = new Seguimiento();
         List<RepartoComprobante> repartoCtes = new ArrayList<>();
-        seguimiento.setFecha(LocalDateTime.parse(String.valueOf(fecha)));
+        seguimiento.setFecha(LocalDateTime.now());
         seguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
         seguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
         for (RepartoComprobante cte : ctes) {
             if (cte.getVentaComprobante() != null) {
-                cte.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
+                VentaComprobante v = ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
                         cte.getVentaComprobante().getPuntoVenta(), cte.getVentaComprobante().getLetra(),
-                        cte.getVentaComprobante().getNumero()));
+                        cte.getVentaComprobante().getNumero());
+                if(v!=null){
+                    cte.setVentaComprobante(v);
                 seguimiento.setVentaComprobante(cte.getVentaComprobante());
+                }
             } else if (cte.getViajeRemito() != null) {
-                cte.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
+                ViajeRemito r =viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
                         cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
-                        cte.getViajeRemito().getNumero()));
-                seguimiento.setViajeRemito(cte.getViajeRemito());
+                        cte.getViajeRemito().getNumero());
+                if(r!=null) {
+                    seguimiento.setViajeRemito(cte.getViajeRemito());
+                    cte.setViajeRemito(r);
+                }
+                
             } else if (cte.getOrdenRecoleccion() != null) {
                 seguimiento.setOrdenRecoleccion(cte.getOrdenRecoleccion());
             }

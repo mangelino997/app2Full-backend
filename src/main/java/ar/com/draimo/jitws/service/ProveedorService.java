@@ -2,8 +2,10 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
+import ar.com.draimo.jitws.model.TipoDocumento;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -30,6 +32,10 @@ public class ProveedorService {
     //Define la referencia al dao ProveedorCuentaContableDAO
     @Autowired
     IProveedorCuentaContableDAO proveedorCuentaContableDAO;
+
+    //Define la referencia al dao tipoDocumento
+    @Autowired
+    ITipoDocumentoDAO tipoDocumentoDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -84,8 +90,9 @@ public class ProveedorService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(Proveedor elemento) {
+        TipoDocumento t = tipoDocumentoDAO.findById(elemento.getTipoDocumento().getId()).get();
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
-                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
+                + " - " + t.getAbreviatura() + " " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);
     }
 
@@ -93,9 +100,7 @@ public class ProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
-        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
-                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
+        establecerAlias(elemento);
         Proveedor proveedor = elementoDAO.save(elemento);
         if (elemento.getProveedorCuentasContables() != null) {
             for (ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {

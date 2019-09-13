@@ -80,6 +80,7 @@ public class PersonalAdelantoController {
     public Object listarPorFiltros(@RequestBody PersonalAdelantoLoteDTO personalAdelanto) throws IOException, Exception {
         return elementoService.listarPorFiltros(personalAdelanto);
     }
+    
     //Actualiza un registro
     @PutMapping(value = URL + "/anularLote")
     public ResponseEntity<?> anularLote(@RequestBody PersonalAdelanto elemento) {

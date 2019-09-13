@@ -5,12 +5,14 @@ import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
+import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.model.CuentaBancaria;
 import ar.com.draimo.jitws.model.OrdenVenta;
+import ar.com.draimo.jitws.model.TipoDocumento;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -55,6 +57,10 @@ public class ClienteService {
     //Define la referencia al dao ClienteCuentaBancariaDAO
     @Autowired
     IClienteCuentaBancariaDAO clienteCuentaBancariaDAO;
+    
+    //Define la referencia al dao tipoDocumento
+    @Autowired
+    ITipoDocumentoDAO tipoDocumentoDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -200,8 +206,9 @@ public class ClienteService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(Cliente elemento) {
+        TipoDocumento t = tipoDocumentoDAO.findById(elemento.getTipoDocumento().getId()).get();
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
-                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
+                + " - " + t.getAbreviatura() + " " + elemento.getNumeroDocumento());
         elementoDAO.save(elemento);
     }
 
