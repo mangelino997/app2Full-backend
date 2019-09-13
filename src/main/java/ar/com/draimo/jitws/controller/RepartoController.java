@@ -61,14 +61,14 @@ public class RepartoController {
     @GetMapping(value = URL + "/listarAbiertosPropios")
     @ResponseBody
     public List<Reparto> listarAbiertosPropios() {
-        return elementoService.listar();
+        return elementoService.listarAbiertosPropios();
     }
     
     //Obtiene la lista de registros terceros abiertos
     @GetMapping(value = URL + "/listarAbiertosTerceros")
     @ResponseBody
     public List<Reparto> listarAbiertosTerceros() {
-        return elementoService.listar();
+        return elementoService.listarAbiertosTerceros();
     }
     
     //Obtiene la lista por estaCerrada

@@ -63,6 +63,13 @@ public class OrdenRecoleccionController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista por ordenes de recoleccion disponibles
+    @GetMapping(value = URL + "/listarRecoleccionesDisponibles")
+    @ResponseBody
+    public Object listarRecoleccionesDisponibles() throws IOException {
+        return elementoService.listarRecoleccionesDisponibles();
+    }
+    
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody

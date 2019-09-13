@@ -63,6 +63,18 @@ public class ViajeRemitoService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Obtiene el listado de remitos disponibles
+    public Object listarRemitosDisponibles() throws IOException {
+        List<ViajeRemito> remitos = elementoDAO.listarRemitosDisponibles();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenesVentas");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(remitos);
+        return mapper.readValue(string, Object.class);
+    }
+
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
         List<ViajeRemito> remitos;

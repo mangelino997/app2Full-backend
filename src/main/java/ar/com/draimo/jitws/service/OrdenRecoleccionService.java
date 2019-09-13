@@ -63,6 +63,18 @@ public class OrdenRecoleccionService {
         return mapper.readValue(string, Object.class);
     }
     
+    //Obtiene la lista por recolecciones disponibles
+    public Object listarRecoleccionesDisponibles() throws IOException {
+        List<OrdenRecoleccion> ordenes = elementoDAO.listarRecoleccionesDisponibles();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ordenes);
+        return mapper.readValue(string, Object.class);
+    }
+    
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
         List<OrdenRecoleccion> ordenes = elementoDAO.findAll();

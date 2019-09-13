@@ -93,6 +93,23 @@ public class VentaComprobanteService {
         return new ObjectMapper().readValue(string, Object.class);
     }
 
+    //Obtiene la lista de registros que no estan en reparto
+    public Object listarComprobantesDisponibles() throws IOException {
+        List<VentaComprobante> ventasComprobantes = elementoDAO.listarComprobantesDisponibles();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+
     //Obtiene la lista por tipo de comprobante
     public Object listarPorTipoComprobante(int idTipoComprobante) throws IOException {
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante).get();

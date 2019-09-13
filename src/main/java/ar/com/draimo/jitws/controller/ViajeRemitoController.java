@@ -58,6 +58,13 @@ public class ViajeRemitoController {
         return elementoService.listar();
     }
 
+    //Obtiene la lista por remitos disponibles
+    @GetMapping(value = URL + "/listarRemitosDisponibles")
+    @ResponseBody
+    public Object listarRemitosDisponibles() throws IOException {
+        return elementoService.listarRemitosDisponibles();
+    }
+
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody

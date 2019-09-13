@@ -33,4 +33,11 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
     @Query(value = "SELECT letra FROM ventacomprobante group by letra", nativeQuery = true)
     public List<String> listarLetras();
     
+    //Obtiene un listado de registros que no estan en reparto
+    @Query(value = "SELECT * FROM ventacomprobante WHERE id!=(SELECT s.idVentaComprobante"
+            + " FROM seguimiento s, seguimientoestado e, ventacomprobante v"
+            + " WHERE s.idVentaComprobante =v.id and e.id=s.idSeguimientoEstado and "
+            + "e.esEntregado=false)", nativeQuery = true)
+    public List<VentaComprobante> listarComprobantesDisponibles();
+    
 }

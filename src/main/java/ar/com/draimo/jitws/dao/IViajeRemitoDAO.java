@@ -71,5 +71,12 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     @Query(value = "SELECT v.* FROM viajeremito v INNER JOIN viajetramoremito t ON t.idViajeRemito=v.id"
             + " WHERE t.idViajeTramo=:idViajeTramo AND v.estaPendiente=false", nativeQuery = true)
     public List<ViajeRemito> listarAsignadosPorViajeTramo(@Param("idViajeTramo") int idViajeRemito);
+    
+    //Obtiene un listado por registros que no estan asignados a un reparto
+    @Query(value = "SELECT * FROM viajeremito WHERE id!=(SELECT s.idViajeRemito "
+            + "FROM jitdb.seguimiento s, jitdb.seguimientoestado e, jitdb.viajeremito v "
+            + "WHERE s.idViajeRemito =v.id and e.id=s.idSeguimientoEstado and "
+            + "e.esEntregado=false);", nativeQuery = true)
+    public List<ViajeRemito> listarRemitosDisponibles();
 
 }

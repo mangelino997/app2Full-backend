@@ -26,4 +26,11 @@ public interface IOrdenRecoleccionDAO extends JpaRepository<OrdenRecoleccion, In
     public List<OrdenRecoleccion> listarPorFiltros(@Param("fechaEmision") String
             fechaEmision, @Param("idCliente") int idCliente);
     
+    //Obtiene un listado por ordenesDeRecoleccion disponibles
+    @Query(value = "SELECT * FROM jitdb.ordenrecoleccion WHERE id!=(SELECT "
+            + "s.idOrdenRecoleccion  FROM jitdb.seguimiento s, jitdb.seguimientoestado "
+            + "e, jitdb.ordenrecoleccion v WHERE s.idOrdenRecoleccion =v.id and "
+            + "e.id=s.idSeguimientoEstado and e.esEntregado=false) ;", nativeQuery = true)
+    public List<OrdenRecoleccion> listarRecoleccionesDisponibles();
+    
 }
