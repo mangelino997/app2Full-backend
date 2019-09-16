@@ -174,6 +174,7 @@ public class MensajeRespuesta {
                         mensajeRespuesta = partes[0];
                         plusMensaje = "";
                         break;
+                        //Retorna mensaje para elemento inexistente
                     case 13:
                         return datoInexistente(parte3[1], dive.getMostSpecificCause().getMessage());
                 }
@@ -310,7 +311,8 @@ public class MensajeRespuesta {
                 break;
             case 3:
                 mensajeRespuesta = MensajeRespuesta.LONGITUD;
-                if (partes[0] == "Truncation") {
+                if (parte3[1] == "Truncation:") {
+                    //Determina que atributo tiene superó su longitud
                     switch (partes[1]) {
                         case LongitudError.FECHA_ALTA_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.FECHA_ALTA_LONGITUD;
@@ -984,8 +986,8 @@ public class MensajeRespuesta {
                             codigoRespuesta = CodigoRespuesta.LONGITUD;
                             plusMensaje = "";
                     }
-                } else if(partes[0]=="Column") {
-                     switch (partes[1]) {
+                } else if (partes[0] == "Column") {
+                    switch (partes[1]) {
                         case LongitudError.FECHA_ALTA_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.FECHA_ALTA_LONGITUD;
                             plusMensaje = " FECHA ALTA";
@@ -1657,10 +1659,10 @@ public class MensajeRespuesta {
                         default:
                             codigoRespuesta = CodigoRespuesta.LONGITUD;
                             plusMensaje = "";
-                     }
-                }else {
+                    }
+                } else {
                     codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
-                            plusMensaje = "";
+                    plusMensaje = "";
                 }
                 break;
         }
