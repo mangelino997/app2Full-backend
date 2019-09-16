@@ -72,7 +72,7 @@ public class VehiculoController {
     }
     
     //Obtiene una lista por alias y empresa
-    @GetMapping(value = URL + "/listarPorAlias/{alias}/{idEmpresa}")
+    @GetMapping(value = URL + "/listarPorAliasYEmpresa/{alias}/{idEmpresa}")
     @ResponseBody
     public Object listarPorAliasYEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorAliasYEmpresa(alias,idEmpresa);
@@ -90,6 +90,13 @@ public class VehiculoController {
     @ResponseBody
     public Object listarPorAliasYRemolqueTrue(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAliasYRemolqueTrue(alias);
+    }
+    
+    //Obtiene una lista por alias filtro remolque
+    @GetMapping(value = URL + "/listarPorAliasYEmpresaFiltroRemolque/{alias}/{idEmpresa}")
+    @ResponseBody
+    public Object listarPorAliasYEmpresaFiltroRemolque(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
+        return elementoService.listarPorAliasYEmpresaFiltroRemolque(alias, idEmpresa);
     }
     
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo

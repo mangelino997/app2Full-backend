@@ -33,6 +33,12 @@ public interface IVehiculoDAO extends JpaRepository<Vehiculo, Integer> {
     //Obtiene un listado por alias filtrado por tipo de vehiculo remolque
     public List<Vehiculo> findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(String alias);
     
+    //Obtiene un listado por alias filtrado por tipo de vehiculo remolque
+    public List<Vehiculo> findByAliasContainingAndEmpresaAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(String alias, Empresa empresa);
+   
+    //Obtiene un listado por alias filtrado por tipo de vehiculo remolque
+    public List<Vehiculo> findByEmpresaAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(Empresa empresa);
+    
     //Obtiene una lista por tipo de vehiculo, marca de vehiculo y empresa
     @Query(value = "SELECT v.* FROM vehiculo v left join configuracionvehiculo c "
             + "on v.idConfiguracionVehiculo=c.id WHERE "

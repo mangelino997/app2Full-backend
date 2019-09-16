@@ -46,7 +46,7 @@ public class RepartoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Reparto elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return (elemento!=null? elemento.getId()+1 : 1);
     }
     
     //Obtiene la lista completa
@@ -69,6 +69,11 @@ public class RepartoService {
     //Obtiene la lista por EstaCerrada 
     public List<Reparto> listarPorEstaCerrada(boolean estaCerrada) {
         return elementoDAO.listarPorEstaCerrada(estaCerrada);
+    }
+    
+    //Obtiene la lista por EstaCerrada 
+    public List<Reparto> listarPorEstaCerradaYEmpresa(boolean estaCerrada, int idEmpresa) {
+        return elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
     }
     
     //Obtiene la lista por filtros
