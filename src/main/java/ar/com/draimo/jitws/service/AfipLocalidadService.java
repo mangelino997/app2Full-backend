@@ -23,7 +23,7 @@ public class AfipLocalidadService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         AfipLocalidad elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return (elemento!=null?elemento.getId()+1:1);
     }
     
     //Obtiene la lista completa

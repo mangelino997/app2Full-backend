@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class OrdenVentaTarifaService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         OrdenVentaTarifa elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return (elemento!=null?elemento.getId()+1:1);
     }
     
     //Obtiene la lista completa

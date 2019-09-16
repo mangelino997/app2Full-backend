@@ -36,7 +36,7 @@ public class OrdenRecoleccionService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         OrdenRecoleccion elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return (elemento!=null?elemento.getId()+1:1);
     }
     
     //Obtiene un registro por id

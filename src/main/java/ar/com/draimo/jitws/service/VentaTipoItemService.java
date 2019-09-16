@@ -27,7 +27,7 @@ public class VentaTipoItemService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         VentaTipoItem elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento.getId()+1;
+        return (elemento!=null?elemento.getId()+1:1);
     }
     
     //Obtiene la lista completa
