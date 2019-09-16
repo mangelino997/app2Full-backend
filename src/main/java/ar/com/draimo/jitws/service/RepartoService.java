@@ -13,6 +13,11 @@ import ar.com.draimo.jitws.dao.IRepartoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoDAO;
 import ar.com.draimo.jitws.dao.IRepartoPersonalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.sql.Date;
 
 /**
@@ -50,25 +55,61 @@ public class RepartoService {
     }
     
     //Obtiene la lista completa
-    public List<Reparto> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+         List<Reparto> elementos = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos","hijos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     
     //Obtiene la lista de registros propios abiertos
-    public List<Reparto> listarAbiertosPropios() {
-        return elementoDAO.listarPorEstaCerradaYReparto(false, true);
+    public Object listarAbiertosPropios() throws IOException {
+         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, true);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos","hijos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     
     //Obtiene la lista de registros terceros abiertos
-    public List<Reparto> listarAbiertosTerceros() {
-        return elementoDAO.listarPorEstaCerradaYReparto(false, false);
+    public Object listarAbiertosTerceros() throws IOException {
+        List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, false);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos","hijos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene la lista por EstaCerrada 
-    public List<Reparto> listarPorEstaCerrada(boolean estaCerrada) {
-        return elementoDAO.listarPorEstaCerrada(estaCerrada);
+    public Object listarPorEstaCerrada(boolean estaCerrada) throws IOException {
+        List<Reparto> elementos = elementoDAO.listarPorEstaCerrada(estaCerrada);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos","hijos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Obtiene la lista por EstaCerrada 
@@ -77,9 +118,18 @@ public class RepartoService {
     }
     
     //Obtiene la lista por filtros
-    public List<Reparto> listarPorFiltros(int idEmpresa, boolean tipoViaje, 
-            Date fechaDesde, Date fechaHasta, int idChofer,boolean estaCerrada) {
-        return elementoDAO.listarPorFiltros(tipoViaje,fechaDesde,fechaHasta,idChofer,estaCerrada,idEmpresa);
+    public Object listarPorFiltros(int idEmpresa, boolean tipoViaje, 
+            Date fechaDesde, Date fechaHasta, int idChofer,boolean estaCerrada) throws IOException {
+        List<Reparto> elementos = elementoDAO.listarPorFiltros(tipoViaje,fechaDesde,fechaHasta,idChofer,estaCerrada,idEmpresa);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos","hijos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
     //Cierra un reparto
@@ -105,7 +155,7 @@ public class RepartoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Reparto agregar(Reparto elemento) {
+    public int agregar(Reparto elemento) throws IOException {
         Timestamp fecha = new Timestamp(new java.util.Date().getTime());
         elemento.setFechaRegistracion(fecha);
         elemento.setEstaCerrada(false);
@@ -122,7 +172,7 @@ public class RepartoService {
                 repartoPersonalDAO.saveAndFlush(acompaniante);
             }
         }
-        return elemento;
+        return elemento.getId();
     }
 
     //Actualiza un registro

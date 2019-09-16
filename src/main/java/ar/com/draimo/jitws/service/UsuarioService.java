@@ -124,6 +124,9 @@ public class UsuarioService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
+        for(UsuarioEmpresa u :usuarioEmpresaDAO.findByUsuario(elementoDAO.findById(elemento))){
+        usuarioEmpresaDAO.deleteById(u.getId());
+    }
         elementoDAO.deleteById(elemento);
     }
     
