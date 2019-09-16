@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.service.RepartoService;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,43 +54,43 @@ public class RepartoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<Reparto> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
     }
     
     //Obtiene la lista de registros propios abiertos
     @GetMapping(value = URL + "/listarAbiertosPropios")
     @ResponseBody
-    public List<Reparto> listarAbiertosPropios() {
+    public Object listarAbiertosPropios() throws IOException {
         return elementoService.listarAbiertosPropios();
     }
     
     //Obtiene la lista de registros terceros abiertos
     @GetMapping(value = URL + "/listarAbiertosTerceros")
     @ResponseBody
-    public List<Reparto> listarAbiertosTerceros() {
+    public Object listarAbiertosTerceros() throws IOException {
         return elementoService.listarAbiertosTerceros();
     }
     
     //Obtiene la lista por estaCerrada
     @GetMapping(value = URL + "/listarPorEstaCerrada/{estaCerrada}")
     @ResponseBody
-    public List<Reparto> listarPorEstaCerrada(@PathVariable boolean estaCerrada) {
+    public Object listarPorEstaCerrada(@PathVariable boolean estaCerrada) throws IOException {
         return elementoService.listarPorEstaCerrada(estaCerrada);
     }
     
     //Obtiene la lista por filtros
     @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{tipoViaje}/{fechaDesde}/{fechaHasta}/{idChofer}/{estaCerrada}")
     @ResponseBody
-    public List<Reparto> listarPorFiltros(@PathVariable int idEmpresa, @PathVariable boolean tipoViaje,
+    public Object listarPorFiltros(@PathVariable int idEmpresa, @PathVariable boolean tipoViaje,
             @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable 
-                    int idChofer,@PathVariable boolean estaCerrada) {
+                    int idChofer,@PathVariable boolean estaCerrada) throws IOException {
         return elementoService.listarPorFiltros(idEmpresa,tipoViaje,fechaDesde,fechaHasta,idChofer,estaCerrada);
     }
     
     //Cierra un repartopropio
     @PutMapping(value = URL + "/cerrarReparto/{idReparto}")
-    public ResponseEntity<?> cerrarReparto(@PathVariable int idReparto) {
+    public ResponseEntity<?> cerrarReparto(@PathVariable int idReparto) throws IOException {
         boolean r = elementoService.cerrarReparto(idReparto);
         if (r == true) {
             template.convertAndSend(TOPIC + "/lista", 
@@ -102,7 +103,7 @@ public class RepartoController {
     
     //Abre un repartopropio
     @PutMapping(value = URL + "/abrirReparto/{idReparto}")
-    public ResponseEntity<?> abrirReparto(@PathVariable int idReparto) {
+    public ResponseEntity<?> abrirReparto(@PathVariable int idReparto) throws IOException {
         boolean r = elementoService.abrirReparto(idReparto);
         if (r == true) {
             template.convertAndSend(TOPIC + "/lista", 
@@ -117,12 +118,12 @@ public class RepartoController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Reparto elemento) {
         try {
-            Reparto a = elementoService.agregar(elemento);
+            int a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/listarPorEstaCerrada",
 //                    elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return MensajeRespuesta.agregado(a);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
