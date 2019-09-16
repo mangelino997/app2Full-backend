@@ -139,6 +139,25 @@ public class VehiculoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
+    
+    //Obtiene una lista por alias y empresa
+    public Object listarPorAliasYEmpresaFiltroRemolque(String alias, int idEmpresa) throws IOException {
+        List<Vehiculo> elementos;
+        Empresa empresa = empresaDAO.findById(idEmpresa).get();
+        if (alias.equals("***")) {
+            elementos = elementoDAO.findByEmpresaAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(empresa);
+        } else {
+            elementos = elementoDAO.findByAliasContainingAndEmpresaAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(alias, empresa);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
 
     //Obtiene una lista por alias filtrado por no remolque
     public Object listarPorAliasYRemolqueFalse(String alias) throws IOException {

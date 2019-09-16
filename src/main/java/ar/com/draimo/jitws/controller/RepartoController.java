@@ -79,6 +79,13 @@ public class RepartoController {
         return elementoService.listarPorEstaCerrada(estaCerrada);
     }
     
+    //Obtiene la lista por estaCerrada
+    @GetMapping(value = URL + "/listarPorEstaCerradaYEmpresa/{estaCerrada}/{idEmpresa}")
+    @ResponseBody
+    public List<Reparto> listarPorEstaCerradaYEmpresa(@PathVariable boolean estaCerrada, @PathVariable int idEmpresa) {
+        return elementoService.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
+    }
+    
     //Obtiene la lista por filtros
     @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{tipoViaje}/{fechaDesde}/{fechaHasta}/{idChofer}/{estaCerrada}")
     @ResponseBody

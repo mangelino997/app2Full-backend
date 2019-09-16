@@ -51,7 +51,7 @@ public class RepartoService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Reparto elemento = elementoDAO.findTopByOrderByIdDesc();
-        return (elemento!=null ? elemento.getId()+1:1);
+        return (elemento!=null? elemento.getId()+1 : 1);
     }
     
     //Obtiene la lista completa
@@ -110,6 +110,11 @@ public class RepartoService {
                 .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
+    }
+    
+    //Obtiene la lista por EstaCerrada 
+    public List<Reparto> listarPorEstaCerradaYEmpresa(boolean estaCerrada, int idEmpresa) {
+        return elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
     }
     
     //Obtiene la lista por filtros
