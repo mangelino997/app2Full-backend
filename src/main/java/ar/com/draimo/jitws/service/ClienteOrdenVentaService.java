@@ -117,7 +117,7 @@ public class ClienteOrdenVentaService {
     @Transactional(rollbackFor = Exception.class)
     public Object actualizar(ClienteOrdenVenta elemento) throws IOException {
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-            elementoDAO.save(elemento);
+        elementoDAO.save(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");

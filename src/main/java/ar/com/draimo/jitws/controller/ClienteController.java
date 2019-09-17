@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.service.ClienteService;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class ClienteController {
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public Object listarPorAlias(@PathVariable String alias) throws IOException {
+    public List<Cliente> listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
     

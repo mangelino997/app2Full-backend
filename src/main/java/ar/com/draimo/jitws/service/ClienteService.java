@@ -110,20 +110,21 @@ public class ClienteService {
     }
 
     //Obtiene una lista por alias
-    public Object listarPorAlias(String alias) throws IOException {
+    public List<Cliente> listarPorAlias(String alias) throws IOException {
         List<Cliente> clientes;
         if (alias.equals("***")) {
             clientes = elementoDAO.findAll();
         } else {
             clientes = elementoDAO.findByAliasContaining(alias);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(clientes);
-        return mapper.readValue(string, Object.class);
+        return clientes;
+//        ObjectMapper mapper = new ObjectMapper();
+//        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+//                .serializeAllExcept("cliente");
+//        FilterProvider filters = new SimpleFilterProvider()
+//                .addFilter("clienteordenventafiltro", theFilter);
+//        String string = mapper.writer(filters).writeValueAsString(clientes);
+//        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un cliente eventual
