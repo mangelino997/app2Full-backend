@@ -13,8 +13,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "seguimientoestadosituacion")
-public class SeguimientoEstadoTipoCte extends ObjetoGenerico {
+@Table(name = "seguimientoestadotipocpte")
+public class SeguimientoEstadoTipoCpte extends ObjetoGenerico {
     
     //Referencia a la tabla seguimientoEstado
     @ManyToOne(cascade = CascadeType.REFRESH)

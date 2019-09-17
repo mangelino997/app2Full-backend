@@ -2,7 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.SeguimientoEstado;
-import ar.com.draimo.jitws.model.SeguimientoEstadoTipoCte;
+import ar.com.draimo.jitws.model.SeguimientoEstadoTipoCpte;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,15 +13,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author blas
  */
 
-public interface ISeguimientoEstadoTipoCteDAO extends JpaRepository<SeguimientoEstadoTipoCte, Integer> {
+public interface ISeguimientoEstadoTipoCpteDAO extends JpaRepository<SeguimientoEstadoTipoCpte, Integer> {
     
     //Obtiene el siguiente id
-    public SeguimientoEstadoTipoCte findTopByOrderByIdDesc();
+    public SeguimientoEstadoTipoCpte findTopByOrderByIdDesc();
     
     //Obtiene una lista por seguimientoEstado
-    public List<SeguimientoEstadoTipoCte> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
+    public List<SeguimientoEstadoTipoCpte> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
     
     //Obtiene una lista ordenada por tipoComprobante
-    public List<SeguimientoEstadoTipoCte> findByTipoComprobante(TipoComprobante tipoComprobante);
+    public List<SeguimientoEstadoTipoCpte> findByTipoComprobante(TipoComprobante tipoComprobante);
     
 }

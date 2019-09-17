@@ -23,11 +23,11 @@ public class SeguimientoEstado extends ObjetoGenerico {
     private boolean esEntregado;
     
     //Define si el reparto es saliente
-    @Column(name = "repartoSaliente", nullable = true)
+    @Column(name = "repartoSaliente", nullable = false)
     private boolean repartoSaliente;
     
     //Define si el reparto es entrante
-    @Column(name = "repartoEntrante", nullable = true)
+    @Column(name = "repartoEntrante", nullable = false)
     private boolean repartoEntrante;
     
     //Define los getters y setters
@@ -40,7 +40,7 @@ public class SeguimientoEstado extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public boolean isEsEntregado() {
+    public boolean getEsEntregado() {
         return esEntregado;
     }
 
@@ -48,7 +48,7 @@ public class SeguimientoEstado extends ObjetoGenerico {
         this.esEntregado = esEntregado;
     }
 
-    public boolean isRepartoSaliente() {
+    public boolean getRepartoSaliente() {
         return repartoSaliente;
     }
 
@@ -56,7 +56,7 @@ public class SeguimientoEstado extends ObjetoGenerico {
         this.repartoSaliente = repartoSaliente;
     }
 
-    public boolean isRepartoEntrante() {
+    public boolean getRepartoEntrante() {
         return repartoEntrante;
     }
 

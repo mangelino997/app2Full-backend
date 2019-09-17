@@ -1,13 +1,13 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
-import ar.com.draimo.jitws.dao.ISeguimientoEstadoTipoCteDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
-import ar.com.draimo.jitws.model.SeguimientoEstadoTipoCte;
+import ar.com.draimo.jitws.model.SeguimientoEstadoTipoCpte;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.ISeguimientoEstadoTipoCpteDAO;
 
 /**
  * Servicio AfipActividad
@@ -15,11 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @author blas
  */
 @Service
-public class SeguimientoEstadoTipoCteService {
+public class SeguimientoEstadoTipoCpteService {
 
     //Define el dao
     @Autowired
-    ISeguimientoEstadoTipoCteDAO elementoDAO;
+    ISeguimientoEstadoTipoCpteDAO elementoDAO;
 
     //Define el dao de tipoComprobante
     @Autowired
@@ -31,34 +31,34 @@ public class SeguimientoEstadoTipoCteService {
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        SeguimientoEstadoTipoCte elemento = elementoDAO.findTopByOrderByIdDesc();
+        SeguimientoEstadoTipoCpte elemento = elementoDAO.findTopByOrderByIdDesc();
         return (elemento != null ? elemento.getId() + 1 : 1);
     }
 
     //Obtiene la lista completa
-    public List<SeguimientoEstadoTipoCte> listar() {
+    public List<SeguimientoEstadoTipoCpte> listar() {
         return elementoDAO.findAll();
     }
 
     //Obtiene una lista por TipoComprobante
-    public List<SeguimientoEstadoTipoCte> listarPorTipoComprobante(int idTipoComprobante) {
+    public List<SeguimientoEstadoTipoCpte> listarPorTipoComprobante(int idTipoComprobante) {
         return elementoDAO.findByTipoComprobante(tipoComprobanteDAO.findById(idTipoComprobante).get());
     }
 
     //Obtiene una lista por SeguimientoEstado
-    public List<SeguimientoEstadoTipoCte> listarPorSeguimientoEstado(int idSeguimientoEstado) {
+    public List<SeguimientoEstadoTipoCpte> listarPorSeguimientoEstado(int idSeguimientoEstado) {
         return elementoDAO.findBySeguimientoEstado(seguimientoEstadoDAO.findById(idSeguimientoEstado).get());
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public SeguimientoEstadoTipoCte agregar(SeguimientoEstadoTipoCte elemento) {
+    public SeguimientoEstadoTipoCpte agregar(SeguimientoEstadoTipoCpte elemento) {
         return elementoDAO.save(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(SeguimientoEstadoTipoCte elemento) {
+    public void actualizar(SeguimientoEstadoTipoCpte elemento) {
         elementoDAO.save(elemento);
     }
 

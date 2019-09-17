@@ -15,11 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IRepartoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRepartoDAO;
-import ar.com.draimo.jitws.dao.ISeguimientoDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
-import ar.com.draimo.jitws.model.Reparto;
-import ar.com.draimo.jitws.model.Seguimiento;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.ViajeRemito;
@@ -62,10 +59,6 @@ public class RepartoComprobanteService {
     //define la referencia al dao de seguimientoEstado
     @Autowired
     ISeguimientoEstadoDAO seguimientoEstadoDAO;
-
-    //define la referencia al dao de seguimiento
-    @Autowired
-    ISeguimientoDAO seguimientoDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -117,71 +110,72 @@ public class RepartoComprobanteService {
     //Agrega un listado
     @Transactional(rollbackFor = Exception.class)
     public List<RepartoComprobante> agregarComprobantes(List<RepartoComprobante> ctes) {
-        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
-        Seguimiento seguimiento = new Seguimiento();
+//        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
+//        Seguimiento seguimiento = new Seguimiento();
         List<RepartoComprobante> repartoCtes = new ArrayList<>();
-        seguimiento.setFecha(LocalDateTime.now());
-        seguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-        seguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
-        for (RepartoComprobante cte : ctes) {
-            if (cte.getVentaComprobante() != null) {
-                VentaComprobante v = ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
-                        cte.getVentaComprobante().getPuntoVenta(), cte.getVentaComprobante().getLetra(),
-                        cte.getVentaComprobante().getNumero());
-                if(v!=null){
-                    cte.setVentaComprobante(v);
-                seguimiento.setVentaComprobante(cte.getVentaComprobante());
-                }
-            } else if (cte.getViajeRemito() != null) {
-                ViajeRemito r =viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
-                        cte.getViajeRemito().getNumero());
-                if(r!=null) {
-                    seguimiento.setViajeRemito(cte.getViajeRemito());
-                    cte.setViajeRemito(r);
-                }
-                
-            } else if (cte.getOrdenRecoleccion() != null) {
-                seguimiento.setOrdenRecoleccion(cte.getOrdenRecoleccion());
-            }
-            RepartoComprobante rc = (cte.getOrdenRecoleccion() == null && cte.getViajeRemito() == null
-                    && cte.getVentaComprobante() == null ? null : elementoDAO.saveAndFlush(cte));
-            if (rc != null) {
-                seguimientoDAO.saveAndFlush(seguimiento);
-                repartoCtes.add(rc);
-            }
-        }
+//        seguimiento.setFecha(LocalDateTime.now());
+//        seguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
+//        seguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+//        for (RepartoComprobante cte : ctes) {
+//            if (cte.getVentaComprobante() != null) {
+//                VentaComprobante v = ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
+//                        cte.getVentaComprobante().getPuntoVenta(), cte.getVentaComprobante().getLetra(),
+//                        cte.getVentaComprobante().getNumero());
+//                if(v!=null){
+//                    cte.setVentaComprobante(v);
+//                seguimiento.setVentaComprobante(cte.getVentaComprobante());
+//                }
+//            } else if (cte.getViajeRemito() != null) {
+//                ViajeRemito r =viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
+//                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
+//                        cte.getViajeRemito().getNumero());
+//                if(r!=null) {
+//                    seguimiento.setViajeRemito(cte.getViajeRemito());
+//                    cte.setViajeRemito(r);
+//                }
+//                
+//            } else if (cte.getOrdenRecoleccion() != null) {
+//                seguimiento.setOrdenRecoleccion(cte.getOrdenRecoleccion());
+//            }
+//            RepartoComprobante rc = (cte.getOrdenRecoleccion() == null && cte.getViajeRemito() == null
+//                    && cte.getVentaComprobante() == null ? null : elementoDAO.saveAndFlush(cte));
+//            if (rc != null) {
+//                seguimientoDAO.saveAndFlush(seguimiento);
+//                repartoCtes.add(rc);
+//            }
+//        }
         return repartoCtes;
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public int agregar(RepartoComprobante c) {
-        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
-        Seguimiento seguimiento = new Seguimiento();
-        seguimiento.setFecha(LocalDateTime.now());
-        seguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-        if (c.getVentaComprobante() != null) {
-            c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
-                    c.getVentaComprobante().getPuntoVenta(), c.getVentaComprobante().getLetra(),
-                    c.getVentaComprobante().getNumero()));
-            seguimiento.setVentaComprobante(c.getVentaComprobante());
-        } else if (c.getViajeRemito() != null) {
-            c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-                    c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
-                    c.getViajeRemito().getNumero()));
-            seguimiento.setViajeRemito(c.getViajeRemito());
-        } else if (c.getOrdenRecoleccion() != null) {
-            seguimiento.setOrdenRecoleccion(c.getOrdenRecoleccion());
-        }
-        Sucursal s = sucursalDAO.obtenerPorReparto(c.getReparto().getId());
-        seguimiento.setSucursal(s);
-        RepartoComprobante rc = (c.getOrdenRecoleccion() == null && c.getViajeRemito() == null
-                && c.getVentaComprobante() == null ? null : elementoDAO.saveAndFlush(c));
-        if (rc != null) {
-            seguimientoDAO.saveAndFlush(seguimiento);
-        }
-        return rc.getId();
+//        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
+//        Seguimiento seguimiento = new Seguimiento();
+//        seguimiento.setFecha(LocalDateTime.now());
+//        seguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
+//        if (c.getVentaComprobante() != null) {
+//            c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
+//                    c.getVentaComprobante().getPuntoVenta(), c.getVentaComprobante().getLetra(),
+//                    c.getVentaComprobante().getNumero()));
+//            seguimiento.setVentaComprobante(c.getVentaComprobante());
+//        } else if (c.getViajeRemito() != null) {
+//            c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
+//                    c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
+//                    c.getViajeRemito().getNumero()));
+//            seguimiento.setViajeRemito(c.getViajeRemito());
+//        } else if (c.getOrdenRecoleccion() != null) {
+//            seguimiento.setOrdenRecoleccion(c.getOrdenRecoleccion());
+//        }
+//        Sucursal s = sucursalDAO.obtenerPorReparto(c.getReparto().getId());
+//        seguimiento.setSucursal(s);
+//        RepartoComprobante rc = (c.getOrdenRecoleccion() == null && c.getViajeRemito() == null
+//                && c.getVentaComprobante() == null ? null : elementoDAO.saveAndFlush(c));
+//        if (rc != null) {
+//            seguimientoDAO.saveAndFlush(seguimiento);
+//        }
+//        return rc.getId();
+        return 1;
     }
 
     //Actualiza un registro

@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.SeguimientoEstadoTipoCte;
-import ar.com.draimo.jitws.service.SeguimientoEstadoTipoCteService;
+import ar.com.draimo.jitws.model.SeguimientoEstadoTipoCpte;
+import ar.com.draimo.jitws.service.SeguimientoEstadoTipoCpteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class SeguimientoEstadoTipoCteController {
+public class SeguimientoEstadoTipoCpteController {
     
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/seguimientoestadotipocte";
@@ -40,7 +40,7 @@ public class SeguimientoEstadoTipoCteController {
     
     //Crea una instancia del servicio
     @Autowired
-    SeguimientoEstadoTipoCteService elementoService;
+    SeguimientoEstadoTipoCpteService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -52,29 +52,29 @@ public class SeguimientoEstadoTipoCteController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<SeguimientoEstadoTipoCte> listar() {
+    public List<SeguimientoEstadoTipoCpte> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por TipoComprobante
     @GetMapping(value = URL + "/listarPorTipoComprobante/{idTipoComprobante}")
     @ResponseBody
-    public List<SeguimientoEstadoTipoCte> listarPorTipoComprobante(@PathVariable int idTipoComprobante) {
+    public List<SeguimientoEstadoTipoCpte> listarPorTipoComprobante(@PathVariable int idTipoComprobante) {
         return elementoService.listarPorTipoComprobante(idTipoComprobante);
     }
     
     //Obtiene una lista por SeguimientoEstado
     @GetMapping(value = URL + "/listarPorSeguimientoEstado/{idSeguimientoEstado}")
     @ResponseBody
-    public List<SeguimientoEstadoTipoCte> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
+    public List<SeguimientoEstadoTipoCpte> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
         return elementoService.listarPorSeguimientoEstado(idSeguimientoEstado);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SeguimientoEstadoTipoCte elemento) {
+    public ResponseEntity<?> agregar(@RequestBody SeguimientoEstadoTipoCpte elemento) {
         try {
-            SeguimientoEstadoTipoCte a = elementoService.agregar(elemento);
+            SeguimientoEstadoTipoCpte a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -93,7 +93,7 @@ public class SeguimientoEstadoTipoCteController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SeguimientoEstadoTipoCte elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody SeguimientoEstadoTipoCpte elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
