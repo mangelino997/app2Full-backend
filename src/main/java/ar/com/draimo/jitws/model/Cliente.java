@@ -5,19 +5,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 /**
  * Clase Cliente
@@ -219,13 +215,18 @@ public class Cliente extends ObjetoGenerico {
     private boolean esReceptorFCE;
    
     //Referencia a la clase ordenVenta
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    @JoinTable(name = "clienteordenventa",
-        joinColumns = @JoinColumn(name = "idCliente"),
-        inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"),
-        uniqueConstraints={@UniqueConstraint(columnNames={"idCliente", "idOrdenVenta"})})  
-    @JsonIgnoreProperties(value = {"clientes","empresas"})
-    private List<OrdenVenta> ordenesVentas = new ArrayList<>();
+//    @ManyToMany(cascade = CascadeType.REFRESH)
+//    @JoinTable(name = "clienteordenventa",
+//        joinColumns = @JoinColumn(name = "idCliente"),
+//        inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"),
+//        uniqueConstraints={@UniqueConstraint(columnNames={"idCliente", "idOrdenVenta"})})  
+//    @JsonIgnoreProperties(value = {"clientes","empresas"})
+//    private List<OrdenVenta> ordenesVentas = new ArrayList<>();
+    
+    //Referencia a la clase ordenVenta
+    @JsonIgnoreProperties("cliente")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
+    private List<ClienteOrdenVenta> clienteOrdenesVentas;
     
     @JsonIgnoreProperties("cliente")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
@@ -561,14 +562,6 @@ public class Cliente extends ObjetoGenerico {
         this.estaActiva = estaActiva;
     }
     
-    public List<OrdenVenta> getOrdenesVentas() {
-        return ordenesVentas;
-    }
-
-    public void setOrdenesVentas(List<OrdenVenta> ordenesVentas) {
-        this.ordenesVentas = ordenesVentas;
-    }
-
     public boolean getEsReceptorFCE() {
         return esReceptorFCE;
     }
@@ -577,6 +570,14 @@ public class Cliente extends ObjetoGenerico {
         this.esReceptorFCE = esReceptorFCE;
     }
 
+    public List<ClienteOrdenVenta> getClienteOrdenesVentas() {
+        return clienteOrdenesVentas;
+    }
+
+    public void setClienteOrdenesVentas(List<ClienteOrdenVenta> clienteOrdenesVentas) {
+        this.clienteOrdenesVentas = clienteOrdenesVentas;
+    }
+    
     public List<ClienteCuentaBancaria> getClienteCuentasBancarias() {
         return clienteCuentasBancarias;
     }
