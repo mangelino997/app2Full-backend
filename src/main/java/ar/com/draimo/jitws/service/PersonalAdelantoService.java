@@ -216,7 +216,11 @@ public class PersonalAdelantoService {
         BasicoCategoria basico;
         for (Personal personal : personales) {
             basico = basicoCategoriaDAO.obtenerPorCategoria(personal.getCategoria().getId());
+            if(basico!=null){
             importeCategoria = basico.getBasico().multiply(basico.getCategoria().getTopeBasicoAdelantos().divide(new BigDecimal(100.00)));
+            }else {
+                importeCategoria=BigDecimal.ZERO;
+            }
             if (importeCategoria.compareTo(adelantos.getImporte()) >= 0) {
                 adelanto = new PersonalAdelanto();
                 adelanto.setEmpresa(personal.getEmpresa());
