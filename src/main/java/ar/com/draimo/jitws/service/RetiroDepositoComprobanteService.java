@@ -89,16 +89,18 @@ public class RetiroDepositoComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RetiroDepositoComprobante agregar(RetiroDepositoComprobante c) {
-        if(c.getVentaComprobante()!= null) {
-            c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
-                c.getVentaComprobante().getPuntoVenta(),c.getVentaComprobante().getLetra(),
-                c.getVentaComprobante().getNumero()));
-        }else if(c.getViajeRemito()!=null){
-            c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-                    c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
-                    c.getViajeRemito().getNumero()));
-        }
-        return elementoDAO.saveAndFlush(c);
+//        if(c.getVentaComprobante()!= null) {
+//            c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
+//                c.getVentaComprobante().getPuntoVenta(),c.getVentaComprobante().getLetra(),
+//                c.getVentaComprobante().getNumero())
+//             );
+//        }else if(c.getViajeRemito()!=null){
+//            c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
+//                    c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
+//                    c.getViajeRemito().getNumero()));
+//        }
+//        return elementoDAO.saveAndFlush(c);
+        return new RetiroDepositoComprobante();
     }
     
     //Actualiza un registro
