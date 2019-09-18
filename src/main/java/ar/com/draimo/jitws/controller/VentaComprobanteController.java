@@ -87,11 +87,11 @@ public class VentaComprobanteController {
     }
     
     //Obtiene un registro por puntoventa letra y numero
-    @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")
+    @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}/{idTipoComprobante}")
     @ResponseBody
     public Object obtener(@PathVariable int puntoVenta,@PathVariable String letra,
-            @PathVariable int numero) throws IOException {
-        return elementoService.obtener(puntoVenta, letra, numero);
+            @PathVariable int numero,@PathVariable int idTipoComprobante) throws IOException {
+        return elementoService.obtener(puntoVenta, letra, numero, idTipoComprobante);
     }
     
     //Agrega un registro
