@@ -2,9 +2,11 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IRetiroDepositoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IRetiroDepositoDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.model.RetiroDepositoComprobante;
+import ar.com.draimo.jitws.model.TipoComprobante;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -31,9 +33,13 @@ public class RetiroDepositoComprobanteService {
     @Autowired
     IRetiroDepositoDAO retiroDepositoDAO;
     
-    //Define la referencia al dao de RepartoPropio
+    //Define la referencia al dao de ventaComprobante
     @Autowired
     IVentaComprobanteDAO ventaComprobanteDAO;
+    
+    //Define la referencia al dao de tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
     
     //Define la referencia al dao de RepartoPropio
     @Autowired
@@ -89,18 +95,17 @@ public class RetiroDepositoComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RetiroDepositoComprobante agregar(RetiroDepositoComprobante c) {
-//        if(c.getVentaComprobante()!= null) {
-//            c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumero(
-//                c.getVentaComprobante().getPuntoVenta(),c.getVentaComprobante().getLetra(),
-//                c.getVentaComprobante().getNumero())
-//             );
-//        }else if(c.getViajeRemito()!=null){
-//            c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-//                    c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
-//                    c.getViajeRemito().getNumero()));
-//        }
-//        return elementoDAO.saveAndFlush(c);
-        return new RetiroDepositoComprobante();
+        if(c.getVentaComprobante()!= null) {
+            TipoComprobante t = tipoComprobanteDAO.findById(c.getVentaComprobante().getTipoComprobante().getId()).get();
+            c.setVentaComprobante(ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(
+                c.getVentaComprobante().getPuntoVenta(),c.getVentaComprobante().getLetra(),
+                c.getVentaComprobante().getNumero(),t));
+        }else if(c.getViajeRemito()!=null){
+            c.setViajeRemito(viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
+                    c.getViajeRemito().getPuntoVenta(), c.getViajeRemito().getLetra(),
+                    c.getViajeRemito().getNumero()));
+        }
+        return elementoDAO.saveAndFlush(c);
     }
     
     //Actualiza un registro

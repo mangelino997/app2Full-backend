@@ -129,21 +129,22 @@ public class VentaComprobanteService {
     }
 
     //Obtiene un registro por puntoVenta, letra y numero
-    public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
-//        VentaComprobante ventasComprobantes = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
-//        ObjectMapper mapper = new ObjectMapper();
-//        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-//                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
-//        FilterProvider filters = new SimpleFilterProvider()
-//                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-//                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-//                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-//                .addFilter("filtroOrdenVentaEscala", theFilter)
-//                .addFilter("clienteordenventafiltro", theFilter)
-//                .addFilter("filtroOrdenVentaTramo", theFilter);
-//        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
-//        return new ObjectMapper().readValue(string, Object.class);
-          return new VentaComprobante();
+    public Object obtener(int puntoVenta, String letra, int numero, int idTipoComprobante) throws IOException {
+        TipoComprobante t = tipoComprobanteDAO.findById(idTipoComprobante).get();
+        VentaComprobante ventasComprobantes = 
+                elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene una lista por cliente y empresa
