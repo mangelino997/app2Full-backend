@@ -110,20 +110,21 @@ public class ClienteService {
     }
 
     //Obtiene una lista por alias
-    public Object listarPorAlias(String alias) throws IOException {
+    public List<Cliente> listarPorAlias(String alias) throws IOException {
         List<Cliente> clientes;
         if (alias.equals("***")) {
             clientes = elementoDAO.findAll();
         } else {
             clientes = elementoDAO.findByAliasContaining(alias);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(clientes);
-        return mapper.readValue(string, Object.class);
+        return clientes;
+//        ObjectMapper mapper = new ObjectMapper();
+//        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+//                .serializeAllExcept("cliente");
+//        FilterProvider filters = new SimpleFilterProvider()
+//                .addFilter("clienteordenventafiltro", theFilter);
+//        String string = mapper.writer(filters).writeValueAsString(clientes);
+//        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un cliente eventual
@@ -142,9 +143,8 @@ public class ClienteService {
     @Transactional(rollbackFor = Exception.class)
     public Cliente agregar(Cliente elemento) {
         elemento = formatearString(elemento);
-        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        List<OrdenVenta> ordenes = elemento.getOrdenesVentas();
-        elemento.setOrdenesVentas(null);
+        Date fechaAlta = new Date(new java.util.Date().getTime());
+        elemento.setFechaAlta(fechaAlta);
         Cliente c;
         if (elemento.getCuentaGrupo() != null) {
             c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
@@ -155,22 +155,26 @@ public class ClienteService {
             }
         }
         Cliente cliente = elementoDAO.saveAndFlush(elemento);
-        ClienteOrdenVenta clienteOrdenVenta = new ClienteOrdenVenta();
         //Agrega la lista de ordenes de venta del cliente
-        if (!ordenes.isEmpty()) {
-            for (OrdenVenta ordenVenta : ordenes) {
-                clienteOrdenVenta.setCliente(cliente);
-                if (clienteOrdenVentaDAO.findById(ordenVenta.getId()) != null) {
-                    clienteOrdenVenta.setOrdenVenta(ordenVenta);
-                } else {
-                    throw new DataIntegrityViolationException("Registro no existente: ORDEN VENTA");
-                }
-                clienteOrdenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
-                clienteOrdenVenta.setUsuarioAlta(elemento.getUsuarioAlta());
-                clienteOrdenVenta.setEstaActiva(true);
-                clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
-            }
+        for(ClienteOrdenVenta cov : elemento.getClienteOrdenesVentas()) {
+            cov.setCliente(cliente);
+            cov.setFechaAlta(fechaAlta);
+            clienteOrdenVentaDAO.saveAndFlush(cov);
         }
+//        if (!ordenes.isEmpty()) {
+//            for (OrdenVenta ordenVenta : ordenes) {
+//                clienteOrdenVenta.setCliente(cliente);
+//                if (clienteOrdenVentaDAO.findById(ordenVenta.getId()) != null) {
+//                    clienteOrdenVenta.setOrdenVenta(ordenVenta);
+//                } else {
+//                    throw new DataIntegrityViolationException("Registro no existente: ORDEN VENTA");
+//                }
+//                clienteOrdenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
+//                clienteOrdenVenta.setUsuarioAlta(elemento.getUsuarioAlta());
+//                clienteOrdenVenta.setEstaActiva(true);
+//                clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
+//            }
+//        }
         //Recorre la lista de cliente cuenta bancaria y agrega registros
         for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
             ccb.setCliente(cliente);
