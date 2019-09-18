@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.service.BasicoCategoriaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -23,67 +24,72 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase BasicoCategoria Controller
+ *
  * @author blas
  */
-
 @RestController
 public class BasicoCategoriaController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/basicocategoria";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/basicocategoria";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     BasicoCategoriaService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<BasicoCategoria> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorCategoriaNombre/{nombre}")
     @ResponseBody
     public List<BasicoCategoria> listarPorCategoriaNombre(@PathVariable String nombre) {
         return elementoService.listarPorCategoriaNombre(nombre);
     }
-    
+
     //Obtiene el ultimo registro por categoria
     @GetMapping(value = URL + "/obtenerPorCategoria/{idCategoria}")
     @ResponseBody
-    public BasicoCategoria obtenerPorCategoria(@PathVariable int idCategoria) {
-        return elementoService.obtenerPorCategoria(idCategoria);
+    public ResponseEntity<?> obtenerPorCategoria(@PathVariable int idCategoria) {
+        BasicoCategoria bc = elementoService.obtenerPorCategoria(idCategoria);
+        if (bc == null) {
+            return new ResponseEntity(bc, HttpStatus.NO_CONTENT);
+        }else{
+            return new ResponseEntity(bc, HttpStatus.OK);
+        }
     }
-    
+
     //Obtiene una lista por categoria
     @GetMapping(value = URL + "/listarPorCategoria/{idCategoria}")
     @ResponseBody
     public List<BasicoCategoria> listarPorCategoria(@PathVariable int idCategoria) {
         return elementoService.listarPorCategoria(idCategoria);
     }
-    
+
     //Obtiene una lista por categoria y anio
     @GetMapping(value = URL + "/listarPorCategoriaYAnio/{idCategoria}/{anio}")
     @ResponseBody
     public List<BasicoCategoria> listarPorCategoria(@PathVariable int idCategoria, @PathVariable short anio) {
         return elementoService.listarPorCategoriaYAnio(idCategoria, anio);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody BasicoCategoria elemento) {
@@ -96,7 +102,7 @@ public class BasicoCategoriaController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -104,7 +110,7 @@ public class BasicoCategoriaController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody BasicoCategoria elemento) {
@@ -121,18 +127,18 @@ public class BasicoCategoriaController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -140,10 +146,10 @@ public class BasicoCategoriaController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

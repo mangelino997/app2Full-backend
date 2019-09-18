@@ -129,8 +129,10 @@ public class VentaComprobanteService {
     }
 
     //Obtiene un registro por puntoVenta, letra y numero
-    public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
-        VentaComprobante ventasComprobantes = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+    public Object obtener(int puntoVenta, String letra, int numero, int idTipoComprobante) throws IOException {
+        TipoComprobante t = tipoComprobanteDAO.findById(idTipoComprobante).get();
+        VentaComprobante ventasComprobantes = 
+                elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
