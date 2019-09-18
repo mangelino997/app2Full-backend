@@ -205,7 +205,7 @@ public class MensajeRespuesta {
                         break;
                     case DuplicidadError.DOCUMENTO_UNICO:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DOCUMENTO;
-                        plusMensaje = " DNI";
+                        plusMensaje = " N° DE DOCUMENTO";
                         break;
                     case DuplicidadError.DOMINIO_UNICO:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_DOMINIO;
