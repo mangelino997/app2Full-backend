@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
-import ar.com.draimo.jitws.service.VentaComprobanteSeguimientoService;
+import ar.com.draimo.jitws.model.ClienteVtoPago;
+import ar.com.draimo.jitws.service.ClienteVtoPagoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,17 +22,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase VentaComprobanteSeguimiento Controller
+ * Clase Cliente Vto Pago Controller
  * @author blas
  */
 
 @RestController
-public class VentaComprobanteSeguimientoController {
+public class ClienteVtoPagoController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ventacomprobanteseguimiento";
+    private final String URL = RutaConstant.URL_BASE + "/clientevtopago";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventacomprobanteseguimiento";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/clientevtopago";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -40,7 +40,7 @@ public class VentaComprobanteSeguimientoController {
     
     //Crea una instancia del servicio
     @Autowired
-    VentaComprobanteSeguimientoService elementoService;
+    ClienteVtoPagoService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -52,31 +52,25 @@ public class VentaComprobanteSeguimientoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<SeguimientoVentaComprobante> listar() {
+    public List<ClienteVtoPago> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por VentaComprobante
-    @GetMapping(value = URL + "/listarPorVentaComprobante/{idVentaComprobante}")
+    //Obtiene una lista por cliente y empresa
+    @GetMapping(value = URL + "/listarPorClienteYEmpresa/{idCliente}/{idEmpresa}")
     @ResponseBody
-    public List<SeguimientoVentaComprobante> listarPorVentaComprobante(@PathVariable int idVentaComprobante) {
-        return elementoService.listarPorVentaComprobante(idVentaComprobante);
-    }
-    
-    //Obtiene una lista por SeguimientoEstado
-    @GetMapping(value = URL + "/listarPorSeguimientoEstado/{idSeguimientoEstado}")
-    @ResponseBody
-    public List<SeguimientoVentaComprobante> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
-        return elementoService.listarPorSeguimientoEstado(idSeguimientoEstado);
+    public List<ClienteVtoPago> listarPorClienteYEmpresa(@PathVariable int idCliente,
+            @PathVariable int idEmpresa) {
+        return elementoService.listarPorClienteYEmpresa(idCliente, idEmpresa);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SeguimientoVentaComprobante elemento) {
+    public ResponseEntity<?> agregar(@RequestBody ClienteVtoPago elemento) {
         try {
-            SeguimientoVentaComprobante a = elementoService.agregar(elemento);
+            ClienteVtoPago a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -93,12 +87,12 @@ public class VentaComprobanteSeguimientoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SeguimientoVentaComprobante elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody ClienteVtoPago elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

@@ -2,7 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.ViajeRemito;
-import ar.com.draimo.jitws.model.ViajeRemitoSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,18 +13,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author blas
  */
 
-public interface IViajeRemitoSeguimientoDAO extends JpaRepository<ViajeRemitoSeguimiento, Integer> {
+public interface IViajeRemitoSeguimientoDAO extends JpaRepository<SeguimientoViajeRemito, Integer> {
     
     //Obtiene el siguiente id
-    public ViajeRemitoSeguimiento findTopByOrderByIdDesc();
+    public SeguimientoViajeRemito findTopByOrderByIdDesc();
     
     //Obtiene una lista ordenada por fecha
-    public List<ViajeRemitoSeguimiento> findByOrderByFechaDesc();
+    public List<SeguimientoViajeRemito> findByOrderByFechaDesc();
     
     //Obtiene una lista por seguimientoEstado
-    public List<ViajeRemitoSeguimiento> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
+    public List<SeguimientoViajeRemito> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
     
     //Obtiene una lista ordenada por ViajeRemito
-    public List<ViajeRemitoSeguimiento> findByViajeRemito(ViajeRemito viajeRemito);
+    public List<SeguimientoViajeRemito> findByViajeRemito(ViajeRemito viajeRemito);
     
 }

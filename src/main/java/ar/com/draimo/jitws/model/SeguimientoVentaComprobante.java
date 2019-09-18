@@ -10,19 +10,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Orden Recoleccion Seguimiento
+ * Clase Venta Comprobante Seguimiento
  * Define el modelo (columnas) de la base de datos
  * @author blas
  */
 
 @Entity
-@Table(name = "ordenrecoleccionseguimiento")
-public class OrdenRecoleccionSeguimiento extends ObjetoGenerico {
+@Table(name = "seguimientoventacomprobante")
+public class SeguimientoVentaComprobante extends ObjetoGenerico {
     
-    //Referencia a ordenRecoleccion
+    //Referencia a VentaComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idOrdenRecoleccion", nullable = false)
-    private OrdenRecoleccion ordenRecoleccion;
+    @JoinColumn(name = "idVentaComprobante", nullable = false)
+    private VentaComprobante ventaComprobante;
     
     //Define fecha
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
@@ -44,14 +44,13 @@ public class OrdenRecoleccionSeguimiento extends ObjetoGenerico {
     @JoinColumn(name = "idSeguimientoSituacion", nullable = true)
     private SeguimientoSituacion seguimientoSituacion;
     
-    //Define los getters y setters
-
-    public OrdenRecoleccion getOrdenRecoleccion() {
-        return ordenRecoleccion;
+    public VentaComprobante getVentaComprobante() {
+        return ventaComprobante;
     }
 
-    public void setOrdenRecoleccion(OrdenRecoleccion ordenRecoleccion) {
-        this.ordenRecoleccion = ordenRecoleccion;
+    //Define los getters y setters
+    public void setVentaComprobante(VentaComprobante ventaComprobante) {
+        this.ventaComprobante = ventaComprobante;
     }
 
     public LocalDateTime getFecha() {

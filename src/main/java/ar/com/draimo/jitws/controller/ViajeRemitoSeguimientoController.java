@@ -2,7 +2,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.ViajeRemitoSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
 import ar.com.draimo.jitws.service.ViajeRemitoSeguimientoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,29 +52,29 @@ public class ViajeRemitoSeguimientoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<ViajeRemitoSeguimiento> listar() {
+    public List<SeguimientoViajeRemito> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por ViajeRemito
     @GetMapping(value = URL + "/listarPorViajeRemito/{idViajeRemito}")
     @ResponseBody
-    public List<ViajeRemitoSeguimiento> listarPorViajeRemito(@PathVariable int idViajeRemito) {
+    public List<SeguimientoViajeRemito> listarPorViajeRemito(@PathVariable int idViajeRemito) {
         return elementoService.listarPorViajeRemito(idViajeRemito);
     }
     
     //Obtiene una lista por SeguimientoEstado
     @GetMapping(value = URL + "/listarPorSeguimientoEstado/{idSeguimientoEstado}")
     @ResponseBody
-    public List<ViajeRemitoSeguimiento> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
+    public List<SeguimientoViajeRemito> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
         return elementoService.listarPorSeguimientoEstado(idSeguimientoEstado);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody ViajeRemitoSeguimiento elemento) {
+    public ResponseEntity<?> agregar(@RequestBody SeguimientoViajeRemito elemento) {
         try {
-            ViajeRemitoSeguimiento a = elementoService.agregar(elemento);
+            SeguimientoViajeRemito a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -93,7 +93,7 @@ public class ViajeRemitoSeguimientoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody ViajeRemitoSeguimiento elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody SeguimientoViajeRemito elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

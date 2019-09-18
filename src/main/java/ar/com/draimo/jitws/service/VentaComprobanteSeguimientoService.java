@@ -4,7 +4,7 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteSeguimientoDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
 import ar.com.draimo.jitws.model.VentaComprobante;
-import ar.com.draimo.jitws.model.VentaComprobanteSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,36 +33,36 @@ public class VentaComprobanteSeguimientoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        VentaComprobanteSeguimiento elemento = elementoDAO.findTopByOrderByIdDesc();
+        SeguimientoVentaComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
         return (elemento!=null?elemento.getId()+1:1);
     }
     
     //Obtiene la lista completa
-    public List<VentaComprobanteSeguimiento> listar() {
+    public List<SeguimientoVentaComprobante> listar() {
         return elementoDAO.findByOrderByFechaDesc();
     }
     
     //Obtiene una lista por VentaComprobante
-    public List<VentaComprobanteSeguimiento> listarPorVentaComprobante(int idVentaComprobante) {
+    public List<SeguimientoVentaComprobante> listarPorVentaComprobante(int idVentaComprobante) {
         VentaComprobante v = ventaComprobanteDAO.findById(idVentaComprobante).get();
         return elementoDAO.findByVentaComprobante(v);
     }
     
     //Obtiene una lista por SeguimientoEstado
-    public List<VentaComprobanteSeguimiento> listarPorSeguimientoEstado(int idSeguimientoEstado) {
+    public List<SeguimientoVentaComprobante> listarPorSeguimientoEstado(int idSeguimientoEstado) {
         SeguimientoEstado s = seguimientoEstadoDAO.findById(idSeguimientoEstado).get();
         return elementoDAO.findBySeguimientoEstado(s);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VentaComprobanteSeguimiento agregar(VentaComprobanteSeguimiento elemento) {
+    public SeguimientoVentaComprobante agregar(SeguimientoVentaComprobante elemento) {
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VentaComprobanteSeguimiento elemento) {
+    public void actualizar(SeguimientoVentaComprobante elemento) {
         elementoDAO.save(elemento);
     }
     

@@ -21,13 +21,13 @@ import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteSeguimientoDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoSeguimientoDAO;
-import ar.com.draimo.jitws.model.OrdenRecoleccionSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
-import ar.com.draimo.jitws.model.VentaComprobanteSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
 import ar.com.draimo.jitws.model.ViajeRemito;
-import ar.com.draimo.jitws.model.ViajeRemitoSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -134,9 +134,9 @@ public class RepartoComprobanteService {
     //Agrega un listado
     @Transactional(rollbackFor = Exception.class)
     public List<RepartoComprobante> agregarComprobantes(List<RepartoComprobante> ctes) {
-        OrdenRecoleccionSeguimiento ordenSeguimiento = new OrdenRecoleccionSeguimiento();
-        ViajeRemitoSeguimiento viajeSeguimiento = new ViajeRemitoSeguimiento();
-        VentaComprobanteSeguimiento ventaSeguimiento = new VentaComprobanteSeguimiento();
+        SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
+        SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
+        SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
         List<RepartoComprobante> repartoCtes = new ArrayList<>();
         //Recorre la lista de reparto comprobante
         for (RepartoComprobante cte : ctes) {
@@ -193,9 +193,9 @@ public class RepartoComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public int agregar(RepartoComprobante cte) {
-        OrdenRecoleccionSeguimiento ordenSeguimiento = new OrdenRecoleccionSeguimiento();
-        ViajeRemitoSeguimiento viajeSeguimiento = new ViajeRemitoSeguimiento();
-        VentaComprobanteSeguimiento ventaSeguimiento = new VentaComprobanteSeguimiento();
+        SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
+        SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
+        SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
         //Consulta si ventaComprobante es nulo para establecer el seguimiento y guardarlo
             if (cte.getVentaComprobante() != null) {
                 TipoComprobante tc = tipoComprobanteDAO.findById(cte.getVentaComprobante().getTipoComprobante().getId()).get();

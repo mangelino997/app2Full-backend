@@ -2,7 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.VentaComprobante;
-import ar.com.draimo.jitws.model.VentaComprobanteSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,18 +13,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author blas
  */
 
-public interface IVentaComprobanteSeguimientoDAO extends JpaRepository<VentaComprobanteSeguimiento, Integer> {
+public interface IVentaComprobanteSeguimientoDAO extends JpaRepository<SeguimientoVentaComprobante, Integer> {
     
     //Obtiene el siguiente id
-    public VentaComprobanteSeguimiento findTopByOrderByIdDesc();
+    public SeguimientoVentaComprobante findTopByOrderByIdDesc();
     
     //Obtiene una lista ordenada por fecha
-    public List<VentaComprobanteSeguimiento> findByOrderByFechaDesc();
+    public List<SeguimientoVentaComprobante> findByOrderByFechaDesc();
     
     //Obtiene una lista por seguimientoEstado
-    public List<VentaComprobanteSeguimiento> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
+    public List<SeguimientoVentaComprobante> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
     
     //Obtiene una lista ordenada por VentaComprobante
-    public List<VentaComprobanteSeguimiento> findByVentaComprobante(VentaComprobante ventaComprobante);
+    public List<SeguimientoVentaComprobante> findByVentaComprobante(VentaComprobante ventaComprobante);
     
 }
