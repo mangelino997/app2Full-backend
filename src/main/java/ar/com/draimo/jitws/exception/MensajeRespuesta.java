@@ -37,7 +37,7 @@ public class MensajeRespuesta {
     public static final String NORMALIZADO = "Registro normalizado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
     public static final String ROL_ASIGNADO = "El rol esta asignado a un usuario";
-    public static final String ELEMENTO_ASIGNADO = "El registro esta asignado en otro módulo";
+    public static final String ELEMENTO_ASIGNADO = "Registro referenciado";
     public static final String ELEMENTO_NO_NULL = "No puede estar vacío.";
 
     //Retorna mensaje con Response Entity de agrego con exito
@@ -1828,7 +1828,7 @@ public class MensajeRespuesta {
                 break;
             case InexistenciaError.CONFIGURACION_VEHICULO_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.CONFIGURACION_VEHICULO_INEXISTENTE;
-                plusMensaje = ": CONFIGURACIÓN VEHÍCULO";
+                plusMensaje = "";
                 break;
             case InexistenciaError.CUENTA_BANCARIA_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.CUENTA_BANCARIA_INEXISTENTE;

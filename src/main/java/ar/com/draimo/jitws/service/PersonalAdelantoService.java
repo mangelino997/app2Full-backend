@@ -211,7 +211,8 @@ public class PersonalAdelantoService {
         List<PersonalAdelanto> adelantosFallados = new ArrayList<>();
         Date emision = new Date(new java.util.Date().getTime());
         PersonalAdelanto adelanto;
-        int lote = elementoDAO.findTopByOrderByNumeroLoteDesc().getNumeroLote() + 1;
+        int lote = (elementoDAO.findTopByOrderByNumeroLoteDesc()!=null?
+                elementoDAO.findTopByOrderByNumeroLoteDesc().getNumeroLote() + 1: 1);
         BigDecimal importeCategoria = new BigDecimal(BigInteger.ZERO);
         BasicoCategoria basico;
         for (Personal personal : personales) {

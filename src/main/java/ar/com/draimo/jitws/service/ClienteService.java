@@ -156,29 +156,19 @@ public class ClienteService {
         }
         Cliente cliente = elementoDAO.saveAndFlush(elemento);
         //Agrega la lista de ordenes de venta del cliente
-        for(ClienteOrdenVenta cov : elemento.getClienteOrdenesVentas()) {
-            cov.setCliente(cliente);
-            cov.setFechaAlta(fechaAlta);
-            clienteOrdenVentaDAO.saveAndFlush(cov);
+        if(elemento.getClienteOrdenesVentas() != null) {
+            for(ClienteOrdenVenta cov : elemento.getClienteOrdenesVentas()) {
+                cov.setCliente(cliente);
+                cov.setFechaAlta(fechaAlta);
+                clienteOrdenVentaDAO.saveAndFlush(cov);
+            }
         }
-//        if (!ordenes.isEmpty()) {
-//            for (OrdenVenta ordenVenta : ordenes) {
-//                clienteOrdenVenta.setCliente(cliente);
-//                if (clienteOrdenVentaDAO.findById(ordenVenta.getId()) != null) {
-//                    clienteOrdenVenta.setOrdenVenta(ordenVenta);
-//                } else {
-//                    throw new DataIntegrityViolationException("Registro no existente: ORDEN VENTA");
-//                }
-//                clienteOrdenVenta.setFechaAlta(new Date(new java.util.Date().getTime()));
-//                clienteOrdenVenta.setUsuarioAlta(elemento.getUsuarioAlta());
-//                clienteOrdenVenta.setEstaActiva(true);
-//                clienteOrdenVentaDAO.saveAndFlush(clienteOrdenVenta);
-//            }
-//        }
         //Recorre la lista de cliente cuenta bancaria y agrega registros
-        for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
-            ccb.setCliente(cliente);
-            clienteCuentaBancariaDAO.saveAndFlush(ccb);
+        if(elemento.getClienteCuentasBancarias() != null) {
+            for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
+                ccb.setCliente(cliente);
+                clienteCuentaBancariaDAO.saveAndFlush(ccb);
+            }
         }
         return cliente;
     }

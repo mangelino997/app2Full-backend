@@ -4,6 +4,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipComprobante;
 import ar.com.draimo.jitws.service.AfipComprobanteService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -156,4 +157,10 @@ public class AfipComprobanteController {
         }
     }
     
+    //Obtiene la lista de letras por Tipo de Comprobante
+    @GetMapping(value = URL + "/listarLetras/{idTipoComprobante}")
+    @ResponseBody
+    public List<String> listarLetras(@PathVariable int idTipoComprobante) throws IOException {
+        return elementoService.listarLetras(idTipoComprobante);
+    }
 }

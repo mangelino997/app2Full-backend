@@ -103,5 +103,10 @@ public class AfipComprobanteService {
         elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;
     }
+    //Obtiene una lista de letras por Tipo de Comprobante
+    public List<String> listarLetras(int idTipoComprobante) {
+        return elementoDAO.listarLetras(idTipoComprobante);
+    }
+    
     
 }

@@ -23,7 +23,7 @@ public interface IBasicoCategoriaDAO extends JpaRepository<BasicoCategoria, Inte
     public List<BasicoCategoria> findByCategoria(Categoria categoria);
     
     //Obtiene el ultimo registro por categoria
-    @Query(value = "SELECT * FROM basicocategoria WHERE (:idCategoria=0 OR idCategoria=:idCategoria) ORDER BY "
+    @Query(value = "SELECT * FROM basicocategoria WHERE idCategoria=:idCategoria ORDER BY "
             + "id DESC LIMIT 1", nativeQuery= true)
     public BasicoCategoria obtenerPorCategoria(@Param("idCategoria") int idCategoria);
     
