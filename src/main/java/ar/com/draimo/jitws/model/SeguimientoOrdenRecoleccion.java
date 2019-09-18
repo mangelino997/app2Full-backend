@@ -10,19 +10,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Viaje Remito Seguimiento
+ * Clase seguimiento Orden Recoleccion 
  * Define el modelo (columnas) de la base de datos
  * @author blas
  */
 
 @Entity
-@Table(name = "viajeremitoseguimiento")
-public class ViajeRemitoSeguimiento extends ObjetoGenerico {
+@Table(name = "seguimientoordenrecoleccion")
+public class SeguimientoOrdenRecoleccion extends ObjetoGenerico {
     
-    //Referencia a ViajeRemito
+    //Referencia a ordenRecoleccion
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idViajeRemito", nullable = false)
-    private ViajeRemito viajeRemito;
+    @JoinColumn(name = "idOrdenRecoleccion", nullable = false)
+    private OrdenRecoleccion ordenRecoleccion;
     
     //Define fecha
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
@@ -46,12 +46,12 @@ public class ViajeRemitoSeguimiento extends ObjetoGenerico {
     
     //Define los getters y setters
 
-    public ViajeRemito getViajeRemito() {
-        return viajeRemito;
+    public OrdenRecoleccion getOrdenRecoleccion() {
+        return ordenRecoleccion;
     }
 
-    public void setViajeRemito(ViajeRemito viajeRemito) {
-        this.viajeRemito = viajeRemito;
+    public void setOrdenRecoleccion(OrdenRecoleccion ordenRecoleccion) {
+        this.ordenRecoleccion = ordenRecoleccion;
     }
 
     public LocalDateTime getFecha() {

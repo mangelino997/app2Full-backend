@@ -2,7 +2,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.OrdenRecoleccionSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.service.OrdenRecoleccionSeguimientoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,29 +52,29 @@ public class OrdenRecoleccionSeguimientoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<OrdenRecoleccionSeguimiento> listar() {
+    public List<SeguimientoOrdenRecoleccion> listar() {
         return elementoService.listar();
     }
     
     //Obtiene una lista por OrdenRecoleccion
     @GetMapping(value = URL + "/listarPorOrdenRecoleccion/{idOrdenRecoleccion}")
     @ResponseBody
-    public List<OrdenRecoleccionSeguimiento> listarPorOrdenRecoleccion(@PathVariable int idOrdenRecoleccion) {
+    public List<SeguimientoOrdenRecoleccion> listarPorOrdenRecoleccion(@PathVariable int idOrdenRecoleccion) {
         return elementoService.listarPorOrdenRecoleccion(idOrdenRecoleccion);
     }
     
     //Obtiene una lista por SeguimientoEstado
     @GetMapping(value = URL + "/listarPorSeguimientoEstado/{idSeguimientoEstado}")
     @ResponseBody
-    public List<OrdenRecoleccionSeguimiento> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
+    public List<SeguimientoOrdenRecoleccion> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
         return elementoService.listarPorSeguimientoEstado(idSeguimientoEstado);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody OrdenRecoleccionSeguimiento elemento) {
+    public ResponseEntity<?> agregar(@RequestBody SeguimientoOrdenRecoleccion elemento) {
         try {
-            OrdenRecoleccionSeguimiento a = elementoService.agregar(elemento);
+            SeguimientoOrdenRecoleccion a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -93,7 +93,7 @@ public class OrdenRecoleccionSeguimientoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody OrdenRecoleccionSeguimiento elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody SeguimientoOrdenRecoleccion elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

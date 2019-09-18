@@ -2,7 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
-import ar.com.draimo.jitws.model.OrdenRecoleccionSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,18 +13,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author blas
  */
 
-public interface IOrdenRecoleccionSeguimientoDAO extends JpaRepository<OrdenRecoleccionSeguimiento, Integer> {
+public interface IOrdenRecoleccionSeguimientoDAO extends JpaRepository<SeguimientoOrdenRecoleccion, Integer> {
     
     //Obtiene el siguiente id
-    public OrdenRecoleccionSeguimiento findTopByOrderByIdDesc();
+    public SeguimientoOrdenRecoleccion findTopByOrderByIdDesc();
     
     //Obtiene una lista ordenada por fecha
-    public List<OrdenRecoleccionSeguimiento> findByOrderByFechaDesc();
+    public List<SeguimientoOrdenRecoleccion> findByOrderByFechaDesc();
     
     //Obtiene una lista por seguimientoEstado
-    public List<OrdenRecoleccionSeguimiento> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
+    public List<SeguimientoOrdenRecoleccion> findBySeguimientoEstado(SeguimientoEstado seguimientoEstado);
     
     //Obtiene una lista ordenada por ordenRecoleccion
-    public List<OrdenRecoleccionSeguimiento> findByOrdenRecoleccion(OrdenRecoleccion ordenRecoleccion);
+    public List<SeguimientoOrdenRecoleccion> findByOrdenRecoleccion(OrdenRecoleccion ordenRecoleccion);
     
 }

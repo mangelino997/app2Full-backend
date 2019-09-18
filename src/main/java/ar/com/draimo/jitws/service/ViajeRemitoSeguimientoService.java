@@ -4,7 +4,7 @@ import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoSeguimientoDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
 import ar.com.draimo.jitws.model.ViajeRemito;
-import ar.com.draimo.jitws.model.ViajeRemitoSeguimiento;
+import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,36 +33,36 @@ public class ViajeRemitoSeguimientoService {
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        ViajeRemitoSeguimiento elemento = elementoDAO.findTopByOrderByIdDesc();
+        SeguimientoViajeRemito elemento = elementoDAO.findTopByOrderByIdDesc();
         return (elemento!=null?elemento.getId()+1:1);
     }
     
     //Obtiene la lista completa
-    public List<ViajeRemitoSeguimiento> listar() {
+    public List<SeguimientoViajeRemito> listar() {
         return elementoDAO.findByOrderByFechaDesc();
     }
     
     //Obtiene una lista por OrdenRecoleccion
-    public List<ViajeRemitoSeguimiento> listarPorViajeRemito(int idViajeRemito) {
+    public List<SeguimientoViajeRemito> listarPorViajeRemito(int idViajeRemito) {
         ViajeRemito v = viajeRemitoDAO.findById(idViajeRemito).get();
         return elementoDAO.findByViajeRemito(v);
     }
     
     //Obtiene una lista por SeguimientoEstado
-    public List<ViajeRemitoSeguimiento> listarPorSeguimientoEstado(int idSeguimientoEstado) {
+    public List<SeguimientoViajeRemito> listarPorSeguimientoEstado(int idSeguimientoEstado) {
         SeguimientoEstado s = seguimientoEstadoDAO.findById(idSeguimientoEstado).get();
         return elementoDAO.findBySeguimientoEstado(s);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public ViajeRemitoSeguimiento agregar(ViajeRemitoSeguimiento elemento) {
+    public SeguimientoViajeRemito agregar(SeguimientoViajeRemito elemento) {
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeRemitoSeguimiento elemento) {
+    public void actualizar(SeguimientoViajeRemito elemento) {
         elementoDAO.save(elemento);
     }
     
