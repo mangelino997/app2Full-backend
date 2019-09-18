@@ -1,7 +1,6 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
-import ar.com.draimo.jitws.dao.IViajeRemitoSeguimientoDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
@@ -10,18 +9,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 
 /**
- * Servicio de ViajeRemitoSeguimiento
+ * Servicio de SeguimientoViajeRemito
  * @author blas
  */
 
 @Service
-public class ViajeRemitoSeguimientoService {
+public class SeguimientoViajeRemitoService {
     
     //Define el dao
     @Autowired
-    IViajeRemitoSeguimientoDAO elementoDAO;
+    ISeguimientoViajeRemitoDAO elementoDAO;
     
     //Define el dao de seguimiento estado
     @Autowired

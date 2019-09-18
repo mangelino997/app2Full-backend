@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
-import ar.com.draimo.jitws.service.OrdenRecoleccionSeguimientoService;
+import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
+import ar.com.draimo.jitws.service.SeguimientoViajeRemitoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,17 +22,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase OrdenRecoleccionSeguimiento Controller
+ * Clase seguimientoViajeRemito Controller
  * @author blas
  */
 
 @RestController
-public class OrdenRecoleccionSeguimientoController {
+public class SeguimientoViajeRemitoController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ordenrecoleccionseguimiento";
+    private final String URL = RutaConstant.URL_BASE + "/seguimientoviajeremito";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ordenrecoleccionseguimiento";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/seguimientoviajeremito";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -40,7 +40,7 @@ public class OrdenRecoleccionSeguimientoController {
     
     //Crea una instancia del servicio
     @Autowired
-    OrdenRecoleccionSeguimientoService elementoService;
+    SeguimientoViajeRemitoService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -52,29 +52,29 @@ public class OrdenRecoleccionSeguimientoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<SeguimientoOrdenRecoleccion> listar() {
+    public List<SeguimientoViajeRemito> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por OrdenRecoleccion
-    @GetMapping(value = URL + "/listarPorOrdenRecoleccion/{idOrdenRecoleccion}")
+    //Obtiene una lista por ViajeRemito
+    @GetMapping(value = URL + "/listarPorViajeRemito/{idViajeRemito}")
     @ResponseBody
-    public List<SeguimientoOrdenRecoleccion> listarPorOrdenRecoleccion(@PathVariable int idOrdenRecoleccion) {
-        return elementoService.listarPorOrdenRecoleccion(idOrdenRecoleccion);
+    public List<SeguimientoViajeRemito> listarPorViajeRemito(@PathVariable int idViajeRemito) {
+        return elementoService.listarPorViajeRemito(idViajeRemito);
     }
     
     //Obtiene una lista por SeguimientoEstado
     @GetMapping(value = URL + "/listarPorSeguimientoEstado/{idSeguimientoEstado}")
     @ResponseBody
-    public List<SeguimientoOrdenRecoleccion> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
+    public List<SeguimientoViajeRemito> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
         return elementoService.listarPorSeguimientoEstado(idSeguimientoEstado);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SeguimientoOrdenRecoleccion elemento) {
+    public ResponseEntity<?> agregar(@RequestBody SeguimientoViajeRemito elemento) {
         try {
-            SeguimientoOrdenRecoleccion a = elementoService.agregar(elemento);
+            SeguimientoViajeRemito a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -93,7 +93,7 @@ public class OrdenRecoleccionSeguimientoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SeguimientoOrdenRecoleccion elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody SeguimientoViajeRemito elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

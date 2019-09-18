@@ -8,12 +8,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO VentaComprobanteSeguimiento
+ * Interfaz DAO SeguimientoVentaComprobante
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface IVentaComprobanteSeguimientoDAO extends JpaRepository<SeguimientoVentaComprobante, Integer> {
+public interface ISeguimientoVentaComprobanteDAO extends JpaRepository<SeguimientoVentaComprobante, Integer> {
     
     //Obtiene el siguiente id
     public SeguimientoVentaComprobante findTopByOrderByIdDesc();

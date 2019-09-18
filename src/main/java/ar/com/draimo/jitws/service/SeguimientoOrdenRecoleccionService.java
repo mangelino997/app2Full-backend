@@ -1,27 +1,27 @@
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
-import ar.com.draimo.jitws.dao.IVentaComprobanteSeguimientoDAO;
+import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
-import ar.com.draimo.jitws.model.VentaComprobante;
-import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
+import ar.com.draimo.jitws.model.OrdenRecoleccion;
+import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
 
 /**
- * Servicio de VentaComprobanteSeguimiento
+ * Servicio de SeguimientoOrdenRecoleccion
  * @author blas
  */
 
 @Service
-public class VentaComprobanteSeguimientoService {
+public class SeguimientoOrdenRecoleccionService {
     
     //Define el dao
     @Autowired
-    IVentaComprobanteSeguimientoDAO elementoDAO;
+    ISeguimientoOrdenRecoleccionDAO elementoDAO;
     
     //Define el dao de seguimiento estado
     @Autowired
@@ -29,40 +29,40 @@ public class VentaComprobanteSeguimientoService {
     
     //Define el dao de ordenRecoleccion
     @Autowired
-    IVentaComprobanteDAO ventaComprobanteDAO;
+    IOrdenRecoleccionDAO ordenRecoleccionDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        SeguimientoVentaComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
+        SeguimientoOrdenRecoleccion elemento = elementoDAO.findTopByOrderByIdDesc();
         return (elemento!=null?elemento.getId()+1:1);
     }
     
     //Obtiene la lista completa
-    public List<SeguimientoVentaComprobante> listar() {
+    public List<SeguimientoOrdenRecoleccion> listar() {
         return elementoDAO.findByOrderByFechaDesc();
     }
     
-    //Obtiene una lista por VentaComprobante
-    public List<SeguimientoVentaComprobante> listarPorVentaComprobante(int idVentaComprobante) {
-        VentaComprobante v = ventaComprobanteDAO.findById(idVentaComprobante).get();
-        return elementoDAO.findByVentaComprobante(v);
+    //Obtiene una lista por OrdenRecoleccion
+    public List<SeguimientoOrdenRecoleccion> listarPorOrdenRecoleccion(int idOrdenRecoleccion) {
+        OrdenRecoleccion o = ordenRecoleccionDAO.findById(idOrdenRecoleccion).get();
+        return elementoDAO.findByOrdenRecoleccion(o);
     }
     
     //Obtiene una lista por SeguimientoEstado
-    public List<SeguimientoVentaComprobante> listarPorSeguimientoEstado(int idSeguimientoEstado) {
+    public List<SeguimientoOrdenRecoleccion> listarPorSeguimientoEstado(int idSeguimientoEstado) {
         SeguimientoEstado s = seguimientoEstadoDAO.findById(idSeguimientoEstado).get();
         return elementoDAO.findBySeguimientoEstado(s);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public SeguimientoVentaComprobante agregar(SeguimientoVentaComprobante elemento) {
+    public SeguimientoOrdenRecoleccion agregar(SeguimientoOrdenRecoleccion elemento) {
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(SeguimientoVentaComprobante elemento) {
+    public void actualizar(SeguimientoOrdenRecoleccion elemento) {
         elementoDAO.save(elemento);
     }
     

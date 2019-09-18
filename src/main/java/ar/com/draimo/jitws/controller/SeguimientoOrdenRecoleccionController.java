@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
-import ar.com.draimo.jitws.service.VentaComprobanteSeguimientoService;
+import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
+import ar.com.draimo.jitws.service.SeguimientoOrdenRecoleccionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,17 +22,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase VentaComprobanteSeguimiento Controller
+ * Clase seguimientoOrdenRecoleccion Controller
  * @author blas
  */
 
 @RestController
-public class VentaComprobanteSeguimientoController {
+public class SeguimientoOrdenRecoleccionController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ventacomprobanteseguimiento";
+    private final String URL = RutaConstant.URL_BASE + "/seguimientoordenrecoleccion";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventacomprobanteseguimiento";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/seguimientoordenrecoleccion";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -40,7 +40,7 @@ public class VentaComprobanteSeguimientoController {
     
     //Crea una instancia del servicio
     @Autowired
-    VentaComprobanteSeguimientoService elementoService;
+    SeguimientoOrdenRecoleccionService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -52,29 +52,29 @@ public class VentaComprobanteSeguimientoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<SeguimientoVentaComprobante> listar() {
+    public List<SeguimientoOrdenRecoleccion> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por VentaComprobante
-    @GetMapping(value = URL + "/listarPorVentaComprobante/{idVentaComprobante}")
+    //Obtiene una lista por OrdenRecoleccion
+    @GetMapping(value = URL + "/listarPorOrdenRecoleccion/{idOrdenRecoleccion}")
     @ResponseBody
-    public List<SeguimientoVentaComprobante> listarPorVentaComprobante(@PathVariable int idVentaComprobante) {
-        return elementoService.listarPorVentaComprobante(idVentaComprobante);
+    public List<SeguimientoOrdenRecoleccion> listarPorOrdenRecoleccion(@PathVariable int idOrdenRecoleccion) {
+        return elementoService.listarPorOrdenRecoleccion(idOrdenRecoleccion);
     }
     
     //Obtiene una lista por SeguimientoEstado
     @GetMapping(value = URL + "/listarPorSeguimientoEstado/{idSeguimientoEstado}")
     @ResponseBody
-    public List<SeguimientoVentaComprobante> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
+    public List<SeguimientoOrdenRecoleccion> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
         return elementoService.listarPorSeguimientoEstado(idSeguimientoEstado);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SeguimientoVentaComprobante elemento) {
+    public ResponseEntity<?> agregar(@RequestBody SeguimientoOrdenRecoleccion elemento) {
         try {
-            SeguimientoVentaComprobante a = elementoService.agregar(elemento);
+            SeguimientoOrdenRecoleccion a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -93,7 +93,7 @@ public class VentaComprobanteSeguimientoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SeguimientoVentaComprobante elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody SeguimientoOrdenRecoleccion elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

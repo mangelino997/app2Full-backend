@@ -1,7 +1,6 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
-import ar.com.draimo.jitws.dao.IOrdenRecoleccionSeguimientoDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.model.RepartoComprobante;
@@ -19,8 +18,6 @@ import ar.com.draimo.jitws.dao.IRepartoDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
-import ar.com.draimo.jitws.dao.IVentaComprobanteSeguimientoDAO;
-import ar.com.draimo.jitws.dao.IViajeRemitoSeguimientoDAO;
 import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.TipoComprobante;
@@ -31,6 +28,9 @@ import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
+import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
+import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 
 /**
  * Servicio RepartoComprobante
@@ -74,15 +74,15 @@ public class RepartoComprobanteService {
 
     //define la referencia al dao de OrdenRecoleccionSeguimiento
     @Autowired
-    IOrdenRecoleccionSeguimientoDAO recoleccionSeguimientoDAO;
+    ISeguimientoOrdenRecoleccionDAO recoleccionSeguimientoDAO;
 
     //define la referencia al dao de VentaComprobanteSeguimiento
     @Autowired
-    IVentaComprobanteSeguimientoDAO comprobanteSeguimientoDAO;
+    ISeguimientoVentaComprobanteDAO comprobanteSeguimientoDAO;
 
     //define la referencia al dao de ViajeRemitoSeguimiento
     @Autowired
-    IViajeRemitoSeguimientoDAO remitoSeguimientoDAO;
+    ISeguimientoViajeRemitoDAO remitoSeguimientoDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

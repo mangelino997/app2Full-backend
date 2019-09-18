@@ -8,12 +8,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO OrdenRecoleccionSeguimiento
+ * Interfaz DAO Seguimiento OrdenRecoleccion
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface IOrdenRecoleccionSeguimientoDAO extends JpaRepository<SeguimientoOrdenRecoleccion, Integer> {
+public interface ISeguimientoOrdenRecoleccionDAO extends JpaRepository<SeguimientoOrdenRecoleccion, Integer> {
     
     //Obtiene el siguiente id
     public SeguimientoOrdenRecoleccion findTopByOrderByIdDesc();

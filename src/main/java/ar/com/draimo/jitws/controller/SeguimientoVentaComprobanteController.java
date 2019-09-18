@@ -2,8 +2,8 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
-import ar.com.draimo.jitws.service.ViajeRemitoSeguimientoService;
+import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
+import ar.com.draimo.jitws.service.SeguimientoVentaComprobanteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,17 +22,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase ViajeRemitoSeguimiento Controller
+ * Clase seguimientoVentaComprobante Controller
  * @author blas
  */
 
 @RestController
-public class ViajeRemitoSeguimientoController {
+public class SeguimientoVentaComprobanteController {
     
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/viajeremitoseguimiento";
+    private final String URL = RutaConstant.URL_BASE + "/seguimientoventacomprobante";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/viajeremitoseguimiento";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/seguimientoventacomprobante";
     
     //Define el template para el envio de datos por socket
     @Autowired
@@ -40,7 +40,7 @@ public class ViajeRemitoSeguimientoController {
     
     //Crea una instancia del servicio
     @Autowired
-    ViajeRemitoSeguimientoService elementoService;
+    SeguimientoVentaComprobanteService elementoService;
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -52,29 +52,29 @@ public class ViajeRemitoSeguimientoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<SeguimientoViajeRemito> listar() {
+    public List<SeguimientoVentaComprobante> listar() {
         return elementoService.listar();
     }
     
-    //Obtiene una lista por ViajeRemito
-    @GetMapping(value = URL + "/listarPorViajeRemito/{idViajeRemito}")
+    //Obtiene una lista por VentaComprobante
+    @GetMapping(value = URL + "/listarPorVentaComprobante/{idVentaComprobante}")
     @ResponseBody
-    public List<SeguimientoViajeRemito> listarPorViajeRemito(@PathVariable int idViajeRemito) {
-        return elementoService.listarPorViajeRemito(idViajeRemito);
+    public List<SeguimientoVentaComprobante> listarPorVentaComprobante(@PathVariable int idVentaComprobante) {
+        return elementoService.listarPorVentaComprobante(idVentaComprobante);
     }
     
     //Obtiene una lista por SeguimientoEstado
     @GetMapping(value = URL + "/listarPorSeguimientoEstado/{idSeguimientoEstado}")
     @ResponseBody
-    public List<SeguimientoViajeRemito> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
+    public List<SeguimientoVentaComprobante> listarPorSeguimientoEstado(@PathVariable int idSeguimientoEstado) {
         return elementoService.listarPorSeguimientoEstado(idSeguimientoEstado);
     }
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody SeguimientoViajeRemito elemento) {
+    public ResponseEntity<?> agregar(@RequestBody SeguimientoVentaComprobante elemento) {
         try {
-            SeguimientoViajeRemito a = elementoService.agregar(elemento);
+            SeguimientoVentaComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
 //            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -93,7 +93,7 @@ public class ViajeRemitoSeguimientoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody SeguimientoViajeRemito elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody SeguimientoVentaComprobante elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

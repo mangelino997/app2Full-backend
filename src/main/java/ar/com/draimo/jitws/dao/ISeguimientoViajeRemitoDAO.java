@@ -8,12 +8,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO ViajeRemitoSeguimiento
+ * Interfaz DAO SeguimientoViajeRemito
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface IViajeRemitoSeguimientoDAO extends JpaRepository<SeguimientoViajeRemito, Integer> {
+public interface ISeguimientoViajeRemitoDAO extends JpaRepository<SeguimientoViajeRemito, Integer> {
     
     //Obtiene el siguiente id
     public SeguimientoViajeRemito findTopByOrderByIdDesc();
