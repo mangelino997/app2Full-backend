@@ -18,12 +18,16 @@ import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
+import ar.com.draimo.jitws.dao.IViajeEfectivoDAO;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
 import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
 import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
+import ar.com.draimo.jitws.model.ViajeCombustible;
+import ar.com.draimo.jitws.model.ViajeEfectivo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -55,7 +59,7 @@ public class RepartoService {
     
     //define la referencia al dao de RepartoPropioComprobante
     @Autowired
-    IRepartoComprobanteDAO repartoPropioComprobanteDAO;
+    IRepartoComprobanteDAO repartoComprobanteDAO;
     
     //define la referencia al dao de tipoComprobante
     @Autowired
@@ -80,6 +84,14 @@ public class RepartoService {
     //define la referencia al dao de seguimientoSituacion
     @Autowired
     ISeguimientoSituacionDAO seguimientoSituacionDAO;
+    
+    //define la referencia al dao de viajeCombustible
+    @Autowired
+    IViajeCombustibleDAO viajeCombustibleDAO;
+    
+    //define la referencia al dao de viajeEfectivo
+    @Autowired
+    IViajeEfectivoDAO viajeEfectivoDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -168,7 +180,7 @@ public class RepartoService {
     //Cierra un reparto
     public boolean cerrarReparto(int idReparto) {
         Reparto r = elementoDAO.findById(idReparto).get();
-        List<RepartoComprobante> c = repartoPropioComprobanteDAO.findByReparto(r);
+        List<RepartoComprobante> c = repartoComprobanteDAO.findByReparto(r);
         if (c.isEmpty()) {
             return false;
         }else {
@@ -213,7 +225,7 @@ public class RepartoService {
     //Abre un reparto
     public boolean abrirReparto(int idReparto) {
         Reparto r = elementoDAO.findById(idReparto).get();
-        List<RepartoComprobante> c = repartoPropioComprobanteDAO.findByReparto(r);
+        List<RepartoComprobante> c = repartoComprobanteDAO.findByReparto(r);
             r.setEstaCerrada(false);
             SeguimientoEstado se = seguimientoEstadoDAO.findById(3).get();
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
@@ -283,7 +295,11 @@ public class RepartoService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public boolean eliminar(int elemento) {
-        if(repartoPropioComprobanteDAO.findByReparto(elementoDAO.findById(elemento).get()).isEmpty()){
+        Reparto r = elementoDAO.findById(elemento).get();
+        List<RepartoComprobante> rctes = repartoComprobanteDAO.findByReparto(r);
+        List<ViajeEfectivo> vefectivos = viajeEfectivoDAO.findByReparto(r);
+        List<ViajeCombustible> vCbles = viajeCombustibleDAO.findByReparto(r);
+        if(rctes.isEmpty()){
             elementoDAO.deleteById(elemento);
             return true;
         }else {

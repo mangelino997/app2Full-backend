@@ -178,7 +178,12 @@ public class ViajeRemitoService {
         String string = mapper.writer(filters).writeValueAsString(remitos);
         return mapper.readValue(string, Object.class);
     }
-
+    
+    //Obtiene una lista de letras
+    public List<String> listarLetras() {
+        return elementoDAO.listarLetras();
+    }
+    
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
         ViajeRemito remitos = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);

@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Personal;
 import ar.com.draimo.jitws.model.Sucursal;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -40,9 +41,9 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     
     //Obtiene una lista de choferes de corta distancia
     @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=0 "
-            + "AND alias LIKE %:alias%"
-            + " ORDER BY nombreCompleto ASC", nativeQuery = true)
-    public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(@Param("alias") String alias);
+            + "AND alias LIKE %:alias% AND (fechaFin is null or datediff(fechaFin,"
+            + " :fecha)>0) ORDER BY nombreCompleto ASC", nativeQuery = true)
+    public List<Personal> listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(@Param("alias") String alias, @Param("fecha") Date fecha);
     
     //Obtiene una lista de choferes de corta distancia
     @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia=1 "
@@ -61,9 +62,9 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     public List<Personal> listarAcompaniantesPorAliasOrdenadoPorNombre(@Param("alias") String alias);
     
     //Obtiene una lista de acompañantes por empresa ordenados por nombre
-    @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND idEmpresa=:idEmpresa "
-            + "AND fechaFin IS NULL ORDER BY nombreCompleto ASC ", nativeQuery = true)
-    public List<Personal> listarAcompaniantesPorEmpresaOrdenadoPorNombre(@Param("idEmpresa") int idEmpresa);
+    @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND (fechaFin is "
+            + "null or datediff(fechaFin, :fecha)>0) ORDER BY nombreCompleto ASC ", nativeQuery = true)
+    public List<Personal> listarAcompaniantesOrdenadoPorNombre();
     
     //Obtiene un listado por alias y empresa
     public List<Personal> findByEmpresaAndAliasContaining(Empresa empresa, String alias);

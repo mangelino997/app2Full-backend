@@ -93,10 +93,10 @@ public class PersonalController {
     }
 
     //Obtiene la lista de acompaniantes por empresa ordenados por nombre
-    @GetMapping(value = URL + "/listarAcompaniantesPorEmpresa/{idEmpresa}")
+    @GetMapping(value = URL + "/listarAcompaniantes")
     @ResponseBody
-    public Object listarAcompaniantesPorEmpresa(@PathVariable int idEmpresa) throws IOException {
-        return elementoService.listarAcompaniantesPorEmpresa(idEmpresa);
+    public Object listarAcompaniantes() throws IOException {
+        return elementoService.listarAcompaniantes();
     }
 
     //Obtiene una lista por alias
