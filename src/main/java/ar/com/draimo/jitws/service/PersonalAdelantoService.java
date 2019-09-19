@@ -159,9 +159,9 @@ public class PersonalAdelantoService {
     //Obtiene la lista por filtro
     public Object listarPorFiltros(PersonalAdelantoLoteDTO personalAdelanto) throws IOException, Exception {
         List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(personalAdelanto.getIdEmpresa(),
-               personalAdelanto.getIdSucursal(), personalAdelanto.getFechaDesde(),
-               personalAdelanto.getFechaHasta(), personalAdelanto.getEstado(), personalAdelanto.getAlias(), 
-               personalAdelanto.getAdelanto());
+                personalAdelanto.getIdSucursal(), personalAdelanto.getFechaDesde(),
+                personalAdelanto.getFechaHasta(), personalAdelanto.getEstado(), personalAdelanto.getAlias(),
+                personalAdelanto.getAdelanto());
         if (adelantos.isEmpty()) {
             throw new DataIntegrityViolationException("No se encontraron registros.");
         }
@@ -211,16 +211,16 @@ public class PersonalAdelantoService {
         List<PersonalAdelanto> adelantosFallados = new ArrayList<>();
         Date emision = new Date(new java.util.Date().getTime());
         PersonalAdelanto adelanto;
-        int lote = (elementoDAO.findTopByOrderByNumeroLoteDesc()!=null?
-                elementoDAO.findTopByOrderByNumeroLoteDesc().getNumeroLote() + 1: 1);
+        int lote = (elementoDAO.findTopByOrderByNumeroLoteDesc() != null
+                ? elementoDAO.findTopByOrderByNumeroLoteDesc().getNumeroLote() + 1 : 1);
         BigDecimal importeCategoria = new BigDecimal(BigInteger.ZERO);
         BasicoCategoria basico;
         for (Personal personal : personales) {
             basico = basicoCategoriaDAO.obtenerPorCategoria(personal.getCategoria().getId());
-            if(basico!=null){
-            importeCategoria = basico.getBasico().multiply(basico.getCategoria().getTopeBasicoAdelantos().divide(new BigDecimal(100.00)));
-            }else {
-                importeCategoria=BigDecimal.ZERO;
+            if (basico != null) {
+                importeCategoria = basico.getBasico().multiply(basico.getCategoria().getTopeBasicoAdelantos().divide(new BigDecimal(100.00)));
+            } else {
+                importeCategoria = BigDecimal.ZERO;
             }
             if (importeCategoria.compareTo(adelantos.getImporte()) >= 0) {
                 adelanto = new PersonalAdelanto();
@@ -271,6 +271,8 @@ public class PersonalAdelantoService {
             elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
             elementoDAO.saveAndFlush(elemento);
         }
+        elementos.get(0).getPersonal().setRecibePrestamo(false);
+        personalDAO.save(elementos.get(0).getPersonal());
         return elementos;
     }
 
