@@ -146,8 +146,10 @@ public class VehiculoController {
                     @RequestPart("habBromat") MultipartFile habBromat) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elementoString, titulo, cedulaIdent, vtoRuta,
+            Vehiculo vehiculo = elementoService.actualizar(elementoString, titulo, cedulaIdent, vtoRuta,
                     vtoInspTecnica, vtoSenasa, habBromat);
+            //Actualiza inmediatamente el registro para establecer el alias
+            elementoService.establecerAlias(vehiculo);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
