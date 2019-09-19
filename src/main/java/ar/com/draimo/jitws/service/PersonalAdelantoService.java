@@ -272,6 +272,7 @@ public class PersonalAdelantoService {
             elementoDAO.saveAndFlush(elemento);
         }
         elementos.get(0).getPersonal().setRecibePrestamo(false);
+        elementos.get(0).getPersonal().setCuotasPrestamo((short)1);
         personalDAO.save(elementos.get(0).getPersonal());
         return elementos;
     }
