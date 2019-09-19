@@ -210,7 +210,7 @@ public class VehiculoService {
         if (anio.length()>4) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
         }
-        if (!titulo.getOriginalFilename().equals("")) {
+        if (!"null".equals(titulo.getOriginalFilename())) {
             Pdf pTitulo = pdfService.agregar(titulo, false);
             pTitulo.setTabla("vehiculo");
             Pdf pdfTitulo = pdfDAO.saveAndFlush(pTitulo);
@@ -218,7 +218,7 @@ public class VehiculoService {
         } else {
             elemento.setPdfTitulo(null);
         }
-        if (!cedulaIdent.getOriginalFilename().equals("")) {
+        if (!"null".equals(cedulaIdent.getOriginalFilename())) {
             Pdf pCedulaIden = pdfService.agregar(cedulaIdent, false);
             pCedulaIden.setTabla("vehiculo");
             Pdf pdfCedulaIden = pdfDAO.saveAndFlush(pCedulaIden);
@@ -226,7 +226,7 @@ public class VehiculoService {
         } else {
             elemento.setPdfCedulaIdent(null);
         }
-        if (!vtoRuta.getOriginalFilename().equals("")) {
+        if (!"null".equals(vtoRuta.getOriginalFilename())) {
             Pdf pVtoRuta = pdfService.agregar(vtoRuta, false);
             pVtoRuta.setTabla("vehiculo");
             Pdf pdfVtoRuta = pdfDAO.saveAndFlush(pVtoRuta);
@@ -234,7 +234,7 @@ public class VehiculoService {
         } else {
             elemento.setPdfVtoRuta(null);
         }
-        if (!vtoInspTecnica.getOriginalFilename().equals("")) {
+        if (!"null".equals(vtoInspTecnica.getOriginalFilename())) {
             Pdf pVtoInspTecnica = pdfService.agregar(vtoInspTecnica, false);
             pVtoInspTecnica.setTabla("vehiculo");
             Pdf pdfVtoInspTecnica = pdfDAO.saveAndFlush(pVtoInspTecnica);
@@ -242,7 +242,7 @@ public class VehiculoService {
         } else {
             elemento.setPdfVtoInspTecnica(null);
         }
-        if (!vtoSenasa.getOriginalFilename().equals("")) {
+        if (!"null".equals(vtoSenasa.getOriginalFilename())) {
             Pdf pVtoSenasa = pdfService.agregar(vtoSenasa, false);
             pVtoSenasa.setTabla("vehiculo");
             Pdf pdfVtoSenasa = pdfDAO.saveAndFlush(pVtoSenasa);
@@ -250,7 +250,7 @@ public class VehiculoService {
         } else {
             elemento.setPdfVtoSenasa(null);
         }
-        if (!habBromat.getOriginalFilename().equals("")) {
+        if (!"null".equals(habBromat.getOriginalFilename())) {
             Pdf pHabBromat = pdfService.agregar(habBromat, false);
             pHabBromat.setTabla("vehiculo");
             Pdf pdfHabBromat = pdfDAO.saveAndFlush(pHabBromat);
@@ -262,24 +262,9 @@ public class VehiculoService {
         return elementoDAO.saveAndFlush(elemento);
     }
 
-    //Establece el alias de un registro
-    @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(Vehiculo elemento) throws IOException {
-        if(elemento.getNumeroInterno() != null) {
-            elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno() + " - "
-                + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
-                + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
-        } else {
-            elemento.setAlias(elemento.getDominio() 
-                + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
-                + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
-        }
-        elementoDAO.save(elemento);
-    }
-
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(String elementoString, MultipartFile titulo, MultipartFile cedulaIdent,
+    public Vehiculo actualizar(String elementoString, MultipartFile titulo, MultipartFile cedulaIdent,
             MultipartFile vtoRuta, MultipartFile vtoInspTecnica, MultipartFile vtoSenasa,
             MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
@@ -291,7 +276,7 @@ public class VehiculoService {
         if (anio.length()>4) {
             throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
         }
-        if (titulo.getOriginalFilename().equals("")) {
+        if ("null".equals(titulo.getOriginalFilename())) {
             if (vehiculo.getPdfTitulo() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
                 elemento.setPdfTitulo(null);
@@ -311,7 +296,7 @@ public class VehiculoService {
                 elemento.setPdfTitulo(pdf1);
             }
         }
-        if (cedulaIdent.getOriginalFilename().equals("")) {
+        if ("null".equals(cedulaIdent.getOriginalFilename())) {
             if (vehiculo.getPdfCedulaIdent() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfCedulaIdent().getId());
                 elemento.setPdfCedulaIdent(null);
@@ -319,7 +304,7 @@ public class VehiculoService {
                 elemento.setPdfCedulaIdent(null);
             }
         } else {
-            if (vehiculo.getPdfTitulo() != null) {
+            if (vehiculo.getPdfCedulaIdent() != null) {
                 Pdf pCedulaIden = pdfService.actualizar(vehiculo.getPdfCedulaIdent().getId(), cedulaIdent, false);
                 pCedulaIden.setTabla("vehiculo");
                 Pdf pdfCedulaIden = pdfDAO.save(pCedulaIden);
@@ -331,7 +316,7 @@ public class VehiculoService {
                 elemento.setPdfCedulaIdent(pdf2);
             }
         }
-        if (vtoRuta.getOriginalFilename().equals("")) {
+        if ("null".equals(vtoRuta.getOriginalFilename())) {
             if (vehiculo.getPdfVtoRuta() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfVtoRuta().getId());
                 elemento.setPdfVtoRuta(null);
@@ -339,7 +324,7 @@ public class VehiculoService {
                 elemento.setPdfVtoRuta(null);
             }
         } else {
-            if (vehiculo.getPdfTitulo() != null) {
+            if (vehiculo.getPdfVtoRuta() != null) {
                 Pdf pVtoRuta = pdfService.actualizar(vehiculo.getPdfVtoRuta().getId(), vtoRuta, false);
                 pVtoRuta.setTabla("vehiculo");
                 Pdf pdfVtoRuta = pdfDAO.save(pVtoRuta);
@@ -351,7 +336,7 @@ public class VehiculoService {
                 elemento.setPdfVtoRuta(pdf3);
             }
         }
-        if (vtoInspTecnica.getOriginalFilename().equals("")) {
+        if ("null".equals(vtoInspTecnica.getOriginalFilename())) {
             if (vehiculo.getPdfVtoInspTecnica() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfVtoInspTecnica().getId());
                 elemento.setPdfVtoInspTecnica(null);
@@ -359,7 +344,7 @@ public class VehiculoService {
                 elemento.setPdfVtoInspTecnica(null);
             }
         } else {
-            if (vehiculo.getPdfTitulo() != null) {
+            if (vehiculo.getPdfVtoInspTecnica() != null) {
                 Pdf pVtoInspTecnica = pdfService.actualizar(vehiculo.getPdfVtoInspTecnica().getId(), vtoInspTecnica, false);
                 pVtoInspTecnica.setTabla("vehiculo");
                 Pdf pdfVtoInspTecnica = pdfDAO.save(pVtoInspTecnica);
@@ -371,7 +356,7 @@ public class VehiculoService {
                 elemento.setPdfVtoInspTecnica(pdf4);
             }
         }
-        if (vtoSenasa.getOriginalFilename().equals("")) {
+        if ("null".equals(vtoSenasa.getOriginalFilename())) {
             if (vehiculo.getPdfVtoSenasa() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfVtoSenasa().getId());
                 elemento.setPdfVtoSenasa(null);
@@ -379,7 +364,7 @@ public class VehiculoService {
                 elemento.setPdfVtoSenasa(null);
             }
         } else {
-            if (vehiculo.getPdfTitulo() != null) {
+            if (vehiculo.getPdfVtoSenasa() != null) {
                 Pdf pVtoSenasa = pdfService.actualizar(vehiculo.getPdfVtoSenasa().getId(), vtoSenasa, false);
                 pVtoSenasa.setTabla("vehiculo");
                 Pdf pdfVtoSenasa = pdfDAO.save(pVtoSenasa);
@@ -391,7 +376,7 @@ public class VehiculoService {
                 elemento.setPdfVtoSenasa(pdf5);
             }
         }
-        if (habBromat.getOriginalFilename().equals("")) {
+        if ("null".equals(habBromat.getOriginalFilename())) {
             if (vehiculo.getPdfHabBromat() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfHabBromat().getId());
                 elemento.setPdfHabBromat(null);
@@ -399,7 +384,7 @@ public class VehiculoService {
                 elemento.setPdfHabBromat(null);
             }
         } else {
-            if (vehiculo.getPdfTitulo() != null) {
+            if (vehiculo.getPdfHabBromat() != null) {
                 Pdf pHabBromat = pdfService.actualizar(vehiculo.getPdfHabBromat().getId(), habBromat, false);
                 pHabBromat.setTabla("vehiculo");
                 Pdf pdfHabBromat = pdfDAO.save(pHabBromat);
@@ -410,6 +395,21 @@ public class VehiculoService {
                 Pdf pdf6 = pdfDAO.saveAndFlush(u);
                 elemento.setPdfHabBromat(pdf6);
             }
+        }
+        return elementoDAO.save(elemento);
+    }
+    
+    //Establece el alias de un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void establecerAlias(Vehiculo elemento) throws IOException {
+        if(elemento.getNumeroInterno() != null) {
+            elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno() + " - "
+                + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
+                + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
+        } else {
+            elemento.setAlias(elemento.getDominio() + " - " 
+                    + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - " 
+                    + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
         }
         elementoDAO.save(elemento);
     }
