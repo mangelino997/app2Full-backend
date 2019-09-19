@@ -63,6 +63,14 @@ public class ProveedorController {
         return elementoService.listarPorAlias(alias);
     }
     
+    //Obtiene una lista por filtros
+    @GetMapping(value = URL + "/listarPorFiltros/{idTipoProveedor}/{idCondCompra}/{estadoCuenta}/{idLocalidad}")
+    @ResponseBody
+    public Object listarPorFiltros(@PathVariable int idTipoProveedor,@PathVariable 
+            int idCondCompra,@PathVariable int estadoCuenta,@PathVariable int idLocalidad) throws IOException {
+        return elementoService.listarPorFiltros(idTipoProveedor,idCondCompra,estadoCuenta,idLocalidad);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Proveedor elemento) {

@@ -70,6 +70,13 @@ public class SeguimientoEstadoController {
         return elementoService.listarParaReparto();
     }
     
+    //Obtiene una lista para reparto entrante
+    @GetMapping(value = URL + "/listarParaRepartoEntrante")
+    @ResponseBody
+    public List<SeguimientoEstado> listarParaRepartoEntrante() {
+        return elementoService.listarParaReparto();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody SeguimientoEstado elemento) {

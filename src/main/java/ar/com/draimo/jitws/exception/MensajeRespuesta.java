@@ -34,6 +34,7 @@ public class MensajeRespuesta {
     public static final String CERRADO = "Registro cerrado con exito";
     public static final String ABIERTO = "Registro abierto con exito";
     public static final String ANULADO = "Registro anulado con exito";
+    public static final String RECIBIDO = "Registro recibido con exito";
     public static final String NORMALIZADO = "Registro normalizado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
     public static final String ROL_ASIGNADO = "El rol esta asignado a un usuario";
@@ -128,6 +129,12 @@ public class MensajeRespuesta {
 
     //Retorna mensaje con ReponseEntity de abierto
     public static ResponseEntity<?> abierto() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ABIERTO_CON_EXITO,
+                MensajeRespuesta.ABIERTO, 0), HttpStatus.OK);
+    }
+
+    //Retorna mensaje con ReponseEntity de recibido
+    public static ResponseEntity<?> recibido() {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ABIERTO_CON_EXITO,
                 MensajeRespuesta.ABIERTO, 0), HttpStatus.OK);
     }

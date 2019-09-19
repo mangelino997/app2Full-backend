@@ -55,6 +55,20 @@ public class ProveedorService {
         return new ObjectMapper().readValue(string, Object.class);
     }
 
+    //Obtiene la lista por filtros
+    public Object listarPorFiltros(int idTipoProveedor, int idCondCompra, int estadoCuenta,
+            int idLocalidad) throws IOException {
+        List<Proveedor> proveedores = elementoDAO.listarPorFiltros(
+                idTipoProveedor, idCondCompra, estadoCuenta, idLocalidad);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(proveedores);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
         List<Proveedor> proveedores = null;
