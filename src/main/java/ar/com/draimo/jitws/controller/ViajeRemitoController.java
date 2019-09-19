@@ -1,11 +1,11 @@
 package ar.com.draimo.jitws.controller;
-
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.service.ViajeRemitoService;
 import java.io.IOException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -121,6 +121,13 @@ public class ViajeRemitoController {
     public Object obtener(@PathVariable int puntoVenta,@PathVariable String letra,
             @PathVariable int numero) throws IOException {
         return elementoService.obtener(puntoVenta, letra, numero);
+    }
+    
+    //Obtiene la lista de letras
+    @GetMapping(value = URL + "/listarLetras")
+    @ResponseBody
+    public List<String> listarLetras() throws IOException {
+        return elementoService.listarLetras();
     }
 
     //Asigna remitos

@@ -64,23 +64,23 @@ public class TipoComprobanteController {
     }
     
     //Obtiene una lista por esta activo ingreso carga igual true
-    @GetMapping(value = URL + "/listarPorEstaActivoIngresoCargaTrue")
+    @GetMapping(value = URL + "/listarActivosIngresoCarga")
     @ResponseBody
-    public List<TipoComprobante> listarPorEstaActivoIngresoCargaTrue() {
+    public List<TipoComprobante> listarActivosIngresoCarga() {
         return elementoService.listarPorEstaActivoIngresoCargaTrue();
     }
     
     //Obtiene una lista por esta activo Reparto igual true
-    @GetMapping(value = URL + "/listarPorEstaActivoRepartoTrue")
+    @GetMapping(value = URL + "/listarActivosReparto")
     @ResponseBody
-    public List<TipoComprobante> listarPorEstaActivoRepartoTrue() {
+    public List<TipoComprobante> listarActivosReparto() {
         return elementoService.listarPorEstaActivoRepartoTrue();
     }
     
     //Obtiene una lista por numeracion punto venta igual true
-    @GetMapping(value = URL + "/listarPorNumeracionPuntoVentaTrue")
+    @GetMapping(value = URL + "/listarConNumeracionPuntoVenta")
     @ResponseBody
-    public List<TipoComprobante> listarPorNumeracionPuntoVentaTrue() {
+    public List<TipoComprobante> listarConNumeracionPuntoVenta() {
         return elementoService.listarPorNumeracionPuntoVentaTrue();
     }
     

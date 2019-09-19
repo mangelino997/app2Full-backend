@@ -23,5 +23,4 @@ public interface ISeguimientoEstadoSituacionDAO extends JpaRepository<Seguimient
     
     //Obtiene una lista ordenada por seguimientoSituacion
     public List<SeguimientoEstadoSituacion> findBySeguimientoSituacion(SeguimientoSituacion seguimientoSituacion);
-    
 }

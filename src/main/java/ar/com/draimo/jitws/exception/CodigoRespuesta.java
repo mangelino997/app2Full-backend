@@ -6,58 +6,67 @@
 package ar.com.draimo.jitws.exception;
 
 /**
- * Clase Codigos de respuesta
- * Define las constantes utilizadas para cada codigo de respuesta
+ * Clase Codigos de respuesta Define las constantes utilizadas para cada codigo
+ * de respuesta
+ *
  * @author blas
  */
 
 /*
 
-*/
+ */
 public class CodigoRespuesta {
-    
+
+    /*
+    ULTIMO CODIGO AGREGADO 5006
+    */
     //Define una respuesta OK
     public static final int OK = 200;
-    
+
     //Define una respuesta de CREADO
     public static final int CREADO = 201;
-    
+
     //Define una respuesta de SIN CONTENIDO
     public static final int SIN_CONTENIDO = 204;
-    
+
     //Define una respuesta de NO AUTORIZADO
     public static final int NO_AUTORIZADO = 401;
-    
+
     //Define una respuesta de NO ENCONTRADO
     public static final int NO_ENCONTRADO = 404;
-    
+
     //Define una respuesta de CONFLICTO
     public static final int CONFLICTO = 409;
-    
+
     //Define una respuesta de ERROR INTERNO EN EL SERVIDOR
     public static final int ERROR_INTERNO_SERVIDOR = 500;
-    
+
     //Define una respuesta de TRANSACCION NO ACTUALIZADA
     public static final int TRANSACCION_NO_ACTUALIZADA = 600;
-    
+
     //Define una respuesta de sincronizacion mediante socket
     public static final int ERROR_SINC_SOCKET = 5001;
-    
+
     //Define una respuesta de Cerrado con exito
     public static final int CERRADO_CON_EXITO = 5002;
-    
+
     //Define una respuesta de abierto con exito
     public static final int ABIERTO_CON_EXITO = 5005;
-    
+
+    //Define una respuesta de recibido con exito
+    public static final int RECIBIDO_CON_EXITO = 5006;
+
     //Define una respuesta de registro no existente
     public static final int NO_EXISTENTE = 5003;
-    
+
     //Define una respuesta de rol asignado a usuario
     public static final int ROL_ASIGNADO = 5004;
-    
-    //Define una respuesta de datos duplicados
-    //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo datoDuplicado = 11042
+
+    /*
+    Define una respuesta de datos duplicados
+    Los codigos estan ordenados alfabeticamente.
+    Ultimo codigo datoDuplicado = 11042
+    */
     public static final int DATO_DUPLICADO = 11020;
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
     public static final int DATO_DUPLICADO_ANIO_AFIP_DEDUCCION_GENERAL = 11029;
@@ -101,11 +110,12 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_USERNAME = 11005;
     public static final int DATO_DUPLICADO_VALOR = 11016;
     public static final int DATO_DUPLICADO_TRAMO = 11017;
-    
-    
-    //Define una respuesta de datos que superan su longitud
-    //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo Longitud = 12140
+
+    /*
+    Define una respuesta de datos que superan su longitud
+    Los codigos estan ordenados alfabeticamente.
+    Ultimo codigo Longitud = 12140
+    */
     public static final int LONGITUD = 12139;
     public static final int ABREVIATURA_LONGITUD = 12015;
     public static final int ADICIONAL_BASICO_VACACIONES_LONGITUD = 12068;
@@ -287,9 +297,7 @@ public class CodigoRespuesta {
     public static final int VTO_RTO_LONGITUD = 12176;
     public static final int VTO_RUTA_LONGITUD = 12177;
     public static final int VTO_SENASA_LONGITUD = 12178;
-    
-    
-    
+
     //Define una respuesta de datos inexistentes
     //Los codigos estan ordenados alfabeticamente.
     //Ultimo codigo datoDuplicado = 13147

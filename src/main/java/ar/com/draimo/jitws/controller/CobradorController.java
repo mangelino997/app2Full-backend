@@ -64,9 +64,9 @@ public class CobradorController {
     }
     
     //Obtiene una lista por activo y ordenado por nombre
-    @GetMapping(value = URL + "/listarPorEstaActivoTrue")
+    @GetMapping(value = URL + "/listarPorEstaActivo")
     @ResponseBody
-    public List<Cobrador> listarPorEstaActivoTrue() {
+    public List<Cobrador> listarPorEstaActivo() {
         return elementoService.listarPorEstaActivoTrue();
     }
     

@@ -4,6 +4,8 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.Proveedor;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO Proveedor
@@ -19,4 +21,12 @@ public interface IProveedorDAO extends JpaRepository<Proveedor, Integer> {
     //Obtiene una lista por alias
     public List<Proveedor> findByAliasContaining(String alias);
     
+    //Obtiene un listado por filtros
+    @Query(value = "SELECT * FROM proveedor WHERE (:idTipoProveedor = 0 OR"
+            + " idTipoProveedor=:idTipoProveedor) AND (:idCondCompra=0 OR idCondCompra=:idCondCompra)"
+            + " AND (:estadoCuenta = 2 OR estaActiva=:estadoCuenta)AND (:idLocalidad=0 OR "
+            + "idLocalidad=:idLocalidad)" , nativeQuery = true)
+    public List<Proveedor> listarPorFiltros(@Param("idTipoProveedor") int idTipoProveedor,
+            @Param("idCondCompra") int idCondCompra,@Param("estadoCuenta") 
+                    int estadoCuenta,@Param("idLocalidad") int idLocalidad);
 }

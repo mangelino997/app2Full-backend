@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,7 +203,9 @@ public class PersonalService {
 
     //Obtiene un listado de choferes ordenados por nombre de corta distancia
     public Object listarChoferesCortaDistanciaOrdenadoPorNombre(String alias) throws IOException {
-        List<Personal> elementos = elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias);
+        Date fecha = new Date(new java.util.Date().getTime());
+        List<Personal> elementos = 
+                elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias, fecha);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -248,9 +251,9 @@ public class PersonalService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene un listado de acompañantes por empresa ordenados por nombre
-    public Object listarAcompaniantesPorEmpresa(int idEmpresa) throws IOException {
-        List<Personal> elementos = elementoDAO.listarAcompaniantesPorEmpresaOrdenadoPorNombre(idEmpresa);
+    //Obtiene un listado de acompañantes ordenados por nombre
+    public Object listarAcompaniantes() throws IOException {
+        List<Personal> elementos = elementoDAO.listarAcompaniantesOrdenadoPorNombre();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

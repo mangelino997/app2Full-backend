@@ -32,6 +32,11 @@ public class SeguimientoEstadoService {
     
     //Obtiene la lista de estados para reparto
     public List<SeguimientoEstado> listarParaReparto() {
+        return elementoDAO.findByRepartoEntranteTrueAndRepartoSalienteTrue();
+    }
+    
+    //Obtiene la lista de estados para reparto entrante
+    public List<SeguimientoEstado> listarParaRepartoEntrante() {
         return elementoDAO.findByRepartoEntranteTrue();
     }
     
