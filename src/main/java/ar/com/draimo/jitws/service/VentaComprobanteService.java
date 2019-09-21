@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -133,6 +134,9 @@ public class VentaComprobanteService {
         TipoComprobante t = tipoComprobanteDAO.findById(idTipoComprobante).get();
         VentaComprobante ventasComprobantes = 
                 elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
+        if (ventasComprobantes==null) {
+            throw new DataIntegrityViolationException("Registro no existente");
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");

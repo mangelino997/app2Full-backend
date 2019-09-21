@@ -23,8 +23,8 @@ public class Provincia extends ObjetoGenerico {
     private String nombre;
     
     //Define el codigo de ingresos brutos
-    @Column(name = "codigoIIBB")
-    private int codigoIIBB;
+    @Column(name = "codigoIIBB", length = 3)
+    private String codigoIIBB;
     
     //Define el codigo de afip
     @Column(name = "codigoAfip",length = 3, nullable = true)
@@ -45,11 +45,11 @@ public class Provincia extends ObjetoGenerico {
         this.nombre = nombre;
     }
 
-    public int getCodigoIIBB() {
+    public String getCodigoIIBB() {
         return codigoIIBB;
     }
 
-    public void setCodigoIIBB(int codigoIIBB) {
+    public void setCodigoIIBB(String codigoIIBB) {
         this.codigoIIBB = codigoIIBB;
     }
 

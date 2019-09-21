@@ -27,4 +27,7 @@ public interface ISeguimientoViajeRemitoDAO extends JpaRepository<SeguimientoVia
     //Obtiene una lista ordenada por ViajeRemito
     public List<SeguimientoViajeRemito> findByViajeRemito(ViajeRemito viajeRemito);
     
+    //elimina una lista por ViajeRemito
+    public void deleteByViajeRemito(ViajeRemito viajeRemito);
+    
 }

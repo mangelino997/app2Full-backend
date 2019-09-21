@@ -21,12 +21,12 @@ public class TalonarioRecibo extends ObjetoGenerico {
     
     //Referencia a la clase talonarioReciboLote
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idTalonarioReciboLote", nullable=false)
+    @JoinColumn(name = "idTalonarioReciboLote", nullable = false)
     private TalonarioReciboLote talonarioReciboLote;
     
     //Referencia a la clase talonarioReciboLote
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCobrador", nullable=false)
+    @JoinColumn(name = "idCobrador", nullable = false)
     private Cobrador cobrador;
     
     //Define el desde
@@ -39,7 +39,7 @@ public class TalonarioRecibo extends ObjetoGenerico {
     
     //Referencia a la clase Usuario - Alta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioAlta", nullable=false)
+    @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
     //Define el fechaAlta

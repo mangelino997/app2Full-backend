@@ -27,4 +27,7 @@ public interface ISeguimientoVentaComprobanteDAO extends JpaRepository<Seguimien
     //Obtiene una lista ordenada por VentaComprobante
     public List<SeguimientoVentaComprobante> findByVentaComprobante(VentaComprobante ventaComprobante);
     
+    //elimina una lista por VentaComprobante
+    public void deleteByVentaComprobante(VentaComprobante ventaComprobante);
+    
 }

@@ -181,7 +181,7 @@ public class MensajeRespuesta {
                         mensajeRespuesta = partes[0];
                         plusMensaje = "";
                         break;
-                        //Retorna mensaje para elemento inexistente
+                    //Retorna mensaje para elemento inexistente
                     case 13:
                         return datoInexistente(parte3[1], dive.getMostSpecificCause().getMessage());
                 }
@@ -995,677 +995,1516 @@ public class MensajeRespuesta {
                     }
                 } else if (partes[0] == "Column") {
                     switch (partes[1]) {
-                        case LongitudError.FECHA_ALTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_ALTA_LONGITUD;
-                            plusMensaje = " FECHA ALTA";
-                            break;
-                        case LongitudError.FECHA_BAJA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_BAJA_LONGITUD;
-                            plusMensaje = " FECHA BAJA";
-                            break;
-                        case LongitudError.FECHA_CAJA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_CAJA_LONGITUD;
-                            plusMensaje = " FECHA CAJA";
-                            break;
-                        case LongitudError.FECHA_CIERRE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_CIERRE_LONGITUD;
-                            plusMensaje = " FECHA CIERRE";
-                            break;
-                        case LongitudError.FECHA_COBRO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_COBRO_LONGITUD;
-                            plusMensaje = " FECHA COBRO";
-                            break;
-                        case LongitudError.FECHA_CONTABLE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_CONTABLE_LONGITUD;
-                            plusMensaje = " FECHA CONTABLE";
-                            break;
-                        case LongitudError.FECHA_DESDE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_DESDE_LONGITUD;
-                            plusMensaje = " FECHA DESDE";
-                            break;
-                        case LongitudError.FECHA_EMISION_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_EMISION_LONGITUD;
-                            plusMensaje = " FECHA EMISION";
-                            break;
-                        case LongitudError.FECHA_FIN_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_FIN_LONGITUD;
-                            plusMensaje = " FECHA FIN";
-                            break;
-                        case LongitudError.FECHA_HASTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_HASTA_LONGITUD;
-                            plusMensaje = " FECHA HASTA";
-                            break;
-                        case LongitudError.FECHA_INICIO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_INICIO_LONGITUD;
-                            plusMensaje = " FECHA INICIO";
-                            break;
-                        case LongitudError.FECHA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_LONGITUD;
-                            plusMensaje = " FECHA";
-                            break;
-                        case LongitudError.FECHA_MOD_CURSO_CP_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_CP_LONGITUD;
-                            plusMensaje = " FECHA MOD CURSO CP";
-                            break;
-                        case LongitudError.FECHA_MOD_CURSO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_LONGITUD;
-                            plusMensaje = " FECHA MOD CURSO";
-                            break;
-                        case LongitudError.FECHA_MOD_LC_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_LC_LONGITUD;
-                            plusMensaje = " FECHA MOD LIC. CONDUCIR";
-                            break;
-                        case LongitudError.FECHA_MOD_LINTI_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_LINTI_LONGITUD;
-                            plusMensaje = " FECHA MOD LINTI";
-                            break;
-                        case LongitudError.FECHA_MOD_LS_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_LS_LONGITUD;
-                            plusMensaje = " FECHA MOD LS";
-                            break;
-                        case LongitudError.FECHA_NACIMIENTO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_NACIMIENTO_LONGITUD;
-                            plusMensaje = " FECHA NACIMIENTO";
-                            break;
-                        case LongitudError.FECHA_PAGO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_PAGO_LONGITUD;
-                            plusMensaje = " FECHA PAGO";
-                            break;
-                        case LongitudError.FECHA_REGRESO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_REGRESO_LONGITUD;
-                            plusMensaje = " FECHA REGRESO";
-                            break;
-                        case LongitudError.FECHA_SALIDA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_SALIDA_LONGITUD;
-                            plusMensaje = " FECHA SALIDA";
-                            break;
-                        case LongitudError.FECHA_TOPE_INFORMAR_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_TOPE_INFORMAR_LONGITUD;
-                            plusMensaje = " FECHA TOPE INFORMAR";
-                            break;
-                        case LongitudError.FECHA_TRAMO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_TRAMO_LONGITUD;
-                            plusMensaje = " FECHA TRAMO";
-                            break;
-                        case LongitudError.FECHA_ULTIMA_MOD_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_ULTIMA_MOD_LONGITUD;
-                            plusMensaje = " FECHA ULTIMA MOD.";
-                            break;
-                        case LongitudError.FECHA_VTO_PAGO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FECHA_VTO_PAGO_LONGITUD;
-                            plusMensaje = " FECHA VTO. PAGO";
-                            break;
-                        case LongitudError.INICIO_ACTIVIDAD_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.INICIO_ACTIVIDAD_LONGITUD;
-                            plusMensaje = " INICIO ACTIVIDAD";
-                            break;
-                        case LongitudError.PRECIOS_DESDE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PRECIOS_DESDE_LONGITUD;
-                            plusMensaje = " PRECIOS DESDE";
-                            break;
-                        case LongitudError.TELEFONO_MOVIL_FECHA_DEVOLUCION_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_DEVOLUCION_LONGITUD;
-                            plusMensaje = " TELEFONO MOVIL FECHA DEVOLUCION";
-                            break;
-                        case LongitudError.TELEFONO_MOVIL_FECHA_ENTREGA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_ENTREGA_LONGITUD;
-                            plusMensaje = " TELEFONO MOVIL FECHA ENTREGA";
-                            break;
-                        case LongitudError.VTO_CURSO_CARGA_PELIGROSA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_CURSO_CARGA_PELIGROSA_LONGITUD;
-                            plusMensaje = " VTO. CURSO CARGA PELIGROSA";
-                            break;
-                        case LongitudError.VTO_CURSO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_CURSO_LONGITUD;
-                            plusMensaje = " VTO. CURSO";
-                            break;
-                        case LongitudError.VTO_HAB_BROMATOLOGICA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_HAB_BROMATOLOGICA_LONGITUD;
-                            plusMensaje = " VTO. HAB. BROMATOLÓGICA";
-                            break;
-                        case LongitudError.VTO_LIB_SANIDAD_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_LIB_SANIDAD_LONGITUD;
-                            plusMensaje = " VTO. LIB. SANIDAD";
-                            break;
-                        case LongitudError.VTO_LIC_CONDUCIR_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_LIC_CONDUCIR_LONGITUD;
-                            plusMensaje = " VTO. LIC. CONDUCIR";
-                            break;
-                        case LongitudError.VTO_LINTI_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_LINTI_LONGITUD;
-                            plusMensaje = " VTO. LINTI";
-                            break;
-                        case LongitudError.VTO_POLIZA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_POLIZA_LONGITUD;
-                            plusMensaje = " VTO. POLIZA";
-                            break;
-                        case LongitudError.VTO_POLIZA_SEGURO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_POLIZA_SEGURO_LONGITUD;
-                            plusMensaje = " VTO. POLIZA SEGURO";
-                            break;
-                        case LongitudError.VTO_PSICOFISICO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_PSICOFISICO_LONGITUD;
-                            plusMensaje = " VTO. PSICO-FÍSICO";
-                            break;
-                        case LongitudError.VTO_RTO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_RTO_LONGITUD;
-                            plusMensaje = " VTO. RTO";
-                            break;
-                        case LongitudError.VTO_RUTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_RUTA_LONGITUD;
-                            plusMensaje = " VTO. RUTA";
-                            break;
-                        case LongitudError.VTO_SENASA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VTO_SENASA_LONGITUD;
-                            plusMensaje = " VTO. SENASA";
-                            break;
-                        case LongitudError.ABREVIATURA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ABREVIATURA_LONGITUD;
-                            plusMensaje = " ABREVIATURA";
-                            break;
-                        case LongitudError.ADICIONAL_BASICO_VACACIONES_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ADICIONAL_BASICO_VACACIONES_LONGITUD;
-                            plusMensaje = " ADICIONAL BASICO VACACIONES";
-                            break;
-                        case LongitudError.ANCHO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ANCHO_LONGITUD;
-                            plusMensaje = " ANCHO";
-                            break;
-                        case LongitudError.ALIAS_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ALIAS_LONGITUD;
-                            plusMensaje = " ALIAS";
-                            break;
-                        case LongitudError.ALIAS_CBU_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ALIAS_CBU_LONGITUD;
-                            plusMensaje = " ALIAS CBU";
-                            break;
-                        case LongitudError.ALICUOTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ALICUOTA_LONGITUD;
-                            plusMensaje = " ALICUOTA";
-                            break;
-                        case LongitudError.ALICUOTA_IVA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ALICUOTA_IVA_LONGITUD;
-                            plusMensaje = " ALICUOTA IVA";
-                            break;
-                        case LongitudError.ALTURA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ALTURA_LONGITUD;
-                            plusMensaje = " ALTURA";
-                            break;
-                        case LongitudError.APELLIDO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.APELLIDO_LONGITUD;
-                            plusMensaje = " APELLIDO";
-                            break;
-                        case LongitudError.APORTE_ADIC_OBRA_SOCIAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.APORTE_ADIC_OBRA_SOCIAL_LONGITUD;
-                            plusMensaje = " APORTE ADIC. OBRA SOCIAL";
-                            break;
-                        case LongitudError.APORTE_ADIC_SEG_SOCIAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.APORTE_ADIC_SEG_SOCIAL_LONGITUD;
-                            plusMensaje = " APORTE ADIC. SEGURIDAD SOCIAL";
-                            break;
-                        case LongitudError.APORTE_DIF_SEG_SOCIAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.APORTE_DIF_SEG_SOCIAL_LONGITUD;
-                            plusMensaje = " APORTE DIF. SEGURIDAD SOCIAL";
-                            break;
-                        case LongitudError.BASICO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.BASICO_LONGITUD;
-                            plusMensaje = " BASICO";
-                            break;
-                        case LongitudError.CANTIDAD_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CANTIDAD_LONGITUD;
-                            plusMensaje = " CANTIDAD";
-                            break;
-                        case LongitudError.CAPACIDAD_CARGA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CAPACIDAD_CARGA_LONGITUD;
-                            plusMensaje = " CAPACIDAD CARGA";
-                            break;
-                        case LongitudError.CODIGO_AFIP_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CODIGO_AFIP_LONGITUD;
-                            plusMensaje = " CODIGO AFIP";
-                            break;
-                        case LongitudError.CODIGO_AREA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CODIGO_AREA_LONGITUD;
-                            plusMensaje = " CODIGO DE AREA";
-                            break;
-                        case LongitudError.CODIGO_AREA_ALT_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CODIGO_AREA_ALT_LONGITUD;
-                            plusMensaje = " CODIGO DE AREA ALT";
-                            break;
-                        case LongitudError.COMISION_CR_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.COMISION_CR_LONGITUD;
-                            plusMensaje = " COMISION CR";
-                            break;
-                        case LongitudError.CONTRIB_ADIC_OBRA_SOCIAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CONTRIB_ADIC_OBRA_SOCIAL_LONGITUD;
-                            plusMensaje = " CONTRIB. ADIC. OBRA SOCIAL";
-                            break;
-                        case LongitudError.CONTRIB_TAREA_DIF_SEG_SOCIAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CONTRIB_TAREA_DIF_SEG_SOCIAL_LONGITUD;
-                            plusMensaje = " CONTRIB. TAREA DIF. SEGURIDAD SOCIAL";
-                            break;
-                        case LongitudError.CORREO_ELECTRONICO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CORREO_ELECTRONICO_LONGITUD;
-                            plusMensaje = " CORREO ELECTRONICO";
-                            break;
-                        case LongitudError.COSTO_POR_KM_PROPIO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_PROPIO_LONGITUD;
-                            plusMensaje = " COSTO POR KM. PROPIO";
-                            break;
-                        case LongitudError.COSTO_POR_KM_TERCERO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_TERCERO_LONGITUD;
-                            plusMensaje = " COSTO POR KM. TERCERO";
-                            break;
-                        case LongitudError.COSTO_PROPIO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.COSTO_PROPIO_LONGITUD;
-                            plusMensaje = " COSTO PROPIO";
-                            break;
-                        case LongitudError.COSTO_TERCERO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.COSTO_TERCERO_LONGITUD;
-                            plusMensaje = " COSTO TERCERO";
-                            break;
-                        case LongitudError.CREDITO_LIMITE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CREDITO_LIMITE_LONGITUD;
-                            plusMensaje = " CRÉDITO LÍMITE";
-                            break;
-                        case LongitudError.CUIL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CUIL_LONGITUD;
-                            plusMensaje = " CUIL";
-                            break;
-                        case LongitudError.CUIT_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CUIT_LONGITUD;
-                            plusMensaje = " CUIT";
-                            break;
-                        case LongitudError.DESCRIPCION_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DESCRIPCION_LONGITUD;
-                            plusMensaje = " DESCRIPCION";
-                            break;
-                        case LongitudError.DESCUENTO_FLETE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DESCUENTO_FLETE_LONGITUD;
-                            plusMensaje = " DESCUENTO FLETE";
-                            break;
-                        case LongitudError.DESCUENTO_SUBTOTAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DESCUENTO_SUBTOTAL_LONGITUD;
-                            plusMensaje = " DESCUENTO SUBTOTAL";
-                            break;
-                        case LongitudError.DOCUMENTO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DOCUMENTO_LONGITUD;
-                            plusMensaje = " DNI";
-                            break;
-                        case LongitudError.DOMICILIO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DOMICILIO_LONGITUD;
-                            plusMensaje = " DOMICILIO";
-                            break;
-                        case LongitudError.DOMICILIO_ALT_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DOMICILIO_ALT_LONGITUD;
-                            plusMensaje = " DOMICILIO ALT";
-                            break;
-                        case LongitudError.DOMINIO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DOMINIO_LONGITUD;
-                            plusMensaje = " DOMINIO";
-                            break;
-                        case LongitudError.FLETE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FLETE_LONGITUD;
-                            plusMensaje = " FLETE";
-                            break;
-                        case LongitudError.FOLIO_LIBRO_SUELDOS_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.FOLIO_LIBRO_SUELDOS_LONGITUD;
-                            plusMensaje = " FOLIO LIBRO SUELDOS";
-                            break;
-                        case LongitudError.IMPORTE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_LONGITUD;
-                            plusMensaje = " IMPORTE";
-                            break;
-                        case LongitudError.IMPORTE_CONTRA_REEMBOLSO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_CONTRA_REEMBOLSO_LONGITUD;
-                            plusMensaje = " IMPORTE CONTRA REEMBOLSO";
-                            break;
-                        case LongitudError.IMPORTE_ENTREGA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_ENTREGA_LONGITUD;
-                            plusMensaje = " IMPORTE ENTREGA";
-                            break;
-                        case LongitudError.IMPORTE_EXENTO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_EXENTO_LONGITUD;
-                            plusMensaje = " IMPORTE EXENTO";
-                            break;
-                        case LongitudError.IMPORTE_FIJO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_LONGITUD;
-                            plusMensaje = " IMPORTE FIJO";
-                            break;
-                        case LongitudError.IMPORTE_FIJO_REF_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_REF_LONGITUD;
-                            plusMensaje = " IMPORTE FIJO REF";
-                            break;
-                        case LongitudError.IMPORTE_FIJO_SECO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_SECO_LONGITUD;
-                            plusMensaje = " IMPORTE FIJO SECO";
-                            break;
-                        case LongitudError.IMPORTE_IMPUESTO_INTERNO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_IMPUESTO_INTERNO_LONGITUD;
-                            plusMensaje = " IMPORTE IMPUESTO INTERNO";
-                            break;
-                        case LongitudError.IMPORTE_ITC_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_ITC_LONGITUD;
-                            plusMensaje = " IMPORTE ITC";
-                            break;
-                        case LongitudError.IMPORTE_IVA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_IVA_LONGITUD;
-                            plusMensaje = " IMPORTE IVA";
-                            break;
-                        case LongitudError.IMPORTE_NETO_GRAVADO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_NETO_GRAVADO_LONGITUD;
-                            plusMensaje = " IMPORTE NETO GRAVADO";
-                            break;
-                        case LongitudError.IMPORTE_NO_GRAVADO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_NO_GRAVADO_LONGITUD;
-                            plusMensaje = " IMPORTE NO GRAVADO";
-                            break;
-                        case LongitudError.IMPORTE_OTROS_TRIBUTOS_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_OTROS_TRIBUTOS_LONGITUD;
-                            plusMensaje = " IMPORTE OTROS TRIBUTOS";
-                            break;
-                        case LongitudError.IMPORTE_PERCEPCION_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_PERCEPCION_LONGITUD;
-                            plusMensaje = " IMPORTE PERCEPCION";
-                            break;
-                        case LongitudError.IMPORTE_RETIRO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_RETIRO_LONGITUD;
-                            plusMensaje = " IMPORTE RETIRO";
-                            break;
-                        case LongitudError.IMPORTE_SALDO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_SALDO_LONGITUD;
-                            plusMensaje = " IMPORTE SALDO";
-                            break;
-                        case LongitudError.IMPORTE_SEGURO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_SEGURO_LONGITUD;
-                            plusMensaje = " IMPORTE SEGURO";
-                            break;
-                        case LongitudError.IMPORTE_TOTAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_TOTAL_LONGITUD;
-                            plusMensaje = " IMPORTE TOTAL";
-                            break;
-                        case LongitudError.IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD;
-                            plusMensaje = " IMPORTE VENTA ITEM CONCEPTO";
-                            break;
-                        case LongitudError.ITC_NETO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ITC_NETO_LONGITUD;
-                            plusMensaje = " ITC NETO";
-                            break;
-                        case LongitudError.ITC_POR_LITRO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.ITC_POR_LITRO_LONGITUD;
-                            plusMensaje = " ITC POR LITRO";
-                            break;
-                        case LongitudError.KILOS_AFORADO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.KILOS_AFORADO_LONGITUD;
-                            plusMensaje = " KILOS AFORADO";
-                            break;
-                        case LongitudError.KILOS_EFECTIVO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.KILOS_EFECTIVO_LONGITUD;
-                            plusMensaje = " KILOS EFECTIVO";
-                            break;
-                        case LongitudError.LARGO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.LARGO_LONGITUD;
-                            plusMensaje = " LARGO";
-                            break;
-                        case LongitudError.LETRA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.LETRA_LONGITUD;
-                            plusMensaje = " LETRA";
-                            break;
-                        case LongitudError.M3_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.M3_LONGITUD;
-                            plusMensaje = " M3";
-                            break;
-                        case LongitudError.MODELO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.MODELO_LONGITUD;
-                            plusMensaje = " MODELO";
-                            break;
-                        case LongitudError.MONEDA_COTIZACION_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.MONEDA_COTIZACION_LONGITUD;
-                            plusMensaje = " MONEDA COTIZACION";
-                            break;
-                        case LongitudError.NOMBRE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOMBRE_LONGITUD;
-                            plusMensaje = " NOMBRE";
-                            break;
-                        case LongitudError.NOMBRE_COMPLETO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOMBRE_COMPLETO_LONGITUD;
-                            plusMensaje = " NOMBRE COMPLETO";
-                            break;
-                        case LongitudError.NOMBRE_FANTASIA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOMBRE_FANTASIA_LONGITUD;
-                            plusMensaje = " NOMBRE FANTASIA";
-                            break;
-                        case LongitudError.NOTA_EMISION_COMPROBANTE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOTA_EMISION_COMPROBANTE_LONGITUD;
-                            plusMensaje = " NOTA EMISION COMPROBANTE";
-                            break;
-                        case LongitudError.NOTA_INGRESAR_COMPROBANTE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOTA_INGRESAR_COMPROBANTE_LONGITUD;
-                            plusMensaje = " NOTA INGRESAR COMPROBANTE";
-                            break;
-                        case LongitudError.NOTA_IMPRESION_COMPROBANTE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_LONGITUD;
-                            plusMensaje = " NOTA IMPRESION COMPROBANTE";
-                            break;
-                        case LongitudError.NOTA_IMPRESION_COMPROBANTE_GRAL_1_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_1_LONGITUD;
-                            plusMensaje = " NOTA IMPRESION COMPROBANTE GENERAL 1";
-                            break;
-                        case LongitudError.NOTA_IMPRESION_COMPROBANTE_GRAL_2_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_2_LONGITUD;
-                            plusMensaje = " NOTA IMPRESION COMPROBANTE GENERAL 2";
-                            break;
-                        case LongitudError.NOTA_IMPRESION_ORDEN_PAGO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_ORDEN_PAGO_LONGITUD;
-                            plusMensaje = " NOTA IMPRESION ORDEN PAGO";
-                            break;
-                        case LongitudError.NOTA_IMPRESION_REMITO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_REMITO_LONGITUD;
-                            plusMensaje = " NOTA IMPRESION REMITO";
-                            break;
-                        case LongitudError.NUMERO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_LONGITUD;
-                            plusMensaje = " NUMERO";
-                            break;
-                        case LongitudError.NUMERO_CAEA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_CAEA_LONGITUD;
-                            plusMensaje = " NUMERO CAEA";
-                            break;
-                        case LongitudError.NUMERO_CBU_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.CBU_LONGITUD;
-                            plusMensaje = " NUMERO CBU";
-                            break;
-                        case LongitudError.NUMERO_CHASIS_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_CHASIS_LONGITUD;
-                            plusMensaje = " NUMERO CHASIS";
-                            break;
-                        case LongitudError.NUMERO_CUENTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_CUENTA_LONGITUD;
-                            plusMensaje = " NUMERO CUENTA";
-                            break;
-                        case LongitudError.NUMERO_DOCUMENTO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.DOCUMENTO_LONGITUD;
-                            plusMensaje = " DNI";
-                            break;
-                        case LongitudError.NUMERO_IIBB_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_IIBB_LONGITUD;
-                            plusMensaje = " NUMERO IIBB";
-                            break;
-                        case LongitudError.NUMERO_INTERNO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_INTERNO_LONGITUD;
-                            plusMensaje = " NUMERO INTERNO";
-                            break;
-                        case LongitudError.NUMERO_MOTOR_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_MOTOR_LONGITUD;
-                            plusMensaje = " NUMERO MOTOR";
-                            break;
-                        case LongitudError.NUMERO_POLIZA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_LONGITUD;
-                            plusMensaje = " NUMERO POLIZA";
-                            break;
-                        case LongitudError.NUMERO_POLIZA_SEGURO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_SEGURO_LONGITUD;
-                            plusMensaje = " NUMERO POLIZA SEGURO";
-                            break;
-                        case LongitudError.NUMERO_REMITO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_REMITO_LONGITUD;
-                            plusMensaje = " NUMERO REMITO";
-                            break;
-                        case LongitudError.NUMERO_RUTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.NUMERO_RUTA_LONGITUD;
-                            plusMensaje = " NUMERO RUTA";
-                            break;
-                        case LongitudError.OBSERVACION_CHOFER_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.OBSERVACION_CHOFER_LONGITUD;
-                            plusMensaje = " OBSERVACION CHOFER";
-                            break;
-                        case LongitudError.OBSERVACION_VEHICULO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_LONGITUD;
-                            plusMensaje = " OBSERVACION VEHIHCULO";
-                            break;
-                        case LongitudError.OBSERVACION_VEHICULO_REMOLQUE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_REMOLQUE_LONGITUD;
-                            plusMensaje = " OBSERVACION VEHICULO REMOLQUE";
-                            break;
-                        case LongitudError.OBSERVACIONES_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.OBSERVACIONES_LONGITUD;
-                            plusMensaje = " OBSERVACIONES";
-                            break;
-                        case LongitudError.OBSERVACIONES_ANULADO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.OBSERVACIONES_ANULADO_LONGITUD;
-                            plusMensaje = " OBSERVACIONES ANULADO";
-                            break;
-                        case LongitudError.PASSWORD_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PASSWORD_LONGITUD;
-                            plusMensaje = " PASSWORD";
-                            break;
-                        case LongitudError.P_COMISION_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.P_COMISION_LONGITUD;
-                            plusMensaje = " P. COMISIÓN";
-                            break;
-                        case LongitudError.P_SEGURO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.P_SEGURO_LONGITUD;
-                            plusMensaje = " P. SEGURO";
-                            break;
-                        case LongitudError.PRECIO_UNITARIO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_LONGITUD;
-                            plusMensaje = " PRECIO UNITARIO";
-                            break;
-                        case LongitudError.PRECIO_UNITARIO_VENTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VENTA_LONGITUD;
-                            plusMensaje = " PRECIO UNITARIO VENTA";
-                            break;
-                        case LongitudError.PRECIO_UNITARIO_VIAJE_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VIAJE_LONGITUD;
-                            plusMensaje = " PRECIO UNITARIO VIAJE";
-                            break;
-                        case LongitudError.PRECIO_UNITARIO_REF_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_REF_LONGITUD;
-                            plusMensaje = " PRECIO UNITARIO REF";
-                            break;
-                        case LongitudError.PRECIO_UNITARIO_SECO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_SECO_LONGITUD;
-                            plusMensaje = " PRECIO UNITARIO SECO";
-                            break;
-                        case LongitudError.PUNTO_VENTA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.PUNTO_VENTA_LONGITUD;
-                            plusMensaje = " PUNTO VENTA";
-                            break;
-                        case LongitudError.RAZON_SOCIAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.RAZON_SOCIAL_LONGITUD;
-                            plusMensaje = " RAZON SOCIAL";
-                            break;
-                        case LongitudError.RUTA_ALTERNATIVA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.RUTA_ALTERNATIVA_LONGITUD;
-                            plusMensaje = " RUTA ALTERNATIVA";
-                            break;
-                        case LongitudError.SEGURO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.SEGURO_LONGITUD;
-                            plusMensaje = " SEGURO";
-                            break;
-                        case LongitudError.SIMBOLO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.SIMBOLO_LONGITUD;
-                            plusMensaje = " SIMBOLO";
-                            break;
-                        case LongitudError.SITIO_WEB_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.SITIO_WEB_LONGITUD;
-                            plusMensaje = " SITIO WEB";
-                            break;
-                        case LongitudError.SMVM_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.SMVM_LONGITUD;
-                            plusMensaje = " SMVM";
-                            break;
-                        case LongitudError.TALLE_CAMISA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TALLE_CAMISA_LONGITUD;
-                            plusMensaje = " TALLE CAMISA";
-                            break;
-                        case LongitudError.TALLE_CALZADO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TALLE_CALZADO_LONGITUD;
-                            plusMensaje = " TALLE CAlZADO";
-                            break;
-                        case LongitudError.TALLE_PANTALON_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TALLE_PANTALON_LONGITUD;
-                            plusMensaje = " TALLE PANTALON";
-                            break;
-                        case LongitudError.TARA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TARA_LONGITUD;
-                            plusMensaje = " TARA";
-                            break;
-                        case LongitudError.TELEFONO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_LONGITUD;
-                            plusMensaje = " TELEFONO";
-                            break;
-                        case LongitudError.TELEFONO_ALT_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_ALT_LONGITUD;
-                            plusMensaje = " TELEFONO ALTERNATIVO";
-                            break;
-                        case LongitudError.TELEFONO_FIJO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_FIJO_LONGITUD;
-                            plusMensaje = " TELEFONO FIJO";
-                            break;
-                        case LongitudError.TELEFONO_MOVIL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_LONGITUD;
-                            plusMensaje = " TELEFONO MOVIL";
-                            break;
-                        case LongitudError.TELEFONO_MOVIL_EMPRESA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_EMPRESA_LONGITUD;
-                            plusMensaje = " TELEFONO MOVIL EMPRESA";
-                            break;
-                        case LongitudError.TELEFONO_MOVIL_OBSERVACION_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_OBSERVACION_LONGITUD;
-                            plusMensaje = " TELEFONO MOVIL OBSERVACION";
-                            break;
-                        case LongitudError.TITULAR_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TITULAR_LONGITUD;
-                            plusMensaje = " TITULAR";
-                            break;
-                        case LongitudError.TOPE_BASICO_ADELANTOS_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.TOPE_BASICO_ADELANTOS_LONGITUD;
-                            plusMensaje = " TOPE BASICO ADELANTOS";
-                            break;
-                        case LongitudError.USERNAME_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.USERNAME_LONGITUD;
-                            plusMensaje = " USUARIO";
-                            break;
-                        case LongitudError.URL_PRUEBA_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.URL_PRUEBA_LONGITUD;
-                            plusMensaje = " URL PRUEBA";
-                            break;
-                        case LongitudError.URL_REAL_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.URL_REAL_LONGITUD;
-                            plusMensaje = " URL REAL";
-                            break;
-                        case LongitudError.VALOR_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VALOR_LONGITUD;
-                            plusMensaje = " VALOR";
-                            break;
-                        case LongitudError.VALOR_DECLARADO_LONGITUD:
-                            codigoRespuesta = CodigoRespuesta.VALOR_DECLARADO_LONGITUD;
-                            plusMensaje = " VALOR DECLARADO";
-                            break;
-                        default:
-                            codigoRespuesta = CodigoRespuesta.LONGITUD;
-                            plusMensaje = "";
+                        case ElementoNuloError.ABREVIATURA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ABREVIATURA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ACTIVA_DESDE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ACTIVA_DESDE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ADICIONAL_BASICO_VACACIONES_NULO:
+                            codigoRespuesta = CodigoRespuesta.ADICIONAL_BASICO_VACACIONES_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_ALICUOTA_GANANCIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_ALICUOTA_GANANCIA_NULO;
+                            ;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_ALICUOTA_IVA_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_ALICUOTA_IVA_NULO;
+                            ;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_CONCEPTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_CONCEPTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_CONDICION_IVA_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_IVA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_CONDICION_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_DEDUCCION_GENERAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_DEDUCCION_GENERAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_DEDUCCION_PERSONAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_DEDUCCION_PERSONAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_LOCALIDAD_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_LOCALIDAD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_MOD_CONTRATACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_MOD_CONTRATACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_SINIESTRADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_SINIESTRADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_SITUACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_SITUACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFIP_TIPO_BENEFICIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFIP_TIPO_BENEFICIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AFORO_NULO:
+                            codigoRespuesta = CodigoRespuesta.AFORO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ALIAS_CBU_NULO:
+                            codigoRespuesta = CodigoRespuesta.ALIAS_CBU_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ALIAS_NULO:
+                            codigoRespuesta = CodigoRespuesta.ALIAS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ALICUOTA_IVA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ALICUOTA_IVA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ALICUOTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ALICUOTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ALTURA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ALTURA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ANCHO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ANCHO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ANIO_FABRICACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.ANIO_FABRICACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ANIO_INICIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ANIO_INICIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ANIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ANIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.APELLIDO_NULO:
+                            codigoRespuesta = CodigoRespuesta.APELLIDO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.APORTE_ADIC_OBRA_SOCIAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.APORTE_ADIC_OBRA_SOCIAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.APORTE_ADIC_SEG_SOCIAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.APORTE_ADIC_SEG_SOCIAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.APORTE_DIF_SEG_SOCIAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.APORTE_DIF_SEG_SOCIAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.AREA_NULO:
+                            codigoRespuesta = CodigoRespuesta.AREA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.BANCO_NULO:
+                            codigoRespuesta = CodigoRespuesta.BANCO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.BASICO_NULO:
+                            codigoRespuesta = CodigoRespuesta.BASICO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.BULTOS_NULO:
+                            codigoRespuesta = CodigoRespuesta.BULTOS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CAE_ESTADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CAE_ESTADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CAE_NULO:
+                            codigoRespuesta = CodigoRespuesta.CAE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CAE_VENCIMIENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CAE_VENCIMIENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CAI_NULO:
+                            codigoRespuesta = CodigoRespuesta.CAI_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CAI_VENCIMIENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CAI_VENCIMIENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CANTIDAD_EJES_NULO:
+                            codigoRespuesta = CodigoRespuesta.CANTIDAD_EJES_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CANTIDAD_MESES_NULO:
+                            codigoRespuesta = CodigoRespuesta.CANTIDAD_MESES_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CANTIDAD_NULO:
+                            codigoRespuesta = CodigoRespuesta.CANTIDAD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CAPACIDAD_CARGA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CAPACIDAD_CARGA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CATEGORIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CATEGORIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CBU_NULO:
+                            codigoRespuesta = CodigoRespuesta.CBU_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CHEQUE_CARTERA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CHEQUE_CARTERA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CLIENTE_DADOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.CLIENTE_DADOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CLIENTE_DESTINATARIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CLIENTE_DESTINATARIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CLIENTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.CLIENTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CLIENTE_REMITENTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.CLIENTE_REMITENTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COBRADOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.COBRADOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CODIGO_AFIP_NULO:
+                            codigoRespuesta = CodigoRespuesta.CODIGO_AFIP_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CODIGO_AREA_ALT_NULO:
+                            codigoRespuesta = CodigoRespuesta.CODIGO_AREA_ALT_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CODIGO_AREA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CODIGO_AREA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CODIGO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CODIGO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CODIGO_POSTAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.CODIGO_POSTAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COMISION_CR_NULO:
+                            codigoRespuesta = CodigoRespuesta.COMISION_CR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COMPANIA_SEGURO_NULO:
+                            codigoRespuesta = CodigoRespuesta.COMPANIA_SEGURO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COMPANIA_SEGURO_POLIZA_NULO:
+                            codigoRespuesta = CodigoRespuesta.COMPANIA_SEGURO_POLIZA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COMPRA_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.COMPRA_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COMPRA_COMPROBANTE_PERCEPCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.COMPRA_COMPROBANTE_PERCEPCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COMPROBANTE_APLICADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.COMPROBANTE_APLICADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CON_COVERTURA_SCVO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CON_COVERTURA_SCVO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CONDICION_COMPRA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CONDICION_COMPRA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CONDICION_VENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CONDICION_VENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CONFIGURACION_VEHICULO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CONFIGURACION_VEHICULO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CONTRIB_ADIC_OBRA_SOCIAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.CONTRIB_ADIC_OBRA_SOCIAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CONTRIB_TAREA_DIF_SEG_SOCIAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.CONTRIB_TAREA_DIF_SEG_SOCIAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COPIAS_NULO:
+                            codigoRespuesta = CodigoRespuesta.COPIAS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CORREO_ELECTRONICO_NULO:
+                            codigoRespuesta = CodigoRespuesta.CORREO_ELECTRONICO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COSTO_POR_KM_PROPIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_PROPIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COSTO_POR_KM_TERCERO_NULO:
+                            codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_TERCERO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COSTO_PROPIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.COSTO_PROPIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COSTO_TERCERO_NULO:
+                            codigoRespuesta = CodigoRespuesta.COSTO_TERCERO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.COUTA_PRESTAMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.COUTA_PRESTAMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CREDITO_LIMITE_NULO:
+                            codigoRespuesta = CodigoRespuesta.CREDITO_LIMITE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CUENTA_BANCARIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CUENTA_BANCARIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CUENTA_HABILITADA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CUENTA_HABILITADA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CUIL_NULO:
+                            codigoRespuesta = CodigoRespuesta.CUIL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CUIT_NULO:
+                            codigoRespuesta = CodigoRespuesta.CUIT_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.CUOTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.CUOTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DATOS_NULO:
+                            codigoRespuesta = CodigoRespuesta.DATOS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DESCRIPCION_CARGA_NULO:
+                            codigoRespuesta = CodigoRespuesta.DESCRIPCION_CARGA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DESCRIPCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.DESCRIPCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DESCUENTO_FLETE_NULO:
+                            codigoRespuesta = CodigoRespuesta.DESCUENTO_FLETE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DESCUENTO_SUBTOTAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.DESCUENTO_SUBTOTAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DESDE_NULO:
+                            codigoRespuesta = CodigoRespuesta.DESDE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DESTINO_NULO:
+                            codigoRespuesta = CodigoRespuesta.DESTINO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DETALLE_POR_JURISDICCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.DETALLE_POR_JURISDICCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DIAS_LABORABLES_NULO:
+                            codigoRespuesta = CodigoRespuesta.DIAS_LABORABLES_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DOCUMENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.DOCUMENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DOMICILIO_ALT_NULO:
+                            codigoRespuesta = CodigoRespuesta.DOMICILIO_ALT_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DOMICILIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.DOMICILIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.DOMINIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.DOMINIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.EMPRESA_EMISION_NULO:
+                            codigoRespuesta = CodigoRespuesta.EMPRESA_EMISION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.EMPRESA_NULO:
+                            codigoRespuesta = CodigoRespuesta.EMPRESA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ENTREGAR_EN_DOMICILIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ENTREGAR_EN_DOMICILIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_ABM_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_ABM_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_ACOMP_REPARTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_ACOMP_REPARTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_ASIGNABLE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_ASIGNABLE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CAEA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CAEA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CHEQUE_RECHAZADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CHEQUE_RECHAZADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CHOFER_LARGA_DISTANCIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CHOFER_LARGA_DISTANCIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CHOFER_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CHOFER_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_COMBUSTIBLE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_COMBUSTIBLE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CONTADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CONTADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CONVENIO_COLECTIVO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CONVENIO_COLECTIVO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CRITICO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CRITICO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CUENTA_CORRIENTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CUENTA_CORRIENTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_CUENTA_ORDEN_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_CUENTA_ORDEN_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_DEDUCIBLE_IMP_GAN_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_DEDUCIBLE_IMP_GAN_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_DESARROLLADOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_DESARROLLADOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_ENTREGADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_ENTREGADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_IMPUTABLE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_IMPUTABLE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_INSUMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_INSUMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_JUBILADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_JUBILADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_MENSUALIZADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_MENSUALIZADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_RECEPTOR_FCE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_RECEPTOR_FCE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_REMOLQUE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_REMOLQUE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_REMOLQUE_PROPIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_REMOLQUE_PROPIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_REPARTO_PROPIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_REPARTO_PROPIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_SEGURO_PROPIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_SEGURO_PROPIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ES_SERIALIZABLE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ES_SERIALIZABLE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESCALA_TARIFA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESCALA_TARIFA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_ACTIVA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_ACTIVA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_ACTIVO_COMPRA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_COMPRA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_ACTIVO_INGRESO_CARGA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_INGRESO_CARGA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_ACTIVO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_ACTIVO_VENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_VENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_EN_REPARTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_EN_REPARTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_FACTURADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_FACTURADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_HABILITADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_HABILITADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTA_PENDIENTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_PENDIENTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ESTADO_CIVIL_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTADO_CIVIL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.EXCLUIR_LIQ_CHOFER_NULO:
+                            codigoRespuesta = CodigoRespuesta.EXCLUIR_LIQ_CHOFER_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FE_CAEA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FE_CAEA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FE_EN_LINEA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FE_EN_LINEA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FE_MODO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FE_MODO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FE_NULO:
+                            codigoRespuesta = CodigoRespuesta.FE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_ALTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_ALTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_BAJA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_BAJA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_CAJA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_CAJA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_CIERRE_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_CIERRE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_COBRO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_COBRO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_CONTABLE_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_CONTABLE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_DESDE_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_DESDE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_EMISION_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_EMISION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_FIN_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_FIN_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_HASTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_HASTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_INICIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_INICIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_MOD_CURSO_CP_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_CP_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_MOD_CURSO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_MOD_LC_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_LC_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_MOD_LINTI_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_LINTI_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_MOD_LS_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_MOD_LS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_NACIMIENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_NACIMIENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_PAGO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_PAGO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_REGISTRACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_REGISTRACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_REGRESO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_REGRESO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_SALIDA_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_SALIDA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_SOLICITUD_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_SOLICITUD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_TOPE_INFORMAR_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_TOPE_INFORMAR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_TRAMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_TRAMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_ULTIMA_MOD_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_ULTIMA_MOD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_VTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_VTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FECHA_VTO_PAGO_NULO:
+                            codigoRespuesta = CodigoRespuesta.FECHA_VTO_PAGO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FLETE_NULO:
+                            codigoRespuesta = CodigoRespuesta.FLETE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.FOLIO_LIBRO_SUELDOS_NULO:
+                            codigoRespuesta = CodigoRespuesta.FOLIO_LIBRO_SUELDOS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.HASTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.HASTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.HORA_DESDE_NULO:
+                            codigoRespuesta = CodigoRespuesta.HORA_DESDE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.HORA_HASTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.HORA_HASTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.HORA_SALIDA_NULO:
+                            codigoRespuesta = CodigoRespuesta.HORA_SALIDA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.HORAS_LABORABLES_NULO:
+                            codigoRespuesta = CodigoRespuesta.HORAS_LABORABLES_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_ANUAL_MENSUAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_ANUAL_MENSUAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_CONTRA_REEMBOLSO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_CONTRA_REEMBOLSO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_ENTREGA_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_ENTREGA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_EXENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_EXENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_FIJO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_FIJO_REF_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_REF_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_FIJO_SECO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_SECO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_FLETE_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_FLETE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_IMPUESTO_INTERNO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_IMPUESTO_INTERNO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_ITC_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_ITC_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_IVA_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_IVA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_NETO_GRAVADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_NETO_GRAVADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_NO_GRAVADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_NO_GRAVADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_OTROS_TRIBUTOS_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_OTROS_TRIBUTOS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_PERCEPCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_PERCEPCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_RETIRO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_RETIRO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_SALDO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_SALDO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_SEGURO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_SEGURO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_TOTAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_TOTAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPORTE_VENTA_ITEM_CONCEPTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPORTE_VENTA_ITEM_CONCEPTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPRIME_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPRIME_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.IMPRIMIR_CONTROL_DEUDA_NULO:
+                            codigoRespuesta = CodigoRespuesta.IMPRIMIR_CONTROL_DEUDA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.INICIO_ACTIVIDAD_NULO:
+                            codigoRespuesta = CodigoRespuesta.INICIO_ACTIVIDAD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ITC_NETO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ITC_NETO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ITC_POR_LITRO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ITC_POR_LITRO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.KILOS_AFORADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.KILOS_AFORADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.KILOS_EFECTIVO_NULO:
+                            codigoRespuesta = CodigoRespuesta.KILOS_EFECTIVO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.KM_NULO:
+                            codigoRespuesta = CodigoRespuesta.KM_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.LETRA_NULO:
+                            codigoRespuesta = CodigoRespuesta.LETRA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.LOCALIDAD_NACIMIENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.LOCALIDAD_NACIMIENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.LOCALIDAD_NULO:
+                            codigoRespuesta = CodigoRespuesta.LOCALIDAD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.LOTE_ENTREGADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.LOTE_ENTREGADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.M3_NULO:
+                            codigoRespuesta = CodigoRespuesta.M3_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MENSAJE_NULO:
+                            codigoRespuesta = CodigoRespuesta.MENSAJE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MARCA_PRODUCTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.MARCA_PRODUCTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MARCA_VEHICULO_NULO:
+                            codigoRespuesta = CodigoRespuesta.MARCA_VEHICULO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MES_INICIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.MES_INICIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MES_NULO:
+                            codigoRespuesta = CodigoRespuesta.MES_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MINIMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.MINIMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MODELO_NULO:
+                            codigoRespuesta = CodigoRespuesta.MODELO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MODULO_NULO:
+                            codigoRespuesta = CodigoRespuesta.MODULO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MONEDA_COTIZACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.MONEDA_COTIZACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MONEDA_NULO:
+                            codigoRespuesta = CodigoRespuesta.MONEDA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.MOSTRAR_NULO:
+                            codigoRespuesta = CodigoRespuesta.MOSTRAR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NIVEL_NULO:
+                            codigoRespuesta = CodigoRespuesta.NIVEL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOMBRE_COMPLETO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOMBRE_COMPLETO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOMBRE_FANTASIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOMBRE_FANTASIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOMBRE_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOMBRE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOTA_EMISION_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOTA_EMISION_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOTA_IMPRESION_COMPROBANTE_GRAL_1_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_1_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOTA_IMPRESION_COMPROBANTE_GRAL_2_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_2_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOTA_IMPRESION_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOTA_IMPRESION_ORDEN_PAGO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_ORDEN_PAGO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOTA_IMPRESION_REMITO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_REMITO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NOTA_INGRESAR_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.NOTA_INGRESAR_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERACION_PUNTO_VENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERACION_PUNTO_VENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_CAEA_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_CAEA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_CAMION_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_CAMION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_CBU_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_CBU_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_CHASIS_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_CHASIS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_CUENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_CUENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_DOCUMENTACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_DOCUMENTACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_DOCUMENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_DOCUMENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_IIBB_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_IIBB_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_INTERNO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_INTERNO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_LIQUIDACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_LIQUIDACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_MOTOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_MOTOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_POLIZA_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_POLIZA_SEGURO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_SEGURO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_REMITO_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_REMITO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.NUMERO_RUTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.NUMERO_RUTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.OBRA_SOCIAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.OBRA_SOCIAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.OBSERVACION_CHOFER_NULO:
+                            codigoRespuesta = CodigoRespuesta.OBSERVACION_CHOFER_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.OBSERVACION_VEHICULO_NULO:
+                            codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.OBSERVACION_VEHICULO_REMOLQUE_NULO:
+                            codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_REMOLQUE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.OBSERVACIONES_ANULADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.OBSERVACIONES_ANULADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.OBSERVACIONES_NULO:
+                            codigoRespuesta = CodigoRespuesta.OBSERVACIONES_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.OPCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.OPCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ORDEN_VENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ORDEN_VENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ORDEN_VENTA_TARIFA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ORDEN_VENTA_TARIFA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ORIGEN_NULO:
+                            codigoRespuesta = CodigoRespuesta.ORIGEN_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.P_COMISION_NULO:
+                            codigoRespuesta = CodigoRespuesta.P_COMISION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.P_SEGURO_NULO:
+                            codigoRespuesta = CodigoRespuesta.P_SEGURO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PAGO_EN_ORIGEN_NULO:
+                            codigoRespuesta = CodigoRespuesta.PAGO_EN_ORIGEN_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PAIS_NULO:
+                            codigoRespuesta = CodigoRespuesta.PAIS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PASSWORD_NULO:
+                            codigoRespuesta = CodigoRespuesta.PASSWORD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PERSONAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.PERSONAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PESTANIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.PESTANIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PLAN_CUENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.PLAN_CUENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.POR_DEFECTO_CLIENTE_EVENTUAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.POR_DEFECTO_CLIENTE_EVENTUAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.POR_DEFECTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.POR_DEFECTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.POR_ESCALA_NULO:
+                            codigoRespuesta = CodigoRespuesta.POR_ESCALA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.POR_PORCENTAJE_NULO:
+                            codigoRespuesta = CodigoRespuesta.POR_PORCENTAJE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PORCENTAJE_GANANCIA_NETA_NULO:
+                            codigoRespuesta = CodigoRespuesta.PORCENTAJE_GANANCIA_NETA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PORCENTAJE_NULO:
+                            codigoRespuesta = CodigoRespuesta.PORCENTAJE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PRECIO_UNITARIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PRECIO_UNITARIO_REF_NULO:
+                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_REF_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PRECIO_UNITARIO_SECO_NULO:
+                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_SECO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PRECIO_UNITARIO_VENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PRECIO_UNITARIO_VIAJE_NULO:
+                            codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VIAJE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PRECIOS_DESDE_NULO:
+                            codigoRespuesta = CodigoRespuesta.PRECIOS_DESDE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PROVEEDOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.PROVEEDOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PROVINCIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.PROVINCIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.PUNTO_VENTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.PUNTO_VENTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.QUINCENA_NULO:
+                            codigoRespuesta = CodigoRespuesta.QUINCENA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.RECIBE_ADELANTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.RECIBE_ADELANTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.RECIBE_PRESTAMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.RECIBE_PRESTAMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.REPARTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.REPARTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.RETIRO_DEPOSITO_NULO:
+                            codigoRespuesta = CodigoRespuesta.RETIRO_DEPOSITO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ROL_NULO:
+                            codigoRespuesta = CodigoRespuesta.ROL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.RUBRO_NULO:
+                            codigoRespuesta = CodigoRespuesta.RUBRO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.RUBRO_PRODUCTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.RUBRO_PRODUCTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.RUTA_ALTERNATIVA_NULO:
+                            codigoRespuesta = CodigoRespuesta.RUTA_ALTERNATIVA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SEGUIMIENTO_ESTADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_ESTADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SEGUIMIENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SEGUIMIENTO_SITUACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_SITUACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SEGURIDAD_SOCIAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.SEGURIDAD_SOCIAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SEGURO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SEGURO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SEXO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SEXO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SIMBOLO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SIMBOLO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SINDICATO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SINDICATO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SITIO_WEB_NULO:
+                            codigoRespuesta = CodigoRespuesta.SITIO_WEB_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SMVM_NULO:
+                            codigoRespuesta = CodigoRespuesta.SMVM_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SOLICITADO_POR_NULO:
+                            codigoRespuesta = CodigoRespuesta.SOLICITADO_POR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SOPORTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.SOPORTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.STOCK_MINIMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.STOCK_MINIMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SUBMODULO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SUBMODULO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SUBOPCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.SUBOPCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SUCURSAL_BANCO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SUCURSAL_BANCO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SUCURSAL_DESTINO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SUCURSAL_DESTINO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SUCURSAL_INGRESO_NULO:
+                            codigoRespuesta = CodigoRespuesta.SUCURSAL_INGRESO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.SUCURSAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.SUCURSAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TABLA_NULO:
+                            codigoRespuesta = CodigoRespuesta.TABLA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TALLE_CALZADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TALLE_CALZADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TALLE_CAMISA_NULO:
+                            codigoRespuesta = CodigoRespuesta.TALLE_CAMISA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TALLE_PANTALON_NULO:
+                            codigoRespuesta = CodigoRespuesta.TALLE_PANTALON_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TALONARIO_RECIBO_LOTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.TALONARIO_RECIBO_LOTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TAMANIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TAMANIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TARA_NULO:
+                            codigoRespuesta = CodigoRespuesta.TARA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_ALT_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_ALT_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_CONTACTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_CONTACTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_FIJO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_FIJO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_MOVIL_EMPRESA_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_EMPRESA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_MOVIL_FECHA_DEVOLUCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_DEVOLUCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_MOVIL_FECHA_ENTREGA_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_ENTREGA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_MOVIL_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_MOVIL_OBSERVACION_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_OBSERVACION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TELEFONO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TELEFONO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_CHEQUERA_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_CHEQUERA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_CONTACTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_CONTACTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_CUENTA_BANCARIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_CUENTA_BANCARIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_DOCUMENTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_DOCUMENTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_FAMILIAR_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_FAMILIAR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_PERCEPCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_PERCEPCION_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_PROVEEDOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_PROVEEDOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TIPO_VEHICULO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TIPO_VEHICULO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TITULAR_NULO:
+                            codigoRespuesta = CodigoRespuesta.TITULAR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TOPE_BASICO_ADELANTOS_NULO:
+                            codigoRespuesta = CodigoRespuesta.TOPE_BASICO_ADELANTOS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TOTAL_CUOTAS_NULO:
+                            codigoRespuesta = CodigoRespuesta.TOTAL_CUOTAS_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.TRAMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.TRAMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ULTIMO_NUMERO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ULTIMO_NUMERO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.UNIDAD_MEDIDA_NULO:
+                            codigoRespuesta = CodigoRespuesta.UNIDAD_MEDIDA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.URL_PRUEBA_NULO:
+                            codigoRespuesta = CodigoRespuesta.URL_PRUEBA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.URL_REAL_NULO:
+                            codigoRespuesta = CodigoRespuesta.URL_REAL_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.USERNAME_NULO:
+                            codigoRespuesta = CodigoRespuesta.USERNAME_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.USUARIO_ALTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.USUARIO_ALTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.USUARIO_BAJA_NULO:
+                            codigoRespuesta = CodigoRespuesta.USUARIO_BAJA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.USUARIO_MOD_NULO:
+                            codigoRespuesta = CodigoRespuesta.USUARIO_MOD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.USUARIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.USUARIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VALOR_DECLARADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VALOR_DECLARADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VALOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.VALOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VEHICULO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VEHICULO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VENDEDOR_NULO:
+                            codigoRespuesta = CodigoRespuesta.VENDEDOR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VENTA_COMPROBANTE_APLICADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VENTA_COMPROBANTE_APLICADO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VENTA_COMPROBANTE_NULO:
+                            codigoRespuesta = CodigoRespuesta.VENTA_COMPROBANTE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VENTA_TIPO_ITEM_NULO:
+                            codigoRespuesta = CodigoRespuesta.VENTA_TIPO_ITEM_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_PROPIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_PROPIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_REMITO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_REMITO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_TARIFA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_TARIFA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_TIPO_CARGA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_TIPO_CARGA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_TIPO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_TIPO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_TRAMO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_TRAMO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VIAJE_UNIDAD_NEGOCIO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VIAJE_UNIDAD_NEGOCIO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_CURSO_CARGA_PELIGROSA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_CURSO_CARGA_PELIGROSA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_CURSO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_CURSO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_HAB_BROMATOLOGICA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_HAB_BROMATOLOGICA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_LIB_SANIDAD_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_LIB_SANIDAD_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_LIC_CONDUCIR_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_LIC_CONDUCIR_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_LINTI_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_LINTI_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_POLIZA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_POLIZA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_POLIZA_SEGURO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_POLIZA_SEGURO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_PSICOFISICO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_PSICOFISICO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_RTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_RTO_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_RUTA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_RUTA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_SANIDAD_ALIMENTICIA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_SANIDAD_ALIMENTICIA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.VTO_SENASA_NULO:
+                            codigoRespuesta = CodigoRespuesta.VTO_SENASA_NULO;
+                            plusMensaje = " ";
+                            break;
+                        case ElementoNuloError.ZONA_NULO:
+                            codigoRespuesta = CodigoRespuesta.ZONA_NULO;
+                            plusMensaje = " ";
+                            break;
                     }
                 } else {
                     codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;

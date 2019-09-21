@@ -68,7 +68,7 @@ public class RetiroDepositoController {
     @PutMapping(value = URL + "/cerrarReparto/{idRetiroDeposito}")
     @ResponseBody
     public ResponseEntity<?> cerrarReparto(@PathVariable int idRetiroDeposito) {
-        boolean r = elementoService.cerrarReparto(idRetiroDeposito);
+        boolean r = elementoService.cerrarRetiro(idRetiroDeposito);
         if (r == true) {
             template.convertAndSend(TOPIC + "/lista", 
                     elementoService.listarPorEstaCerrada(false));

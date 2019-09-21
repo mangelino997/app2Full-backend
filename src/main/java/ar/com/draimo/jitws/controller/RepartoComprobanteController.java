@@ -82,6 +82,28 @@ public class RepartoComprobanteController {
     }
 
     //Agrega un listado de registros
+    @PutMapping(value = URL + "/conformarComprobantes")
+    public ResponseEntity<?> conformarComprobantes(@RequestBody List<RepartoComprobante> elementos) {
+        try {
+            List<RepartoComprobante> a = elementoService.agregarComprobantes(elementos);
+            //Envia la nueva lista a los usuarios subscriptos
+            template.convertAndSend(TOPIC + "/listarComprobantes",
+                    elementoService.listarComprobantes(elementos.get(0).getReparto().getId()));
+            //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
+            return new ResponseEntity(elementos, HttpStatus.ACCEPTED);
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+
+    //Agrega un listado de registros
     @PostMapping(value = URL + "/agregarComprobantes")
     public ResponseEntity<?> agregarComprobantes(@RequestBody List<RepartoComprobante> elementos) {
         try {

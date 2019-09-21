@@ -29,8 +29,11 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
+import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
+import ar.com.draimo.jitws.model.SeguimientoEstado;
+import ar.com.draimo.jitws.model.SeguimientoSituacion;
 
 /**
  * Servicio RepartoComprobante
@@ -71,6 +74,10 @@ public class RepartoComprobanteService {
     //define la referencia al dao de seguimientoEstado
     @Autowired
     ISeguimientoEstadoDAO seguimientoEstadoDAO;
+
+    //define la referencia al dao de seguimientoSituacion
+    @Autowired
+    ISeguimientoSituacionDAO seguimientoSituacionDAO;
 
     //define la referencia al dao de OrdenRecoleccionSeguimiento
     @Autowired
@@ -131,6 +138,40 @@ public class RepartoComprobanteService {
         return idrp;
     }
 
+    //Agrega un listado
+    @Transactional(rollbackFor = Exception.class)
+    public void conformarComprobantes(List<RepartoComprobante> ctes) {
+        SeguimientoEstado seguimientoEstado = seguimientoEstadoDAO.findById(6).get();
+        SeguimientoSituacion seguimientoSituacion = seguimientoSituacionDAO.findById(1).get();
+        SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
+        SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
+        SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
+        List<RepartoComprobante> repartoCtes = new ArrayList<>();
+        //Recorre la lista de reparto comprobante
+        for (RepartoComprobante cte : ctes) {
+            //Si no esta vacio, guarda el seguimiento para aquel comprobante que contenga el repartoComprobante
+                if (ordenSeguimiento != null) {
+                    ordenSeguimiento.setFecha(LocalDateTime.now());
+                    ordenSeguimiento.setSeguimientoEstado(seguimientoEstado);
+                    ordenSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
+                    ordenSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                    recoleccionSeguimientoDAO.saveAndFlush(ordenSeguimiento);
+                } else if (viajeSeguimiento != null) {
+                    viajeSeguimiento.setFecha(LocalDateTime.now());
+                    ordenSeguimiento.setSeguimientoEstado(seguimientoEstado);
+                    ordenSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
+                    viajeSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                    remitoSeguimientoDAO.saveAndFlush(viajeSeguimiento);
+                } else {
+                    ventaSeguimiento.setFecha(LocalDateTime.now());
+                    ordenSeguimiento.setSeguimientoEstado(seguimientoEstado);
+                    ordenSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
+                    ventaSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                    comprobanteSeguimientoDAO.saveAndFlush(ventaSeguimiento);
+                }
+        }
+    }
+    
     //Agrega un listado
     @Transactional(rollbackFor = Exception.class)
     public List<RepartoComprobante> agregarComprobantes(List<RepartoComprobante> ctes) {

@@ -20,4 +20,7 @@ public interface IRetiroDepositoComprobanteDAO extends JpaRepository<RetiroDepos
     //Obtiene un listado de RepartoTerceroComprobante por idRepartoTercero
     public List<RetiroDepositoComprobante> findByRetiroDeposito(RetiroDeposito retiroDeposito);
     
+    //Elimina un listado por retiroDeposito
+    public void deleteByRetiroDeposito(RetiroDeposito retiroDeposito);
+    
 }

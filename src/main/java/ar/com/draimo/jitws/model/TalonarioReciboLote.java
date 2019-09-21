@@ -21,7 +21,7 @@ public class TalonarioReciboLote extends ObjetoGenerico {
     
     //Referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idEmpresa", nullable=false)
+    @JoinColumn(name = "idEmpresa", nullable =  false)
     private Empresa empresa;
     
     //Define el puntoVenta
@@ -54,7 +54,7 @@ public class TalonarioReciboLote extends ObjetoGenerico {
     
     //Referencia a la clase Usuario - Alta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioAlta", nullable=false)
+    @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario UsuarioAlta;
     
     //Define el fechaAlta

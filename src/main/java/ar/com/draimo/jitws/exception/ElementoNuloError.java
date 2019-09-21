@@ -82,6 +82,7 @@ public class ElementoNuloError {
     public static final String SUCURSAL_BANCO_NULO = "idSucursalBanco";
     public static final String SUCURSAL_DESTINO_NULO = "idSucursalDestino";
     public static final String SUCURSAL_INGRESO_NULO = "idSucursalIngreso";
+    public static final String TALONARIO_RECIBO_LOTE_NULO = "idTalonarioReciboLote";
     public static final String TIPO_CHEQUERA_NULO = "idTipoChequera";
     public static final String TIPO_COMPROBANTE_NULO = "idTipoComprobante";
     public static final String TIPO_CONTACTO_NULO = "idTipoContacto";
