@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -60,8 +61,14 @@ public class AfipComprobanteController {
     //Obtiene por codigoAfip
     @GetMapping(value = URL + "/obtenerPorCodigoAfip/{codigoAfip}")
     @ResponseBody
-    public AfipComprobante obtenerPorCodigoAfip(@PathVariable String codigoAfip) {
-        return elementoService.obtenerPorCodigoAfip(codigoAfip);
+    public ResponseEntity<?> obtenerPorCodigoAfip(@PathVariable String codigoAfip) {
+//        return elementoService.obtenerPorCodigoAfip(codigoAfip);
+        AfipComprobante ac = elementoService.obtenerPorCodigoAfip(codigoAfip);
+        if (ac == null) {
+            return new ResponseEntity(ac, HttpStatus.NO_CONTENT);
+        }else{
+            return new ResponseEntity(ac, HttpStatus.OK);
+        }
     }
     
     //Obtiene el codigo afip

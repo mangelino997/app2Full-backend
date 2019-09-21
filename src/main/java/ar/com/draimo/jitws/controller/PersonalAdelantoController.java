@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -26,61 +27,61 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase PersonalAdelanto Controller
+ *
  * @author blas
  */
-
 @RestController
 public class PersonalAdelantoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/personaladelanto";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/personaladelanto";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     PersonalAdelantoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene la lista de cuotas
     @PostMapping(value = URL + "/listarCuotas")
     @ResponseBody
     public Object listarCuotas(@RequestBody PersonalAdelanto personalAdelanto) throws IOException {
         return elementoService.listarCoutas(personalAdelanto);
     }
-    
+
     //Obtiene una lista por lote o fecha emision
     @GetMapping(value = URL + "/listarLotes/{fechaDesde}/{fechaHasta}/{idEmpresa}")
     @ResponseBody
     public List<PersonalAdelantoLoteDTO> listarLotes(@PathVariable Date fechaDesde, @PathVariable Date fechaHasta,
-            @PathVariable int idEmpresa ) throws IOException {
+            @PathVariable int idEmpresa) throws IOException {
         return elementoService.listarLotes(fechaDesde, fechaHasta, idEmpresa);
     }
-    
+
     //Obtiene una lista por filtros
     @PostMapping(value = URL + "/listarPorFiltros")
     @ResponseBody
     public Object listarPorFiltros(@RequestBody PersonalAdelantoLoteDTO personalAdelanto) throws IOException, Exception {
         return elementoService.listarPorFiltros(personalAdelanto);
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL + "/anularLote")
     public ResponseEntity<?> anularLote(@RequestBody PersonalAdelanto elemento) {
@@ -97,29 +98,10 @@ public class PersonalAdelantoController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
-            //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
-        }
-    }
-    
-    //Agrega un lote
-    @PostMapping(value = URL + "/agregarLote")
-    @ResponseBody
-    public Object agregarLote(@RequestBody PersonalAdelantoLoteDTO personalAdelanto) throws IOException {
-        try {
-            //Retorna mensaje de agregado con exito
-            return elementoService.agregarLote(personalAdelanto);
-        } catch (DataIntegrityViolationException dive) {
-            //Retorna mensaje de dato duplicado
-            return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -127,7 +109,33 @@ public class PersonalAdelantoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
+    //Agrega un lote
+    @PostMapping(value = URL + "/agregarLote")
+    @ResponseBody
+    public Object agregarLote(@RequestBody PersonalAdelantoLoteDTO personalAdelanto) throws IOException {
+        try {
+            //Retorna mensaje de agregado con exito
+            Object o = elementoService.agregarLote(personalAdelanto);
+            //controla la cantidad de adelantos fallidos
+            boolean b = elementoService.controlAdelantosFallidos(o, personalAdelanto);
+            if (b) {
+                return new ResponseEntity(o, HttpStatus.CONFLICT);
+            } else {
+                return new ResponseEntity(o, HttpStatus.CREATED);
+            }
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+
     //Agrega un registro con prestamo
     @PostMapping(value = URL + "/agregarPrestamo")
     public ResponseEntity<?> agregarPrestamo(@RequestBody List<PersonalAdelanto> elementos) {
@@ -136,11 +144,11 @@ public class PersonalAdelantoController {
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.get(a.size()-1).getId());
+            return MensajeRespuesta.agregado(a.get(a.size() - 1).getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -148,7 +156,7 @@ public class PersonalAdelantoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody PersonalAdelanto elemento) {
@@ -161,7 +169,7 @@ public class PersonalAdelantoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -169,7 +177,7 @@ public class PersonalAdelantoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody PersonalAdelanto elemento) {
@@ -186,18 +194,18 @@ public class PersonalAdelantoController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -205,13 +213,13 @@ public class PersonalAdelantoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

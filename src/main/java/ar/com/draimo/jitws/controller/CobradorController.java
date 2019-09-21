@@ -75,6 +75,7 @@ public class CobradorController {
     @ResponseBody
     public Cobrador obtenerPorDefecto() {
         return elementoService.obtenerPorDefecto();
+        
     }
     
     //Establece al cobrador por defecto false

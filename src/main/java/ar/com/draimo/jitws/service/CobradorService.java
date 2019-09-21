@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.model.Cobrador;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,13 +65,13 @@ public class CobradorService {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
-        if (elemento.isPorDefectoClienteEventual()) {
-            if (cobrador != null) {
+        if (cobrador != null) {
+            if (elemento.isPorDefectoClienteEventual()) {
                 cobrador.setPorDefectoClienteEventual(false);
                 elementoDAO.save(cobrador);
-            } else {
-                elemento.setPorDefectoClienteEventual(true);
             }
+        } else {
+            elemento.setPorDefectoClienteEventual(true);
         }
         return elementoDAO.save(elemento);
     }
@@ -79,10 +80,14 @@ public class CobradorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Cobrador elemento) {
         elemento = formatearStrings(elemento);
-        if (elemento.isPorDefectoClienteEventual()) {
-            Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
-            cobrador.setPorDefectoClienteEventual(false);
-            elementoDAO.save(cobrador);
+        Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
+        if (cobrador == null || cobrador.getId() == elemento.getId()) {
+            elemento.setPorDefectoClienteEventual(true);
+        } else {
+            if (elemento.isPorDefectoClienteEventual()) {
+                cobrador.setPorDefectoClienteEventual(false);
+                elementoDAO.save(cobrador);
+            }
         }
         elementoDAO.save(elemento);
     }
@@ -90,7 +95,12 @@ public class CobradorService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
-        elementoDAO.deleteById(elemento);
+        Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
+        if (cobrador.getId() == elemento) {
+            throw new DataIntegrityViolationException("No se puede eliminar el cobrador cliente eventual.");
+        } else {
+            elementoDAO.deleteById(elemento);
+        }
     }
 
     //Formatea los strings

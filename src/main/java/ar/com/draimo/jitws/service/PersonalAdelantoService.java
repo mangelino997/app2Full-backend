@@ -259,13 +259,19 @@ public class PersonalAdelantoService {
         String string = mapper.writer(filters).writeValueAsString(adelantosFallados);
         return mapper.readValue(string, Object.class);
     }
-
+    
+    
+    public boolean controlAdelantosFallidos(Object elemento, PersonalAdelantoLoteDTO adelanto){
+        List<PersonalAdelanto> adelantos = (List<PersonalAdelanto>) ((Object)elemento);
+        List<Personal> personales = personalDAO.listarPersonalesParaAdelanto(adelanto.getIdEmpresa(),
+                adelanto.getIdSucursal(), adelanto.getIdCategoria());
+        return (adelantos.size() == personales.size());
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public List<PersonalAdelanto> agregarPrestamo(List<PersonalAdelanto> elementos) {
         for (PersonalAdelanto elemento : elementos) {
-//            elemento.setFechaVto(new Date(new java.util.Date().getTime()));
-//            elemento.setCuota((short) 1);
             elemento.setEstaAnulado(false);
             elemento.setNumeroLote(0);
             elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
