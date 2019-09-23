@@ -5,11 +5,14 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.dao.IUsuarioEmpresaDAO;
+import ar.com.draimo.jitws.exception.LongitudError;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Usuario;
 import ar.com.draimo.jitws.model.UsuarioEmpresa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,6 +91,9 @@ public class UsuarioService {
     public Usuario agregar(Usuario elemento) {
         elemento = formatearStrings(elemento);
         elemento.setEsDesarrollador(false);
+        if(elemento.getPassword().length()>15){
+          throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " PASSWORD");
+        }
         elemento.setPassword(bCryptPasswordEncoder.encode(elemento.getPassword()));
         //Agrega el usuario
         Usuario usuario = elementoDAO.saveAndFlush(elemento);

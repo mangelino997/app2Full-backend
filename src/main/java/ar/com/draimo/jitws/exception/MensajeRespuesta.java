@@ -37,9 +37,9 @@ public class MensajeRespuesta {
     public static final String RECIBIDO = "Registro recibido con exito";
     public static final String NORMALIZADO = "Registro normalizado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
-    public static final String ROL_ASIGNADO = "El rol esta asignado a un usuario";
+    public static final String ROL_ASIGNADO = "El rol estÁ asignado a un usuario";
     public static final String ELEMENTO_ASIGNADO = "Registro referenciado";
-    public static final String ELEMENTO_NO_NULL = "No puede estar vacío.";
+    public static final String ELEMENTO_NO_NULL = "No puede estar vacio";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {
@@ -317,8 +317,8 @@ public class MensajeRespuesta {
                 }
                 break;
             case 3:
+                if (parte3[1].equals("truncation:")) {
                 mensajeRespuesta = MensajeRespuesta.LONGITUD;
-                if (parte3[1] == "Truncation:") {
                     //Determina que atributo tiene superó su longitud
                     switch (partes[1]) {
                         case LongitudError.FECHA_ALTA_LONGITUD:
@@ -971,7 +971,7 @@ public class MensajeRespuesta {
                             break;
                         case LongitudError.USERNAME_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.USERNAME_LONGITUD;
-                            plusMensaje = " USUARIO";
+                            plusMensaje = " NOMBRE DE USUARIO";
                             break;
                         case LongitudError.URL_PRUEBA_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.URL_PRUEBA_LONGITUD;
@@ -993,1520 +993,1524 @@ public class MensajeRespuesta {
                             codigoRespuesta = CodigoRespuesta.LONGITUD;
                             plusMensaje = "";
                     }
-                } else if (partes[0] == "Column") {
+                } else if (partes[0].equals("Column ")) {
+                    mensajeRespuesta = ELEMENTO_NO_NULL;
                     switch (partes[1]) {
                         case ElementoNuloError.ABREVIATURA_NULO:
                             codigoRespuesta = CodigoRespuesta.ABREVIATURA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ABREVIATURA";
                             break;
                         case ElementoNuloError.ACTIVA_DESDE_NULO:
                             codigoRespuesta = CodigoRespuesta.ACTIVA_DESDE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ACTIVA DESDE";
                             break;
                         case ElementoNuloError.ADICIONAL_BASICO_VACACIONES_NULO:
                             codigoRespuesta = CodigoRespuesta.ADICIONAL_BASICO_VACACIONES_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ADICIONAL BASICO VACACIONES";
                             break;
                         case ElementoNuloError.AFIP_ALICUOTA_GANANCIA_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_ALICUOTA_GANANCIA_NULO;
-                            ;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP ALICUOTA GANANCIA";
                             break;
                         case ElementoNuloError.AFIP_ALICUOTA_IVA_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_ALICUOTA_IVA_NULO;
-                            ;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP ALICUOTA IVA";
                             break;
                         case ElementoNuloError.AFIP_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP COMPROBANTE";
                             break;
                         case ElementoNuloError.AFIP_CONCEPTO_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_CONCEPTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP CONCEPTO";
                             break;
                         case ElementoNuloError.AFIP_CONDICION_IVA_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_IVA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP CONDICION IVA";
                             break;
                         case ElementoNuloError.AFIP_CONDICION_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_CONDICION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP CONDICION";
                             break;
                         case ElementoNuloError.AFIP_DEDUCCION_GENERAL_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_DEDUCCION_GENERAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP DEDUCCION GENERAL";
                             break;
                         case ElementoNuloError.AFIP_DEDUCCION_PERSONAL_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_DEDUCCION_PERSONAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP DEDUCCION PERSONAL";
                             break;
                         case ElementoNuloError.AFIP_LOCALIDAD_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_LOCALIDAD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP LOCALIDAD";
                             break;
                         case ElementoNuloError.AFIP_MOD_CONTRATACION_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_MOD_CONTRATACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP MOD. CONTRATACION";
                             break;
                         case ElementoNuloError.AFIP_SINIESTRADO_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_SINIESTRADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP SINIESTRADO";
                             break;
                         case ElementoNuloError.AFIP_SITUACION_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_SITUACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP SITUACION";
                             break;
                         case ElementoNuloError.AFIP_TIPO_BENEFICIO_NULO:
                             codigoRespuesta = CodigoRespuesta.AFIP_TIPO_BENEFICIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFIP TIPO BENEFICIO";
                             break;
                         case ElementoNuloError.AFORO_NULO:
                             codigoRespuesta = CodigoRespuesta.AFORO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AFORO";
                             break;
                         case ElementoNuloError.ALIAS_CBU_NULO:
                             codigoRespuesta = CodigoRespuesta.ALIAS_CBU_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ALIAS CBU";
                             break;
                         case ElementoNuloError.ALIAS_NULO:
                             codigoRespuesta = CodigoRespuesta.ALIAS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ALIAS";
                             break;
                         case ElementoNuloError.ALICUOTA_IVA_NULO:
                             codigoRespuesta = CodigoRespuesta.ALICUOTA_IVA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ALICUOTA IVA";
                             break;
                         case ElementoNuloError.ALICUOTA_NULO:
                             codigoRespuesta = CodigoRespuesta.ALICUOTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ALICUOTA";
                             break;
                         case ElementoNuloError.ALTURA_NULO:
                             codigoRespuesta = CodigoRespuesta.ALTURA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ALTURA";
                             break;
                         case ElementoNuloError.ANCHO_NULO:
                             codigoRespuesta = CodigoRespuesta.ANCHO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ANCHO";
                             break;
                         case ElementoNuloError.ANIO_FABRICACION_NULO:
                             codigoRespuesta = CodigoRespuesta.ANIO_FABRICACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AÑO DE FABRICACIÓN";
                             break;
                         case ElementoNuloError.ANIO_INICIO_NULO:
                             codigoRespuesta = CodigoRespuesta.ANIO_INICIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AÑO DE INICIO";
                             break;
                         case ElementoNuloError.ANIO_NULO:
                             codigoRespuesta = CodigoRespuesta.ANIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AÑO";
                             break;
                         case ElementoNuloError.APELLIDO_NULO:
                             codigoRespuesta = CodigoRespuesta.APELLIDO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " APELLIDO";
                             break;
                         case ElementoNuloError.APORTE_ADIC_OBRA_SOCIAL_NULO:
                             codigoRespuesta = CodigoRespuesta.APORTE_ADIC_OBRA_SOCIAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " APORTE ADICIONAL DE OBRA SOCIAL";
                             break;
                         case ElementoNuloError.APORTE_ADIC_SEG_SOCIAL_NULO:
                             codigoRespuesta = CodigoRespuesta.APORTE_ADIC_SEG_SOCIAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " APORTE ADICIONAL DE SEGURIDAD SOCIAL";
                             break;
                         case ElementoNuloError.APORTE_DIF_SEG_SOCIAL_NULO:
                             codigoRespuesta = CodigoRespuesta.APORTE_DIF_SEG_SOCIAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " APORTE DIF. DE SEGURIDAD SOCIAL";
                             break;
                         case ElementoNuloError.AREA_NULO:
                             codigoRespuesta = CodigoRespuesta.AREA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " AREA";
                             break;
                         case ElementoNuloError.BANCO_NULO:
                             codigoRespuesta = CodigoRespuesta.BANCO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " BANCO";
                             break;
                         case ElementoNuloError.BASICO_NULO:
                             codigoRespuesta = CodigoRespuesta.BASICO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " BASICO";
                             break;
                         case ElementoNuloError.BULTOS_NULO:
                             codigoRespuesta = CodigoRespuesta.BULTOS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " BULTOS";
                             break;
                         case ElementoNuloError.CAE_ESTADO_NULO:
                             codigoRespuesta = CodigoRespuesta.CAE_ESTADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CAE ESTADO";
                             break;
                         case ElementoNuloError.CAE_NULO:
                             codigoRespuesta = CodigoRespuesta.CAE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CAE";
                             break;
                         case ElementoNuloError.CAE_VENCIMIENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.CAE_VENCIMIENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CAE VENCIMIENTO";
                             break;
                         case ElementoNuloError.CAI_NULO:
                             codigoRespuesta = CodigoRespuesta.CAI_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CAI";
                             break;
                         case ElementoNuloError.CAI_VENCIMIENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.CAI_VENCIMIENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CAI VENCIMIENTO";
                             break;
                         case ElementoNuloError.CANTIDAD_EJES_NULO:
                             codigoRespuesta = CodigoRespuesta.CANTIDAD_EJES_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CANTIDAD DE EJES";
                             break;
                         case ElementoNuloError.CANTIDAD_MESES_NULO:
                             codigoRespuesta = CodigoRespuesta.CANTIDAD_MESES_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CANTIDAD MESES";
                             break;
                         case ElementoNuloError.CANTIDAD_NULO:
                             codigoRespuesta = CodigoRespuesta.CANTIDAD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CANTIDAD";
                             break;
                         case ElementoNuloError.CAPACIDAD_CARGA_NULO:
                             codigoRespuesta = CodigoRespuesta.CAPACIDAD_CARGA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CAPACIDAD CARGA";
                             break;
                         case ElementoNuloError.CATEGORIA_NULO:
                             codigoRespuesta = CodigoRespuesta.CATEGORIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CATEGORIA";
                             break;
                         case ElementoNuloError.CBU_NULO:
                             codigoRespuesta = CodigoRespuesta.CBU_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CBU";
                             break;
                         case ElementoNuloError.CHEQUE_CARTERA_NULO:
                             codigoRespuesta = CodigoRespuesta.CHEQUE_CARTERA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CHEQUE CARTERA";
                             break;
                         case ElementoNuloError.CLIENTE_DADOR_NULO:
                             codigoRespuesta = CodigoRespuesta.CLIENTE_DADOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CLIENTE DADOR";
                             break;
                         case ElementoNuloError.CLIENTE_DESTINATARIO_NULO:
                             codigoRespuesta = CodigoRespuesta.CLIENTE_DESTINATARIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CLIENTE DESTINATARIO";
                             break;
                         case ElementoNuloError.CLIENTE_NULO:
                             codigoRespuesta = CodigoRespuesta.CLIENTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CLIENTE";
                             break;
                         case ElementoNuloError.CLIENTE_REMITENTE_NULO:
                             codigoRespuesta = CodigoRespuesta.CLIENTE_REMITENTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CLIENTE REMITENTE";
                             break;
                         case ElementoNuloError.COBRADOR_NULO:
                             codigoRespuesta = CodigoRespuesta.COBRADOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COBRADOR";
                             break;
                         case ElementoNuloError.CODIGO_AFIP_NULO:
                             codigoRespuesta = CodigoRespuesta.CODIGO_AFIP_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CÓDIGO AFIP";
                             break;
                         case ElementoNuloError.CODIGO_AREA_ALT_NULO:
                             codigoRespuesta = CodigoRespuesta.CODIGO_AREA_ALT_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CÓDIGO AREA ALT.";
                             break;
                         case ElementoNuloError.CODIGO_AREA_NULO:
                             codigoRespuesta = CodigoRespuesta.CODIGO_AREA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CÓDIGO AREA";
                             break;
                         case ElementoNuloError.CODIGO_NULO:
                             codigoRespuesta = CodigoRespuesta.CODIGO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CÓDIGO";
                             break;
                         case ElementoNuloError.CODIGO_POSTAL_NULO:
                             codigoRespuesta = CodigoRespuesta.CODIGO_POSTAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CÓDIGO POSTAL";
                             break;
                         case ElementoNuloError.COMISION_CR_NULO:
                             codigoRespuesta = CodigoRespuesta.COMISION_CR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COMISIÓN C.R.";
                             break;
                         case ElementoNuloError.COMPANIA_SEGURO_NULO:
                             codigoRespuesta = CodigoRespuesta.COMPANIA_SEGURO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COMPIAÑÍA SEGURO";
                             break;
                         case ElementoNuloError.COMPANIA_SEGURO_POLIZA_NULO:
                             codigoRespuesta = CodigoRespuesta.COMPANIA_SEGURO_POLIZA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COMPAÑÍA SEGURO POLIZA";
                             break;
                         case ElementoNuloError.COMPRA_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.COMPRA_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COMPRA COMPROBANTE";
                             break;
                         case ElementoNuloError.COMPRA_COMPROBANTE_PERCEPCION_NULO:
                             codigoRespuesta = CodigoRespuesta.COMPRA_COMPROBANTE_PERCEPCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COMPRA COMPROBANTE PERCEPCIÓN";
                             break;
                         case ElementoNuloError.COMPROBANTE_APLICADO_NULO:
                             codigoRespuesta = CodigoRespuesta.COMPROBANTE_APLICADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COMPROBANTE APLICADO";
                             break;
                         case ElementoNuloError.CON_COVERTURA_SCVO_NULO:
                             codigoRespuesta = CodigoRespuesta.CON_COVERTURA_SCVO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CON COVERTURA S.C.V.O.";
                             break;
                         case ElementoNuloError.CONDICION_COMPRA_NULO:
                             codigoRespuesta = CodigoRespuesta.CONDICION_COMPRA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CONDICIÓN COMPRA";
                             break;
                         case ElementoNuloError.CONDICION_VENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.CONDICION_VENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CONDICIÓN VENTA";
                             break;
                         case ElementoNuloError.CONFIGURACION_VEHICULO_NULO:
                             codigoRespuesta = CodigoRespuesta.CONFIGURACION_VEHICULO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CONFIGURACIÓN VEHÍCULO";
                             break;
                         case ElementoNuloError.CONTRIB_ADIC_OBRA_SOCIAL_NULO:
                             codigoRespuesta = CodigoRespuesta.CONTRIB_ADIC_OBRA_SOCIAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CONTRIB. ADIC. OBRA SOCIAL";
                             break;
                         case ElementoNuloError.CONTRIB_TAREA_DIF_SEG_SOCIAL_NULO:
                             codigoRespuesta = CodigoRespuesta.CONTRIB_TAREA_DIF_SEG_SOCIAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CONTRIB. TAREA DIF. SEGURIDAD SOCIAL";
                             break;
                         case ElementoNuloError.COPIAS_NULO:
                             codigoRespuesta = CodigoRespuesta.COPIAS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COPIAS";
                             break;
                         case ElementoNuloError.CORREO_ELECTRONICO_NULO:
                             codigoRespuesta = CodigoRespuesta.CORREO_ELECTRONICO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CORREO ELECTRÓNICO";
                             break;
                         case ElementoNuloError.COSTO_POR_KM_PROPIO_NULO:
                             codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_PROPIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COSTO POR KM. PROPIO";
                             break;
                         case ElementoNuloError.COSTO_POR_KM_TERCERO_NULO:
                             codigoRespuesta = CodigoRespuesta.COSTO_POR_KM_TERCERO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COSTO POR KM. TERCERO";
                             break;
                         case ElementoNuloError.COSTO_PROPIO_NULO:
                             codigoRespuesta = CodigoRespuesta.COSTO_PROPIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COSTO PROPIO";
                             break;
                         case ElementoNuloError.COSTO_TERCERO_NULO:
                             codigoRespuesta = CodigoRespuesta.COSTO_TERCERO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " COSTO TERCERO";
                             break;
                         case ElementoNuloError.COUTA_PRESTAMO_NULO:
                             codigoRespuesta = CodigoRespuesta.COUTA_PRESTAMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CUOTA PRESTAMO";
                             break;
                         case ElementoNuloError.CREDITO_LIMITE_NULO:
                             codigoRespuesta = CodigoRespuesta.CREDITO_LIMITE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CRÉDITO LÍMITE";
                             break;
                         case ElementoNuloError.CUENTA_BANCARIA_NULO:
                             codigoRespuesta = CodigoRespuesta.CUENTA_BANCARIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CUENTA BANCARIA";
                             break;
                         case ElementoNuloError.CUENTA_HABILITADA_NULO:
                             codigoRespuesta = CodigoRespuesta.CUENTA_HABILITADA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CUENTA HABILITADA";
                             break;
                         case ElementoNuloError.CUIL_NULO:
                             codigoRespuesta = CodigoRespuesta.CUIL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CUIL";
                             break;
                         case ElementoNuloError.CUIT_NULO:
                             codigoRespuesta = CodigoRespuesta.CUIT_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CUIT";
                             break;
                         case ElementoNuloError.CUOTA_NULO:
                             codigoRespuesta = CodigoRespuesta.CUOTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " CUOTA";
                             break;
                         case ElementoNuloError.DATOS_NULO:
                             codigoRespuesta = CodigoRespuesta.DATOS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DATOS";
                             break;
                         case ElementoNuloError.DESCRIPCION_CARGA_NULO:
                             codigoRespuesta = CodigoRespuesta.DESCRIPCION_CARGA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DESCRIPCIÓN CARGA";
                             break;
                         case ElementoNuloError.DESCRIPCION_NULO:
                             codigoRespuesta = CodigoRespuesta.DESCRIPCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DESCRIPCIÓN";
                             break;
                         case ElementoNuloError.DESCUENTO_FLETE_NULO:
                             codigoRespuesta = CodigoRespuesta.DESCUENTO_FLETE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DESCUENTO FLETE";
                             break;
                         case ElementoNuloError.DESCUENTO_SUBTOTAL_NULO:
                             codigoRespuesta = CodigoRespuesta.DESCUENTO_SUBTOTAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DESCUENTO SUBTOTAL";
                             break;
                         case ElementoNuloError.DESDE_NULO:
                             codigoRespuesta = CodigoRespuesta.DESDE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DESDE";
                             break;
                         case ElementoNuloError.DESTINO_NULO:
                             codigoRespuesta = CodigoRespuesta.DESTINO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DESTINO";
                             break;
                         case ElementoNuloError.DETALLE_POR_JURISDICCION_NULO:
                             codigoRespuesta = CodigoRespuesta.DETALLE_POR_JURISDICCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DETALLE POR JURISDICCIÓN";
                             break;
                         case ElementoNuloError.DIAS_LABORABLES_NULO:
                             codigoRespuesta = CodigoRespuesta.DIAS_LABORABLES_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DIAS LABORABLES";
                             break;
                         case ElementoNuloError.DOCUMENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.DOCUMENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DOCUMENTO";
                             break;
                         case ElementoNuloError.DOMICILIO_ALT_NULO:
                             codigoRespuesta = CodigoRespuesta.DOMICILIO_ALT_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DOMICILIO ALT.";
                             break;
                         case ElementoNuloError.DOMICILIO_NULO:
                             codigoRespuesta = CodigoRespuesta.DOMICILIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DOMICILIO";
                             break;
                         case ElementoNuloError.DOMINIO_NULO:
                             codigoRespuesta = CodigoRespuesta.DOMINIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " DOMINIO";
                             break;
                         case ElementoNuloError.EMPRESA_EMISION_NULO:
                             codigoRespuesta = CodigoRespuesta.EMPRESA_EMISION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " EMPRESA EMISIÓN";
                             break;
                         case ElementoNuloError.EMPRESA_NULO:
                             codigoRespuesta = CodigoRespuesta.EMPRESA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " EMPRESA";
                             break;
                         case ElementoNuloError.ENTREGAR_EN_DOMICILIO_NULO:
                             codigoRespuesta = CodigoRespuesta.ENTREGAR_EN_DOMICILIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ENTREGAR EN DOMICILIO";
                             break;
                         case ElementoNuloError.ES_ABM_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_ABM_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES ABM";
                             break;
                         case ElementoNuloError.ES_ACOMP_REPARTO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_ACOMP_REPARTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES ACOMPAÑANTE REPARTO";
                             break;
                         case ElementoNuloError.ES_ASIGNABLE_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_ASIGNABLE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES ASIGNABLE";
                             break;
                         case ElementoNuloError.ES_CAEA_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CAEA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CAEA";
                             break;
                         case ElementoNuloError.ES_CHEQUE_RECHAZADO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CHEQUE_RECHAZADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CHEQUE RECHAZADO";
                             break;
                         case ElementoNuloError.ES_CHOFER_LARGA_DISTANCIA_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CHOFER_LARGA_DISTANCIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CHOFER LARGA DISTANCIA";
                             break;
                         case ElementoNuloError.ES_CHOFER_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CHOFER_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CHOFER";
                             break;
                         case ElementoNuloError.ES_COMBUSTIBLE_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_COMBUSTIBLE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES COMBUSTIBLE";
                             break;
                         case ElementoNuloError.ES_CONTADO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CONTADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CONTADO";
                             break;
                         case ElementoNuloError.ES_CONVENIO_COLECTIVO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CONVENIO_COLECTIVO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CONVENIO COLECTIVO";
                             break;
                         case ElementoNuloError.ES_CRITICO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CRITICO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CRÍTICO";
                             break;
                         case ElementoNuloError.ES_CUENTA_CORRIENTE_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CUENTA_CORRIENTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CUENTA CORRIENTE";
                             break;
                         case ElementoNuloError.ES_CUENTA_ORDEN_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_CUENTA_ORDEN_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES CUENTA ORDEN";
                             break;
                         case ElementoNuloError.ES_DEDUCIBLE_IMP_GAN_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_DEDUCIBLE_IMP_GAN_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES DEDUCIBLE IMPUESTO GANANCIA";
                             break;
                         case ElementoNuloError.ES_DESARROLLADOR_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_DESARROLLADOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES DESARROLLADOR";
                             break;
                         case ElementoNuloError.ES_ENTREGADO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_ENTREGADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES ENTREGADO";
                             break;
                         case ElementoNuloError.ES_IMPUTABLE_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_IMPUTABLE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES IMPUTABLE";
                             break;
                         case ElementoNuloError.ES_INSUMO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_INSUMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES INSUMO";
                             break;
                         case ElementoNuloError.ES_JUBILADO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_JUBILADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES JUBILADO";
                             break;
                         case ElementoNuloError.ES_MENSUALIZADO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_MENSUALIZADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES MENSUALIZADO";
                             break;
                         case ElementoNuloError.ES_RECEPTOR_FCE_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_RECEPTOR_FCE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES RECEPTOR FCE";
                             break;
                         case ElementoNuloError.ES_REMOLQUE_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_REMOLQUE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES REMOLQUE";
                             break;
                         case ElementoNuloError.ES_REMOLQUE_PROPIO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_REMOLQUE_PROPIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES REMOLQUE PROPIO";
                             break;
                         case ElementoNuloError.ES_REPARTO_PROPIO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_REPARTO_PROPIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES REPARTO PROPIO";
                             break;
                         case ElementoNuloError.ES_SEGURO_PROPIO_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_SEGURO_PROPIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES SEGURO PROPIO";
                             break;
                         case ElementoNuloError.ES_SERIALIZABLE_NULO:
                             codigoRespuesta = CodigoRespuesta.ES_SERIALIZABLE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ES SERIALIZABLE";
                             break;
                         case ElementoNuloError.ESCALA_TARIFA_NULO:
                             codigoRespuesta = CodigoRespuesta.ESCALA_TARIFA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESCALA TARIFA";
                             break;
                         case ElementoNuloError.ESTA_ACTIVA_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_ACTIVA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ ACTIVA";
                             break;
                         case ElementoNuloError.ESTA_ACTIVO_COMPRA_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_COMPRA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ ACTIVO COMPRA";
                             break;
                         case ElementoNuloError.ESTA_ACTIVO_INGRESO_CARGA_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_INGRESO_CARGA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ ACTIVO INGRESO CARGA";
                             break;
                         case ElementoNuloError.ESTA_ACTIVO_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ ACTIVO";
                             break;
                         case ElementoNuloError.ESTA_ACTIVO_VENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_VENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ ACTIVO VENTA";
                             break;
                         case ElementoNuloError.ESTA_EN_REPARTO_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_EN_REPARTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ EN REPARTO";
                             break;
                         case ElementoNuloError.ESTA_FACTURADO_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_FACTURADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ FACTURADO";
                             break;
                         case ElementoNuloError.ESTA_HABILITADO_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_HABILITADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ HABILITADO";
                             break;
                         case ElementoNuloError.ESTA_PENDIENTE_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_PENDIENTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTÁ PENDIENTE";
                             break;
                         case ElementoNuloError.ESTADO_CIVIL_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTADO_CIVIL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ESTADO CIVIL";
                             break;
                         case ElementoNuloError.EXCLUIR_LIQ_CHOFER_NULO:
                             codigoRespuesta = CodigoRespuesta.EXCLUIR_LIQ_CHOFER_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " EXCLUIR LIQ. CHOFER";
                             break;
                         case ElementoNuloError.FE_CAEA_NULO:
                             codigoRespuesta = CodigoRespuesta.FE_CAEA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FE CAEA";
                             break;
                         case ElementoNuloError.FE_EN_LINEA_NULO:
                             codigoRespuesta = CodigoRespuesta.FE_EN_LINEA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FE EN LINEA";
                             break;
                         case ElementoNuloError.FE_MODO_NULO:
                             codigoRespuesta = CodigoRespuesta.FE_MODO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FE MODO";
                             break;
                         case ElementoNuloError.FE_NULO:
                             codigoRespuesta = CodigoRespuesta.FE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FE";
                             break;
                         case ElementoNuloError.FECHA_ALTA_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_ALTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA ALTA";
                             break;
                         case ElementoNuloError.FECHA_BAJA_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_BAJA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA BAJA";
                             break;
                         case ElementoNuloError.FECHA_CAJA_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_CAJA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA CAJA";
                             break;
                         case ElementoNuloError.FECHA_CIERRE_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_CIERRE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA CIERRE";
                             break;
                         case ElementoNuloError.FECHA_COBRO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_COBRO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA COBRO";
                             break;
                         case ElementoNuloError.FECHA_CONTABLE_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_CONTABLE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA CONTABLE";
                             break;
                         case ElementoNuloError.FECHA_DESDE_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_DESDE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA DESDE";
                             break;
                         case ElementoNuloError.FECHA_EMISION_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_EMISION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA EMISIÓN";
                             break;
                         case ElementoNuloError.FECHA_FIN_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_FIN_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA FIN";
                             break;
                         case ElementoNuloError.FECHA_HASTA_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_HASTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA HASTA";
                             break;
                         case ElementoNuloError.FECHA_INICIO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_INICIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA INICIO";
                             break;
                         case ElementoNuloError.FECHA_MOD_CURSO_CP_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_CP_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA MOD. CURSO CARGA PELIGROSA";
                             break;
                         case ElementoNuloError.FECHA_MOD_CURSO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_MOD_CURSO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA MOD. CURSO";
                             break;
                         case ElementoNuloError.FECHA_MOD_LC_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_MOD_LC_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA MOD. LICENCIA DE CONDUCIR";
                             break;
                         case ElementoNuloError.FECHA_MOD_LINTI_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_MOD_LINTI_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA MOD. LINTI";
                             break;
                         case ElementoNuloError.FECHA_MOD_LS_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_MOD_LS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA MOD LS";
                             break;
                         case ElementoNuloError.FECHA_NACIMIENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_NACIMIENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA NACIMIENTO";
                             break;
                         case ElementoNuloError.FECHA_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA";
                             break;
                         case ElementoNuloError.FECHA_PAGO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_PAGO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA PAGO";
                             break;
                         case ElementoNuloError.FECHA_REGISTRACION_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_REGISTRACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA REGISTRACIÓN";
                             break;
                         case ElementoNuloError.FECHA_REGRESO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_REGRESO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA REGRESO";
                             break;
                         case ElementoNuloError.FECHA_SALIDA_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_SALIDA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA SALIDA";
                             break;
                         case ElementoNuloError.FECHA_SOLICITUD_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_SOLICITUD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA SOLICITUD";
                             break;
                         case ElementoNuloError.FECHA_TOPE_INFORMAR_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_TOPE_INFORMAR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA TOPE INFORMAR";
                             break;
                         case ElementoNuloError.FECHA_TRAMO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_TRAMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA TRAMO";
                             break;
                         case ElementoNuloError.FECHA_ULTIMA_MOD_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_ULTIMA_MOD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA ULTIMA MOD.";
                             break;
                         case ElementoNuloError.FECHA_VTO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_VTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA VTO.";
                             break;
                         case ElementoNuloError.FECHA_VTO_PAGO_NULO:
                             codigoRespuesta = CodigoRespuesta.FECHA_VTO_PAGO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FECHA VTO. PAGO";
                             break;
                         case ElementoNuloError.FLETE_NULO:
                             codigoRespuesta = CodigoRespuesta.FLETE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FLETE";
                             break;
                         case ElementoNuloError.FOLIO_LIBRO_SUELDOS_NULO:
                             codigoRespuesta = CodigoRespuesta.FOLIO_LIBRO_SUELDOS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " FOLIO LIBRO SUELDOS";
                             break;
                         case ElementoNuloError.HASTA_NULO:
                             codigoRespuesta = CodigoRespuesta.HASTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " HASTA";
                             break;
                         case ElementoNuloError.HORA_DESDE_NULO:
                             codigoRespuesta = CodigoRespuesta.HORA_DESDE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " HORA DESDE";
                             break;
                         case ElementoNuloError.HORA_HASTA_NULO:
                             codigoRespuesta = CodigoRespuesta.HORA_HASTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " HORA HASTA";
                             break;
                         case ElementoNuloError.HORA_SALIDA_NULO:
                             codigoRespuesta = CodigoRespuesta.HORA_SALIDA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " HORA SALIDA";
                             break;
                         case ElementoNuloError.HORAS_LABORABLES_NULO:
                             codigoRespuesta = CodigoRespuesta.HORAS_LABORABLES_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " HORAS LABORABLES";
                             break;
                         case ElementoNuloError.IMPORTE_ANUAL_MENSUAL_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_ANUAL_MENSUAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE ANUAL MENSUAL";
                             break;
                         case ElementoNuloError.IMPORTE_CONTRA_REEMBOLSO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_CONTRA_REEMBOLSO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE CONTRA REEMBOLSO";
                             break;
                         case ElementoNuloError.IMPORTE_ENTREGA_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_ENTREGA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE ENTREGA";
                             break;
                         case ElementoNuloError.IMPORTE_EXENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_EXENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE EXENTO";
                             break;
                         case ElementoNuloError.IMPORTE_FIJO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE FIJO";
                             break;
                         case ElementoNuloError.IMPORTE_FIJO_REF_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_REF_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE FIJO REF.";
                             break;
                         case ElementoNuloError.IMPORTE_FIJO_SECO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_FIJO_SECO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE FIJO SECO";
                             break;
                         case ElementoNuloError.IMPORTE_FLETE_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_FLETE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE FLETE";
                             break;
                         case ElementoNuloError.IMPORTE_IMPUESTO_INTERNO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_IMPUESTO_INTERNO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE IMPUESTO INTERNO";
                             break;
                         case ElementoNuloError.IMPORTE_ITC_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_ITC_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE ITC";
                             break;
                         case ElementoNuloError.IMPORTE_IVA_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_IVA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE IVA";
                             break;
                         case ElementoNuloError.IMPORTE_NETO_GRAVADO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_NETO_GRAVADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE NETO GRAVADO";
                             break;
                         case ElementoNuloError.IMPORTE_NO_GRAVADO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_NO_GRAVADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE NO GRAVADO";
                             break;
                         case ElementoNuloError.IMPORTE_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE";
                             break;
                         case ElementoNuloError.IMPORTE_OTROS_TRIBUTOS_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_OTROS_TRIBUTOS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE OTROS TRIBUTOS";
                             break;
                         case ElementoNuloError.IMPORTE_PERCEPCION_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_PERCEPCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE PERCEPCIÓN";
                             break;
                         case ElementoNuloError.IMPORTE_RETIRO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_RETIRO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE RETIRO";
                             break;
                         case ElementoNuloError.IMPORTE_SALDO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_SALDO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE SALDO";
                             break;
                         case ElementoNuloError.IMPORTE_SEGURO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_SEGURO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE SEGURO";
                             break;
                         case ElementoNuloError.IMPORTE_TOTAL_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_TOTAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE TOTAL";
                             break;
                         case ElementoNuloError.IMPORTE_VENTA_ITEM_CONCEPTO_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPORTE_VENTA_ITEM_CONCEPTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPORTE VENTA ITEM CONCEPTO";
                             break;
                         case ElementoNuloError.IMPRIME_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPRIME_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPRIME";
                             break;
                         case ElementoNuloError.IMPRIMIR_CONTROL_DEUDA_NULO:
                             codigoRespuesta = CodigoRespuesta.IMPRIMIR_CONTROL_DEUDA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " IMPRIMIR CONTROL DEUDA";
                             break;
                         case ElementoNuloError.INICIO_ACTIVIDAD_NULO:
                             codigoRespuesta = CodigoRespuesta.INICIO_ACTIVIDAD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " INICIO ACTIVIDAD";
                             break;
                         case ElementoNuloError.ITC_NETO_NULO:
                             codigoRespuesta = CodigoRespuesta.ITC_NETO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ITC NETO";
                             break;
                         case ElementoNuloError.ITC_POR_LITRO_NULO:
                             codigoRespuesta = CodigoRespuesta.ITC_POR_LITRO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ITC POR LITRO";
                             break;
                         case ElementoNuloError.KILOS_AFORADO_NULO:
                             codigoRespuesta = CodigoRespuesta.KILOS_AFORADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " KILOS AFORADO";
                             break;
                         case ElementoNuloError.KILOS_EFECTIVO_NULO:
                             codigoRespuesta = CodigoRespuesta.KILOS_EFECTIVO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " KILOS EFECTIVO";
                             break;
                         case ElementoNuloError.KM_NULO:
                             codigoRespuesta = CodigoRespuesta.KM_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " KM";
                             break;
                         case ElementoNuloError.LETRA_NULO:
                             codigoRespuesta = CodigoRespuesta.LETRA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " LETRA";
                             break;
                         case ElementoNuloError.LOCALIDAD_NACIMIENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.LOCALIDAD_NACIMIENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " LOCALIDAD";
                             break;
                         case ElementoNuloError.LOCALIDAD_NULO:
                             codigoRespuesta = CodigoRespuesta.LOCALIDAD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " LOCALIDAD";
                             break;
                         case ElementoNuloError.LOTE_ENTREGADO_NULO:
                             codigoRespuesta = CodigoRespuesta.LOTE_ENTREGADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " LOTE ENTREGADO";
                             break;
                         case ElementoNuloError.M3_NULO:
                             codigoRespuesta = CodigoRespuesta.M3_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " M3";
                             break;
                         case ElementoNuloError.MENSAJE_NULO:
                             codigoRespuesta = CodigoRespuesta.MENSAJE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MENSAJE";
                             break;
                         case ElementoNuloError.MARCA_PRODUCTO_NULO:
                             codigoRespuesta = CodigoRespuesta.MARCA_PRODUCTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MARCA PRODUCTO";
                             break;
                         case ElementoNuloError.MARCA_VEHICULO_NULO:
                             codigoRespuesta = CodigoRespuesta.MARCA_VEHICULO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MARCA VEHÍCULO";
                             break;
                         case ElementoNuloError.MES_INICIO_NULO:
                             codigoRespuesta = CodigoRespuesta.MES_INICIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MES INICIO";
                             break;
                         case ElementoNuloError.MES_NULO:
                             codigoRespuesta = CodigoRespuesta.MES_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MES";
                             break;
                         case ElementoNuloError.MINIMO_NULO:
                             codigoRespuesta = CodigoRespuesta.MINIMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MÍNIMO";
                             break;
                         case ElementoNuloError.MODELO_NULO:
                             codigoRespuesta = CodigoRespuesta.MODELO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MODELO";
                             break;
                         case ElementoNuloError.MODULO_NULO:
                             codigoRespuesta = CodigoRespuesta.MODULO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MÓDULO";
                             break;
                         case ElementoNuloError.MONEDA_COTIZACION_NULO:
                             codigoRespuesta = CodigoRespuesta.MONEDA_COTIZACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MONEDA COTIZACIÓN";
                             break;
                         case ElementoNuloError.MONEDA_NULO:
                             codigoRespuesta = CodigoRespuesta.MONEDA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MONEDA";
                             break;
                         case ElementoNuloError.MOSTRAR_NULO:
                             codigoRespuesta = CodigoRespuesta.MOSTRAR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " MOSTRAR";
                             break;
                         case ElementoNuloError.NIVEL_NULO:
                             codigoRespuesta = CodigoRespuesta.NIVEL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NIVEL";
                             break;
                         case ElementoNuloError.NOMBRE_COMPLETO_NULO:
                             codigoRespuesta = CodigoRespuesta.NOMBRE_COMPLETO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOMBRE COMPLETO";
                             break;
                         case ElementoNuloError.NOMBRE_FANTASIA_NULO:
                             codigoRespuesta = CodigoRespuesta.NOMBRE_FANTASIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOMBRE FANTASIA";
                             break;
                         case ElementoNuloError.NOMBRE_NULO:
                             codigoRespuesta = CodigoRespuesta.NOMBRE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOMBRE";
                             break;
                         case ElementoNuloError.NOTA_EMISION_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.NOTA_EMISION_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOTA EMISIÓN COMPROBANTE";
                             break;
                         case ElementoNuloError.NOTA_IMPRESION_COMPROBANTE_GRAL_1_NULO:
                             codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_1_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOTA IMPRESIÓN COMPROBANTE GENERAL 1";
                             break;
                         case ElementoNuloError.NOTA_IMPRESION_COMPROBANTE_GRAL_2_NULO:
                             codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_GRAL_2_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOTA IMPRESIÓN COMPROBANTE GENERAL 2";
                             break;
                         case ElementoNuloError.NOTA_IMPRESION_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOTA IMPRESIÓN COMPROBANTE";
                             break;
                         case ElementoNuloError.NOTA_IMPRESION_ORDEN_PAGO_NULO:
                             codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_ORDEN_PAGO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOTA IMPRESIÓN ORDEN DE PAGO";
                             break;
                         case ElementoNuloError.NOTA_IMPRESION_REMITO_NULO:
                             codigoRespuesta = CodigoRespuesta.NOTA_IMPRESION_REMITO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOTA IMPRESIÓN REMITO";
                             break;
                         case ElementoNuloError.NOTA_INGRESAR_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.NOTA_INGRESAR_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NOTA INGRESAR COMPROBANTE";
                             break;
                         case ElementoNuloError.NUMERACION_PUNTO_VENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERACION_PUNTO_VENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NUMERACIÓN PUNTO DE VENTA";
                             break;
                         case ElementoNuloError.NUMERO_CAEA_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_CAEA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO CAEA";
                             break;
                         case ElementoNuloError.NUMERO_CAMION_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_CAMION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO CAMIÓN";
                             break;
                         case ElementoNuloError.NUMERO_CBU_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_CBU_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO CBU";
                             break;
                         case ElementoNuloError.NUMERO_CHASIS_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_CHASIS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO CHASIS";
                             break;
                         case ElementoNuloError.NUMERO_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO COMPROBANTE";
                             break;
                         case ElementoNuloError.NUMERO_CUENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_CUENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO DE CUENTA";
                             break;
                         case ElementoNuloError.NUMERO_DOCUMENTACION_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_DOCUMENTACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO DE DOCUMENTACIÓN";
                             break;
                         case ElementoNuloError.NUMERO_DOCUMENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_DOCUMENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO DE DOCUMENTO";
                             break;
                         case ElementoNuloError.NUMERO_IIBB_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_IIBB_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO IIBB";
                             break;
                         case ElementoNuloError.NUMERO_INTERNO_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_INTERNO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO INTERNO";
                             break;
                         case ElementoNuloError.NUMERO_LIQUIDACION_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_LIQUIDACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO LIQUIDACIÓN";
                             break;
                         case ElementoNuloError.NUMERO_MOTOR_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_MOTOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO DE MOTOR";
                             break;
                         case ElementoNuloError.NUMERO_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO";
                             break;
                         case ElementoNuloError.NUMERO_POLIZA_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO PÓLIZA";
                             break;
                         case ElementoNuloError.NUMERO_POLIZA_SEGURO_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_POLIZA_SEGURO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO PÓLIZA SEGURO";
                             break;
                         case ElementoNuloError.NUMERO_REMITO_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_REMITO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO DE REMITO";
                             break;
                         case ElementoNuloError.NUMERO_RUTA_NULO:
                             codigoRespuesta = CodigoRespuesta.NUMERO_RUTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " NÚMERO DE RUTA";
                             break;
                         case ElementoNuloError.OBRA_SOCIAL_NULO:
                             codigoRespuesta = CodigoRespuesta.OBRA_SOCIAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " OBRA SOCIAL";
                             break;
                         case ElementoNuloError.OBSERVACION_CHOFER_NULO:
                             codigoRespuesta = CodigoRespuesta.OBSERVACION_CHOFER_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " OBSERVACIÓN CHOFER";
                             break;
                         case ElementoNuloError.OBSERVACION_VEHICULO_NULO:
                             codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " OBSERVACIÓN VEHÍCULO";
                             break;
                         case ElementoNuloError.OBSERVACION_VEHICULO_REMOLQUE_NULO:
                             codigoRespuesta = CodigoRespuesta.OBSERVACION_VEHICULO_REMOLQUE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " OBSERVACIÓN VEHÍCULO REMOLQUE";
                             break;
                         case ElementoNuloError.OBSERVACIONES_ANULADO_NULO:
                             codigoRespuesta = CodigoRespuesta.OBSERVACIONES_ANULADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " OBSERVACIONES ANULADO";
                             break;
                         case ElementoNuloError.OBSERVACIONES_NULO:
                             codigoRespuesta = CodigoRespuesta.OBSERVACIONES_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " OBSERVACIONES";
                             break;
                         case ElementoNuloError.OPCION_NULO:
                             codigoRespuesta = CodigoRespuesta.OPCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " OPCIÓN";
                             break;
                         case ElementoNuloError.ORDEN_VENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.ORDEN_VENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ORDEN DE VENTA";
                             break;
                         case ElementoNuloError.ORDEN_VENTA_TARIFA_NULO:
                             codigoRespuesta = CodigoRespuesta.ORDEN_VENTA_TARIFA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ORDEN VENTA TARIFA";
                             break;
                         case ElementoNuloError.ORIGEN_NULO:
                             codigoRespuesta = CodigoRespuesta.ORIGEN_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ORIGEN";
                             break;
                         case ElementoNuloError.P_COMISION_NULO:
                             codigoRespuesta = CodigoRespuesta.P_COMISION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " P. COMISIÓN";
                             break;
                         case ElementoNuloError.P_SEGURO_NULO:
                             codigoRespuesta = CodigoRespuesta.P_SEGURO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " P. SEGURO";
                             break;
                         case ElementoNuloError.PAGO_EN_ORIGEN_NULO:
                             codigoRespuesta = CodigoRespuesta.PAGO_EN_ORIGEN_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PAGO EN ORIGEN";
                             break;
                         case ElementoNuloError.PAIS_NULO:
                             codigoRespuesta = CodigoRespuesta.PAIS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PAÍS";
                             break;
                         case ElementoNuloError.PASSWORD_NULO:
                             codigoRespuesta = CodigoRespuesta.PASSWORD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PASSWORD";
                             break;
                         case ElementoNuloError.PERSONAL_NULO:
                             codigoRespuesta = CodigoRespuesta.PERSONAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PERSONAL";
                             break;
                         case ElementoNuloError.PESTANIA_NULO:
                             codigoRespuesta = CodigoRespuesta.PESTANIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PESTAÑA";
                             break;
                         case ElementoNuloError.PLAN_CUENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.PLAN_CUENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PLAN DE CUENTA";
                             break;
                         case ElementoNuloError.POR_DEFECTO_CLIENTE_EVENTUAL_NULO:
                             codigoRespuesta = CodigoRespuesta.POR_DEFECTO_CLIENTE_EVENTUAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " POR DEFECTO CLIENTE EVENTUAL";
                             break;
                         case ElementoNuloError.POR_DEFECTO_NULO:
                             codigoRespuesta = CodigoRespuesta.POR_DEFECTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " POR DEFECTO";
                             break;
                         case ElementoNuloError.POR_ESCALA_NULO:
                             codigoRespuesta = CodigoRespuesta.POR_ESCALA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " POR ESCALA";
                             break;
                         case ElementoNuloError.POR_PORCENTAJE_NULO:
                             codigoRespuesta = CodigoRespuesta.POR_PORCENTAJE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " POR PORCENTAJE";
                             break;
                         case ElementoNuloError.PORCENTAJE_GANANCIA_NETA_NULO:
                             codigoRespuesta = CodigoRespuesta.PORCENTAJE_GANANCIA_NETA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PORCENTAJE GANANCIA NETA";
                             break;
                         case ElementoNuloError.PORCENTAJE_NULO:
                             codigoRespuesta = CodigoRespuesta.PORCENTAJE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PORCENTAJE";
                             break;
                         case ElementoNuloError.PRECIO_UNITARIO_NULO:
                             codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PRECIO UNITARIO";
                             break;
                         case ElementoNuloError.PRECIO_UNITARIO_REF_NULO:
                             codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_REF_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PRECIO UNITARIO REF.";
                             break;
                         case ElementoNuloError.PRECIO_UNITARIO_SECO_NULO:
                             codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_SECO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PRECIO UNITARIO SECO";
                             break;
                         case ElementoNuloError.PRECIO_UNITARIO_VENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PRECIO UNITARIO VENTA";
                             break;
                         case ElementoNuloError.PRECIO_UNITARIO_VIAJE_NULO:
                             codigoRespuesta = CodigoRespuesta.PRECIO_UNITARIO_VIAJE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PRECIO UNITARIO VIAJE";
                             break;
                         case ElementoNuloError.PRECIOS_DESDE_NULO:
                             codigoRespuesta = CodigoRespuesta.PRECIOS_DESDE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PRECIOS DESDE";
                             break;
                         case ElementoNuloError.PROVEEDOR_NULO:
                             codigoRespuesta = CodigoRespuesta.PROVEEDOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PROVEEDOR";
                             break;
                         case ElementoNuloError.PROVINCIA_NULO:
                             codigoRespuesta = CodigoRespuesta.PROVINCIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PROVINCIA";
                             break;
                         case ElementoNuloError.PUNTO_VENTA_NULO:
                             codigoRespuesta = CodigoRespuesta.PUNTO_VENTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " PUNTO DE VENTA";
                             break;
                         case ElementoNuloError.QUINCENA_NULO:
                             codigoRespuesta = CodigoRespuesta.QUINCENA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " QUINCENA";
                             break;
                         case ElementoNuloError.RECIBE_ADELANTO_NULO:
                             codigoRespuesta = CodigoRespuesta.RECIBE_ADELANTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " RECIBE ADELANTO";
                             break;
                         case ElementoNuloError.RECIBE_PRESTAMO_NULO:
                             codigoRespuesta = CodigoRespuesta.RECIBE_PRESTAMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " RECIBE PRÉSTAMO";
                             break;
                         case ElementoNuloError.REPARTO_NULO:
                             codigoRespuesta = CodigoRespuesta.REPARTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " REPARTO";
                             break;
                         case ElementoNuloError.RETIRO_DEPOSITO_NULO:
                             codigoRespuesta = CodigoRespuesta.RETIRO_DEPOSITO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " RETIRO DEPÓSITO";
                             break;
                         case ElementoNuloError.ROL_NULO:
                             codigoRespuesta = CodigoRespuesta.ROL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ROL";
                             break;
                         case ElementoNuloError.RUBRO_NULO:
                             codigoRespuesta = CodigoRespuesta.RUBRO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " RUBRO";
                             break;
                         case ElementoNuloError.RUBRO_PRODUCTO_NULO:
                             codigoRespuesta = CodigoRespuesta.RUBRO_PRODUCTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " RUBRO PRODUCTO";
                             break;
                         case ElementoNuloError.RUTA_ALTERNATIVA_NULO:
                             codigoRespuesta = CodigoRespuesta.RUTA_ALTERNATIVA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " RUTA ALTERNATIVA";
                             break;
                         case ElementoNuloError.SEGUIMIENTO_ESTADO_NULO:
                             codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_ESTADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SEGUIMIENTO ESTADO";
                             break;
                         case ElementoNuloError.SEGUIMIENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SEGUIMIENTO NULO";
                             break;
                         case ElementoNuloError.SEGUIMIENTO_SITUACION_NULO:
                             codigoRespuesta = CodigoRespuesta.SEGUIMIENTO_SITUACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SEGUIMIENTO SITUACIÓN";
                             break;
                         case ElementoNuloError.SEGURIDAD_SOCIAL_NULO:
                             codigoRespuesta = CodigoRespuesta.SEGURIDAD_SOCIAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SEGURIDAD SOCIAL";
                             break;
                         case ElementoNuloError.SEGURO_NULO:
                             codigoRespuesta = CodigoRespuesta.SEGURO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SEGURO";
                             break;
                         case ElementoNuloError.SEXO_NULO:
                             codigoRespuesta = CodigoRespuesta.SEXO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SEXO";
                             break;
                         case ElementoNuloError.SIMBOLO_NULO:
                             codigoRespuesta = CodigoRespuesta.SIMBOLO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SÍMBOLO";
                             break;
                         case ElementoNuloError.SINDICATO_NULO:
                             codigoRespuesta = CodigoRespuesta.SINDICATO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SINDICATO";
                             break;
                         case ElementoNuloError.SITIO_WEB_NULO:
                             codigoRespuesta = CodigoRespuesta.SITIO_WEB_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SITIO WEB";
                             break;
                         case ElementoNuloError.SMVM_NULO:
                             codigoRespuesta = CodigoRespuesta.SMVM_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " S.M.V.M.";
                             break;
                         case ElementoNuloError.SOLICITADO_POR_NULO:
                             codigoRespuesta = CodigoRespuesta.SOLICITADO_POR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SOLICITADO POR";
                             break;
                         case ElementoNuloError.SOPORTE_NULO:
                             codigoRespuesta = CodigoRespuesta.SOPORTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SOPORTE";
                             break;
                         case ElementoNuloError.STOCK_MINIMO_NULO:
                             codigoRespuesta = CodigoRespuesta.STOCK_MINIMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SOTCK MÍNIMO";
                             break;
                         case ElementoNuloError.SUBMODULO_NULO:
                             codigoRespuesta = CodigoRespuesta.SUBMODULO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SUBMODULO";
                             break;
                         case ElementoNuloError.SUBOPCION_NULO:
                             codigoRespuesta = CodigoRespuesta.SUBOPCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SUBOPCIÓN";
                             break;
                         case ElementoNuloError.SUCURSAL_BANCO_NULO:
                             codigoRespuesta = CodigoRespuesta.SUCURSAL_BANCO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SUCURSAL BANCO";
                             break;
                         case ElementoNuloError.SUCURSAL_DESTINO_NULO:
                             codigoRespuesta = CodigoRespuesta.SUCURSAL_DESTINO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SUCURSAL DESTINO";
                             break;
                         case ElementoNuloError.SUCURSAL_INGRESO_NULO:
                             codigoRespuesta = CodigoRespuesta.SUCURSAL_INGRESO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SUCURSAL INGRESO";
                             break;
                         case ElementoNuloError.SUCURSAL_NULO:
                             codigoRespuesta = CodigoRespuesta.SUCURSAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " SUCURSAL";
                             break;
                         case ElementoNuloError.TABLA_NULO:
                             codigoRespuesta = CodigoRespuesta.TABLA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TABLA";
                             break;
                         case ElementoNuloError.TALLE_CALZADO_NULO:
                             codigoRespuesta = CodigoRespuesta.TALLE_CALZADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TALLE CALZADO";
                             break;
                         case ElementoNuloError.TALLE_CAMISA_NULO:
                             codigoRespuesta = CodigoRespuesta.TALLE_CAMISA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TALLE CAMISA";
                             break;
                         case ElementoNuloError.TALLE_PANTALON_NULO:
                             codigoRespuesta = CodigoRespuesta.TALLE_PANTALON_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TALLE PANTALÓN";
                             break;
                         case ElementoNuloError.TALONARIO_RECIBO_LOTE_NULO:
                             codigoRespuesta = CodigoRespuesta.TALONARIO_RECIBO_LOTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TALONARIO RECIBO LOTE";
                             break;
                         case ElementoNuloError.TAMANIO_NULO:
                             codigoRespuesta = CodigoRespuesta.TAMANIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TAMAÑO";
                             break;
                         case ElementoNuloError.TARA_NULO:
                             codigoRespuesta = CodigoRespuesta.TARA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TARA";
                             break;
                         case ElementoNuloError.TELEFONO_ALT_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_ALT_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO ALTERNATIVO";
                             break;
                         case ElementoNuloError.TELEFONO_CONTACTO_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_CONTACTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO CONTACTO";
                             break;
                         case ElementoNuloError.TELEFONO_FIJO_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_FIJO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO FIJO";
                             break;
                         case ElementoNuloError.TELEFONO_MOVIL_EMPRESA_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_EMPRESA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO MOVIL EMPRESA";
                             break;
                         case ElementoNuloError.TELEFONO_MOVIL_FECHA_DEVOLUCION_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_DEVOLUCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFOMO MOVIL FECHA DEVOLUCIÓN";
                             break;
                         case ElementoNuloError.TELEFONO_MOVIL_FECHA_ENTREGA_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_FECHA_ENTREGA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO MOVIL FECHA ENTREGA";
                             break;
                         case ElementoNuloError.TELEFONO_MOVIL_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO MOVIL";
                             break;
                         case ElementoNuloError.TELEFONO_MOVIL_OBSERVACION_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_MOVIL_OBSERVACION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO MOVIL OBSERVACIÓN";
                             break;
                         case ElementoNuloError.TELEFONO_NULO:
                             codigoRespuesta = CodigoRespuesta.TELEFONO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TELÉFONO";
                             break;
                         case ElementoNuloError.TIPO_CHEQUERA_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_CHEQUERA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE CHEQUERA";
                             break;
                         case ElementoNuloError.TIPO_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE COMPROBANTE";
                             break;
                         case ElementoNuloError.TIPO_CONTACTO_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_CONTACTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE CONTACTO";
                             break;
                         case ElementoNuloError.TIPO_CUENTA_BANCARIA_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_CUENTA_BANCARIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE CUENTA BANCARIA";
                             break;
                         case ElementoNuloError.TIPO_DOCUMENTO_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_DOCUMENTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE DOCUMENTO";
                             break;
                         case ElementoNuloError.TIPO_FAMILIAR_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_FAMILIAR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE FAMILIAR";
                             break;
                         case ElementoNuloError.TIPO_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO";
                             break;
                         case ElementoNuloError.TIPO_PERCEPCION_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_PERCEPCION_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE PERCEPCIÓN";
                             break;
                         case ElementoNuloError.TIPO_PROVEEDOR_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_PROVEEDOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE PROVEEDOR";
                             break;
                         case ElementoNuloError.TIPO_VEHICULO_NULO:
                             codigoRespuesta = CodigoRespuesta.TIPO_VEHICULO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TIPO DE VEHÍCULO";
                             break;
                         case ElementoNuloError.TITULAR_NULO:
                             codigoRespuesta = CodigoRespuesta.TITULAR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TITULAR";
                             break;
                         case ElementoNuloError.TOPE_BASICO_ADELANTOS_NULO:
                             codigoRespuesta = CodigoRespuesta.TOPE_BASICO_ADELANTOS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TOPE BÁSICO ADELANTOS";
                             break;
                         case ElementoNuloError.TOTAL_CUOTAS_NULO:
                             codigoRespuesta = CodigoRespuesta.TOTAL_CUOTAS_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TOTAL CUOTAS";
                             break;
                         case ElementoNuloError.TRAMO_NULO:
                             codigoRespuesta = CodigoRespuesta.TRAMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " TRAMO";
                             break;
                         case ElementoNuloError.ULTIMO_NUMERO_NULO:
                             codigoRespuesta = CodigoRespuesta.ULTIMO_NUMERO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ÚLTIMO NÚMERO";
                             break;
                         case ElementoNuloError.UNIDAD_MEDIDA_NULO:
                             codigoRespuesta = CodigoRespuesta.UNIDAD_MEDIDA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " UNIDAD DE MEDIDA";
                             break;
                         case ElementoNuloError.URL_PRUEBA_NULO:
                             codigoRespuesta = CodigoRespuesta.URL_PRUEBA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " URL PRUEBA";
                             break;
                         case ElementoNuloError.URL_REAL_NULO:
                             codigoRespuesta = CodigoRespuesta.URL_REAL_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " URL REAL";
                             break;
                         case ElementoNuloError.USERNAME_NULO:
                             codigoRespuesta = CodigoRespuesta.USERNAME_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " USERNAME";
                             break;
                         case ElementoNuloError.USUARIO_ALTA_NULO:
                             codigoRespuesta = CodigoRespuesta.USUARIO_ALTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " USUARIO ALTA";
                             break;
                         case ElementoNuloError.USUARIO_BAJA_NULO:
                             codigoRespuesta = CodigoRespuesta.USUARIO_BAJA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " USUARIO BAJA";
                             break;
                         case ElementoNuloError.USUARIO_MOD_NULO:
                             codigoRespuesta = CodigoRespuesta.USUARIO_MOD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " USUARIO MOD.";
                             break;
                         case ElementoNuloError.USUARIO_NULO:
                             codigoRespuesta = CodigoRespuesta.USUARIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " USUARIO";
                             break;
                         case ElementoNuloError.VALOR_DECLARADO_NULO:
                             codigoRespuesta = CodigoRespuesta.VALOR_DECLARADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VALOR DECLARADO";
                             break;
                         case ElementoNuloError.VALOR_NULO:
                             codigoRespuesta = CodigoRespuesta.VALOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VALOR";
                             break;
                         case ElementoNuloError.VEHICULO_NULO:
                             codigoRespuesta = CodigoRespuesta.VEHICULO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VEHÍCULO";
                             break;
                         case ElementoNuloError.VENDEDOR_NULO:
                             codigoRespuesta = CodigoRespuesta.VENDEDOR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VENDEDOR";
                             break;
                         case ElementoNuloError.VENTA_COMPROBANTE_APLICADO_NULO:
                             codigoRespuesta = CodigoRespuesta.VENTA_COMPROBANTE_APLICADO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VENTA COMPROBANTE APLICADO";
                             break;
                         case ElementoNuloError.VENTA_COMPROBANTE_NULO:
                             codigoRespuesta = CodigoRespuesta.VENTA_COMPROBANTE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VENTA COMPROBANTE";
                             break;
                         case ElementoNuloError.VENTA_TIPO_ITEM_NULO:
                             codigoRespuesta = CodigoRespuesta.VENTA_TIPO_ITEM_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VENTA TIPO ITEM";
                             break;
                         case ElementoNuloError.VIAJE_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE";
                             break;
                         case ElementoNuloError.VIAJE_PROPIO_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_PROPIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE PROPIO";
                             break;
                         case ElementoNuloError.VIAJE_REMITO_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_REMITO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE REMITO";
                             break;
                         case ElementoNuloError.VIAJE_TARIFA_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_TARIFA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE TARIFA";
                             break;
                         case ElementoNuloError.VIAJE_TIPO_CARGA_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_TIPO_CARGA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE TIPO CARGA";
                             break;
                         case ElementoNuloError.VIAJE_TIPO_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_TIPO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE TIPO";
                             break;
                         case ElementoNuloError.VIAJE_TRAMO_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_TRAMO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE TRAMO";
                             break;
                         case ElementoNuloError.VIAJE_UNIDAD_NEGOCIO_NULO:
                             codigoRespuesta = CodigoRespuesta.VIAJE_UNIDAD_NEGOCIO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VIAJE UNIDAD DE NEGOCIO";
                             break;
                         case ElementoNuloError.VTO_CURSO_CARGA_PELIGROSA_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_CURSO_CARGA_PELIGROSA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. CURSO CARGA PELIGROSA";
                             break;
                         case ElementoNuloError.VTO_CURSO_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_CURSO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. CURSO";
                             break;
                         case ElementoNuloError.VTO_HAB_BROMATOLOGICA_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_HAB_BROMATOLOGICA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. HABILITACIÓN BROMATOLÓGICA";
                             break;
                         case ElementoNuloError.VTO_LIB_SANIDAD_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_LIB_SANIDAD_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. LIBRETA DE SANIDAD";
                             break;
                         case ElementoNuloError.VTO_LIC_CONDUCIR_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_LIC_CONDUCIR_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. LICENCIA DE CONDUCIR";
                             break;
                         case ElementoNuloError.VTO_LINTI_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_LINTI_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. LINTI";
                             break;
                         case ElementoNuloError.VTO_POLIZA_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_POLIZA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. PÓLIZA";
                             break;
                         case ElementoNuloError.VTO_POLIZA_SEGURO_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_POLIZA_SEGURO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. PÓLIZA SEGURO";
                             break;
                         case ElementoNuloError.VTO_PSICOFISICO_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_PSICOFISICO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. PSICOFÍSICO";
                             break;
                         case ElementoNuloError.VTO_RTO_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_RTO_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. RTO.";
                             break;
                         case ElementoNuloError.VTO_RUTA_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_RUTA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. RUTA";
                             break;
                         case ElementoNuloError.VTO_SANIDAD_ALIMENTICIA_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_SANIDAD_ALIMENTICIA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. SANIDAD ALIMENTICIA";
                             break;
                         case ElementoNuloError.VTO_SENASA_NULO:
                             codigoRespuesta = CodigoRespuesta.VTO_SENASA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " VTO. SENASA";
                             break;
                         case ElementoNuloError.ZONA_NULO:
                             codigoRespuesta = CodigoRespuesta.ZONA_NULO;
-                            plusMensaje = " ";
+                            plusMensaje = " ZONA";
+                            break;
+                        default:
+                            codigoRespuesta = CodigoRespuesta.NO_EXISTENTE;
+                            plusMensaje = "";
                             break;
                     }
                 } else {
+                    mensajeRespuesta = ERROR_INTERNO_SERVIDOR;
                     codigoRespuesta = CodigoRespuesta.ERROR_INTERNO_SERVIDOR;
                     plusMensaje = "";
                 }
@@ -2519,21 +2523,16 @@ public class MensajeRespuesta {
     public static ResponseEntity<?> datoInexistente(String a, String b) {
         String[] partes2 = b.split(" ");
         String[] partes = b.split("`");
-        String s;
-        String mensajeRespuesta = "";
         String[] partes3 = partes2[3].split(".");
         int codigoRespuesta = 0;
+        String mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
+        String s = partes[7];
         String plusMensaje = "";
         if (a.equals("delete")) {
             mensajeRespuesta = MensajeRespuesta.ELEMENTO_ASIGNADO;
-            s = partes[7];
         } else if (a.equals("a")) {
             s = partes2[3].substring(26);
             s = "id" + s;
-            mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
-        } else {
-            mensajeRespuesta = MensajeRespuesta.NO_EXISTENTE;
-            s = partes[7];
         }
         switch (s) {
             case InexistenciaError.AFIP_ACTIVIDAD_INEXISTENTE:

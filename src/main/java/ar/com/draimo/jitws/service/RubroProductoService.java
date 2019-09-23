@@ -98,6 +98,7 @@ public class RubroProductoService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
+        rubroProductoCuentaContableDAO.deleteByRubroProducto(elementoDAO.findById(elemento).get());
         elementoDAO.deleteById(elemento);
     }
     
