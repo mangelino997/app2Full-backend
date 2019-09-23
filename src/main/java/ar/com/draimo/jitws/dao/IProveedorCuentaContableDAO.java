@@ -25,6 +25,9 @@ public interface IProveedorCuentaContableDAO extends JpaRepository<ProveedorCuen
     //Obtiene una lista por Proveedor
     public List<ProveedorCuentaContable> findByProveedor(Proveedor proveedor);
     
+    //Elimina por Proveedor
+    public List<ProveedorCuentaContable> deleteByProveedor(Proveedor proveedor);
+    
     //Obtiene una lista por PlanCuenta
     public List<ProveedorCuentaContable> findByPlanCuentaCompra(PlanCuenta planCuenta);
     

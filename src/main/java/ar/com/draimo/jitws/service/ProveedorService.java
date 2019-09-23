@@ -127,6 +127,7 @@ public class ProveedorService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
+        proveedorCuentaContableDAO.deleteByProveedor(elementoDAO.findById(elemento).get());
         elementoDAO.deleteById(elemento);
     }
 
