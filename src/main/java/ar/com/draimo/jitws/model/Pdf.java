@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 /**
  * Clase pdf
- * Mapea con la tabla en la base de datos
+ * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
@@ -37,12 +37,11 @@ public class Pdf extends ObjetoGenerico {
     @Column(name = "datos", nullable = false)
     private byte[] datos;
     
-    //Define el nombre
+    //Define la tabla
     @Column(name = "tabla", length = 60, nullable = false)
     private String tabla;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

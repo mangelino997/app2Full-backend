@@ -29,7 +29,6 @@ public class ObjetoGenerico {
     private int version;
 
     //Getters y Setters de la clase
-
     public int getId() {
         return id;
     }

@@ -6,7 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Seguimiento Situacion Define el modelo (columnas) de la base de datos.
+ * Clase Seguimiento Situacion 
+ * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 

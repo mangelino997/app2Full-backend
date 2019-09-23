@@ -11,6 +11,7 @@ import javax.persistence.Table;
 /**
  * Clase Punto Venta
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -74,7 +75,6 @@ public class PuntoVenta extends ObjetoGenerico {
     private AfipComprobante afipComprobante;
     
     //Getters y Setters de la clase
-
     public Sucursal getSucursal() {
         return sucursal;
     }

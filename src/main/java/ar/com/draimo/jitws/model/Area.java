@@ -6,11 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Area
+ * Clase Area 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "area")
 public class Area extends ObjetoGenerico {
@@ -20,7 +20,6 @@ public class Area extends ObjetoGenerico {
     private String nombre;
 
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

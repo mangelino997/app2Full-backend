@@ -14,6 +14,7 @@ import javax.persistence.Table;
 /**
  * Clase OrdenVentaEscala
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -42,7 +43,7 @@ public class OrdenVentaEscala extends ObjetoGenerico {
     @Column(name = "minimo")
     private BigDecimal minimo;
     
-    //Referencia a la clase OrdenVentaPrecio
+    //Referencia a la clase OrdenVentaTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVentaTarifa", nullable = false)
     private OrdenVentaTarifa ordenVentaTarifa;
@@ -53,7 +54,6 @@ public class OrdenVentaEscala extends ObjetoGenerico {
     private Date preciosDesde;
     
     //Getters y Setters de la clase
-
     public EscalaTarifa getEscalaTarifa() {
         return escalaTarifa;
     }

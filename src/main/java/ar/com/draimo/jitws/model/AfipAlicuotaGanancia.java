@@ -7,11 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase AfipAlicuotaGanancia
- * Define el modelo (columnas) de la base de datos.
+ * Clase Afip Alicuota 
+ * Ganancia Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipalicuotaganancia")
 public class AfipAlicuotaGanancia extends ObjetoGenerico {
@@ -21,9 +21,8 @@ public class AfipAlicuotaGanancia extends ObjetoGenerico {
     private BigDecimal alicuota;
 
     //Getters y Setters de la clase
-
     public BigDecimal getAlicuota() {
         return alicuota;
     }
-    
+
 }

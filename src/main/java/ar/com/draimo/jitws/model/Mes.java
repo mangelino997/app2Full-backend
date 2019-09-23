@@ -24,7 +24,6 @@ public class Mes extends ObjetoGenerico {
     private String numero;
 
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

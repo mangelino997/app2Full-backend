@@ -6,8 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Pestaña.
+ * Clase Pestania.
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -20,7 +21,6 @@ public class Pestania extends ObjetoGenerico {
     private String nombre;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

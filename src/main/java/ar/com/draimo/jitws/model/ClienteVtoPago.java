@@ -11,11 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase ClienteVtoPago
+ * Clase ClienteVtoPago 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "clientevtopago")
 public class ClienteVtoPago extends ObjetoGenerico {
@@ -24,78 +24,77 @@ public class ClienteVtoPago extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
-    
+
     //Referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Define diasFechaFactura
     @Column(name = "diasFechaFactura", nullable = true)
     private short diasFechaFactura;
-    
+
     //Define enero
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "enero", nullable = true)
     private Date enero;
-    
+
     //Define febrero
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "febrero", nullable = true)
     private Date febrero;
-    
+
     //Define marzo
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "marzo", nullable = true)
     private Date marzo;
-    
+
     //Define abril
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "abril", nullable = true)
     private Date abril;
-    
+
     //Define mayo
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "mayo", nullable = true)
     private Date mayo;
-    
+
     //Define junio
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "junio", nullable = true)
     private Date junio;
-    
+
     //Define julio
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "julio", nullable = true)
     private Date julio;
-    
+
     //Define agosto
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "agosto", nullable = true)
     private Date agosto;
-    
+
     //Define septiembre
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "septiembre", nullable = true)
     private Date septiembre;
-    
+
     //Define octubre
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "octubre", nullable = true)
     private Date octubre;
-    
+
     //Define noviembre
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "noviembre", nullable = true)
     private Date noviembre;
-    
+
     //Define diciembre
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "diciembre", nullable = true)
     private Date diciembre;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Cliente getCliente() {
         return cliente;
     }

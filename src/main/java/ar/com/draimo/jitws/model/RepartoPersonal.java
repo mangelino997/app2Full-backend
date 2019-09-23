@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 /**
  * Clase reparto personal
- * Mapea con la tabla en la base de datos
+ * Mapea con la tabla en la base de datos.
  * @author blas
  */
 
@@ -29,7 +29,6 @@ public class RepartoPersonal extends ObjetoGenerico {
     private Personal personal;
     
     //Getters y Setters de la clase
-
     public Reparto getReparto() {
         return reparto;
     }

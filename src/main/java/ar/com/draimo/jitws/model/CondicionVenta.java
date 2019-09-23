@@ -6,25 +6,24 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase CondicionVenta
+ * Clase CondicionVenta 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "condicionventa")
 public class CondicionVenta extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Define si es contado
     @Column(name = "esContado", nullable = false)
     private boolean esContado;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -40,5 +39,5 @@ public class CondicionVenta extends ObjetoGenerico {
     public void setEsContado(boolean esContado) {
         this.esContado = esContado;
     }
-    
+
 }

@@ -32,7 +32,7 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -46,7 +46,7 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
@@ -57,7 +57,6 @@ public class ClienteOrdenVenta extends ObjetoGenerico {
     private Date fechaUltimaMod;
     
     //Getters y Setters de la clase
-
     public Cliente getCliente() {
         return cliente;
     }

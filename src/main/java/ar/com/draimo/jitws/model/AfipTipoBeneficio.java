@@ -6,21 +6,20 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase AfipTipoBeneficio
+ * Clase AfipTipoBeneficio 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afiptipobeneficio")
 public class AfipTipoBeneficio extends ObjetoGenerico {
 
-    //Define el descripcion
+    //Define descripcion
     @Column(name = "descripcion", length = 45, nullable = false)
     private String descripcion;
 
     //Getters y Setters de la clase
-
     public String getDescripcion() {
         return descripcion;
     }

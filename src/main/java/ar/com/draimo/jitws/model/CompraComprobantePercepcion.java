@@ -12,56 +12,56 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Clase CompraComprobantePercepcion
- * Define el modelo (columnas) de la base de datos.
+ * Clase CompraComprobantePercepcion 
+ * Define el modelo (columnas) de la base de
+ * datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "compracomprobantepercepcion")
 public class CompraComprobantePercepcion extends ObjetoGenerico {
-    
+
     //Referencia a la clase compraComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCompraComprobante", nullable = false)
     private CompraComprobante compraComprobante;
-    
+
     //Referencia a la clase TipoPercepcion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoPercepcion", nullable = false)
     private TipoPercepcion tipoPercepcion;
 
     //Define anio
-    @Column(name = "anio",length = 4, nullable = false)
+    @Column(name = "anio", length = 4, nullable = false)
     private short anio;
-    
+
     //Referencia a la clase Mes
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMes", nullable = false)
     private Mes mes;
 
     //Define el importe
-    @Column(name = "importe",nullable = false)
+    @Column(name = "importe", nullable = false)
     private BigDecimal importe;
-    
+
     //Define PuntoVenta
-    @Column(name = "puntoVenta",length = 5, nullable = true)
+    @Column(name = "puntoVenta", length = 5, nullable = true)
     private int puntoVenta;
-    
+
     //Define letra
-    @Column(name = "letra",length = 1, nullable = true)
+    @Column(name = "letra", length = 1, nullable = true)
     private String letra;
-    
+
     //Define numero
-    @Column(name = "numero",length = 8, nullable = true)
+    @Column(name = "numero", length = 8, nullable = true)
     private int numero;
-    
-    //Referencia a la clase compraComprobanteVencimientos
+
+    //Referencia a la clase compraComprobanteJurisdicciones
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobantePercepcion")
     private List<CompraCptePercepcionJurisd> compraCptePercepcionJurisdicciones;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public CompraComprobante getCompraComprobante() {
         return compraComprobante;
     }

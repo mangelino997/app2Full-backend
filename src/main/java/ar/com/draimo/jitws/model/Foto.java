@@ -37,12 +37,11 @@ public class Foto extends ObjetoGenerico {
     @Column(name = "datos", nullable = false)
     private byte[] datos;
     
-    //Define el nombre
+    //Define la tabla
     @Column(name = "tabla", length = 60, nullable = false)
     private String tabla;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

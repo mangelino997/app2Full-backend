@@ -9,36 +9,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase OpcionPestania
+ * Clase OpcionPestania 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "opcionpestania")
 public class OpcionPestania extends ObjetoGenerico {
-    
+
     //Referencia a la clase Rol
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRol", nullable = false)
     private Rol rol;
-    
+
     //Referencia a la clase Opcion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOpcion", nullable = false)
     private Opcion opcion;
-    
+
     //Referencia a la clase Pestania
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPestania", nullable = false)
     private Pestania pestania;
-    
+
     //Define si la pestaña se muestra o no
     @Column(name = "mostrar", nullable = false)
     private boolean mostrar;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Rol getRol() {
         return rol;
     }
@@ -70,5 +69,5 @@ public class OpcionPestania extends ObjetoGenerico {
     public void setMostrar(boolean mostrar) {
         this.mostrar = mostrar;
     }
-    
+
 }

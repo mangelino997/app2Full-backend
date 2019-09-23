@@ -10,16 +10,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Banco
+ * Clase basico categoria 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "basicocategoria")
 public class BasicoCategoria extends ObjetoGenerico {
-    
-    //Referencia a categoria
+
+    //Referencia a la clase categoria
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
@@ -27,18 +27,17 @@ public class BasicoCategoria extends ObjetoGenerico {
     //Define el anio
     @Column(name = "anio", nullable = false)
     private short anio;
-    
+
     //Referencia a la clase Mes
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMes", nullable = false)
     private Mes mes;
-    
+
     //Define el basico
     @Column(name = "basico", nullable = false)
     private BigDecimal basico;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Categoria getCategoria() {
         return categoria;
     }
@@ -70,5 +69,5 @@ public class BasicoCategoria extends ObjetoGenerico {
     public void setBasico(BigDecimal basico) {
         this.basico = basico;
     }
-    
+
 }

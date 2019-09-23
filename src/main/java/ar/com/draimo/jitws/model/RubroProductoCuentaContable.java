@@ -10,6 +10,7 @@ import javax.persistence.Table;
 /**
  * Clase RubroProductoCuentaContable
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -17,12 +18,12 @@ import javax.persistence.Table;
 @Table(name = "rubroproductocuentacontable")
 public class RubroProductoCuentaContable extends ObjetoGenerico {
 
-    //Referencia a la clase cliente
+    //Referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
-    //Referencia a la clase PlanCuenta
+    //Referencia a la clase PlanCuenta (compra)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPlanCuentaCompra", nullable = true)
     private PlanCuenta planCuentaCompra;
@@ -33,7 +34,6 @@ public class RubroProductoCuentaContable extends ObjetoGenerico {
     private RubroProducto rubroProducto;
     
     //Getters y Setters de la clase
-    
     public Empresa getEmpresa() {
         return empresa;
     }

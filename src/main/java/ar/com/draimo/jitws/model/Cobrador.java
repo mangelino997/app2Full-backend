@@ -52,7 +52,6 @@ public class Cobrador extends ObjetoGenerico {
     private String correoElectronico;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

@@ -18,6 +18,7 @@ import javax.persistence.Table;
 /**
  * Clase Reparto
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -25,7 +26,7 @@ import javax.persistence.Table;
 @Table(name = "reparto")
 public class Reparto extends ObjetoGenerico {
     
-    //Referencia a la claase empresa
+    //Referencia a la clase empresa (emision)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresaEmision", nullable = false)
     private Empresa empresaEmision;
@@ -50,7 +51,7 @@ public class Reparto extends ObjetoGenerico {
     @Column(name = "fechaSalida", nullable = false)
     private Date fechaSalida;
     
-    //Define horaSalidav
+    //Define horaSalida
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "horaSalida", nullable = false)
     private Time horaSalida;
@@ -60,7 +61,7 @@ public class Reparto extends ObjetoGenerico {
     @JoinColumn(name = "idVehiculo", nullable = false)
     private Vehiculo vehiculo;
     
-    //Referencia a la clase vehiculo
+    //Referencia a la clase vehiculo (remolque)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoRemolque", nullable = true)
     private Vehiculo vehiculoRemolque;
@@ -79,7 +80,7 @@ public class Reparto extends ObjetoGenerico {
     @Column(name = "observaciones", length = 100, nullable = true)
     private String observaciones;
     
-    //Referencia a la clase usuario
+    //Referencia a la clase usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -107,7 +108,7 @@ public class Reparto extends ObjetoGenerico {
     @JoinColumn(name = "idVehiculoProveedor", nullable = true)
     private VehiculoProveedor vehiculoProveedor;
     
-    //Referencia a la clase VehiculoRemolqueProveedor
+    //Referencia a la clase VehiculoProveedor (remolque)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoRemolqueProveedor", nullable = true)
     private VehiculoProveedor vehiculoRemolqueProveedor;
@@ -122,23 +123,22 @@ public class Reparto extends ObjetoGenerico {
     @JoinColumn(name = "idProveedor", nullable = true)
     private Proveedor proveedor;
     
-    //Referencia a la clase AfipCondicionIva
+    //Referencia a la clase AfipCondicionIva (proveedor)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipCondicionIvaProveedor", nullable = true)
     private AfipCondicionIva afipCondicionIvaProveedor;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     
-    //Define referencia a personal
+    //Define referencia a personal (acompaniantes)
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="reparto")
     private List<RepartoPersonal> acompaniantes;
     
     //Getters y Setters de la clase
-
     public Empresa getEmpresaEmision() {
         return empresaEmision;
     }

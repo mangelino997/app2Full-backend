@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Viaje Remito Seguimiento
+ * Clase seguimiento Viaje Remito
  * Define el modelo (columnas) de la base de datos
  * @author blas
  */
@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "seguimientoviajeremito")
 public class SeguimientoViajeRemito extends ObjetoGenerico {
     
-    //Referencia a ViajeRemito
+    //Referencia a la clase ViajeRemito
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeRemito", nullable = false)
     private ViajeRemito viajeRemito;
@@ -29,23 +29,22 @@ public class SeguimientoViajeRemito extends ObjetoGenerico {
     @Column(name = "fecha", nullable = false)  
     private LocalDateTime fecha;
     
-    //Referencia a Sucursal
+    //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal  sucursal;
     
-    //Referencia a SeguimientoEstado
+    //Referencia a la clase SeguimientoEstado
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoEstado", nullable = false)
     private SeguimientoEstado seguimientoEstado;
     
-    //Referencia a SeguimientoSituacion
+    //Referencia a la clase SeguimientoSituacion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoSituacion", nullable = true)
     private SeguimientoSituacion seguimientoSituacion;
     
     //Define los getters y setters
-
     public ViajeRemito getViajeRemito() {
         return viajeRemito;
     }

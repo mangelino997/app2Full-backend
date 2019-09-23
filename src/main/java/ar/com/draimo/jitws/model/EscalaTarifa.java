@@ -7,21 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase EscalaTarifa
+ * Clase EscalaTarifa 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "escalatarifa")
 public class EscalaTarifa extends ObjetoGenerico {
 
-    //Define el nombre
+    //Define el valor
     @Column(name = "valor", nullable = false, unique = true)
     private BigDecimal valor;
 
     //Getters y Setters de la clase
-
     public BigDecimal getValor() {
         return valor;
     }
@@ -29,5 +28,5 @@ public class EscalaTarifa extends ObjetoGenerico {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
-    
+
 }

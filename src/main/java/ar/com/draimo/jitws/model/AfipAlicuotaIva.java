@@ -7,11 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase AlicuotaIva
- * Define el modelo (columnas) de la base de datos.
+ * Clase Afip Alicuota Iva Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipalicuotaiva")
 public class AfipAlicuotaIva extends ObjetoGenerico {
@@ -19,21 +18,20 @@ public class AfipAlicuotaIva extends ObjetoGenerico {
     //Define la alicuota
     @Column(name = "alicuota", nullable = false)
     private BigDecimal alicuota;
-    
+
     //Define el codigo de afip
-    @Column(name = "codigoAfip",length = 3, nullable = false)
+    @Column(name = "codigoAfip", length = 3, nullable = false)
     private String codigoAfip;
-    
+
     //Define la alicuota por defecto
     @Column(name = "porDefecto", nullable = false)
     private boolean porDefecto;
-    
+
     //Define si esta activa
     @Column(name = "estaActiva", nullable = true)
     private boolean estaActiva;
 
     //Getters y Setters de la clase
-
     public BigDecimal getAlicuota() {
         return alicuota;
     }
@@ -65,5 +63,5 @@ public class AfipAlicuotaIva extends ObjetoGenerico {
     public void setEstaActiva(boolean estaActiva) {
         this.estaActiva = estaActiva;
     }
-    
+
 }

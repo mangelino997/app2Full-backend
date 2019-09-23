@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "afipsiniestrado")
 public class AfipSiniestrado extends ObjetoGenerico {
     
-    //Define el codigo de afip
+    //Define el codigo afip
     @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     

@@ -7,37 +7,36 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Categoria
+ * Clase Categoria 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "categoria")
 public class Categoria extends ObjetoGenerico {
-    
+
     //Define el nombre
     @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
-    
-    //Define el adicional por vacaciones
-    @Column(name = "adicionalBasicoVacaciones",length = 45, nullable = false)
+
+    //Define el adicional basico por vacaciones
+    @Column(name = "adicionalBasicoVacaciones", length = 45, nullable = false)
     private BigDecimal adicionalBasicoVacaciones;
-    
-    //Define el tope de adelantos
+
+    //Define el tope basico de adelantos
     @Column(name = "topeBasicoAdelantos", nullable = false)
     private BigDecimal topeBasicoAdelantos;
-    
+
     //Define los dias laborables
     @Column(name = "diasLaborables", length = 2, nullable = false)
     private short diasLaborables;
-    
-    //Define las horas laborables
-    @Column(name = "horasLaborables",length = 2, nullable = false)
-    private short horasLaborables;
-    
-    //Getters y Setters de la clase
 
+    //Define las horas laborables
+    @Column(name = "horasLaborables", length = 2, nullable = false)
+    private short horasLaborables;
+
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -77,5 +76,5 @@ public class Categoria extends ObjetoGenerico {
     public void setHorasLaborables(short horasLaborables) {
         this.horasLaborables = horasLaborables;
     }
-    
+
 }

@@ -14,6 +14,7 @@ import javax.persistence.Table;
 /**
  * Clase Plan de Cuenta
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -27,7 +28,7 @@ public class PlanCuenta extends ObjetoGenerico {
     @JoinColumn(name = "idEmpresa")
     private Empresa empresa;
     
-    //Referencia a la clase PlanDeCuenta
+    //Referencia a la clase PlanDeCuenta (padre)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPadre")
     private PlanCuenta padre;
@@ -44,12 +45,12 @@ public class PlanCuenta extends ObjetoGenerico {
     @Column(name = "estaActivo", nullable = false)
     private boolean estaActivo;
 
-    //Referencia a la clase Usuario alta
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta")
     private Usuario usuarioAlta;
     
-    //Referencia a la clase Usuario mod
+    //Referencia a la clase Usuario (mod)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod")
     private Usuario usuarioMod;
@@ -68,12 +69,11 @@ public class PlanCuenta extends ObjetoGenerico {
     @JoinColumn(name = "idGrupoCuentaContable", nullable = true)
     private GrupoCuentaContable grupoCuentaContable;
     
-    //Define las cuentas hijas
+    //Referencia a la clase planCuenta(hijas)
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "padre")
     private List<PlanCuenta> hijos;
     
     //Getters y setters de la clase
-
     public Empresa getEmpresa() {
         return empresa;
     }

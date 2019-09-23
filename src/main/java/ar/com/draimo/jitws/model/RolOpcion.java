@@ -33,7 +33,6 @@ public class RolOpcion extends ObjetoGenerico {
     private boolean mostrar;
     
     //Getters y Setters de la clase
-
     public Rol getRol() {
         return rol;
     }

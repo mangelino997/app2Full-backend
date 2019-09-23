@@ -535,7 +535,7 @@ public class MensajeRespuesta {
                             break;
                         case LongitudError.BASICO_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.BASICO_LONGITUD;
-                            plusMensaje = " BASICO";
+                            plusMensaje = " BÁSICO";
                             break;
                         case LongitudError.CANTIDAD_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.CANTIDAD_LONGITUD;
@@ -543,23 +543,23 @@ public class MensajeRespuesta {
                             break;
                         case LongitudError.CAPACIDAD_CARGA_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.CAPACIDAD_CARGA_LONGITUD;
-                            plusMensaje = " CAPACIDAD CARGA";
+                            plusMensaje = " CAPACIDAD DE CARGA";
                             break;
                         case LongitudError.CODIGO_AFIP_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.CODIGO_AFIP_LONGITUD;
-                            plusMensaje = " CODIGO AFIP";
+                            plusMensaje = " CÓDIGO AFIP";
                             break;
                         case LongitudError.CODIGO_AREA_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.CODIGO_AREA_LONGITUD;
-                            plusMensaje = " CODIGO DE AREA";
+                            plusMensaje = " CÓDIGO DE AREA";
                             break;
                         case LongitudError.CODIGO_AREA_ALT_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.CODIGO_AREA_ALT_LONGITUD;
-                            plusMensaje = " CODIGO DE AREA ALT";
+                            plusMensaje = " CÓDIGO DE AREA ALT";
                             break;
                         case LongitudError.COMISION_CR_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.COMISION_CR_LONGITUD;
-                            plusMensaje = " COMISION CR";
+                            plusMensaje = " COMISIÓN CR";
                             break;
                         case LongitudError.CONTRIB_ADIC_OBRA_SOCIAL_LONGITUD:
                             codigoRespuesta = CodigoRespuesta.CONTRIB_ADIC_OBRA_SOCIAL_LONGITUD;

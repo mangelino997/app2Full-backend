@@ -11,6 +11,7 @@ import javax.persistence.Table;
 /**
  * Clase Provincia.
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -36,7 +37,6 @@ public class Provincia extends ObjetoGenerico {
     private Pais pais;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

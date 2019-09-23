@@ -20,7 +20,6 @@ public class EstadoCivil extends ObjetoGenerico {
     private String nombre;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

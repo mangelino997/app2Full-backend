@@ -6,7 +6,8 @@ import javax.persistence.Table;
 
 /**
  * Clase Seguimiento Estado
- * Define el modelo (columnas) de la base de datos
+ * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -31,7 +32,6 @@ public class SeguimientoEstado extends ObjetoGenerico {
     private boolean repartoEntrante;
     
     //Define los getters y setters
-
     public String getNombre() {
         return nombre;
     }

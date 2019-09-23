@@ -11,15 +11,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase CompraComprobanteVencimiento
- * Define el modelo (columnas) de la base de datos.
+ * Clase CompraComprobanteVencimiento 
+ * Define el modelo (columnas) de la base de
+ * datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "compracomprobantevencimiento")
 public class CompraComprobanteVencimiento extends ObjetoGenerico {
-    
+
     //Referencia a la clase compraComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCompraComprobante", nullable = false)
@@ -28,13 +29,12 @@ public class CompraComprobanteVencimiento extends ObjetoGenerico {
     //Define fecha
     @Column(name = "fecha", nullable = false)
     private Date fecha;
-    
-    //Define el importe
-    @Column(name = "importe",nullable = false)
-    private BigDecimal importe;
-    
-    //Getters y Setters de la clase
 
+    //Define el importe
+    @Column(name = "importe", nullable = false)
+    private BigDecimal importe;
+
+    //Getters y Setters de la clase
     public CompraComprobante getCompraComprobante() {
         return compraComprobante;
     }

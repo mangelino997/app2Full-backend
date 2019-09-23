@@ -14,11 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase OrdenRecoleccion
+ * Clase OrdenRecoleccion 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "ordenrecoleccion")
 public class OrdenRecoleccion extends ObjetoGenerico {
@@ -27,116 +27,115 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
-    
+
     //Referencia a la clase Usuario
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario usuario;
-    
+
     //Referencia a la clase TipoComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
-    
+
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
-    
+
     //Define Domicilio
-    @Column(name = "domicilio",length = 60, nullable = false)
+    @Column(name = "domicilio", length = 60, nullable = false)
     private String domicilio;
-    
+
     //Referencia a la clase Barrio
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBarrio", nullable = true)
     private Barrio barrio;
-    
+
     //Referencia a la clase Localidad
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidad", nullable = true)
     private Localidad localidad;
-    
+
     //Define fechaEmision
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
-    @Column(name = "fechaEmision", nullable = false)  
+    @Column(name = "fechaEmision", nullable = false)
     private LocalDateTime fechaEmision;
-    
+
     //Define fecha
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
     private Date fecha;
-    
+
     //Define horaDesde
     @JsonFormat(pattern = "HH:mm", timezone = "UTC-3")
     @Column(name = "horaDesde", nullable = false)
     private LocalTime horaDesde;
-    
+
     //Define horaHasta
     @JsonFormat(pattern = "HH:mm", timezone = "UTC-3")
     @Column(name = "horaHasta", nullable = false)
     private LocalTime horaHasta;
-    
+
     //Define solicitadoPor
     @Column(name = "solicitadoPor", length = 30, nullable = false)
     private String solicitadoPor;
-    
+
     //Define telefonoContacto
     @Column(name = "telefonoContacto", length = 45, nullable = false)
     private String telefonoContacto;
-    
+
     //Define descripcionCarga
     @Column(name = "descripcionCarga", length = 60, nullable = false)
     private String descripcionCarga;
-    
+
     //Define bultos
-    @Column(name = "bultos",nullable = false)
+    @Column(name = "bultos", nullable = false)
     private short bultos;
-    
+
     //Define el kilosEfectivo
-    @Column(name = "kilosEfectivo" ,nullable = true)
+    @Column(name = "kilosEfectivo", nullable = true)
     private BigDecimal kilosEfectivo;
-    
+
     //Define el m3
-    @Column(name = "m3" ,nullable = true)
+    @Column(name = "m3", nullable = true)
     private BigDecimal m3;
-    
+
     //Define el valorDeclarado
     @Column(name = "valorDeclarado", nullable = true)
     private BigDecimal valorDeclarado;
-    
-    //Referencia a la clase SucursalDestino
+
+    //Referencia a la clase Sucursal (Destino)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalDestino", nullable = false)
     private Sucursal sucursalDestino;
-    
-    //Define el entregaEnDomicilio
+
+    //Define si se entrega En Domicilio
     @Column(name = "entregarEnDomicilio", nullable = false)
     private boolean entregarEnDomicilio;
-    
-    //Define el pagoEnOrigen
+
+    //Define si se paga En Origen
     @Column(name = "pagoEnOrigen", nullable = true)
     private boolean pagoEnOrigen;
-    
-    //Define el estaEnReparto
+
+    //Define si esta En Reparto
     @Column(name = "estaEnReparto", nullable = false)
     private boolean estaEnReparto;
-    
+
     //Define observaciones
     @Column(name = "observaciones", length = 60, nullable = true)
     private String observaciones;
-    
+
     //Define el alias
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -336,5 +335,5 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-    
+
 }

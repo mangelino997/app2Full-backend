@@ -10,11 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase AfipDeduccionGeneralTope
- * Define el modelo (columnas) de la base de datos.
+ * Clase AfipDeduccionGeneralTope 
+ * Define el modelo (columnas) de la base de
+ * datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipdeducciongeneraltope")
 public class AfipDeduccionGeneralTope extends ObjetoGenerico {
@@ -36,12 +37,11 @@ public class AfipDeduccionGeneralTope extends ObjetoGenerico {
     @Column(name = "importe", nullable = true)
     private BigDecimal importe;
 
-    //Define oircentajeGananciaNeta
+    //Define porcentajeGananciaNeta
     @Column(name = "porcentajeGananciaNeta", nullable = true)
     private BigDecimal porcentajeGananciaNeta;
 
     //Getters y Setters de la clase
-
     public AfipDeduccionGeneral getAfipDeduccionGeneral() {
         return afipDeduccionGeneral;
     }

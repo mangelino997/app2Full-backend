@@ -17,6 +17,7 @@ import javax.persistence.Table;
 /**
  * Clase Proveedor
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -55,7 +56,7 @@ public class Proveedor extends ObjetoGenerico {
     @Column(name = "numeroDocumento",length = 15, nullable = false)
     private String numeroDocumento;
     
-    //Define el codigo de ingresos brutos
+    //Define el numero de ingresos brutos
     @Column(name = "numeroIIBB",length = 15, nullable = true)
     private String numeroIIBB;
     
@@ -158,12 +159,12 @@ public class Proveedor extends ObjetoGenerico {
     @Column(name = "alias",length = 100, nullable = true)
     private String alias;
     
+    //Referencia a la clase proveedoriCuentaContable
     @JsonIgnoreProperties("proveedor")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
     private List<ProveedorCuentaContable> proveedorCuentasContables;
     
     //Getters y Setters de la clase
-
     public String getRazonSocial() {
         return razonSocial;
     }

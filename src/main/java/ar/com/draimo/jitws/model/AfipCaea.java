@@ -12,11 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase AfipCaea
+ * Clase AfipCaea 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipcaea")
 public class AfipCaea extends ObjetoGenerico {
@@ -25,47 +25,46 @@ public class AfipCaea extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Define el anio
-    @Column(name = "anio",length = 4, nullable = false)
+    @Column(name = "anio", length = 4, nullable = false)
     private short anio;
-    
+
     //Define el mes
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMes", nullable = false)
     private Mes mes;
-    
+
     //Define la quincena
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idQuincena", nullable = false)
     private Quincena quincena;
-    
+
     //Define el numero caea
-    @Column(name = "numeroCAEA",length = 14, nullable = false)
+    @Column(name = "numeroCAEA", length = 14, nullable = false)
     private String numeroCAEA;
-    
+
     //Define fecha desde
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaDesde", nullable = false)
     private Date fechaDesde;
-    
+
     //Define fecha hasta
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaHasta", nullable = false)
     private Date fechaHasta;
-    
+
     //Define fecha tope informar
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaTopeInformar", nullable = false)
     private Date fechaTopeInformar;
-    
+
     //Define fecha solicitud
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaSolicitud", nullable = false)
     private LocalDateTime fechaSolicitud;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -137,5 +136,5 @@ public class AfipCaea extends ObjetoGenerico {
     public void setFechaSolicitud(LocalDateTime fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
-    
+
 }

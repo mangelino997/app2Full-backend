@@ -10,8 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Banco
+ * Clase personal familiar
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -58,7 +59,7 @@ public class PersonalFamiliar extends ObjetoGenerico {
     @Column(name = "fechaNacimiento", nullable = false)
     private Date fechaNacimiento;
     
-    //Define la referencia a la clase localidad
+    //Define la referencia a la clase localidad (nacimiento)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidadNacimiento",nullable = false)
     private Localidad localidadNacimiento;
@@ -72,7 +73,7 @@ public class PersonalFamiliar extends ObjetoGenerico {
     @Column(name = "anioAltaImpGan",length = 4, nullable = true)
     private short anioAltaImpGan;
     
-    //Define la referencia a la tabla mes de alta
+    //Define la referencia a la tabla mes (alta imp. gan.)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMesAltaImpGan", nullable = true)
     private Mes mesAltaImpGan;
@@ -81,13 +82,12 @@ public class PersonalFamiliar extends ObjetoGenerico {
     @Column(name = "anioBajaImpGan",length = 4, nullable = true)
     private short anioBajaImpGan;
     
-    //Define la referencia a la tabla mes de baja
+    //Define la referencia a la tabla mes (baja imp. gan.)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMesBajaImpGan", nullable = true)
     private Mes mesBajaImpGan;
     
     //Getters y Setters de la clase
-
     public Personal getPersonal() {
         return personal;
     }
@@ -209,4 +209,3 @@ public class PersonalFamiliar extends ObjetoGenerico {
     }
     
 }
-

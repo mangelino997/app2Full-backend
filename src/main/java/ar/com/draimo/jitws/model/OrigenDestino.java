@@ -9,8 +9,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase OrigenDestino
+ * Clase Origen Destino
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -28,7 +29,6 @@ public class OrigenDestino extends ObjetoGenerico {
     private Provincia provincia;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

@@ -9,36 +9,35 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
- * Clase bugimagen
- * Mapea con la tabla en la base de datos
+ * Clase bug imagen 
+ * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "bugimagen")
 @JsonFilter("filtroImagen")
 public class BugImagen extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
-    //Define el nombre
-    @Column(name = "tipo",length = 10, nullable = false)
+
+    //Define el tipo
+    @Column(name = "tipo", length = 10, nullable = false)
     private String tipo;
-    
-    //Define el nombre
+
+    //Define el tamanio
     @Column(name = "tamanio", nullable = false)
     private long tamanio;
-    
+
     //Define los datos
     @Lob
     @Basic(optional = false, fetch = FetchType.LAZY)
     @Column(name = "datos", nullable = true)
     private byte[] datos;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }

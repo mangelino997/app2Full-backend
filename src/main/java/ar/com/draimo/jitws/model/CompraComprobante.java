@@ -14,120 +14,120 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Clase CompraComprobante
- * Mapea con la tabla en la base de datos
+ * Clase CompraComprobante 
+ * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "compracomprobante")
 public class CompraComprobante extends ObjetoGenerico {
-    
+
     //Referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
-    
+
     //Define el puntoVenta
-    @Column(name = "puntoVenta",length = 5, nullable = false)
+    @Column(name = "puntoVenta", length = 5, nullable = false)
     private int puntoVenta;
-    
+
     //Define letra
-    @Column(name = "letra",length = 1, nullable = false)
+    @Column(name = "letra", length = 1, nullable = false)
     private String letra;
-    
+
     //Define numero
-    @Column(name = "numero",length = 8, nullable = false)
+    @Column(name = "numero", length = 8, nullable = false)
     private int numero;
-    
+
     //Referencia a la clase TipoComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
-    
+
     //Define codigoAfip
-    @Column(name = "codigoAfip",length = 3, nullable = false)
+    @Column(name = "codigoAfip", length = 3, nullable = false)
     private String codigoAfip;
-    
+
     //Define fechaEmision
     @Column(name = "fechaEmision", nullable = false)
     private Date fechaEmision;
-    
+
     //Define fechaContable
     @Column(name = "fechaContable", nullable = false)
     private Date fechaContable;
-    
+
     //Define fechaRegistracion
     @Column(name = "fechaRegistracion", nullable = false)
     private Timestamp fechaRegistracion;
-    
+
     //Referencia a la clase proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProveedor", nullable = false)
     private Proveedor proveedor;
-    
+
     //Referencia a la clase AfipCondicionIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipCondicionIva", nullable = false)
     private AfipCondicionIva afipCondicionIva;
-    
+
     //Referencia a la clase TipoDocumento
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoDocumento", nullable = false)
     private TipoDocumento tipoDocumento;
-    
+
     //Define numeroDocumento
-    @Column(name = "numeroDocumento",length = 15, nullable = false)
+    @Column(name = "numeroDocumento", length = 15, nullable = false)
     private String numeroDocumento;
 
     //Referencia a la clase CondicionCompra
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCondicionCompra", nullable = false)
     private CondicionCompra condicionCompra;
-    
+
     //Define importeNetoGravado
     @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
-    
+
     //Define importeIVA
     @Column(name = "importeIVA", nullable = false)
     private BigDecimal importeIVA;
-    
+
     //Define importeNoGravado
     @Column(name = "importeNoGravado", nullable = false)
     private BigDecimal importeNoGravado;
-    
+
     //Define importeExento
     @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
-    
+
     //Define importeImpuestoInterno
     @Column(name = "importeImpuestoInterno", nullable = false)
     private BigDecimal importeImpuestoInterno;
-    
+
     //Define importePercepcion
     @Column(name = "importePercepcion", nullable = false)
     private BigDecimal importePercepcion;
-    
+
     //Define importeTotal
     @Column(name = "importeTotal", nullable = false)
     private BigDecimal importeTotal;
-    
+
     //Define importeSaldo
     @Column(name = "importeSaldo", nullable = false)
     private BigDecimal importeSaldo;
 
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
 
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = false)
     private Usuario usuarioMod;
@@ -136,32 +136,31 @@ public class CompraComprobante extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMoneda", nullable = false)
     private Moneda moneda;
-    
+
     //Define monedaCotizacion
     @Column(name = "monedaCotizacion", nullable = false)
     private BigDecimal monedaCotizacion;
-    
-    //Define codigoAfip
-    @Column(name = "observaciones",length = 100, nullable = true)
+
+    //Define observaciones
+    @Column(name = "observaciones", length = 100, nullable = true)
     private String observaciones;
-    
+
     //Referencia a la clase compraComprobanteItems
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
     @JsonIgnoreProperties("compraComprobante")
     private List<CompraComprobanteItem> compraComprobanteItems;
-    
+
     //Referencia a la clase compraComprobantePercepciones
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
     @JsonIgnoreProperties("compraComprobante")
     private List<CompraComprobantePercepcion> compraComprobantePercepciones;
-    
+
     //Referencia a la clase compraComprobanteVencimientos
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "compraComprobante")
     @JsonIgnoreProperties("compraComprobante")
     private List<CompraComprobanteVencimiento> compraComprobanteVencimientos;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;
     }

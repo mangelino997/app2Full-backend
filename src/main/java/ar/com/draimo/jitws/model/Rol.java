@@ -24,7 +24,6 @@ public class Rol extends ObjetoGenerico {
     private boolean esDesarrollador;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

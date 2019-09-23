@@ -13,7 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Personal Define el modelo (columnas) de la base de datos.
+ * Clase Personal 
+ * Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */
@@ -33,12 +34,12 @@ public class Personal extends ObjetoGenerico {
     @Column(name = "nombreCompleto", length = 45, nullable = false)
     private String nombreCompleto;
 
-    //Referencia a la clase Tipo de documento
+    //Referencia a la clase Tipo documento
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoDocumento", nullable = false)
     private TipoDocumento tipoDocumento;
 
-    //Define el numero de documento
+    //Define el numero documento
     @Column(name = "numeroDocumento", length = 11, nullable = false)
     private String numeroDocumento;
 
@@ -83,7 +84,7 @@ public class Personal extends ObjetoGenerico {
     @Column(name = "telefonoMovil", length = 45, nullable = true)
     private String telefonoMovil;
 
-    //Referencia a la clese Estado civil
+    //Referencia a la clase Estado civil
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEstadoCivil", nullable = false)
     private EstadoCivil estadoCivil;
@@ -92,17 +93,17 @@ public class Personal extends ObjetoGenerico {
     @Column(name = "correoelectronico", length = 60, nullable = true)
     private String correoelectronico;
 
-    //Referencia a la clese Sexo
+    //Referencia a la clase Sexo
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSexo", nullable = false)
     private Sexo sexo;
 
-    //Referencia a la clese Sucursal
+    //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
 
-    //Referencia a la clese Area
+    //Referencia a la clase Area
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idArea", nullable = false)
     private Area area;
@@ -242,7 +243,7 @@ public class Personal extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
 
-    //Define el vencimiento de la licencia de conducirde un chofer
+    //Define el vencimiento de la licencia de conducir de un chofer
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLicenciaConducir", nullable = true)
     private Date vtoLicenciaConducir;
@@ -257,12 +258,12 @@ public class Personal extends ObjetoGenerico {
     @Column(name = "vtoPsicoFisico", nullable = true)
     private Date vtoPsicoFisico;
 
-    //Define el vencimiento del curso De carga peligrosa
+    //Define el vencimiento del curso de carga peligrosa
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoCursoCargaPeligrosa", nullable = true)
     private Date vtoCursoCargaPeligrosa;
 
-    //Define el vencimiento de LNH
+    //Define el vencimiento de LINTI
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoLINTI", nullable = true)
     private Date vtoLINTI;
@@ -385,11 +386,11 @@ public class Personal extends ObjetoGenerico {
     @Column(name = "turnoDSalida", nullable = true)
     private Time turnoDSalida;
 
-    //Define el turno rotativo
+    //Define si es turno rotativo
     @Column(name = "turnoRotativo", nullable = true)
     private boolean turnoRotativo;
 
-    //Define el turno fuera convenio
+    //Define si es turno fuera convenio
     @Column(name = "turnoFueraConvenio", nullable = true)
     private boolean turnoFueraConvenio;
 
@@ -461,7 +462,7 @@ public class Personal extends ObjetoGenerico {
     @JoinColumn(name = "idPdfAltaTemprana", nullable = true)
     private Pdf pdfAltaTemprana;
     
-    //Define esta activa
+    //Define si esta activa
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
 

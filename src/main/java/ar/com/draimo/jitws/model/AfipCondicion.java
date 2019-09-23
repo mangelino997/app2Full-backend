@@ -6,29 +6,28 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase AfipCondicion
+ * Clase Afip Condicion 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipcondicion")
 public class AfipCondicion extends ObjetoGenerico {
-    
+
     //Define el codigo de afip
-    @Column(name = "codigoAfip",length = 3, nullable = false)
+    @Column(name = "codigoAfip", length = 3, nullable = false)
     private String codigoAfip;
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 140, nullable = false)
+    @Column(name = "nombre", length = 140, nullable = false)
     private String nombre;
-    
+
     //Define el alias
     @Column(name = "alias", length = 150, nullable = true)
     private String alias;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getCodigoAfip() {
         return codigoAfip;
     }
@@ -52,5 +51,5 @@ public class AfipCondicion extends ObjetoGenerico {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-    
+
 }

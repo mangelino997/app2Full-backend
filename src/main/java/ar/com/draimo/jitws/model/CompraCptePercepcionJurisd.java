@@ -10,31 +10,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase CompraCptePercepcionJurisd
- * Define el modelo (columnas) de la base de datos.
+ * Clase CompraCptePercepcionJurisd 
+ * Define el modelo (columnas) de la base de
+ * datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "compracptepercepcionjurisd")
 public class CompraCptePercepcionJurisd extends ObjetoGenerico {
-    
+
     //Referencia a la clase compraComprobantePercepcion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCompraComprobantePercepcion", nullable = false)
     private CompraComprobantePercepcion compraComprobantePercepcion;
-    
+
     //Referencia a la clase Provincia
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProvincia", nullable = false)
     private Provincia provincia;
-    
-    //Define el importe
-    @Column(name = "importe",nullable = false)
-    private BigDecimal importe;
-    
-    //Getters y Setters de la clase
 
+    //Define el importe
+    @Column(name = "importe", nullable = false)
+    private BigDecimal importe;
+
+    //Getters y Setters de la clase
     public CompraComprobantePercepcion getCompraComprobantePercepcion() {
         return compraComprobantePercepcion;
     }

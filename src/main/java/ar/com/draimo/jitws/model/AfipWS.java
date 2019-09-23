@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Categoria
+ * Clase afipws
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
@@ -23,14 +23,15 @@ public class AfipWS extends ObjetoGenerico {
     @Column(name = "descripcion",length = 100, nullable = false)
     private String descripcion;
     
-    //Define el urlReal
+    //Define la urlReal
     @Column(name = "urlReal",length = 150, nullable = false)
     private String urlReal;
     
-    //Define el urlPrueba
+    //Define la urlPrueba
     @Column(name = "urlPrueba",length = 150, nullable = false)
     private String urlPrueba;
 
+    //Getters y setters de la clase
     public String getNombre() {
         return nombre;
     }

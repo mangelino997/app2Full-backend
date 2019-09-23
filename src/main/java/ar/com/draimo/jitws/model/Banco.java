@@ -6,25 +6,24 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Banco
+ * Clase Banco 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "banco")
 public class Banco extends ObjetoGenerico {
-    
-    //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false, unique = true)
-    private String nombre;
-    
-    //Define el sitio web
-    @Column(name = "sitioWeb",length = 60, nullable = true, unique = true)
-    private String sitioWeb;
-    
-    //Getters y Setters de la clase
 
+    //Define el nombre
+    @Column(name = "nombre", length = 45, nullable = false, unique = true)
+    private String nombre;
+
+    //Define el sitio web
+    @Column(name = "sitioWeb", length = 60, nullable = true, unique = true)
+    private String sitioWeb;
+
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -40,5 +39,5 @@ public class Banco extends ObjetoGenerico {
     public void setSitioWeb(String sitioWeb) {
         this.sitioWeb = sitioWeb;
     }
-    
+
 }

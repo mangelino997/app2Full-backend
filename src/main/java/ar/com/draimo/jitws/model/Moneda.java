@@ -6,37 +6,36 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Moneda
+ * Clase Moneda 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "moneda")
 public class Moneda extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false, unique = true)
+    @Column(name = "nombre", length = 45, nullable = false, unique = true)
     private String nombre;
-    
-    //Define si esta activo o no
+
+    //Define si esta activo
     @Column(name = "estaActivo", nullable = false)
     private boolean estaActivo;
-    
+
     //Define por defecto
     @Column(name = "porDefecto", nullable = false)
     private boolean porDefecto;
-    
-    //Define el codigo de afip
-    @Column(name = "codigoAfip",length = 3, nullable = false)
-    private String codigoAfip;
-    
-    //Define el simbolo
-    @Column(name = "simbolo",length = 5, nullable = false)
-    private String simbolo;
-    
-    //Getters y Setters de la clase
 
+    //Define el codigo de afip
+    @Column(name = "codigoAfip", length = 3, nullable = false)
+    private String codigoAfip;
+
+    //Define el simbolo
+    @Column(name = "simbolo", length = 5, nullable = false)
+    private String simbolo;
+
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -76,5 +75,5 @@ public class Moneda extends ObjetoGenerico {
     public void setSimbolo(String simbolo) {
         this.simbolo = simbolo;
     }
-    
+
 }

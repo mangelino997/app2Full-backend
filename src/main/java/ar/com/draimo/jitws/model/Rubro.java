@@ -8,6 +8,7 @@ import javax.persistence.Table;
 /**
  * Clase Rubro.
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -20,7 +21,6 @@ public class Rubro extends ObjetoGenerico {
     private String nombre;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 /**
  * Clase OrdenVentaTarifa
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -28,7 +29,6 @@ public class OrdenVentaTarifa extends ObjetoGenerico {
     private TipoTarifa tipoTarifa;
     
     //Getters y Setters de la clase
-
     public OrdenVenta getOrdenVenta() {
         return ordenVenta;
     }

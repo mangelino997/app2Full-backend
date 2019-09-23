@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 /**
  * Clase Seguimiento Estado Situacion
- * Mapea con la tabla en la base de datos
+ * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
@@ -16,18 +16,17 @@ import javax.persistence.Table;
 @Table(name = "seguimientoestadosituacion")
 public class SeguimientoEstadoSituacion extends ObjetoGenerico {
     
-    //Referencia a la tabla seguimientoEstado
+    //Referencia a la clase seguimientoEstado
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoEstado",nullable = false)
     private SeguimientoEstado seguimientoEstado;
     
-    //Referencia a la tabla seguimientoSituacion
+    //Referencia a la clase seguimientoSituacion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoSituacion",nullable = false)
     private SeguimientoSituacion seguimientoSituacion;
     
     //Getters y Setters de la clase
-
     public SeguimientoEstado getSeguimientoEstado() {
         return seguimientoEstado;
     }

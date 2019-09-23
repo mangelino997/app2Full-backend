@@ -6,8 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Marca de vehiculo.
+ * Clase Marca vehiculo.
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -20,7 +21,6 @@ public class MarcaVehiculo extends ObjetoGenerico {
     private String nombre;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

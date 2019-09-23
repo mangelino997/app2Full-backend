@@ -32,7 +32,6 @@ public class Localidad extends ObjetoGenerico {
     private Provincia provincia;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

@@ -19,59 +19,59 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 /**
- * Clase Empresa
+ * Clase Empresa 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "empresa")
 public class Empresa extends ObjetoGenerico {
-    
+
     //Define la razon social
-    @Column(name = "razonSocial",length = 45, nullable = false, unique = true)
+    @Column(name = "razonSocial", length = 45, nullable = false, unique = true)
     private String razonSocial;
-    
+
     //Define el domicilio
     @Column(name = "domicilio", length = 60, nullable = false)
     private String domicilio;
-    
+
     //Referencia a la clase Barrio
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBarrio")
     private Barrio barrio;
-    
+
     //Referencia a la clase Localidad
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidad", nullable = false)
     private Localidad localidad;
-    
+
     //Referencia a la clase AfipCondicionIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipCondicionIva", nullable = false)
     private AfipCondicionIva afipCondicionIva;
-    
+
     //Define el cuit
     @Column(name = "cuit", length = 11, nullable = false, unique = true)
     private String cuit;
-    
+
     //Define el numero de ingresos brutos
     @Column(name = "numeroIIBB", length = 15)
     private String numeroIIBB;
-    
+
     //Define la abreviatura
     @Column(name = "abreviatura", length = 15, nullable = false, unique = true)
     private String abreviatura;
-    
+
     //Define el logo
     @Lob
     @Column(name = "logoBin")
     private Blob logoBin;
-    
+
     //Define si esta activa
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
-    
+
     //Define el inicio de actividad
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "inicioActividad")
@@ -80,44 +80,44 @@ public class Empresa extends ObjetoGenerico {
     //Define el caea
     @Column(name = "feCAEA", nullable = false)
     private boolean feCAEA;
-    
+
     //Define el fe modo
     @Column(name = "feModo", nullable = false)
     private boolean feModo;
-    
+
     //Define el certificado real
     @Lob
     @Column(name = "certificadoReal")
     private Blob certificadoReal;
-    
+
     //Define el certificado prueba
     @Lob
     @Column(name = "certificadoPrueba")
     private Blob certificadoPrueba;
-    
+
     //Define fe
     @Column(name = "fe", nullable = false)
     private boolean fe;
-    
+
     //Referencia al a clase ordenVenta
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "empresaordenventa",
-        joinColumns = @JoinColumn(name = "idEmpresa"),
-        inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"),
-        uniqueConstraints={@UniqueConstraint(columnNames={"idEmpresa", "idOrdenVenta"})})  
-    @JsonIgnoreProperties(value = {"clientes","empresas"})
+            joinColumns = @JoinColumn(name = "idEmpresa"),
+            inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"),
+            uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"idEmpresa", "idOrdenVenta"})})
+    @JsonIgnoreProperties(value = {"clientes", "empresas"})
     private List<OrdenVenta> ordenesVentas = new ArrayList<>();
-    
+
     //Define token
     @Column(name = "token", length = 1000)
     private String token;
-    
+
     //Define firma
     @Column(name = "firma", length = 300)
     private String firma;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getRazonSocial() {
         return razonSocial;
     }
@@ -205,7 +205,7 @@ public class Empresa extends ObjetoGenerico {
     public void setInicioActividad(Date inicioActividad) {
         this.inicioActividad = inicioActividad;
     }
-    
+
     public boolean isFeCAEA() {
         return feCAEA;
     }
@@ -269,5 +269,5 @@ public class Empresa extends ObjetoGenerico {
     public void setFirma(String firma) {
         this.firma = firma;
     }
-    
+
 }

@@ -14,6 +14,7 @@ import javax.persistence.Table;
 /**
  * Clase OrdenVentaTramo
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -46,7 +47,7 @@ public class OrdenVentaTramo extends ObjetoGenerico {
     @Column(name = "precioUnitarioRef", nullable = true)
     private BigDecimal precioUnitarioRef;
     
-    //Referencia a la clase OrdenVentaPrecio
+    //Referencia a la clase OrdenVentaTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVentaTarifa", nullable = false)
     private OrdenVentaTarifa ordenVentaTarifa;
@@ -57,7 +58,6 @@ public class OrdenVentaTramo extends ObjetoGenerico {
     private Date preciosDesde;
     
     //Getters y Setters de la clase
-
     public Tramo getTramo() {
         return tramo;
     }

@@ -10,11 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase AfipGananciaNeta
+ * Clase Afip Ganancia Neta 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipganancianeta")
 public class AfipGananciaNeta extends ObjetoGenerico {
@@ -31,13 +31,12 @@ public class AfipGananciaNeta extends ObjetoGenerico {
     @Column(name = "importeFijo", nullable = false)
     private BigDecimal importeFijo;
 
-    //Referencia a afiptipobeneficio
+    //Referencia a afipAlicuotaGanancia
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipAlicuotaGanancia", nullable = false)
     private AfipAlicuotaGanancia afipAlicuotaGanancia;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public short getAnio() {
         return anio;
     }

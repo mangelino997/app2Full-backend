@@ -9,44 +9,43 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Chequera
- * Mapea con la tabla en la base de datos
+ * Clase Chequera 
+ * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "chequera")
 public class Chequera extends ObjetoGenerico {
-    
-    //Referencia a cuenta bancaria
+
+    //Referencia a la clase cuenta bancaria
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCuentaBancaria", nullable = false)
     private CuentaBancaria cuentaBancaria;
-    
+
     //Define desde
     @Column(name = "desde", length = 8, nullable = false)
     private int desde;
-    
+
     //Define hasta
     @Column(name = "hasta", length = 8, nullable = false)
     private int hasta;
-    
-    //Referencia a tipo chequera
+
+    //Referencia a la clase tipo chequera
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoChequera", nullable = false)
     private TipoChequera tipoChequera;
-    
-    //Referencia a usuario
+
+    //Referencia a la clase usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
-    
+
     //Define hasta
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public CuentaBancaria getCuentaBancaria() {
         return cuentaBancaria;
     }

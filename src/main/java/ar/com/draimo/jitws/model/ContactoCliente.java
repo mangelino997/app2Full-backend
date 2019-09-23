@@ -9,53 +9,52 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Contacto Cliente
+ * Clase Contacto Cliente 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "contactocliente")
 public class ContactoCliente extends ObjetoGenerico {
-    
+
     //Referencia a la clase Cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
-    
+
     //Referencia a la clase Tipo Contacto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoContacto", nullable = false)
     private TipoContacto tipoContacto;
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Define el telefono fijo
-    @Column(name = "telefonoFijo",length = 45, nullable = true)
+    @Column(name = "telefonoFijo", length = 45, nullable = true)
     private String telefonoFijo;
-    
+
     //Define el telefono movil
-    @Column(name = "telefonoMovil",length = 45, nullable = true)
+    @Column(name = "telefonoMovil", length = 45, nullable = true)
     private String telefonoMovil;
-    
+
     //Define el correo electronico
-    @Column(name = "correoelectronico",length = 60, nullable = true)
+    @Column(name = "correoelectronico", length = 60, nullable = true)
     private String correoelectronico;
-    
+
     //Referencia a la clase Usuario (Alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
-    
+
     //Referencia a la clase Usuario (Mod)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Cliente getCliente() {
         return cliente;
     }
@@ -119,5 +118,5 @@ public class ContactoCliente extends ObjetoGenerico {
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
     }
-    
+
 }

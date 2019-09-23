@@ -10,11 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Configuracion Vehiculo
+ * Clase Configuracion Vehiculo 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "configuracionvehiculo")
 public class ConfiguracionVehiculo extends ObjetoGenerico {
@@ -23,50 +23,49 @@ public class ConfiguracionVehiculo extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoVehiculo", nullable = false)
     private TipoVehiculo tipoVehiculo;
-    
+
     //Referencia a la clase MarcaVehiculo
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMarcaVehiculo", nullable = false)
     private MarcaVehiculo marcaVehiculo;
-    
+
     //Define el modelo
-    @Column(name = "modelo",length = 45, nullable = false)
+    @Column(name = "modelo", length = 45, nullable = false)
     private String modelo;
-    
+
     //Define la descripcion
-    @Column(name = "descripcion",length = 100, nullable = true)
+    @Column(name = "descripcion", length = 100, nullable = true)
     private String descripcion;
-    
+
     //Define la cantidad de ejes
     @Column(name = "cantidadEjes", nullable = false)
     private short cantidadEjes;
-    
+
     //Define la capacidad de carga
     @Column(name = "capacidadCarga", nullable = false)
     private BigDecimal capacidadCarga;
-    
+
     //Define la tara
     @Column(name = "tara", nullable = true)
     private BigDecimal tara;
-    
+
     //Define la altura
     @Column(name = "altura", nullable = true)
     private BigDecimal altura;
-    
+
     //Define el largo
     @Column(name = "largo", nullable = true)
     private BigDecimal largo;
-    
+
     //Define el ancho
     @Column(name = "ancho", nullable = true)
     private BigDecimal ancho;
-    
+
     //Define los m3
     @Column(name = "m3", nullable = true)
     private BigDecimal m3;
 
     //Getters y Setters de la clase
-
     public TipoVehiculo getTipoVehiculo() {
         return tipoVehiculo;
     }
@@ -154,5 +153,5 @@ public class ConfiguracionVehiculo extends ObjetoGenerico {
     public void setM3(BigDecimal m3) {
         this.m3 = m3;
     }
-    
+
 }

@@ -11,6 +11,7 @@ import javax.persistence.Table;
 /**
  * Clase RolSubopcion.
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -23,7 +24,7 @@ public class RolSubopcion extends ObjetoGenerico {
     @JoinColumn(name = "idRol", nullable = false)
     private Rol rol;
     
-    //Referencia a la clase Submodulo
+    //Referencia a la clase Subopcion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSubopcion", nullable = false)
     private Subopcion subopcion;
@@ -33,7 +34,6 @@ public class RolSubopcion extends ObjetoGenerico {
     private boolean mostrar;
     
     //Getters y Setters de la clase
-
     public Rol getRol() {
         return rol;
     }

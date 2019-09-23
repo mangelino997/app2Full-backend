@@ -13,7 +13,8 @@ import javax.persistence.Table;
 
 /**
  * Clase retiro deposito
- * Mapea con la tabla en la base de datos
+ * Mapea con la tabla en la base de datos.
+ * 
  * @author blas
  */
 
@@ -55,12 +56,12 @@ public class RetiroDeposito extends ObjetoGenerico {
     @Column(name = "observaciones",length = 100)
     private String observaciones;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
-    //Define estaCerrada
+    //Define si estaCerrada
     @Column(name = "estaCerrada", nullable = false)
     private boolean estaCerrada;
     
@@ -73,11 +74,12 @@ public class RetiroDeposito extends ObjetoGenerico {
     @Column(name = "numeroDocumento", length = 15, nullable = false)
     private String numeroDocumento;
 
-    //Referencia a la clase Pdf
+    //Referencia a la clase Pdf (dni)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPdfDni", nullable = true)
     private Pdf pdfDni;
     
+    //Define getters y setters de la clase
     public Empresa getEmpresa() {
         return empresa;
     }

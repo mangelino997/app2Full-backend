@@ -12,54 +12,54 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase OrdenVenta
+ * Clase OrdenVenta 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "ordenventa")
 public class OrdenVenta extends ObjetoGenerico {
 
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Referencia a la clase Vendedor
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVendedor", nullable = false)
     private Vendedor vendedor;
-    
+
     //Define la fecha de alta
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
-    
+
     //Define el seguro
     @Column(name = "seguro", nullable = false)
     private BigDecimal seguro;
-    
-    //Define la comision cr
+
+    //Define la comision contra reembolso
     @Column(name = "comisionCR", nullable = true)
     private BigDecimal comisionCR;
-    
+
     //Define las observaciones
     @Column(name = "observaciones", length = 200, nullable = true)
     private String observaciones;
-    
+
     //Define si esta activa
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
-    
+
     //Define la fecha desde que esta activa
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "activaDesde", nullable = true)
     private Date activaDesde;
-    
+
     //Define si es contado
     @Column(name = "esContado", nullable = true)
     private boolean esContado;
-    
+
     //Referencia a la clase cliente
 //    @ManyToMany(cascade = CascadeType.REFRESH)
 //    @JoinTable(name = "clienteordenventa",
@@ -68,7 +68,6 @@ public class OrdenVenta extends ObjetoGenerico {
 //         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idCliente"})})  
 //    @JsonIgnoreProperties("ordenesVentas")
 //    private List<Cliente>  clientes = new ArrayList<>();
-    
     //Referencia a la clase empresa
 //    @ManyToMany(cascade = CascadeType.REFRESH)
 //    @JoinTable(name = "empresaordenventa",
@@ -77,13 +76,11 @@ public class OrdenVenta extends ObjetoGenerico {
 //         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idEmpresa"})})  
 //    @JsonIgnoreProperties("ordenesVentas")
 //    private List<Empresa> empresas = new ArrayList<>();
-    
     //Referencia a la clase empresa
 //    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ordenVenta")
 //    private List<OrdenVentaTarifa> ordenesVentasTarifas = new ArrayList<>();
-
+    
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

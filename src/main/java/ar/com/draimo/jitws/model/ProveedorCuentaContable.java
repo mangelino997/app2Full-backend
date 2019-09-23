@@ -10,6 +10,7 @@ import javax.persistence.Table;
 /**
  * Clase ProveedorCuentaContable
  * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -17,12 +18,12 @@ import javax.persistence.Table;
 @Table(name = "proveedorcuentacontable")
 public class ProveedorCuentaContable extends ObjetoGenerico {
 
-    //Referencia a la clase cliente
+    //Referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
-    //Referencia a la clase PlanCuenta
+    //Referencia a la clase PlanCuenta (Compra)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPlanCuentaCompra", nullable = true)
     private PlanCuenta planCuentaCompra;
@@ -33,7 +34,6 @@ public class ProveedorCuentaContable extends ObjetoGenerico {
     private Proveedor proveedor;
     
     //Getters y Setters de la clase
-    
     public Empresa getEmpresa() {
         return empresa;
     }

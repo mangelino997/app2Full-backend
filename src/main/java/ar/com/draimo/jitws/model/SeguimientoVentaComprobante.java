@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Venta Comprobante Seguimiento
+ * Clase seguimiento Venta Comprobante
  * Define el modelo (columnas) de la base de datos
  * @author blas
  */
@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "seguimientoventacomprobante")
 public class SeguimientoVentaComprobante extends ObjetoGenerico {
     
-    //Referencia a VentaComprobante
+    //Referencia a la clase VentaComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
@@ -29,26 +29,26 @@ public class SeguimientoVentaComprobante extends ObjetoGenerico {
     @Column(name = "fecha", nullable = false)  
     private LocalDateTime fecha;
     
-    //Referencia a Sucursal
+    //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal  sucursal;
     
-    //Referencia a SeguimientoEstado
+    //Referencia a la clase SeguimientoEstado
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoEstado", nullable = false)
     private SeguimientoEstado seguimientoEstado;
     
-    //Referencia a SeguimientoSituacion
+    //Referencia a la clase SeguimientoSituacion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoSituacion", nullable = true)
     private SeguimientoSituacion seguimientoSituacion;
     
+    //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }
 
-    //Define los getters y setters
     public void setVentaComprobante(VentaComprobante ventaComprobante) {
         this.ventaComprobante = ventaComprobante;
     }

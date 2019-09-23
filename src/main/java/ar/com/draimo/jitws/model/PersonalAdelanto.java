@@ -14,7 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase PersonalAdelanto Define el modelo (columnas) de la base de datos.
+ * Clase PersonalAdelanto 
+ * Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */
@@ -23,22 +24,22 @@ import javax.persistence.Table;
 @JsonFilter("personaladelantofiltro")
 public class PersonalAdelanto extends ObjetoGenerico {
 
-    //Referencia a empresa
+    //Referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
 
-    //Referencia a sucursal
+    //Referencia a la clase sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
 
-    //Referencia a personal
+    //Referencia a la clase personal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPersonal", nullable = false)
     private Personal personal;
 
-    //Referencia a tipoComprobante
+    //Referencia a la clase tipoComprobante
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoComprobante", nullable = false)
     private TipoComprobante tipoComprobante;
@@ -65,7 +66,7 @@ public class PersonalAdelanto extends ObjetoGenerico {
     @Column(name = "totalCuotas", nullable = false)
     private short totalCuotas;
 
-    //Referencia a Usuario
+    //Referencia a la clase Usuario(alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -74,7 +75,7 @@ public class PersonalAdelanto extends ObjetoGenerico {
     @Column(name = "observaciones", length = 60, nullable = true)
     private String observaciones;
 
-    //Define esta anulado
+    //Define si esta anulado
     @Column(name = "estaAnulado", nullable = true)
     private boolean estaAnulado;
 
@@ -82,12 +83,12 @@ public class PersonalAdelanto extends ObjetoGenerico {
     @Column(name = "observacionesAnulado", length = 60, nullable = true)
     private String observacionesAnulado;
 
-    //Referencia a usuario
+    //Referencia a usuario (modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
 
-    //Referencia a usuario
+    //Referencia a usuario (baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
@@ -96,12 +97,12 @@ public class PersonalAdelanto extends ObjetoGenerico {
     @Column(name = "numeroLote", nullable = true)
     private int numeroLote;
 
-    //Referencia a viaje
+    //Referencia a la clase viaje
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idViaje", nullable = true)
     private Viaje viaje;
 
-    //Referencia a reparto
+    //Referencia a la clase reparto
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idReparto", nullable = true)
     private Reparto reparto;

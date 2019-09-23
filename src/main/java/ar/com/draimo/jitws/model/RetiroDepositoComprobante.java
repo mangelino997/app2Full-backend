@@ -8,7 +8,8 @@ import javax.persistence.Table;
 
 /**
  * Clase retiro deposito comprobante
- * Mapea con la tabla en la base de datos
+ * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -32,7 +33,6 @@ public class RetiroDepositoComprobante extends ObjetoGenerico {
     private ViajeRemito viajeRemito;
     
     //Define los getters y setters
-
     public RetiroDeposito getRetiroDeposito() {
         return retiroDeposito;
     }

@@ -9,53 +9,52 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Ejercicio.
+ * Clase Ejercicio. 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "ejercicio")
 public class Ejercicio extends ObjetoGenerico {
-    
+
     //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Define el anio de inicio
-    @Column(name = "anioInicio",length = 4, nullable = false)
+    @Column(name = "anioInicio", length = 4, nullable = false)
     private short anioInicio;
-    
+
     //Referencia a la clase mes
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMesInicio", nullable = false)
     private Mes mesInicio;
-    
+
     //Define cantidad meses
-    @Column(name = "cantidadMeses",length = 2, nullable = false)
+    @Column(name = "cantidadMeses", length = 2, nullable = false)
     private short cantidadMeses;
-    
+
     //Define porDefecto
     @Column(name = "porDefecto", nullable = true)
     private boolean porDefecto;
-    
-    //Referencia a la clase usuario
+
+    //Referencia a la clase usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
-    
-    //Referencia a la clase usuario
+
+    //Referencia a la clase usuario(modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -119,5 +118,5 @@ public class Ejercicio extends ObjetoGenerico {
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
     }
-    
+
 }

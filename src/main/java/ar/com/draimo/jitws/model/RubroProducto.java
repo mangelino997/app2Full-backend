@@ -10,8 +10,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Clase Rubro del producto.
+ * Clase Rubro producto.
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
 
@@ -31,12 +32,12 @@ public class RubroProducto extends ObjetoGenerico {
     @Column(name = "esCombustible", nullable = false)
     private boolean esCombustible;
     
+    //Referencia a la clase rubro producto cuenta contable
     @JsonIgnoreProperties("rubroProducto")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "rubroProducto")
     private List<RubroProductoCuentaContable> rubrosProductosCuentasContables;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

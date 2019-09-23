@@ -6,24 +6,23 @@ import javax.persistence.Table;
 
 /**
  * Clase Afip Concepto
- * Mapea con la tabla en la base de datos
+ * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipconcepto")
 public class AfipConcepto extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false, unique = true)
+    @Column(name = "nombre", length = 45, nullable = false, unique = true)
     private String nombre;
-    
+
     //Define el código Afip
     @Column(name = "codigoAfip", length = 3, nullable = false)
     private String codigoAfip;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -39,5 +38,5 @@ public class AfipConcepto extends ObjetoGenerico {
     public void setCodigoAfip(String codigoAfip) {
         this.codigoAfip = codigoAfip;
     }
-    
+
 }

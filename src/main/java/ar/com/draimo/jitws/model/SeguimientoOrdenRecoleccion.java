@@ -11,7 +11,8 @@ import javax.persistence.Table;
 
 /**
  * Clase seguimiento Orden Recoleccion 
- * Define el modelo (columnas) de la base de datos
+ * Define el modelo (columnas) de la base de datos.
+ * 
  * @author blas
  */
 
@@ -19,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "seguimientoordenrecoleccion")
 public class SeguimientoOrdenRecoleccion extends ObjetoGenerico {
     
-    //Referencia a ordenRecoleccion
+    //Referencia a la clase ordenRecoleccion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenRecoleccion", nullable = false)
     private OrdenRecoleccion ordenRecoleccion;
@@ -29,23 +30,22 @@ public class SeguimientoOrdenRecoleccion extends ObjetoGenerico {
     @Column(name = "fecha", nullable = false)  
     private LocalDateTime fecha;
     
-    //Referencia a Sucursal
+    //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal  sucursal;
     
-    //Referencia a SeguimientoEstado
+    //Referencia a la clase SeguimientoEstado
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoEstado", nullable = false)
     private SeguimientoEstado seguimientoEstado;
     
-    //Referencia a SeguimientoSituacion
+    //Referencia a la clase SeguimientoSituacion
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSeguimientoSituacion", nullable = true)
     private SeguimientoSituacion seguimientoSituacion;
     
     //Define los getters y setters
-
     public OrdenRecoleccion getOrdenRecoleccion() {
         return ordenRecoleccion;
     }

@@ -8,7 +8,8 @@ import javax.persistence.Table;
 
 /**
  * Clase reparto comprobante
- * Mapea con la tabla en la base de datos
+ * Mapea con la tabla en la base de datos.
+ * 
  * @author blas
  */
 
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "repartocomprobante")
 public class RepartoComprobante extends ObjetoGenerico {
     
-    //Referencia a la clase reparto propio
+    //Referencia a la clase reparto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idReparto", nullable = false)
     private Reparto reparto;
@@ -37,7 +38,6 @@ public class RepartoComprobante extends ObjetoGenerico {
     private ViajeRemito viajeRemito;
     
     //Getters y Setters de la clase
-
     public Reparto getReparto() {
         return reparto;
     }

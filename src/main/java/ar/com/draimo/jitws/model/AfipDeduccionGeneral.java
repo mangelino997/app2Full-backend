@@ -6,11 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase AfipDeduccionGeneral
+ * Clase AfipDeduccionGeneral 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afipdeducciongeneral")
 public class AfipDeduccionGeneral extends ObjetoGenerico {
@@ -20,7 +20,6 @@ public class AfipDeduccionGeneral extends ObjetoGenerico {
     private String descripcion;
 
     //Getters y Setters de la clase
-
     public String getDescripcion() {
         return descripcion;
     }

@@ -10,25 +10,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase CuentaBancaria
- * Mapea con la tabla de base de datos
+ * Clase CuentaBancaria 
+ * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
 @Entity
 @Table(name = "cuentabancaria")
 public class CuentaBancaria extends ObjetoGenerico {
 
-    //Define la referencia a la tabla empresa
+    //Define la referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
 
-    //Define la referencia a la tabla sucursalBanco
+    //Define la referencia a la clase sucursalBanco
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalBanco", nullable = false)
     private SucursalBanco sucursalBanco;
 
-    //Define la referencia a la tabla TipoCuentaBancaria
+    //Define la referencia a la clase TipoCuentaBancaria
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoCuentaBancaria", nullable = false)
     private TipoCuentaBancaria tipoCuentaBancaria;
@@ -37,7 +38,7 @@ public class CuentaBancaria extends ObjetoGenerico {
     @Column(name = "numeroCuenta", length = 20, nullable = false)
     private String numeroCuenta;
 
-    //Define la referencia a la tabla moneda
+    //Define la referencia a la clase moneda
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idMoneda", nullable = false)
     private Moneda moneda;
@@ -64,7 +65,7 @@ public class CuentaBancaria extends ObjetoGenerico {
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
 
-    //Define la referencia a la tabla usuario
+    //Define la referencia a la clase usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -74,7 +75,7 @@ public class CuentaBancaria extends ObjetoGenerico {
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
 
-    //Define la referencia a la tabla usuario
+    //Define la referencia a la clase usuario (baja)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioBaja", nullable = true)
     private Usuario usuarioBaja;
@@ -82,7 +83,7 @@ public class CuentaBancaria extends ObjetoGenerico {
     //Define la fecha de cierre
     @Column(name = "fechaCierre", nullable = true)
     private Date fechaCierre;
-    
+
 //    @ManyToMany(cascade = CascadeType.REFRESH)
 //    @JoinTable(name = "clientecuentabancaria",
 //        joinColumns = @JoinColumn(name = "idCuentaBancaria"),
@@ -90,7 +91,7 @@ public class CuentaBancaria extends ObjetoGenerico {
 //         uniqueConstraints={@UniqueConstraint(columnNames={"idCuentaBancaria", "idCliente"})})  
 //    @JsonIgnoreProperties("cuentaBancaria")
 //    private List<Cliente> clientes = new ArrayList<>();
-
+    
     //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;

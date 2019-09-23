@@ -10,11 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase AfipTipoBeneficioDeduccion
- * Define el modelo (columnas) de la base de datos.
+ * Clase AfipTipoBeneficioDeduccion 
+ * Define el modelo (columnas) de la base de
+ * datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "afiptipobeneficiodeduccion")
 public class AfipTipoBeneficioDeduccion extends ObjetoGenerico {
@@ -47,7 +48,6 @@ public class AfipTipoBeneficioDeduccion extends ObjetoGenerico {
     private Mes mes;
 
     //Getters y Setters de la clase
-
     public AfipTipoBeneficio getAfipTipoBeneficio() {
         return afipTipoBeneficio;
     }
@@ -95,5 +95,5 @@ public class AfipTipoBeneficioDeduccion extends ObjetoGenerico {
     public void setMes(Mes mes) {
         this.mes = mes;
     }
-    
+
 }
