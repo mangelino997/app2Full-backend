@@ -70,7 +70,7 @@ public class ViajePrecioController {
         try {
             ViajePrecio a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
              return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
@@ -92,7 +92,7 @@ public class ViajePrecioController {
             //Actualiza el registro
             ViajePrecio a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
              return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {

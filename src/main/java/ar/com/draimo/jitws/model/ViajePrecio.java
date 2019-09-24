@@ -38,7 +38,6 @@ public class ViajePrecio extends ObjetoGenerico {
     private BigDecimal costoTercero;
 
     //Getters y Setters de la clase
-
     public ViajeTipo getViajeTipo() {
         return viajeTipo;
     }

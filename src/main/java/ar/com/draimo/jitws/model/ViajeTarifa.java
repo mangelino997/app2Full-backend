@@ -28,7 +28,6 @@ public class ViajeTarifa extends ObjetoGenerico {
     private boolean porDefecto;
 
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

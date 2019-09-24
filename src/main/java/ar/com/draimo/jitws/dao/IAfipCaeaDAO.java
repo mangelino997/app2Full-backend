@@ -19,14 +19,15 @@ public interface IAfipCaeaDAO extends JpaRepository<AfipCaea, Integer> {
     public AfipCaea findTopByOrderByIdDesc();
     
     //Obtiene un registro por empresa, anio, mes y quincena
-    @Query(value = "SELECT * FROM afipcaea where idEmpresa=:idEmpresa and "
-            + "anio=:anio and mes=:mes and quincena=:quincena", nativeQuery = true)
+    @Query(value = "SELECT * FROM afipcaea where (:idEmpresa=0 OR idEmpresa=:idEmpresa)"
+            + " and (:anio=0 OR anio=:anio) and (:mes=0 OR mes=:mes ) and "
+            + "(:quincena=0 OR quincena=:quincena)", nativeQuery = true)
     public AfipCaea obtenerPorEmpresaYPeriodoOrden(@Param("idEmpresa") int idEmpresa, 
             @Param("anio") short anio, @Param("mes") short mes, @Param("quincena") short quincena);
     
     //Obtiene una lista de registros por empresa y anio
-    @Query(value = "SELECT * FROM afipcaea where idEmpresa=:idEmpresa and anio=:anio"
-            + "  order by mes,quincena asc", nativeQuery = true)
+    @Query(value = "SELECT * FROM afipcaea where (idEmpresa=0 OR idEmpresa=:idEmpresa)"
+            + " and (:anio=0 OR anio=:anio) order by mes,quincena asc", nativeQuery = true)
     public List<AfipCaea> listarPorEmpresaYAnio(@Param("idEmpresa") int idEmpresa, @Param("anio") short anio);
     
 }

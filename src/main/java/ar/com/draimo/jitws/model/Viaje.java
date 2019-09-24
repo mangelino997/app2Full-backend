@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @JsonFilter("viajefiltro")
 public class Viaje extends ObjetoGenerico {
 
-    //Referencia a la clase Empresa
+    //Referencia a la clase Empresa (emision)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresaEmision", nullable = false)
     private Empresa empresaEmision;
@@ -80,12 +80,12 @@ public class Viaje extends ObjetoGenerico {
     @Column(name = "esRemolquePropio", nullable = false)
     private boolean esRemolquePropio;
     
-    //Referencia a la clase Vehiculo Remolque
+    //Referencia a la clase Vehiculo (Remolque)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoRemolque", nullable = true)
     private Vehiculo vehiculoRemolque;
     
-    //Referencia a la clase Vehiculo Remolque Proveedor
+    //Referencia a la clase Vehiculo Proveedor (remolque)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoRemolqueProveedor", nullable = true)
     private VehiculoProveedor vehiculoRemolqueProveedor;
@@ -99,7 +99,7 @@ public class Viaje extends ObjetoGenerico {
     @Column(name = "fechaDocumentacion", nullable = true)
     private Timestamp fechaDocumentacion;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (documentacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioDocumentacion", nullable = true)
     private Usuario usuarioDocumentacion;
@@ -113,22 +113,22 @@ public class Viaje extends ObjetoGenerico {
     @Column(name = "fechaLiquidacion", nullable = true)
     private Timestamp fechaLiquidacion;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (liquidacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioLiquidacion", nullable = true)
     private Usuario usuarioLiquidacion;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (vehiculo autorizado)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioVehiculoAutorizado", nullable = true)
     private Usuario usuarioVehiculoAutorizado;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (vehiculo remolque autorizado)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioVehiculoRemAutorizado", nullable = true)
     private Usuario usuarioVehiculoRemAutorizado;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (chofer autorizado)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioChoferAutorizado", nullable = true)
     private Usuario usuarioChoferAutorizado;
@@ -149,7 +149,7 @@ public class Viaje extends ObjetoGenerico {
     @Column(name = "observaciones",length = 100, nullable = true)
     private String observaciones;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -158,38 +158,37 @@ public class Viaje extends ObjetoGenerico {
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
     
-    //Define la lista de tramos
+    //Referencia a la clase viajeTramo (lista)
     @JsonIgnoreProperties("viaje")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeTramo> viajeTramos;
     
-    //Define la lista de ordenes de combustible
+    //Referencia a la clase viajeCombustible (lista)
     @JsonIgnoreProperties("viaje")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeCombustible> viajeCombustibles;
     
-    //Define la lista de adelantos de efectivo
+    //Referencia a la clase viajeEfectivo (lista)
     @JsonIgnoreProperties("viaje")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeEfectivo> viajeEfectivos;
     
-    //Define la lista de ordenes de insumo
+    //Referencia a la clase viajeInsumo (lista)
     @JsonIgnoreProperties("viaje")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeInsumo> viajeInsumos;
     
-    //Define la lista de gastos
+    //Referencia a la clase viajeGasto (lista)
     @JsonIgnoreProperties("viaje")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajeGasto> viajeGastos;
     
-    //Define la lista de peajes
+    //Referencia a la clase viajePeaje (lista)
     @JsonIgnoreProperties("viaje")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje", orphanRemoval = true)
     private List<ViajePeaje> viajePeajes;
 
     //Getters y Setters de la clase
-
     public Empresa getEmpresaEmision() {
         return empresaEmision;
     }

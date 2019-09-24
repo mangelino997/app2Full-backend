@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Viaje Propio Gasto
+ * Clase Viaje Gasto
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
@@ -30,7 +30,7 @@ public class ViajeGasto extends ObjetoGenerico {
     @JoinColumn(name = "idViaje", nullable = true)
     private Viaje viaje;
     
-    //Referencia a la clase Reparto Propio
+    //Referencia a la clase Reparto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idReparto", nullable = true)
     private Reparto reparto;
@@ -40,7 +40,7 @@ public class ViajeGasto extends ObjetoGenerico {
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -85,7 +85,6 @@ public class ViajeGasto extends ObjetoGenerico {
     private String observacionesAnulado;
 
     //Getters y Setters de la clase
-
     public Viaje getViaje() {
         return viaje;
     }

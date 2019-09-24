@@ -58,7 +58,7 @@ public class AfipComprobanteController {
         return elementoService.listar();
     }
     
-    //Obtiene por codigoAfip
+    //Obtiene un registro por codigoAfip
     @GetMapping(value = URL + "/obtenerPorCodigoAfip/{codigoAfip}")
     @ResponseBody
     public ResponseEntity<?> obtenerPorCodigoAfip(@PathVariable String codigoAfip) {
@@ -85,18 +85,18 @@ public class AfipComprobanteController {
         return elementoService.obtenerLetra(idCondicionIva, idTipoComprobante);
     }
     
-    //Obtiene la letra por codigo de afip
-    @GetMapping(value = URL + "/obtenerLetraPorCodigoAfip/{codigoAfip}")
-    @ResponseBody
-    public String obtenerLetraPorCodigoAfip(@PathVariable String codigoAfip) {
-        return elementoService.obtenerLetraPorCodigoAfip(codigoAfip);
-    }
-    
     //Obtiene una lista por tipo de comprobante
     @GetMapping(value = URL + "/listarPorTipoComprobante/{idTipoComprobante}")
     @ResponseBody
     public List<AfipComprobante> listarPorTipoComprobante(@PathVariable int idTipoComprobante) {
         return elementoService.listarPorTipoComprobante(idTipoComprobante);
+    }
+    
+    //Obtiene la lista de letras por Tipo de Comprobante
+    @GetMapping(value = URL + "/listarLetras/{idTipoComprobante}")
+    @ResponseBody
+    public List<String> listarLetras(@PathVariable int idTipoComprobante) throws IOException {
+        return elementoService.listarLetras(idTipoComprobante);
     }
     
     //Agrega un registro
@@ -105,7 +105,7 @@ public class AfipComprobanteController {
         try {
             AfipComprobante a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -127,14 +127,14 @@ public class AfipComprobanteController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
         } catch (JpaObjectRetrievalFailureException jorfe) {
-            //Retorna mensaje de dato duplicado
+            //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
@@ -164,10 +164,4 @@ public class AfipComprobanteController {
         }
     }
     
-    //Obtiene la lista de letras por Tipo de Comprobante
-    @GetMapping(value = URL + "/listarLetras/{idTipoComprobante}")
-    @ResponseBody
-    public List<String> listarLetras(@PathVariable int idTipoComprobante) throws IOException {
-        return elementoService.listarLetras(idTipoComprobante);
-    }
 }

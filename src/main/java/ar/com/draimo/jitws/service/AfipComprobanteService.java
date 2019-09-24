@@ -66,15 +66,15 @@ public class AfipComprobanteService {
         }
         return letra;
     }
-    
-    //Obtiene la letra por codigo de afip
-    public String obtenerLetraPorCodigoAfip(String codigoAfip) {
-        return elementoDAO.findByCodigoAfip(codigoAfip).getLetra();
-    }
-    
+  
     //Obtiene por tipo de comprobante
     public List<AfipComprobante> listarPorTipoComprobante(int idTipoComprobante) {
         return elementoDAO.findByTipoComprobante(tipoComprobanteDAO.findById(idTipoComprobante).get());
+    }
+    
+    //Obtiene una lista de letras por Tipo de Comprobante
+    public List<String> listarLetras(int idTipoComprobante) {
+        return elementoDAO.listarLetras(idTipoComprobante);
     }
     
     //Agrega un registro
@@ -103,10 +103,5 @@ public class AfipComprobanteService {
         elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;
     }
-    //Obtiene una lista de letras por Tipo de Comprobante
-    public List<String> listarLetras(int idTipoComprobante) {
-        return elementoDAO.listarLetras(idTipoComprobante);
-    }
-    
     
 }

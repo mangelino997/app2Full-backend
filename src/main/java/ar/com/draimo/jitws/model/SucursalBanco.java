@@ -9,26 +9,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Sucursal Banco
+ * Clase Sucursal Banco 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "sucursalbanco")
 public class SucursalBanco extends ObjetoGenerico {
-    
+
     //Referencia a la clase Banco
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBanco", nullable = false)
     private Banco banco;
 
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false, unique = true)
+    @Column(name = "nombre", length = 45, nullable = false, unique = true)
     private String nombre;
 
     //Getters y Setters de la clase
-
     public Banco getBanco() {
         return banco;
     }

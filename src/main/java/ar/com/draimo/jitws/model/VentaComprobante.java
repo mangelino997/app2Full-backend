@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @Table(name = "ventacomprobante")
 public class VentaComprobante extends ObjetoGenerico {
 
-    //referencia a la clase Empresa
+    //Referencia a la clase Empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
@@ -70,12 +70,12 @@ public class VentaComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (clienteGrupo)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteGrupo", nullable = true)
     private Cliente clienteGrupo;
     
-    //Referencia a la clase CondicionIva
+    //Referencia a la clase afipCondicionIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipCondicionIva", nullable = false)
     private AfipCondicionIva afipCondicionIva;
@@ -89,22 +89,22 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "numeroDocumento", length = 15, nullable = false)
     private String numeroDocumento;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (remitente)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteRemitente", nullable = false)
     private Cliente clienteRemitente;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (destinatario)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
     
-    //Referencia a la clase SucursalCliente
+    //Referencia a la clase SucursalCliente (remitente)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalClienteRem", nullable = true)
     private SucursalCliente sucursalClienteRem;
     
-    //Referencia a la clase SucursalCliente
+    //Referencia a la clase SucursalCliente (destinatario)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalClienteDes", nullable = true)
     private SucursalCliente sucursalClienteDes;
@@ -147,12 +147,12 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "pagoEnOrigen", nullable = false)
     private boolean pagoEnOrigen;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (modificacion)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
@@ -193,24 +193,23 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "monedaCotizacion", nullable = false)
     private BigDecimal monedaCotizacion;
     
-    //Define la lista de ventaComprobanteItemFA
+    //Referencia a la clase ventaComprobanteItemFA (lista)
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
     
-    //Define referencia a ventaComprobanteItemCR
+    //Referencia a la clase ventaComprobanteItemCR (lista)
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
     private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
     
-    //Define referencia a ventaComprobanteItemNC
+    //Referencia a la clase ventaComprobanteItemNC(lista)
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
     private List<VentaComprobanteItemNC> ventaComprobanteItemNC;
     
-    //Define referencia a ventaComprobanteItemNC
+    //Referencia a la clase ventaComprobanteItemNC (lista)
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="ventaComprobante")
     private List<VentaComprobanteItemND> ventaComprobanteItemND;
     
     //Getters y Setters de la clase
-
     public Empresa getEmpresa() {
         return empresa;
     }

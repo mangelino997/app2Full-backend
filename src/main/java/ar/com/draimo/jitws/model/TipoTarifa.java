@@ -28,7 +28,6 @@ public class TipoTarifa extends ObjetoGenerico {
     private boolean porPorcentaje;
 
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

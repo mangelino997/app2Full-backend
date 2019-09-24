@@ -62,7 +62,6 @@ public class TalonarioReciboLote extends ObjetoGenerico {
     private Date fechaAlta;
     
     //Getters y Setters de la clase
-
     public Empresa getEmpresa() {
         return empresa;
     }

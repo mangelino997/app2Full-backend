@@ -14,16 +14,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipDeduccionGeneralTopeDAO extends JpaRepository<AfipDeduccionGeneralTope, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipDeduccionGeneralTope findTopByOrderByIdDesc();
     
     //Obtiene una lista por descripcion
     public List<AfipDeduccionGeneralTope> findByDescripcionContaining(String descripcion);
     
-    //Obtiene una lista por anio 
+    //Obtiene una lista por anio ordenada por id de afipDeduccionGeneral
     public List<AfipDeduccionGeneralTope> findByAnioOrderByAfipDeduccionGeneral_Id(short anio);
     
-    //Obtiene una lista por anio y afipDeduccionGeneral
+    //Obtiene una lista por anio y afipDeduccionGeneral ordenada por id de afipDeduccionGeneral
     public List<AfipDeduccionGeneralTope> findByAnioAndAfipDeduccionGeneralOrderByAfipDeduccionGeneral_Id(short anio,
             AfipDeduccionGeneral afipDeduccionGeneral);
     

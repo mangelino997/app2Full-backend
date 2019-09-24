@@ -64,7 +64,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @Column(name = "valorDeclarado", nullable = false)
     private BigDecimal valorDeclarado;
     
-    //Define el p seguro
+    //Define el porcentaje seguro
     @Column(name = "pSeguro", nullable = true)
     private BigDecimal pSeguro;
     
@@ -137,7 +137,6 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private OrdenVenta ordenVenta;
 
     //Getters y Setters de la clase
-
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }

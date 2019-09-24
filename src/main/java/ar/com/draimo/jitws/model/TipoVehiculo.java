@@ -29,7 +29,6 @@ public class TipoVehiculo extends ObjetoGenerico {
     private boolean vtoSanidadAlimenticia;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

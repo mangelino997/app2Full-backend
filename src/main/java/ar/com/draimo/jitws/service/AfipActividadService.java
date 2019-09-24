@@ -9,44 +9,44 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio AfipActividad
+ * Servicio de AfipActividad
+ *
  * @author blas
  */
-
 @Service
 public class AfipActividadService {
-    
+
     //Define el dao
     @Autowired
     IAfipActividadDAO elementoDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         AfipActividad elemento = elementoDAO.findTopByOrderByIdDesc();
-        return (elemento!=null?elemento.getId()+1:1);
+        return (elemento != null ? elemento.getId() + 1 : 1);
     }
-    
+
     //Obtiene la lista completa
     public List<AfipActividad> listar() {
         return elementoDAO.findByOrderByCodigoAfipAsc();
     }
-    
+
     //Obtiene una lista por alias
     public List<AfipActividad> listarPorAlias(String alias) {
-        if(alias.equals("***")) {
+        if (alias.equals("***")) {
             return elementoDAO.findByOrderByCodigoAfipAsc();
         } else {
             return elementoDAO.findByAliasContaining(alias);
         }
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipActividad agregar(AfipActividad elemento) {
         formatearString(elemento);
         return elementoDAO.save(elemento);
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipActividad elemento) {
@@ -55,7 +55,7 @@ public class AfipActividadService {
         formatearString(elemento);
         elementoDAO.save(elemento);
     }
-    
+
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(AfipActividad elemento) {
@@ -63,17 +63,17 @@ public class AfipActividadService {
                 + " - " + elemento.getNombre());
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-    
+
     //Formatea los string 
     private AfipActividad formatearString(AfipActividad elemento) {
         elemento.setNombre(Funcion.convertirATitulo(elemento.getNombre().trim()));
         return elemento;
     }
-    
+
 }

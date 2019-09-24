@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Interfaz Barrio DAO
+ * Interfaz afipConcepto DAO
  * Metodos contra la base de datos
  * @author blas
  */
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IAfipConceptoDAO extends JpaRepository<AfipConcepto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el el ultimo registro
     public AfipConcepto findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

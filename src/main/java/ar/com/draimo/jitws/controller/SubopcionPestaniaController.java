@@ -70,7 +70,7 @@ public class SubopcionPestaniaController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -108,7 +108,7 @@ public class SubopcionPestaniaController {
         try {
             elementoService.reestablecerTablaDesdeCero();
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarMenu", 1);
+            //template.convertAndSend(TOPIC + "/listarMenu", 1);
                return MensajeRespuesta.tablaReestablecida();
         }catch(MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket

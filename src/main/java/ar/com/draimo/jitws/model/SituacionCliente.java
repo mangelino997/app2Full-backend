@@ -6,21 +6,20 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Situacion cliente
+ * Clase Situacion cliente 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "situacioncliente")
 public class SituacionCliente extends ObjetoGenerico {
-    
-    //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false, unique = true)
-    private String nombre;
-    
-    //Getters y Setters de la clase
 
+    //Define el nombre
+    @Column(name = "nombre", length = 45, nullable = false, unique = true)
+    private String nombre;
+
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -28,5 +27,5 @@ public class SituacionCliente extends ObjetoGenerico {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
 }

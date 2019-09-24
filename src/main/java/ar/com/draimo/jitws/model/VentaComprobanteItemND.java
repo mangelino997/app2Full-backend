@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase VentaComprobanteItem NC
+ * Clase VentaComprobanteItem ND
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
@@ -24,7 +24,7 @@ public class VentaComprobanteItemND extends ObjetoGenerico {
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
     
-    //Referencia a la clase Concepto
+    //Referencia a la clase ventaTipoItem
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaTipoItem", nullable = false)
     private VentaTipoItem ventaTipoItem;
@@ -33,7 +33,7 @@ public class VentaComprobanteItemND extends ObjetoGenerico {
     @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
     
-    //Referencia a la clase idAliCuotaIva
+    //Referencia a la clase afipAliCuotaIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
     private AfipAlicuotaIva afipAliCuota;
@@ -54,7 +54,7 @@ public class VentaComprobanteItemND extends ObjetoGenerico {
     @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
     
-    //Referencia a la clase Jurisdiccion
+    //Referencia a la clase provincia
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProvincia", nullable = false)
     private Provincia provincia;
@@ -63,6 +63,7 @@ public class VentaComprobanteItemND extends ObjetoGenerico {
     @Column(name = "idChequeCartera", nullable = false)
     private int chequeCartera;
     
+    //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }

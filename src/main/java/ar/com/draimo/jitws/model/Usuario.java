@@ -23,7 +23,7 @@ public class Usuario extends ObjetoGenerico {
     @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
     
-    //Define el usuario
+    //Define el nombre de usuario
     @Column(name = "username",length = 15, nullable = false, unique = true)
     private String username;
     
@@ -45,7 +45,7 @@ public class Usuario extends ObjetoGenerico {
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
-    //Referencia a la clase Rol
+    //Referencia a la clase Rol (secundario)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idRolSecundario", nullable = true)
     private Rol rolSecundario;
@@ -55,7 +55,6 @@ public class Usuario extends ObjetoGenerico {
     private boolean esDesarrollador;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

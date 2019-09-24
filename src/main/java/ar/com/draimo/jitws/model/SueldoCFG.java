@@ -7,25 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Sueldo CFG
+ * Clase Sueldo CFG 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "sueldocfg")
 public class SueldoCFG extends ObjetoGenerico {
-    
+
     //Define el folio libro sueldos
     @Column(name = "folioLibroSueldos", nullable = true)
     private int folioLibroSueldos;
-    
-    //Define el smvm
+
+    //Define smvm
     @Column(name = "smvm", nullable = true)
     private BigDecimal smvm;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public int getFolioLibroSueldos() {
         return folioLibroSueldos;
     }
@@ -41,5 +40,5 @@ public class SueldoCFG extends ObjetoGenerico {
     public void setSmvm(BigDecimal smvm) {
         this.smvm = smvm;
     }
-    
+
 }

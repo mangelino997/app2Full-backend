@@ -31,6 +31,8 @@ public class MensajeRespuesta {
     public static final String ERROR_SINC_SOCKET = "Error de sincronización de datos";
     public static final String TABLA_REESTABLECIDA = "Tabla reestablecida con éxito";
     public static final String LONGITUD = "Cantidad caracteres excedida en";
+    public static final String SHORT_INCORRECTO = "Cantidad caracteres incorrecta en ";
+    public static final String EXISTENTE_PARA_ANIO_FISCAL = "Existente para el año fiscal ";
     public static final String CERRADO = "Registro cerrado con exito";
     public static final String ABIERTO = "Registro abierto con exito";
     public static final String ANULADO = "Registro anulado con exito";

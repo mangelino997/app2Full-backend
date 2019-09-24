@@ -9,30 +9,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Subopcion.
+ * Clase Subopcion. 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "subopcion")
 public class Subopcion extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Define si el submodulo es una ABM
     @Column(name = "esABM", nullable = false)
     private boolean esABM;
-    
+
     //Referencia a la clase Modulo
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSubmodulo", nullable = false)
     private Submodulo submodulo;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -48,7 +47,7 @@ public class Subopcion extends ObjetoGenerico {
     public void setEsABM(boolean esABM) {
         this.esABM = esABM;
     }
-    
+
     public Submodulo getSubmodulo() {
         return submodulo;
     }
@@ -56,5 +55,5 @@ public class Subopcion extends ObjetoGenerico {
     public void setSubmodulo(Submodulo submodulo) {
         this.submodulo = submodulo;
     }
-    
+
 }

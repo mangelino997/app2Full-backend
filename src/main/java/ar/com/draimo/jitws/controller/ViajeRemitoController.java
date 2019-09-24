@@ -136,7 +136,7 @@ public class ViajeRemitoController {
         try {
             elementoService.asignar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            //stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.asignado();
         } catch (DataIntegrityViolationException dive) {
@@ -161,7 +161,7 @@ public class ViajeRemitoController {
             //Quita el registro
             elementoService.quitar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+//            //stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.quitado();
         } catch (DataIntegrityViolationException dive) {
@@ -187,7 +187,7 @@ public class ViajeRemitoController {
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            ////stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -209,7 +209,7 @@ public class ViajeRemitoController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

@@ -35,7 +35,7 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
     
-    //Referencia a la clase idAliCuotaIva
+    //Referencia a la clase afipAliCuotaIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
     private AfipAlicuotaIva viajeRemito;
@@ -56,7 +56,7 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
     
-    //Referencia a la clase Jurisdiccion
+    //Referencia a la clase provincia
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProvincia", nullable = false)
     private Provincia provincia;
@@ -68,7 +68,8 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     //Define comprobanteAplicado
     @Column(name = "comprobanteAplicado",length = 14, nullable = true)
     private String comprobanteAplicado;
-
+    
+    //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }

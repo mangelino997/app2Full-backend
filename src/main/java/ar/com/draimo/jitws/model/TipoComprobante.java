@@ -23,15 +23,15 @@ public class TipoComprobante extends ObjetoGenerico {
     @Column(name = "abreviatura",length = 8, nullable = false)
     private String abreviatura;
     
-    //Define esta activo ingreso carga
+    //Define si esta activo ingreso carga
     @Column(name = "estaActivoIngresoCarga", nullable = false)
     private boolean estaActivoIngresoCarga;
     
-    //Define esta activo venta
+    //Define si esta activo venta
     @Column(name = "estaActivoVenta", nullable = false)
     private boolean estaActivoVentaCarga;
     
-    //Define esta activo compra
+    //Define si esta activo compra
     @Column(name = "estaActivoCompra", nullable = false)
     private boolean estaActivoCompraCarga;
     
@@ -44,7 +44,6 @@ public class TipoComprobante extends ObjetoGenerico {
     private boolean estaActivoReparto;
 
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

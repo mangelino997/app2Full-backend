@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 /**
  * Clase tipopercepcion
- * Mapea con la tabla en la base de datos
+ * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
 
@@ -23,7 +23,6 @@ public class TipoPercepcion extends ObjetoGenerico {
     private boolean detallePorJurisdiccion;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

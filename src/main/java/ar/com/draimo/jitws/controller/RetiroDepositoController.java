@@ -70,8 +70,7 @@ public class RetiroDepositoController {
     public ResponseEntity<?> cerrarReparto(@PathVariable int idRetiroDeposito) {
         boolean r = elementoService.cerrarRetiro(idRetiroDeposito);
         if (r == true) {
-            template.convertAndSend(TOPIC + "/lista", 
-                    elementoService.listarPorEstaCerrada(false));
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listarPorEstaCerrada(false));
             return MensajeRespuesta.cerrado();
         } else{
             return MensajeRespuesta.error();
@@ -92,7 +91,7 @@ public class RetiroDepositoController {
         try {
             RetiroDeposito a = elementoService.agregar(retiroString,archivo);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
+            //template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -115,7 +114,7 @@ public class RetiroDepositoController {
             //Actualiza el registro
             elementoService.actualizar(retiroString,archivo);
             //Envia la nueva lista a los usuarios subscripto
-            template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
+            //template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

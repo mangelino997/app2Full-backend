@@ -33,7 +33,6 @@ public class VentaContrareembolso extends ObjetoGenerico {
     private BigDecimal comisionCR;
     
     //Getters y Setters de la clase
-
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }

@@ -28,7 +28,6 @@ public class ViajeTramoRemito extends ObjetoGenerico {
     private ViajeTramo viajeTramo;
     
     //Getters y Setters de la clase
-
     public ViajeRemito getViajeRemito() {
         return viajeRemito;
     }

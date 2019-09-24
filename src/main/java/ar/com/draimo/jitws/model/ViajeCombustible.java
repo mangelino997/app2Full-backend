@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Table(name = "viajecombustible")
 public class ViajeCombustible extends ObjetoGenerico {
     
-    //Referencia a la clase Viaje Propio
+    //Referencia a la clase Viaje
     @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
         "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,7 +45,7 @@ public class ViajeCombustible extends ObjetoGenerico {
     @JoinColumn(name = "idSucursal", nullable = false)
     private Sucursal sucursal;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -86,7 +86,6 @@ public class ViajeCombustible extends ObjetoGenerico {
     private String observacionesAnulado;
 
     //Getters y Setters de la clase
-
     public Viaje getViaje() {
         return viaje;
     }

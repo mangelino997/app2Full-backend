@@ -32,7 +32,6 @@ public class VentaItemConcepto extends ObjetoGenerico {
     private boolean estaHabilitado;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

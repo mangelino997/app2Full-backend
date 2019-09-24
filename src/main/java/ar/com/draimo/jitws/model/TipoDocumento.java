@@ -19,7 +19,7 @@ public class TipoDocumento extends ObjetoGenerico {
     @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
-    //Define la abreviatura del nombre
+    //Define la abreviatura
     @Column(name = "abreviatura",length = 5, nullable = false, unique = true)
     private String abreviatura;
     
@@ -28,7 +28,6 @@ public class TipoDocumento extends ObjetoGenerico {
     private String codigoAfip;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

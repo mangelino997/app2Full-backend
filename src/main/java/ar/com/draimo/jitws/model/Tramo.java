@@ -45,7 +45,6 @@ public class Tramo extends ObjetoGenerico {
     private String rutaAlternativa;
     
     //Getters y Setters de la clase
-
     public OrigenDestino getOrigen() {
         return origen;
     }

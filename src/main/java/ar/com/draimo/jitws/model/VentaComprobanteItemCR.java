@@ -52,7 +52,6 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     private Date fechaPago;
     
     //Getters y Setters de la clase
-
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }

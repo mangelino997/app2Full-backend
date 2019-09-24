@@ -28,7 +28,6 @@ public class VentaConfig extends ObjetoGenerico {
     private String notaImpresionComprobanteGral2;
     
     //Getters y Setters de la clase
-
     public short getAforo() {
         return aforo;
     }

@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipDeduccionGeneralDAO;
 import ar.com.draimo.jitws.dao.IAfipDeduccionGeneralTopeDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipDeduccionGeneralTope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,15 +56,15 @@ public class AfipDeduccionGeneralTopeService {
     public AfipDeduccionGeneralTope agregar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
         String anio = String.valueOf(elemento.getAnio());
-        //Obtiene longitud de anio, si supera 4 retorna error
+        //Obtiene longitud de anio, si no es igual a 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + "AÑO");
         }
         if (elementoDAO.findByAnioAndAfipDeduccionGeneralOrderByAfipDeduccionGeneral_Id(
                 elemento.getAnio(), elemento.getAfipDeduccionGeneral()).isEmpty()) {
             return elementoDAO.saveAndFlush(elemento);
         } else {
-            throw new DataIntegrityViolationException("Deducción General existente para el año fiscal.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.EXISTENTE_PARA_ANIO_FISCAL + "DEDUCCIÓN GENERAL");
         }
     }
 
@@ -72,9 +73,9 @@ public class AfipDeduccionGeneralTopeService {
     public void actualizar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
         String anio = String.valueOf(elemento.getAnio());
-        //Obtiene longitud de anio, si supera 4 retorna error
+        //Obtiene longitud de anio, si no es igual a 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + "AÑO");
         }
         elementoDAO.save(elemento);
     }

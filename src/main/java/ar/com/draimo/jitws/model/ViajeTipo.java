@@ -33,7 +33,6 @@ public class ViajeTipo extends ObjetoGenerico {
     private BigDecimal costoPorKmTercero;
 
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

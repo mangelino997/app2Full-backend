@@ -9,35 +9,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Sucursal
+ * Clase Sucursal 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "sucursal")
 public class Sucursal extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Define el domicilio
-    @Column(name = "domicilio",length = 60, nullable = false)
+    @Column(name = "domicilio", length = 60, nullable = false)
     private String domicilio;
-    
+
     //Referencia a la clase Barrio
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idBarrio", nullable = true)
     private Barrio barrio;
-    
+
     //Referencia a la clase Localidad
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLocalidad", nullable = false)
     private Localidad localidad;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -69,5 +68,5 @@ public class Sucursal extends ObjetoGenerico {
     public void setLocalidad(Localidad localidad) {
         this.localidad = localidad;
     }
-    
+
 }

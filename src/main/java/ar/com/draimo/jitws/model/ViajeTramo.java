@@ -60,7 +60,7 @@ public class ViajeTramo extends ObjetoGenerico {
     @Column(name = "km", nullable = false)
     private short km;
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
@@ -101,18 +101,17 @@ public class ViajeTramo extends ObjetoGenerico {
     @Column(name = "importe", nullable = false)
     private BigDecimal importe;
     
-    //Define la lista de tramos de clientes
-//    @JsonIgnoreProperties("viajeTramo")
+    //Referencia a la clase viajeTramosCliente (lista)
+    //@JsonIgnoreProperties("viajeTramo")
     @OneToMany(mappedBy = "viajeTramo", cascade = CascadeType.REMOVE)
     private List<ViajeTramoCliente> viajeTramoClientes;
     
     //Define la lista de remitos
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "viajePropioTramo")
-//    private List<ViajeRemitoTramo> viajeRemitoTramos;
+    //@JsonManagedReference
+    //@OneToMany(mappedBy = "viajePropioTramo")
+    //private List<ViajeRemitoTramo> viajeRemitoTramos;
     
     //Getters y Setters de la clase
-
     public Viaje getViaje() {
         return viaje;
     }

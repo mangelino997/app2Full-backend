@@ -34,17 +34,16 @@ public class Vendedor extends ObjetoGenerico {
     @Column(name = "fechaBaja", nullable = true)
     private Date fechaBaja;
     
-    //Define la baja
+    //Define si esta activo
     @Column(name = "estaActivo", nullable = false)
     private boolean estaActivo;
     
-    //Define el usuario
+    //Referencia a la clase el usuario(alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = true)
     private Usuario usuarioAlta;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "viajeremito")
 public class ViajeRemito extends ObjetoGenerico {
     
-    //Referencia a la clase Sucursal
+    //Referencia a la clase Sucursal (ingreso)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalIngreso", nullable = false)
     private Sucursal sucursalIngreso;
@@ -45,7 +45,7 @@ public class ViajeRemito extends ObjetoGenerico {
     @Column(name = "numeroCamion", nullable = false)
     private short numeroCamion;
     
-    //Referencia a la clase Sucursal
+    //Referencia a la clase Sucursal (destino)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idSucursalDestino", nullable = false)
     private Sucursal sucursalDestino;
@@ -67,17 +67,17 @@ public class ViajeRemito extends ObjetoGenerico {
     @Column(name = "numero",length = 8, nullable = false)
     private int numero;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (remitente)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteRemitente", nullable = false)
     private Cliente clienteRemitente;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (destinatario)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (destinatario sucursal)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDestinatarioSuc", nullable = true)
     private Cliente clienteDestinatarioSuc;
@@ -131,7 +131,6 @@ public class ViajeRemito extends ObjetoGenerico {
     private String alias;
     
     //Getters y Setters de la clase
-
     public Sucursal getSucursalIngreso() {
         return sucursalIngreso;
     }

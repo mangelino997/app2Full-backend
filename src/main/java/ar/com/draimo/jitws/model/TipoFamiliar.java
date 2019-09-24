@@ -18,12 +18,11 @@ public class TipoFamiliar extends ObjetoGenerico {
     @Column(name = "nombre",length = 45, nullable = false, unique = true)
     private String nombre;
     
-    //Define es deducible impuesto/ganancia
+    //Define si es deducible impuesto/ganancia
     @Column(name = "esDeducibleImpGan",nullable = false)
     private boolean esDeducibleImpGan;
     
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

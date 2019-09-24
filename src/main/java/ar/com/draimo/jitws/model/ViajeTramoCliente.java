@@ -20,12 +20,12 @@ import javax.persistence.Table;
 @JsonFilter("viajetramoclientefiltro")
 public class ViajeTramoCliente extends ObjetoGenerico {
 
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (dador)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDador", nullable = false)
     private Cliente clienteDador;
     
-    //Referencia a la clase Cliente
+    //Referencia a la clase Cliente (destinatario)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
@@ -37,7 +37,6 @@ public class ViajeTramoCliente extends ObjetoGenerico {
     private ViajeTramo viajeTramo;
 
     //Getters y Setters de la clase
-
     public Cliente getClienteDador() {
         return clienteDador;
     }

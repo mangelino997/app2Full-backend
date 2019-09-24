@@ -91,7 +91,7 @@ public class CompraComprobanteItemController {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
         } catch (JpaObjectRetrievalFailureException jorfe) {
-            //Retorna mensaje de dato duplicado
+            //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
         } catch(ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada

@@ -59,12 +59,12 @@ public class Vehiculo extends ObjetoGenerico {
     @JoinColumn(name = "idPersonal", nullable = true)
     private Personal personal;
     
-    //Referencia a la clase Vehiculo
+    //Referencia a la clase Vehiculo (remolque)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVehiculoRemolque", nullable = true)
     private Vehiculo vehiculoRemolque;
     
-    //Referencia a la clase Compañia de seguro
+    //Referencia a la clase Compañia de seguro poliza
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idCompaniaSeguroPoliza", nullable = false)
     private CompaniaSeguroPoliza companiaSeguroPoliza;
@@ -158,7 +158,6 @@ public class Vehiculo extends ObjetoGenerico {
     private Pdf pdfHabBromat;
     
     //Getters y Setters de la clase
-
     public ConfiguracionVehiculo getConfiguracionVehiculo() {
         return configuracionVehiculo;
     }

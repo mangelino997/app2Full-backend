@@ -41,7 +41,6 @@ public class VentaTipoItem extends ObjetoGenerico {
     private boolean esChequeRechazado;
 
     //Getters y Setters de la clase
-
     public String getNombre() {
         return nombre;
     }

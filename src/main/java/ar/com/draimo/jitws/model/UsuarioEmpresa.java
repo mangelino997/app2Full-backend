@@ -33,7 +33,6 @@ public class UsuarioEmpresa extends ObjetoGenerico {
     private boolean mostrar;
     
     //Getters y Setters de la clase
-
     public Usuario getUsuario() {
         return usuario;
     }

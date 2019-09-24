@@ -6,25 +6,24 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Sindicato.
+ * Clase Sindicato. 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "sindicato")
 public class Sindicato extends ObjetoGenerico {
-    
-    //Define el nombre
-    @Column(name = "nombre",length = 60, nullable = false, unique = true)
-    private String nombre;
-    
-    //Define el sitio web
-    @Column(name = "sitioWeb",length = 60, nullable = true)
-    private String sitioWeb;
-    
-    //Getters y Setters de la clase
 
+    //Define el nombre
+    @Column(name = "nombre", length = 60, nullable = false, unique = true)
+    private String nombre;
+
+    //Define el sitio web
+    @Column(name = "sitioWeb", length = 60, nullable = true)
+    private String sitioWeb;
+
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -40,5 +39,5 @@ public class Sindicato extends ObjetoGenerico {
     public void setSitioWeb(String sitioWeb) {
         this.sitioWeb = sitioWeb;
     }
-    
+
 }

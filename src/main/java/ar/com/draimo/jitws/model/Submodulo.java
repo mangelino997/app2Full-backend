@@ -9,26 +9,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Submodulo.
+ * Clase Submodulo. 
  * Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "submodulo")
 public class Submodulo extends ObjetoGenerico {
-    
+
     //Define el nombre
-    @Column(name = "nombre",length = 45, nullable = false)
+    @Column(name = "nombre", length = 45, nullable = false)
     private String nombre;
-    
+
     //Referencia a la clase Supermodulo
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idModulo", nullable = false)
     private Modulo modulo;
-    
-    //Getters y Setters de la clase
 
+    //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
     }
@@ -44,5 +43,5 @@ public class Submodulo extends ObjetoGenerico {
     public void setModulo(Modulo modulo) {
         this.modulo = modulo;
     }
-    
+
 }

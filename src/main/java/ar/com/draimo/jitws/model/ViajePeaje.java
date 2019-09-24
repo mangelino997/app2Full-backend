@@ -48,7 +48,7 @@ public class ViajePeaje extends ObjetoGenerico {
     @Column(name = "letra",length = 1, nullable = false)
     private String letra;
     
-    //Define el numero
+    //Define el numero comprobante
     @Column(name = "numeroComprobante",length = 8, nullable = false)
     private int numeroComprobante;
     
@@ -61,23 +61,22 @@ public class ViajePeaje extends ObjetoGenerico {
     @Column(name = "importe", nullable = false)
     private BigDecimal importe;
     
-    //Referencia a la clase Empresa
+    //Referencia a la clase Empresa (c. Fiscal)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idEmpresaCFiscal", nullable = true)
     private Empresa empresaCFiscal;
     
-    //Referencia a la clase
+    //Referencia a la clase registro
     /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRegistroCFiscal", nullable = true)
     private Registro registroCFiscal;*/
     
-    //Referencia a la clase Usuario
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
 
     //Getters y Setters de la clase
-
     public Viaje getViaje() {
         return viaje;
     }

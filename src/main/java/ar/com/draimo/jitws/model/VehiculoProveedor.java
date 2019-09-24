@@ -134,7 +134,6 @@ public class VehiculoProveedor extends ObjetoGenerico {
     private String alias;
     
     //Getters y Setters de la clase
-
     public String getDominio() {
         return dominio;
     }
