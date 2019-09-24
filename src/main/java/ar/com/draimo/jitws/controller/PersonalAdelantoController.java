@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PersonalAdelanto;
 import ar.com.draimo.jitws.service.PersonalAdelantoService;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,13 @@ public class PersonalAdelantoController {
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
+    }
+    
+    //Obtiene la suma total de importes para la lista de cuotas
+    @PutMapping(value = URL + "/obtenerDiferenciaImportes")
+    @ResponseBody
+    public BigDecimal obtenerDiferenciaImportes(@RequestBody List<PersonalAdelantoLoteDTO> listaCuotas) throws IOException {
+        return elementoService.obtenerDiferenciaImportes(listaCuotas);
     }
 
     //Obtiene la lista completa
