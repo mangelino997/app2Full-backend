@@ -102,6 +102,15 @@ public class PersonalAdelantoService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Controla la diferencia entre el importe y los importes de la tabla generada por listarCuotas
+    public BigDecimal obtenerDiferenciaImportes(List<PersonalAdelantoLoteDTO> listaCuotas) {
+        BigDecimal total = new BigDecimal(0);
+        for (PersonalAdelantoLoteDTO listaCuota : listaCuotas) {
+             total = total.add(listaCuota.getImporte());
+        }
+        return total.subtract(listaCuotas.get(0).getImporteTotal());
+    }
+
     //Genera la tabla de cuotas
     public Object listarCoutas(PersonalAdelanto personalAdelanto) throws IOException {
         List<PersonalAdelanto> cuotasAdelantos = new ArrayList<>();
@@ -259,15 +268,14 @@ public class PersonalAdelantoService {
         String string = mapper.writer(filters).writeValueAsString(adelantosFallados);
         return mapper.readValue(string, Object.class);
     }
-    
-    
-    public boolean controlAdelantosFallidos(Object elemento, PersonalAdelantoLoteDTO adelanto){
-        List<PersonalAdelanto> adelantos = (List<PersonalAdelanto>) ((Object)elemento);
+
+    public boolean controlAdelantosFallidos(Object elemento, PersonalAdelantoLoteDTO adelanto) {
+        List<PersonalAdelanto> adelantos = (List<PersonalAdelanto>) ((Object) elemento);
         List<Personal> personales = personalDAO.listarPersonalesParaAdelanto(adelanto.getIdEmpresa(),
                 adelanto.getIdSucursal(), adelanto.getIdCategoria());
         return (adelantos.size() == personales.size());
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public List<PersonalAdelanto> agregarPrestamo(List<PersonalAdelanto> elementos) {
@@ -278,7 +286,7 @@ public class PersonalAdelantoService {
             elementoDAO.saveAndFlush(elemento);
         }
         elementos.get(0).getPersonal().setRecibePrestamo(false);
-        elementos.get(0).getPersonal().setCuotasPrestamo((short)1);
+        elementos.get(0).getPersonal().setCuotasPrestamo((short) 1);
         personalDAO.save(elementos.get(0).getPersonal());
         return elementos;
     }
