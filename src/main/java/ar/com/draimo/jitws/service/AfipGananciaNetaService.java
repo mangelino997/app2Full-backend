@@ -105,7 +105,6 @@ public class AfipGananciaNetaService {
         if (anio.length() > 4 || anio.length() < 4) {
             throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
         }
-            elementoDAO.save(elemento);
         elementoDAO.save(elemento);
     }
 
