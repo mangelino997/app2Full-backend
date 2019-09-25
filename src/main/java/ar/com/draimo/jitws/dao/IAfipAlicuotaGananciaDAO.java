@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipAlicuotaGananciaDAO extends JpaRepository<AfipAlicuotaGanancia, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipAlicuotaGanancia findTopByOrderByIdDesc();
     
     //Obtiene todos los registros ordenados de mayor a menor

@@ -1,3 +1,4 @@
+//Páquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.CompraComprobantePercepcion;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICompraComprobantePercepcionDAO extends JpaRepository<CompraComprobantePercepcion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public CompraComprobantePercepcion findTopByOrderByIdDesc();
     
 }

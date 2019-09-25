@@ -17,20 +17,23 @@ import org.springframework.data.repository.query.Param;
 
 public interface IAfipTipoBeneficioDeduccionDAO extends JpaRepository<AfipTipoBeneficioDeduccion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipTipoBeneficioDeduccion findTopByOrderByIdDesc();
     
-    //Obtiene todos los registros ordenados
+    //Obtiene todos los registros ordenados por idAfipDeduccionPersonal
     public List<AfipTipoBeneficioDeduccion> findAllByOrderByAfipDeduccionPersonal_Id();
     
-    //Obtiene una lista por AfipTipoBeneficio
+    //Obtiene una lista por anio y AfipTipoBeneficio ordenada por idAfipDeduccionPersonal
     public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(short anio, AfipTipoBeneficio afipTipoBeneficio);
     
-    //Obtiene una lista por AfipTipoBeneficio, anio y deduccionPersonal
+    //Obtiene una lista por AfipTipoBeneficio, anio y deduccionPersonal ordenada por idAfipDeduccionPersonal
     public List<AfipTipoBeneficioDeduccion> findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
             short anio, AfipTipoBeneficio afipTipoBeneficio, AfipDeduccionPersonal afipDeduccionPersonal);
     
-    //Obtiene una lista por filtros
+    /* Obtiene una lista por anio, idAfipTipoBeneficio y mes
+    * Si el mes es igual a 0 retorna el importe del registro encontrado
+    * Si mes!= 0 obtiene el porcentaje del importe que le corresponde a ese mes
+    */
     @Query(value = "SELECT id, version, anio, idAfipTipoBeneficio,  "
             + "idAfipDeduccionPersonal, CASE(:idMes) when 0 then importe else "
             + "ROUND(importe/12*:idMes, 2) end as importe, importeAnualMensual , idMes FROM afiptipobeneficiodeduccion "
@@ -38,10 +41,10 @@ public interface IAfipTipoBeneficioDeduccionDAO extends JpaRepository<AfipTipoBe
     public List<AfipTipoBeneficioDeduccion> listarPorFiltros(@Param("anio") short anio,
             @Param("idAfipTipoBeneficio")int idAfipTipoBeneficio,@Param("idMes") int idMes);
     
-    //Obtiene una lista por AfipTipoBeneficio
+    //Obtiene una lista por AfipTipoBeneficio ordenada por idAfipDeduccionPersonal
     public List<AfipTipoBeneficioDeduccion> findByAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(AfipTipoBeneficio afipTipoBeneficio);
     
-    //Obtiene una lista por AfipDeduccionPersonal
+    //Obtiene una lista por AfipDeduccionPersonal ordenada por idAfipDeduccionPersonal
     public List<AfipTipoBeneficioDeduccion> findByAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(AfipDeduccionPersonal afipDeduccionPersonal);
     
 }

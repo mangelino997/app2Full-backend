@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipCondicionIvaDAO extends JpaRepository<AfipCondicionIva, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipCondicionIva findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

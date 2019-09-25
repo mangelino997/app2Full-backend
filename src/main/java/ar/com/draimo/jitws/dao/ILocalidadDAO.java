@@ -15,13 +15,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ILocalidadDAO extends JpaRepository<Localidad, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Localidad findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
     public List<Localidad> findByNombreContaining(String nombre);
     
-    //Obtiene una lista por id provincia
+    //Obtiene una lista por provincia
     public List<Localidad> findByProvincia(Provincia elemento);
     
 }

@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipSituacionDAO extends JpaRepository<AfipSituacion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipSituacion findTopByOrderByIdDesc();
     
     //Obtiene una lista por alias

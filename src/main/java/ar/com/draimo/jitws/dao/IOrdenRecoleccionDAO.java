@@ -20,9 +20,9 @@ public interface IOrdenRecoleccionDAO extends JpaRepository<OrdenRecoleccion, In
     //Obtiene por alias
     public List<OrdenRecoleccion> findByAliasContaining(String alias);
     
-    //Obtiene por filtro
+    //Obtiene un listado fecha de emision y cliente. Si son nulos obtiene todos los registros
     @Query(value = "select * from ordenrecoleccion where (:fechaEmision IS NULL "
-            + "or date(fechaEmision)=:fechaEmision) AND (:idCliente IS NULL or idCliente=:idCliente)", nativeQuery = true)
+            + "or date(fechaEmision)=:fechaEmision) AND (:idCliente=0 or idCliente=:idCliente)", nativeQuery = true)
     public List<OrdenRecoleccion> listarPorFiltros(@Param("fechaEmision") String
             fechaEmision, @Param("idCliente") int idCliente);
     

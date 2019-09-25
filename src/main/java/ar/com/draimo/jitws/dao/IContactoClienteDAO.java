@@ -8,14 +8,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO ContactoBanco
+ * Interfaz DAO ContactoCliente
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IContactoClienteDAO extends JpaRepository<ContactoCliente, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ContactoCliente findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

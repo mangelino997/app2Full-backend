@@ -68,8 +68,11 @@ public class PersonalService {
     }
 
     //Obtiene la lista completa
-    public Object listar() throws IOException {
+    public Object listar() throws IOException, Exception {
         List<Personal> elementos = elementoDAO.findAll();
+        if (elementos.isEmpty()) {
+            throw new Exception("No se encontraron registros.");
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -81,12 +84,11 @@ public class PersonalService {
     }
 
     //Obtiene una lista por alias
-    public Object listarPorAlias(String alias) throws IOException {
-        List<Personal> elementos;
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findAll();
-        } else {
-            elementos = elementoDAO.findByAliasContaining(alias);
+    public Object listarPorAlias(String alias, boolean activos) throws IOException, Exception {
+        //Se establece 0 en parametro de empresa para no filtrar por tal
+        List<Personal> elementos = elementoDAO.listarPorAlias(alias, activos, 0);
+        if (elementos.isEmpty()) {
+            throw new Exception("No se encontraron registros.");
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -98,13 +100,14 @@ public class PersonalService {
     }
 
     //Obtiene una lista por alias y empresa
-    public Object listarPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
-        List<Personal> elementos;
-        Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findByEmpresa(empresa);
-        } else {
-            elementos = elementoDAO.findByEmpresaAndAliasContaining(empresa, alias);
+    public Object listarPorAliasYEmpresa(String alias, int idEmpresa, boolean 
+            activos) throws IOException, Exception {
+        Date fecha = new Date(new java.util.Date().getTime());
+        //Se establece 0 en parametro de sucursal para no filtrar por tal
+        List<Personal> elementos = elementoDAO.listarPorAliasEmpresaYSucursal(
+                idEmpresa, 0,activos,alias, fecha);
+        if (elementos.isEmpty()) {
+            throw new Exception("No se encontraron registros.");
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -116,16 +119,11 @@ public class PersonalService {
     }
 
     //Obtiene una lista por alias, empresa y sucursal
-    public Object listarActivosPorAliasEmpresaYSucursal(String alias, int idEmpresa, int idSucursal) throws IOException, Exception {
-        List<Personal> elementos;
-        Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        Sucursal sucursal = sucursalDAO.findById(idSucursal).get();
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findByEmpresa(empresa);
-        } else {
-            elementos
-                    = elementoDAO.findByEmpresaAndAliasContainingAndSucursalAndEstaActivaTrue(empresa, alias, sucursal);
-        }
+    public Object listarActivosPorAliasEmpresaYSucursal(String alias, int idEmpresa,
+            int idSucursal) throws IOException, Exception {
+        Date fecha = new Date(new java.util.Date().getTime());
+        List<Personal> elementos = elementoDAO.listarPorAliasEmpresaYSucursal(
+                idEmpresa, idSucursal, true, alias, fecha);
         if (elementos.isEmpty()) {
             throw new Exception("No se encontraron registros.");
         }
@@ -139,7 +137,7 @@ public class PersonalService {
     }
 
     //Obtiene un registro por id
-    public Object obtenerPorId(int id) throws IOException {
+    public Object obtenerPorId(int id) throws IOException, Exception {
         Personal elemento = elementoDAO.findById(id).get();
         Pdf pdf = new Pdf();
         if (elemento.getPdfAltaTemprana() == null) {
@@ -161,6 +159,9 @@ public class PersonalService {
             Foto foto = fotoDAO.findById(1).get();
             elemento.setFoto(foto);
         }
+        if (elemento==null) {
+            throw new Exception("No se encontró el registro.");
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept();
@@ -170,66 +171,13 @@ public class PersonalService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene un chofer por alias
-    public Object listarChoferPorAlias(String alias) throws IOException {
-        List<Personal> elementos = elementoDAO.findByAliasContainingAndEsChoferTrue(alias);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene un chofer por alias y empresa
-    public Object listarChoferPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
-        Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        List<Personal> elementos = new ArrayList<>();
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findByEmpresaAndEsChoferTrueAndFechaFinIsNull(empresa);
-        } else {
-            elementos = elementoDAO.findByAliasContainingAndEsChoferTrueAndEmpresaAndFechaFinIsNull(
-                    alias, empresa);
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene un listado de choferes ordenados por nombre de corta distancia
-    public Object listarChoferesCortaDistanciaOrdenadoPorNombre(String alias) throws IOException {
+    //Obtiene un listado de choferes por alias, distancia y empresa ordenados por nombre
+    public Object listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(String alias, 
+            boolean distancia) throws IOException {
         Date fecha = new Date(new java.util.Date().getTime());
         List<Personal> elementos = 
-                elementoDAO.listarChoferesCortaDistanciaPorAliasOrdenadoPorNombre(alias, fecha);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene un listado de choferes ordenados por nombre de larga distancia
-    public Object listarChoferesLargaDistanciaOrdenadoPorNombre(String alias) throws IOException {
-        List<Personal> elementos = elementoDAO.listarChoferesLargaDistanciaPorAliasOrdenadoPorNombre(alias);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene un listado de choferes ordenados por nombre de larga distancia
-    public Object listarChoferesPorEmpresa(int idEmpresa) throws IOException {
-        List<Personal> elementos = elementoDAO.listarChoferesPorEmpresa(idEmpresa);
+                elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias,distancia,
+                        0, fecha);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -241,7 +189,9 @@ public class PersonalService {
 
     //Obtiene un listado de acompañantes ordenados por nombre
     public Object listarAcompaniantesPorAliasOrdenadosPorNombre(String alias) throws IOException {
-        List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(alias);
+        Date fecha = new Date(new java.util.Date().getTime());
+        List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(
+                alias,fecha);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -253,7 +203,9 @@ public class PersonalService {
 
     //Obtiene un listado de acompañantes ordenados por nombre
     public Object listarAcompaniantes() throws IOException {
-        List<Personal> elementos = elementoDAO.listarAcompaniantesOrdenadoPorNombre();
+        Date fecha = new Date(new java.util.Date().getTime());
+        List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(
+                "***",fecha);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

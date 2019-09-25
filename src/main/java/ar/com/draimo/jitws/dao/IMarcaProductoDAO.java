@@ -6,17 +6,17 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Marca de producto
+ * Interfaz DAO MarcaProducto
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IMarcaProductoDAO extends JpaRepository<MarcaProducto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public MarcaProducto findTopByOrderByIdDesc();
     
-    //Obtiene la lista de registro ordenada por nombre desc
+    //Obtiene la lista de registro ordenada por nombre asc
     public List<MarcaProducto> findAllByOrderByNombreAsc();
     
     //Obtiene una lista por nombre

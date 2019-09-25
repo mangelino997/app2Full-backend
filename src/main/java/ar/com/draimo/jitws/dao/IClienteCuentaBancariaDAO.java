@@ -15,10 +15,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IClienteCuentaBancariaDAO extends JpaRepository<ClienteCuentaBancaria, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ClienteCuentaBancaria findTopByOrderByIdDesc();
     
-    //Obtiene una lista por ordenVenta
+    //Obtiene una lista por cuentaBancaria
     public List<ClienteCuentaBancaria> findByCuentaBancaria(CuentaBancaria cuentaBancaria);
     
     //Obtiene una lista por cliente

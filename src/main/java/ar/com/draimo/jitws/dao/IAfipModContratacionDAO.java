@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipModContratacionDAO extends JpaRepository<AfipModContratacion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipModContratacion findTopByOrderByIdDesc();
     
     //Obtiene una lista por alias

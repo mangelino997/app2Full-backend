@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IContactoCompaniaSeguroDAO extends JpaRepository<ContactoCompaniaSeguro, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ContactoCompaniaSeguro findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

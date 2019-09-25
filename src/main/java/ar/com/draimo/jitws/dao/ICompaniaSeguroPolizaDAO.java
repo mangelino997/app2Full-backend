@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICompaniaSeguroPolizaDAO extends JpaRepository<CompaniaSeguroPoliza, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public CompaniaSeguroPoliza findTopByOrderByIdDesc();
     
     //Obtiene una lista por empresa
@@ -28,7 +28,7 @@ public interface ICompaniaSeguroPolizaDAO extends JpaRepository<CompaniaSeguroPo
     //Obtiene por compania de seguro y empresa
     public List<CompaniaSeguroPoliza> findByCompaniaSeguroAndEmpresa(Optional<CompaniaSeguro> companiaSeguro, Optional<Empresa> empresa);
     
-    //Obtiene una lista por nombre de compania de seguro
+    //Obtiene una lista por el nombre de compania de seguro
     public List<CompaniaSeguroPoliza> findByCompaniaSeguro_NombreContaining(String nombre);
     
 }

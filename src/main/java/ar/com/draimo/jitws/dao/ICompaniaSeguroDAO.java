@@ -15,15 +15,16 @@ import org.springframework.data.repository.query.Param;
 
 public interface ICompaniaSeguroDAO extends JpaRepository<CompaniaSeguro, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public CompaniaSeguro findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
     public List<CompaniaSeguro> findByNombreContaining(String nombre);
     
     //Obtiene una lista por empresa (Consulta CompaniaSeguroPoliza)
-    @Query(value = "SELECT c.* FROM companiaseguropoliza p " + "INNER JOIN companiaseguro c ON p.idCompaniaSeguro=c.id " 
-            + "where p.idEmpresa=:idEmpresa group by idCompaniaSeguro order by idCompaniaSeguro asc;", nativeQuery = true)
+    @Query(value = "SELECT c.* FROM companiaseguropoliza p INNER JOIN companiaseguro c"
+            + " ON p.idCompaniaSeguro=c.id where p.idEmpresa=:idEmpresa group by"
+            + " idCompaniaSeguro order by idCompaniaSeguro asc;", nativeQuery = true)
     public List<CompaniaSeguro> listarPorEmpresa(@Param("idEmpresa") int idEmpresa);
     
 }

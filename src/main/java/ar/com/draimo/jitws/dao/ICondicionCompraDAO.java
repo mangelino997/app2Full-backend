@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICondicionCompraDAO extends JpaRepository<CondicionCompra, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public CondicionCompra findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

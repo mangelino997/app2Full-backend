@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAgendaTelefonicaDAO extends JpaRepository<AgendaTelefonica, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AgendaTelefonica findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

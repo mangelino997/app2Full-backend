@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IEjercicioDAO extends JpaRepository<Ejercicio, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Ejercicio findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por nombre y empresa
     public List<Ejercicio> findByEmpresaAndNombreContaining(Empresa empresa, String nombre);
     
     //Obtiene un listado por empresa

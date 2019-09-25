@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipWSDAO extends JpaRepository<AfipWS, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipWS findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

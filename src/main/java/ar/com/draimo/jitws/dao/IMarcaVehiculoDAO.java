@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Marca de vehiculo
+ * Interfaz DAO Marca vehiculo
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IMarcaVehiculoDAO extends JpaRepository<MarcaVehiculo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public MarcaVehiculo findTopByOrderByIdDesc();
     
     //Obtiene la lista de registro ordenada por nombre desc

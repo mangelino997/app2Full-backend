@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IPaisDAO extends JpaRepository<Pais, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Pais findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

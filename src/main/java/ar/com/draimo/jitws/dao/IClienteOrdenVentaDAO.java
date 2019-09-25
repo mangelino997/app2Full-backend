@@ -8,14 +8,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Compañia de seguro poliza
+ * Interfaz DAO Cliente orden venta
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IClienteOrdenVentaDAO extends JpaRepository<ClienteOrdenVenta, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ClienteOrdenVenta findTopByOrderByIdDesc();
     
     //Obtiene una lista por ordenVenta

@@ -1,3 +1,4 @@
+//Paquete el que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Foto;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IFotoDAO extends JpaRepository<Foto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Foto findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

@@ -17,14 +17,15 @@ import org.springframework.data.repository.query.Param;
 
 public interface IMonedaCotizacionDAO extends JpaRepository<MonedaCotizacion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public MonedaCotizacion findTopByOrderByIdDesc();
     
     //Obtiene una moneda cotizacion por moneda y fecha
     public MonedaCotizacion findByMonedaAndFecha(Moneda moneda, Date fecha);
     
-    //Obtiene un listado de moneda cotizacion por moneda
-    @Query(value = "SELECT * FROM monedacotizacion WHERE idMoneda=:idMoneda ORDER BY fecha DESC", nativeQuery = true)
+    //Obtiene un listado de moneda cotizacion por moneda  ordenada por fecha
+    @Query(value = "SELECT * FROM monedacotizacion WHERE idMoneda=:idMoneda ORDER "
+            + "BY fecha DESC", nativeQuery = true)
     public List<MonedaCotizacion> listarPorMoneda(@Param("idMoneda") int idMoneda);
     
 }

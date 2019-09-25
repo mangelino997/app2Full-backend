@@ -8,17 +8,17 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Provincia
+ * Interfaz DAO moneda cuenta contable
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IMonedaCuentaContableDAO extends JpaRepository<MonedaCuentaContable, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public MonedaCuentaContable findTopByOrderByIdDesc();
     
-    //Obtiene por nombre de moneda
+    //Obtiene por nombre de moneda y empresa
     public List<MonedaCuentaContable> findByMoneda_NombreContainingAndEmpresa(String nombre, Empresa empresa);
     
     //Obtiene un listado de moneda cuenta contable por moneda

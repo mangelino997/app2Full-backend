@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPdfDAO extends JpaRepository<Pdf, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Pdf findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IOrdenVentaDAO extends JpaRepository<OrdenVenta, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public OrdenVenta findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

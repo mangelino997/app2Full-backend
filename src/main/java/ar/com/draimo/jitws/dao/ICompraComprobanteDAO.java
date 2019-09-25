@@ -1,3 +1,4 @@
+//Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.CompraComprobante;
@@ -17,17 +18,23 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICompraComprobanteDAO extends JpaRepository<CompraComprobante, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public CompraComprobante findTopByOrderByIdDesc();
     
-    //Obtiene un registro por puntoVenta, letra, numero y proveedor
+    //Obtiene un registro por puntoVenta, codigoAfip, numero y proveedor
     @Query(value = "SELECT * FROM compracomprobante WHERE idProveedor=:idProveedor AND "
             + "codigoAfip=:codigoAfip AND puntoVenta=:puntoVenta AND numero=:numero", nativeQuery = true)
     public List<CompraComprobante> verificarUnicidad(@Param("idProveedor") int idProveedor,
             @Param("codigoAfip") String codigoAfip,@Param("puntoVenta") int puntoVenta,
             @Param("numero") int numero);
     
-    //Obtiene un listado de registros por filtro
+    /*Obtiene un listado de registros por idEmpresa, idProveedor, rango de fecha, tipo de comprobante
+    * y el tipo de fecha por la que se quiere listar
+    * Si fechaTipo es igual 0 se obtiene por fecha registracion, si es igual a 1 se obtiene 
+    * por fecha emision y si es igual a 2 se obtiene por fechaContable
+    * Si idEmpresa es igual a 0 obtiene todas. Si idProveedor es igual a cero obtiene todos.
+    * Si idTipoComprobante es igual a 0 obtiene todos.
+    */
     @Query(value = "SELECT * FROM compracomprobante where Case :fechaTipo when 1 then "
             + "(:idEmpresa=0 OR idEmpresa=:idEmpresa) and (:idProveedor=0 OR idProveedor=:idProveedor)"
             + " and fechaEmision between :fechaDesde and :fechaHasta and "
@@ -42,4 +49,5 @@ public interface ICompraComprobanteDAO extends JpaRepository<CompraComprobante, 
             @Param("idProveedor") int idProveedor, @Param("fechaDesde") Date fechaDesde,
             @Param("fechaHasta") Date fechaHasta, @Param("idTipoComprobante") int idTipoComprobante,
             @Param("fechaTipo") int fechaTipo);
+
 }

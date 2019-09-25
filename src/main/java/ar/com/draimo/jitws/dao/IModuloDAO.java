@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IModuloDAO extends JpaRepository<Modulo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Modulo findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

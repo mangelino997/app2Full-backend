@@ -1,3 +1,4 @@
+//Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.DepositoInsumoProducto;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IDepositoInsumoProductoDAO extends JpaRepository<DepositoInsumoProducto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public DepositoInsumoProducto findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

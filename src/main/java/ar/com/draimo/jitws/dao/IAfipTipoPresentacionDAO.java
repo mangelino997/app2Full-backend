@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipTipoPresentacionDAO extends JpaRepository<AfipTipoPresentacion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipTipoPresentacion findTopByOrderByIdDesc();
     
     //Obtiene una lista por descripcion

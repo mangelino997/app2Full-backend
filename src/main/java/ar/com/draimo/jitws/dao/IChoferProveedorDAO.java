@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IChoferProveedorDAO extends JpaRepository<ChoferProveedor, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ChoferProveedor findTopByOrderByIdDesc();
     
     //Obtiene una lista por id proveedor

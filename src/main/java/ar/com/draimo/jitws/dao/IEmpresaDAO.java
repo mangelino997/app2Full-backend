@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Empresa findTopByOrderByIdDesc();
     
     //Obtiene una lista de empresas activas
@@ -24,18 +24,18 @@ public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
     //Obtiene una lista por razon social
     public List<Empresa> findByRazonSocialContaining(String razonSocial);
     
-    //Obtiene una lista por razon social y CAEA habilitado
+    //Obtiene una lista por razon social y Fe CAEA habilitado
     public List<Empresa> findByRazonSocialContainingAndFeCAEATrue(String razonSocial);
     
-    //Obtiene un listado por razon social y activa
+    //Obtiene un listado de activas por razon social 
     public List<Empresa> findByRazonSocialContainingAndEstaActivaTrue(String razonSocial);
     
-    //Obtiene un listado por razon social, esta activa y fe
+    //Obtiene un listadode activas por razon social y fe habilitado
     public List<Empresa> findByRazonSocialContainingAndEstaActivaTrueAndFeTrue(String razonSocial);
     
-    //Obtiene una lista por empresa
+    //Obtiene una lista de empresas activas por usuario (usuarioEmpresa)
     @Query(value = "SELECT e.* FROM usuarioempresa u INNER JOIN empresa e ON "
-            + "u.idUsuario = e.id WHERE u.idUsuario=:idUsuario AND u.mostrar=1 AND estaActiva=1", nativeQuery = true)
+            + "u.idUsuario = e.id WHERE u.idUsuario=:idUsuario AND u.mostrar=1 AND e.estaActiva=1", nativeQuery = true)
     public List<Empresa> listarPorUsuarioYMostrarTrue(@Param("idUsuario") int idUsuario);
     
 }

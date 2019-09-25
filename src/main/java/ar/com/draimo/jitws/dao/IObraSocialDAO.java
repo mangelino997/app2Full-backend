@@ -13,12 +13,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IObraSocialDAO extends JpaRepository<ObraSocial, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ObraSocial findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por alias ordenada por nombre
     public List<ObraSocial> findByAliasContainingOrderByNombreAsc(String nombre);
     
-    //Obtiene la lista completa ordenada alfabeticamente
+    //Obtiene la lista completa ordenada por codigo afip
     public List<ObraSocial> findByOrderByCodigoAfipAsc();
+    
 }

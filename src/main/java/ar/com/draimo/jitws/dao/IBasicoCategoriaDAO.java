@@ -16,7 +16,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IBasicoCategoriaDAO extends JpaRepository<BasicoCategoria, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public BasicoCategoria findTopByOrderByIdDesc();
     
     //Obtiene una lista por categoria
@@ -24,10 +24,10 @@ public interface IBasicoCategoriaDAO extends JpaRepository<BasicoCategoria, Inte
     
     //Obtiene el ultimo registro por categoria
     @Query(value = "SELECT * FROM basicocategoria WHERE idCategoria=:idCategoria ORDER BY "
-            + "id DESC LIMIT 1", nativeQuery= true)
+            + "anio, idMes DESC LIMIT 1", nativeQuery= true)
     public BasicoCategoria obtenerPorCategoria(@Param("idCategoria") int idCategoria);
     
-    //Obtiene un listado por categoria_nombre
+    //Obtiene un listado por el nombre de categoria
     public List<BasicoCategoria> findByCategoria_NombreContaining(String nombre);
     
     //Obtiene una lista por categoria y anio

@@ -13,13 +13,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICategoriaDAO extends JpaRepository<Categoria, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Categoria findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por nombre ordenado por nombre
     public List<Categoria> findByNombreContainingOrderByNombreAsc(String nombre);
     
-    //Obtiene la lista completa ordenada alfabeticamente
+    //Obtiene la lista completa ordenadapor nombre
     public List<Categoria> findByOrderByNombreAsc();
     
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IAfipConceptoDAO extends JpaRepository<AfipConcepto, Integer> {
     
-    //Obtiene el el ultimo registro
+    //Obtiene el ultimo registro
     public AfipConcepto findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

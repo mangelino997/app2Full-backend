@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IBancoDAO extends JpaRepository<Banco, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Banco findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

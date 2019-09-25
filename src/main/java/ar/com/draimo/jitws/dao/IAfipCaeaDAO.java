@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IAfipCaeaDAO extends JpaRepository<AfipCaea, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipCaea findTopByOrderByIdDesc();
     
     //Obtiene un registro por empresa, anio, mes y quincena

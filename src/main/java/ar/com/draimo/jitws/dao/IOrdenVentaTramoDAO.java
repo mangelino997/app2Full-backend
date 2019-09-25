@@ -16,16 +16,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IOrdenVentaTramoDAO extends JpaRepository<OrdenVentaTramo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public OrdenVentaTramo findTopByOrderByIdDesc();
     
+    //Obtiene un registro por ordenVenta de ordenVentaTarifa y preciosDesde
     public List<OrdenVentaTramo> findByOrdenVentaTarifa_OrdenVentaAndPreciosDesde(
             OrdenVenta ordenVenta, Date preciosDesde);
     
-    //Obtiene un listado por la orden de venta ordenVentaTarifa
+    //Obtiene un listado por la ordenVenta de ordenVentaTarifa
     public List<OrdenVentaTramo> findByOrdenVentaTarifa_OrdenVenta(OrdenVenta ordenVenta);
     
-    //Obtiene un listado por la orden de venta ordenVentaTarifa
+    //Obtiene un listado por ordenVentaTarifa
     public List<OrdenVentaTramo> findByOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa);
     
     //Elimina los registro por ordenVentaTarifa

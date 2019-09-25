@@ -21,7 +21,7 @@ public interface IContactoBancoDAO extends JpaRepository<ContactoBanco, Integer>
     //Obtiene una lista por nombre
     public List<ContactoBanco> findByNombreContaining(String nombre);
     
-    //Obtiene una lista de contactos por sucursal
+    //Obtiene una lista de contactos por sucursalBanco
     public List<ContactoBanco> findBySucursalBanco(Optional<SucursalBanco> elemento);
     
 }

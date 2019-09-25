@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICondicionVentaDAO extends JpaRepository<CondicionVenta, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public CondicionVenta findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

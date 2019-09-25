@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IEstadoCivilDAO extends JpaRepository<EstadoCivil, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public EstadoCivil findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

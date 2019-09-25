@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IOrigenDestinoDAO extends JpaRepository<OrigenDestino, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public OrigenDestino findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

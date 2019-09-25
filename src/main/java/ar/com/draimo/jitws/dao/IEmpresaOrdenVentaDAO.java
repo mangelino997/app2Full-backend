@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IEmpresaOrdenVentaDAO extends JpaRepository<EmpresaOrdenVenta, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public EmpresaOrdenVenta findTopByOrderByIdDesc();
     
     //Obtiene una lista por ordenVenta
@@ -24,7 +24,7 @@ public interface IEmpresaOrdenVentaDAO extends JpaRepository<EmpresaOrdenVenta, 
     //Obtiene una lista por empresa 
     public List<EmpresaOrdenVenta> findByEmpresa(Empresa empresa);
     
-    //Obtiene por compania de empresa y ordenVenta
+    //Obtiene por empresa y ordenVenta
     public List<EmpresaOrdenVenta> findByEmpresaAndOrdenVenta(Empresa empresa, OrdenVenta ordenVenta);
     
     //Elimina por orden de venta

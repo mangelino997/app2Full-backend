@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IClienteVtoPagoDAO extends JpaRepository<ClienteVtoPago, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ClienteVtoPago findTopByOrderByIdDesc();
     
     //Obtiene una lista por cliente y empresa

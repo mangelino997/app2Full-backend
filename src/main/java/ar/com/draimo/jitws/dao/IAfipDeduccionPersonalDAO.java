@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipDeduccionPersonalDAO extends JpaRepository<AfipDeduccionPersonal, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipDeduccionPersonal findTopByOrderByIdDesc();
     
     //Obtiene una lista por descripcion

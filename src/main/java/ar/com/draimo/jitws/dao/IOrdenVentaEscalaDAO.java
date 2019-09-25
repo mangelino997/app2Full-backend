@@ -20,23 +20,23 @@ import org.springframework.data.repository.query.Param;
 
 public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public OrdenVentaEscala findTopByOrderByIdDesc();
     
-    //Obtiene un listapo por los precios desde y orden venta de orden venta tarifa
+    //Obtiene un listado por los precios desde y orden venta de orden venta tarifa
     public List<OrdenVentaEscala> findByOrdenVentaTarifa_OrdenVentaAndPreciosDesde(
             OrdenVenta ordenVenta, Date preciosDesde);
     
     //Obtiene un listado por orden venta de orvenVentaTarifa
     public List<OrdenVentaEscala> findByOrdenVentaTarifa_OrdenVenta(OrdenVenta ordenVenta);
     
-    //Obtiene un listado por orvenVentaTarifa
+    //Obtiene un listado por orvenVentaTarifa ordenado por el valor de escalaTarifa
     public List<OrdenVentaEscala> findByOrdenVentaTarifaOrderByEscalaTarifa_ValorAsc(OrdenVentaTarifa ordenVentaTarifa);
     
     //elimina un listado por ordenVentaTarifa
     public List<OrdenVentaEscala> deleteByOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa);
     
-    //Obtiene un registro por un valor y un idOrdenVenta
+    //Obtiene un registro por un valor y una idOrdenVenta
     @Query(value = "SELECT e.* FROM ordenventaescala e inner join escalatarifa t"
             + " on t.id=e.idEscalaTarifa inner join ordenventatarifa v on e.idOrdenVentaTarifa ="
             + "v.id where v.idOrdenVenta=:idOrdenVenta and t.valor between"
@@ -45,7 +45,7 @@ public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, In
             @Param("idOrdenVenta") int idOrdenVenta, @Param("valor") BigDecimal valor,
             @Param("valorHasta") BigDecimal valorHasta);
     
-    //Obtiene un listado de fechas por ordenVentaTarifa
+    //Obtiene un listado por ordenVentaTarifa y precios desde
     @Query(value = "SELECT * FROM ordenventaescala where idOrdenVentaTarifa=:idOrdenVentaTarifa "
             + "and preciosDesde=:preciosDesde", nativeQuery = true)
     public List<OrdenVentaEscala> listarPorOrdenVentaTarifaYPreciosDesde(@Param("idOrdenVentaTarifa") int idOrdenVentaTarifa,

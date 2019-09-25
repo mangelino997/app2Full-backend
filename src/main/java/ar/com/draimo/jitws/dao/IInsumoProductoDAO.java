@@ -13,16 +13,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IInsumoProductoDAO extends JpaRepository<InsumoProducto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public InsumoProducto findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por alias
     public List<InsumoProducto> findByAliasContaining(String alias);
     
-    //Obtiene una lista por esCombustible
+    //Obtiene una lista por esCombustible de rubro producto
     public List<InsumoProducto> findByRubroProducto_EsCombustibleTrue();
     
-    //Obtiene una lista por esInsumo
+    //Obtiene una lista por esInsumo de rubro producto
     public List<InsumoProducto> findByRubroProducto_EsInsumoTrue();
     
 }

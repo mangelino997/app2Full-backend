@@ -16,10 +16,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public PersonalAdelanto findTopByOrderByIdDesc();
     
-    //Obtiene el siguiente numero de lote
+    //Obtiene el ultimo numero de lote
     public PersonalAdelanto findTopByOrderByNumeroLoteDesc();
     
     //Obtiene el id viaje del personal adelanto

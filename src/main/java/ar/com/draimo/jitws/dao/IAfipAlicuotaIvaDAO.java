@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipAlicuotaIvaDAO extends JpaRepository<AfipAlicuotaIva, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipAlicuotaIva findTopByOrderByIdDesc();
     
     //Obtiene una lista de activas

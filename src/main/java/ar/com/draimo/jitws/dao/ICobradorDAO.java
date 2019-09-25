@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICobradorDAO extends JpaRepository<Cobrador, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Cobrador findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IMonedaDAO extends JpaRepository<Moneda, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Moneda findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

@@ -53,36 +53,30 @@ public class PersonalController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public Object listar() throws IOException {
+    public Object listar() throws IOException, Exception {
         return elementoService.listar();
     }
 
     //Obtiene un registro por id
     @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
-    public Object obtenerPorId(@PathVariable int id) throws IOException {
+    public Object obtenerPorId(@PathVariable int id) throws IOException, Exception {
         return elementoService.obtenerPorId(id);
     }
 
     //Obtiene la lista de choferes de corta distancia por alias
-    @GetMapping(value = URL + "/listarChoferesCortaDistanciaPorAlias/{alias}")
+    @GetMapping(value = URL + "/listarChoferesPorDistanciaPorAlias/{alias}/{distancia}")
     @ResponseBody
     public Object listarChoferesCortaDistanciaPorAliasOrdenados(@PathVariable String alias) throws IOException {
-        return elementoService.listarChoferesCortaDistanciaOrdenadoPorNombre(alias);
-    }
-
-    //Obtiene la lista de choferes de larga distancia por alias
-    @GetMapping(value = URL + "/listarChoferesLargaDistanciaPorAlias/{alias}")
-    @ResponseBody
-    public Object listarChoferesLargaDistanciaPorAliasOrdenados(@PathVariable String alias) throws IOException {
-        return elementoService.listarChoferesLargaDistanciaOrdenadoPorNombre(alias);
+        return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
+                alias, false);
     }
 
     //Obtiene la lista de choferes de larga distancia por alias
     @GetMapping(value = URL + "/listarChoferesPorEmpresa/{idEmpresa}")
     @ResponseBody
-    public Object listarChoferesPorEmpresa(@PathVariable int idEmpresa) throws IOException {
-        return elementoService.listarChoferesPorEmpresa(idEmpresa);
+    public Object listarChoferesPorEmpresa(@PathVariable int idEmpresa) throws IOException, Exception {
+        return elementoService.listarActivosPorAliasEmpresaYSucursal("***",idEmpresa, 0);
     }
 
     //Obtiene la lista completa
@@ -102,15 +96,29 @@ public class PersonalController {
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
-    public Object listarPorAlias(@PathVariable String alias) throws IOException {
-        return elementoService.listarPorAlias(alias);
+    public Object listarPorAlias(@PathVariable String alias) throws IOException, Exception {
+        return elementoService.listarPorAlias(alias, false);
+    }
+
+    //Obtiene una lista por alias
+    @GetMapping(value = URL + "/listarActivosPorAlias/{alias}")
+    @ResponseBody
+    public Object listarActivosPorAlias(@PathVariable String alias) throws IOException, Exception {
+        return elementoService.listarPorAlias(alias, true);
     }
 
     //Obtiene una lista por alias y empresa
     @GetMapping(value = URL + "/listarPorAliasYEmpresa/{alias}/{idEmpresa}")
     @ResponseBody
-    public Object listarPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
-        return elementoService.listarPorAliasYEmpresa(alias, idEmpresa);
+    public Object listarPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException, Exception {
+        return elementoService.listarPorAliasYEmpresa(alias, idEmpresa, false);
+    }
+
+    //Obtiene una lista por alias y empresa
+    @GetMapping(value = URL + "/listarPorActivosAliasYEmpresa/{alias}/{idEmpresa}")
+    @ResponseBody
+    public Object listarActivosPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException, Exception {
+        return elementoService.listarPorAliasYEmpresa(alias, idEmpresa, true);
     }
 
     //Obtiene una lista por alias, sucursal y empresa
@@ -120,19 +128,12 @@ public class PersonalController {
         return elementoService.listarActivosPorAliasEmpresaYSucursal(alias, idEmpresa, idSucursal);
     }
 
-    //Obtiene una lista de choferes por alias
-    @GetMapping(value = URL + "/listarChoferPorAlias/{alias}")
-    @ResponseBody
-    public Object listarChoferPorAlias(@PathVariable String alias) throws IOException {
-        return elementoService.listarChoferPorAlias(alias);
-    }
-    
-    //Obtiene una lista de choferes por alias y empresa
-    @GetMapping(value = URL + "/listarChoferPorAliasYEmpresa/{alias}/{idEmpresa}")
-    @ResponseBody
-    public Object listarChoferPorAliasYEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
-        return elementoService.listarChoferPorAliasYEmpresa(alias,idEmpresa);
-    }
+//    //Obtiene una lista de choferes por alias
+//    @GetMapping(value = URL + "/listarChoferActivoPorAlias/{alias}")
+//    @ResponseBody
+//    public Object listarChoferPorAlias(@PathVariable String alias) throws IOException, Exception {
+//        return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias, 0, 0);
+//    }
 
     //Agrega un registro
     @PostMapping(value = URL)

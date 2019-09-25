@@ -16,10 +16,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IConfiguracionVehiculoDAO extends JpaRepository<ConfiguracionVehiculo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ConfiguracionVehiculo findTopByOrderByIdDesc();
     
-    //Obtiene una lista por id tipo vehiculo y id marca vehiculo
+    //Obtiene una lista por TipoVehiculo y MarcaVehiculo
     public List<ConfiguracionVehiculo> findByTipoVehiculoAndMarcaVehiculo(Optional<TipoVehiculo> TipoVehiculo, Optional<MarcaVehiculo> marcaVehiculo);
     
     //Obtiene una lista por marca de vehiculo

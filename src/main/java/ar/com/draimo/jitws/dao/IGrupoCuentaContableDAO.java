@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IGrupoCuentaContableDAO extends JpaRepository<GrupoCuentaContable, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public GrupoCuentaContable findTopByOrderByIdDesc();
     
 }

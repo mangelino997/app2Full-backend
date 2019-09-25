@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IAfipSiniestradoDAO extends JpaRepository<AfipSiniestrado, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public AfipSiniestrado findTopByOrderByIdDesc();
     
     //Obtiene una lista por alias
