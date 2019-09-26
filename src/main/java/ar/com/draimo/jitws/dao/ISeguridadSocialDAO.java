@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISeguridadSocialDAO extends JpaRepository<SeguridadSocial, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SeguridadSocial findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por nombre ordenado por nombre
     public List<SeguridadSocial> findByNombreContainingOrderByNombreAsc(String nombre);
     
     //Obtiene una lista por orden alfabetico

@@ -1,7 +1,9 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipAlicuotaGananciaDAO;
 import ar.com.draimo.jitws.dao.IAfipGananciaNetaDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipGananciaNeta;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class AfipGananciaNetaService {
     @Autowired
     IAfipGananciaNetaDAO elementoDAO;
 
-    //Define la referencia al dao de afipTipoBeneficio
+    //Define la referencia al dao de afipAlicuotaGanancia
     @Autowired
     IAfipAlicuotaGananciaDAO gananciaDAO;
 
@@ -35,7 +37,7 @@ public class AfipGananciaNetaService {
     public List<AfipGananciaNeta> listar() {
         List<AfipGananciaNeta> ganancias = elementoDAO.findAllByOrderByImporte();
         if (ganancias.isEmpty()) {
-            throw new DataIntegrityViolationException("No se encontraron registros.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         } else {
             return ganancias;
         }
@@ -44,11 +46,11 @@ public class AfipGananciaNetaService {
     //Obtiene una lista por filtros
     public List<AfipGananciaNeta> listarPorFiltros(short anio, int idMes) throws Exception {
         if (idMes > 12) {
-            throw new Exception("Mes inexistente");
+            throw new Exception(MensajeRespuesta.NO_EXISTENTE + "MES");
         } else {
             List<AfipGananciaNeta> ganancias = elementoDAO.listarPorFiltros(anio, idMes);
             if (ganancias.isEmpty()) {
-                throw new DataIntegrityViolationException("No se encontraron registros.");
+                throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
             } else {
                 return ganancias;
             }
@@ -61,7 +63,7 @@ public class AfipGananciaNetaService {
         List<AfipGananciaNeta> ganancias = elementoDAO.findByAfipAlicuotaGananciaOrderByImporte(
                 gananciaDAO.findById(idAlicuotaGanancia).get());
         if (ganancias.isEmpty()) {
-            throw new DataIntegrityViolationException("No se encontraron registros.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         } else {
             return ganancias;
         }
@@ -72,11 +74,11 @@ public class AfipGananciaNetaService {
         String anio = String.valueOf(anioFiscal);
         //Obtiene longitud de anio, si supera 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
         }
         List<AfipGananciaNeta> ganancias = elementoDAO.findByAnioOrderByImporte(anioFiscal);
         if (ganancias.isEmpty()) {
-            throw new DataIntegrityViolationException("No se encontraron registros.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         } else {
             return ganancias;
         }
@@ -88,12 +90,12 @@ public class AfipGananciaNetaService {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
         }
         if (elementoDAO.findByAnioAndImporte(elemento.getAnio(), elemento.getImporte()).isEmpty()) {
             return elementoDAO.saveAndFlush(elemento);
         } else {
-            throw new DataIntegrityViolationException("Ganancia neta acumulada existente para el año fiscal.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.EXISTENTE_PARA_ANIO_FISCAL + " GANANCIA NETA ACUMULADA");
         }
     }
 
@@ -103,7 +105,7 @@ public class AfipGananciaNetaService {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " AÑO");
         }
         elementoDAO.save(elemento);
     }

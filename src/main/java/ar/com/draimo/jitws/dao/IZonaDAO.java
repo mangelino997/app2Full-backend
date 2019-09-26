@@ -13,19 +13,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IZonaDAO extends JpaRepository<Zona, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Zona findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
     public List<Zona> findByNombreContaining(String nombre);
     
     //Obtiene una lista ordenada por id
-    public List<Zona> findByOrderByNombreAsc();
-    
-    //Obtiene una lista ordenada por id
     public List<Zona> findByOrderByIdAsc();
     
-    //Obtiene un listado completo ordenado alfabeticamente
+    //Obtiene un listado completo ordenado 
     public List<Zona> findAllByOrderByNombreAsc();
     
 }

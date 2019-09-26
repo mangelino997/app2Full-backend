@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ITipoCuentaContableDAO extends JpaRepository<TipoCuentaContable, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public TipoCuentaContable findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

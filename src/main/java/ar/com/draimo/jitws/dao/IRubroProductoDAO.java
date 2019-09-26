@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IRubroProductoDAO extends JpaRepository<RubroProducto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public RubroProducto findTopByOrderByIdDesc();
     
     //Obtiene la lista de registros ordenada por nombre desc

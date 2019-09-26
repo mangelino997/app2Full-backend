@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUnidadMedidaDAO extends JpaRepository<UnidadMedida, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public UnidadMedida findTopByOrderByIdDesc();
     
     //Obtiene la lista de registros ordenada por nombre desc

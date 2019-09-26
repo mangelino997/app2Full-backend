@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IRubroProductoCuentaContableDAO extends JpaRepository<RubroProductoCuentaContable, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public RubroProductoCuentaContable findTopByOrderByIdDesc();
     
     //Obtiene una lista por Empresa
@@ -28,7 +28,7 @@ public interface IRubroProductoCuentaContableDAO extends JpaRepository<RubroProd
     //elimina una lista por RubroProducto
     public void deleteByRubroProducto(RubroProducto rubroProducto);
     
-    //Obtiene una lista por PlanCuenta
+    //Obtiene una lista por PlanCuenta compra
     public List<RubroProductoCuentaContable> findByPlanCuentaCompra(PlanCuenta planCuenta);
     
 }

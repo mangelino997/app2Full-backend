@@ -14,13 +14,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IVentaItemConceptoDAO extends JpaRepository<VentaItemConcepto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public VentaItemConcepto findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
     public List<VentaItemConcepto> findByNombreContaining(String nombre);
     
-    //Obtiene una lista por tipo de comprobante y esta habilitado en true
+    //Obtiene una lista por tipo de comprobante y registro habilitado
     public List<VentaItemConcepto> findByTipoComprobanteAndEstaHabilitadoTrue(TipoComprobante tipoComprobante);
     
 }

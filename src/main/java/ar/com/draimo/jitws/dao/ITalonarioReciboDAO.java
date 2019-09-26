@@ -1,3 +1,4 @@
+//Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.TalonarioRecibo;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ITalonarioReciboDAO extends JpaRepository<TalonarioRecibo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public TalonarioRecibo findTopByOrderByIdDesc();
     
     @Query(value = "SELECT * FROM talonariorecibo c WHERE :desdeHasta BETWEEN "

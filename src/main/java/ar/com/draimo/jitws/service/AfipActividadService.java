@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
@@ -50,10 +51,7 @@ public class AfipActividadService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipActividad elemento) {
-        elemento.setAlias(elemento.getCodigoAfip()
-                + " - " + elemento.getNombre());
-        formatearString(elemento);
-        elementoDAO.save(elemento);
+        establecerAlias(elemento);
     }
 
     //Establece el alias de un registro

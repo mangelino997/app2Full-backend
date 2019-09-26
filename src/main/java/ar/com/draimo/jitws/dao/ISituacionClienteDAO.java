@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISituacionClienteDAO extends JpaRepository<SituacionCliente, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SituacionCliente findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

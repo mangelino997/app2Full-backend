@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISueldoCFGDAO extends JpaRepository<SueldoCFG, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SueldoCFG findTopByOrderByIdDesc();
     
 }

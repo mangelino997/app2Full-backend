@@ -10,14 +10,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * Interfaz DAO ViajeRemito Define los metodos particulares contra la base de
- * datos
+ * Interfaz DAO ViajeRemito 
+ * Define los metodos particulares contra la base de datos
  *
  * @author blas
  */
 public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
 
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ViajeRemito findTopByOrderByIdDesc();
 
     //Obtiene una lista por alias
@@ -26,14 +26,14 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     //Obtiene la lista por numero
     public List<ViajeRemito> findByNumero(int numero);
 
-    //Obtiene una lista de pendientes por sucursal ingreso
+    //Obtiene una lista de no pendientes por sucursal ingreso
     public List<ViajeRemito> findBySucursalIngresoAndEstaPendienteFalse(Optional<Sucursal> sucursal);
 
     //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino y numero camion)
     public List<ViajeRemito> findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
     
-    //Obtiene una lista de asignados por filtro (sucursalIngreso, sucursalDestino y numero camion)
+    //Obtiene una lista de asignados por filtros(sucursalIngreso, sucursalDestino y numero camion)
     public List<ViajeRemito> findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(
             Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
 
@@ -43,19 +43,21 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
 //        findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
 //            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion,
 //                Optional<ViajePropioTramo> viajePropioTramo);
+    
     //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino,
     //numero camion y viajePropioTramo)
-    @Query(value = "SELECT * FROM viajeremito where ((:fechaDesde IS NULL and :fechaHasta IS  NULL) OR (fecha between "
-            + ":fechaDesde and :fechaHasta)) and (:idSucursalIngreso = 0 "
-            + "or idSucursalIngreso=:idSucursalIngreso) and (:idSucursalDestino "
-            + "=0 or idSucursalDestino=:idSucursalDestino) and (:idClienteRemitente "
-            + "=0 or idClienteRemitente=:idClienteRemitente) and (:idClienteDestinatario "
-            + "=0 or idClienteDestinatario=:idClienteDestinatario) and (:numeroCamion "
-            + "=0 or numeroCamion=:numeroCamion)", nativeQuery = true)
+    @Query(value = "SELECT * FROM viajeremito where ((:fechaDesde IS NULL and :fechaHasta "
+            + "IS  NULL) OR (fecha between :fechaDesde and :fechaHasta)) and (:idSucursalIngreso "
+            + "= 0 or idSucursalIngreso=:idSucursalIngreso) and (:idSucursalDestino =0 or "
+            + "idSucursalDestino=:idSucursalDestino) and (:idClienteRemitente =0 or "
+            + "idClienteRemitente=:idClienteRemitente) and (:idClienteDestinatario=0 or "
+            + "idClienteDestinatario=:idClienteDestinatario) and (:numeroCamion=0 or "
+            + "numeroCamion=:numeroCamion)", nativeQuery = true)
     public List<ViajeRemito> listarPorFiltros(@Param("fechaDesde") String fechaDesde,
             @Param("fechaHasta") String fechaHasta, @Param("idSucursalIngreso") int idSucursalIngreso,
-            @Param("idSucursalDestino") int idSucursalDestino, @Param("idClienteRemitente") int idClienteRemitente,
-            @Param("idClienteDestinatario") int idClienteDestinatario, @Param("numeroCamion") short numeroCamion);
+            @Param("idSucursalDestino") int idSucursalDestino, @Param("idClienteRemitente") 
+            int idClienteRemitente,@Param("idClienteDestinatario") int idClienteDestinatario, 
+            @Param("numeroCamion") short numeroCamion);
 
 //    //Obtiene un listado de remitos por viaje propio
 //    public List<ViajeRemito> findByViajePropioTramoAndEstaFacturadoFalse(
@@ -64,6 +66,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
 //    //Obtiene un listado de remitos por viaje tercero
 //    public List<ViajeRemito> findByViajeTerceroTramoAndEstaFacturadoFalse(
 //            Optional<ViajeTerceroTramo> viajeTerceroTramo);
+    
     //Obtiene un registro por puntoVenta, letra y nroComprobante
     public ViajeRemito findByPuntoVentaAndLetraAndNumero(int puntoVenta, String letra, int numero);
     
@@ -74,7 +77,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     
     //Obtiene un listado por registros que no estan asignados a un reparto
     @Query(value = "SELECT * FROM viajeremito WHERE id!=(SELECT s.idViajeRemito "
-            + "FROM jitdb.seguimiento s, jitdb.seguimientoestado e, jitdb.viajeremito v "
+            + "FROM seguimientoviajeremito s, seguimientoestado e, viajeremito v "
             + "WHERE s.idViajeRemito =v.id and e.id=s.idSeguimientoEstado and "
             + "e.esEntregado=false);", nativeQuery = true)
     public List<ViajeRemito> listarRemitosDisponibles();

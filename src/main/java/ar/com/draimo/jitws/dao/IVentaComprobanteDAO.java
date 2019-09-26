@@ -17,10 +17,10 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public VentaComprobante findTopByOrderByIdDesc();
     
-    //Obtiene un registro por puntoVenta, letra y nroComprobante
+    //Obtiene un registro por puntoVenta, letra, nroComprobante y tipoComprobante
     public VentaComprobante findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(int puntoVenta,String letra, int numero, TipoComprobante tc);
     
     //Obtiene una lista por tipos de comprobantes
@@ -35,7 +35,7 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
     
     //Obtiene un listado de registros que no estan en reparto
     @Query(value = "SELECT * FROM ventacomprobante WHERE id!=(SELECT s.idVentaComprobante"
-            + " FROM seguimiento s, seguimientoestado e, ventacomprobante v"
+            + " FROM seguimientoventacomprobante s, seguimientoestado e, ventacomprobante v"
             + " WHERE s.idVentaComprobante =v.id and e.id=s.idSeguimientoEstado and "
             + "e.esEntregado=false)", nativeQuery = true)
     public List<VentaComprobante> listarComprobantesDisponibles();

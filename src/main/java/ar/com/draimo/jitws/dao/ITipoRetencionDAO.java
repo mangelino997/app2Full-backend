@@ -1,3 +1,4 @@
+//Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.TipoRetencion;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ITipoRetencionDAO extends JpaRepository<TipoRetencion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public TipoRetencion findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

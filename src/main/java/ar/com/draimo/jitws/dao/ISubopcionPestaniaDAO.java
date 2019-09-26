@@ -22,7 +22,7 @@ public interface ISubopcionPestaniaDAO extends JpaRepository<SubopcionPestania, 
     //Obtiene una lista por rol
     public List<SubopcionPestania> findByRol(Rol rol);
     
-    //Obtiene una lista de pestañas por subopcion
+    //Obtiene una lista de pestañas por subopcion y rol
     public List<SubopcionPestania> findByRolAndSubopcion(Optional<Rol> rol, Optional<Subopcion> subopcion);
     
     //Obtiene por subopcion y pestania

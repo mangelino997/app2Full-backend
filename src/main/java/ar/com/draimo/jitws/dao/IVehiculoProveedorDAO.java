@@ -14,13 +14,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IVehiculoProveedorDAO extends JpaRepository<VehiculoProveedor, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public VehiculoProveedor findTopByOrderByIdDesc();
     
-    //Obtiene un listado por alias
+    //Obtiene un listado por alias ordenado
     public List<VehiculoProveedor> findByAliasContainingOrderByAlias(String alias);
     
-    //Obtiene un listado por filtro remolque
+    //Obtiene un listado por filtro remolque ordenado por alias
     public List<VehiculoProveedor> findByAliasContainingAndTipoVehiculo_EsRemolqueTrueOrderByAlias(String alias);
     
     //Obtiene una lista por proveedor

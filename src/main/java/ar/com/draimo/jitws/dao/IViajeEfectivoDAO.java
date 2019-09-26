@@ -15,10 +15,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IViajeEfectivoDAO extends JpaRepository<ViajeEfectivo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ViajeEfectivo findTopByOrderByIdDesc();
     
-    //Obtiene una lista por viaje propio
+    //Obtiene una lista por viaje 
     public List<ViajeEfectivo> findByViaje(Viaje viaje);
     
     //Obtiene una lista por reparto

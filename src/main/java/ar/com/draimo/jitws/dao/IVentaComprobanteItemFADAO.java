@@ -5,7 +5,7 @@ import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO VentaComprobanteItem
+ * Interfaz DAO VentaComprobanteItemFA
  * Define los metodos particulares contra la base de datos
  * @author blas
  */

@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
@@ -58,9 +59,7 @@ public class AfipCondicionService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipCondicion elemento) {
         formatearString(elemento);
-        elemento.setAlias(elemento.getCodigoAfip()
-                + " - " + elemento.getNombre());
-        elementoDAO.save(elemento);
+        establecerAlias(elemento);
     }
 
     //Elimina un registro

@@ -8,14 +8,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Area
+ * Interfaz DAO sucursal cliente
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface ISucursalClienteDAO extends JpaRepository<SucursalCliente, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SucursalCliente findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

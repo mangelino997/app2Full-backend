@@ -8,14 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * Interfaz DAO Viaje Propio
+ * Interfaz DAO Viaje 
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IViajeDAO extends JpaRepository<Viaje, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Viaje findTopByOrderByIdDesc();
     
     //Obtiene un registro por id

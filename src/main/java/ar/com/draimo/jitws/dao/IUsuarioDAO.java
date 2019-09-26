@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Usuario findTopByOrderByIdDesc();
     
     /**
@@ -27,7 +27,7 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
      */
     public Usuario findOneByUsername(String username);
     
-    //Obtiene un listado por nombre
+    //Obtiene un listado por nombre y que no son desarrolladores
     public List<Usuario> findByNombreContainingAndEsDesarrolladorFalse(String nombre);
     
     //Obtiene una lista por rol
@@ -44,4 +44,5 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, Integer> {
     
     //Obtiene todos los registros no desarrolladores
     public List<Usuario> findAllByEsDesarrolladorFalse();
+
 }

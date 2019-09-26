@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IVentaContrareembolsoDAO extends JpaRepository<VentaContrareembolso, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public VentaContrareembolso findTopByOrderByIdDesc();
     
 }

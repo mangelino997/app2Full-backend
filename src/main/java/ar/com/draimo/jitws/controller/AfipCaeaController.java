@@ -42,6 +42,10 @@ public class AfipCaeaController {
     @Autowired
     AfipCaeaService elementoService;
     
+    //Crea una instancia del controlador de fecha
+    @Autowired
+    FechaController fechaController;
+    
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
@@ -60,15 +64,15 @@ public class AfipCaeaController {
     @GetMapping(value = URL + "/listarAnios")
     @ResponseBody
     public List<Short> listarAnios() {
-        return elementoService.listarAnios();
+        return fechaController.listarAnios();
     }
     
     //Obtiene un registro por empresa, anio, mes y quincena
-    @GetMapping(value = URL + "/obtenerPorEmpresaYPeriodoOrden/{idEmpresa}/{anio}/{mes}/{quincena}")
+    @GetMapping(value = URL + "/obtenerPorEmpresaYPeriodoOrden/{idEmpresa}/{anio}/{idMes}/{idQuincena}")
     @ResponseBody
     public AfipCaea obtenerPorEmpresaYPeriodoOrden(@PathVariable int idEmpresa,
-            @PathVariable short anio,@PathVariable short mes,@PathVariable short quincena) {
-        return elementoService.obtenerPorEmpresaYPeriodoOrden(idEmpresa, anio, mes, quincena);
+            @PathVariable short anio,@PathVariable int idMes,@PathVariable int idQuincena) {
+        return elementoService.obtenerPorEmpresaYPeriodoOrden(idEmpresa, anio, idMes, idQuincena);
     }
     
     //Obtiene un listado por empresa y anio

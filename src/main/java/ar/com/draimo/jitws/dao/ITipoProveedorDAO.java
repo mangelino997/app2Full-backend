@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ITipoProveedorDAO extends JpaRepository<TipoProveedor, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public TipoProveedor findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
