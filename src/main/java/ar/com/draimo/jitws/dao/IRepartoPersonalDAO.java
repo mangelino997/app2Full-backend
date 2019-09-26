@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IRepartoPersonalDAO extends JpaRepository<RepartoPersonal, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public RepartoPersonal findTopByOrderByIdDesc();
     
 }

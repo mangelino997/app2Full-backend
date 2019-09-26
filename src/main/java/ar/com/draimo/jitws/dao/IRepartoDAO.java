@@ -16,24 +16,27 @@ import org.springframework.data.repository.query.Param;
 
 public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Reparto findTopByOrderByIdDesc();
     
-    //Obtiene u listado por estaCerrada 
+    //Obtiene un listado por estaCerrada 
     @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada", nativeQuery = true )
     public List<Reparto> listarPorEstaCerrada(@Param("estaCerrada") boolean estaCerrada);
     
-    //Obtiene u listado por estaCerrada 
-    @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada AND idEmpresaEmision =:idEmpresa", nativeQuery = true )
-    public List<Reparto> listarPorEstaCerradaYEmpresa(@Param("estaCerrada") boolean estaCerrada, @Param("idEmpresa") int idEmpresa);
+    //Obtiene u listado por estaCerrada y empresa
+    @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada AND "
+            + "idEmpresaEmision =:idEmpresa", nativeQuery = true )
+    public List<Reparto> listarPorEstaCerradaYEmpresa(@Param("estaCerrada") boolean 
+            estaCerrada, @Param("idEmpresa") int idEmpresa);
     
-    //Obtiene u listado por estaCerrada falso y tercero o propio
+    //Obtiene u listado por estaCerrada falso y si es reparto tercero o propio
     @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada AND "
             + "esRepartoPropio=:esRepartoPropio", nativeQuery = true )
-    public List<Reparto> listarPorEstaCerradaYReparto(@Param("estaCerrada") boolean estaCerrada, 
-            @Param("esRepartoPropio") boolean esRepartoPropio);
+    public List<Reparto> listarPorEstaCerradaYReparto(@Param("estaCerrada") boolean 
+            estaCerrada, @Param("esRepartoPropio") boolean esRepartoPropio);
     
-    //Obtiene un listado por filtros
+    /*Obtiene un listado por tipo de reparto(propio/tercero), rango de fecha, chofer,
+    Si esta cerrada y idEmpresa*/
     @Query(value = "SELECT * FROM reparto WHERE esRepartoPropio=:esRepartoPropio "
             + "AND fechaRegistracion BETWEEN :fechaDesde AND :fechaHasta AND CASE "
             + ":esRepartoPropio WHEN true THEN idPersonal=:idChofer WHEN false THEN "
@@ -43,4 +46,5 @@ public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
             @Param("fechaDesde") Date fechaDesde, @Param("fechaHasta") Date fechaHasta,
             @Param("idChofer") int idChofer, @Param("estaCerrada") boolean estaCerrada,
             @Param("idEmpresa") int idEmpresa);
+
 }

@@ -10,14 +10,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * Interfaz DAO PlandeCuenta
+ * Interfaz DAO PlanCuenta
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IPlanCuentaDAO extends JpaRepository<PlanCuenta, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public PlanCuenta findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
@@ -26,13 +26,18 @@ public interface IPlanCuentaDAO extends JpaRepository<PlanCuenta, Integer> {
     //Obtiene un plan de cuenta por empresa y nivel
     public PlanCuenta findByEmpresaAndNivel(Empresa empresa, short nivel);
     
-    @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresa AND idGrupoCuentaContable=1 AND estaActivo=1", nativeQuery = true)
+    //Obtiene un listado de grupoCuentaContable activos y registros activos por empresa
+    @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresa AND "
+            + "idGrupoCuentaContable=1 AND estaActivo=1", nativeQuery = true)
     public List<PlanCuenta> listarGrupoActivo(@Param("idEmpresa") int idEmpresa);
     
-    @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresa AND idGrupoCuentaContable=4 AND estaActivo=1", nativeQuery = true)
+    /*Obtiene un listado de grupoCuentaContable en estado de resultados y registros 
+    activos por empresa*/
+    @Query(value = "SELECT * FROM plandecuenta WHERE idEmpresa=:idEmpresa AND "
+            + "idGrupoCuentaContable=4 AND estaActivo=1", nativeQuery = true)
     public List<PlanCuenta> listarGrupoEstadoResultados(@Param("idEmpresa") int idEmpresa);
     
-    //Obtiene una lista por padre
+    //Obtiene una lista por plan de cuenta padre
     public List<PlanCuenta> findByPadre(PlanCuenta planCuenta);
     
     //Lista por empresa y grupo cuenta contable

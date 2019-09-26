@@ -1,9 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Personal;
-import ar.com.draimo.jitws.model.Sucursal;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,24 +22,19 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     //Obtiene una lista por alias
     public List<Personal> findByAliasContaining(String alias);
     
-    //Obtiene una lista de activos 
-    public List<Personal> findByFechaFinIsNull();
-    
-    //Obtiene una lista de activos o todos por alias 
+    /*Obtiene una lista por alias y/o activos y/o empresa y/o sucursal
+    El parametro 'activos' sirve para saber si quiere o no filtrar por el mismo
+    El parametro 'fecha' recibe la fecha actual para ver si el personal esta 
+    activo controlando o que no haya fecha fin o que sea mayor a la fecha actual*/
     @Query(value = "SELECT * FROM personal WHERE case :activos when true then "
-            + "(:alias LIKE '***' OR alias LIKE %:alias%) and (fechaFin is null "
-            + "or datediff(fechaFin, :fecha)>0) and (:idEmpresa=0 OR idEmpresa=:idEmpresa)"
-            + " when false then (:alias LIKE '***' OR alias LIKE %:alias%) and "
-            + "(:idEmpresa=0 OR idEmpresa=:idEmpresa) end", nativeQuery = true)
+            + "(alias LIKE %:alias%) and (fechaFin is null or datediff(fechaFin, "
+            + ":fecha)>0) and (:idEmpresa=0 OR idEmpresa=:idEmpresa) and (:idSucursal=0 "
+            + "OR idSucursal=:idSucursal) when false then (alias LIKE %:alias%) and "
+            + "(:idEmpresa=0 OR idEmpresa=:idEmpresa) AND (:idSucursal=0 OR "
+            + "idSucursal=:idSucursal) end", nativeQuery = true)
     public List<Personal> listarPorAlias(@Param("alias") String alias, @Param("activos") 
-            boolean activos, @Param("idEmpresa") int idEmpresa);
-    
-    //Obtiene una lista de choferes activos por alias y empresa 
-    public List<Personal> findByAliasContainingAndEsChoferTrueAndEmpresaAndFechaFinIsNull(
-            String alias, Empresa empresa);
-    
-    //Obtiene una lista de choferes activos por empresa 
-    public List<Personal> findByEmpresaAndEsChoferTrueAndFechaFinIsNull(Empresa empresa);
+            boolean activos, @Param("idEmpresa") int idEmpresa, @Param("idSucursal") 
+                    int idSucursal,@Param("fecha") Date fecha );
     
     //Obtiene una lista de personales por empresa, sucursal y categoria(opcional) para adelantos en lote
     @Query(value = "SELECT * FROM personal WHERE idEmpresa=:idEmpresa AND "
@@ -50,47 +43,28 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     public List<Personal> listarPersonalesParaAdelanto(@Param("idEmpresa") int idEmpresa,
             @Param("idSucursal") int idSucursal, @Param("idCategoria") int idCategoria);
     
-    //Obtiene una lista de choferes activos de larga o corta distancia por alias ordenados por nombre
-    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND esChoferLargaDistancia="
-            + ":largaDistancia AND (:alias LIKE '***' OR alias LIKE %:alias%) AND "
-            + "(fechaFin is null or datediff(fechaFin, :fecha)>0) AND (:idEmpresa=0 "
-            + "OR idEmpresa=:idEmpresa) ORDER BY nombreCompleto ASC", nativeQuery = true)
+    /* Obtiene un listado de choferes por distancia o no y/o alias y/o empresa y activos. 
+    El parametro 'largaDistancia' es un int que recibe 3 posibles numeros 0, 1 o 2.
+    Si recibe 1 lista por larga distancia, 0 corta distancia y 2 todos*/
+    @Query(value = "SELECT * FROM personal WHERE case :largaDistancia when 1 then "
+            + "esChofer=1 AND  (alias LIKE %:alias%) AND (fechaFin is null or datediff(fechaFin,"
+            + " :fecha)>0) AND (:idEmpresa=0 OR idEmpresa=:idEmpresa) AND "
+            + "esChoferLargaDistancia=:largaDistancia when 0 then esChofer=1 AND  "
+            + "(alias LIKE %:alias%) AND (fechaFin is null or datediff(fechaFin,"
+            + " :fecha)>0) AND (:idEmpresa=0 OR idEmpresa=:idEmpresa) AND "
+            + "esChoferLargaDistancia=:largaDistancia when 2 then esChofer=1 AND  "
+            + "(alias LIKE %:alias%) AND (fechaFin is null or datediff(fechaFin,"
+            + " :fecha)>0) AND (:idEmpresa=0 OR idEmpresa=:idEmpresa) end ORDER BY "
+            + "nombreCompleto ASC", nativeQuery = true)
     public List<Personal> listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
-            @Param("alias") String alias, @Param("largaDistancia") boolean largaDistancia,
+            @Param("alias") String alias, @Param("largaDistancia") int largaDistancia,
             @Param("idEmpresa") int idEmpresa, @Param("fecha") Date fecha);
     
-    //Obtiene una lista de choferes activos por empresa ordenados por nombre
-    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND idEmpresa=:idEmpresa"
-            + "AND (fechaFin is null or datediff(fechaFin, :fecha)>0) ORDER BY"
-            + " nombreCompleto ASC", nativeQuery = true)
-    public List<Personal> listarChoferesPorEmpresa(@Param("idEmpresa") int idEmpresa, @Param("fecha") Date fecha);
-    
     //Obtiene una lista de acompañantes activos  por alias ordenados por nombre
-    @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND (:alias LIKE '***' "
-            + "OR alias LIKE %:alias%) AND (fechaFin is null or datediff(fechaFin,"
-            + " :fecha)>0) ORDER BY nombreCompleto ASC ", nativeQuery = true)
+    @Query(value = "SELECT * FROM personal WHERE esAcompReparto=1 AND (alias LIKE "
+            + "%:alias%) AND (fechaFin is null or datediff(fechaFin, :fecha)>0) "
+            + "ORDER BY nombreCompleto ASC ", nativeQuery = true)
     public List<Personal> listarAcompaniantesPorAliasOrdenadoPorNombre(@Param("alias") 
             String alias, @Param("fecha") Date fecha);
-    
-    //Obtiene un listado por alias y empresa
-    public List<Personal> findByEmpresaAndAliasContaining(Empresa empresa, String alias);
-    
-    //Obtiene un listado por empresa
-    @Query(value = "SELECT * FROM personal WHERE case :activo when true then (:idEmpresa=0 "
-            + "OR idEmpresa=:idEmpresa) and (fechaFin is null or datediff(fechaFin, "
-            + ":fecha)>0) when false then (:idEmpresa=0 OR idEmpresa=:idEmpresa) end",nativeQuery = true)
-    public List<Personal> listarPorEmpresa(@Param("idEmpresa")int idEmpresa,@Param("activo") 
-            boolean activo,@Param("fecha") Date fecha);
-    
-    //Obtiene un listado por empresa y sucursal
-    @Query(value = "SELECT * FROM personal WHERE case :activo when true then (:idSucursal=0 "
-            + "OR idSucursal=:idSucursal) and(:idEmpresa=0 OR idEmpresa=:idEmpresa)"
-            + " and (:alias LIKE '***' OR  alias LIKE %:alias%) and (fechaFin is null"
-            + " or datediff(fechaFin, :fecha)>0) when false then (:idSucursal=0 and"
-            + " (:alias LIKE '***' OR  alias LIKE %:alias%) and (:idEmpresa=0 OR idEmpresa=:idEmpresa)"
-            + " end",nativeQuery = true)
-    public List<Personal> listarPorAliasEmpresaYSucursal(@Param("idEmpresa")int idEmpresa,
-            @Param("idSucursal") int idSucursal, @Param("activo") boolean activo, 
-            @Param("alias") String alias, @Param("fecha") Date fecha);
     
 }
