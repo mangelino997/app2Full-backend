@@ -75,6 +75,8 @@ public class PersonalService {
     public Object listarPorAlias(String alias, boolean activos, int idEmpresa, 
             int idSucursal) throws IOException, Exception {
         Date fecha = new Date(new java.util.Date().getTime());
+        //Establece el string vacio a alias en caso de que el usuario quiera listar todo
+        alias =(alias.equals("***")?"": alias);
         /* Obtiene un listado por alias, activos o todos.
         Si recibe '***' en el alias no filtra por el mismo.
         idEmpresa y idSucursal pueden ser 0. en este caso no filtra por los mismos
@@ -132,6 +134,8 @@ public class PersonalService {
     public Object listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(String alias, 
             int largaDistancia, int idEmpresa) throws IOException {
         Date fecha = new Date(new java.util.Date().getTime());
+        //Establece el string vacio a alias en caso de que el usuario quiera listar todo
+        alias =(alias.equals("***")?"": alias);
         List<Personal> elementos = 
                 elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                         alias,largaDistancia, idEmpresa, fecha);
@@ -147,6 +151,8 @@ public class PersonalService {
     //Obtiene un listado de acompañantes ordenados por nombre
     public Object listarAcompaniantesPorAliasOrdenadosPorNombre(String alias) throws IOException {
         Date fecha = new Date(new java.util.Date().getTime());
+        //Establece el string vacio a alias en caso de que el usuario quiera listar todo
+        alias =(alias.equals("***")?"": alias);
         List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(
                 alias,fecha);
         ObjectMapper mapper = new ObjectMapper();

@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IResumenClienteDAO extends JpaRepository<ResumenCliente, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ResumenCliente findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

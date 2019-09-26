@@ -15,13 +15,13 @@ import org.springframework.data.repository.query.Param;
 
 public interface IProveedorDAO extends JpaRepository<Proveedor, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Proveedor findTopByOrderByIdDesc();
     
     //Obtiene una lista por alias
     public List<Proveedor> findByAliasContaining(String alias);
     
-    //Obtiene un listado por filtros
+    //Obtiene un listado por tipoProveedor y/o condicionCompra y/o activo y/o localidad
     @Query(value = "SELECT * FROM proveedor WHERE (:idTipoProveedor = 0 OR"
             + " idTipoProveedor=:idTipoProveedor) AND (:idCondCompra=0 OR idCondCompra=:idCondCompra)"
             + " AND (:estadoCuenta = 2 OR estaActiva=:estadoCuenta)AND (:idLocalidad=0 OR "

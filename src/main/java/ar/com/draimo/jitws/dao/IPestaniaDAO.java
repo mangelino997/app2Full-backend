@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IPestaniaDAO extends JpaRepository<Pestania, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Pestania findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

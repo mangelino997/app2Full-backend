@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IProveedorCuentaContableDAO extends JpaRepository<ProveedorCuentaContable, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ProveedorCuentaContable findTopByOrderByIdDesc();
     
     //Obtiene una lista por Empresa
@@ -28,7 +28,7 @@ public interface IProveedorCuentaContableDAO extends JpaRepository<ProveedorCuen
     //Elimina por Proveedor
     public List<ProveedorCuentaContable> deleteByProveedor(Proveedor proveedor);
     
-    //Obtiene una lista por PlanCuenta
+    //Obtiene una lista por PlanCuentaCompra
     public List<ProveedorCuentaContable> findByPlanCuentaCompra(PlanCuenta planCuenta);
     
 }

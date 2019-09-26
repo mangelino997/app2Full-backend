@@ -14,10 +14,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IRepartoComprobanteDAO extends JpaRepository<RepartoComprobante, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public RepartoComprobante findTopByOrderByIdDesc();
     
-    //Obtiene un listado de RepartoPropioComprobante por idReparto
+    //Obtiene un listado de RepartoComprobante por idReparto
     public List<RepartoComprobante> findByReparto(Reparto reparto);
     
 }
