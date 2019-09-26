@@ -176,7 +176,8 @@ public class PersonalAdelantoService {
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
+                .serializeAllExcept("datos","viajeTramos","viajeCombustibles",
+                        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("personaladelantofiltro", theFilter)

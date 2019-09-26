@@ -1,3 +1,4 @@
+//Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Personal;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPersonalFamiliarDAO extends JpaRepository<PersonalFamiliar, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public PersonalFamiliar findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

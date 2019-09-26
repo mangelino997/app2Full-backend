@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IQuincenaDAO extends JpaRepository<Quincena, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Quincena findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

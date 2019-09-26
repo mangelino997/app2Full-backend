@@ -7,17 +7,17 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO RepartoPropioComprobante
+ * Interfaz DAO Retiro Deposito Comprobante
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
 public interface IRetiroDepositoComprobanteDAO extends JpaRepository<RetiroDepositoComprobante, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public RetiroDepositoComprobante findTopByOrderByIdDesc();
     
-    //Obtiene un listado de RepartoTerceroComprobante por idRepartoTercero
+    //Obtiene un listado de RetiroDepositoComprobante por RetiroDeposito
     public List<RetiroDepositoComprobante> findByRetiroDeposito(RetiroDeposito retiroDeposito);
     
     //Elimina un listado por retiroDeposito

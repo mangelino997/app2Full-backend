@@ -18,9 +18,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface IRetiroDepositoDAO extends JpaRepository<RetiroDeposito, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public RetiroDeposito findTopByOrderByIdDesc();
-    
     
     //Obtiene un listado de Retiro deposito por numero de documento
     public List<RetiroDeposito> findByNumeroDocumento(String elemento);
