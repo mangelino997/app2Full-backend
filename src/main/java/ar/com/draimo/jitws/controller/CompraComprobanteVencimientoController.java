@@ -1,9 +1,11 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ImportesDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobanteVencimiento;
 import ar.com.draimo.jitws.service.CompraComprobanteVencimientoService;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,13 @@ public class CompraComprobanteVencimientoController {
     @ResponseBody
     public List<CompraComprobanteVencimiento> listar() {
         return elementoService.listar();
+    }
+    
+    //Obtiene la suma total de importes para la lista de cuotas
+    @PutMapping(value = URL + "/obtenerDiferenciaImportes")
+    @ResponseBody
+    public BigDecimal obtenerDiferenciaImportes(@RequestBody List<ImportesDTO> listaCuotas) throws IOException {
+        return elementoService.obtenerDiferenciaImportes(listaCuotas);
     }
 
     //Obtiene la lista completa
