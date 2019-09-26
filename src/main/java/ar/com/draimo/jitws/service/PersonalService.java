@@ -1,23 +1,19 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
-import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
-import ar.com.draimo.jitws.dao.ISucursalDAO;
-import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Personal;
-import ar.com.draimo.jitws.model.Sucursal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -36,14 +32,6 @@ public class PersonalService {
     //Define la referencia al dao
     @Autowired
     IPersonalDAO elementoDAO;
-
-    //Define la referencia al dao de empresa
-    @Autowired
-    IEmpresaDAO empresaDAO;
-
-    //Define la referencia al dao de sucursal
-    @Autowired
-    ISucursalDAO sucursalDAO;
 
     //Define la referencia al dao de foto
     @Autowired
@@ -71,7 +59,7 @@ public class PersonalService {
     public Object listar() throws IOException, Exception {
         List<Personal> elementos = elementoDAO.findAll();
         if (elementos.isEmpty()) {
-            throw new Exception("No se encontraron registros.");
+            throw new Exception(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -83,49 +71,18 @@ public class PersonalService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene una lista por alias
-    public Object listarPorAlias(String alias, boolean activos) throws IOException, Exception {
-        //Se establece 0 en parametro de empresa para no filtrar por tal
-        List<Personal> elementos = elementoDAO.listarPorAlias(alias, activos, 0);
-        if (elementos.isEmpty()) {
-            throw new Exception("No se encontraron registros.");
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene una lista por alias y empresa
-    public Object listarPorAliasYEmpresa(String alias, int idEmpresa, boolean 
-            activos) throws IOException, Exception {
-        Date fecha = new Date(new java.util.Date().getTime());
-        //Se establece 0 en parametro de sucursal para no filtrar por tal
-        List<Personal> elementos = elementoDAO.listarPorAliasEmpresaYSucursal(
-                idEmpresa, 0,activos,alias, fecha);
-        if (elementos.isEmpty()) {
-            throw new Exception("No se encontraron registros.");
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene una lista por alias, empresa y sucursal
-    public Object listarActivosPorAliasEmpresaYSucursal(String alias, int idEmpresa,
+    //Obtiene una lista por alias y/o empresa y/o sucursal y/o activos
+    public Object listarPorAlias(String alias, boolean activos, int idEmpresa, 
             int idSucursal) throws IOException, Exception {
         Date fecha = new Date(new java.util.Date().getTime());
-        List<Personal> elementos = elementoDAO.listarPorAliasEmpresaYSucursal(
-                idEmpresa, idSucursal, true, alias, fecha);
+        /* Obtiene un listado por alias, activos o todos.
+        Si recibe '***' en el alias no filtra por el mismo.
+        idEmpresa y idSucursal pueden ser 0. en este caso no filtra por los mismos
+        La fecha de hoy es para ver que el personal no este dado de baja*/
+        List<Personal> elementos = elementoDAO.listarPorAlias(alias, activos, 
+                idEmpresa, idSucursal, fecha);
         if (elementos.isEmpty()) {
-            throw new Exception("No se encontraron registros.");
+            throw new Exception(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -173,11 +130,11 @@ public class PersonalService {
 
     //Obtiene un listado de choferes por alias, distancia y empresa ordenados por nombre
     public Object listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(String alias, 
-            boolean distancia) throws IOException {
+            int largaDistancia, int idEmpresa) throws IOException {
         Date fecha = new Date(new java.util.Date().getTime());
         List<Personal> elementos = 
-                elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias,distancia,
-                        0, fecha);
+                elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
+                        alias,largaDistancia, idEmpresa, fecha);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -201,26 +158,13 @@ public class PersonalService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene un listado de acompañantes ordenados por nombre
-    public Object listarAcompaniantes() throws IOException {
-        Date fecha = new Date(new java.util.Date().getTime());
-        List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(
-                "***",fecha);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Personal agregar(String elementoString, MultipartFile foto, MultipartFile licConducir,
             MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException, Exception {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
+        controlDeLongitud(elemento);
         if (!foto.getOriginalFilename().equals("")) {
             Foto p = fotoService.agregar(foto, false);
             p.setTabla("personal");
@@ -269,23 +213,6 @@ public class PersonalService {
         } else {
             elemento.setPdfAltaTemprana(null);
         }
-        //Obtiene AntiguedadAntAnio, si es mayor a 60 retorna error
-        if (elemento.getAntiguedadAntAnio() > 60) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. AÑO");
-        }
-        //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
-        if (elemento.getAntiguedadAntMes() > 11) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. MES");
-        }
-        //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
-        if (elemento.getAdherenteObraSocial() > 12) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ADHERENTE OBRA SOCIAL");
-        }
-        //Obtiene longitud de anio, si es mayor a 2 retorna error
-        String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
-        if (cuotasPr.length() > 2) {
-            throw new Exception("Cantidad caracteres excedida en CUOTAS PRESTAMO");
-        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -295,23 +222,7 @@ public class PersonalService {
             MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         Personal personal = elementoDAO.findById(elemento.getId()).get();
-        //Obtiene AntiguedadAntAnio, si es mayor a 60 retorna error
-        if (elemento.getAntiguedadAntAnio() > 60) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. AÑO");
-        }
-        //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
-        if (elemento.getAntiguedadAntMes() > 11) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ANTIGUEDAD ANT. MES");
-        }
-        //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
-        if (elemento.getAdherenteObraSocial() > 12) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en ADHERENTE OBRA SOCIAL");
-        }
-        //Obtiene longitud de anio, si es mayor a 2 retorna error
-        String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
-        if (cuotasPr.length() > 2) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CUOTAS PRESTAMO");
-        }
+        controlDeLongitud(elemento);
         if (foto.getOriginalFilename().equals("")) {
             if (personal.getFoto() != null) {
                 pdfDAO.deleteById(personal.getFoto().getId());
@@ -434,6 +345,25 @@ public class PersonalService {
         }
         establecerAlias(elemento);
         elementoDAO.save(elemento);
+    }
+    private boolean controlDeLongitud(Personal elemento) {
+        if (elemento.getAntiguedadAntAnio() > 60) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " ANTIGUEDAD ANT. AÑO");
+        }
+        //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
+        if (elemento.getAntiguedadAntMes() > 11) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " ANTIGUEDAD ANT. MES");
+        }
+        //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
+        if (elemento.getAdherenteObraSocial() > 12) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " ADHERENTE OBRA SOCIAL");
+        }
+        //Obtiene longitud de anio, si es mayor a 2 retorna error
+        String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
+        if (cuotasPr.length() > 2) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CUOTAS PRESTAMO");
+        }
+        return true;
     }
 
     //Elimina un registro
