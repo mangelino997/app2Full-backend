@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompraComprobanteDAO;
@@ -7,6 +8,7 @@ import ar.com.draimo.jitws.dao.ICompraComprobanteVencimientoDAO;
 import ar.com.draimo.jitws.dao.ICompraCptePercepcionJurisdDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobante;
 import ar.com.draimo.jitws.model.CompraComprobanteItem;
 import ar.com.draimo.jitws.model.CompraComprobantePercepcion;
@@ -28,31 +30,38 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Servicio de CompraComprobante
  * @author blas
  */
 
 @Service
 public class CompraComprobanteService {
 
+    //Referencia al dao
     @Autowired
     ICompraComprobanteDAO elementoDAO;
 
+    //Referencia al dao de CompraComprobanteVencimiento
     @Autowired
     ICompraComprobanteVencimientoDAO vencimientoDAO;
 
+    //Referencia al dao de CompraComprobantePercepcion
     @Autowired
     ICompraComprobantePercepcionDAO percepcionDAO;
 
+    //Referencia al dao de CompraComprobanteItem
     @Autowired
     ICompraComprobanteItemDAO itemDAO;
 
+    //Referencia al dao de CompraCtePercepcionJurisd
     @Autowired
     ICompraCptePercepcionJurisdDAO jurisdiccionDAO;
     
+    //Referencia al DAO de moneda
     @Autowired
     IMonedaDAO monedaDAO;
     
+    //Referencia al DAO de proveedor
     @Autowired
     IProveedorDAO proveedorDAO;
     
@@ -81,6 +90,7 @@ public class CompraComprobanteService {
         return new ObjectMapper().readValue(string, Object.class);
     }
     
+    //Verifica que el comprobante no exista
     public boolean verificarUnicidadComprobante(int idProveedor, String codigoAfip, int puntoVenta, int numero) {
         if(!elementoDAO.verificarUnicidad(idProveedor, codigoAfip, puntoVenta, numero).isEmpty()) {
             return true;
@@ -99,16 +109,20 @@ public class CompraComprobanteService {
         elemento.setMoneda(monedaDAO.findById(1).get());
         elemento.setImporteSaldo(BigDecimal.ZERO);
         elemento.setMonedaCotizacion(BigDecimal.ZERO);
+        //Establece condicion de compra, tipo y numero de documento por el proveedor
         elemento.setTipoDocumento(p.getTipoDocumento());
         elemento.setNumeroDocumento(p.getNumeroDocumento());
         elemento.setCondicionCompra(p.getCondicionCompra());
+        //Establece las listas del elemento en otras listas
         List<CompraComprobanteItem> items = elemento.getCompraComprobanteItems();
         List<CompraComprobantePercepcion> percepciones = elemento.getCompraComprobantePercepciones();
         List<CompraComprobanteVencimiento> vencimientos = elemento.getCompraComprobanteVencimientos();
+        //Vacia las listas del elemento para poder guardarlo
         elemento.setCompraComprobanteItems(null);
         elemento.setCompraComprobantePercepciones(null);
         elemento.setCompraComprobanteVencimientos(null);
         elemento = elementoDAO.saveAndFlush(elemento);
+        //Si items no esta vacio, recorre la lista, establece el comprobante y los guarda
         if(!items.isEmpty()){
             for (CompraComprobanteItem item : items) {
                 item.setObservaciones("");
@@ -116,16 +130,19 @@ public class CompraComprobanteService {
                 itemDAO.save(item);
             }
         }else {
-            throw new DataIntegrityViolationException("La lista de ITEMS no puede estar vacia");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO+" ITEMS");
         }
+        //Si percepciones no esta vacio, recorre la lista estableciendo punto de venta, letra y numero
         if(!percepciones.isEmpty()){
             for (CompraComprobantePercepcion percepcion : percepciones) {
                 percepcion.setCompraComprobante(elemento);
                 percepcion.setLetra(elemento.getLetra());
                 percepcion.setPuntoVenta(elemento.getPuntoVenta());
                 percepcion.setNumero(elemento.getNumero());
+                //Si tiene jurisdicciones se guardan en una lista y se vacia el campo
                 List<CompraCptePercepcionJurisd> jurisdicciones =percepcion.getCompraCptePercepcionJurisdicciones();
                 percepcion.setCompraCptePercepcionJurisdicciones(null);
+                //Guarda la percepcion y se la establece a las jurisdicciones, luego las guarda
                 percepcionDAO.save(percepcion);
                 if(!jurisdicciones.isEmpty()){
                     for (CompraCptePercepcionJurisd cteJurisdicciones : jurisdicciones) {
@@ -135,12 +152,14 @@ public class CompraComprobanteService {
                 }
             }
         }
+        //Si vencimientos no esta vacio, recorre la lista, establece el comprobante y los guarda
         if(!vencimientos.isEmpty()){
             for (CompraComprobanteVencimiento vencimiento : vencimientos) {
                 vencimiento.setCompraComprobante(elemento);
                 vencimientoDAO.save(vencimiento);
             }
         }
+        //Retorna el elemento
         return elemento;
     }
 

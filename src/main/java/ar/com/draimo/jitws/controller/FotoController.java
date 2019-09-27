@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Clase Foto Controller
@@ -65,9 +67,9 @@ public class FotoController {
     
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody Foto elemento) {
+    public ResponseEntity<?> agregar(@RequestParam("archivo") MultipartFile archivo) {
         try {
-            Foto a = elementoService.agregar(elemento);
+            Foto a = elementoService.agregar(archivo, true);
             //Envia la nueva lista a los usuarios subscriptos
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
@@ -85,10 +87,10 @@ public class FotoController {
     
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody Foto elemento) {
+    public ResponseEntity<?> actualizar(@RequestParam("idFoto") int idImagen, @RequestParam("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            elementoService.actualizar(idImagen,archivo, true);
             //Envia la nueva lista a los usuarios subscripto
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();

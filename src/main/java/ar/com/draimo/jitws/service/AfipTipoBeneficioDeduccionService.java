@@ -1,8 +1,10 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipDeduccionPersonalDAO;
 import ar.com.draimo.jitws.dao.IAfipTipoBeneficioDAO;
 import ar.com.draimo.jitws.dao.IAfipTipoBeneficioDeduccionDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipTipoBeneficioDeduccion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,24 +44,26 @@ public class AfipTipoBeneficioDeduccionService {
     }
 
     //Obtiene una lista por anio y idTipoBeneficio
-    public List<AfipTipoBeneficioDeduccion> listarPorAnioYBeneficio(short anio, int idBeneficio) {
+    public List<AfipTipoBeneficioDeduccion> listarPorAnioYBeneficio(short anio, int idTipoBeneficio) {
         return elementoDAO.findByAnioAndAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(
-                anio, beneficioDAO.findById(idBeneficio).get());
+                anio, beneficioDAO.findById(idTipoBeneficio).get());
     }
 
-    //Obtiene una lista por filtros
-    public List<AfipTipoBeneficioDeduccion> listarPorFiltros(short anio, int idBeneficio, int idMes) throws Exception {
+    //Obtiene una lista por anio y beneficio. Si recibe un mes devuelve el 
+    //monto acumado que corresponderia a ese mes
+    public List<AfipTipoBeneficioDeduccion> listarPorFiltros(short anio, 
+            int idBeneficio, int idMes) throws Exception {
         if (idMes > 12) {
-            throw new Exception("Mes inexistente");
+            throw new Exception(MensajeRespuesta.NO_EXISTENTE + " MES");
         } else {
             return elementoDAO.listarPorFiltros(anio, idBeneficio, idMes);
         }
     }
 
     //Obtiene una lista por idTipoBeneficio
-    public List<AfipTipoBeneficioDeduccion> listarPorBeneficio(int idBeneficio) {
+    public List<AfipTipoBeneficioDeduccion> listarPorBeneficio(int idTipoBeneficio) {
         return elementoDAO.findByAfipTipoBeneficioOrderByAfipDeduccionPersonal_Id(
-                beneficioDAO.findById(idBeneficio).get());
+                beneficioDAO.findById(idTipoBeneficio).get());
     }
 
     //Obtiene una lista por idDedudccionPersonal
@@ -74,7 +78,7 @@ public class AfipTipoBeneficioDeduccionService {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
         }
         if (!elemento.isImporteAnualMensual()) {
             if (elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
@@ -83,12 +87,13 @@ public class AfipTipoBeneficioDeduccionService {
                 elemento.setMes(null);
                 return elementoDAO.saveAndFlush(elemento);
             } else {
-                throw new DataIntegrityViolationException("Deducción Personal y Tipo Beneficio existente para el año fiscal.");
+                throw new DataIntegrityViolationException(MensajeRespuesta.EXISTENTE_PARA_ANIO_FISCAL 
+                        + "DEDUCCIÓN PERSONAL Y TIPO BENEFICIO");
             }
         } else if (elemento.getMes() != null) {
             return elementoDAO.saveAndFlush(elemento);
         } else {
-            throw new DataIntegrityViolationException("MES no puede estar vacío");
+            throw new DataIntegrityViolationException(MensajeRespuesta.ELEMENTO_NO_NULL + " MES");
         }
     }
 
@@ -98,13 +103,13 @@ public class AfipTipoBeneficioDeduccionService {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
         }
         if(elemento.isImporteAnualMensual()){
             if (elemento.getMes() != null) {
             elementoDAO.save(elemento);
         } else {
-            throw new DataIntegrityViolationException("MES no puede estar vacío");
+            throw new DataIntegrityViolationException(MensajeRespuesta.ELEMENTO_NO_NULL+" MES");
         }
         }else {
             elemento.setMes(null);

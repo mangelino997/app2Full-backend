@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteCuentaBancariaDAO;
@@ -7,6 +8,7 @@ import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
@@ -148,7 +150,7 @@ public class ClienteService {
             if (c != null) {
                 elemento.setCuentaGrupo(c);
             } else {
-                throw new DataIntegrityViolationException("Registro no existente: CUENTA GRUPO");
+                throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE +" CUENTA GRUPO");
             }
         }
         Cliente cliente = elementoDAO.saveAndFlush(elemento);
@@ -175,18 +177,16 @@ public class ClienteService {
     public void actualizar(Cliente elemento) {
         elemento = formatearString(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
-                + " - " + elemento.getNombreFantasia() + " - " + elemento.getNumeroDocumento());
         Cliente c;
         if (elemento.getCuentaGrupo() != null) {
             c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
             if (c != null) {
                 elemento.setCuentaGrupo(c);
             } else {
-                throw new DataIntegrityViolationException("Registro no existente: CUENTA GRUPO");
+                throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE+ " CUENTA GRUPO");
             }
         }
-        Cliente cliente = elementoDAO.save(elemento);
+        Cliente cliente =establecerAlias(elemento);
         //Recorre la lista de cliente cuenta bancaria y agrega registros
         for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
             ccb.setCliente(cliente);
@@ -196,11 +196,11 @@ public class ClienteService {
 
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(Cliente elemento) {
+    public Cliente establecerAlias(Cliente elemento) {
         TipoDocumento t = tipoDocumentoDAO.findById(elemento.getTipoDocumento().getId()).get();
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
                 + " - " + t.getAbreviatura() + " " + elemento.getNumeroDocumento());
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
 
     //Elimina un registro

@@ -1,8 +1,10 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IConfiguracionVehiculoDAO;
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ConfiguracionVehiculo;
 import ar.com.draimo.jitws.model.MarcaVehiculo;
 import ar.com.draimo.jitws.model.TipoVehiculo;
@@ -45,7 +47,7 @@ public class ConfiguracionVehiculoService {
     }
     
     //Obtiene una lista por tipo vehiculo y marca vehiculo
-    public List<ConfiguracionVehiculo> listarPorTipoVehiculoMarcaVehiculo(int idTipoVehiculo, int idMarcaVehiculo) {
+    public List<ConfiguracionVehiculo> listarPorTipoYMarca(int idTipoVehiculo, int idMarcaVehiculo) {
         //Obtiene el tipo vehiculo por id
         Optional<TipoVehiculo> tipoVehiculo = tipoVehiculoDAO.findById(idTipoVehiculo);
         //Obtiene la marca vehiculo por id
@@ -66,9 +68,9 @@ public class ConfiguracionVehiculoService {
         //Obtiene longitud de cant. ejes, si supera 2 retorna error
         String ejes = String.valueOf(elemento.getCantidadEjes());
         if (ejes.length()>2) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD EJES");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD EJES");
         }
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
@@ -78,7 +80,7 @@ public class ConfiguracionVehiculoService {
         //Obtiene longitud de cant. ejes, si supera 2 retorna error
         String ejes = String.valueOf(elemento.getCantidadEjes());
         if (ejes.length()>2) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD EJES");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD EJES");
         }
         elementoDAO.save(elemento);
     }

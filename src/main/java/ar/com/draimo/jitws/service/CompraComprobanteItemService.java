@@ -1,3 +1,4 @@
+//Paquete al qque pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompraComprobanteItemDAO;
@@ -13,13 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Servicio de CompraComprobanteItem
  * @author blas
  */
 
 @Service
 public class CompraComprobanteItemService {
 
+    //Define la referencia al DAO
     @Autowired
     ICompraComprobanteItemDAO elementoDAO;
     

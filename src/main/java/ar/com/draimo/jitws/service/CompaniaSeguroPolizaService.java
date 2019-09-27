@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompaniaSeguroDAO;
@@ -76,8 +77,8 @@ public class CompaniaSeguroPolizaService {
     }
 
     //Obtiene una lista por empresa
-    public Object listarPorEmpresa(int id) throws IOException {
-        List<CompaniaSeguroPoliza> elementos=  elementoDAO.findByEmpresa(empresaDAO.findById(id));
+    public Object listarPorEmpresa(int idEmpresa) throws IOException {
+        List<CompaniaSeguroPoliza> elementos=  elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

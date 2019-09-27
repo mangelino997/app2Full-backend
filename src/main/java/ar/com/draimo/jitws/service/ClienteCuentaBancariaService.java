@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
@@ -24,7 +25,7 @@ public class ClienteCuentaBancariaService {
 
     //Define la referencia al dao CuentaBancaria
     @Autowired
-    ICuentaBancariaDAO ordenVentaDAO;
+    ICuentaBancariaDAO cuentaBancariaDAO;
 
     //Define la referencia a clienteDAO
     @Autowired
@@ -46,9 +47,9 @@ public class ClienteCuentaBancariaService {
         return elementoDAO.findByCliente(clienteDAO.findById(idCliente).get());
     }
 
-    //Obtiene una lista por OrdenVenta
-    public List<ClienteCuentaBancaria> listarPorOrdenVenta(int idCuentaBancaria){
-        CuentaBancaria cuentaBancaria = ordenVentaDAO.findById(idCuentaBancaria).get();
+    //Obtiene una lista por cuentaBancaria
+    public List<ClienteCuentaBancaria> listarPorCuentaBancaria(int idCuentaBancaria){
+        CuentaBancaria cuentaBancaria = cuentaBancariaDAO.findById(idCuentaBancaria).get();
         return elementoDAO.findByCuentaBancaria(cuentaBancaria);
     }
 

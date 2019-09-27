@@ -1,7 +1,9 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompraComprobanteVencimientoDAO;
 import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
+import ar.com.draimo.jitws.dto.ImportesDTO;
 import ar.com.draimo.jitws.model.CompraComprobanteVencimiento;
 import ar.com.draimo.jitws.model.CondicionCompra;
 import java.math.BigDecimal;
@@ -15,15 +17,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Servicio de Compra comprobante vencimiento
  * @author blas
  */
 @Service
 public class CompraComprobanteVencimientoService {
 
+    //Referencia al DAO
     @Autowired
     ICompraComprobanteVencimientoDAO elementoDAO;
 
+    //Referencia al DAO de condicionCompra
     @Autowired
     ICondicionCompraDAO condicionCompraDAO;
 
@@ -36,6 +40,15 @@ public class CompraComprobanteVencimientoService {
     //Obtiene la lista completa
     public List<CompraComprobanteVencimiento> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Controla la diferencia entre el importe y los importes de la tabla generada por listarCuotas
+    public BigDecimal obtenerDiferenciaImportes(List<ImportesDTO> listaCuotas) {
+        BigDecimal total = new BigDecimal(0);
+        for (ImportesDTO listaCuota : listaCuotas) {
+             total = total.add(listaCuota.getImporte());
+        }
+        return total.subtract(listaCuotas.get(0).getImporteTotal());
     }
 
     //Genera la tabla de cuotas
@@ -63,10 +76,12 @@ public class CompraComprobanteVencimientoService {
             vencimientos.add(vencimiento);
             total = total.add(importe);
         }
+        //Controla si hay diferencia entre el importe total y la suma de los importe
+        //Si hay, se lo establece al ultimo registro
         if(total.compareTo(totalImporte) == 1) {
             dif = total.subtract(totalImporte);
             vencimientos.get(cantidadCuotas-1).setImporte(importe.subtract(dif));
-            
+        //Si no se lo resta
         } else if(total.compareTo(totalImporte) == -1){
             dif = totalImporte.subtract(total);
             vencimientos.get(cantidadCuotas-1).setImporte(importe.add(dif));
