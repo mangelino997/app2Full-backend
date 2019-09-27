@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IInsumoProductoDAO;
+import ar.com.draimo.jitws.dao.IMarcaProductoDAO;
+import ar.com.draimo.jitws.dao.IRubroProductoDAO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -25,6 +27,14 @@ public class InsumoProductoService {
     @Autowired
     IInsumoProductoDAO elementoDAO;
     
+    //Define la referencia al dao
+    @Autowired
+    IRubroProductoDAO rubroProductoDAO;
+    
+    //Define la referencia al dao
+    @Autowired
+    IMarcaProductoDAO marcaProductoDAO;
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         InsumoProducto elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -34,6 +44,19 @@ public class InsumoProductoService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<InsumoProducto> elementos = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
+    //Obtiene una lista por rubro y marca
+    public Object listarPorRubroYMarca(int idRubroProducto, int idMarcaProducto) throws IOException {
+        List<InsumoProducto> elementos = elementoDAO.findByRubroProductoAndMarcaProducto(
+                rubroProductoDAO.findById(idRubroProducto).get(), marcaProductoDAO.findById(idMarcaProducto).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");

@@ -57,6 +57,13 @@ public class InsumoProductoController {
     public Object listar() throws IOException {
         return elementoService.listar();
     }
+    
+    //Obtiene una lista de Rubro y Marca
+    @GetMapping(value = URL + "/listarPorRubroYMarca/{idRubro}/{idMarca}")
+    @ResponseBody
+    public Object listarPorRubroYMarca(@PathVariable int idRubro, @PathVariable int idMarca) throws IOException {
+        return elementoService.listarPorRubroYMarca(idRubro, idMarca);
+    }
 
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorAlias/{alias}")

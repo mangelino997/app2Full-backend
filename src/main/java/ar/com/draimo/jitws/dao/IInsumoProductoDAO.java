@@ -2,6 +2,8 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.InsumoProducto;
+import ar.com.draimo.jitws.model.MarcaProducto;
+import ar.com.draimo.jitws.model.RubroProducto;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -24,5 +26,8 @@ public interface IInsumoProductoDAO extends JpaRepository<InsumoProducto, Intege
     
     //Obtiene una lista por esInsumo de rubro producto
     public List<InsumoProducto> findByRubroProducto_EsInsumoTrue();
+    
+    //Obtiene una lista por esInsumo de rubro producto
+    public List<InsumoProducto> findByRubroProductoAndMarcaProducto(RubroProducto rubro, MarcaProducto marca);
     
 }
