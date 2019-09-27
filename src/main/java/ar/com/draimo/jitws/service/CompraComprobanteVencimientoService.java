@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompraComprobanteVencimientoDAO;
 import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
+import ar.com.draimo.jitws.dto.ImportesDTO;
 import ar.com.draimo.jitws.model.CompraComprobanteVencimiento;
 import ar.com.draimo.jitws.model.CondicionCompra;
 import java.math.BigDecimal;
@@ -39,6 +40,15 @@ public class CompraComprobanteVencimientoService {
     //Obtiene la lista completa
     public List<CompraComprobanteVencimiento> listar() {
         return elementoDAO.findAll();
+    }
+    
+    //Controla la diferencia entre el importe y los importes de la tabla generada por listarCuotas
+    public BigDecimal obtenerDiferenciaImportes(List<ImportesDTO> listaCuotas) {
+        BigDecimal total = new BigDecimal(0);
+        for (ImportesDTO listaCuota : listaCuotas) {
+             total = total.add(listaCuota.getImporte());
+        }
+        return total.subtract(listaCuotas.get(0).getImporteTotal());
     }
 
     //Genera la tabla de cuotas

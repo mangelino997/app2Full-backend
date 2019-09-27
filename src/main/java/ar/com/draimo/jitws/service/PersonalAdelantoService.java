@@ -106,7 +106,7 @@ public class PersonalAdelantoService {
     public BigDecimal obtenerDiferenciaImportes(List<PersonalAdelantoLoteDTO> listaCuotas) {
         BigDecimal total = new BigDecimal(0);
         for (PersonalAdelantoLoteDTO listaCuota : listaCuotas) {
-             total = total.add(listaCuota.getImporte());
+            total = total.add(listaCuota.getImporte());
         }
         return total.subtract(listaCuotas.get(0).getImporteTotal());
     }
@@ -176,8 +176,8 @@ public class PersonalAdelantoService {
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos","viajeTramos","viajeCombustibles",
-                        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
+                .serializeAllExcept("datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("personaladelantofiltro", theFilter)
@@ -300,6 +300,17 @@ public class PersonalAdelantoService {
             per.setEstaAnulado(true);
             per.setUsuarioMod(elemento.getUsuarioMod());
             per.setObservacionesAnulado(elemento.getObservacionesAnulado());
+        }
+    }
+
+    //Anula un registro - un adelanto personal
+    @Transactional(rollbackFor = Exception.class)
+    public void anular(PersonalAdelanto elemento) {
+        List<PersonalAdelanto> adelantos = elementoDAO.anular(elemento.getFechaEmision(), elemento.getPersonal().getId());
+        for (PersonalAdelanto adelanto : adelantos) {
+            adelanto.setEstaAnulado(true);
+            adelanto.setUsuarioMod(elemento.getUsuarioMod());
+            adelanto.setObservacionesAnulado(elemento.getObservacionesAnulado());
         }
     }
 
