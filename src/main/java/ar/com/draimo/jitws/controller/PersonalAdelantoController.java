@@ -117,6 +117,34 @@ public class PersonalAdelantoController {
             return MensajeRespuesta.error();
         }
     }
+    
+    //Anula un registro - un adelanto personal
+    @PutMapping(value = URL + "/anular")
+    public ResponseEntity<?> anular(@RequestBody PersonalAdelanto elemento) {
+        try {
+            //Actualiza el registro
+            elementoService.anular(elemento);
+            //Envia la nueva lista a los usuarios subscripto
+//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de actualizado con exito
+            return MensajeRespuesta.anulado();
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (JpaObjectRetrievalFailureException jorfe) {
+            //Retorna mensaje de dato Inexistente
+            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
+            //Retorna mensaje de transaccion no actualizada
+            return MensajeRespuesta.transaccionNoActualizada();
+        } catch (MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
 
     //Agrega un lote
     @PostMapping(value = URL + "/agregarLote")
