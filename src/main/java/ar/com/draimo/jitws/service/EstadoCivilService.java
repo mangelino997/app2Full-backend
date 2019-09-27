@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEstadoCivilDAO;
@@ -43,7 +44,7 @@ public class EstadoCivilService {
     @Transactional(rollbackFor = Exception.class)
     public EstadoCivil agregar(EstadoCivil elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

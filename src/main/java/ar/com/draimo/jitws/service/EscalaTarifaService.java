@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEscalaTarifaDAO;
@@ -36,7 +37,7 @@ public class EscalaTarifaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public EscalaTarifa agregar(EscalaTarifa elemento) {
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

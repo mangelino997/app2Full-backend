@@ -42,6 +42,10 @@ public class EjercicioController {
     @Autowired
     EjercicioService elementoService;
     
+    //Crea una instancia del controlador de fecha
+    @Autowired
+    FechaController fechaController;
+    
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
@@ -67,7 +71,7 @@ public class EjercicioController {
     @GetMapping(value = URL + "/listarAnios")
     @ResponseBody
     public List<Short> listarAnios() {
-        return elementoService.listarAnios();
+        return fechaController.listarAnios();
     }
     
     //Agrega un registro

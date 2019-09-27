@@ -63,7 +63,7 @@ public class ConfiguracionVehiculoController {
     public List<ConfiguracionVehiculo> listarPorTipoVehiculoMarcaVehiculo(
             @PathVariable int idTipoVehiculo, @PathVariable int idMarcaVehiculo) {
         return elementoService
-                .listarPorTipoVehiculoMarcaVehiculo(idTipoVehiculo, idMarcaVehiculo);
+                .listarPorTipoYMarca(idTipoVehiculo, idMarcaVehiculo);
     }
     
     //Obtiene una lista por marca de vehiculo

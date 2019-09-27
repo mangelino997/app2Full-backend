@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
@@ -85,7 +86,7 @@ public class ContactoClienteService {
     @Transactional(rollbackFor = Exception.class)
     public ContactoCliente agregar(ContactoCliente elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

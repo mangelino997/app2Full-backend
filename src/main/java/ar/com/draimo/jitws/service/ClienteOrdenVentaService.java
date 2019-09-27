@@ -1,3 +1,4 @@
+//Paquete al que pertence el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
@@ -26,19 +27,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ClienteOrdenVentaService {
 
-    //Define la referencia al dao
-    @Autowired
-    IOrdenVentaDAO ordenVentaDAO;
-
-    //Define la referencia a clienteDAO
-    @Autowired
-    IClienteDAO clienteDAO;
-
-    //Define la referencia al dao OrdenVenta
+    //Define la referencia al dao 
     @Autowired
     IClienteOrdenVentaDAO elementoDAO;
 
-    //Define la referencia al dao TipoTarifaDAO
+    //Define la referencia al dao OrdenVenta
+    @Autowired
+    IOrdenVentaDAO ordenVentaDAO;
+
+    //Define la referencia al dao cliente
+    @Autowired
+    IClienteDAO clienteDAO;
+    
+    //Define la referencia al dao TipoTarifa
     @Autowired
     ITipoTarifaDAO tipoTarifaDAO;
 
@@ -62,7 +63,8 @@ public class ClienteOrdenVentaService {
 
     //Obtiene una lista por Cliente
     public Object listarPorCliente(int idCliente) throws IOException {
-        List<ClienteOrdenVenta> clienteOrdenesVentas = elementoDAO.findByCliente(clienteDAO.findById(idCliente).get());
+        List<ClienteOrdenVenta> clienteOrdenesVentas = elementoDAO.findByCliente(
+                clienteDAO.findById(idCliente).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");

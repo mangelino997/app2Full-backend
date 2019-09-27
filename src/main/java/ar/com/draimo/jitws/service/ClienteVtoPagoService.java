@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
@@ -27,7 +28,7 @@ public class ClienteVtoPagoService {
     @Autowired
     IClienteDAO clienteDAO;
     
-    //Define el dao
+    //Define el dao de empresa
     @Autowired
     IEmpresaDAO empresaDAO;
     
@@ -42,7 +43,7 @@ public class ClienteVtoPagoService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por alias
+    //Obtiene una lista por cliente y empresa
     public List<ClienteVtoPago> listarPorClienteYEmpresa(int idCliente, int idEmpresa) {
         Empresa e = empresaDAO.findById(idEmpresa).get();
         Cliente c = clienteDAO.findById(idCliente).get();

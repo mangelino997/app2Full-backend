@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBarrioDAO;
@@ -8,13 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Servicio de Barrio
  * @author blas
  */
 
 @Service
 public class BarrioService {
 
+    //Referencia al DAO
     @Autowired
     IBarrioDAO elementoDAO;
     

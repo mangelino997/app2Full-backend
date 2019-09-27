@@ -60,35 +60,35 @@ public class EmpresaController {
     @GetMapping(value = URL + "/listarActivas")
     @ResponseBody
     public List<Empresa> listarActivas() {
-        return elementoService.listarActivas();
+        return elementoService.listarPorFiltros("", 0);
     }
     
     //Obtiene una lista por razon social
     @GetMapping(value = URL + "/listarPorRazonSocial/{razonSocial}")
     @ResponseBody
     public List<Empresa> listarPorRazonSocial(@PathVariable String razonSocial) {
-        return elementoService.listarPorRazonSocial(razonSocial);
+        return elementoService.listarPorFiltros(razonSocial, 1);
     }
     
     //Obtiene una lista por nombre y feCAEA habilitado
     @GetMapping(value = URL + "/listarPorRazonSocialYCAEAHabilitado/{razonSocial}")
     @ResponseBody
     public List<Empresa> listarPorRazonSocialYCAEAHabilitado(@PathVariable String razonSocial) {
-        return elementoService.listarPorRazonSocialYCAEAHabilitado(razonSocial);
+        return elementoService.listarPorFiltros(razonSocial, 2);
     }
     
     //Obtiene una lista por nombre y esta activa
     @GetMapping(value = URL + "/listarPorRazonSocialYActiva/{razonSocial}")
     @ResponseBody
     public List<Empresa> listarPorRazonSocialYActiva(@PathVariable String razonSocial) {
-        return elementoService.listarPorRazonSocialYActiva(razonSocial);
+        return elementoService.listarPorFiltros(razonSocial, 3);
     }
     
     //Obtiene una lista por nombre, esta activa y fe
     @GetMapping(value = URL + "/listarPorRazonSocialYActivaYFe/{razonSocial}")
     @ResponseBody
     public List<Empresa> listarPorRazonSocialYActivaYFe(@PathVariable String razonSocial) {
-        return elementoService.listarPorRazonSocialYActivaYFe(razonSocial);
+        return elementoService.listarPorFiltros(razonSocial, 4);
     }
     
     //Obtiene una lista de usuarios por empresa

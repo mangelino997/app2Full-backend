@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
@@ -30,35 +31,15 @@ public class EmpresaService {
         return elementoDAO.findAll();
     }
 
-    //Obtiene una lista de empresas activas
-    public List<Empresa> listarActivas() {
-        return elementoDAO.findByEstaActivaTrue();
+    /* Si opcion= 0 Lista empresas activas. Si opcion = 1 lista empresas por razonSocial
+    * Si opcion=2 lista empresas por razon social y feCaea true. Si opcion = 3 lista
+    * empresas por razonSocial y activas. Si opcion=4 lista empresas por razon social
+    Activas y fe true */
+    public List<Empresa> listarPorFiltros(String razonSocial, int opcion) {
+        //Opcion 0 del metodo lista empresas activas
+        return elementoDAO.listarPorFiltros(razonSocial, opcion);
     }
-
-    //Obtiene por razon social
-    public List<Empresa> listarPorRazonSocial(String razonSocial) {
-        if (razonSocial.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByRazonSocialContaining(razonSocial);
-        }
-    }
-
-    //Obtiene por razon social
-    public List<Empresa> listarPorRazonSocialYCAEAHabilitado(String razonSocial) {
-        return elementoDAO.findByRazonSocialContainingAndFeCAEATrue(razonSocial);
-    }
-
-    //Obtiene por razon social y esta activo
-    public List<Empresa> listarPorRazonSocialYActiva(String razonSocial) {
-        return elementoDAO.findByRazonSocialContainingAndEstaActivaTrue(razonSocial);
-    }
-
-    //Obtiene por razon social, esta activo y fe
-    public List<Empresa> listarPorRazonSocialYActivaYFe(String razonSocial) {
-        return elementoDAO.findByRazonSocialContainingAndEstaActivaTrueAndFeTrue(razonSocial);
-    }
-
+    
     //Obtiene una lista de usuarios por empresa
     public List<Empresa> listarEmpresasPorUsuario(int idUsuario) {
         List<Empresa> empresas = elementoDAO.listarPorUsuarioYMostrarTrue(idUsuario);
@@ -69,7 +50,7 @@ public class EmpresaService {
     @Transactional(rollbackFor = Exception.class)
     public Empresa agregar(Empresa elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
