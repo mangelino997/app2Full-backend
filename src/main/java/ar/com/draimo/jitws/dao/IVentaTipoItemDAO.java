@@ -15,13 +15,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IVentaTipoItemDAO extends JpaRepository<VentaTipoItem, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public VentaTipoItem findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
     public List<VentaTipoItem> findByNombreContaining(String nombre);
     
-    //Obtiene un listado de ventaTipoItem por tipoComprobante igual a 1
+    //Obtiene un listado de ventaTipoItem por tipoComprobante
     public List<VentaTipoItem> findByTipoComprobante(Optional<TipoComprobante> tipoComprobante);
     
 }

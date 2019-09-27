@@ -1,3 +1,4 @@
+//Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Empresa;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ITalonarioReciboLoteDAO extends JpaRepository<TalonarioReciboLote, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public TalonarioReciboLote findTopByOrderByIdDesc();
     
     //Obtiene un listado por empresa y loteEntregadoFalse
@@ -26,8 +27,10 @@ public interface ITalonarioReciboLoteDAO extends JpaRepository<TalonarioReciboLo
     //Obtiene un listado por empresa
     public List<TalonarioReciboLote> findByEmpresaOrderByPuntoVentaAsc(Empresa empresa); 
     
+    //Obtiene un listado por desde-hasta, punto de venta y letra
     @Query(value = "SELECT * FROM talonariorecibolote t WHERE  :desdeHasta BETWEEN "
             + "(t.desde AND t.hasta) and puntoVenta=:puntoVenta and letra=:letra", nativeQuery = true)
     public List<TalonarioReciboLote> listarPorDesdeHasta(@Param("desdeHasta") int 
             desdeHasta, @Param("puntoVenta") int puntoVenta, @Param("letra") String letra);
+    
 }

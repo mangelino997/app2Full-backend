@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ITipoCuentaBancariaDAO extends JpaRepository<TipoCuentaBancaria, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public TipoCuentaBancaria findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

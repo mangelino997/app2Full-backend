@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IRolDAO extends JpaRepository<Rol, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Rol findTopByOrderByIdDesc();
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por nombre y que no es desarrollador
     public List<Rol> findByNombreContainingAndEsDesarrolladorFalse(String nombre);
     
     //Obtiene todos los registros no desarrolladores

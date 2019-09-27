@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISeguimientoEstadoTipoCpteDAO extends JpaRepository<SeguimientoEstadoTipoCpte, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SeguimientoEstadoTipoCpte findTopByOrderByIdDesc();
     
     //Obtiene una lista por seguimientoEstado

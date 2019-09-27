@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISexoDAO extends JpaRepository<Sexo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo regisstro
     public Sexo findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

@@ -16,13 +16,13 @@ import org.springframework.data.repository.query.Param;
 
 public interface IViajeTramoDAO extends JpaRepository<ViajeTramo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ViajeTramo findTopByOrderByIdDesc();
     
     //Obtiene una lista por viaje propio
     public List<ViajeTramo> findByViaje(Viaje viaje);
     
-    //Obtiene por viaje propio y tramo
+    //Obtiene por viaje y tramo
     @Query(value = "SELECT * FROM viajetramo WHERE idViaje=:idViaje AND idTramo=:idTramo ",nativeQuery = true)
     public ViajeTramo findByViajeAndTramo(@Param("idViaje") int idViaje, @Param("idTramo") int idTramo);
     

@@ -17,13 +17,13 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IUsuarioEmpresaDAO extends JpaRepository<UsuarioEmpresa, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public UsuarioEmpresa findTopByOrderByIdDesc();
     
     //Obtiene una lista por usuario
     public List<UsuarioEmpresa> findByUsuario(Optional<Usuario> usuario);
     
-    //Obtiene una lista por usuario
+    //Obtiene una lista por usuario y habilitado para mostrar
     public List<UsuarioEmpresa> findByUsuarioAndMostrarTrue(Optional<Usuario> usuario);
     
     //Elimina todos los datos de la tabla

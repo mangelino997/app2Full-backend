@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISeguimientoOrdenRecoleccionDAO extends JpaRepository<SeguimientoOrdenRecoleccion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SeguimientoOrdenRecoleccion findTopByOrderByIdDesc();
     
     //Obtiene una lista ordenada por fecha

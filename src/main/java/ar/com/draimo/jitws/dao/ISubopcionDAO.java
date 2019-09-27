@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISubopcionDAO extends JpaRepository<Subopcion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Subopcion findTopByOrderByIdDesc();
     
     //Obtiene una lista por submodulo

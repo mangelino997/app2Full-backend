@@ -22,7 +22,7 @@ public interface IRolOpcionDAO extends JpaRepository<RolOpcion, Integer> {
     //Obtiene una lista de opciones por rol
     public List<RolOpcion> findByRol(Rol rol);
     
-    //Obtiene una lista por rol y subopcion
+    //Obtiene una lista por rol y subopcion de la opcion
     public List<RolOpcion> findByRolAndOpcion_Subopcion(Optional<Rol> rol, Optional<Subopcion> subopcion);
     
     //Obtiene por rol y opcion

@@ -14,10 +14,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IViajeInsumoDAO extends JpaRepository<ViajeInsumo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ViajeInsumo findTopByOrderByIdDesc();
     
-    //Obtiene una lista por viaje propio
+    //Obtiene una lista por viaje 
     public List<ViajeInsumo> findByViaje(Viaje viaje);
     
 }

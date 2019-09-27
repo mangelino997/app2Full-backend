@@ -34,7 +34,7 @@ public class ZonaService {
     public List<Zona> listarOrdenado(String elemento) {
         switch (elemento) {
             case "nombre":
-                return elementoDAO.findByOrderByNombreAsc();
+                return elementoDAO.findAllByOrderByNombreAsc();
             case "id":
                 return elementoDAO.findByOrderByIdAsc();
             default:

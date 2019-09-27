@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ITipoVehiculoDAO extends JpaRepository<TipoVehiculo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public TipoVehiculo findTopByOrderByIdDesc();
     
     //Obtiene la lista de registros ordenada por nombre desc

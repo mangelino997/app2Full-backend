@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISeguimientoEstadoSituacionDAO extends JpaRepository<SeguimientoEstadoSituacion, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SeguimientoEstadoSituacion findTopByOrderByIdDesc();
     
     //Obtiene una lista por seguimientoEstado

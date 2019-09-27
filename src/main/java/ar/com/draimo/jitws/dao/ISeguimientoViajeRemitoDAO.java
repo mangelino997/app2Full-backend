@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISeguimientoViajeRemitoDAO extends JpaRepository<SeguimientoViajeRemito, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SeguimientoViajeRemito findTopByOrderByIdDesc();
     
     //Obtiene una lista ordenada por fecha

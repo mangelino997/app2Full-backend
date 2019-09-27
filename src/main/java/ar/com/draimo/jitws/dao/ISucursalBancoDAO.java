@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISucursalBancoDAO extends JpaRepository<SucursalBanco, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SucursalBanco findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

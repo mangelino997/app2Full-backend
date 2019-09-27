@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipConceptoDAO;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AfipConceptoService {
 
+    //Define el DAO
     @Autowired
     IAfipConceptoDAO elementoDAO;
     

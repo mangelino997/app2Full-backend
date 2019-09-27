@@ -14,13 +14,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ITramoDAO extends JpaRepository<Tramo, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Tramo findTopByOrderByIdDesc();
     
-    //Obtiene un listado por origen
+    //Obtiene un listado por nombre de origen
     public List<Tramo> findByOrigen_NombreContaining(String nombre);
     
-    //Obtiene un listado por destino
+    //Obtiene un listado por nombre de destino
     public List<Tramo> findByDestino_NombreContaining(String nombre);
     
     //Obtiene una lista por origen

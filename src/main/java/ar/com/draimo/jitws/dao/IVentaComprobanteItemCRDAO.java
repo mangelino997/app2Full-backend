@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IVentaComprobanteItemCRDAO extends JpaRepository<VentaComprobanteItemCR, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public VentaComprobanteItemCR findTopByOrderByIdDesc();
     
 }

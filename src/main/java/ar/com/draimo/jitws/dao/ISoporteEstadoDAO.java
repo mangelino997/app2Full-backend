@@ -1,3 +1,4 @@
+//Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.SoporteEstado;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ISoporteEstadoDAO extends JpaRepository<SoporteEstado, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public SoporteEstado findTopByOrderByIdDesc();
     
     //Obtiene un listado por nombre

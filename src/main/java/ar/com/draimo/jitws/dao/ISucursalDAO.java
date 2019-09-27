@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ISucursalDAO extends JpaRepository<Sucursal, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Sucursal findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

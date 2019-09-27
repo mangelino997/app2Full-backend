@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IViajePrecioDAO extends JpaRepository<ViajePrecio, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public ViajePrecio findTopByOrderByIdDesc();
     
     //Obtiene el costo por idViajeTipo y idViajeTarifa

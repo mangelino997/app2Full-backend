@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ISindicatoDAO extends JpaRepository<Sindicato, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Sindicato findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre

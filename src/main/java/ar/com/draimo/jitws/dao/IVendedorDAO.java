@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IVendedorDAO extends JpaRepository<Vendedor, Integer> {
     
-    //Obtiene el siguiente id
+    //Obtiene el ultimo registro
     public Vendedor findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
