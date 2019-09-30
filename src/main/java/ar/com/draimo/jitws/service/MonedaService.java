@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IMonedaDAO;
@@ -32,11 +33,8 @@ public class MonedaService {
     
     //Obtiene una lista por nombre
     public List<Moneda> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")? elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Obtiene la moneda principal por defecto
