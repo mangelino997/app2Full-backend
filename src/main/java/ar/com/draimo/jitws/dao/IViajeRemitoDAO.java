@@ -90,7 +90,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     //Obtiene un registro por remitente, destinatario , puntoVenta, letra, numero y tipoComprobante
     @Query(value = "SELECT * FROM viajeremito WHERE idClienteRemitente=:idClienteRemitente"
             + " AND idClienteDestinatario=:idClienteDestinatario AND puntoVenta=:puntoVenta"
-            + " AND letra=:letra AND numero=:numero AND idTipoComprobante=:idTipoComprobante")
+            + " AND letra=:letra AND numero=:numero AND idTipoComprobante=:idTipoComprobante", nativeQuery = true)
     public ViajeRemito obtenerComprobanteUnicoParaRemitenteDestinatario(@Param("idClienteRemitente") 
             int idClienteRemitente,@Param("idClienteDestinatario") int idClienteDestinatario,
             @Param("puntoVenta") int puntoVenta, @Param("letra") String letra, 

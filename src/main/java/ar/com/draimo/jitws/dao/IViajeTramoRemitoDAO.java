@@ -30,5 +30,5 @@ public interface IViajeTramoRemitoDAO extends JpaRepository<ViajeTramoRemito, In
     public void deleteByViajeRemitoAndViajeTramo(ViajeRemito viajeRemito, ViajeTramo viajeTramo);
     
     //Obtiene un registro por remitente, destinatario , puntoVenta, letra, numero y tipoComprobante
-    public ViajeRemito findByClienteRemitenteAndClienteDestinatarioAndPuntoVentaAndNumeroAndLetraAndTipoComprobante();
+//    public ViajeRemito findByClienteRemitenteAndClienteDestinatarioAndPuntoVentaAndNumeroAndLetraAndTipoComprobante();
 }
