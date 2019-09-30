@@ -1,11 +1,10 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ILocalidadDAO;
 import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.model.Localidad;
-import ar.com.draimo.jitws.model.Provincia;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,11 +38,8 @@ public class LocalidadService {
     
     //Obtiene una lista por nombre
     public List<Localidad> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")?elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Obtiene una lista por provincia

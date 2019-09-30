@@ -1,3 +1,4 @@
+//Paquete al que pertenece el serivicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IRolDAO;

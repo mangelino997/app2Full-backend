@@ -44,12 +44,8 @@ public class FotoService {
     
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<Foto> elementos;
-        if(nombre.equals("***")) {
-            elementos= elementoDAO.findAll();
-        } else {
-            elementos= elementoDAO.findByNombreContaining(nombre);
-        }
+        List<Foto> elementos= nombre.equals("***")?elementoDAO.findAll(): 
+                    elementoDAO.findByNombreContaining(nombre);
         ObjectMapper mapper = new ObjectMapper();
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", 

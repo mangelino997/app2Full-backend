@@ -64,13 +64,10 @@ public class MonedaCuentaContableService {
 
     //Obtiene una lista por nombre de moneda
     public Object listarPorNombreMoneda(String nombre, int idEmpresa) throws IOException {
-        List<MonedaCuentaContable> monedasCuentasContables = new ArrayList<>();
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        if (nombre.equals("***")) {
-            monedasCuentasContables = elementoDAO.findByEmpresa(empresa);
-        } else {
-            monedasCuentasContables = elementoDAO.findByMoneda_NombreContainingAndEmpresa(nombre, empresa);
-        }
+        List<MonedaCuentaContable> monedasCuentasContables = nombre.equals("***")?
+            elementoDAO.findByEmpresa(empresa):
+            elementoDAO.findByMoneda_NombreContainingAndEmpresa(nombre, empresa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");

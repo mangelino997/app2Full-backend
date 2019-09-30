@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.model.InsumoProducto;
@@ -27,11 +28,11 @@ public class InsumoProductoService {
     @Autowired
     IInsumoProductoDAO elementoDAO;
     
-    //Define la referencia al dao
+    //Define la referencia al dao de rubro
     @Autowired
     IRubroProductoDAO rubroProductoDAO;
     
-    //Define la referencia al dao
+    //Define la referencia al dao de marca
     @Autowired
     IMarcaProductoDAO marcaProductoDAO;
     
@@ -68,12 +69,8 @@ public class InsumoProductoService {
     
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
-        List<InsumoProducto> elementos;
-        if(alias.equals("***")) {
-            elementos = elementoDAO.findAll();
-        } else {
-            elementos = elementoDAO.findByAliasContaining(alias);
-        }
+        List<InsumoProducto> elementos= alias.equals("***")? elementoDAO.findAll():
+            elementoDAO.findByAliasContaining(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -117,18 +114,14 @@ public class InsumoProductoService {
     @Transactional(rollbackFor = Exception.class)
     public int agregar(InsumoProducto elemento) throws IOException {
         elemento = formatearStrings(elemento);
-        if(elemento.getPrecioUnitarioVenta()== null){
-            elemento.setPrecioUnitarioVenta(new BigDecimal(0));
-        }
-        if(elemento.getPrecioUnitarioViaje()== null){
-            elemento.setPrecioUnitarioViaje(new BigDecimal(0));
-        }
-        if(elemento.getItcNeto()== null){
-            elemento.setItcNeto(new BigDecimal(0));
-        }
-        if(elemento.getItcPorLitro()== null){
-            elemento.setItcPorLitro(new BigDecimal(0));
-        }
+        elemento.setPrecioUnitarioVenta(elemento.getPrecioUnitarioVenta()== null? 
+                new BigDecimal(0): elemento.getPrecioUnitarioVenta());
+        elemento.setPrecioUnitarioViaje(elemento.getPrecioUnitarioViaje()== null? 
+                new BigDecimal(0):elemento.getPrecioUnitarioViaje());
+        elemento.setItcNeto(elemento.getItcNeto()== null? new BigDecimal(0): 
+                elemento.getItcNeto());
+        elemento.setItcPorLitro(elemento.getItcPorLitro()== null? new BigDecimal(0):
+                elemento.getItcPorLitro());
         elementoDAO.saveAndFlush(elemento);
         return elemento.getId();
     }
@@ -137,20 +130,15 @@ public class InsumoProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(InsumoProducto elemento) {
         elemento = formatearStrings(elemento);
-        if(elemento.getPrecioUnitarioVenta()== null){
-            elemento.setPrecioUnitarioVenta(new BigDecimal(0));
-        }
-        if(elemento.getPrecioUnitarioViaje()== null){
-            elemento.setPrecioUnitarioViaje(new BigDecimal(0));
-        }
-        if(elemento.getItcNeto()== null){
-            elemento.setItcNeto(new BigDecimal(0));
-        }
-        if(elemento.getItcPorLitro()== null){
-            elemento.setItcPorLitro(new BigDecimal(0));
-        }
+        elemento.setPrecioUnitarioVenta(elemento.getPrecioUnitarioVenta()== null? 
+                new BigDecimal(0): elemento.getPrecioUnitarioVenta());
+        elemento.setPrecioUnitarioViaje(elemento.getPrecioUnitarioViaje()== null? 
+                new BigDecimal(0):elemento.getPrecioUnitarioViaje());
+        elemento.setItcNeto(elemento.getItcNeto()== null? new BigDecimal(0): 
+                elemento.getItcNeto());
+        elemento.setItcPorLitro(elemento.getItcPorLitro()== null? new BigDecimal(0):
+                elemento.getItcPorLitro());
         establecerAlias(elemento.getId(), elemento);
-        elementoDAO.save(elemento);
     }
     
     //Elimina un registro
@@ -164,6 +152,7 @@ public class InsumoProductoService {
         elemento.setAlias(id +" - "+ elemento.getNombre() + " - "+
                 elemento.getRubroProducto().getNombre() + " - " + 
                 elemento.getMarcaProducto().getNombre());
+        elementoDAO.save(elemento);
     }
     
     //Formatea los strings
