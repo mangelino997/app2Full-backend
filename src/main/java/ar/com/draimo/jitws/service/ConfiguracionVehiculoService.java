@@ -58,7 +58,8 @@ public class ConfiguracionVehiculoService {
     
     //Obtiene una lista por marca de vehiculo
     public List<ConfiguracionVehiculo> listarPorMarcaVehiculo(int idMarcaVehiculo) {
-        return elementoDAO.findByMarcaVehiculo(marcaVehiculoDAO.findById(idMarcaVehiculo).get());
+        return idMarcaVehiculo != 0 ?elementoDAO.findByMarcaVehiculo(marcaVehiculoDAO.findById(idMarcaVehiculo).get()):
+                elementoDAO.findAll();
     }
     
     //Agrega un registro

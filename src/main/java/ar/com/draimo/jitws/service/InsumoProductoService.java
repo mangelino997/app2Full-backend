@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IInsumoProductoDAO;
 import ar.com.draimo.jitws.dao.IMarcaProductoDAO;
 import ar.com.draimo.jitws.dao.IRubroProductoDAO;
+import ar.com.draimo.jitws.model.RubroProducto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -16,7 +17,8 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-/**
+/*
+*
  * Servicio InsumoProducto
  * @author blas
  */
@@ -56,8 +58,9 @@ public class InsumoProductoService {
     
     //Obtiene una lista por rubro y marca
     public Object listarPorRubroYMarca(int idRubroProducto, int idMarcaProducto) throws IOException {
-        List<InsumoProducto> elementos = elementoDAO.findByRubroProductoAndMarcaProducto(
-                rubroProductoDAO.findById(idRubroProducto).get(), marcaProductoDAO.findById(idMarcaProducto).get());
+        RubroProducto rubro = rubroProductoDAO.findById(idRubroProducto).get();
+        List<InsumoProducto> elementos =  idMarcaProducto != 0 ? elementoDAO.findByRubroProductoAndMarcaProducto(
+                rubro, marcaProductoDAO.findById(idMarcaProducto).get()): elementoDAO.findByRubroProducto(rubro);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");

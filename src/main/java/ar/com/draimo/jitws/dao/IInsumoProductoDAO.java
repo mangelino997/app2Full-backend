@@ -27,6 +27,9 @@ public interface IInsumoProductoDAO extends JpaRepository<InsumoProducto, Intege
     //Obtiene una lista por esInsumo de rubro producto
     public List<InsumoProducto> findByRubroProducto_EsInsumoTrue();
     
+    //Obtiene una lista por rubro producto
+    public List<InsumoProducto> findByRubroProducto(RubroProducto rubro);
+    
     //Obtiene una lista por esInsumo de rubro producto
     public List<InsumoProducto> findByRubroProductoAndMarcaProducto(RubroProducto rubro, MarcaProducto marca);
     
