@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
+import ar.com.draimo.jitws.dao.IClienteVtoPagoDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
@@ -10,6 +11,7 @@ import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
+import ar.com.draimo.jitws.model.ClienteVtoPago;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -54,6 +56,10 @@ public class ClienteService {
     //Define la referencia al dao ClienteCuentaBancariaDAO
     @Autowired
     IClienteCuentaBancariaDAO clienteCuentaBancariaDAO;
+    
+    //Define la referencia al dao ClienteVtoPagoDAO
+    @Autowired
+    IClienteVtoPagoDAO clienteVtoPagoDAO;
     
     //Define la referencia al dao tipoDocumento
     @Autowired
@@ -165,6 +171,13 @@ public class ClienteService {
             for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
                 ccb.setCliente(cliente);
                 clienteCuentaBancariaDAO.saveAndFlush(ccb);
+            }
+        }
+        //Registra los vencimientos de pagos
+        if(elemento.getClienteVtosPagos() != null) {
+            for(ClienteVtoPago cvp : elemento.getClienteVtosPagos()) {
+                cvp.setCliente(cliente);
+                clienteVtoPagoDAO.saveAndFlush(cvp);
             }
         }
         return cliente;

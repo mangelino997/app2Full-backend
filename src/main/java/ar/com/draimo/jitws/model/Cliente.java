@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -232,6 +233,11 @@ public class Cliente extends ObjetoGenerico {
     @JsonIgnoreProperties("cliente")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
     private List<ClienteCuentaBancaria> clienteCuentasBancarias;
+    
+    //Referencia a la clase ClienteVtoPago
+    @JsonIgnoreProperties("cliente")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
+    private List<ClienteVtoPago> clienteVtosPagos;
 
     //Getters y Setters de la clase
     public String getRazonSocial() {
@@ -586,4 +592,12 @@ public class Cliente extends ObjetoGenerico {
         this.clienteCuentasBancarias = clienteCuentasBancarias;
     }
 
+    public List<ClienteVtoPago> getClienteVtosPagos() {
+        return clienteVtosPagos;
+    }
+
+    public void setClienteVtosPagos(List<ClienteVtoPago> clienteVtosPagos) {
+        this.clienteVtosPagos = clienteVtosPagos;
+    }
+    
 }
