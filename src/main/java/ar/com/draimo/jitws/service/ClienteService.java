@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IClienteVtoPagoDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
@@ -14,6 +15,7 @@ import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.model.ClienteVtoPago;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -21,6 +23,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -58,14 +61,18 @@ public class ClienteService {
     //Define la referencia al dao ClienteCuentaBancariaDAO
     @Autowired
     IClienteCuentaBancariaDAO clienteCuentaBancariaDAO;
-    
+
     //Define la referencia al dao ClienteVtoPagoDAO
     @Autowired
     IClienteVtoPagoDAO clienteVtoPagoDAO;
-    
+
     //Define la referencia al dao tipoDocumento
     @Autowired
     ITipoDocumentoDAO tipoDocumentoDAO;
+
+    //Define la referencia al dao empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -122,14 +129,11 @@ public class ClienteService {
         } else {
             clientes = elementoDAO.findByAliasContaining(alias);
         }
+        //Construye la lista de rubros productos cuentas contables para cada empresa
+        for (Cliente cliente : clientes) {
+            cliente.setClienteCuentasBancarias(construirCuentasBancariasParaEmpresas(cliente));
+        }
         return clientes;
-//        ObjectMapper mapper = new ObjectMapper();
-//        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-//                .serializeAllExcept("cliente");
-//        FilterProvider filters = new SimpleFilterProvider()
-//                .addFilter("clienteordenventafiltro", theFilter);
-//        String string = mapper.writer(filters).writeValueAsString(clientes);
-//        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un cliente eventual
@@ -156,28 +160,30 @@ public class ClienteService {
             if (c != null) {
                 elemento.setCuentaGrupo(c);
             } else {
-                throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE +" CUENTA GRUPO");
+                throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE + " CUENTA GRUPO");
             }
         }
         Cliente cliente = elementoDAO.saveAndFlush(elemento);
         //Agrega la lista de ordenes de venta del cliente
-        if(elemento.getClienteOrdenesVentas() != null) {
-            for(ClienteOrdenVenta cov : elemento.getClienteOrdenesVentas()) {
+        if (elemento.getClienteOrdenesVentas() != null) {
+            for (ClienteOrdenVenta cov : elemento.getClienteOrdenesVentas()) {
                 cov.setCliente(cliente);
                 cov.setFechaAlta(fechaAlta);
                 clienteOrdenVentaDAO.saveAndFlush(cov);
             }
         }
         //Recorre la lista de cliente cuenta bancaria y agrega registros
-        if(elemento.getClienteCuentasBancarias() != null) {
-            for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
-                ccb.setCliente(cliente);
-                clienteCuentaBancariaDAO.saveAndFlush(ccb);
+        if (elemento.getClienteCuentasBancarias() != null) {
+            for (ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
+                if (ccb.getCuentaBancaria() != null) {
+                    ccb.setCliente(cliente);
+                    clienteCuentaBancariaDAO.saveAndFlush(ccb);
+                }
             }
         }
         //Registra los vencimientos de pagos
-        if(elemento.getClienteVtosPagos() != null) {
-            for(ClienteVtoPago cvp : elemento.getClienteVtosPagos()) {
+        if (elemento.getClienteVtosPagos() != null) {
+            for (ClienteVtoPago cvp : elemento.getClienteVtosPagos()) {
                 cvp.setCliente(cliente);
                 clienteVtoPagoDAO.saveAndFlush(cvp);
             }
@@ -196,15 +202,10 @@ public class ClienteService {
             if (c != null) {
                 elemento.setCuentaGrupo(c);
             } else {
-                throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE+ " CUENTA GRUPO");
+                throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE + " CUENTA GRUPO");
             }
         }
-        Cliente cliente =establecerAlias(elemento);
-        //Recorre la lista de cliente cuenta bancaria y agrega registros
-        for(ClienteCuentaBancaria ccb : elemento.getClienteCuentasBancarias()) {
-            ccb.setCliente(cliente);
-            clienteCuentaBancariaDAO.saveAndFlush(ccb);
-        }
+        establecerAlias(elemento);
     }
 
     //Establece el alias de un registro
@@ -255,6 +256,29 @@ public class ClienteService {
             elemento.setNotaImpresionRemito(elemento.getNotaImpresionRemito().trim());
         }
         return elemento;
+    }
+
+    //Arma la lista de cliente cuentas contables para todas las empresas
+    private List<ClienteCuentaBancaria> construirCuentasBancariasParaEmpresas(Cliente cliente) {
+        List<Empresa> empresas = empresaDAO.findAll();
+        List<ClienteCuentaBancaria> ccbLista = new ArrayList<>();
+        ClienteCuentaBancaria ccb;
+        for (Empresa empresa : empresas) {
+            ccb = new ClienteCuentaBancaria();
+            ccb.setEmpresa(empresa);
+            ccb.setCliente(null);
+            ccb.setCuentaBancaria(null);
+            ccbLista.add(ccb);
+        }
+        int indice;
+        for (ClienteCuentaBancaria r : cliente.getClienteCuentasBancarias()) {
+            indice = r.getEmpresa().getId() - 1;
+            ccbLista.get(indice).setId(r.getId());
+            ccbLista.get(indice).setVersion(r.getVersion());
+            ccbLista.get(indice).setCliente(r.getCliente());
+            ccbLista.get(indice).setCuentaBancaria(r.getCuentaBancaria());
+        }
+        return ccbLista;
     }
 
 }
