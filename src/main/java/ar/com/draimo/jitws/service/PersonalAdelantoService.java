@@ -306,12 +306,8 @@ public class PersonalAdelantoService {
     //Anula un registro - un adelanto personal
     @Transactional(rollbackFor = Exception.class)
     public void anular(PersonalAdelanto elemento) {
-        List<PersonalAdelanto> adelantos = elementoDAO.anular(elemento.getFechaEmision(), elemento.getPersonal().getId());
-        for (PersonalAdelanto adelanto : adelantos) {
-            adelanto.setEstaAnulado(true);
-            adelanto.setUsuarioMod(elemento.getUsuarioMod());
-            adelanto.setObservacionesAnulado(elemento.getObservacionesAnulado());
-        }
+       elemento.setEstaAnulado(true);
+       elementoDAO.save(elemento);
     }
 
     //Agrega un registro
