@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBugImagenDAO;
@@ -13,13 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- *
+ * Servicio BugImagen
  * @author blas
  */
 
 @Service
 public class BugImagenService {
 
+    //Define la referencia al DAO
     @Autowired
     IBugImagenDAO elementoDAO;
     
@@ -39,17 +41,6 @@ public class BugImagenService {
         String string = mapper.writer(filters).writeValueAsString(bug);
         return mapper.readValue(string, Object.class);
     }
-
-    //Agrega un registro
-    @Transactional(rollbackFor = Exception.class)
-    public BugImagen agregar(MultipartFile archivo) throws IOException {
-        BugImagen imagen = new BugImagen();
-        imagen.setNombre(archivo.getOriginalFilename());
-        imagen.setTipo(archivo.getContentType());
-        imagen.setTamanio(archivo.getSize());
-        imagen.setDatos(archivo.getBytes());
-        return elementoDAO.saveAndFlush(imagen);
-    }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
@@ -61,17 +52,7 @@ public class BugImagenService {
         element.setDatos(archivo.getBytes());
         return opcion ? elementoDAO.saveAndFlush(element) : element;
     }
-
-    //Actualiza un registro
-    @Transactional(rollbackFor = Exception.class)
-    public BugImagen actualizar(int idFoto, MultipartFile archivo) throws IOException {
-        BugImagen element = elementoDAO.findById(idFoto).get();
-        element.setNombre(archivo.getOriginalFilename());
-        element.setTipo(archivo.getContentType());
-        element.setTamanio(archivo.getSize());
-        element.setDatos(archivo.getBytes());
-        return elementoDAO.save(element);
-    }
+    
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public BugImagen actualizar(int idFoto, MultipartFile archivo, boolean opcion) throws IOException {
@@ -82,6 +63,7 @@ public class BugImagenService {
         element.setDatos(archivo.getBytes());
         return opcion ? elementoDAO.save(element) : element;
     }
+    
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {

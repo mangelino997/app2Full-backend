@@ -1,6 +1,8 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICobradorDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cobrador;
 import java.sql.Date;
 import java.util.List;
@@ -46,12 +48,12 @@ public class CobradorService {
         return elementoDAO.findByEstaActivoTrueOrderByNombreAsc();
     }
 
-    //Obtiene la moneda principal por defecto
+    //Obtiene la moneda principal por defecto para cliente eventual
     public Cobrador obtenerPorDefecto() {
         return elementoDAO.findByPorDefectoClienteEventualTrue();
     }
 
-    //Establece la moneda como principal
+    //Establece el cobrador por defecto
     @Transactional(rollbackFor = Exception.class)
     public void establecerCobradorPorDefecto(int idCobrador) {
         Cobrador cobrador = elementoDAO.findById(idCobrador).get();
@@ -97,7 +99,7 @@ public class CobradorService {
     public void eliminar(int elemento) {
         Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
         if (cobrador.getId() == elemento) {
-            throw new DataIntegrityViolationException("No se puede eliminar el cobrador cliente eventual.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.ERROR_COBRADOR_POR_DEFECTO);
         } else {
             elementoDAO.deleteById(elemento);
         }

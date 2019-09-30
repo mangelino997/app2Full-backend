@@ -1,3 +1,4 @@
+//Paquete al que pertenece a el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
@@ -10,15 +11,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Servicio de cuentaBancaria
  * @author blas
  */
 @Service
 public class CuentaBancariaService {
 
+    //Referencia al DAO
     @Autowired
     ICuentaBancariaDAO elementoDAO;
 
+    //Referencia al DAO de empresa
     @Autowired
     IEmpresaDAO empresaDAO;
 
@@ -38,7 +41,7 @@ public class CuentaBancariaService {
         return elementoDAO.listarPorEmpresa(idEmpresa);
     }
 
-    //Obtiene una lista por empresa
+    //Obtiene una lista por chequeras por empresa
     public List<CuentaBancaria> listarConChequerasPorEmpresa(int idEmpresa) {
         return elementoDAO.listarConChequerasPorEmpresa(idEmpresa);
     }

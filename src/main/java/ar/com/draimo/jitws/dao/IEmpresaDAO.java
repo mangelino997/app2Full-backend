@@ -18,20 +18,16 @@ public interface IEmpresaDAO extends JpaRepository<Empresa, Integer> {
     //Obtiene el ultimo registro
     public Empresa findTopByOrderByIdDesc();
     
-    //Obtiene una lista de empresas activas
-    public List<Empresa> findByEstaActivaTrue();
-    
-    //Obtiene una lista por razon social
-    public List<Empresa> findByRazonSocialContaining(String razonSocial);
-    
-    //Obtiene una lista por razon social y Fe CAEA habilitado
-    public List<Empresa> findByRazonSocialContainingAndFeCAEATrue(String razonSocial);
-    
-    //Obtiene un listado de activas por razon social 
-    public List<Empresa> findByRazonSocialContainingAndEstaActivaTrue(String razonSocial);
-    
-    //Obtiene un listadode activas por razon social y fe habilitado
-    public List<Empresa> findByRazonSocialContainingAndEstaActivaTrueAndFeTrue(String razonSocial);
+    /* Si opcion= 0 Lista empresas activas. Si opcion = 1 lista empresas por razonSocial
+    * Si opcion=2 lista empresas por razon social y feCaea true. Si opcion = 3 lista
+    * empresas por razonSocial y activas. Si opcion=4 lista empresas por razon social
+    Activas y fe true */
+    @Query(value = "SELECT * FROM jitdb.empresa where case :opcion when 0 then estaActiva "
+            + "= true when 1 then  razonSocial LIKE %:razonSocial% when 2 then  razonSocial "
+            + "LIKE %:razonSocial% and feCAEA = true when 3 then  razonSocial LIKE "
+            + "%:razonSocial% and estaActiva = true when 4 then  razonSocial LIKE "
+            + "%:razonSocial% and estaActiva= true and fe=true end", nativeQuery = true)
+    public List<Empresa> listarPorFiltros(@Param("razonSocial") String razonSocial, @Param("opcion") int opcion);
     
     //Obtiene una lista de empresas activas por usuario (usuarioEmpresa)
     @Query(value = "SELECT e.* FROM usuarioempresa u INNER JOIN empresa e ON "

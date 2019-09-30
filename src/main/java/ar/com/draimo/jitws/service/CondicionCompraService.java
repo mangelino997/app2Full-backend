@@ -1,6 +1,8 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CondicionCompra;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +47,7 @@ public class CondicionCompraService {
     public CondicionCompra agregar(CondicionCompra elemento) throws Exception {
         elemento = formatearStrings(elemento);
         String cuotas = String.valueOf(elemento.getCuotas());
-        if (cuotas.length()>3) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CUOTAS");
-        }
-        String dias = String.valueOf(elemento.getDias());
-        if (dias.length()>2) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
     
@@ -59,17 +55,20 @@ public class CondicionCompraService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(CondicionCompra elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de cuotas, si supera 3 retorna error
+        controlarLongitud(elemento);
+        elementoDAO.save(elemento);
+    }
+    
+    //Realiza el control de las cuotas y los dias
+    private void controlarLongitud(CondicionCompra elemento) {
         String cuotas = String.valueOf(elemento.getCuotas());
         if (cuotas.length()>3) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CUOTAS");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CUOTAS");
         }
-        //Obtiene longitud de dias, si supera 2 retorna error
         String dias = String.valueOf(elemento.getDias());
         if (dias.length()>2) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en DIAS");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " DIAS");
         }
-        elementoDAO.save(elemento);
     }
     
     //Elimina un registro

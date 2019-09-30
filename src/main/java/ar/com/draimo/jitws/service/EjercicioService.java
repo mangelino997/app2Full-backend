@@ -1,8 +1,10 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IEjercicioDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Ejercicio;
 import ar.com.draimo.jitws.model.Empresa;
 import java.util.ArrayList;
@@ -48,29 +50,12 @@ public class EjercicioService {
             return elementoDAO.findByEmpresaAndNombreContaining(empresa, nombre);
         }
     }
-    
-    //Obtiene un listado de anios
-    public List<Short> listarAnios() {
-        List<Short> anios = new ArrayList<>();
-        short anio = Funcion.anioInicio;
-        for (short i = anio; i < anio+15; i++) {
-            anios.add((short)i);
-        }
-        return anios;
-    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Ejercicio agregar(Ejercicio elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        String anio = String.valueOf(elemento.getAnioInicio());
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO INICIO");
-        }
-        //Obtiene longitud de meses, si supera 12 retorna error
-        if (elemento.getCantidadMeses()>12) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD MESES");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -78,16 +63,20 @@ public class EjercicioService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Ejercicio elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de anioInicio, si supera 4 retorna error
+        controlarLongitud(elemento);
+        elementoDAO.save(elemento);
+    }
+    
+    //Controla error de longitud
+    private void controlarLongitud(Ejercicio elemento) throws Exception {
         String anio = String.valueOf(elemento.getAnioInicio());
         if (anio.length()>4) {
-            throw new Exception("Cantidad caracteres excedida en AÑO INICIO");
+            throw new Exception(MensajeRespuesta.SHORT_INCORRECTO + " AÑO INICIO");
         }
         //Obtiene longitud de meses, si supera 12 retorna error
         if (elemento.getCantidadMeses()>12) {
-            throw new Exception("Cantidad caracteres excedida en CANTIDAD MESES");
+            throw new Exception(MensajeRespuesta.SHORT_INCORRECTO + " CANTIDAD MESES");
         }
-        elementoDAO.save(elemento);
     }
     
     //Elimina un registro

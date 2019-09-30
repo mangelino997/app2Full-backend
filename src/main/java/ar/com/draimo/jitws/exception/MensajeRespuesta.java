@@ -42,6 +42,10 @@ public class MensajeRespuesta {
     public static final String ROL_ASIGNADO = "El rol estÁ asignado a un usuario";
     public static final String ELEMENTO_ASIGNADO = "Registro referenciado";
     public static final String ELEMENTO_NO_NULL = "No puede estar vacio";
+    public static final String ELEMENTO_MENOR = "no puede ser mayor a";
+    public static final String EXISTENTE_PARA_CUENTA_BANCARIA = "Para cuenta bancaria-tipo chequera: dato existente";
+    public static final String ERROR_COBRADOR_POR_DEFECTO = "No se puede eliminar el cobrador por defecto para cliente eventual.";
+    public static final String COMPROBANTE_REGISTRADO = "Comprobante ya registrado.";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {

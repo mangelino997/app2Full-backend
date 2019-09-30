@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoRemitoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeTramo;
 import ar.com.draimo.jitws.model.ViajeTramoRemito;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -153,7 +154,9 @@ public class ViajeRemitoService {
         //Obtiene la sucursal destino por id
         Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
         //Retorna los datos
-        List<ViajeRemito> remitos = elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(sucursal, sucursalDestino, numeroCamion);
+        List<ViajeRemito> remitos = 
+            elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(
+                    sucursal, sucursalDestino, numeroCamion);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept();
@@ -223,7 +226,8 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void quitar(String elementosString, String idViajeTramo) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        List<ViajeRemito> elementos = mapper.readValue(elementosString, mapper.getTypeFactory().constructCollectionType(List.class, ViajeRemito.class));
+        List<ViajeRemito> elementos = mapper.readValue(elementosString, 
+                mapper.getTypeFactory().constructCollectionType(List.class, ViajeRemito.class));
         //Obtiene el viaje tramo
         ViajeTramo viajeTramo = viajeTramoDAO.findById(Integer.valueOf(idViajeTramo)).get();
         //Recorre la lista de remitos
@@ -244,6 +248,14 @@ public class ViajeRemitoService {
         elemento.setEstaPendiente(true);
         elemento.setEstaFacturado(false);
         elemento.setEstaEnReparto(false);
+        ViajeRemito viajeRemito = 
+                elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
+                        elemento.getClienteRemitente().getId(),elemento.getClienteDestinatario().getId(),
+                        elemento.getPuntoVenta(),elemento.getLetra(),elemento.getNumero(), 
+                        elemento.getTipoComprobante().getId());
+        if (viajeRemito!=null) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.COMPROBANTE_REGISTRADO);
+        }
         //Obtiene longitud de numrtoCamion, si supera 3 retorna error
         String numCamion = String.valueOf(elemento.getNumeroCamion());
         if (numCamion.length() > 3) {
@@ -271,6 +283,14 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeRemito elemento) throws Exception {
         elemento = formatearStrings(elemento);
+        ViajeRemito viajeRemito = 
+                elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
+                        elemento.getClienteRemitente().getId(),elemento.getClienteDestinatario().getId(),
+                        elemento.getPuntoVenta(),elemento.getLetra(),elemento.getNumero(), 
+                        elemento.getTipoComprobante().getId());
+        if (viajeRemito!=null) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.COMPROBANTE_REGISTRADO);
+        }
         //Obtiene longitud de numrtoCamion, si supera 3 retorna error
         String numCamion = String.valueOf(elemento.getNumeroCamion());
         if (numCamion.length() > 3) {

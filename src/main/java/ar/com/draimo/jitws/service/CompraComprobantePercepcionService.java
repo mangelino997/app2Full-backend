@@ -1,6 +1,8 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompraComprobantePercepcionDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobantePercepcion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Servicio de compraComprobantePercepcion
  * @author blas
  */
 
 @Service
 public class CompraComprobantePercepcionService {
 
+    //Refecencia al DAO
     @Autowired
     ICompraComprobantePercepcionDAO elementoDAO;
     
@@ -36,7 +39,7 @@ public class CompraComprobantePercepcionService {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
         if (anio.length()>4 || anio.length()<4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO +" AÑO");
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -47,7 +50,7 @@ public class CompraComprobantePercepcionService {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
         if (anio.length()>4 || anio.length()<4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres incorrecta en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
         }
         elementoDAO.save(elemento);
     }

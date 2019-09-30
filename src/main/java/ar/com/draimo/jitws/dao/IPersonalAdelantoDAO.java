@@ -63,4 +63,7 @@ public interface IPersonalAdelantoDAO extends JpaRepository<PersonalAdelanto, In
     @Query(value = "select * from personaladelanto  where numeroLote =:numeroLote", nativeQuery = true)
     public List<PersonalAdelanto> anularPorLote(@Param("numeroLote") int numeroLote);
     
+    //Anula un adelanto de personal
+    @Query(value = "select * from personaladelanto  where fechaEmision =:fechaEmision AND idPersonal =:idPersonal", nativeQuery = true)
+    public List<PersonalAdelanto> anular(@Param("fechaEmision") Date fechaEmision, @Param("idPersonal") int idPersonal );
     }

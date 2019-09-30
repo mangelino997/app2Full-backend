@@ -1,10 +1,10 @@
+//Paquete al que pertence el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IChoferProveedorDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.ChoferProveedor;
-import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Proveedor;
 import java.sql.Date;
 import java.util.List;
@@ -56,7 +56,7 @@ public class ChoferProveedorService {
     //Obtiene una lista por alias activos
     public List<ChoferProveedor> listarActivosPorAlias(String alias) {
         if(alias.equals("***")) {
-            return elementoDAO.findAll();
+            return elementoDAO.findByUsuarioBajaIsNull();
         } else {
             return elementoDAO.findByAliasContainingAndUsuarioBajaIsNull(alias);
         }
@@ -71,7 +71,8 @@ public class ChoferProveedorService {
     
     //Obtiene una lista por alias y proveedor
     public List<ChoferProveedor> listarPorAliasYProveedor(String alias, int idProveedor) {
-        return elementoDAO.findByAliasContainingAndProveedor(alias, proveedorDAO.findById(idProveedor).get());
+        return elementoDAO.findByAliasContainingAndProveedor(alias, 
+                proveedorDAO.findById(idProveedor).get());
     }
     
     //Agrega un registro
@@ -95,9 +96,7 @@ public class ChoferProveedorService {
     public void actualizar(ChoferProveedor elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-        elemento.setAlias(elemento.getId() + " - " + elemento.getNombre() 
-                + " - " + elemento.getNumeroDocumento());
-        elementoDAO.save(elemento);
+        establecerAlias(elemento);
     }
     
     //Elimina un registro

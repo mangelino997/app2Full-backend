@@ -69,7 +69,7 @@ public class ClienteCuentaBancariaController {
     @GetMapping(value = URL + "/listarPorCuentaBancaria/{id}")
     @ResponseBody
     public List<ClienteCuentaBancaria> listarPorOrdenVenta(@PathVariable int id) {
-        return elementoService.listarPorOrdenVenta(id);
+        return elementoService.listarPorCuentaBancaria(id);
     }
     
     //Agrega un registro

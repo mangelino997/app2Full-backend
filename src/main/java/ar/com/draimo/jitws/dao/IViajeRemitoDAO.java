@@ -87,4 +87,13 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     @Query(value = "SELECT letra FROM ventacomprobante group by letra", nativeQuery = true)
     public List<String> listarLetras();
 
+    //Obtiene un registro por remitente, destinatario , puntoVenta, letra, numero y tipoComprobante
+    @Query(value = "SELECT * FROM viajeremito WHERE idClienteRemitente=:idClienteRemitente"
+            + " AND idClienteDestinatario=:idClienteDestinatario AND puntoVenta=:puntoVenta"
+            + " AND letra=:letra AND numero=:numero AND idTipoComprobante=:idTipoComprobante")
+    public ViajeRemito obtenerComprobanteUnicoParaRemitenteDestinatario(@Param("idClienteRemitente") 
+            int idClienteRemitente,@Param("idClienteDestinatario") int idClienteDestinatario,
+            @Param("puntoVenta") int puntoVenta, @Param("letra") String letra, 
+            @Param("numero") int numero, @Param("idTipoComprobante") int idTipoComprobante);
+    
 }

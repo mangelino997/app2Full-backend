@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,7 +61,7 @@ public class BugImagenController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestParam("archivo") MultipartFile archivo) {
         try {
-            BugImagen a = elementoService.agregar(archivo);
+            BugImagen a = elementoService.agregar(archivo, true);
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -82,7 +81,7 @@ public class BugImagenController {
     public ResponseEntity<?> actualizar(@RequestParam("idImagen") int idImagen, @RequestParam("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(idImagen, archivo);
+            elementoService.actualizar(idImagen, archivo, true);
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

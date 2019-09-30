@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
@@ -30,15 +31,15 @@ public class EmpresaOrdenVentaService {
     @Autowired
     IOrdenVentaDAO ordenVentaDAO;
 
-    //Define la referencia a clienteDAO
+    //Define la referencia a EmpresaDAO
     @Autowired
     IEmpresaDAO empresaDAO;
 
-    //Define la referencia al dao OrdenVenta
+    //Define la referencia al dao EmpresaOrdenVenta
     @Autowired
     IEmpresaOrdenVentaDAO elementoDAO;
 
-    //Define la referencia al dao TipoTarifaDAO
+    //Define la referencia al dao TipoTarifa
     @Autowired
     ITipoTarifaDAO tipoTarifaDAO;
 
@@ -62,7 +63,8 @@ public class EmpresaOrdenVentaService {
 
     //Obtiene una lista por Empresa
     public Object listarPorEmpresa(int idEmpresa) throws IOException {
-        List<EmpresaOrdenVenta> empresaOrdenesVentas = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
+        List<EmpresaOrdenVenta> empresaOrdenesVentas = elementoDAO.findByEmpresa(
+                empresaDAO.findById(idEmpresa).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("empresa");
@@ -85,7 +87,7 @@ public class EmpresaOrdenVentaService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene por compania de Empresa y OrdenVenta
+    //Obtiene por Empresa y OrdenVenta
     public Object listarPorEmpresaYOrdenVenta(int idEmpresa, int idOrdenVenta) throws IOException {
         Empresa elemento = empresaDAO.findById(idEmpresa).get();
         OrdenVenta ordenVenta = ordenVentaDAO.findById(idOrdenVenta).get();

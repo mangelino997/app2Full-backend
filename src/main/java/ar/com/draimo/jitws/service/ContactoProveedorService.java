@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IContactoProveedorDAO;
@@ -50,7 +51,6 @@ public class ContactoProveedorService {
     public List<ContactoProveedor> listarPorProveedor(int idProveedor) {
         //Obtiene el proveedor por id
         Optional<Proveedor> proveedor = proveedorDAO.findById(idProveedor);
-        //Retorna por proveedor
         return elementoDAO.findByProveedor(proveedor);
     }
     
@@ -58,7 +58,7 @@ public class ContactoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public ContactoProveedor agregar(ContactoProveedor elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza el registro

@@ -1,7 +1,9 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBasicoCategoriaDAO;
 import ar.com.draimo.jitws.dao.ICategoriaDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.BasicoCategoria;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class BasicoCategoriaService {
         return elementoDAO.findAll();
     }
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por nombre de categoria
     public List<BasicoCategoria> listarPorCategoriaNombre(String nombre) {
         if(nombre.equals("***")){
             return elementoDAO.findAll();
@@ -50,12 +52,12 @@ public class BasicoCategoriaService {
         return elementoDAO.obtenerPorCategoria(idCategoria);
     }
     
-    //Obtiene una lista por nombre
+    //Obtiene una lista por categoria
     public List<BasicoCategoria> listarPorCategoria(int idCategoria) {
         return elementoDAO.findByCategoria(categoriaDAO.findById(idCategoria).get());
     }
     
-    //Obtiene una lista por categoria y aio
+    //Obtiene una lista por categoria y anio
     public List<BasicoCategoria> listarPorCategoriaYAnio(int idCategoria, short anio) {
         return elementoDAO.findByCategoriaAndAnio(categoriaDAO.findById(idCategoria).get(), anio);
     }
@@ -66,7 +68,7 @@ public class BasicoCategoriaService {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
         if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO +" AÑO");
         }
         return elementoDAO.save(elemento);
     }
@@ -77,7 +79,7 @@ public class BasicoCategoriaService {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
         if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO +" AÑO");
         }
         elementoDAO.save(elemento);
     }

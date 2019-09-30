@@ -22,7 +22,7 @@ public class ContactoCompaniaSeguroService {
     @Autowired
     IContactoCompaniaSeguroDAO elementoDAO;
     
-    //Define la referencia al dao
+    //Define la referencia al dao de compania seguro
     @Autowired
     ICompaniaSeguroDAO companiaSeguroDAO;
     
@@ -58,7 +58,7 @@ public class ContactoCompaniaSeguroService {
     @Transactional(rollbackFor = Exception.class)
     public ContactoCompaniaSeguro agregar(ContactoCompaniaSeguro elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

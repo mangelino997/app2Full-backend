@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IFotoDAO;
@@ -14,13 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- *
+ * Servicio de Foto
  * @author blas
  */
 
 @Service
 public class FotoService {
 
+    //Referencia al DAO
     @Autowired
     IFotoDAO elementoDAO;
     
@@ -66,41 +68,22 @@ public class FotoService {
         foto.setDatos(archivo.getBytes());
         return opcion ? elementoDAO.saveAndFlush(foto) : foto;
     }
-    //Agrega un registro
+    
+    //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Foto actualizar(int idPdf ,MultipartFile archivo, boolean opcion) throws IOException {
-        Foto elemento = elementoDAO.findById(idPdf).get();
+    public Foto actualizar(int idFoto ,MultipartFile archivo, boolean opcion) throws IOException {
+        Foto elemento = elementoDAO.findById(idFoto).get();
         elemento.setNombre(archivo.getOriginalFilename());
         elemento.setTipo(archivo.getContentType());
         elemento.setTamanio(archivo.getSize());
         elemento.setDatos(archivo.getBytes());
         return opcion ? elementoDAO.saveAndFlush(elemento) : elemento;
     }
-
-    //Agrega un registro
-    @Transactional(rollbackFor = Exception.class)
-    public Foto agregar(Foto elemento) {
-        elemento = formatearStrings(elemento);
-        return elementoDAO.saveAndFlush(elemento);
-    }
-
-    //Actualiza un registro
-    @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Foto elemento) {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
-    }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
-    }
-    
-    //Formatea los strings
-    private Foto formatearStrings(Foto elemento) {
-        elemento.setNombre(elemento.getNombre().trim());
-        return elemento;
     }
 
 }
