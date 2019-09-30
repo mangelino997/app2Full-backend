@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IMarcaProductoDAO;
@@ -32,18 +33,15 @@ public class MarcaProductoService {
     
     //Obtiene una lista por nombre
     public List<MarcaProducto> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")? elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public MarcaProducto agregar(MarcaProducto elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

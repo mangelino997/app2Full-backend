@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IObraSocialDAO;
@@ -32,19 +33,15 @@ public class ObraSocialService {
     
     //Obtiene una lista por nombre
     public List<ObraSocial> listarPorAlias(String alias) {
-        if(alias.equals("***")) {
-            return elementoDAO.findByOrderByCodigoAfipAsc();
-        } else {
-            return elementoDAO.findByAliasContainingOrderByNombreAsc(alias);
-        }
+        return alias.equals("***")? elementoDAO.findByOrderByCodigoAfipAsc():
+            elementoDAO.findByAliasContainingOrderByNombreAsc(alias);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ObraSocial agregar(ObraSocial elemento) {
-        elemento = elementoDAO.saveAndFlush(elemento);
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

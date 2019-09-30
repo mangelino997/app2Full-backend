@@ -132,13 +132,31 @@ public class PersonalService {
 
     //Obtiene un listado de choferes por alias, distancia y empresa ordenados por nombre
     public Object listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(String alias, 
-            int largaDistancia, int idEmpresa) throws IOException {
+            boolean largaDistancia, int idEmpresa) throws IOException {
+        Date fecha = new Date(new java.util.Date().getTime());
+        //Establece el string vacio a alias en caso de que el usuario quiera listar todo
+        alias =(alias.equals("***")?"": alias);
+        int distancia = largaDistancia ? 1 : 0;
+        List<Personal> elementos = 
+                elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
+                        alias,distancia, idEmpresa, fecha);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+
+    //Obtiene un listado de choferes por alias, distancia y empresa ordenados por nombre
+    public Object listarChoferesPorAliasOrdenadoPorNombre(String alias, int idEmpresa) throws IOException {
         Date fecha = new Date(new java.util.Date().getTime());
         //Establece el string vacio a alias en caso de que el usuario quiera listar todo
         alias =(alias.equals("***")?"": alias);
         List<Personal> elementos = 
                 elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
-                        alias,largaDistancia, idEmpresa, fecha);
+                        alias,2, idEmpresa, fecha);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
