@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IResumenClienteDAO;
@@ -33,11 +34,8 @@ public class ResumenClienteService {
     
     //Obtiene una lista por nombre
     public List<ResumenCliente> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")? elementoDAO.findAll():
+           elementoDAO.findByNombreContaining(nombre);
     }
 
     //Agrega un registro

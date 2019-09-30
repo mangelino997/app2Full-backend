@@ -46,6 +46,8 @@ public class MensajeRespuesta {
     public static final String EXISTENTE_PARA_CUENTA_BANCARIA = "Para cuenta bancaria-tipo chequera: dato existente";
     public static final String ERROR_COBRADOR_POR_DEFECTO = "No se puede eliminar el cobrador por defecto para cliente eventual.";
     public static final String COMPROBANTE_REGISTRADO = "Comprobante ya registrado.";
+    public static final String ADELANTO_NO_OTORGADO = "No logró alcanzar el importe para recibir el adelanto";
+    public static final String SIN_COMPROBANTES = "No contiene comprobante/s";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {

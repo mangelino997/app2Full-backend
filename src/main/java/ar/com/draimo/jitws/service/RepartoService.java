@@ -1,3 +1,4 @@
+//Paquete al que pertenece la clase
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IPersonalDAO;
@@ -20,7 +21,7 @@ import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeEfectivoDAO;
-import ar.com.draimo.jitws.model.OrdenRecoleccion;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
@@ -57,7 +58,7 @@ public class RepartoService {
     @Autowired
     IPersonalDAO personalDAO;
 
-    //define la referencia al dao de RepartoPropioComprobante
+    //define la referencia al dao de RepartoComprobante
     @Autowired
     IRepartoComprobanteDAO repartoComprobanteDAO;
 
@@ -143,7 +144,7 @@ public class RepartoService {
 
     //Obtiene la lista por EstaCerrada 
     public Object listarPorEstaCerrada(boolean estaCerrada) throws IOException {
-        List<Reparto> elementos = elementoDAO.listarPorEstaCerrada(estaCerrada);
+        List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, 0);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");
@@ -155,7 +156,7 @@ public class RepartoService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene la lista por EstaCerrada 
+    //Obtiene la lista por EstaCerrada y empresa
     public List<Reparto> listarPorEstaCerradaYEmpresa(boolean estaCerrada, int idEmpresa) {
         return elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
     }
@@ -212,7 +213,7 @@ public class RepartoService {
                     svr.setSucursal(r.getSucursal());
                     seguimientoViajeRtoDAO.saveAndFlush(svr);
                 } else {
-                    throw new DataIntegrityViolationException("No contiene comprobante/s");
+                    throw new DataIntegrityViolationException(MensajeRespuesta.SIN_COMPROBANTES);
                 }
             }
             elementoDAO.save(r);
@@ -254,7 +255,7 @@ public class RepartoService {
                 svr.setSucursal(r.getSucursal());
                 seguimientoViajeRtoDAO.saveAndFlush(svr);
             } else {
-                throw new DataIntegrityViolationException("No contiene comprobante/s");
+                throw new DataIntegrityViolationException(MensajeRespuesta.SIN_COMPROBANTES);
             }
         }
         elementoDAO.save(r);

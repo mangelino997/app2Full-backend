@@ -1,7 +1,9 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +12,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -77,12 +78,8 @@ public class OrdenRecoleccionService {
     
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<OrdenRecoleccion> ordenes = elementoDAO.findAll();
-        if(alias.equals("***")) {
-            ordenes= elementoDAO.findAll();
-        }else {
-            ordenes= elementoDAO.findByAliasContaining(alias);
-        }
+        List<OrdenRecoleccion> ordenes = alias.equals("***")?
+            elementoDAO.findAll(): elementoDAO.findByAliasContaining(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -95,12 +92,8 @@ public class OrdenRecoleccionService {
     
     //Obtiene una lista por alias
     public Object listarPorFiltros(String fechaEmision, int idCliente) throws IOException {
-        List<OrdenRecoleccion> ordenes = new ArrayList<>();
-        if (fechaEmision.isEmpty() && idCliente==0) {
-            ordenes= elementoDAO.listarPorFiltros(fechaEmision, idCliente);
-        } else {
-            ordenes= elementoDAO.findAll();
-        }
+        List<OrdenRecoleccion> ordenes = fechaEmision.isEmpty() && idCliente==0?
+            elementoDAO.listarPorFiltros(fechaEmision, idCliente):elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -121,7 +114,7 @@ public class OrdenRecoleccionService {
         //Obtiene longitud de bultos, si supera 6 retorna error
         String bultos = String.valueOf(elemento.getBultos());
         if (bultos.length()>6) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -143,7 +136,7 @@ public class OrdenRecoleccionService {
         //Obtiene longitud de bultos, si supera 6 retorna error
         String bultos = String.valueOf(elemento.getBultos());
         if (bultos.length()>6) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
         }
         elementoDAO.save(elemento);
     }

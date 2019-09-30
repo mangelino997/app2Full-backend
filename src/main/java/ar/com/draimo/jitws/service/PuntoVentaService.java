@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipComprobanteDAO;
@@ -5,6 +6,7 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.Sucursal;
@@ -48,7 +50,7 @@ public class PuntoVentaService {
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         PuntoVenta elemento = elementoDAO.findTopByOrderByIdDesc();
-        return (elemento!=null?elemento.getId()+1:1);
+        return (elemento != null ? elemento.getId() + 1 : 1);
     }
 
     //Obtiene la lista completa
@@ -102,7 +104,9 @@ public class PuntoVentaService {
         Sucursal sucursal = sucursalDAO.findById(idSucursal).get();
         //Obtiene la empresa por id
         Empresa empresa = empresaDAO.findById(idEmrpesa).get();
-        PuntoVenta pVenta = elementoDAO.findByPuntoVentaAndSucursalAndEmpresaAndAfipComprobante_CodigoAfip(puntoVenta, sucursal, empresa, codigoAfip);
+        PuntoVenta pVenta
+                = elementoDAO.findByPuntoVentaAndSucursalAndEmpresaAndAfipComprobante_CodigoAfip(
+                        puntoVenta, sucursal, empresa, codigoAfip);
         int numero = pVenta.getUltimoNumero() + 1;
         return numero;
     }
@@ -112,8 +116,8 @@ public class PuntoVentaService {
     public PuntoVenta agregar(PuntoVenta elemento) throws Exception {
         //Obtiene longitud de anio, si es mayor a 1 retorna error
         String copias = String.valueOf(elemento.getCopias());
-        if (copias.length()>1) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en COPIAS");
+        if (copias.length() > 1) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " COPIAS");
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -123,8 +127,8 @@ public class PuntoVentaService {
     public void actualizar(PuntoVenta elemento) throws Exception {
         //Obtiene longitud de anio, si es mayor a 1 retorna error
         String copias = String.valueOf(elemento.getCopias());
-        if (copias.length()>1) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en COPIAS");
+        if (copias.length() > 1) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " COPIAS");
         }
         elementoDAO.save(elemento);
     }
