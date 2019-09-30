@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEscalaTarifaDAO;
@@ -89,8 +90,7 @@ public class OrdenVentaTarifaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public int agregar(OrdenVentaTarifa elemento) throws IOException {
-        elemento = elementoDAO.saveAndFlush(elemento);
-        return elemento.getId();
+        return elementoDAO.saveAndFlush(elemento).getId();
     }
     
     //Actualiza un registro

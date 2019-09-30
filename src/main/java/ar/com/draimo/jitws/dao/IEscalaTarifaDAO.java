@@ -26,4 +26,8 @@ public interface IEscalaTarifaDAO extends JpaRepository<EscalaTarifa, Integer> {
     public List<EscalaTarifa> obtenerDosEscalasporIdOrdenVenta(
             @Param("idOrdenVenta") int idOrdenVenta);
     
+    //Obtiene un listado pordenado por valor
+    @Query(value = "SELECT * FROM escalatarifa order by valor", nativeQuery = true)
+    public List<EscalaTarifa> listarOrdenadoPorValor();
+    
 }

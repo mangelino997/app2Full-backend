@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEscalaTarifaDAO;
@@ -63,14 +64,10 @@ public class OrdenVentaEscalaService {
         return mapper.readValue(string, Object.class);
     }
     
-    /*
-    * Obtiene una lista con todas las escalas tarifas
-    */
+    //Obtiene una lista con todas las escalas tarifas
     public Object listarConEscalaTarifa() throws IOException {
-        //Obtiene la lista completa de escalas tarifas
-        List<EscalaTarifa> escalasTarifas = escalaTarifaDAO.findAll();
-        //Ordena la lista de escalas tarifas
-        escalasTarifas.sort(Comparator.comparing(EscalaTarifa::getValor));
+        //Obtiene la lista completa de escalas tarifas ordenado por valor
+        List<EscalaTarifa> escalasTarifas = escalaTarifaDAO.listarOrdenadoPorValor();
         //Crea una lista vacia de ordenes de ventas escalas
         List<OrdenVentaEscala> elementos = new ArrayList<>();
         //Define una orden venta escala
@@ -105,8 +102,9 @@ public class OrdenVentaEscalaService {
     
     //Obtiene un listado por ordenVentaTarifa
     public Object listarPorOrdenVentaTarifa(int idOrdenVentaTarifa) throws IOException {
-        List<OrdenVentaEscala> elementos = elementoDAO.findByOrdenVentaTarifaOrderByEscalaTarifa_ValorAsc(
-             ordenVentaTarifaDAO.findById(idOrdenVentaTarifa).get());
+        List<OrdenVentaEscala> elementos = 
+            elementoDAO.findByOrdenVentaTarifaOrderByEscalaTarifa_ValorAsc(
+                 ordenVentaTarifaDAO.findById(idOrdenVentaTarifa).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -117,8 +115,10 @@ public class OrdenVentaEscalaService {
     }
     
     //Obtiene una lista por orden de venta y precios desde
-    public List<OrdenVentaEscala> listarPorOrdenVentaTarifaYPreciosDesde(int idOrdenVentaTarifa, String preciosDesde) {
-        return elementoDAO.listarPorOrdenVentaTarifaYPreciosDesde(idOrdenVentaTarifa, Date.valueOf(preciosDesde));
+    public List<OrdenVentaEscala> listarPorOrdenVentaTarifaYPreciosDesde(int 
+            idOrdenVentaTarifa, String preciosDesde) {
+        return elementoDAO.listarPorOrdenVentaTarifaYPreciosDesde(idOrdenVentaTarifa,
+                Date.valueOf(preciosDesde));
     }
     
     //Obtiene un listado de fechas de preciosDesde por ordenVentaTarifa
@@ -134,28 +134,20 @@ public class OrdenVentaEscalaService {
         (escalaTarifas.get(1).getValor()).subtract(new BigDecimal(1.00)).setScale(2, RoundingMode.UNNECESSARY);
         OrdenVentaEscala ordenVentaEscala = elementoDAO.obtenerPorOrdenVentaYValorProximo
         (idOrdenVenta, v, v.add(valorHasta));
-        BigDecimal precioFlete;
-        if (ordenVentaEscala.getImporteFijo()!=null) {
-            precioFlete = ordenVentaEscala.getImporteFijo();
-        } else {
-            
-            precioFlete = (v.multiply(ordenVentaEscala.getPrecioUnitario()));
-        }
-        return precioFlete;
+            return ordenVentaEscala.getImporteFijo()!=null? ordenVentaEscala.getImporteFijo():
+             (v.multiply(ordenVentaEscala.getPrecioUnitario()));
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public int agregar(OrdenVentaEscala elemento) throws IOException {
-        elemento = elementoDAO.saveAndFlush(elemento);
-        return elemento.getId();
+        return elementoDAO.saveAndFlush(elemento).getId();
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public int actualizar(OrdenVentaEscala elemento) throws IOException {
-        elementoDAO.save(elemento);
-        return elemento.getId();
+        return elementoDAO.save(elemento).getId();
     }
     
     //Elimina un registro

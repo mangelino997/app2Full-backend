@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
@@ -29,7 +30,7 @@ public class ProveedorService {
     @Autowired
     IProveedorDAO elementoDAO;
 
-    //Define la referencia al dao ProveedorCuentaContableDAO
+    //Define la referencia al dao ProveedorCuentaContable
     @Autowired
     IProveedorCuentaContableDAO proveedorCuentaContableDAO;
 
@@ -71,12 +72,8 @@ public class ProveedorService {
 
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
-        List<Proveedor> proveedores = null;
-        if (alias.equals("***")) {
-            proveedores = elementoDAO.findAll();
-        } else {
-            proveedores = elementoDAO.findByAliasContaining(alias);
-        }
+        List<Proveedor> proveedores = alias.equals("***") ? elementoDAO.findAll()
+                : elementoDAO.findByAliasContaining(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -103,19 +100,18 @@ public class ProveedorService {
 
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(Proveedor elemento) {
+    public Proveedor establecerAlias(Proveedor elemento) {
         TipoDocumento t = tipoDocumentoDAO.findById(elemento.getTipoDocumento().getId()).get();
         elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
                 + " - " + t.getAbreviatura() + " " + elemento.getNumeroDocumento());
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
-        establecerAlias(elemento);
-        Proveedor proveedor = elementoDAO.save(elemento);
+        Proveedor proveedor = establecerAlias(elemento);
         if (elemento.getProveedorCuentasContables() != null) {
             for (ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
                 pcc.setProveedor(proveedor);

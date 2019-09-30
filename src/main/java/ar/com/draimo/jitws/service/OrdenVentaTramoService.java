@@ -1,8 +1,10 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrdenVentaTramo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -10,7 +12,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -55,9 +56,10 @@ public class OrdenVentaTramoService {
         return mapper.readValue(string, Object.class);
     }
     
-    //Obtiene una lista por orden de venta y precios desde
+    //Obtiene una lista por orden de venta
     public Object listarPorOrdenVenta(int idOrdenVenta) throws IOException {
-         List<OrdenVentaTramo> elementos = elementoDAO.findByOrdenVentaTarifa_OrdenVenta(ordenVentaDAO.findById(idOrdenVenta).get());
+         List<OrdenVentaTramo> elementos = elementoDAO.findByOrdenVentaTarifa_OrdenVenta(
+                 ordenVentaDAO.findById(idOrdenVenta).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -82,7 +84,7 @@ public class OrdenVentaTramoService {
         return mapper.readValue(string, Object.class);
     }
     
-    //Obtiene una lista por orden de venta y precios desde
+    //Obtiene una lista por orden de venta tarifa
     public Object listarPorOrdenVentaTarifa(int idOrdenVentaTarifa) throws IOException {
         List<OrdenVentaTramo> elementos = 
             elementoDAO.findByOrdenVentaTarifa(
@@ -98,22 +100,13 @@ public class OrdenVentaTramoService {
     
     //Obtiene la lista de fechas por orden de venta
     public Object listarFechasPorOrdenVenta(int idOrdenVenta) throws IOException {
-        List<OrdenVentaTramo> ordenesTramo = elementoDAO.findByOrdenVentaTarifa_OrdenVenta(
-                ordenVentaDAO.findById(idOrdenVenta).get());
-        List<OrdenVentaTramo> elementos = new ArrayList<>();
-        List<Date> fechas = new ArrayList<>();
-        for(OrdenVentaTramo elemento : ordenesTramo) {
-            if(!fechas.contains(elemento.getPreciosDesde())) {
-                fechas.add(elemento.getPreciosDesde());
-                elementos.add(elemento);
-            }
-        }
+        List<OrdenVentaTramo> ordenesTramo = elementoDAO.listarPreciosDesdePorOrdenVenta(idOrdenVenta);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
+        String string = mapper.writer(filters).writeValueAsString(ordenesTramo);
         return mapper.readValue(string, Object.class);
     }
     
@@ -123,7 +116,7 @@ public class OrdenVentaTramoService {
         String kmPactado = String.valueOf(elemento.getKmPactado());
         //Obtiene longitud de kmPactado, si es mayor a 4retorna error
         if (kmPactado.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM PACTADO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD +" KM PACTADO");
         }
         elemento = elementoDAO.saveAndFlush(elemento);
         return elemento.getId();
@@ -135,7 +128,7 @@ public class OrdenVentaTramoService {
         String kmPactado = String.valueOf(elemento.getKmPactado());
         //Obtiene longitud de kmPactado, si es mayor a 4retorna error
         if (kmPactado.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM PACTADO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM PACTADO");
         }
         elemento = elementoDAO.save(elemento);
         return elemento.getId();
