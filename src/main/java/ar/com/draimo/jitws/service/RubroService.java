@@ -1,3 +1,4 @@
+//paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IRubroDAO;
@@ -32,11 +33,8 @@ public class RubroService {
     
     //Obtiene una lista por nombre
     public List<Rubro> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")?elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
 
     //Agrega un registro

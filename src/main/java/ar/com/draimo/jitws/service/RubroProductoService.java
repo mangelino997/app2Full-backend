@@ -1,3 +1,4 @@
+//Paquete  al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
@@ -33,7 +34,7 @@ public class RubroProductoService {
     @Autowired
     IRubroProductoCuentaContableDAO rubroProductoCuentaContableDAO;
 
-    //Define la referencia al usuarioEmpresaService
+    //Define la referencia a usuarioEmpresaService
     @Autowired
     UsuarioEmpresaService usuarioEmpresaService;
 
@@ -61,12 +62,8 @@ public class RubroProductoService {
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<RubroProducto> rubrosProductos = null;
-        if (nombre.equals("***")) {
-            rubrosProductos = elementoDAO.findAll();
-        } else {
-            rubrosProductos = elementoDAO.findByNombreContaining(nombre);
-        }
+        List<RubroProducto> rubrosProductos = nombre.equals("***")?elementoDAO.findAll():
+             elementoDAO.findByNombreContaining(nombre);
         //Construye la lista de rubros productos cuentas contables para cada empresa
         for (RubroProducto rubroProducto : rubrosProductos) {
             rubroProducto.setRubrosProductosCuentasContables(construirCuentasContablesParaEmpresas(rubroProducto));
@@ -98,7 +95,6 @@ public class RubroProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(RubroProducto elemento) {
         elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
         RubroProducto rubroProducto = elementoDAO.save(elemento);
         for (RubroProductoCuentaContable rpcc : elemento.getRubrosProductosCuentasContables()) {
             if (rpcc.getPlanCuentaCompra() != null) {

@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IOpcionDAO;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio Pais
+ * Servicio RolOpcion
  * @author blas
  */
 
@@ -45,7 +46,7 @@ public class RolOpcionService {
     }
     
     //Obtiene una lista por rol y subopcion
-    public List<Opcion> listarPorRolSubopcion(int idRol, int idSubopcion) {
+    public List<Opcion> listarPorRolYSubopcion(int idRol, int idSubopcion) {
         
         //Define una lista dto vacia
         List<Opcion> opciones = null;
@@ -63,7 +64,6 @@ public class RolOpcionService {
         if(rolOpciones.isEmpty()) {
             return opciones;
         }
-        
         //Define un opcionDTO
         Opcion opcion;
         //Crea una lista de opcionDTO
@@ -83,9 +83,7 @@ public class RolOpcionService {
                 opciones.add(opcion);
             }
         }
-        
         return opciones;
-        
     }
     
     /*
@@ -130,7 +128,6 @@ public class RolOpcionService {
                 elementoDAO.saveAndFlush(rolOpcion);
             }
         }
-        
     }
 
 }

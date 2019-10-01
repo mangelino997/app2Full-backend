@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
@@ -17,15 +18,15 @@ import ar.com.draimo.jitws.dao.ISeguimientoEstadoTipoCpteDAO;
 @Service
 public class SeguimientoEstadoTipoCpteService {
 
-    //Define el dao
+    //Define la referencia al dao
     @Autowired
     ISeguimientoEstadoTipoCpteDAO elementoDAO;
 
-    //Define el dao de tipoComprobante
+    //Define la referencia al dao de tipoComprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
 
-    //Define el dao de SeguimientoEstado
+    //Define la referencia al dao de SeguimientoEstado
     @Autowired
     ISeguimientoEstadoDAO seguimientoEstadoDAO;
 
@@ -47,13 +48,14 @@ public class SeguimientoEstadoTipoCpteService {
 
     //Obtiene una lista por SeguimientoEstado
     public List<SeguimientoEstadoTipoCpte> listarPorSeguimientoEstado(int idSeguimientoEstado) {
-        return elementoDAO.findBySeguimientoEstado(seguimientoEstadoDAO.findById(idSeguimientoEstado).get());
+        return elementoDAO.findBySeguimientoEstado(seguimientoEstadoDAO.findById(
+            idSeguimientoEstado).get());
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SeguimientoEstadoTipoCpte agregar(SeguimientoEstadoTipoCpte elemento) {
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

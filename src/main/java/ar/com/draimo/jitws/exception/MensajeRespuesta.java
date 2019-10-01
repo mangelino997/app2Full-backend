@@ -39,7 +39,7 @@ public class MensajeRespuesta {
     public static final String RECIBIDO = "Registro recibido con exito";
     public static final String NORMALIZADO = "Registro normalizado con exito";
     public static final String NO_EXISTENTE = "Registro no existente";
-    public static final String ROL_ASIGNADO = "El rol estÁ asignado a un usuario";
+    public static final String ROL_ASIGNADO = "El rol está asignado a un usuario";
     public static final String ELEMENTO_ASIGNADO = "Registro referenciado";
     public static final String ELEMENTO_NO_NULL = "No puede estar vacio";
     public static final String ELEMENTO_MENOR = "no puede ser mayor a";
@@ -48,6 +48,10 @@ public class MensajeRespuesta {
     public static final String COMPROBANTE_REGISTRADO = "Comprobante ya registrado.";
     public static final String ADELANTO_NO_OTORGADO = "No logró alcanzar el importe para recibir el adelanto";
     public static final String SIN_COMPROBANTES = "No contiene comprobante/s";
+    public static final String DESDE_HASTA_YA_ASIGNADO = "DESDE y/o HASTA ya asignado a otro talonario.";
+    public static final String DESDE_YA_ASIGNADO = "DESDE ya asignado a otro talonario.";
+    public static final String HASTA_YA_ASIGNADO = "HASTA ya asignado a otro talonario.";
+    public static final String DESDE_HASTA_INVALIDOS = "DESDE y/o HASTA rango invalido para Talonario Recibo Lote.";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {

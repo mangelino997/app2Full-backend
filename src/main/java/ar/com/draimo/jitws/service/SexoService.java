@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ISexoDAO;
@@ -32,25 +33,20 @@ public class SexoService {
     
     //Obtiene una lista por nombre
     public List<Sexo> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")?elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Sexo agregar(Sexo elemento) {
-        elemento = formatearStrings(elemento);
-        return elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Sexo elemento) {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
     
     //Elimina un registro

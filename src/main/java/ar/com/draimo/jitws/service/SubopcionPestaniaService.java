@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IPestaniaDAO;
@@ -47,7 +48,7 @@ public class SubopcionPestaniaService {
     }
     
     //Obtiene una lista por rol y subopcion
-    public List<Pestania> listarPorRolSubopcion(int idRol, int idSubopcion) {
+    public List<Pestania> listarPestaniasPorRolYSubopcion(int idRol, int idSubopcion) {
         
         //Define una lista vacia
         List<Pestania> pestanias = null;
@@ -65,7 +66,6 @@ public class SubopcionPestaniaService {
         if(subopcionesPestania.isEmpty()) {
             return pestanias;
         }
-        
         //Crea una lista de pestanias
         pestanias = new ArrayList<>();
         //Define una pestania vacio
@@ -85,9 +85,7 @@ public class SubopcionPestaniaService {
                 pestanias.add(pestania);
             }
         }
-        
         return pestanias;
-        
     }
     
     //Obtiene la lista de pestanias de una subopcion para actualizar estado mostrar
@@ -120,13 +118,11 @@ public class SubopcionPestaniaService {
             pestaniaDTO.setMostrar(subopcionPestania.getMostrar());
             pestaniaDTOs.add(pestaniaDTO);
         }
-        
         //Establece la lista de pestanias a la subopcion pestania dto
         subopcionPestaniaDTO.setPestanias(pestaniaDTOs);
         
         //Retorna los datos
         return subopcionPestaniaDTO;
-        
     }
     
     //Actualiza
@@ -151,7 +147,6 @@ public class SubopcionPestaniaService {
             //Actualiza el registro
             elementoDAO.save(subopcionPestania);
         }
-        
     }
     
     //Asigna todas las pestañas a cada una de las subopciones
@@ -197,7 +192,6 @@ public class SubopcionPestaniaService {
                 }
             }
         }
-        
     }
     
     /*
@@ -252,7 +246,5 @@ public class SubopcionPestaniaService {
                 }
             }
         }
-        
     }
-    
 }

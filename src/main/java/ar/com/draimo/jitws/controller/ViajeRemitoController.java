@@ -1,4 +1,6 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
+
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
@@ -98,7 +100,8 @@ public class ViajeRemitoController {
     @ResponseBody
     public Object listarPendientesPorFiltro(@PathVariable int idSucursal,
             @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
-        return elementoService.listarPendientesPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
+        return elementoService.listarPendientesOAsignadosPorFiltro(
+                idSucursal, idSucursalDestino, numeroCamion, true);
     }
     
     //Obtiene una lista de remitos asignados por filtro
@@ -106,7 +109,8 @@ public class ViajeRemitoController {
     @ResponseBody
     public Object listarAsignadosPorFiltro(@PathVariable int idSucursal,
             @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
-        return elementoService.listarAsignadosPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
+        return elementoService.listarPendientesOAsignadosPorFiltro(
+                idSucursal, idSucursalDestino, numeroCamion, false);
     }
 
     //Obtiene una lista de remitos por filtro

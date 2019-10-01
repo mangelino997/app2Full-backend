@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
@@ -9,6 +10,7 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
@@ -51,11 +53,11 @@ public class VentaComprobanteService {
     @Autowired
     IVentaComprobanteItemNCDAO ventaComprobanteItemNCDAO;
 
-    //Define la referancia a RemitoDAO
+    //Define la referancia a ViajeRemitoDAO
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
 
-    //Define la referancia a tipoComprobante DAO
+    //Define la referancia a tipoComprobanteDAO
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
 
@@ -82,7 +84,7 @@ public class VentaComprobanteService {
         List<VentaComprobante> ventasComprobantes = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
@@ -99,7 +101,7 @@ public class VentaComprobanteService {
         List<VentaComprobante> ventasComprobantes = elementoDAO.listarComprobantesDisponibles();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
@@ -117,7 +119,7 @@ public class VentaComprobanteService {
         List<VentaComprobante> ventasComprobantes = elementoDAO.findByTipoComprobante(tipoComprobante);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
@@ -132,14 +134,14 @@ public class VentaComprobanteService {
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero, int idTipoComprobante) throws IOException {
         TipoComprobante t = tipoComprobanteDAO.findById(idTipoComprobante).get();
-        VentaComprobante ventasComprobantes = 
-                elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
-        if (ventasComprobantes==null) {
-            throw new DataIntegrityViolationException("Registro no existente");
+        VentaComprobante ventasComprobantes
+                = elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
+        if (ventasComprobantes == null) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
@@ -157,7 +159,7 @@ public class VentaComprobanteService {
                 clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta","cliente");
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
@@ -177,7 +179,6 @@ public class VentaComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public VentaComprobante agregar(VentaComprobante elemento) {
-        elemento = formatearStrings(elemento);
         elemento.setMoneda(monedaDAO.findById(1).get());
         elemento.setMonedaCotizacion(new BigDecimal(0.0));
         elemento.setFechaRegistracion(LocalDateTime.now());
@@ -205,14 +206,13 @@ public class VentaComprobanteService {
                 ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
             }
         }
-        return elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(VentaComprobante elemento) {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
 
     //Elimina un registro

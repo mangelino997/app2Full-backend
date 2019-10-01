@@ -1,7 +1,9 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IOrigenDestinoDAO;
 import ar.com.draimo.jitws.dao.ITramoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.OrigenDestino;
 import ar.com.draimo.jitws.model.Tramo;
 import java.util.List;
@@ -22,7 +24,7 @@ public class TramoService {
     @Autowired
     ITramoDAO elementoDAO;
     
-    //Define la referencia al dao origendestino
+    //Define la referencia al dao origenDestino
     @Autowired
     IOrigenDestinoDAO origenDestinoDAO;
     
@@ -47,48 +49,36 @@ public class TramoService {
         return elementoDAO.findByDestino_NombreContaining(nombre);
     }
     
-    //Obtiene una lista por destino
+    //Obtiene una lista por origen y/o destino
     public List<Tramo> listarPorFiltro(int idOrigen, int idDestino) {
-        if(idOrigen != 0 && idDestino != 0) {
-            OrigenDestino origen = origenDestinoDAO.findById(idOrigen).get();
-            OrigenDestino destino = origenDestinoDAO.findById(idDestino).get();
-            return elementoDAO.findByOrigenAndDestino(origen, destino);
-        } else if(idOrigen != 0) {
-            OrigenDestino origen = origenDestinoDAO.findById(idOrigen).get();
-            return elementoDAO.findByOrigen(origen);
-        } else if(idDestino != 0) {
-            OrigenDestino destino = origenDestinoDAO.findById(idDestino).get();
-            return elementoDAO.findByDestino(destino);
-        } else {
-            return elementoDAO.findAll();
-        }
+        return (idOrigen != 0 && idDestino != 0?elementoDAO.findByOrigenAndDestino(
+            origenDestinoDAO.findById(idOrigen).get(),origenDestinoDAO.findById(idDestino).get()):
+                idOrigen!=0?elementoDAO.findByOrigen( origenDestinoDAO.findById(idOrigen).get()):
+                idDestino!=0?elementoDAO.findByDestino(origenDestinoDAO.findById(idDestino).get()):
+                elementoDAO.findAll()); 
     }
+    
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Tramo agregar(Tramo elemento) throws Exception {
-        elemento = formatearStrings(elemento);
-        if(elemento.getRutaAlternativa() == null) {
-            elemento.setRutaAlternativa("-");
-        }
         //Obtiene longitud de anio, si es mayor a 4 retorna error
         String km = String.valueOf(elemento.getKm());
         if (km.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
         }
-        return elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Tramo elemento) throws Exception {
-        elemento = formatearStrings(elemento);
         //Obtiene longitud de anio, si es mayor a 4 retorna error
         String km = String.valueOf(elemento.getKm());
         if (km.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
         }
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
     
     //Elimina un registro
@@ -99,9 +89,8 @@ public class TramoService {
     
     //Formatea los strings
     private Tramo formatearStrings(Tramo elemento) {
-        if(elemento.getRutaAlternativa() != null) {
-            elemento.setRutaAlternativa(elemento.getRutaAlternativa().trim());
-        }
+        elemento.setRutaAlternativa(elemento.getRutaAlternativa() == null?"-":
+                elemento.getRutaAlternativa().trim());
         return elemento;
     }
 

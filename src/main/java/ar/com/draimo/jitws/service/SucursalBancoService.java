@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBancoDAO;
@@ -39,19 +40,14 @@ public class SucursalBancoService {
     
     //Obtiene una lista por nombre
     public List<SucursalBanco> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")?elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Obtiene una lista por banco
     public List<SucursalBanco> listarPorBanco(int idBanco) {
-        //Obtiene el banco por id
-        Optional<Banco> banco = bancoDAO.findById(idBanco);
-        //Retorn los datos
-        return elementoDAO.findByBanco(banco);
+        //Retorna los datos
+        return elementoDAO.findByBanco(bancoDAO.findById(idBanco));
     }
     
     //Obtiene una lista por nombre de banco
@@ -62,15 +58,13 @@ public class SucursalBancoService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SucursalBanco agregar(SucursalBanco elemento) {
-        elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SucursalBanco elemento) {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
     
     //Elimina un registro

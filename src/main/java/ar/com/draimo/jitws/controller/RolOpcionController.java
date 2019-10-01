@@ -40,7 +40,7 @@ public class RolOpcionController {
     @GetMapping(value = URL + "/listarPorRolSubopcion/{idRol}/{idSubopcion}")
     @ResponseBody
     public List<Opcion> listarPorRolSubopcion(@PathVariable int idRol, @PathVariable int idSubopcion) {
-        return elementoService.listarPorRolSubopcion(idRol, idSubopcion);
+        return elementoService.listarPorRolYSubopcion(idRol, idSubopcion);
     }
     
     /*

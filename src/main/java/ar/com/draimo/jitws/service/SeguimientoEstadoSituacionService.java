@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
@@ -17,15 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SeguimientoEstadoSituacionService {
 
-    //Define el dao
+    //Define la referencia al dao
     @Autowired
     ISeguimientoEstadoSituacionDAO elementoDAO;
 
-    //Define el dao de SeguimientoEstado
+    //Define la referencia al dao de SeguimientoEstado
     @Autowired
     ISeguimientoEstadoDAO seguimientoEstadoDAO;
 
-    //Define el dao de SeguimientoSituacion
+    //Define la referencia al dao de SeguimientoSituacion
     @Autowired
     ISeguimientoSituacionDAO seguimientoSituacionDAO;
 

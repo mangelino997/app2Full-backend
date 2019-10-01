@@ -53,7 +53,7 @@ public class SubopcionPestaniaController {
     @GetMapping(value = URL + "/listarPorRolSubopcion/{idRol}/{idSubopcion}")
     @ResponseBody
     public List<Pestania> listarPorRolSubopcion(@PathVariable int idRol, @PathVariable int idSubopcion) {
-        return elementoService.listarPorRolSubopcion(idRol, idSubopcion);
+        return elementoService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion);
     }
     
     //Obtiene una lista por rol y subopcion para actualizar estado mostrar

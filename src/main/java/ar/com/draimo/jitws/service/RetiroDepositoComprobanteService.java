@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IRetiroDepositoComprobanteDAO;
@@ -10,6 +11,7 @@ import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RetiroDeposito;
 import ar.com.draimo.jitws.model.RetiroDepositoComprobante;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
@@ -53,7 +55,7 @@ public class RetiroDepositoComprobanteService {
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
 
-    //Define la referencia al dao de RepartoPropio
+    //Define la referencia al dao de viajeRemito
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
 
@@ -69,11 +71,11 @@ public class RetiroDepositoComprobanteService {
     @Autowired
     ISeguimientoSituacionDAO seguimientoSituacionDAO;
 
-    //Define la referencia al dao de ViajeRemitoSeguimiento
+    //Define la referencia al dao de SeguimientoViajeRemito
     @Autowired
     ISeguimientoViajeRemitoDAO seguimientoViajeRemitoDAO;
 
-    //Define la referencia al dao de ventaComprobanteSeguimiento
+    //Define la referencia al dao de SeguimientoventaComprobante
     @Autowired
     ISeguimientoVentaComprobanteDAO seguimientoVentaComprobanteDAO;
 
@@ -102,7 +104,8 @@ public class RetiroDepositoComprobanteService {
 
     //Obtiene la lista por RetiroDeposito
     public Object listarComprobantes(int idRetiroDeposito) throws IOException {
-        List<RetiroDepositoComprobante> elementos = elementoDAO.findByRetiroDeposito(retiroDepositoDAO.findById(idRetiroDeposito).get());
+        List<RetiroDepositoComprobante> elementos = elementoDAO.findByRetiroDeposito(
+                retiroDepositoDAO.findById(idRetiroDeposito).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -146,7 +149,7 @@ public class RetiroDepositoComprobanteService {
             svRemito.setSucursal(sucursal);
             seguimientoViajeRemitoDAO.saveAndFlush(svRemito);
         } else {
-            throw new DataIntegrityViolationException("No contiene comprobantes.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.SIN_COMPROBANTES);
         }
         return elementoDAO.saveAndFlush(c);
     }
@@ -161,10 +164,12 @@ public class RetiroDepositoComprobanteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         RetiroDepositoComprobante rdCte = elementoDAO.findById(elemento).get();
-        if (rdCte.getVentaComprobante()!=null) {
-        seguimientoVentaComprobanteDAO.deleteByVentaComprobante(ventaComprobanteDAO.findById(rdCte.getVentaComprobante().getId()).get());
+        if (rdCte.getVentaComprobante() != null) {
+            seguimientoVentaComprobanteDAO.deleteByVentaComprobante(
+                    ventaComprobanteDAO.findById(rdCte.getVentaComprobante().getId()).get());
         } else {
-        seguimientoViajeRemitoDAO.deleteByViajeRemito(viajeRemitoDAO.findById(rdCte.getViajeRemito().getId()).get());
+            seguimientoViajeRemitoDAO.deleteByViajeRemito(viajeRemitoDAO.findById(
+                    rdCte.getViajeRemito().getId()).get());
         }
         elementoDAO.deleteById(elemento);
     }

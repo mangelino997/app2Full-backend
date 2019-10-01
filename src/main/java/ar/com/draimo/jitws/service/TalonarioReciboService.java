@@ -1,6 +1,8 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ITalonarioReciboDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TalonarioRecibo;
 import java.sql.Date;
 import java.util.List;
@@ -9,12 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * Servicio de TalonarioRecibo
  *
  * @author blas
  */
 @Service
 public class TalonarioReciboService {
 
+    //Define la referencia al DAO
     @Autowired
     ITalonarioReciboDAO elementoDAO;
 
@@ -33,19 +37,19 @@ public class TalonarioReciboService {
     @Transactional(rollbackFor = Exception.class)
     public TalonarioRecibo agregar(TalonarioRecibo elemento) throws Exception {
         if (elemento.getDesde() >= elemento.getHasta()) {
-            throw new Exception("'Hasta' no puede ser mayor a 'Desde'");
+            throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
         }
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         List<TalonarioRecibo> desdeLista = elementoDAO.listarPorDesdeHasta(elemento.getDesde());
         List<TalonarioRecibo> hastaLista = elementoDAO.listarPorDesdeHasta(elemento.getHasta());
         if (!desdeLista.isEmpty()) {
-            throw new Exception("'Desde' ya pertenece a otro talonario");
+            throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
         }
         if (!hastaLista.isEmpty()) {
-            throw new Exception("'Hasta' ya pertenece a otro talonario");
+            throw new Exception(MensajeRespuesta.HASTA_YA_ASIGNADO);
         }
-        if (elemento.getHasta()> elemento.getTalonarioReciboLote().getHasta()) {
-            throw new Exception("'Desde - Hasta' supera el rango de 'Talonario Recibo Lote'");
+        if (elemento.getHasta() > elemento.getTalonarioReciboLote().getHasta()) {
+            throw new Exception(MensajeRespuesta.DESDE_HASTA_INVALIDOS);
         }
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -54,17 +58,17 @@ public class TalonarioReciboService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TalonarioRecibo elemento) throws Exception {
         if (elemento.getDesde() >= elemento.getHasta()) {
-            throw new Exception("'Hasta' no puede ser mayor a 'Desde'");
+            throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
         }
         List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(
                 elemento.getDesde());
         List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(
                 elemento.getHasta());
         if (!desdeList.isEmpty()) {
-            throw new Exception("'Desde' ya pertenece a otro talonario");
+            throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
         }
         if (!hastaList.isEmpty()) {
-            throw new Exception("'Hasta' ya pertenece a otro talonario");
+            throw new Exception(MensajeRespuesta.HASTA_YA_ASIGNADO);
         }
         elementoDAO.save(elemento);
     }

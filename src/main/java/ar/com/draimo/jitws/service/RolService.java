@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
@@ -76,11 +77,8 @@ public class RolService {
 
     //Obtiene una lista por nombre
     public List<Rol> listarPorNombre(String nombre) {
-        if (nombre.equals("***")) {
-            return elementoDAO.findAllByEsDesarrolladorFalse();
-        } else {
-            return elementoDAO.findByNombreContainingAndEsDesarrolladorFalse(nombre);
-        }
+        return (nombre.equals("***")?elementoDAO.findAllByEsDesarrolladorFalse():
+            elementoDAO.findByNombreContainingAndEsDesarrolladorFalse(nombre));
     }
 
     //Agrega un registro
@@ -92,16 +90,16 @@ public class RolService {
         r.setNombre(elemento.getNombre());
         r.setEsDesarrollador(false);
         Rol rol = elementoDAO.saveAndFlush(r);
+        //Define un RolSubopcion
+        RolSubopcion rolSubopcion;
+        //Define una subopcion pestania
+        SubopcionPestania subopcionPestania;
         //Verifica si el usuario copia de un rol existente
         if (elemento.getRolSecundarioDTO() == null) {
             //Obtiene la lista completa de subopciones
             List<Subopcion> subopciones = subopcionDAO.findAll();
             //Obtiene la lista de pestanias
             List<Pestania> pestanias = pestaniaDAO.findAll();
-            //Define un RolSubopcion
-            RolSubopcion rolSubopcion;
-            //Define una subopcion pestania
-            SubopcionPestania subopcionPestania;
             //Recorre la lista de subopciones
             for (Subopcion subopcion : subopciones) {
                 //Crea una instancia de RolSubopcion
@@ -129,30 +127,26 @@ public class RolService {
             List<RolSubopcion> rolSubopciones = rolSubopcionDAO.findByRol(rolSecundario);
             //Obtiene la lista de pestanias del rol secundario elegido por el usuario
             List<SubopcionPestania> subopcionPestanias = subopcionPestaniaDAO.findByRol(rolSecundario);
-            //Define una rolSubopcion
-            RolSubopcion rs;
             //Recorre las subopciones del rol secundario
-            for (RolSubopcion rolSubopcion : rolSubopciones) {
+            for (RolSubopcion rs : rolSubopciones) {
                 //Crea el nuevo rolsubopcion
-                rs = new RolSubopcion();
-                rs.setRol(rol);
-                rs.setSubopcion(rolSubopcion.getSubopcion());
-                rs.setMostrar(rolSubopcion.getMostrar());
+                rolSubopcion = new RolSubopcion();
+                rolSubopcion.setRol(rol);
+                rolSubopcion.setSubopcion(rs.getSubopcion());
+                rolSubopcion.setMostrar(rs.getMostrar());
                 //Agrega el rol subopion
-                rolSubopcionDAO.saveAndFlush(rs);
+                rolSubopcionDAO.saveAndFlush(rolSubopcion);
             }
-            //Define una subopcionPestania
-            SubopcionPestania sp;
             //Recorre las pestanias del rol secundario
-            for (SubopcionPestania subopcionPestania : subopcionPestanias) {
+            for (SubopcionPestania sp : subopcionPestanias) {
                 //Crea la nueva subopcionpestania
-                sp = new SubopcionPestania();
-                sp.setRol(rol);
-                sp.setSubopcion(subopcionPestania.getSubopcion());
-                sp.setPestania(subopcionPestania.getPestania());
-                sp.setMostrar(subopcionPestania.getMostrar());
+                subopcionPestania = new SubopcionPestania();
+                subopcionPestania.setRol(rol);
+                subopcionPestania.setSubopcion(sp.getSubopcion());
+                subopcionPestania.setPestania(sp.getPestania());
+                subopcionPestania.setMostrar(sp.getMostrar());
                 //Agrega la subopcion pestania
-                subopcionPestaniaDAO.saveAndFlush(sp);
+                subopcionPestaniaDAO.saveAndFlush(subopcionPestania);
             }
         }
         //Obtiene la lista de opciones

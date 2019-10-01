@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBugImagenDAO;
@@ -21,24 +22,30 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
+ * Servicio Soporte
  *
  * @author blas
  */
 @Service
 public class SoporteService {
 
+    //Define la referencia al dao
     @Autowired
     ISoporteDAO elementoDAO;
 
+    //Define la referencia al dao de usuario
     @Autowired
     IUsuarioDAO usuarioDAO;
 
+    //Define la referencia al dao de subopcion
     @Autowired
     ISubopcionDAO subopcionDAO;
 
+    //Define la referencia al dao de bugImagen
     @Autowired
     IBugImagenDAO bugImagenDAO;
 
+    //Define la referencial al servicio de bugImagen
     @Autowired
     BugImagenService bugImagenService;
 
@@ -59,11 +66,11 @@ public class SoporteService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene la lista completa
     public Object obtenerPorId(int id) throws IOException {
         Soporte elemento = elementoDAO.findById(id).get();
-        if (elemento.getBugImagen()==null) {
+        if (elemento.getBugImagen() == null) {
             elemento.setBugImagen(new BugImagen());
         }
         ObjectMapper mapper = new ObjectMapper();
@@ -78,12 +85,8 @@ public class SoporteService {
     //Obtiene una lista por alias y usuario
     public Object listarPorAliasContainingYUsuario(int idUsuario, String alias) throws IOException {
         Usuario usuario = usuarioDAO.findById(idUsuario).get();
-        List<Soporte> elementos;
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findByUsuario(usuario);
-        } else {
-            elementos = elementoDAO.findByUsuarioAndAliasContaining(usuario, alias);
-        }
+        List<Soporte> elementos = alias.equals("***") ? elementoDAO.findByUsuario(usuario)
+                : elementoDAO.findByUsuarioAndAliasContaining(usuario, alias);
         ObjectMapper mapper = new ObjectMapper();
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroImagen",
@@ -109,13 +112,9 @@ public class SoporteService {
     public Soporte agregar(String soporteString, MultipartFile archivo) throws IOException {
         Soporte elemento = new ObjectMapper().readValue(soporteString, Soporte.class);
         elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
-        if (!archivo.getOriginalFilename().equals("")) {
-            BugImagen u = bugImagenService.agregar(archivo, false);
-            BugImagen bugImagen = bugImagenDAO.saveAndFlush(u);
-            elemento.setBugImagen(bugImagen);
-        } else {
-            elemento.setBugImagen(null);
-        }
+        BugImagen bug = !archivo.getOriginalFilename().equals("") ? bugImagenService.agregar(archivo, false) : null;
+        BugImagen u = bug != null ? bugImagenDAO.saveAndFlush(bug) : null;
+        elemento.setBugImagen(u);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -126,23 +125,20 @@ public class SoporteService {
         if (archivo.getOriginalFilename().equals("")) {
             if (elemento.getBugImagen().getId() != 0) {
                 bugImagenDAO.deleteById(elemento.getBugImagen().getId());
-                elemento.setBugImagen(null);
-            } else {
-                elemento.setBugImagen(null);
             }
+            elemento.setBugImagen(null);
         } else {
+            BugImagen bug, f;
             if (elemento.getBugImagen().getId() != 0) {
-                BugImagen f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
-                BugImagen bug = bugImagenDAO.save(f);
-                elemento.setBugImagen(bug);
+                f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
+                bug = bugImagenDAO.save(f);
             } else {
-                BugImagen u = bugImagenService.agregar(archivo, false);
-                BugImagen bug = bugImagenDAO.saveAndFlush(u);
-                elemento.setBugImagen(bug);
+                f = bugImagenService.agregar(archivo, false);
+                bug = bugImagenDAO.saveAndFlush(f);
             }
+            elemento.setBugImagen(bug);
         }
         establecerAlias(elemento);
-        elementoDAO.save(elemento);
     }
 
     //Elimina un registro

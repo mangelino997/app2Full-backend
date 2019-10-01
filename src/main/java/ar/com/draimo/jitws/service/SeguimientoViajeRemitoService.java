@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
@@ -13,63 +14,61 @@ import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 
 /**
  * Servicio de SeguimientoViajeRemito
+ *
  * @author blas
  */
-
 @Service
 public class SeguimientoViajeRemitoService {
-    
-    //Define el dao
+
+    //Define la referencia al dao
     @Autowired
     ISeguimientoViajeRemitoDAO elementoDAO;
-    
-    //Define el dao de seguimiento estado
+
+    //Define la referencia al dao de seguimiento estado
     @Autowired
     ISeguimientoEstadoDAO seguimientoEstadoDAO;
-    
-    //Define el dao de ordenRecoleccion
+
+    //Define la referencia al dao de viajeRemito
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         SeguimientoViajeRemito elemento = elementoDAO.findTopByOrderByIdDesc();
-        return (elemento!=null?elemento.getId()+1:1);
+        return (elemento != null ? elemento.getId() + 1 : 1);
     }
-    
+
     //Obtiene la lista completa
     public List<SeguimientoViajeRemito> listar() {
         return elementoDAO.findByOrderByFechaDesc();
     }
-    
-    //Obtiene una lista por OrdenRecoleccion
+
+    //Obtiene una lista por viajeRemito
     public List<SeguimientoViajeRemito> listarPorViajeRemito(int idViajeRemito) {
-        ViajeRemito v = viajeRemitoDAO.findById(idViajeRemito).get();
-        return elementoDAO.findByViajeRemito(v);
+        return elementoDAO.findByViajeRemito(viajeRemitoDAO.findById(idViajeRemito).get());
     }
-    
+
     //Obtiene una lista por SeguimientoEstado
     public List<SeguimientoViajeRemito> listarPorSeguimientoEstado(int idSeguimientoEstado) {
-        SeguimientoEstado s = seguimientoEstadoDAO.findById(idSeguimientoEstado).get();
-        return elementoDAO.findBySeguimientoEstado(s);
+        return elementoDAO.findBySeguimientoEstado(seguimientoEstadoDAO.findById(idSeguimientoEstado).get());
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SeguimientoViajeRemito agregar(SeguimientoViajeRemito elemento) {
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
-    
+
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SeguimientoViajeRemito elemento) {
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-    
+
 }

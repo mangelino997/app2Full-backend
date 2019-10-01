@@ -81,22 +81,22 @@ public class VehiculoController {
     //Obtiene una lista por alias filtro no remolque
     @GetMapping(value = URL + "/listarPorAliasYRemolqueFalse/{alias}")
     @ResponseBody
-    public Object listarPorAliasYRemolqueFalse(@PathVariable String alias) throws IOException {
-        return elementoService.listarPorAliasYRemolqueFalse(alias);
+    public Object listarNoRemolquesPorAlias(@PathVariable String alias) throws IOException {
+        return elementoService.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, false, 0);
     }
     
     //Obtiene una lista por alias filtro remolque
     @GetMapping(value = URL + "/listarPorAliasYRemolqueTrue/{alias}")
     @ResponseBody
-    public Object listarPorAliasYRemolqueTrue(@PathVariable String alias) throws IOException {
-        return elementoService.listarPorAliasYRemolqueTrue(alias);
+    public Object listarRemolquesPorAlias(@PathVariable String alias) throws IOException {
+        return elementoService.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, true, 0);
     }
     
     //Obtiene una lista por alias filtro remolque
     @GetMapping(value = URL + "/listarPorAliasYEmpresaFiltroRemolque/{alias}/{idEmpresa}")
     @ResponseBody
     public Object listarPorAliasYEmpresaFiltroRemolque(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
-        return elementoService.listarPorAliasYEmpresaFiltroRemolque(alias, idEmpresa);
+        return elementoService.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, true, idEmpresa);
     }
     
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
@@ -104,7 +104,7 @@ public class VehiculoController {
     @ResponseBody
     public Object listarFiltro(@PathVariable int idEmpresa, @PathVariable int idTipoVehiculo,
             @PathVariable int idMarcaVehiculo) throws IOException {
-        return elementoService.listarFiltro(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
+        return elementoService.listarPorConfiguarionVehiculo(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
     }
     
     //Agrega un registro

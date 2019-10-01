@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IRepartoDAO;
@@ -108,9 +109,8 @@ public class ViajeCombustibleService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeCombustible elemento) throws IOException {
-        elemento = formatearStrings(elemento);
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(15).get());
-        elemento = elementoDAO.saveAndFlush(elemento);
+        elemento = elementoDAO.saveAndFlush(formatearStrings(elemento));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");
@@ -126,8 +126,7 @@ public class ViajeCombustibleService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeCombustible elemento) throws IOException {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
     
     //Elimina un registro

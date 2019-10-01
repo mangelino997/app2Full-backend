@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IRepartoDAO;
@@ -18,41 +19,41 @@ import java.sql.Date;
 
 /**
  * Servicio ViajeEfectivo
+ *
  * @author blas
  */
-
 @Service
 public class ViajeEfectivoService {
 
     //Define la referencia al dao
     @Autowired
     IViajeEfectivoDAO elementoDAO;
-    
+
     //Define la referencia al dao viaje
     @Autowired
     IViajeDAO viajeDAO;
-    
+
     //Define la referencia al dao reparto
     @Autowired
     IRepartoDAO repartoDAO;
-    
+
     //Define la referencia al dao tipoComprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeEfectivo elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<ViajeEfectivo>  elementos= elementoDAO.findAll();
+        List<ViajeEfectivo> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos","viajeTramos","viajeCombustibles",
-        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -61,14 +62,14 @@ public class ViajeEfectivoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista de efectivos por viaje propio
     public Object listarEfectivos(int idViaje) throws IOException {
         List<ViajeEfectivo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos","viajeTramos","viajeCombustibles",
-        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -77,14 +78,14 @@ public class ViajeEfectivoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista de efectivos por reparto
     public Object listarEfectivosReparto(int idReparto) throws IOException {
         List<ViajeEfectivo> elementos = elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos","viajeTramos","viajeCombustibles",
-        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -93,14 +94,14 @@ public class ViajeEfectivoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Anula un registro
     @Transactional(rollbackFor = Exception.class)
     public void anularEfectivo(ViajeEfectivo elemento) throws IOException {
         elemento.setEstaAnulado(true);
         elementoDAO.save(elemento);
     }
-    
+
     //Normaliza un registro
     @Transactional(rollbackFor = Exception.class)
     public void normalizarEfectivo(ViajeEfectivo elemento) throws IOException {
@@ -108,18 +109,17 @@ public class ViajeEfectivoService {
         elemento.setObservacionesAnulado(null);
         elementoDAO.save(elemento);
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeEfectivo elemento) throws IOException {
-        elemento = formatearStrings(elemento);
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
         elemento.setFecha(new Date(new java.util.Date().getTime()));
-        elemento = elementoDAO.saveAndFlush(elemento);
+        elemento = elementoDAO.saveAndFlush(formatearStrings(elemento));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos","viajeTramos","viajeCombustibles",
-        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -132,22 +132,21 @@ public class ViajeEfectivoService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeEfectivo elemento) throws IOException {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
         elementoDAO.deleteById(id);
     }
-    
+
     //Formatea los strings
     private ViajeEfectivo formatearStrings(ViajeEfectivo elemento) {
-        if(elemento.getObservaciones() != null) {
+        if (elemento.getObservaciones() != null) {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
-        if(elemento.getObservacionesAnulado() != null) {
+        if (elemento.getObservacionesAnulado() != null) {
             elemento.setObservacionesAnulado(elemento.getObservacionesAnulado().trim());
         }
         return elemento;

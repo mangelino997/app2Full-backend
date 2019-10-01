@@ -1,3 +1,4 @@
+//Paquete al que  pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ITipoRetencionDAO;
@@ -8,13 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
+ * Servicio de tipoRetencion
  * @author blas
  */
 
 @Service
 public class TipoRetencionService {
 
+    //Define la referencia al dao
     @Autowired
     ITipoRetencionDAO elementoDAO;
     
@@ -31,25 +33,20 @@ public class TipoRetencionService {
     
     //Obtiene una lista por nombre
     public List<TipoRetencion> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")?elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TipoRetencion agregar(TipoRetencion elemento) {
-        elemento = formatearStrings(elemento);
-        return elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TipoRetencion elemento) {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
     
     //Elimina un registro

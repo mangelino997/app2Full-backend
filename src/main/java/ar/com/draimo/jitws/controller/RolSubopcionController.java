@@ -59,14 +59,14 @@ public class RolSubopcionController {
     @GetMapping(value = URL + "/listarPorRolModulo/{idRol}/{idModulo}")
     @ResponseBody
     public List<Submodulo> listarPorRolModulo(@PathVariable int idRol, @PathVariable int idModulo) {
-        return elementoService.listarPorRolModulo(idRol, idModulo);
+        return elementoService.listarPorRolYModulo(idRol, idModulo);
     }
     
     //Obtiene una lista por rol y submodulo
     @GetMapping(value = URL + "/listarPorRolSubmodulo/{idRol}/{idSubmodulo}")
     @ResponseBody
     public List<Subopcion> listarPorRolSubmodulo(@PathVariable int idRol, @PathVariable int idSubmodulo) {
-        return elementoService.listarPorRolSubmodulo(idRol, idSubmodulo);
+        return elementoService.listarSubopcionesPorRolYSubmodulo(idRol, idSubmodulo);
     }
     
     //Obtiene una lista por rol y submodulo para armado de menu por rol

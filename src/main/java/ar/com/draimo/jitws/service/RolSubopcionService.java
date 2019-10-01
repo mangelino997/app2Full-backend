@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IModuloDAO;
@@ -53,7 +54,7 @@ public class RolSubopcionService {
     }
     
     //Obtiene un listado por rol y modulo
-    public List<Submodulo> listarPorRolModulo(int idRol, int idModulo) {
+    public List<Submodulo> listarPorRolYModulo(int idRol, int idModulo) {
         
         //Define una lista dto vacia
         List<Submodulo> submodulos = null;
@@ -71,7 +72,6 @@ public class RolSubopcionService {
         if(rolesSubopcion.isEmpty()) {
             return submodulos;
         }
-        
         //Define una lista de nombre de submodulos
         List<String> nombresSubmodulos = new ArrayList<>();
         
@@ -92,13 +92,11 @@ public class RolSubopcionService {
                 submodulos.add(submodulo);
             }
         }
-        
         return submodulos;
-        
     }
     
     //Obtiene un listado por rol y submodulo
-    public List<Subopcion> listarPorRolSubmodulo(int idRol, int idSubmodulo) {
+    public List<Subopcion> listarSubopcionesPorRolYSubmodulo(int idRol, int idSubmodulo) {
         
         //Define una lista dto vacia
         List<Subopcion> subopciones = null;
@@ -116,7 +114,6 @@ public class RolSubopcionService {
         if(rolesSubopcion.isEmpty()) {
             return subopciones;
         }
-        
         //Define un subopcionDTO
         Subopcion subopcion;
         //Crea una lista de subopcionDTO
@@ -136,9 +133,7 @@ public class RolSubopcionService {
                 subopciones.add(subopcion);
             }
         }
-        
         return subopciones;
-        
     }
     
     //Obtiene un rol, submodulo y una lista de subopciones
@@ -168,13 +163,10 @@ public class RolSubopcionService {
             subopcionDTO.setMostrar(rolSubopcion.getMostrar());
             subopciones.add(subopcionDTO);
         }
-        
         //Asigna la lista de subopciones al rol subopcion dto
         rolSubopcionDTO.setSubopciones(subopciones);
-        
         //Retorna los datos
         return rolSubopcionDTO;
-        
     }
     
     //Actualiza un registro
@@ -192,7 +184,6 @@ public class RolSubopcionService {
             //Actualiza el registro
             elementoDAO.save(rolSubopcion);
         }
-        
     }
     
     /*
@@ -237,7 +228,6 @@ public class RolSubopcionService {
                 elementoDAO.saveAndFlush(rolSubopcion);
             }
         }
-        
     }
     
 }

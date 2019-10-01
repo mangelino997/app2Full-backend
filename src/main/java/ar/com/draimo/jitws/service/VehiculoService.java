@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
@@ -5,6 +6,7 @@ import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Vehiculo;
@@ -75,22 +77,23 @@ public class VehiculoService {
     //Obtiene un registro por id
     public Object obtenerPorId(int id) throws IOException {
         Vehiculo elemento = elementoDAO.findById(id).get();
-        if (elemento.getPdfTitulo()==null) {
+        //Establece un pdf vacio a aquellos atributos que no contengan pdfs
+        if (elemento.getPdfTitulo() == null) {
             elemento.setPdfTitulo(new Pdf());
         }
-        if (elemento.getPdfCedulaIdent()==null) {
+        if (elemento.getPdfCedulaIdent() == null) {
             elemento.setPdfCedulaIdent(new Pdf());
         }
-        if (elemento.getPdfHabBromat()==null) {
+        if (elemento.getPdfHabBromat() == null) {
             elemento.setPdfHabBromat(new Pdf());
         }
-        if (elemento.getPdfVtoInspTecnica()==null) {
+        if (elemento.getPdfVtoInspTecnica() == null) {
             elemento.setPdfVtoInspTecnica(new Pdf());
         }
-        if (elemento.getPdfVtoRuta()==null) {
+        if (elemento.getPdfVtoRuta() == null) {
             elemento.setPdfVtoRuta(new Pdf());
         }
-        if (elemento.getPdfVtoSenasa()==null) {
+        if (elemento.getPdfVtoSenasa() == null) {
             elemento.setPdfVtoSenasa(new Pdf());
         }
         ObjectMapper mapper = new ObjectMapper();
@@ -105,12 +108,8 @@ public class VehiculoService {
 
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<Vehiculo> elementos;
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findAll();
-        } else {
-            elementos = elementoDAO.findByAliasContainingOrderByAlias(alias);
-        }
+        List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findAll()
+                : elementoDAO.findByAliasContainingOrderByAlias(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -123,13 +122,9 @@ public class VehiculoService {
 
     //Obtiene una lista por alias y empresa
     public Object listarPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
-        List<Vehiculo> elementos;
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findByEmpresaOrderByAlias(empresa);
-        } else {
-            elementos = elementoDAO.findByAliasContainingAndEmpresaOrderByAlias(alias, empresa);
-        }
+        List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findByEmpresaOrderByAlias(empresa)
+                : elementoDAO.findByAliasContainingAndEmpresaOrderByAlias(alias, empresa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -139,42 +134,11 @@ public class VehiculoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista por alias y empresa
-    public Object listarPorAliasYEmpresaFiltroRemolque(String alias, int idEmpresa) throws IOException {
-        List<Vehiculo> elementos;
-        Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        if (alias.equals("***")) {
-            elementos = elementoDAO.findByEmpresaAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(empresa);
-        } else {
-            elementos = elementoDAO.findByAliasContainingAndEmpresaAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(alias, empresa);
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene una lista por alias filtrado por no remolque
-    public Object listarPorAliasYRemolqueFalse(String alias) throws IOException {
-        List<Vehiculo> elementos = elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueFalse(alias);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
-    }
-
-    //Obtiene una lista por alias filtrado por remolque
-    public Object listarPorAliasYRemolqueTrue(String alias) throws IOException {
-        List<Vehiculo> elementos = elementoDAO.findByAliasContainingAndConfiguracionVehiculo_TipoVehiculo_EsRemolqueTrue(alias);
+    public Object listarPorAliasFiltroEmpresaYFiltroRemolque(String alias, boolean esRemolque, int idEmpresa) throws IOException {
+        alias = alias.equals("***") ? "" : alias;
+        List<Vehiculo> elementos = elementoDAO.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, esRemolque, idEmpresa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -186,7 +150,7 @@ public class VehiculoService {
     }
 
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
-    public Object listarFiltro(int idEmpresa, int idTipoVehiculo, int idMarcaVehiculo) throws IOException {
+    public Object listarPorConfiguarionVehiculo(int idEmpresa, int idTipoVehiculo, int idMarcaVehiculo) throws IOException {
         List<Vehiculo> elementos = elementoDAO.listarPorConfig(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -204,62 +168,50 @@ public class VehiculoService {
             MultipartFile vtoRuta, MultipartFile vtoInspTecnica, MultipartFile vtoSenasa,
             MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
-        elemento = formatearStrings(elemento);
         //Obtiene longitud de anio, si es mayor a 4 retorna error
         String anio = String.valueOf(elemento.getAnioFabricacion());
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
+        if (anio.length() > 4 || anio.length() < 4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO FABRICACIÓN");
         }
+        Pdf pdfTitulo = null, pdfCI = null, pdfVtoRuta = null, pdfIT = null, pdfVtoSenasa = null, pdfHB = null;
         if (!"null".equals(titulo.getOriginalFilename())) {
             Pdf pTitulo = pdfService.agregar(titulo, false);
             pTitulo.setTabla("vehiculo");
-            Pdf pdfTitulo = pdfDAO.saveAndFlush(pTitulo);
-            elemento.setPdfTitulo(pdfTitulo);
-        } else {
-            elemento.setPdfTitulo(null);
+            pdfTitulo = pdfDAO.saveAndFlush(pTitulo);
         }
+        elemento.setPdfTitulo(pdfTitulo);
         if (!"null".equals(cedulaIdent.getOriginalFilename())) {
             Pdf pCedulaIden = pdfService.agregar(cedulaIdent, false);
             pCedulaIden.setTabla("vehiculo");
-            Pdf pdfCedulaIden = pdfDAO.saveAndFlush(pCedulaIden);
-            elemento.setPdfCedulaIdent(pdfCedulaIden);
-        } else {
-            elemento.setPdfCedulaIdent(null);
+            pdfCI = pdfDAO.saveAndFlush(pCedulaIden);
         }
+        elemento.setPdfCedulaIdent(pdfCI);
         if (!"null".equals(vtoRuta.getOriginalFilename())) {
             Pdf pVtoRuta = pdfService.agregar(vtoRuta, false);
             pVtoRuta.setTabla("vehiculo");
-            Pdf pdfVtoRuta = pdfDAO.saveAndFlush(pVtoRuta);
-            elemento.setPdfVtoRuta(pdfVtoRuta);
-        } else {
-            elemento.setPdfVtoRuta(null);
+            pdfVtoRuta = pdfDAO.saveAndFlush(pVtoRuta);
         }
+        elemento.setPdfVtoRuta(pdfVtoRuta);
         if (!"null".equals(vtoInspTecnica.getOriginalFilename())) {
             Pdf pVtoInspTecnica = pdfService.agregar(vtoInspTecnica, false);
             pVtoInspTecnica.setTabla("vehiculo");
-            Pdf pdfVtoInspTecnica = pdfDAO.saveAndFlush(pVtoInspTecnica);
-            elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
-        } else {
-            elemento.setPdfVtoInspTecnica(null);
+            pdfIT = pdfDAO.saveAndFlush(pVtoInspTecnica);
         }
+        elemento.setPdfVtoInspTecnica(pdfIT);
         if (!"null".equals(vtoSenasa.getOriginalFilename())) {
             Pdf pVtoSenasa = pdfService.agregar(vtoSenasa, false);
             pVtoSenasa.setTabla("vehiculo");
-            Pdf pdfVtoSenasa = pdfDAO.saveAndFlush(pVtoSenasa);
-            elemento.setPdfVtoSenasa(pdfVtoSenasa);
-        } else {
-            elemento.setPdfVtoSenasa(null);
+            pdfVtoSenasa = pdfDAO.saveAndFlush(pVtoSenasa);
         }
+        elemento.setPdfVtoSenasa(pdfVtoSenasa);
         if (!"null".equals(habBromat.getOriginalFilename())) {
             Pdf pHabBromat = pdfService.agregar(habBromat, false);
             pHabBromat.setTabla("vehiculo");
-            Pdf pdfHabBromat = pdfDAO.saveAndFlush(pHabBromat);
-            elemento.setPdfHabBromat(pdfHabBromat);
-        } else {
-            elemento.setPdfHabBromat(null);
+            pdfHB = pdfDAO.saveAndFlush(pHabBromat);
         }
+        elemento.setPdfHabBromat(pdfHB);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        return elementoDAO.saveAndFlush(elemento);
+        return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
@@ -273,145 +225,110 @@ public class VehiculoService {
         elemento = formatearStrings(elemento);
         //Obtiene longitud de anio, si es mayor a 4 retorna error
         String anio = String.valueOf(elemento.getAnioFabricacion());
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en AÑO FABRICACIÓN");
+        if (anio.length() > 4 || anio.length() < 4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO FABRICACIÓN");
         }
         if ("null".equals(titulo.getOriginalFilename())) {
             if (vehiculo.getPdfTitulo() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
-                elemento.setPdfTitulo(null);
-            } else {
-                elemento.setPdfTitulo(null);
             }
+            elemento.setPdfTitulo(null);
         } else {
-            if (vehiculo.getPdfTitulo() != null) {
-                Pdf pTitulo = pdfService.actualizar(vehiculo.getPdfTitulo().getId(), titulo, false);
-                pTitulo.setTabla("vehiculo");
-                Pdf pdfTitulo = pdfDAO.save(pTitulo);
-                elemento.setPdfTitulo(pdfTitulo);
-            } else {
-                Pdf u = pdfService.agregar(titulo, false);
-                u.setTabla("vehiculo");
-                Pdf pdf1 = pdfDAO.saveAndFlush(u);
-                elemento.setPdfTitulo(pdf1);
-            }
+            Pdf pTitulo = vehiculo.getPdfTitulo() != null ? pdfService.actualizar(
+                    vehiculo.getPdfTitulo().getId(), titulo, false)
+                    : pdfService.agregar(titulo, false);
+            pTitulo.setTabla("vehiculo");
+            Pdf pdfTitulo = vehiculo.getPdfTitulo() != null ? pdfDAO.save(pTitulo)
+                    : pdfDAO.saveAndFlush(pTitulo);
+            elemento.setPdfTitulo(pdfTitulo);
         }
         if ("null".equals(cedulaIdent.getOriginalFilename())) {
             if (vehiculo.getPdfCedulaIdent() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfCedulaIdent().getId());
-                elemento.setPdfCedulaIdent(null);
-            } else {
-                elemento.setPdfCedulaIdent(null);
             }
+            elemento.setPdfCedulaIdent(null);
         } else {
-            if (vehiculo.getPdfCedulaIdent() != null) {
-                Pdf pCedulaIden = pdfService.actualizar(vehiculo.getPdfCedulaIdent().getId(), cedulaIdent, false);
-                pCedulaIden.setTabla("vehiculo");
-                Pdf pdfCedulaIden = pdfDAO.save(pCedulaIden);
-                elemento.setPdfCedulaIdent(pdfCedulaIden);
-            } else {
-                Pdf u = pdfService.agregar(cedulaIdent, false);
-                u.setTabla("vehiculo");
-                Pdf pdf2 = pdfDAO.saveAndFlush(u);
-                elemento.setPdfCedulaIdent(pdf2);
-            }
+            Pdf pCedulaIden = vehiculo.getPdfCedulaIdent() != null ? pdfService.actualizar(
+                    vehiculo.getPdfCedulaIdent().getId(), cedulaIdent, false)
+                    : pdfService.agregar(cedulaIdent, false);
+            pCedulaIden.setTabla("vehiculo");
+            Pdf pdfCedulaIden = vehiculo.getPdfCedulaIdent() != null ? pdfDAO.save(pCedulaIden)
+                    : pdfDAO.saveAndFlush(pCedulaIden);
+            elemento.setPdfCedulaIdent(pdfCedulaIden);
         }
         if ("null".equals(vtoRuta.getOriginalFilename())) {
             if (vehiculo.getPdfVtoRuta() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfVtoRuta().getId());
-                elemento.setPdfVtoRuta(null);
-            } else {
-                elemento.setPdfVtoRuta(null);
             }
+            elemento.setPdfVtoRuta(null);
         } else {
-            if (vehiculo.getPdfVtoRuta() != null) {
-                Pdf pVtoRuta = pdfService.actualizar(vehiculo.getPdfVtoRuta().getId(), vtoRuta, false);
-                pVtoRuta.setTabla("vehiculo");
-                Pdf pdfVtoRuta = pdfDAO.save(pVtoRuta);
-                elemento.setPdfVtoRuta(pdfVtoRuta);
-            } else {
-                Pdf u = pdfService.agregar(vtoRuta, false);
-                u.setTabla("vehiculo");
-                Pdf pdf3 = pdfDAO.saveAndFlush(u);
-                elemento.setPdfVtoRuta(pdf3);
-            }
+            Pdf pVtoRuta = vehiculo.getPdfVtoRuta() != null ? pdfService.actualizar(
+                    vehiculo.getPdfVtoRuta().getId(), vtoRuta, false)
+                    : pdfService.agregar(vtoRuta, false);
+            pVtoRuta.setTabla("vehiculo");
+            Pdf pdfVtoRuta = vehiculo.getPdfVtoRuta() != null ? pdfDAO.save(pVtoRuta)
+                    : pdfDAO.saveAndFlush(pVtoRuta);
+            elemento.setPdfVtoRuta(pdfVtoRuta);
         }
         if ("null".equals(vtoInspTecnica.getOriginalFilename())) {
             if (vehiculo.getPdfVtoInspTecnica() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfVtoInspTecnica().getId());
-                elemento.setPdfVtoInspTecnica(null);
-            } else {
-                elemento.setPdfVtoInspTecnica(null);
             }
+            elemento.setPdfVtoInspTecnica(null);
         } else {
-            if (vehiculo.getPdfVtoInspTecnica() != null) {
-                Pdf pVtoInspTecnica = pdfService.actualizar(vehiculo.getPdfVtoInspTecnica().getId(), vtoInspTecnica, false);
-                pVtoInspTecnica.setTabla("vehiculo");
-                Pdf pdfVtoInspTecnica = pdfDAO.save(pVtoInspTecnica);
-                elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
-            } else {
-                Pdf u = pdfService.agregar(vtoInspTecnica, false);
-                u.setTabla("vehiculo");
-                Pdf pdf4 = pdfDAO.saveAndFlush(u);
-                elemento.setPdfVtoInspTecnica(pdf4);
-            }
+            Pdf pVtoInspTecnica = vehiculo.getPdfVtoInspTecnica() != null
+                    ? pdfService.actualizar(vehiculo.getPdfVtoInspTecnica().getId(), vtoInspTecnica, false)
+                    : pdfService.agregar(vtoInspTecnica, false);
+            pVtoInspTecnica.setTabla("vehiculo");
+            Pdf pdfVtoInspTecnica = vehiculo.getPdfVtoInspTecnica() != null
+                    ? pdfDAO.save(pVtoInspTecnica) : pdfDAO.saveAndFlush(pVtoInspTecnica);
+            elemento.setPdfVtoInspTecnica(pdfVtoInspTecnica);
         }
         if ("null".equals(vtoSenasa.getOriginalFilename())) {
             if (vehiculo.getPdfVtoSenasa() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfVtoSenasa().getId());
-                elemento.setPdfVtoSenasa(null);
-            } else {
-                elemento.setPdfVtoSenasa(null);
             }
+            elemento.setPdfVtoSenasa(null);
         } else {
-            if (vehiculo.getPdfVtoSenasa() != null) {
-                Pdf pVtoSenasa = pdfService.actualizar(vehiculo.getPdfVtoSenasa().getId(), vtoSenasa, false);
-                pVtoSenasa.setTabla("vehiculo");
-                Pdf pdfVtoSenasa = pdfDAO.save(pVtoSenasa);
-                elemento.setPdfVtoSenasa(pdfVtoSenasa);
-            } else {
-                Pdf u = pdfService.agregar(vtoSenasa, false);
-                u.setTabla("vehiculo");
-                Pdf pdf5 = pdfDAO.saveAndFlush(u);
-                elemento.setPdfVtoSenasa(pdf5);
-            }
+            Pdf pVtoSenasa = vehiculo.getPdfVtoSenasa() != null ? pdfService.actualizar(
+                    vehiculo.getPdfVtoSenasa().getId(), vtoSenasa, false)
+                    : pdfService.agregar(vtoSenasa, false);
+            pVtoSenasa.setTabla("vehiculo");
+            Pdf pdfVtoSenasa = vehiculo.getPdfVtoSenasa() != null
+                    ? pdfDAO.save(pVtoSenasa) : pdfDAO.saveAndFlush(pVtoSenasa);
+            elemento.setPdfVtoSenasa(pdfVtoSenasa);
+
         }
         if ("null".equals(habBromat.getOriginalFilename())) {
             if (vehiculo.getPdfHabBromat() != null) {
                 pdfDAO.deleteById(vehiculo.getPdfHabBromat().getId());
-                elemento.setPdfHabBromat(null);
-            } else {
-                elemento.setPdfHabBromat(null);
             }
+            elemento.setPdfHabBromat(null);
         } else {
-            if (vehiculo.getPdfHabBromat() != null) {
-                Pdf pHabBromat = pdfService.actualizar(vehiculo.getPdfHabBromat().getId(), habBromat, false);
-                pHabBromat.setTabla("vehiculo");
-                Pdf pdfHabBromat = pdfDAO.save(pHabBromat);
-                elemento.setPdfHabBromat(pdfHabBromat);
-            } else {
-                Pdf u = pdfService.agregar(habBromat, false);
-                u.setTabla("vehiculo");
-                Pdf pdf6 = pdfDAO.saveAndFlush(u);
-                elemento.setPdfHabBromat(pdf6);
-            }
+            Pdf pHabBromat = vehiculo.getPdfHabBromat() != null ? pdfService.actualizar(
+                    vehiculo.getPdfHabBromat().getId(), habBromat, false)
+                    : pdfService.agregar(habBromat, false);
+            pHabBromat.setTabla("vehiculo");
+            Pdf pdfHabBromat = vehiculo.getPdfHabBromat() != null
+                    ? pdfDAO.save(pHabBromat) : pdfDAO.saveAndFlush(pHabBromat);
+            elemento.setPdfHabBromat(pdfHabBromat);
         }
-        return elementoDAO.save(elemento);
+        return establecerAlias(elemento);
     }
-    
+
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(Vehiculo elemento) throws IOException {
-        if(elemento.getNumeroInterno() != null) {
+    public Vehiculo establecerAlias(Vehiculo elemento) throws IOException {
+        if (elemento.getNumeroInterno() != null) {
             elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno() + " - "
-                + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
-                + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
+                    + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
+                    + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
         } else {
-            elemento.setAlias(elemento.getDominio() + " - " 
-                    + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - " 
+            elemento.setAlias(elemento.getDominio() + " - "
+                    + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
                     + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
         }
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
 
     //Elimina un registro

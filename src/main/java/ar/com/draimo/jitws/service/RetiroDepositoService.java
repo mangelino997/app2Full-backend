@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
@@ -54,13 +55,13 @@ public class RetiroDepositoService {
     @Autowired
     IPdfDAO pdfDAO;
 
-    //Define la referencia al dao de tipoComprobante
-    @Autowired
-    ITipoComprobanteDAO tipoComprobanteDAO;
-    
     //Define la referencia al service pdf
     @Autowired
     PdfService pdfService;
+
+    //Define la referencia al dao de tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
 
     //Define la referencia al dao de sucursal
     @Autowired
@@ -74,11 +75,11 @@ public class RetiroDepositoService {
     @Autowired
     ISeguimientoSituacionDAO seguimientoSituacionDAO;
 
-    //Define la referencia al dao de ViajeRemitoSeguimiento
+    //Define la referencia al dao de SeguimientoViajeRemito
     @Autowired
     ISeguimientoViajeRemitoDAO seguimientoViajeRemitoDAO;
 
-    //Define la referencia al dao de ventaComprobanteSeguimiento
+    //Define la referencia al dao de SeguimientoventaComprobante
     @Autowired
     ISeguimientoVentaComprobanteDAO seguimientoVentaComprobanteDAO;
 
@@ -93,16 +94,16 @@ public class RetiroDepositoService {
         return elementoDAO.findAll();
     }
 
-    //Obtiene la lista de planillas abiertas
+    //Obtiene la lista de planillas por esta cerrada
     public List<RetiroDeposito> listarPorEstaCerrada(boolean estaCerrada) {
         return elementoDAO.listarPorEstaCerrada(estaCerrada);
     }
 
-    //Cierra un reparto
+    //Cierra un retiro
     public boolean cerrarRetiro(int idRetiroDeposito) {
         RetiroDeposito r = elementoDAO.findById(idRetiroDeposito).get();
-        List<RetiroDepositoComprobante> c = elementoComprobanteDAO.findByRetiroDeposito(r);
-        if (c.isEmpty()) {
+        List<RetiroDepositoComprobante> rdCtes = elementoComprobanteDAO.findByRetiroDeposito(r);
+        if (rdCtes.isEmpty()) {
             return false;
         } else {
             SeguimientoVentaComprobante svCte = new SeguimientoVentaComprobante();
@@ -111,7 +112,7 @@ public class RetiroDepositoService {
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
             Sucursal sucursal = sucursalDAO.findById(r.getSucursal().getId()).get();
             LocalDateTime fecha = LocalDateTime.now();
-            for (RetiroDepositoComprobante retiroDepositoComprobante : c) {
+            for (RetiroDepositoComprobante retiroDepositoComprobante : rdCtes) {
                 if (retiroDepositoComprobante.getVentaComprobante() != null) {
                     svCte.setSeguimientoEstado(se);
                     svCte.setSeguimientoSituacion(ss);
@@ -132,7 +133,7 @@ public class RetiroDepositoService {
         }
     }
 
-    //Obtiene una lista por filtros
+    //Obtiene una lista por filtros(empresa y sucursal opcionales)
     public List<RetiroDeposito> listarPorFiltros(int idEmpresa, int idSucursal,
             Date fechaDesde, Date fechaHasta, boolean estaCerrada) {
         return elementoDAO.listarPorFiltros(idEmpresa, idSucursal, fechaDesde, fechaHasta, estaCerrada);
@@ -140,8 +141,7 @@ public class RetiroDepositoService {
 
     //Obtiene una lista por empresa
     public List<RetiroDeposito> listarPorEmpresa(int id) {
-        Optional<Empresa> elemento = empresaDAO.findById(id);
-        return elementoDAO.findByEmpresa(elemento);
+        return elementoDAO.findByEmpresa(empresaDAO.findById(id));
     }
 
     //Obtiene por numeroDocumento
@@ -156,13 +156,15 @@ public class RetiroDepositoService {
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(25).get());
         elemento.setFechaRegistracion(LocalDateTime.now());
         elemento = formatearStrings(elemento);
+        Pdf pdf;
         if (!archivo.getOriginalFilename().equals("")) {
             Pdf u = pdfService.agregar(archivo, false);
-            Pdf pdf = pdfDAO.saveAndFlush(u);
-            elemento.setPdfDni(pdf);
+            pdf = pdfDAO.saveAndFlush(u);
         } else {
-            elemento.setPdfDni(null);
+            pdf = null;
+
         }
+        elemento.setPdfDni(pdf);
         return elementoDAO.saveAndFlush(elemento);
     }
 

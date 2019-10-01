@@ -1,6 +1,6 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
 import java.util.List;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SeguimientoSituacionService {
 
-    //Define el dao
+    //Define laa referencia al dao
     @Autowired
     ISeguimientoSituacionDAO elementoDAO;
 
@@ -33,25 +33,20 @@ public class SeguimientoSituacionService {
 
     //Obtiene una lista por nombre
     public List<SeguimientoSituacion> listarPorNombre(String nombre) {
-        if (nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***") ? elementoDAO.findAll()
+                : elementoDAO.findByNombreContaining(nombre);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SeguimientoSituacion agregar(SeguimientoSituacion elemento) {
-        formatearString(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(formatearString(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SeguimientoSituacion elemento) {
-        formatearString(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearString(elemento));
     }
 
     //Elimina un registro

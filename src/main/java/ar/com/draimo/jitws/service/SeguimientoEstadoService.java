@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
@@ -42,25 +43,20 @@ public class SeguimientoEstadoService {
     
     //Obtiene una lista por nombre
     public List<SeguimientoEstado> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***")?elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SeguimientoEstado agregar(SeguimientoEstado elemento) {
-        elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(SeguimientoEstado elemento) {
-        elemento = formatearStrings(elemento);
-        elementoDAO.save(elemento);
+        elementoDAO.save(formatearStrings(elemento));
     }
     
     //Elimina un registro

@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
@@ -47,9 +48,7 @@ public class UsuarioEmpresaService {
     
     //Obtiene un listado por usuario
     public List<UsuarioEmpresa> listarPorUsuario(int idUsuario) {
-        //Obtiene el usuario por id
-        Optional<Usuario> usuario = usuarioDAO.findById(idUsuario);
-        return elementoDAO.findByUsuario(usuario);
+        return elementoDAO.findByUsuario(usuarioDAO.findById(idUsuario));
     }
     
     //Obtiene las empresas activas del usuario
@@ -58,9 +57,8 @@ public class UsuarioEmpresaService {
         Empresa empresa;
         //Define una lista de empresas
         List<Empresa> empresas = new ArrayList<>();
-        //Obtiene el usuario por id
-        Optional<Usuario> usuario = usuarioDAO.findById(idUsuario);
-        List<UsuarioEmpresa> usuarioEmpresas = elementoDAO.findByUsuarioAndMostrarTrue(usuario);
+        List<UsuarioEmpresa> usuarioEmpresas = elementoDAO.findByUsuarioAndMostrarTrue(
+                usuarioDAO.findById(idUsuario));
         for(UsuarioEmpresa elemento : usuarioEmpresas) {
             empresa = new Empresa();
             empresa.setId(elemento.getEmpresa().getId());
@@ -102,18 +100,14 @@ public class UsuarioEmpresaService {
      */
     @Transactional(rollbackFor = Exception.class)
     public List<UsuarioEmpresa> eliminarTabla() {
-        
         //Obtiene el listado de rolsubopcion
         List<UsuarioEmpresa> usuariosEmpresas = elementoDAO.findAll();
-
         //Elimina todos los datos de la tabla
         elementoDAO.eliminarTodo();
-        
         //Reestablece el autoincremental
         elementoDAO.reestablecerAutoincremental();
         
         return usuariosEmpresas;
-        
     }
     
     /*
@@ -122,10 +116,8 @@ public class UsuarioEmpresaService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void reestablecerTabla(List<UsuarioEmpresa> usuariosEmpresas) {
-        
         //Obtiene la lista completa de usuarios
         List<Usuario> usuarios = usuarioDAO.findAll();
-        
         //Obtiene la lista completa de empresas
         List<Empresa> empresas = empresaDAO.findAll();
         
@@ -160,19 +152,14 @@ public class UsuarioEmpresaService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void reestablecerTablaDesdeCero() {
-        
         //Elimina todos los datos de la tabla
         elementoDAO.eliminarTodo();
-        
         //Reestablece el autoincremental
         elementoDAO.reestablecerAutoincremental();
-        
         //Obtiene la lista completa de usuarios
         List<Usuario> usuarios = usuarioDAO.findAll();
-        
         //Obtiene la lista completa de empresas
         List<Empresa> empresas = empresaDAO.findAll();
-        
         //Define un UsuarioEmpresa
         UsuarioEmpresa usuarioEmpresa;
         for (Usuario usuario : usuarios) {
@@ -187,7 +174,6 @@ public class UsuarioEmpresaService {
                 elementoDAO.saveAndFlush(usuarioEmpresa);
             }
         }
-        
     }
     
 }

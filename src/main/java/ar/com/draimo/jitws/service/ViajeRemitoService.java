@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ISucursalDAO;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
- * Servicio de ViajePropio
+ * Servicio de ViajeRemito
  *
  * @author blas
  */
@@ -38,11 +39,11 @@ public class ViajeRemitoService {
     @Autowired
     ISucursalDAO sucursalDAO;
 
-    //Define la referencia al dao viaje propio tramo
+    //Define la referencia al dao viaje tramo
     @Autowired
     IViajeTramoDAO viajeTramoDAO;
 
-    //Define la referencia al dao viaje remito tramo
+    //Define la referencia al dao viaje tramo remito
     @Autowired
     IViajeTramoRemitoDAO viajeTramoRemitoDAO;
 
@@ -78,12 +79,8 @@ public class ViajeRemitoService {
 
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<ViajeRemito> remitos;
-        if (alias.equals("***")) {
-            remitos = elementoDAO.findAll();
-        } else {
-            remitos = elementoDAO.findByAliasContaining(alias);
-        }
+        List<ViajeRemito> remitos = alias.equals("***") ? elementoDAO.findAll()
+                : elementoDAO.findByAliasContaining(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -119,9 +116,8 @@ public class ViajeRemitoService {
 
     //Obtiene un listado de pendientes por sucursal
     public Object listarPendientesPorSucursal(int idSucursal) throws IOException {
-        //Obtiene la sucursal por id
-        Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
-        List<ViajeRemito> remitos = elementoDAO.findBySucursalIngresoAndEstaPendienteFalse(sucursal);
+        List<ViajeRemito> remitos = elementoDAO.findBySucursalIngresoAndEstaPendienteFalse(
+                sucursalDAO.findById(idSucursal));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -132,31 +128,16 @@ public class ViajeRemitoService {
     }
 
     //Obtiene un listado de pendientes por filtro
-    public Object listarPendientesPorFiltro(int idSucursal, int idSucursalDestino, short numeroCamion) throws IOException {
+    public Object listarPendientesOAsignadosPorFiltro(int idSucursal, int idSucursalDestino,
+            short numeroCamion, boolean estaPendiente) throws IOException {
         //Obtiene la sucursal por id
         Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
         //Obtiene la sucursal destino por id
         Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
         //Retorna los datos
-        List<ViajeRemito> remitos = elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(sucursal, sucursalDestino, numeroCamion);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept();
-        FilterProvider filters = new SimpleFilterProvider();
-        String string = mapper.writer(filters).writeValueAsString(remitos);
-        return mapper.readValue(string, Object.class);
-    }
-    
-    //Obtiene un listado de asignados por filtro
-    public Object listarAsignadosPorFiltro(int idSucursal, int idSucursalDestino, short numeroCamion) throws IOException {
-        //Obtiene la sucursal por id
-        Optional<Sucursal> sucursal = sucursalDAO.findById(idSucursal);
-        //Obtiene la sucursal destino por id
-        Optional<Sucursal> sucursalDestino = sucursalDAO.findById(idSucursalDestino);
-        //Retorna los datos
-        List<ViajeRemito> remitos = 
-            elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(
-                    sucursal, sucursalDestino, numeroCamion);
+        List<ViajeRemito> remitos
+                = elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendiente(
+                        sucursal, sucursalDestino, numeroCamion, estaPendiente);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept();
@@ -181,17 +162,17 @@ public class ViajeRemitoService {
         String string = mapper.writer(filters).writeValueAsString(remitos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista de letras
     public List<String> listarLetras() {
         return elementoDAO.listarLetras();
     }
-    
+
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
         ViajeRemito remitos = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
-        if (remitos==null) {
-            throw new DataIntegrityViolationException("Registro no existente");
+        if (remitos == null) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -206,13 +187,14 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void asignar(String elementosString, String idViajeTramo) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        List<ViajeRemito> elementos = mapper.readValue(elementosString, mapper.getTypeFactory().constructCollectionType(List.class, ViajeRemito.class));
+        List<ViajeRemito> elementos = mapper.readValue(elementosString,
+                mapper.getTypeFactory().constructCollectionType(List.class, ViajeRemito.class));
         //Obtiene el viajeRemito
         ViajeTramo viajeTramo = viajeTramoDAO.findById(Integer.valueOf(idViajeTramo)).get();
         ViajeTramoRemito tramoRemito;
         //Recorre la lista de remitos
         for (ViajeRemito viajeRemito : elementos) {
-            if(!viajeRemito.getEstaPendiente()) {
+            if (!viajeRemito.getEstaPendiente()) {
                 tramoRemito = new ViajeTramoRemito();
                 tramoRemito.setViajeRemito(viajeRemito);
                 tramoRemito.setViajeTramo(viajeTramo);
@@ -226,13 +208,13 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void quitar(String elementosString, String idViajeTramo) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        List<ViajeRemito> elementos = mapper.readValue(elementosString, 
+        List<ViajeRemito> elementos = mapper.readValue(elementosString,
                 mapper.getTypeFactory().constructCollectionType(List.class, ViajeRemito.class));
         //Obtiene el viaje tramo
         ViajeTramo viajeTramo = viajeTramoDAO.findById(Integer.valueOf(idViajeTramo)).get();
         //Recorre la lista de remitos
         for (ViajeRemito viajeRemito : elementos) {
-            if(viajeRemito.getEstaPendiente()) {
+            if (viajeRemito.getEstaPendiente()) {
                 //Elimina el viaje tramo remito
                 viajeTramoRemitoDAO.deleteByViajeRemitoAndViajeTramo(viajeRemito, viajeTramo);
                 //Actualiza el remito
@@ -248,26 +230,12 @@ public class ViajeRemitoService {
         elemento.setEstaPendiente(true);
         elemento.setEstaFacturado(false);
         elemento.setEstaEnReparto(false);
-        ViajeRemito viajeRemito = 
-                elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
-                        elemento.getClienteRemitente().getId(),elemento.getClienteDestinatario().getId(),
-                        elemento.getPuntoVenta(),elemento.getLetra(),elemento.getNumero(), 
+        ViajeRemito viajeRemito
+                = elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
+                        elemento.getClienteRemitente().getId(), elemento.getClienteDestinatario().getId(),
+                        elemento.getPuntoVenta(), elemento.getLetra(), elemento.getNumero(),
                         elemento.getTipoComprobante().getId());
-        if (viajeRemito!=null) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.COMPROBANTE_REGISTRADO);
-        }
-        //Obtiene longitud de numrtoCamion, si supera 3 retorna error
-        String numCamion = String.valueOf(elemento.getNumeroCamion());
-        if (numCamion.length() > 3) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO CAMION");
-        }
-        //Obtiene longitud de bultos, si supera 6 retorna error
-        String bultos = String.valueOf(elemento.getBultos());
-        if (bultos.length() > 6) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
-        }
-        //Formatea los strings
-        elemento = formatearStrings(elemento);
+        elemento = controlarLongitudes(elemento, viajeRemito);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -283,27 +251,30 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeRemito elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        ViajeRemito viajeRemito = 
-                elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
-                        elemento.getClienteRemitente().getId(),elemento.getClienteDestinatario().getId(),
-                        elemento.getPuntoVenta(),elemento.getLetra(),elemento.getNumero(), 
+        ViajeRemito viajeRemito
+                = elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
+                        elemento.getClienteRemitente().getId(), elemento.getClienteDestinatario().getId(),
+                        elemento.getPuntoVenta(), elemento.getLetra(), elemento.getNumero(),
                         elemento.getTipoComprobante().getId());
-        if (viajeRemito!=null) {
+        elemento = controlarLongitudes(elemento, viajeRemito);
+        establecerAlias(elemento);
+    }
+
+    private ViajeRemito controlarLongitudes(ViajeRemito elemento, ViajeRemito viajeRemito) {
+        if (viajeRemito != null) {
             throw new DataIntegrityViolationException(MensajeRespuesta.COMPROBANTE_REGISTRADO);
         }
         //Obtiene longitud de numrtoCamion, si supera 3 retorna error
         String numCamion = String.valueOf(elemento.getNumeroCamion());
         if (numCamion.length() > 3) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO CAMION");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " NUMERO CAMION");
         }
         //Obtiene longitud de bultos, si supera 6 retorna error
         String bultos = String.valueOf(elemento.getBultos());
         if (bultos.length() > 6) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en BULTOS");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
         }
-        elemento.setAlias(elemento.getNumero() + " - (R: " + elemento.getClienteRemitente().getAlias() + ") - "
-                + "(D: " + elemento.getClienteDestinatario().getAlias() + ")");
-        elementoDAO.save(elemento);
+        return formatearStrings(elemento);
     }
 
     //Elimina un registro

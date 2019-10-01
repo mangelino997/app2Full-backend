@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
@@ -59,7 +60,8 @@ public class RubroProductoCuentaContableService {
     
     //Obtiene una lista por Empresa
     public Object listarPorEmpresa(int idEmpresa) throws IOException {
-        List<RubroProductoCuentaContable> elementos = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
+        List<RubroProductoCuentaContable> elementos = elementoDAO.findByEmpresa(
+                empresaDAO.findById(idEmpresa).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -84,7 +86,8 @@ public class RubroProductoCuentaContableService {
     
     //Obtiene una lista por RubroProducto
     public Object listarPorRubroProducto(int idRubroProducto) throws IOException {
-        List<RubroProductoCuentaContable> elementos = elementoDAO.findByRubroProducto(rubroProductoDAO.findById(idRubroProducto).get());
+        List<RubroProductoCuentaContable> elementos = elementoDAO.findByRubroProducto(
+                rubroProductoDAO.findById(idRubroProducto).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -97,7 +100,7 @@ public class RubroProductoCuentaContableService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(RubroProductoCuentaContable elemento) throws IOException {
-        elemento = elementoDAO.save(elemento);
+        elemento = elementoDAO.saveAndFlush(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
