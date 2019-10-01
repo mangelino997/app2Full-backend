@@ -45,6 +45,7 @@ public class MensajeRespuesta {
     public static final String ELEMENTO_MENOR = "no puede ser mayor a";
     public static final String EXISTENTE_PARA_CUENTA_BANCARIA = "Para cuenta bancaria-tipo chequera: dato existente";
     public static final String ERROR_COBRADOR_POR_DEFECTO = "No se puede eliminar el cobrador por defecto para cliente eventual.";
+    public static final String ERROR_MONEDA_POR_DEFECTO = "No se puede eliminar la moneda por defecto.";
     public static final String COMPROBANTE_REGISTRADO = "Comprobante ya registrado.";
     public static final String ADELANTO_NO_OTORGADO = "No logró alcanzar el importe para recibir el adelanto";
     public static final String SIN_COMPROBANTES = "No contiene comprobante/s";
@@ -330,7 +331,7 @@ public class MensajeRespuesta {
                 break;
             case 3:
                 if (parte3[1].equals("truncation:")) {
-                mensajeRespuesta = MensajeRespuesta.LONGITUD;
+                    mensajeRespuesta = MensajeRespuesta.LONGITUD;
                     //Determina que atributo tiene superó su longitud
                     switch (partes[1]) {
                         case LongitudError.FECHA_ALTA_LONGITUD:

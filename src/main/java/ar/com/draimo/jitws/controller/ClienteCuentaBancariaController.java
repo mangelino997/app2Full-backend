@@ -68,7 +68,7 @@ public class ClienteCuentaBancariaController {
     //Obtiene una lista por OrdenVenta
     @GetMapping(value = URL + "/listarPorCuentaBancaria/{id}")
     @ResponseBody
-    public List<ClienteCuentaBancaria> listarPorOrdenVenta(@PathVariable int id) {
+    public List<ClienteCuentaBancaria> listarPorCuentaBancaria(@PathVariable int id) {
         return elementoService.listarPorCuentaBancaria(id);
     }
     
