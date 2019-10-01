@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.model.RepartoPersonal;
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IRepartoPersonalDAO;
 
 /**
- * Servicio repartoPropioPersonal
+ * Servicio repartoPersonal
  * @author blas
  */
 
@@ -33,7 +34,7 @@ public class RepartoPersonalService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RepartoPersonal agregar(RepartoPersonal elemento) {
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

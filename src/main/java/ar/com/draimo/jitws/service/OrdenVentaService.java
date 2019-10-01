@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
@@ -35,23 +36,23 @@ public class OrdenVentaService {
     @Autowired
     IOrdenVentaDAO elementoDAO;
 
-    //Define la referencia al dao
+    //Define la referencia al dao clienteOrdenVenta
     @Autowired
     IClienteOrdenVentaDAO clienteOrdenVentaDAO;
 
-    //Define la referencia al dao
+    //Define la referencia al dao EmpresaOrdenVenta
     @Autowired
     IEmpresaOrdenVentaDAO empresaOrdenVentaDAO;
 
-    //Define la referencia al dao
+    //Define la referencia al dao OrdenVentaTramo
     @Autowired
     IOrdenVentaTramoDAO ordenVentaTramoDAO;
 
-    //Define la referencia al dao
+    //Define la referencia al dao OrdenVentaEscala
     @Autowired
     IOrdenVentaEscalaDAO ordenVentaEscalaDAO;
 
-    //Define la referencia al dao
+    //Define la referencia al dao OrdenVentaTarifa
     @Autowired
     IOrdenVentaTarifaDAO ordenVentaTarifaDAO;
 
@@ -79,12 +80,8 @@ public class OrdenVentaService {
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<OrdenVenta> elementos = new ArrayList<>();
-        if (nombre.equals("***")) {
-            elementos = elementoDAO.findAll();
-        } else {
-            elementos = elementoDAO.findByNombreContaining(nombre);
-        }
+        List<OrdenVenta> elementos = nombre.equals("***")?
+            elementoDAO.findAll():elementoDAO.findByNombreContaining(nombre);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -155,7 +152,8 @@ public class OrdenVentaService {
         //Obtiene la orden de venta por id
         OrdenVenta ordenVenta = elementoDAO.findById(id).get();
         //Obtiene las ordenes de venta tarifa por id orden venta
-        List<OrdenVentaTarifa> ordenesVentasTarifas = ordenVentaTarifaDAO.findByOrdenVenta(ordenVenta);
+        List<OrdenVentaTarifa> ordenesVentasTarifas = 
+                ordenVentaTarifaDAO.findByOrdenVenta(ordenVenta);
         //Recorre las ordenes de ventas tarifas para eliminar escalas o tramos referenciados
         for(OrdenVentaTarifa ordenVentaTarifa : ordenesVentasTarifas) {
             //Verifica si se trata de por escala o por tramo

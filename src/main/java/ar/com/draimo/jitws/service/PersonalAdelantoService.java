@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBasicoCategoriaDAO;
@@ -7,6 +8,7 @@ import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.dto.PersonalAdelantoLoteDTO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.BasicoCategoria;
 import ar.com.draimo.jitws.model.Personal;
 import ar.com.draimo.jitws.model.PersonalAdelanto;
@@ -116,7 +118,6 @@ public class PersonalAdelantoService {
         List<PersonalAdelanto> cuotasAdelantos = new ArrayList<>();
         PersonalAdelanto cuota;
         BigDecimal total = new BigDecimal(0);
-        BigDecimal dif = new BigDecimal(0);
         //Establece la cantidad de dias
         short cantDias = 30;
         //Obtiene la fechaActual
@@ -145,14 +146,10 @@ public class PersonalAdelantoService {
             cuotasAdelantos.add(cuota);
             total = total.add(importe);
         }
-        if (total.compareTo(personalAdelanto.getImporte()) == 1) {
-            dif = total.subtract(personalAdelanto.getImporte());
-            cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(importe.subtract(dif));
-
-        } else if (total.compareTo(personalAdelanto.getImporte()) == -1) {
-            dif = personalAdelanto.getImporte().subtract(total);
-            cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(importe.add(dif));
-        }
+        cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(
+                total.compareTo(personalAdelanto.getImporte()) == 1 ? total.subtract(
+                personalAdelanto.getImporte()) : total.compareTo(personalAdelanto.getImporte()) == -1
+                ? personalAdelanto.getImporte().subtract(total) : importe.add(new BigDecimal(0)));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -172,7 +169,7 @@ public class PersonalAdelantoService {
                 personalAdelanto.getFechaHasta(), personalAdelanto.getEstado(), personalAdelanto.getAlias(),
                 personalAdelanto.getAdelanto());
         if (adelantos.isEmpty()) {
-            throw new DataIntegrityViolationException("No se encontraron registros.");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -223,15 +220,13 @@ public class PersonalAdelantoService {
         PersonalAdelanto adelanto;
         int lote = (elementoDAO.findTopByOrderByNumeroLoteDesc() != null
                 ? elementoDAO.findTopByOrderByNumeroLoteDesc().getNumeroLote() + 1 : 1);
-        BigDecimal importeCategoria = new BigDecimal(BigInteger.ZERO);
+        BigDecimal importeCategoria;
         BasicoCategoria basico;
         for (Personal personal : personales) {
             basico = basicoCategoriaDAO.obtenerPorCategoria(personal.getCategoria().getId());
-            if (basico != null) {
-                importeCategoria = basico.getBasico().multiply(basico.getCategoria().getTopeBasicoAdelantos().divide(new BigDecimal(100.00)));
-            } else {
-                importeCategoria = BigDecimal.ZERO;
-            }
+            importeCategoria = (basico != null
+                    ? basico.getBasico().multiply(basico.getCategoria().getTopeBasicoAdelantos().divide(new BigDecimal(100.00)))
+                    : BigDecimal.ZERO);
             if (importeCategoria.compareTo(adelantos.getImporte()) >= 0) {
                 adelanto = new PersonalAdelanto();
                 adelanto.setEmpresa(personal.getEmpresa());
@@ -254,7 +249,7 @@ public class PersonalAdelantoService {
                 adelanto.setPersonal(personal);
                 adelanto.setFechaEmision(emision);
                 adelanto.setImporte(adelantos.getImporte());
-                adelanto.setObservaciones("No logró alcanzar el importe para recibir el adelanto");
+                adelanto.setObservaciones(MensajeRespuesta.ADELANTO_NO_OTORGADO);
                 adelantosFallados.add(adelanto);
             }
         }
@@ -270,6 +265,7 @@ public class PersonalAdelantoService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Control para ver si todos los adelantos de un lote fracasaron
     public boolean controlAdelantosFallidos(Object elemento, PersonalAdelantoLoteDTO adelanto) {
         List<PersonalAdelanto> adelantos = (List<PersonalAdelanto>) ((Object) elemento);
         List<Personal> personales = personalDAO.listarPersonalesParaAdelanto(adelanto.getIdEmpresa(),

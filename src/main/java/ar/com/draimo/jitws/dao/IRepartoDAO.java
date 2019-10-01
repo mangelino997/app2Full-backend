@@ -20,14 +20,10 @@ public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
     public Reparto findTopByOrderByIdDesc();
     
     //Obtiene un listado por estaCerrada 
-    @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada", nativeQuery = true )
-    public List<Reparto> listarPorEstaCerrada(@Param("estaCerrada") boolean estaCerrada);
-    
-    //Obtiene u listado por estaCerrada y empresa
     @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada AND "
-            + "idEmpresaEmision =:idEmpresa", nativeQuery = true )
-    public List<Reparto> listarPorEstaCerradaYEmpresa(@Param("estaCerrada") boolean 
-            estaCerrada, @Param("idEmpresa") int idEmpresa);
+            + "(:idEmpresa=0 OR idEmpresa=:idEmpresa)", nativeQuery = true )
+    public List<Reparto> listarPorEstaCerradaYEmpresa(@Param("estaCerrada") boolean estaCerrada,
+    @Param("idEmpresa") int idEmpresa);
     
     //Obtiene u listado por estaCerrada falso y si es reparto tercero o propio
     @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada AND "
