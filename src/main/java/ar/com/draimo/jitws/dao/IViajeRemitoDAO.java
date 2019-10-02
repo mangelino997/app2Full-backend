@@ -31,20 +31,13 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
 
     //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino y numero camion)
     
-    public List<ViajeRemito> findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendiente(
-            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion, boolean estaPendiente);
+    public List<ViajeRemito> findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
+            Sucursal sucursal, Sucursal sucursalDestino, short numeroCamion);
     
     //Obtiene una lista de asignados por filtros(sucursalIngreso, sucursalDestino y numero camion)
     public List<ViajeRemito> findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteFalse(
-            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion);
+            Sucursal sucursal, Sucursal sucursalDestino, short numeroCamion);
 
-//    //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino,
-//    //numero camion y viajePropioTramo)
-//    public List<ViajeRemito> 
-//        findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndViajePropioTramoAndEstaPendienteFalse(
-//            Optional<Sucursal> sucursal, Optional<Sucursal> sucursalDestino, short numeroCamion,
-//                Optional<ViajePropioTramo> viajePropioTramo);
-    
     //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino,
     //numero camion y viajePropioTramo)
     @Query(value = "SELECT * FROM viajeremito where ((:fechaDesde IS NULL and :fechaHasta "
@@ -60,14 +53,6 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
             int idClienteRemitente,@Param("idClienteDestinatario") int idClienteDestinatario, 
             @Param("numeroCamion") short numeroCamion);
 
-//    //Obtiene un listado de remitos por viaje propio
-//    public List<ViajeRemito> findByViajePropioTramoAndEstaFacturadoFalse(
-//            Optional<ViajePropioTramo> viajePropioTramo);
-//    
-//    //Obtiene un listado de remitos por viaje tercero
-//    public List<ViajeRemito> findByViajeTerceroTramoAndEstaFacturadoFalse(
-//            Optional<ViajeTerceroTramo> viajeTerceroTramo);
-    
     //Obtiene un registro por puntoVenta, letra y nroComprobante
     public ViajeRemito findByPuntoVentaAndLetraAndNumero(int puntoVenta, String letra, int numero);
     

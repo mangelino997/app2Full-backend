@@ -321,10 +321,12 @@ public class VehiculoService {
     public Vehiculo establecerAlias(Vehiculo elemento) throws IOException {
         if (elemento.getNumeroInterno() != null) {
             elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno() + " - "
+                    + elemento.getEmpresa().getRazonSocial() + " - "
                     + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
                     + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
         } else {
             elemento.setAlias(elemento.getDominio() + " - "
+                    + elemento.getEmpresa().getRazonSocial() + " - "
                     + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
                     + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
         }

@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ViajeFiltroDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Viaje;
 import ar.com.draimo.jitws.service.ViajeService;
@@ -64,11 +65,11 @@ public class ViajeController {
         return elementoService.obtenerPorId(id);
     }
     
-    //Obtiene una lista de registros por alias
-    @GetMapping(value = URL + "/listarPorAlias/{alias}")
+    //Obtiene una lista de registros por filtros
+    @PostMapping(value = URL + "/listarPorFiltros")
     @ResponseBody
-    public Object listarPorAlias(@PathVariable String alias) throws IOException {
-        return elementoService.listarPorAlias(alias);
+    public Object listarPorFiltros(@RequestBody ViajeFiltroDTO viajeFiltroDTO) throws IOException {
+        return elementoService.listarPorFiltros(viajeFiltroDTO);
     }
  
     //Agrega un registro

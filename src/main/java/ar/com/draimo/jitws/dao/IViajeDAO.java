@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.Viaje;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,8 +23,12 @@ public interface IViajeDAO extends JpaRepository<Viaje, Integer> {
     @Query(value = "SELECT * FROM viaje WHERE id=:id", nativeQuery = true)
     public Viaje obtenerPorId(@Param("id") int id);
     
-    //Obtiene una lista de registros por alias
-    public List<Viaje> findByAliasContaining(String alias);
+    //Obtiene por filtros
+    @Query(value = "SELECT * FROM viaje where ((:idViaje IS NULL or id=:idViaje) and (:fechaDesde IS NULL and :fechaHasta "
+            + "IS  NULL) OR (fecha between :fechaDesde and :fechaHasta)) and (:idPersonal IS NULL or idPersonal=:idPersonal) "
+            + "and (:idProveedor IS NULL or idProveedor=:idProveedor)", nativeQuery = true)
+    public List<Viaje> listarPorFiltros(@Param("idViaje") String idVieja, @Param("fechaDesde") Date fechaDesde, 
+            @Param("fechaHasta") Date fechaHasta, @Param("idPersonal") String idPersonal, @Param("idProveedor") String idProveedor);
     
     //Obtiene todos los registros
     @Query(value = "SELECT * FROM viaje", nativeQuery = true)

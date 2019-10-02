@@ -19,6 +19,7 @@ import ar.com.draimo.jitws.dao.IViajeInsumoDAO;
 import ar.com.draimo.jitws.dao.IViajePeajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import ar.com.draimo.jitws.dto.ViajeFiltroDTO;
 import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -128,14 +129,10 @@ public class ViajeService {
         return mapper.readValue(string, Object.class);
     }
 
-    //Obtiene una lista de registros por alias
-    public Object listarPorAlias(String alias) throws IOException {
-        List<Viaje> viajes;
-        if (alias.equals("***")) {
-            viajes = elementoDAO.findAll();
-        } else {
-            viajes = elementoDAO.findByAliasContaining(alias);
-        }
+    //Obtiene una lista de registros por filtros
+    public Object listarPorFiltros(ViajeFiltroDTO dto) throws IOException {
+        List<Viaje> viajes = elementoDAO.listarPorFiltros(dto.getIdViaje(), dto.getFechaDesde(), 
+                dto.getFechaHasta(), dto.getIdPersonal(), dto.getIdProveedor());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");

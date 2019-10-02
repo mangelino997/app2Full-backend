@@ -84,7 +84,7 @@ public class ViajeRemitoController {
     //Obtiene una lista de remitos no pendientes por viajeTramo
     @GetMapping(value = URL + "/listarAsignadosPorViajeTramo/{idViajeTramo}")
     @ResponseBody
-    public Object listarAsignadosPorViajeTramo(@PathVariable int idViajeTramo) throws IOException {
+    public List<ViajeRemito> listarAsignadosPorViajeTramo(@PathVariable int idViajeTramo) {
         return elementoService.listarAsignadosPorViajeTramo(idViajeTramo);
     }
 
@@ -98,19 +98,9 @@ public class ViajeRemitoController {
     //Obtiene una lista de remitos pendientes por filtro
     @GetMapping(value = URL + "/listarPendientesPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
     @ResponseBody
-    public Object listarPendientesPorFiltro(@PathVariable int idSucursal,
-            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
-        return elementoService.listarPendientesOAsignadosPorFiltro(
-                idSucursal, idSucursalDestino, numeroCamion, true);
-    }
-    
-    //Obtiene una lista de remitos asignados por filtro
-    @GetMapping(value = URL + "/listarAsignadosPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
-    @ResponseBody
-    public Object listarAsignadosPorFiltro(@PathVariable int idSucursal,
-            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) throws IOException {
-        return elementoService.listarPendientesOAsignadosPorFiltro(
-                idSucursal, idSucursalDestino, numeroCamion, false);
+    public List<ViajeRemito> listarPendientesPorFiltro(@PathVariable int idSucursal,
+            @PathVariable int idSucursalDestino, @PathVariable short numeroCamion) {
+        return elementoService.listarPendientesPorFiltro(idSucursal, idSucursalDestino, numeroCamion);
     }
 
     //Obtiene una lista de remitos por filtro
