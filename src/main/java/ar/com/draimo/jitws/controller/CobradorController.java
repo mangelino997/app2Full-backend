@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -23,61 +24,61 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase Cobrador Controller
+ *
  * @author blas
  */
-
 @RestController
 public class CobradorController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/cobrador";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/cobrador";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     CobradorService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<Cobrador> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
     public List<Cobrador> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
-    
+
     //Obtiene una lista por activo y ordenado por nombre
     @GetMapping(value = URL + "/listarPorEstaActivo")
     @ResponseBody
     public List<Cobrador> listarPorEstaActivo() {
         return elementoService.listarPorEstaActivoTrue();
     }
-    
+
     //Obtiene el cobrador por defecto
     @GetMapping(value = URL + "/obtenerPorDefecto")
     @ResponseBody
     public Cobrador obtenerPorDefecto() {
         return elementoService.obtenerPorDefecto();
-        
+
     }
-    
+
     //Establece al cobrador por defecto false
     @PutMapping(value = URL + "/establecerCobradorPorDefecto/{idCobrador}")
     public ResponseEntity<?> establecerCobradorPorDefecto(@PathVariable int idCobrador) {
@@ -91,18 +92,18 @@ public class CobradorController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Cobrador elemento) {
@@ -115,7 +116,7 @@ public class CobradorController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -123,7 +124,7 @@ public class CobradorController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody Cobrador elemento) {
@@ -140,18 +141,18 @@ public class CobradorController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -159,13 +160,13 @@ public class CobradorController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -57,33 +58,33 @@ public class BasicoCategoriaController {
         return elementoService.listar();
     }
 
-    //Obtiene una lista por nombre
+    //Obtiene una lista por nombre el nombre de categoria
     @GetMapping(value = URL + "/listarPorCategoriaNombre/{nombre}")
     @ResponseBody
     public List<BasicoCategoria> listarPorCategoriaNombre(@PathVariable String nombre) {
         return elementoService.listarPorCategoriaNombre(nombre);
     }
 
-    //Obtiene el ultimo registro por categoria
+    //Obtiene el ultimo registro por id categoria
     @GetMapping(value = URL + "/obtenerPorCategoria/{idCategoria}")
     @ResponseBody
     public ResponseEntity<?> obtenerPorCategoria(@PathVariable int idCategoria) {
         BasicoCategoria bc = elementoService.obtenerPorCategoria(idCategoria);
         if (bc == null) {
             return new ResponseEntity(bc, HttpStatus.NO_CONTENT);
-        }else{
+        } else {
             return new ResponseEntity(bc, HttpStatus.OK);
         }
     }
 
-    //Obtiene una lista por categoria
+    //Obtiene una lista por id categoria
     @GetMapping(value = URL + "/listarPorCategoria/{idCategoria}")
     @ResponseBody
     public List<BasicoCategoria> listarPorCategoria(@PathVariable int idCategoria) {
         return elementoService.listarPorCategoria(idCategoria);
     }
 
-    //Obtiene una lista por categoria y anio
+    //Obtiene una lista por id categoria y anio
     @GetMapping(value = URL + "/listarPorCategoriaYAnio/{idCategoria}/{anio}")
     @ResponseBody
     public List<BasicoCategoria> listarPorCategoria(@PathVariable int idCategoria, @PathVariable short anio) {

@@ -19,10 +19,6 @@ public interface IViajeDAO extends JpaRepository<Viaje, Integer> {
     //Obtiene el ultimo registro
     public Viaje findTopByOrderByIdDesc();
     
-    //Obtiene un registro por id
-    @Query(value = "SELECT * FROM viaje WHERE id=:id", nativeQuery = true)
-    public Viaje obtenerPorId(@Param("id") int id);
-    
     //Obtiene por filtros
     @Query(value = "SELECT * FROM viaje where ((:idViaje IS NULL or id=:idViaje) and (:fechaDesde IS NULL and :fechaHasta "
             + "IS  NULL) OR (fecha between :fechaDesde and :fechaHasta)) and (:idPersonal IS NULL or idPersonal=:idPersonal) "

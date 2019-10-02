@@ -1,4 +1,4 @@
-//Paquete al que pertenece el servicio
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -63,7 +63,6 @@ public class AfipComprobanteController {
     @GetMapping(value = URL + "/obtenerPorCodigoAfip/{codigoAfip}")
     @ResponseBody
     public ResponseEntity<?> obtenerPorCodigoAfip(@PathVariable String codigoAfip) {
-//        return elementoService.obtenerPorCodigoAfip(codigoAfip);
         AfipComprobante ac = elementoService.obtenerPorCodigoAfip(codigoAfip);
         if (ac == null) {
             return new ResponseEntity(ac, HttpStatus.NO_CONTENT);

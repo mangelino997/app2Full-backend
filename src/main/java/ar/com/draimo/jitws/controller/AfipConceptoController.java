@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -31,7 +32,6 @@ public class AfipConceptoController {
     
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/afipconcepto";
-    
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/afipconcepto";
     

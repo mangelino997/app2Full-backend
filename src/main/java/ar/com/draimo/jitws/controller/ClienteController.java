@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -24,60 +25,60 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase Cliente Controller
+ *
  * @author blas
  */
-
 @RestController
 public class ClienteController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/cliente";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/cliente";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     ClienteService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene por id
     @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
     public Object obtenerPorId(@PathVariable int id) throws IOException {
         return elementoService.obtenerPorId(id);
     }
-    
-    //Obtiene una lista por nombre
+
+    //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public List<Cliente> listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
-    
-    //Obtiene una lista por nombre para la lista de precios
+
+    //Obtiene una lista por alias para la lista de precios
     @GetMapping(value = URL + "/listarPorAliasListaPrecio/{alias}/{idCliente}")
     @ResponseBody
     public Object listarPorAliasListaPrecio(@PathVariable String alias, @PathVariable int idCliente) throws IOException {
         return elementoService.listarPorAliasListaPrecio(alias, idCliente);
     }
-    
+
     //Agrega un cliente eventual
     @PostMapping(value = URL + "/agregarClienteEventual")
     public ResponseEntity<?> agregarClienteEventual(@RequestBody Cliente elemento) {
@@ -86,13 +87,13 @@ public class ClienteController {
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -100,7 +101,7 @@ public class ClienteController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Cliente elemento) {
@@ -115,7 +116,7 @@ public class ClienteController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -123,7 +124,7 @@ public class ClienteController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody Cliente elemento) {
@@ -140,18 +141,18 @@ public class ClienteController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -159,13 +160,13 @@ public class ClienteController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

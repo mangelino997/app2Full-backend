@@ -4,7 +4,6 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.ChoferProveedor;
 import ar.com.draimo.jitws.model.Proveedor;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,7 +18,7 @@ public interface IChoferProveedorDAO extends JpaRepository<ChoferProveedor, Inte
     public ChoferProveedor findTopByOrderByIdDesc();
     
     //Obtiene una lista por id proveedor
-    public List<ChoferProveedor> findByProveedor(Optional<Proveedor> proveedor);
+    public List<ChoferProveedor> findByProveedor(Proveedor proveedor);
     
     //Obtiene una lista por alias
     public List<ChoferProveedor> findByAliasContaining(String alias);

@@ -53,7 +53,7 @@ public class ViajePeajeService {
 
     //Obtiene una lista de peajes por viaje
     public Object listarPeajes(int idViaje) throws IOException {
-        List<ViajePeaje> elementos = elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
+        List<ViajePeaje> elementos = elementoDAO.findByViaje(viajeDAO.findById(idViaje).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "datos");

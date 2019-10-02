@@ -55,7 +55,7 @@ public class ViajeGastoService {
 
     //Obtiene una lista de gastos por viaje 
     public Object listarGastos(int idViaje) throws IOException {
-        List<ViajeGasto> elementos = elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
+        List<ViajeGasto> elementos = elementoDAO.findByViaje(viajeDAO.findById(idViaje).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "datos");

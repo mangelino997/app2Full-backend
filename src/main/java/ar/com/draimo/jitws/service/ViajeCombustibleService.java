@@ -63,7 +63,7 @@ public class ViajeCombustibleService {
     
     //Obtiene una lista de tramos por viaje
     public Object listarCombustibles(int idViaje) throws IOException {
-        List<ViajeCombustible>  elementos= elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
+        List<ViajeCombustible>  elementos= elementoDAO.findByViaje(viajeDAO.findById(idViaje).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");

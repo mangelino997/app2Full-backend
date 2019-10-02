@@ -86,6 +86,12 @@ public class MensajeRespuesta {
                 MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    //Retorna mensaje con ReponseEntity de error interno en el servidor
+    public static ResponseEntity<?> error(String mensaje) {
+        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+                mensaje, 0), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     //Retorna mensaje con ReponseEntity intentalo nuevamente
     public static ResponseEntity<?> seleccioneNuevosDatos() {
         List<String> mensajes = new ArrayList<>();
