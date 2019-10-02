@@ -1,3 +1,4 @@
+//Paquete al que petenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.model.Viaje;
@@ -66,7 +67,7 @@ public class ViajeService {
     @Autowired
     IViajePeajeDAO viajePeajeDAO;
 
-    //Define la referencia al service de Viaje
+    //Define la referencia al service de ViajeTramo
     @Autowired
     ViajeTramoService viajeTramoService;
 
@@ -78,7 +79,7 @@ public class ViajeService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<Viaje> viajes = elementoDAO.obtenerTodos();
+        List<Viaje> viajes = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
@@ -95,7 +96,7 @@ public class ViajeService {
     //Obtiene por id
     public Object obtenerPorId(int id) throws IOException {
         //Obtiene un viaje propio por id
-        Viaje viaje = elementoDAO.obtenerPorId(id);
+        Viaje viaje = elementoDAO.findById(id).get();
         //Obtiene la lista de tramos del viaje
         List<ViajeTramo> viajePropioTramos = viajeTramoDAO.findByViaje(viaje);
         viaje.setViajeTramos(viajePropioTramos);
@@ -130,12 +131,8 @@ public class ViajeService {
 
     //Obtiene una lista de registros por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<Viaje> viajes;
-        if (alias.equals("***")) {
-            viajes = elementoDAO.findAll();
-        } else {
-            viajes = elementoDAO.findByAliasContaining(alias);
-        }
+        List<Viaje> viajes = alias.equals("***") ? elementoDAO.findAll()
+                : elementoDAO.findByAliasContaining(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
@@ -169,9 +166,7 @@ public class ViajeService {
 //                    elemento.getViajeTramos().add(viaje);
                 }
             }
-//            elemento = elementoDAO.save(elemento);
         }
-        elemento = establecerAlias(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
@@ -198,14 +193,8 @@ public class ViajeService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public Object actualizar(Viaje viaje) throws IOException {
-        //Formatea los strings
-        viaje = formatearStrings(viaje);
-        //Establece el alias
-        viaje.setAlias(viaje.getId() + " - " + viaje.getFecha()
-                + " - " + viaje.getEmpresaEmision().getRazonSocial()
-                + " - " + viaje.getPersonal().getNombreCompleto());
-        //Actualiza el viaje
-        viaje = elementoDAO.save(viaje);
+        //Formatea los strings, establece el alias y actualiza
+        viaje = establecerAlias(formatearStrings(viaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");

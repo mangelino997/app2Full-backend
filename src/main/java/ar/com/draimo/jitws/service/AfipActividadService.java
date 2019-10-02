@@ -56,10 +56,10 @@ public class AfipActividadService {
 
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(AfipActividad elemento) {
+    public AfipActividad establecerAlias(AfipActividad elemento) {
         elemento.setAlias(elemento.getCodigoAfip()
                 + " - " + elemento.getNombre());
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
 
     //Elimina un registro

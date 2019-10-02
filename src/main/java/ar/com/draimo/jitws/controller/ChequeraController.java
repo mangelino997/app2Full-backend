@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -26,52 +27,53 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase Chequera Controller
+ *
  * @author blas
  */
-
 @RestController
 public class ChequeraController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/chequera";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/chequera";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     ChequeraService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<Chequera> listar() {
         return elementoService.listar();
     }
-    
-    //Obtiene una lista por CuentaBancaria
+
+    //Obtiene una lista por id de empresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
     public List<Chequera> listarPorEmpresa(@PathVariable int idEmpresa) {
         return elementoService.listarPorEmpresa(idEmpresa);
     }
-    //Obtiene una lista por CuentaBancaria
+
+    //Obtiene una lista por id de CuentaBancaria
     @GetMapping(value = URL + "/listarPorCuentaBancaria/{idCuentaBancaria}")
     @ResponseBody
     public List<Chequera> listarPorCuentaBancaria(@PathVariable int idCuentaBancaria) {
         return elementoService.listarPorCuentaBancaria(idCuentaBancaria);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Chequera elemento) {
@@ -84,16 +86,15 @@ public class ChequeraController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna codigo y mensaje de error
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.error(e.getMessage());
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody Chequera elemento) {
@@ -110,19 +111,18 @@ public class ChequeraController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna codigo y mensaje de error
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.error(e.getMessage());
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -130,10 +130,10 @@ public class ChequeraController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

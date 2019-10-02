@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -23,67 +24,67 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase ChoferProveedor Controller
+ *
  * @author blas
  */
-
 @RestController
 public class ChoferProveedorController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/choferproveedor";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/choferproveedor";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     ChoferProveedorService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<ChoferProveedor> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public List<ChoferProveedor> listarPorAlias(@PathVariable String alias) {
         return elementoService.listarPorAlias(alias);
     }
-    
+
     //Obtiene una lista activos por alias  
     @GetMapping(value = URL + "/listarActivosPorAlias/{alias}")
     @ResponseBody
     public List<ChoferProveedor> listarActivosPorAlias(@PathVariable String alias) {
         return elementoService.listarActivosPorAlias(alias);
     }
-    
+
     //Obtiene una lista por proveedor
-    @GetMapping(value = URL + "/listarPorProveedor/{id}")
+    @GetMapping(value = URL + "/listarPorProveedor/{idProveedor}")
     @ResponseBody
-    public List<ChoferProveedor> listarPorProveedor(@PathVariable int id) {
-        return elementoService.listarPorProveedor(id);
+    public List<ChoferProveedor> listarPorProveedor(@PathVariable int idProveedor) {
+        return elementoService.listarPorAliasYProveedor("***", idProveedor);
     }
-    
+
     //Obtiene una lista por alias y proveedor
     @GetMapping(value = URL + "/listarPorAliasYProveedor/{alias}/{idProveedor}")
     @ResponseBody
     public List<ChoferProveedor> listarPorAliasYProveedor(@PathVariable String alias, @PathVariable int idProveedor) {
         return elementoService.listarPorAliasYProveedor(alias, idProveedor);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ChoferProveedor elemento) {
@@ -98,7 +99,7 @@ public class ChoferProveedorController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -106,7 +107,7 @@ public class ChoferProveedorController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody ChoferProveedor elemento) {
@@ -114,7 +115,7 @@ public class ChoferProveedorController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -123,18 +124,18 @@ public class ChoferProveedorController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -142,13 +143,13 @@ public class ChoferProveedorController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

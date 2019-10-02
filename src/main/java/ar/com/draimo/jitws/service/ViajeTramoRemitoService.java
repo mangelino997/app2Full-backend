@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
@@ -14,28 +15,30 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 
 /**
+ * ViajeTramoRemito
  *
  * @author blas
  */
-
 @Service
 public class ViajeTramoRemitoService {
 
+    //Define la referencia al DAO
     @Autowired
     IViajeTramoRemitoDAO elementoDAO;
 
+    //Define la referencia al DAO de viajeRemito
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeTramoRemito elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<ViajeTramoRemito> elementos=elementoDAO.findAll();
+        List<ViajeTramoRemito> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -44,10 +47,11 @@ public class ViajeTramoRemitoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
-    //Obtiene una lista por nombre
+
+    //Obtiene una lista por viajeRemito
     public Object listarPorViajeRemito(int idRemito) throws IOException {
-         List<ViajeTramoRemito> elementos=elementoDAO.findByViajeRemito(viajeRemitoDAO.findById(idRemito).get());
+        List<ViajeTramoRemito> elementos = elementoDAO.findByViajeRemito(
+                viajeRemitoDAO.findById(idRemito).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -68,7 +72,7 @@ public class ViajeTramoRemitoService {
     public void actualizar(ViajeTramoRemito elemento) {
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {

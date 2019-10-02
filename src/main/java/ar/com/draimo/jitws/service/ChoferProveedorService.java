@@ -55,24 +55,15 @@ public class ChoferProveedorService {
     
     //Obtiene una lista por alias activos
     public List<ChoferProveedor> listarActivosPorAlias(String alias) {
-        if(alias.equals("***")) {
-            return elementoDAO.findByUsuarioBajaIsNull();
-        } else {
-            return elementoDAO.findByAliasContainingAndUsuarioBajaIsNull(alias);
-        }
-    }
-    
-    //Obtiene una lista por proveedor
-    public List<ChoferProveedor> listarPorProveedor(int id) {
-        //Obtiene el proveedor por id
-        Optional<Proveedor> proveedor = proveedorDAO.findById(id);
-        return elementoDAO.findByProveedor(proveedor);
+        return alias.equals("***")?elementoDAO.findByUsuarioBajaIsNull():
+                elementoDAO.findByAliasContainingAndUsuarioBajaIsNull(alias);
     }
     
     //Obtiene una lista por alias y proveedor
     public List<ChoferProveedor> listarPorAliasYProveedor(String alias, int idProveedor) {
-        return elementoDAO.findByAliasContainingAndProveedor(alias, 
-                proveedorDAO.findById(idProveedor).get());
+        Proveedor proveedor = proveedorDAO.findById(idProveedor).get();
+        return alias.equals("***")?elementoDAO.findByProveedor(proveedor):
+                elementoDAO.findByAliasContainingAndProveedor(alias,proveedor);
     }
     
     //Agrega un registro

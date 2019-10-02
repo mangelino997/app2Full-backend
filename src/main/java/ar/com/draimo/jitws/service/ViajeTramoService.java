@@ -1,3 +1,4 @@
+//Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.model.ViajeTramo;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Viaje;
 import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +31,7 @@ public class ViajeTramoService {
     //Define la referencia al dao
     @Autowired
     IViajeTramoDAO elementoDAO;
-    
+
     //Define la referencia al dao de viaje tramo cliente
     @Autowired
     IViajeTramoClienteDAO viajeTramoClienteDAO;
@@ -48,9 +50,9 @@ public class ViajeTramoService {
         return elemento != null ? elemento.getId() + 1 : 1;
     }
 
-    //Obtiene una lista de tramos por viaje propio
+    //Obtiene una lista de tramos por viaje 
     public Object listarTramos(int idViaje) throws IOException {
-        List<ViajeTramo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerPorId(idViaje));
+        List<ViajeTramo> elementos = elementoDAO.findByViaje(viajeDAO.findById(idViaje).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");
@@ -91,32 +93,14 @@ public class ViajeTramoService {
             viaje = viajeService.establecerAlias(viaje);
             elemento.setViaje(viaje);
         }
-        //Obtiene longitud de numeroOrden, si supera 3 retorna error
-        String numOrden = String.valueOf(elemento.getNumeroOrden());
-        if (numOrden.length()>3) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO ORDEN");
-        }
-        //Obtiene longitud de km, si supera 4 retorna error
-        String km = String.valueOf(elemento.getKm());
-        if (km.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
-        }
-        //Obtiene longitud de cantidad, si supera 4 retorna error
-        String cantidad = String.valueOf(elemento.getCantidad());
-        if (cantidad.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD");
-        }
+        controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
         List<ViajeTramoCliente> vtCliente = new ArrayList<>();
         for (ViajeTramoCliente viajeTramoCliente : elemento.getViajeTramoClientes()) {
-            if(viajeTramoCliente.getId()!= 0){
-                viajeTramoCliente.setViajeTramo(elemento);
-                vtCliente.add(viajeTramoCliente);
-            }else {
-                viajeTramoCliente.setViajeTramo(elemento);
-                viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
-                vtCliente.add(viajeTramoCliente);
-            }
+            viajeTramoCliente.setViajeTramo(elemento);
+            viajeTramoCliente = viajeTramoCliente.getId() == 0
+                    ? viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente) : viajeTramoCliente;
+            vtCliente.add(viajeTramoCliente);
         }
         elemento.setViajeTramoClientes(vtCliente);
         ObjectMapper mapper = new ObjectMapper();
@@ -137,34 +121,13 @@ public class ViajeTramoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeTramo elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de numeroOrden, si supera 2 retorna error
-        String numOrden = String.valueOf(elemento.getNumeroOrden());
-        if (numOrden.length()>2) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en NUMERO ORDEN");
-        }
-        //Obtiene longitud de km, si supera 4 retorna error
-        String km = String.valueOf(elemento.getKm());
-        if (km.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en KM");
-        }
-        //Obtiene longitud de cantidad, si supera 4 retorna error
-        String cantidad = String.valueOf(elemento.getCantidad());
-        if (cantidad.length()>4) {
-            throw new DataIntegrityViolationException("Cantidad caracteres excedida en CANTIDAD");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(elemento);
-        List<ViajeTramoCliente> vtCliente = new ArrayList<>();
         for (ViajeTramoCliente viajeTramoCliente : elemento.getViajeTramoClientes()) {
-            if(viajeTramoCliente.getId()!= 0){
-                viajeTramoCliente.setViajeTramo(elemento);
-                vtCliente.add(viajeTramoCliente);
-            }else {
-                viajeTramoCliente.setViajeTramo(elemento);
-                viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
-                vtCliente.add(viajeTramoCliente);
-            }
+            viajeTramoCliente.setViajeTramo(elemento);
+            viajeTramoCliente = viajeTramoCliente.getId() == 0
+                    ? viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente) : viajeTramoCliente;
         }
-        elemento.setViajeTramoClientes(vtCliente);
     }
 
     //Elimina un registro
@@ -179,6 +142,25 @@ public class ViajeTramoService {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
         return elemento;
+    }
+
+    //Control para short excedidos en su limite
+    private void controlarLongitud(ViajeTramo elemento) {
+        //Obtiene longitud de numeroOrden, si supera 3 retorna error
+        String numOrden = String.valueOf(elemento.getNumeroOrden());
+        if (numOrden.length() > 3) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " NUMERO ORDEN");
+        }
+        //Obtiene longitud de km, si supera 4 retorna error
+        String km = String.valueOf(elemento.getKm());
+        if (km.length() > 4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
+        }
+        //Obtiene longitud de cantidad, si supera 4 retorna error
+        String cantidad = String.valueOf(elemento.getCantidad());
+        if (cantidad.length() > 4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD");
+        }
     }
 
 }
