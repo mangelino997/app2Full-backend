@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -55,10 +56,12 @@ public class CompraComprobante extends ObjetoGenerico {
     private String codigoAfip;
 
     //Define fechaEmision
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaEmision", nullable = false)
     private Date fechaEmision;
 
     //Define fechaContable
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaContable", nullable = false)
     private Date fechaContable;
 

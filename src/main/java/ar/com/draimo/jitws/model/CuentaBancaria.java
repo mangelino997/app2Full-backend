@@ -81,6 +81,7 @@ public class CuentaBancaria extends ObjetoGenerico {
     private Usuario usuarioBaja;
 
     //Define la fecha de cierre
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaCierre", nullable = true)
     private Date fechaCierre;
 

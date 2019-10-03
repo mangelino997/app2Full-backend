@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,6 +57,7 @@ public class PersonalFamiliar extends ObjetoGenerico {
     private String alias;
     
     //Define la fecha de nacimiento
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaNacimiento", nullable = false)
     private Date fechaNacimiento;
     

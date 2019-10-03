@@ -1,12 +1,10 @@
-//Paquete al que pertenece el controlador
+//Paquete al que pertenece el controlador 
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.CompraComprobante;
-import ar.com.draimo.jitws.service.CompraComprobanteService;
-import java.io.IOException;
-import java.sql.Date;
+import ar.com.draimo.jitws.model.ViajeTramoClienteRemito;
+import ar.com.draimo.jitws.service.ViajeTramoClienteRemitoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,62 +23,53 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase CompraComprobante Controller
+ * Clase ViajeTramoClienteRemito Controller
+ *
  * @author blas
  */
-
 @RestController
-public class CompraComprobanteController {
-    
+public class ViajeTramoClienteRemitoController {
+
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/compracomprobante";
+    private final String URL = RutaConstant.URL_BASE + "/viajetramoclienteremito";
+
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/compracomprobante";
-    
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/viajetramoclienteremito";
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
-    CompraComprobanteService elementoService;
-    
+    ViajeTramoClienteRemitoService elementoService;
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<CompraComprobante> listar() {
+    public List<ViajeTramoClienteRemito> listar() {
         return elementoService.listar();
     }
-    
-    //Obtiene la lista por filtros
-    @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{idProveedor}/{fechaTipo}/{fechaDesde}/{fechaHasta}/{idTipoComprobante}")
+
+    //Obtiene una lista por ViajeTramoCliente
+    @GetMapping(value = URL + "/listarPorViajeTramoCliente/{idViajeTramoCliente}")
     @ResponseBody
-    public Object listarPorFiltros(@PathVariable int idEmpresa, 
-            @PathVariable int idProveedor, @PathVariable int fechaTipo, 
-            @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable int idTipoComprobante) throws IOException {
-        return elementoService.listarPorFiltros(idEmpresa, idProveedor, fechaTipo, fechaDesde, fechaHasta, idTipoComprobante);
+    public List<ViajeTramoClienteRemito> listarPorViajeTramoCliente(@PathVariable int idViajeTramoCliente) {
+        return elementoService.listarPorViajeTramoCliente(idViajeTramoCliente);
     }
-    
-    //retorna si se cumple o no la unicidad
-    @GetMapping(value = URL + "/verificarUnicidadComprobante/{idProveedor}/{codigoAfip}/{puntoVenta}/{numero}")
-    @ResponseBody
-    public boolean verificarUnicidadComprobante(@PathVariable int idProveedor,
-            @PathVariable String codigoAfip, @PathVariable int puntoVenta, @PathVariable int numero) {
-        return elementoService.verificarUnicidadComprobante(idProveedor, codigoAfip, puntoVenta, numero);
-    }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody CompraComprobante elemento) {
+    public ResponseEntity<?> agregar(@RequestBody ViajeTramoClienteRemito elemento) {
         try {
-            CompraComprobante a = elementoService.agregar(elemento);
+            ViajeTramoClienteRemito a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -88,7 +77,7 @@ public class CompraComprobanteController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -96,10 +85,10 @@ public class CompraComprobanteController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody CompraComprobante elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody ViajeTramoClienteRemito elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -113,18 +102,18 @@ public class CompraComprobanteController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -132,13 +121,13 @@ public class CompraComprobanteController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

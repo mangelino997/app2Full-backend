@@ -80,7 +80,7 @@ public class ViajeService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<Viaje> viajes = elementoDAO.findAll();
+        List<Viaje> viajes = elementoDAO.obtenerTodos();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
@@ -97,7 +97,7 @@ public class ViajeService {
     //Obtiene por id
     public Object obtenerPorId(int id) throws IOException {
         //Obtiene un viaje propio por id
-        Viaje viaje = elementoDAO.findById(id).get();
+        Viaje viaje = elementoDAO.obtenerViaje(id);
         //Obtiene la lista de tramos del viaje
         List<ViajeTramo> viajePropioTramos = viajeTramoDAO.findByViaje(viaje);
         viaje.setViajeTramos(viajePropioTramos);

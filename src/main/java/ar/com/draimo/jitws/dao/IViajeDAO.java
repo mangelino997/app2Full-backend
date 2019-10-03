@@ -30,4 +30,8 @@ public interface IViajeDAO extends JpaRepository<Viaje, Integer> {
     @Query(value = "SELECT * FROM viaje", nativeQuery = true)
     public List<Viaje> obtenerTodos();
     
+    //Obtiene un registro por id
+    @Query(value = "SELECT * FROM viaje WHERE id=:id", nativeQuery = true)
+    public Viaje obtenerViaje(@Param("id") int id);
+    
 }

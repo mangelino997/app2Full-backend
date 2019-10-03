@@ -45,7 +45,7 @@ public class AfipActividadService {
     @Transactional(rollbackFor = Exception.class)
     public AfipActividad agregar(AfipActividad elemento) {
         formatearString(elemento);
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro

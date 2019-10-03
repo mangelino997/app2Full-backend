@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,6 +44,7 @@ public class TalonarioRecibo extends ObjetoGenerico {
     private Usuario usuarioAlta;
 
     //Define el fechaAlta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
 
