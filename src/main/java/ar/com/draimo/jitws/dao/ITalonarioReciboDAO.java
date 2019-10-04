@@ -1,6 +1,8 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Cobrador;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.TalonarioRecibo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +21,9 @@ public interface ITalonarioReciboDAO extends JpaRepository<TalonarioRecibo, Inte
     
     //Obtiene el ultimo registro
     public TalonarioRecibo findTopByOrderByIdDesc();
+    
+    //Obtiene una lista de 
+    public List<TalonarioRecibo> findByCobradorAndTalonarioReciboLote_empresa(Cobrador cobrador,Empresa empresa);
     
     @Query(value = "SELECT * FROM talonariorecibo c WHERE :desdeHasta BETWEEN "
             + "c.desde AND c.hasta", nativeQuery = true)

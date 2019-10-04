@@ -1,6 +1,8 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.ICobradorDAO;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITalonarioReciboDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TalonarioRecibo;
@@ -21,6 +23,15 @@ public class TalonarioReciboService {
     //Define la referencia al DAO
     @Autowired
     ITalonarioReciboDAO elementoDAO;
+    
+    //Define la referencia al DAO de Cobrador 
+    @Autowired
+    ICobradorDAO cobradorDAO;
+
+    //Define la referencia al DAO de Empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
+
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -32,6 +43,13 @@ public class TalonarioReciboService {
     public List<TalonarioRecibo> listar() {
         return elementoDAO.findAll();
     }
+    
+    //Obtiene la lista completa
+    public List<TalonarioRecibo> listarPorEmpresaYCobrador(int idCobrador, int idEmpresa) {
+        return elementoDAO.findByCobradorAndTalonarioReciboLote_empresa(cobradorDAO.findById(idCobrador).get(), empresaDAO.findById(idEmpresa).get());
+    }
+    
+    
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

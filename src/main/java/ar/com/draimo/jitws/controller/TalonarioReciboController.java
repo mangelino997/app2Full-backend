@@ -59,6 +59,13 @@ public class TalonarioReciboController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista completa
+//    @GetMapping(value = URL)
+//    @ResponseBody
+//    public List<TalonarioRecibo> listarPorEmpresaYCobrador(@PathVariable int idCobrador, @PathVariable int idEmpresa) {
+//        return elementoService.listarPorEmpresaYCobrador(idCobrador, idEmpresa);
+//    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TalonarioRecibo elemento) {
