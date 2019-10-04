@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
@@ -27,6 +28,7 @@ public class CompraComprobanteVencimiento extends ObjetoGenerico {
     private CompraComprobante compraComprobante;
 
     //Define fecha
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
     private Date fecha;
 

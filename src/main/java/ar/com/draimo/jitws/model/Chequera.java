@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,6 +43,7 @@ public class Chequera extends ObjetoGenerico {
     private Usuario usuarioAlta;
 
     //Define hasta
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaAlta", nullable = false)
     private Date fechaAlta;
 

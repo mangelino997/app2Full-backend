@@ -65,7 +65,7 @@ public class ViajeEfectivoService {
 
     //Obtiene una lista de efectivos por viaje propio
     public Object listarEfectivos(int idViaje) throws IOException {
-        List<ViajeEfectivo> elementos = elementoDAO.findByViaje(viajeDAO.findById(idViaje).get());
+        List<ViajeEfectivo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",

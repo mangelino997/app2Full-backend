@@ -55,7 +55,7 @@ public class ViajeInsumoService {
 
     //Obtiene una lista de insumos por viaje 
     public Object listarInsumos(int idViaje) throws IOException {
-        List<ViajeInsumo> elementos = elementoDAO.findByViaje(viajeDAO.findById(idViaje).get());
+        List<ViajeInsumo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "datos");

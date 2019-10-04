@@ -52,10 +52,11 @@ public class ViajeTramoService {
 
     //Obtiene una lista de tramos por viaje 
     public Object listarTramos(int idViaje) throws IOException {
-        List<ViajeTramo> elementos = elementoDAO.findByViaje(viajeDAO.findById(idViaje).get());
+        List<ViajeTramo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes", "viaje");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -71,7 +72,8 @@ public class ViajeTramoService {
         List<ViajeTramo> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes", "viaje");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
