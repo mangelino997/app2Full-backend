@@ -151,10 +151,10 @@ public class SoporteService {
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(Soporte elemento) {
         Subopcion s = subopcionDAO.findById(elemento.getSubopcion().getId()).get();
-        String subopcion = s.getNombre();
         String submodulo = s.getSubmodulo().getNombre();
         String modulo = s.getSubmodulo().getModulo().getNombre();
-        elemento.setAlias(elemento.getId() + " - " + modulo + " - " + submodulo + " - " + subopcion);
+        elemento.setAlias(elemento.getId() + " - " + modulo + " - " + submodulo 
+                + " - " + s.getNombre());
         elementoDAO.save(elemento);
     }
 

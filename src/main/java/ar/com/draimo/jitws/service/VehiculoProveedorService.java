@@ -80,7 +80,7 @@ public class VehiculoProveedorService {
     public VehiculoProveedor establecerAlias(VehiculoProveedor elemento) {
         Proveedor p = proveedorDAO.findById(elemento.getProveedor().getId()).get();
         MarcaVehiculo m = marcaVehiculoDAO.findById(elemento.getMarcaVehiculo().getId()).get();
-        elemento.setAlias(elemento.getId() + " - " + p.getNombreFantasia()
+        elemento.setAlias(elemento.getId() + " - " + p.getRazonSocial()
                 + " - " + elemento.getDominio() + " - " + m.getNombre());
         return elementoDAO.save(elemento);
     }

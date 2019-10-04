@@ -1,12 +1,14 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IConfiguracionVehiculoDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.ConfiguracionVehiculo;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Vehiculo;
@@ -46,6 +48,10 @@ public class VehiculoService {
     //Define la referencia al dao marca vehiculo
     @Autowired
     IMarcaVehiculoDAO marcaVehiculoDAO;
+
+    //Define la referencia al dao configuracion vehiculo
+    @Autowired
+    IConfiguracionVehiculoDAO configuracionVehiculoDAO;
 
     //Define DAO de pdf
     @Autowired
@@ -319,17 +325,13 @@ public class VehiculoService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public Vehiculo establecerAlias(Vehiculo elemento) throws IOException {
-        if (elemento.getNumeroInterno() != null) {
-            elemento.setAlias(elemento.getDominio() + " - " + elemento.getNumeroInterno() + " - "
-                    + elemento.getEmpresa().getRazonSocial() + " - "
-                    + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
-                    + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
-        } else {
-            elemento.setAlias(elemento.getDominio() + " - "
-                    + elemento.getEmpresa().getRazonSocial() + " - "
-                    + elemento.getConfiguracionVehiculo().getTipoVehiculo().getNombre() + " - "
-                    + elemento.getConfiguracionVehiculo().getMarcaVehiculo().getNombre());
-        }
+        Empresa e = empresaDAO.findById(elemento.getEmpresa().getId()).get();
+        ConfiguracionVehiculo cv = configuracionVehiculoDAO.findById(
+                elemento.getConfiguracionVehiculo().getId()).get();
+        String nInterno=elemento.getNumeroInterno() != null?elemento.getNumeroInterno():"";
+        elemento.setAlias(elemento.getDominio() + " - " + nInterno + " - "
+                + e.getRazonSocial() + " - " + cv.getTipoVehiculo().getNombre() + " - "
+                + cv.getMarcaVehiculo().getNombre());
         return elementoDAO.save(elemento);
     }
 

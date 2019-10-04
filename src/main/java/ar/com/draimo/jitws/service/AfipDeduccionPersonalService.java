@@ -33,11 +33,8 @@ public class AfipDeduccionPersonalService {
     
     //Obtiene una lista por Descripcion
     public List<AfipDeduccionPersonal> listarPorDescripcion(String descripcion) {
-        if(descripcion.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByDescripcionContaining(descripcion);
-        }
+        return descripcion.equals("***") ?elementoDAO.findAll()
+                : elementoDAO.findByDescripcionContaining(descripcion);
     }
     
     //Agrega un registro

@@ -1,6 +1,7 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoRemitoDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ViajeTramo;
 import ar.com.draimo.jitws.model.ViajeTramoRemito;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +39,10 @@ public class ViajeRemitoService {
     //Define la referencia al dao sucursal
     @Autowired
     ISucursalDAO sucursalDAO;
+
+    //Define la referencia al dao cliente
+    @Autowired
+    IClienteDAO clienteDAO;
 
     //Define la referencia al dao viaje tramo
     @Autowired
@@ -128,7 +134,7 @@ public class ViajeRemitoService {
         Sucursal sucursalDestino = sucursalDAO.findById(idSucursalDestino).get();
         //Retorna los datos
         return elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
-                        sucursal, sucursalDestino, numeroCamion);
+                sucursal, sucursalDestino, numeroCamion);
     }
 
     //Obtiene un listado por filtro
@@ -215,11 +221,10 @@ public class ViajeRemitoService {
         elemento.setEstaPendiente(true);
         elemento.setEstaFacturado(false);
         elemento.setEstaEnReparto(false);
-        ViajeRemito viajeRemito
-                = elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
-                        elemento.getClienteRemitente().getId(), elemento.getClienteDestinatario().getId(),
-                        elemento.getPuntoVenta(), elemento.getLetra(), elemento.getNumero(),
-                        elemento.getTipoComprobante().getId());
+        ViajeRemito viajeRemito = elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
+                elemento.getClienteRemitente().getId(), elemento.getClienteDestinatario().getId(),
+                elemento.getPuntoVenta(), elemento.getLetra(), elemento.getNumero(),
+                elemento.getTipoComprobante().getId());
         elemento = controlarLongitudes(elemento, viajeRemito);
         return elementoDAO.saveAndFlush(elemento);
     }
@@ -227,8 +232,10 @@ public class ViajeRemitoService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(ViajeRemito elemento) {
-        elemento.setAlias(elemento.getNumero() + " - (R: " + elemento.getClienteRemitente().getAlias() + ") - "
-                + "(D: " + elemento.getClienteDestinatario().getAlias() + ")");
+        Cliente rem = clienteDAO.findById(elemento.getClienteRemitente().getId()).get();
+        Cliente dest = clienteDAO.findById(elemento.getClienteDestinatario().getId()).get();
+        elemento.setAlias(elemento.getNumero() + " - (R: " + rem.getAlias() + ") - "
+                + "(D: " + dest.getAlias() + ")");
         elementoDAO.save(elemento);
     }
 

@@ -1,6 +1,8 @@
 //Paquete al que petenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.model.Viaje;
 import ar.com.draimo.jitws.model.ViajeCombustible;
 import ar.com.draimo.jitws.model.ViajeEfectivo;
@@ -21,6 +23,8 @@ import ar.com.draimo.jitws.dao.IViajePeajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.dto.ViajeFiltroDTO;
+import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.Personal;
 import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -39,6 +43,14 @@ public class ViajeService {
     //Define la referencia al dao
     @Autowired
     IViajeDAO elementoDAO;
+
+    //Define la referencia al dao personal
+    @Autowired
+    IPersonalDAO personalDAO;
+
+    //Define la referencia al dao empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
 
     //Define la referencia al dao viaje tramo
     @Autowired
@@ -132,7 +144,7 @@ public class ViajeService {
 
     //Obtiene una lista de registros por filtros
     public Object listarPorFiltros(ViajeFiltroDTO dto) throws IOException {
-        List<Viaje> viajes = elementoDAO.listarPorFiltros(dto.getIdViaje(), dto.getFechaDesde(), 
+        List<Viaje> viajes = elementoDAO.listarPorFiltros(dto.getIdViaje(), dto.getFechaDesde(),
                 dto.getFechaHasta(), dto.getIdPersonal(), dto.getIdProveedor());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -151,6 +163,7 @@ public class ViajeService {
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(Viaje elemento) throws IOException {
         ViajeTramo vTramo;
+        elemento = formatearStrings(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
         List<ViajeTramo> viajeTramos = elemento.getViajeTramos();
         for (ViajeTramo viajeTramo : viajeTramos) {
@@ -163,8 +176,8 @@ public class ViajeService {
                         viajeTramoCliente.setViajeTramo(viajeTramo);
                         viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
                     }
-//                    elemento.getViajeTramos().clear();
-//                    elemento.getViajeTramos().add(viaje);
+                    //elemento.getViajeTramos().clear();
+                    //elemento.getViajeTramos().add(viaje);
                 }
             }
         }
@@ -184,10 +197,10 @@ public class ViajeService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public Viaje establecerAlias(Viaje elemento) {
-        elemento = formatearStrings(elemento);
+        Empresa e = empresaDAO.findById(elemento.getEmpresaEmision().getId()).get();
+        Personal p = personalDAO.findById(elemento.getPersonal().getId()).get();
         elemento.setAlias(elemento.getId() + " - " + elemento.getFecha()
-                + " - " + elemento.getEmpresaEmision().getRazonSocial()
-                + " - " + elemento.getPersonal().getNombreCompleto());
+                + " - " + e.getRazonSocial() + " - " + p.getNombreCompleto());
         return elementoDAO.save(elemento);
     }
 

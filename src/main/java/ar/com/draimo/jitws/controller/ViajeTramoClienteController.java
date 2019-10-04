@@ -69,11 +69,11 @@ public class ViajeTramoClienteController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeTramoCliente elemento) {
         try {
-            ViajeTramoCliente viajeTramoCliente = elementoService.agregar(elemento);
+            ViajeTramoCliente a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return new ResponseEntity(viajeTramoCliente, HttpStatus.CREATED);
+            return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

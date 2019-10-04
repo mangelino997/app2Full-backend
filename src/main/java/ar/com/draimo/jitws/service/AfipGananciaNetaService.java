@@ -36,11 +36,8 @@ public class AfipGananciaNetaService {
     //Obtiene la lista completa
     public List<AfipGananciaNeta> listar() {
         List<AfipGananciaNeta> ganancias = elementoDAO.findAllByOrderByImporte();
-        if (ganancias.isEmpty()) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
-        } else {
-            return ganancias;
-        }
+        controlarListas(ganancias);
+        return ganancias;
     }
 
     //Obtiene una lista por filtros
@@ -49,11 +46,8 @@ public class AfipGananciaNetaService {
             throw new Exception(MensajeRespuesta.NO_EXISTENTE + "MES");
         } else {
             List<AfipGananciaNeta> ganancias = elementoDAO.listarPorFiltros(anio, idMes);
-            if (ganancias.isEmpty()) {
-                throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
-            } else {
-                return ganancias;
-            }
+            controlarListas(ganancias);
+            return ganancias;
         }
     }
 
@@ -62,51 +56,34 @@ public class AfipGananciaNetaService {
 
         List<AfipGananciaNeta> ganancias = elementoDAO.findByAfipAlicuotaGananciaOrderByImporte(
                 gananciaDAO.findById(idAlicuotaGanancia).get());
-        if (ganancias.isEmpty()) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
-        } else {
-            return ganancias;
-        }
+        controlarListas(ganancias);
+        return ganancias;
     }
 
     //Obtiene una lista por AnioFiscal
     public List<AfipGananciaNeta> listarPorAnioFiscal(short anioFiscal) {
-        String anio = String.valueOf(anioFiscal);
-        //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
-        }
+        controlarLongitud(anioFiscal);
         List<AfipGananciaNeta> ganancias = elementoDAO.findByAnioOrderByImporte(anioFiscal);
-        if (ganancias.isEmpty()) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
-        } else {
-            return ganancias;
-        }
+        controlarListas(ganancias);
+        return ganancias;
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipGananciaNeta agregar(AfipGananciaNeta elemento) throws Exception {
-        String anio = String.valueOf(elemento.getAnio());
-        //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
-        }
+        controlarLongitud(elemento.getAnio());
         if (elementoDAO.findByAnioAndImporte(elemento.getAnio(), elemento.getImporte()).isEmpty()) {
             return elementoDAO.saveAndFlush(elemento);
         } else {
-            throw new DataIntegrityViolationException(MensajeRespuesta.EXISTENTE_PARA_ANIO_FISCAL + " GANANCIA NETA ACUMULADA");
+            throw new DataIntegrityViolationException(MensajeRespuesta.EXISTENTE_PARA_ANIO_FISCAL 
+                    + " GANANCIA NETA ACUMULADA");
         }
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipGananciaNeta elemento) throws Exception {
-        String anio = String.valueOf(elemento.getAnio());
-        //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " AÑO");
-        }
+        controlarLongitud(elemento.getAnio());
         elementoDAO.save(elemento);
     }
 
@@ -114,6 +91,22 @@ public class AfipGananciaNetaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+
+    //Controla la longitud incorrecta en atributos de tipo short
+    private void controlarLongitud(short elemento) {
+        String anio = String.valueOf(elemento);
+        //Obtiene longitud de anio, si supera 4 retorna error
+        if (anio.length() > 4 || anio.length() < 4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " AÑO");
+        }
+    }
+
+    //Retorna mensaje de lista vacia
+    private void controlarListas(List<AfipGananciaNeta> ganancias) {
+        if (ganancias.isEmpty()) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
+        }
     }
 
 }

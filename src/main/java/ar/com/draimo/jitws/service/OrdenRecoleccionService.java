@@ -1,9 +1,11 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +35,10 @@ public class OrdenRecoleccionService {
     //Define la referencia al dao tipo comprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
+    
+    //Define la referencia al dao cliente
+    @Autowired
+    IClienteDAO clienteDAO;
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -122,8 +128,9 @@ public class OrdenRecoleccionService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public void establecerAlias(OrdenRecoleccion or) {
-        or.setAlias(or.getId() + " | " + or.getCliente().getId() + " - " + 
-                or.getCliente().getRazonSocial() + " | " + or.getFecha());
+        Cliente c = clienteDAO.findById(or.getCliente().getId()).get();
+        or.setAlias(or.getId() + " | " + c.getId() + " - " + 
+                c.getRazonSocial() + " | " + or.getFecha());
         elementoDAO.save(or);
     }
     
@@ -131,14 +138,12 @@ public class OrdenRecoleccionService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(OrdenRecoleccion elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        elemento.setAlias(elemento.getId() + " | " + elemento.getCliente().getId() 
-                + " - " + elemento.getCliente().getRazonSocial() + " | " + elemento.getFecha());
         //Obtiene longitud de bultos, si supera 6 retorna error
         String bultos = String.valueOf(elemento.getBultos());
         if (bultos.length()>6) {
             throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
         }
-        elementoDAO.save(elemento);
+        establecerAlias(elemento);
     }
     
     //Elimina un registro

@@ -46,24 +46,16 @@ public class AfipCaeaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipCaea agregar(AfipCaea elemento) throws Exception {
+        controlarLongitud(elemento);
         elemento = formatearStrings(elemento);
-        String anio = String.valueOf(elemento.getAnio());
-        //Obtiene la longitud del anio, si supera 4 retorna mensaje de error
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
-        }
-        return elementoDAO.save(elemento);
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipCaea elemento) throws Exception {
+        controlarLongitud(elemento);
         elemento = formatearStrings(elemento);
-        String anio = String.valueOf(elemento.getAnio());
-        //Obtiene la longitud del anio, si supera 4 retorna mensaje de error
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
-        }
         elementoDAO.save(elemento);
     }
     
@@ -71,6 +63,15 @@ public class AfipCaeaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //COntrola la longitud de los atributos short
+    private void controlarLongitud(AfipCaea elemento) {
+        String anio = String.valueOf(elemento.getAnio());
+        //Obtiene la longitud del anio, si supera 4 retorna mensaje de error
+        if (anio.length()>4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
+        }
     }
     
     //Formatea los strings
