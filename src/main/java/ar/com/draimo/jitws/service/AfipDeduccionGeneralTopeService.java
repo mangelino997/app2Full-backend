@@ -45,22 +45,15 @@ public class AfipDeduccionGeneralTopeService {
 
     //Obtiene una lista por Descripcion
     public List<AfipDeduccionGeneralTope> listarPorDescripcion(String descripcion) {
-        if (descripcion.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByDescripcionContaining(descripcion);
-        }
+        return descripcion.equals("***") ? elementoDAO.findAll()
+                : elementoDAO.findByDescripcionContaining(descripcion);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipDeduccionGeneralTope agregar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        String anio = String.valueOf(elemento.getAnio());
-        //Obtiene longitud de anio, si no es igual a 4 retorna error
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + "AÑO");
-        }
+        controlarLongitud(elemento);
         if (elementoDAO.findByAnioAndAfipDeduccionGeneralOrderByAfipDeduccionGeneral_Id(
                 elemento.getAnio(), elemento.getAfipDeduccionGeneral()).isEmpty()) {
             return elementoDAO.saveAndFlush(elemento);
@@ -73,11 +66,7 @@ public class AfipDeduccionGeneralTopeService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipDeduccionGeneralTope elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        String anio = String.valueOf(elemento.getAnio());
-        //Obtiene longitud de anio, si no es igual a 4 retorna error
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + "AÑO");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(elemento);
     }
 
@@ -85,6 +74,15 @@ public class AfipDeduccionGeneralTopeService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+
+    //Cotrola la longitud de los atributos short
+    private void controlarLongitud(AfipDeduccionGeneralTope elemento) {
+        String anio = String.valueOf(elemento.getAnio());
+        //Obtiene longitud de anio, si no es igual a 4 retorna error
+        if (anio.length() > 4 || anio.length() < 4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + "AÑO");
+        }
     }
 
     //Formatea los strings

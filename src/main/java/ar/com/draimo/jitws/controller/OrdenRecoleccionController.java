@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -23,68 +24,68 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase OrdenRecoleccion Controller
+ *
  * @author blas
  */
-
 @RestController
 public class OrdenRecoleccionController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/ordenrecoleccion";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/ordenrecoleccion";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     OrdenRecoleccionService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene un registro por id
     @GetMapping(value = URL + "/obtenerPorId/{idOrdenRecoleccion}")
     @ResponseBody
     public Object obtenerPorId(@PathVariable int idOrdenRecoleccion) throws IOException {
         return elementoService.obtenerPorId(idOrdenRecoleccion);
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene la lista por ordenes de recoleccion disponibles
     @GetMapping(value = URL + "/listarRecoleccionesDisponibles")
     @ResponseBody
     public Object listarRecoleccionesDisponibles() throws IOException {
         return elementoService.listarRecoleccionesDisponibles();
     }
-    
+
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
-    
-    //Obtiene una lista por filtros
+
+    //Obtiene una lista por filtros (fecha de emision y cliente)
     @GetMapping(value = URL + "/listarPorFiltros/{fechaEmision}/{idCliente}")
     @ResponseBody
     public Object listarPorFiltros(@PathVariable String fechaEmision,
             @PathVariable int idCliente) throws IOException {
         return elementoService.listarPorFiltros(fechaEmision, idCliente);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody OrdenRecoleccion elemento) {
@@ -99,7 +100,7 @@ public class OrdenRecoleccionController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -107,7 +108,7 @@ public class OrdenRecoleccionController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody OrdenRecoleccion elemento) {
@@ -124,18 +125,18 @@ public class OrdenRecoleccionController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato Inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -143,13 +144,13 @@ public class OrdenRecoleccionController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

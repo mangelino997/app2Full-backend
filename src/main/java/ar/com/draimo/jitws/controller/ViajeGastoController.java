@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -24,46 +25,46 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase ViajeGasto Controller
+ *
  * @author blas
  */
-
 @RestController
 public class ViajeGastoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/viajegasto";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/viajegasto";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     ViajeGastoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
-    //Obtiene la lista de gastos por ViajePropio
+
+    //Obtiene la lista de gastos por Viaje
     @GetMapping(value = URL + "/listarGastos/{idViaje}")
     @ResponseBody
     public Object listarGastos(@PathVariable int idViaje) throws IOException {
         return elementoService.listarGastos(idViaje);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeGasto elemento) {
@@ -76,7 +77,7 @@ public class ViajeGastoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -84,7 +85,7 @@ public class ViajeGastoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody ViajeGasto elemento) {
@@ -101,32 +102,32 @@ public class ViajeGastoController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //anula un Efectivo
     @PutMapping(value = URL + "/anular")
     @ResponseBody
     public ResponseEntity<?> anular(@RequestBody ViajeGasto elemento) throws IOException {
-            try {
+        try {
             elementoService.anular(elemento);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.anulado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Normaliza un registro
     @PutMapping(value = URL + "/normalizar")
     @ResponseBody
@@ -135,12 +136,12 @@ public class ViajeGastoController {
             elementoService.normalizar(elemento);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.normalizado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -148,10 +149,10 @@ public class ViajeGastoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

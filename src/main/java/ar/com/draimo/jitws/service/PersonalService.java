@@ -190,7 +190,7 @@ public class PersonalService {
             MultipartFile altaTemprana) throws IOException, Exception {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
-        controlDeLongitud(elemento);
+        controlarLongitud(elemento);
         if (!foto.getOriginalFilename().equals("")) {
             Foto p = fotoService.agregar(foto, false);
             p.setTabla("personal");
@@ -245,10 +245,11 @@ public class PersonalService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(String elementoString, MultipartFile foto, MultipartFile licConducir,
-            MultipartFile linti, MultipartFile libSanidad, MultipartFile dni, MultipartFile altaTemprana) throws IOException {
+            MultipartFile linti, MultipartFile libSanidad, MultipartFile dni,
+            MultipartFile altaTemprana) throws IOException {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         Personal personal = elementoDAO.findById(elemento.getId()).get();
-        controlDeLongitud(elemento);
+        controlarLongitud(elemento);
         if (foto.getOriginalFilename().equals("")) {
             if (personal.getFoto() != null) {
                 fotoDAO.deleteById(personal.getFoto().getId());
@@ -268,9 +269,11 @@ public class PersonalService {
             elemento.setPdfLicConducir(null);
         } else {
             Pdf p1 = personal.getPdfLicConducir() != null ? pdfService.actualizar(
-                    personal.getPdfLicConducir().getId(), licConducir, false) : pdfService.agregar(licConducir, false);
+                    personal.getPdfLicConducir().getId(), licConducir, false)
+                    : pdfService.agregar(licConducir, false);
             p1.setTabla("personal");
-            Pdf pdf1 = personal.getPdfLicConducir() != null ? pdfDAO.save(p1) : pdfDAO.saveAndFlush(p1);
+            Pdf pdf1 = personal.getPdfLicConducir() != null ? pdfDAO.save(p1)
+                    : pdfDAO.saveAndFlush(p1);
             elemento.setPdfLicConducir(pdf1);
         }
         if (linti.getOriginalFilename().equals("")) {
@@ -280,9 +283,11 @@ public class PersonalService {
             elemento.setPdfLinti(null);
         } else {
             Pdf p2 = personal.getPdfLinti() != null ? pdfService.actualizar(
-                    personal.getPdfLinti().getId(), linti, false) : pdfService.agregar(linti, false);
+                    personal.getPdfLinti().getId(), linti, false)
+                    : pdfService.agregar(linti, false);
             p2.setTabla("personal");
-            Pdf pdf2 = personal.getPdfLinti() != null ? pdfDAO.save(p2) : pdfDAO.saveAndFlush(p2);
+            Pdf pdf2 = personal.getPdfLinti() != null ? pdfDAO.save(p2)
+                    : pdfDAO.saveAndFlush(p2);
             elemento.setPdfLinti(pdf2);
         }
         if (libSanidad.getOriginalFilename().equals("")) {
@@ -295,7 +300,8 @@ public class PersonalService {
                     personal.getPdfLibSanidad().getId(), libSanidad, false)
                     : pdfService.agregar(libSanidad, false);
             p3.setTabla("personal");
-            Pdf pdf3 = personal.getPdfLibSanidad() != null ? pdfDAO.save(p3) : pdfDAO.saveAndFlush(p3);
+            Pdf pdf3 = personal.getPdfLibSanidad() != null ? pdfDAO.save(p3)
+                    : pdfDAO.saveAndFlush(p3);
             elemento.setPdfLibSanidad(pdf3);
         }
 //        if (dni.getOriginalFilename().equals("")) {
@@ -325,32 +331,38 @@ public class PersonalService {
             elemento.setPdfAltaTemprana(null);
         } else {
             Pdf p5 = personal.getPdfAltaTemprana() != null ? pdfService.actualizar(
-                    personal.getPdfAltaTemprana().getId(), altaTemprana, false) : pdfService.agregar(altaTemprana, false);
+                    personal.getPdfAltaTemprana().getId(), altaTemprana, false)
+                    : pdfService.agregar(altaTemprana, false);
             p5.setTabla("personal");
             p5.setTabla("personal");
-            Pdf pdf5 = personal.getPdfAltaTemprana() != null ? pdfDAO.save(p5) : pdfDAO.saveAndFlush(p5);
+            Pdf pdf5 = personal.getPdfAltaTemprana() != null ? pdfDAO.save(p5)
+                    : pdfDAO.saveAndFlush(p5);
             elemento.setPdfAltaTemprana(pdf5);
         }
         establecerAlias(elemento);
     }
 
     //Controla la longitud de los atributos de tipo short
-    private boolean controlDeLongitud(Personal elemento) {
+    private boolean controlarLongitud(Personal elemento) {
         if (elemento.getAntiguedadAntAnio() > 60) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " ANTIGUEDAD ANT. AÑO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD
+                    + " ANTIGUEDAD ANT. AÑO");
         }
         //Obtiene antiguedadAntMes, si es mayor a 11 retorna error
         if (elemento.getAntiguedadAntMes() > 11) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " ANTIGUEDAD ANT. MES");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD
+                    + " ANTIGUEDAD ANT. MES");
         }
         //Obtiene adherenteOb.Soc., si es mayor a 12 retorna error
         if (elemento.getAdherenteObraSocial() > 12) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " ADHERENTE OBRA SOCIAL");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD
+                    + " ADHERENTE OBRA SOCIAL");
         }
         //Obtiene longitud de anio, si es mayor a 2 retorna error
         String cuotasPr = String.valueOf(elemento.getCuotasPrestamo());
         if (cuotasPr.length() > 2) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CUOTAS PRESTAMO");
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD
+                    + " CUOTAS PRESTAMO");
         }
         return true;
     }

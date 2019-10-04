@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -11,24 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase Menu Controller
+ *
  * @author blas
  */
-
 @RestController
 public class MenuController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/menu";
-    
+
     //Crea una instancia del servicio
     @Autowired
     MenuService elementoService;
-    
+
     //Obtiene la lista por rol
     @GetMapping(value = URL + "/{idRol}")
     @ResponseBody
     public MenuDTO listar(@PathVariable int idRol) {
         return elementoService.listar(idRol);
     }
-    
+
 }

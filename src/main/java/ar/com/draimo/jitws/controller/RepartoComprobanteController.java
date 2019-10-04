@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -58,21 +59,21 @@ public class RepartoComprobanteController {
         return elementoService.listar();
     }
 
-    //Obtiene la lista por RepartoPropio
+    //Obtiene la lista por Reparto
     @GetMapping(value = URL + "/listarComprobantes/{idReparto}")
     @ResponseBody
     public Object listarComprobantes(@PathVariable int idReparto) throws IOException {
         return elementoService.listarComprobantes(idReparto);
     }
 
-    //Obtiene la lista por RepartoPropio
+    //Quita comprobante por id
     @GetMapping(value = URL + "/quitarComprobante/{id}")
     @ResponseBody
     public ResponseEntity<?> quitarComprobante(@PathVariable int id) {
         try {
             int rp = elementoService.quitarComprobante(id);
             //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/listarComprobantes", elementoService.listarComprobantes(rp));
+            //template.convertAndSend(TOPIC + "/listarComprobantes", elementoService.listarComprobantes(rp));
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch (Exception e) {
@@ -81,14 +82,14 @@ public class RepartoComprobanteController {
         }
     }
 
-    //Agrega un listado de registros
+    //Conforma que un listado de registros fueron entregados en forma
     @PutMapping(value = URL + "/conformarComprobantes")
     public ResponseEntity<?> conformarComprobantes(@RequestBody List<RepartoComprobante> elementos) {
         try {
-            List<RepartoComprobante> a = elementoService.agregarComprobantes(elementos);
+            List<RepartoComprobante> a = elementoService.conformarComprobantes(elementos);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes",
-                    elementoService.listarComprobantes(elementos.get(0).getReparto().getId()));
+            /*template.convertAndSend(TOPIC + "/listarComprobantes",
+                    elementoService.listarComprobantes(elementos.get(0).getReparto().getId()));*/
             //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
             return new ResponseEntity(elementos, HttpStatus.ACCEPTED);
         } catch (DataIntegrityViolationException dive) {
@@ -109,8 +110,8 @@ public class RepartoComprobanteController {
         try {
             List<RepartoComprobante> a = elementoService.agregarComprobantes(elementos);
             //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes",
-                    elementoService.listarComprobantes(elementos.get(0).getReparto().getId()));
+            /*template.convertAndSend(TOPIC + "/listarComprobantes",
+                    elementoService.listarComprobantes(elementos.get(0).getReparto().getId()));*/
             //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
             return new ResponseEntity(elementos, HttpStatus.ACCEPTED);
         } catch (DataIntegrityViolationException dive) {
@@ -131,9 +132,9 @@ public class RepartoComprobanteController {
         try {
             int a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/listarComprobantes",
-//                    elementoService.listarComprobantes(elemento.getReparto().getId()));
-            //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente
+            /*template.convertAndSend(TOPIC + "/listarComprobantes",
+                    elementoService.listarComprobantes(elemento.getReparto().getId()));
+            //Confirma si el registro fue agregado. Si no devuelve mensaje de no existente*/
             return a != 0 ? MensajeRespuesta.agregado(a)
                     : MensajeRespuesta.registroNoExistente();
         } catch (DataIntegrityViolationException dive) {
@@ -155,8 +156,8 @@ public class RepartoComprobanteController {
             //Actualiza el registro
             RepartoComprobante a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/listarComprobantes",
-//                    elementoService.listarComprobantes(elemento.getReparto().getId()));
+            /*template.convertAndSend(TOPIC + "/listarComprobantes",
+                    elementoService.listarComprobantes(elemento.getReparto().getId()));*/
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {

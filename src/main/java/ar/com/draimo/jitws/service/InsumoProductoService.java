@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IInsumoProductoDAO;
 import ar.com.draimo.jitws.dao.IMarcaProductoDAO;
 import ar.com.draimo.jitws.dao.IRubroProductoDAO;
+import ar.com.draimo.jitws.model.MarcaProducto;
 import ar.com.draimo.jitws.model.RubroProducto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -152,9 +153,10 @@ public class InsumoProductoService {
     
     //Establece el alias
     public void establecerAlias(int id, InsumoProducto elemento) {
+        RubroProducto r = rubroProductoDAO.findById(elemento.getRubroProducto().getId()).get();
+        MarcaProducto m = marcaProductoDAO.findById(elemento.getMarcaProducto().getId()).get();
         elemento.setAlias(id +" - "+ elemento.getNombre() + " - "+
-                elemento.getRubroProducto().getNombre() + " - " + 
-                elemento.getMarcaProducto().getNombre());
+                r.getNombre() + " - " + m.getNombre());
         elementoDAO.save(elemento);
     }
     

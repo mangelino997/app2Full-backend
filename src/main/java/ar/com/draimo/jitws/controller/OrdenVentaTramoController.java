@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -64,7 +65,7 @@ public class OrdenVentaTramoController {
         return elementoService.listarPorOrdenVentaTarifa(id);
     }
 
-    //Obtiene una lista por id de orden venta y preciosDesde
+    //Obtiene una lista por id de orden venta 
     @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
     @ResponseBody
     public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta) throws IOException {
@@ -74,7 +75,8 @@ public class OrdenVentaTramoController {
     //Obtiene una lista por id de orden venta y preciosDesde
     @GetMapping(value = URL + "/listarPorOrdenVentaYPreciosDesde/{idOrdenVenta}/{preciosDesde}")
     @ResponseBody
-    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta, @PathVariable String preciosDesde) throws IOException {
+    public Object listarPorOrdenVentaYPreciosDesde(@PathVariable int idOrdenVenta,
+            @PathVariable String preciosDesde) throws IOException {
         return elementoService.listarPorOrdenVentaYPreciosDesde(idOrdenVenta, preciosDesde);
     }
 
@@ -91,7 +93,7 @@ public class OrdenVentaTramoController {
         try {
             int a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return new ResponseEntity(a, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
@@ -113,7 +115,7 @@ public class OrdenVentaTramoController {
             //Actualiza el registro
             int a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return new ResponseEntity(a, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {

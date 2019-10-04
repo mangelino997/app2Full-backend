@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -24,47 +25,47 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Clase RetiroDeposito Controller
+ *
  * @author blas
  */
-
 @RestController
 public class RetiroDepositoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/retirodeposito";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/retirodeposito";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     RetiroDepositoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<RetiroDeposito> listar() {
         return elementoService.listar();
     }
-    
-    //Obtiene la lista de planillas abiertas
+
+    //Obtiene la lista de planillas por esta cerrada
     @GetMapping(value = URL + "/listarPorEstaCerrada/{estaCerrada}")
     @ResponseBody
     public List<RetiroDeposito> listarPorEstaCerrada(@PathVariable boolean estaCerrada) {
         return elementoService.listarPorEstaCerrada(estaCerrada);
     }
-    
-    //Cierra un repartopropio
+
+    //Cierra un reparto
     @PutMapping(value = URL + "/cerrarReparto/{idRetiroDeposito}")
     @ResponseBody
     public ResponseEntity<?> cerrarReparto(@PathVariable int idRetiroDeposito) {
@@ -72,24 +73,24 @@ public class RetiroDepositoController {
         if (r == true) {
             //template.convertAndSend(TOPIC + "/lista", elementoService.listarPorEstaCerrada(false));
             return MensajeRespuesta.cerrado();
-        } else{
+        } else {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Obtiene una lista por numeroDocumento
     @GetMapping(value = URL + "/listarPorNumeroDocumento/{numeroDocumento}")
     @ResponseBody
     public List<RetiroDeposito> listarPorNumeroDocumento(@PathVariable String numeroDocumento) {
         return elementoService.obtenerPorNumeroDocumento(numeroDocumento);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("formulario") String retiroString,
             @RequestPart("archivo") MultipartFile archivo) {
         try {
-            RetiroDeposito a = elementoService.agregar(retiroString,archivo);
+            RetiroDeposito a = elementoService.agregar(retiroString, archivo);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de agregado con exito
@@ -97,7 +98,7 @@ public class RetiroDepositoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -105,14 +106,14 @@ public class RetiroDepositoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestPart("formulario") String retiroString,
             @RequestPart("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(retiroString,archivo);
+            elementoService.actualizar(retiroString, archivo);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/listarPorEstaCerrada", elementoService.listarPorEstaCerrada(false));
             //Retorna mensaje de actualizado con exito
@@ -123,18 +124,18 @@ public class RetiroDepositoController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -142,13 +143,13 @@ public class RetiroDepositoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

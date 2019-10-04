@@ -54,8 +54,8 @@ public class PersonalAdelantoController {
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
-    //Obtiene la suma total de importes para la lista de cuotas
+
+    //Obtiene la diferencia de importes para la lista de cuotas
     @PutMapping(value = URL + "/obtenerDiferenciaImportes")
     @ResponseBody
     public BigDecimal obtenerDiferenciaImportes(@RequestBody List<PersonalAdelantoLoteDTO> listaCuotas) throws IOException {
@@ -76,7 +76,7 @@ public class PersonalAdelantoController {
         return elementoService.listarCoutas(personalAdelanto);
     }
 
-    //Obtiene una lista por lote o fecha emision
+    //Obtiene una lista por lote o fecha emision o empresa
     @GetMapping(value = URL + "/listarLotes/{fechaDesde}/{fechaHasta}/{idEmpresa}")
     @ResponseBody
     public List<PersonalAdelantoLoteDTO> listarLotes(@PathVariable Date fechaDesde, @PathVariable Date fechaHasta,
@@ -118,7 +118,7 @@ public class PersonalAdelantoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Anula un registro - un adelanto personal
     @PutMapping(value = URL + "/anular")
     public ResponseEntity<?> anular(@RequestBody PersonalAdelanto elemento) {

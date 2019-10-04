@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -16,33 +17,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase RolOpcion Controller
+ *
  * @author blas
  */
-
 @RestController
 public class RolOpcionController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/rolopcion";
-    
+
     //Crea una instancia del servicio
     @Autowired
     RolOpcionService elementoService;
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<RolOpcion> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por rol y subopcion
     @GetMapping(value = URL + "/listarPorRolSubopcion/{idRol}/{idSubopcion}")
     @ResponseBody
     public List<Opcion> listarPorRolSubopcion(@PathVariable int idRol, @PathVariable int idSubopcion) {
         return elementoService.listarPorRolYSubopcion(idRol, idSubopcion);
     }
-    
+
     /*
      * Asigna todas las empresas a cada uno de los usuarios, eliminando todo los
      * datos y reestableciendo desde cero
@@ -53,10 +54,10 @@ public class RolOpcionController {
         try {
             elementoService.reestablecerTablaDesdeCero();
             return MensajeRespuesta.tablaReestablecida();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         }
     }
-    
+
 }

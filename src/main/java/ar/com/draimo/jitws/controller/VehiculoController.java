@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -24,81 +25,82 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Clase Vehiculo Controller
+ *
  * @author blas
  */
-
 @RestController
 public class VehiculoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/vehiculo";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/vehiculo";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     VehiculoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene un registro por id
     @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
     public Object obtenerPorId(@PathVariable int id) throws IOException {
         return elementoService.obtenerPorId(id);
     }
-    
-    //Obtiene un re
+
+    //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
-    
+
     //Obtiene una lista por alias y empresa
     @GetMapping(value = URL + "/listarPorAliasYEmpresa/{alias}/{idEmpresa}")
     @ResponseBody
     public Object listarPorAliasYEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
-        return elementoService.listarPorAliasYEmpresa(alias,idEmpresa);
+        return elementoService.listarPorAliasYEmpresa(alias, idEmpresa);
     }
-    
-    //Obtiene una lista por alias filtro no remolque
+
+    //Obtiene una lista por alias y no remolque
     @GetMapping(value = URL + "/listarPorAliasYRemolqueFalse/{alias}")
     @ResponseBody
     public Object listarNoRemolquesPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, false, 0);
     }
-    
+
     //Obtiene una lista por alias filtro remolque
     @GetMapping(value = URL + "/listarPorAliasYRemolqueTrue/{alias}")
     @ResponseBody
     public Object listarRemolquesPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, true, 0);
     }
-    
-    //Obtiene una lista por alias filtro remolque
+
+    //Obtiene una lista por alias y empresa con filtro remolque
     @GetMapping(value = URL + "/listarPorAliasYEmpresaFiltroRemolque/{alias}/{idEmpresa}")
     @ResponseBody
-    public Object listarPorAliasYEmpresaFiltroRemolque(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException {
+    public Object listarPorAliasYEmpresaFiltroRemolque(@PathVariable String alias, 
+            @PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, true, idEmpresa);
     }
-    
+
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
     @GetMapping(value = URL + "/listarFiltro/{idEmpresa}/{idTipoVehiculo}/{idMarcaVehiculo}")
     @ResponseBody
@@ -106,17 +108,17 @@ public class VehiculoController {
             @PathVariable int idMarcaVehiculo) throws IOException {
         return elementoService.listarPorConfiguarionVehiculo(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("vehiculo") String elementoString,
-            @RequestPart("titulo") MultipartFile titulo,@RequestPart("cedulaIdent")
-                    MultipartFile cedulaIdent,@RequestPart("vtoRuta") MultipartFile vtoRuta,
-                    @RequestPart("vtoInspTecnica") MultipartFile vtoInspTecnica,
-                    @RequestPart("vtoSenasa") MultipartFile vtoSenasa,
-                    @RequestPart("habBromat") MultipartFile habBromat) {
+            @RequestPart("titulo") MultipartFile titulo, @RequestPart("cedulaIdent") MultipartFile cedulaIdent, 
+            @RequestPart("vtoRuta") MultipartFile vtoRuta,
+            @RequestPart("vtoInspTecnica") MultipartFile vtoInspTecnica,
+            @RequestPart("vtoSenasa") MultipartFile vtoSenasa,
+            @RequestPart("habBromat") MultipartFile habBromat) {
         try {
-            Vehiculo a = elementoService.agregar(elementoString,titulo, cedulaIdent,
+            Vehiculo a = elementoService.agregar(elementoString, titulo, cedulaIdent,
                     vtoRuta, vtoInspTecnica, vtoSenasa, habBromat);
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(a);
@@ -127,7 +129,7 @@ public class VehiculoController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -135,15 +137,15 @@ public class VehiculoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestPart("vehiculo") String elementoString,
-            @RequestPart("titulo") MultipartFile titulo,@RequestPart("cedulaIdent")
-                    MultipartFile cedulaIdent,@RequestPart("vtoRuta") MultipartFile vtoRuta,
-                    @RequestPart("vtoInspTecnica") MultipartFile vtoInspTecnica,
-                    @RequestPart("vtoSenasa") MultipartFile vtoSenasa,
-                    @RequestPart("habBromat") MultipartFile habBromat) {
+            @RequestPart("titulo") MultipartFile titulo, @RequestPart("cedulaIdent") MultipartFile cedulaIdent, 
+            @RequestPart("vtoRuta") MultipartFile vtoRuta,
+            @RequestPart("vtoInspTecnica") MultipartFile vtoInspTecnica,
+            @RequestPart("vtoSenasa") MultipartFile vtoSenasa,
+            @RequestPart("habBromat") MultipartFile habBromat) {
         try {
             //Actualiza el registro
             Vehiculo vehiculo = elementoService.actualizar(elementoString, titulo, cedulaIdent, vtoRuta,
@@ -160,18 +162,18 @@ public class VehiculoController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -179,13 +181,13 @@ public class VehiculoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }
