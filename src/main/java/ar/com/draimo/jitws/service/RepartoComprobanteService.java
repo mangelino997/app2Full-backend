@@ -139,7 +139,7 @@ public class RepartoComprobanteService {
 
     //Agrega un listado
     @Transactional(rollbackFor = Exception.class)
-    public void conformarComprobantes(List<RepartoComprobante> ctes) {
+    public List<RepartoComprobante> conformarComprobantes(List<RepartoComprobante> ctes) {
         SeguimientoEstado seguimientoEstado = seguimientoEstadoDAO.findById(6).get();
         SeguimientoSituacion seguimientoSituacion = seguimientoSituacionDAO.findById(1).get();
         SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
@@ -171,6 +171,7 @@ public class RepartoComprobanteService {
                 seguimientoComprobanteDAO.saveAndFlush(ventaSeguimiento);
             }
         }
+        return ctes;
     }
 
     //Agrega un listado

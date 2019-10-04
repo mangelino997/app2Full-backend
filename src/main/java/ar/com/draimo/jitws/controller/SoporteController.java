@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -63,7 +64,7 @@ public class SoporteController {
     public Object obtenerPorId(@PathVariable int id) throws IOException {
         return elementoService.obtenerPorId(id);
     }
-    
+
     //Obtiene una lista por alias y usuario
     @GetMapping(value = URL + "/listarPorAliasYUsuario/{alias}/{idUsuario}")
     @ResponseBody
@@ -71,7 +72,7 @@ public class SoporteController {
         return elementoService.listarPorAliasContainingYUsuario(idUsuario, alias);
     }
 
-    //Obtiene una lista por nombre
+    //Obtiene una lista por usuario
     @GetMapping(value = URL + "/listarPorUsuario/{idUsuario}")
     @ResponseBody
     public Object listarPorUsuario(@PathVariable int idUsuario) throws IOException {

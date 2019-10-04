@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -25,127 +26,126 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase Reparto Controller
+ *
  * @author blas
  */
-
 @RestController
 public class RepartoController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/reparto";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/reparto";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     RepartoService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene la lista de registros propios abiertos
     @GetMapping(value = URL + "/listarAbiertosPropios")
     @ResponseBody
     public Object listarAbiertosPropios() throws IOException {
         return elementoService.listarAbiertosPropios();
     }
-    
+
     //Obtiene la lista de registros terceros abiertos
     @GetMapping(value = URL + "/listarAbiertosTerceros")
     @ResponseBody
     public Object listarAbiertosTerceros() throws IOException {
         return elementoService.listarAbiertosTerceros();
     }
-    
+
     //Obtiene la lista por estaCerrada
     @GetMapping(value = URL + "/listarPorEstaCerrada/{estaCerrada}")
     @ResponseBody
     public Object listarPorEstaCerrada(@PathVariable boolean estaCerrada) throws IOException {
         return elementoService.listarPorEstaCerrada(estaCerrada);
     }
-    
-    //Obtiene la lista por estaCerrada
+
+    //Obtiene la lista por estaCerrada y empresa
     @GetMapping(value = URL + "/listarPorEstaCerradaYEmpresa/{estaCerrada}/{idEmpresa}")
     @ResponseBody
     public List<Reparto> listarPorEstaCerradaYEmpresa(@PathVariable boolean estaCerrada, @PathVariable int idEmpresa) {
         return elementoService.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
     }
-    
-    //Obtiene la lista por filtros
+
+    //Obtiene la lista por filtros(empresa, viaje propio o tercero, periodo de fecha, chofer y si esta abierto o cerrado)
     @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{tipoViaje}/{fechaDesde}/{fechaHasta}/{idChofer}/{estaCerrada}")
     @ResponseBody
     public Object listarPorFiltros(@PathVariable int idEmpresa, @PathVariable boolean tipoViaje,
-            @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable 
-                    int idChofer,@PathVariable boolean estaCerrada) throws IOException {
-        return elementoService.listarPorFiltros(idEmpresa,tipoViaje,fechaDesde,fechaHasta,idChofer,estaCerrada);
+            @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable int idChofer, @PathVariable boolean estaCerrada) throws IOException {
+        return elementoService.listarPorFiltros(idEmpresa, tipoViaje, fechaDesde, fechaHasta, idChofer, estaCerrada);
     }
-    
-    //Cierra un repartopropio
+
+    //Cierra un reparto
     @PutMapping(value = URL + "/cerrarReparto/{idReparto}")
     public ResponseEntity<?> cerrarReparto(@PathVariable int idReparto) throws IOException {
         boolean r = elementoService.cerrarReparto(idReparto);
         if (r == true) {
-            template.convertAndSend(TOPIC + "/lista", 
-                    elementoService.listarPorEstaCerrada(false));
+            /*template.convertAndSend(TOPIC + "/lista", 
+                    elementoService.listarPorEstaCerrada(false));*/
             return MensajeRespuesta.cerrado();
-        } else{
+        } else {
             return MensajeRespuesta.error();
         }
     }
-    
-    //Abre un repartopropio
+
+    //Abre un reparto
     @PutMapping(value = URL + "/abrirReparto/{idReparto}")
     public ResponseEntity<?> abrirReparto(@PathVariable int idReparto) throws IOException {
         boolean r = elementoService.abrirReparto(idReparto);
         if (r == true) {
-            template.convertAndSend(TOPIC + "/lista", 
-                    elementoService.listarPorEstaCerrada(true));
+            /*template.convertAndSend(TOPIC + "/lista", 
+                    elementoService.listarPorEstaCerrada(true));*/
             return MensajeRespuesta.abierto();
-        } else{
+        } else {
             return MensajeRespuesta.error();
         }
     }
-    
-    //recibe un repartopropio
+
+    //recibe un reparto
     @PutMapping(value = URL + "/recibirReparto")
     public ResponseEntity<?> recibirReparto(@RequestBody Reparto elemento) throws IOException {
         Reparto r = elementoService.recibirReparto(elemento);
         if (r != null) {
             return MensajeRespuesta.abierto();
-        } else{
+        } else {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody Reparto elemento) {
         try {
             int a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
-//            template.convertAndSend(TOPIC + "/listarPorEstaCerrada",
-//                    elementoService.listarPorEstaCerrada(false));
+            /*template.convertAndSend(TOPIC + "/listarPorEstaCerrada",
+                    elementoService.listarPorEstaCerrada(false));*/
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -153,7 +153,7 @@ public class RepartoController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody Reparto elemento) {
@@ -161,7 +161,7 @@ public class RepartoController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-//            template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -170,37 +170,37 @@ public class RepartoController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
             boolean a = elementoService.eliminar(id);
-            if(a==true){
-                template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
-                        elementoService.listarPorEstaCerrada(a));
+            if (a == true) {
+                /*template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
+                        elementoService.listarPorEstaCerrada(a));*/
                 return MensajeRespuesta.eliminado();
             } else {
                 return MensajeRespuesta.error();
             }
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

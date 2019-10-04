@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -23,67 +24,67 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase TipoComprobante Controller
+ *
  * @author blas
  */
-
 @RestController
 public class TipoComprobanteController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/tipocomprobante";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/tipocomprobante";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     TipoComprobanteService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene un registro por id
     @GetMapping(value = URL + "/obtenerPorId/{id}")
     @ResponseBody
     public TipoComprobante obtenerPorId(@PathVariable int id) {
         return elementoService.obtenerPorId(id);
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<TipoComprobante> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por esta activo ingreso carga igual true
     @GetMapping(value = URL + "/listarActivosIngresoCarga")
     @ResponseBody
     public List<TipoComprobante> listarActivosIngresoCarga() {
         return elementoService.listarEstaActivoIngresoCarga();
     }
-    
+
     //Obtiene una lista por esta activo Reparto igual true
     @GetMapping(value = URL + "/listarActivosReparto")
     @ResponseBody
     public List<TipoComprobante> listarActivosReparto() {
         return elementoService.listarEstaActivoReparto();
     }
-    
+
     //Obtiene una lista por numeracion punto venta igual true
     @GetMapping(value = URL + "/listarConNumeracionPuntoVenta")
     @ResponseBody
     public List<TipoComprobante> listarConNumeracionPuntoVenta() {
         return elementoService.listarNumeracionPuntoVenta();
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TipoComprobante elemento) {
@@ -96,7 +97,7 @@ public class TipoComprobanteController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -104,7 +105,7 @@ public class TipoComprobanteController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody TipoComprobante elemento) {
@@ -121,18 +122,18 @@ public class TipoComprobanteController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -140,13 +141,13 @@ public class TipoComprobanteController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

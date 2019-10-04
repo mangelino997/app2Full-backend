@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -26,53 +27,53 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase TalonarioReciboLote Controller
+ *
  * @author blas
  */
-
 @RestController
 public class TalonarioReciboLoteController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/talonariorecibolote";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/talonariorecibolote";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     TalonarioReciboLoteService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<TalonarioReciboLote> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene la lista por empresa y lote entregado false
     @GetMapping(value = URL + "/listarPorEmpresaYLoteEntregadoFalse/{idEmpresa}")
     @ResponseBody
     public List<TalonarioReciboLote> listarPorEmpresaYLoteEntregadoFalse(@PathVariable int idEmpresa) {
         return elementoService.listarPorEmpresaYLoteNoEntregado(idEmpresa);
     }
-    
+
     //Obtiene la lista por empresa 
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
     public List<TalonarioReciboLote> listarPorEmpresa(@PathVariable int idEmpresa) {
         return elementoService.listarPorEmpresa(idEmpresa);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TalonarioReciboLote elemento) {
@@ -85,16 +86,15 @@ public class TalonarioReciboLoteController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
             //Retorna codigo y mensaje de error
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.error(e.getMessage());
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody TalonarioReciboLote elemento) {
@@ -111,19 +111,18 @@ public class TalonarioReciboLoteController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna codigo y mensaje de error
-            return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                e.getMessage(), 0), HttpStatus.INTERNAL_SERVER_ERROR);
+            return MensajeRespuesta.error(e.getMessage());
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -131,13 +130,13 @@ public class TalonarioReciboLoteController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

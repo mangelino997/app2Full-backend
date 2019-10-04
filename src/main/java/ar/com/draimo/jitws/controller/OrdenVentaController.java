@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -25,76 +26,76 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase OrdenVenta Controller
+ *
  * @author blas
  */
-
 @RestController
 public class OrdenVentaController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/ordenventa";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/ordenventa";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     OrdenVentaService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
     public Object listarPorNombre(@PathVariable String nombre) throws IOException {
         return elementoService.listarPorNombre(nombre);
     }
-    
+
     //Obtiene una lista por idEmpresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody
     public List<OrdenVenta> listarPorEmpresa(@PathVariable int idEmpresa) {
         return elementoService.listarPorEmpresa(idEmpresa);
     }
-    
+
     //Obtiene una lista por idCliente
     @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
     @ResponseBody
     public List<OrdenVenta> listarPorCliente(@PathVariable int idCliente) {
         return elementoService.listarPorCliente(idCliente);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("ordenVenta") String elementoString,
-            @RequestPart("clienteOrdenVenta") String clienteString,@RequestPart("empresaOrdenVenta") String empresaString,
+            @RequestPart("clienteOrdenVenta") String clienteString, @RequestPart("empresaOrdenVenta") String empresaString,
             @RequestPart("ordenVentaTarifa") String ordenVentaTarifaString) {
         try {
-            int id = elementoService.agregar(elementoString, clienteString, 
+            int id = elementoService.agregar(elementoString, clienteString,
                     empresaString, ordenVentaTarifaString);
             //Envia la nueva lista a los usuarios subscriptos
-//            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(id-1);
+            return MensajeRespuesta.agregado(id - 1);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -102,7 +103,7 @@ public class OrdenVentaController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody OrdenVenta elemento) {
@@ -110,7 +111,7 @@ public class OrdenVentaController {
             //Actualiza el registro
             elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
-//            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
@@ -119,18 +120,18 @@ public class OrdenVentaController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato Inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -138,13 +139,13 @@ public class OrdenVentaController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

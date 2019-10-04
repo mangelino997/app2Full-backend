@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -23,55 +24,55 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase retiroDepositoComprobante Controller
+ *
  * @author blas
  */
-
 @RestController
 public class RetiroDepositoComprobanteController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/retirodepositocomprobante";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/retirodepositocomprobante";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     RetiroDepositoComprobanteService elementoService;
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene la lista por RetiroDeposito
     @GetMapping(value = URL + "/listarComprobantes/{idRetiroDeposito}")
     @ResponseBody
     public Object listarComprobantes(@PathVariable int idRetiroDeposito) throws IOException {
         return elementoService.listarComprobantes(idRetiroDeposito);
     }
-    
-    //Obtiene la lista por RetiroDeposito
+
+    //Quita un comprobante por id
     @GetMapping(value = URL + "/quitarComprobante/{id}")
     @ResponseBody
     public ResponseEntity<?> quitarComprobante(@PathVariable int id) {
         try {
             int rp = elementoService.quitarComprobante(id);
-         //Envia la nueva lista a los usuarios subscriptos
-            template.convertAndSend(TOPIC + "/listarComprobantes", 
-                    elementoService.listarComprobantes(rp));
+            //Envia la nueva lista a los usuarios subscriptos
+            /*template.convertAndSend(TOPIC + "/listarComprobantes", 
+                    elementoService.listarComprobantes(rp));*/
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch (Exception e) {
@@ -79,7 +80,7 @@ public class RetiroDepositoComprobanteController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody RetiroDepositoComprobante elemento) {
@@ -93,7 +94,7 @@ public class RetiroDepositoComprobanteController {
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
@@ -101,13 +102,13 @@ public class RetiroDepositoComprobanteController {
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody RetiroDepositoComprobante elemento) {
         try {
             //Actualiza el registro
-            RetiroDepositoComprobante a =  elementoService.actualizar(elemento);
+            RetiroDepositoComprobante a = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/listarComprobantes", 
             //        elementoService.listarComprobantes(a.getRetiroDeposito().getId()));
@@ -119,18 +120,18 @@ public class RetiroDepositoComprobanteController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Elimina un registro
     @DeleteMapping(value = URL + "/{id}")
     public ResponseEntity<?> eliminar(@PathVariable int id) {
@@ -138,10 +139,10 @@ public class RetiroDepositoComprobanteController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
 }

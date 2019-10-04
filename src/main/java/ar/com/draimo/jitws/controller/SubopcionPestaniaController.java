@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -23,46 +24,46 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase SubopcionPestania Controller
+ *
  * @author blas
  */
-
 @RestController
 public class SubopcionPestaniaController {
-    
+
     //Define la url
     private final String URL = RutaConstant.URL_BASE + "/subopcionpestania";
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/subopcionpestania";
-    
+
     //Define el template para el envio de datos por socket
     @Autowired
     private SimpMessagingTemplate template;
-    
+
     //Crea una instancia del servicio
     @Autowired
     SubopcionPestaniaService elementoService;
-    
+
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public List<SubopcionPestania> listar() {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista por rol y subopcion
     @GetMapping(value = URL + "/listarPorRolSubopcion/{idRol}/{idSubopcion}")
     @ResponseBody
     public List<Pestania> listarPorRolSubopcion(@PathVariable int idRol, @PathVariable int idSubopcion) {
         return elementoService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion);
     }
-    
+
     //Obtiene una lista por rol y subopcion para actualizar estado mostrar
     @GetMapping(value = URL + "/obtenerPestaniasPorRolYSubopcion/{idRol}/{idSubopcion}")
     @ResponseBody
     public SubopcionPestaniaDTO obtenerPestaniasPorRolYSubopcion(@PathVariable int idRol, @PathVariable int idSubopcion) {
         return elementoService.obtenerPestaniasPorRolYSubopcion(idRol, idSubopcion);
     }
-    
+
     //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody SubopcionPestaniaDTO elemento) {
@@ -79,25 +80,25 @@ public class SubopcionPestaniaController {
         } catch (JpaObjectRetrievalFailureException jorfe) {
             //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch(ObjectOptimisticLockingFailureException oolfe) {
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada
             return MensajeRespuesta.transaccionNoActualizada();
-        }catch(MessagingException e) {
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
-        } catch(Exception e) {
+        } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
         }
     }
-    
+
     //Asigna todas las pestañas a cada una de las subopciones
     @GetMapping(value = URL + "/asignarPestaniasASubopciones")
     @ResponseBody
     public void asignarPestaniasASubopciones() {
         elementoService.asignarPestaniasASubopciones();
     }
-    
+
     /*
      * Asigna todas las pestañas a cada una de las subopciones, eliminando todo los
      * datos y reestableciendo desde cero
@@ -109,11 +110,11 @@ public class SubopcionPestaniaController {
             elementoService.reestablecerTablaDesdeCero();
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/listarMenu", 1);
-               return MensajeRespuesta.tablaReestablecida();
-        }catch(MessagingException e) {
+            return MensajeRespuesta.tablaReestablecida();
+        } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
         }
     }
-    
+
 }

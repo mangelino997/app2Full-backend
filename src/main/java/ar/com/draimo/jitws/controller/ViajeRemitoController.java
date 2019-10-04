@@ -95,7 +95,7 @@ public class ViajeRemitoController {
         return elementoService.listarPendientesPorSucursal(idSucursal);
     }
 
-    //Obtiene una lista de remitos pendientes por filtro
+    //Obtiene una lista de remitos pendientes por filtro(sucursal, sucursal destino y numero de camion)
     @GetMapping(value = URL + "/listarPendientesPorFiltro/{idSucursal}/{idSucursalDestino}/{numeroCamion}")
     @ResponseBody
     public List<ViajeRemito> listarPendientesPorFiltro(@PathVariable int idSucursal,
@@ -112,11 +112,11 @@ public class ViajeRemitoController {
     //Obtiene un registro por puntoventa letra y numero
     @GetMapping(value = URL + "/obtener/{puntoVenta}/{letra}/{numero}")
     @ResponseBody
-    public Object obtener(@PathVariable int puntoVenta,@PathVariable String letra,
+    public Object obtener(@PathVariable int puntoVenta, @PathVariable String letra,
             @PathVariable int numero) throws IOException {
         return elementoService.obtener(puntoVenta, letra, numero);
     }
-    
+
     //Obtiene la lista de letras
     @GetMapping(value = URL + "/listarLetras")
     @ResponseBody
@@ -126,11 +126,12 @@ public class ViajeRemitoController {
 
     //Asigna remitos
     @PutMapping(value = URL + "/asignar")
-    public ResponseEntity<?> asignar(@RequestPart("elementos") String elementos, @RequestPart("viajeTramo") String idViajeTramo) {
+    public ResponseEntity<?> asignar(@RequestPart("elementos") String elementos,
+            @RequestPart("viajeTramo") String idViajeTramo) {
         try {
             elementoService.asignar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
-//            //stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.asignado();
         } catch (DataIntegrityViolationException dive) {
@@ -150,12 +151,13 @@ public class ViajeRemitoController {
 
     //Quita remitos
     @PutMapping(value = URL + "/quitar")
-    public ResponseEntity<?> quitar(@RequestPart("elementos") String elementos, @RequestPart("viajeTramo") String idViajeTramo) {
+    public ResponseEntity<?> quitar(@RequestPart("elementos") String elementos,
+            @RequestPart("viajeTramo") String idViajeTramo) {
         try {
             //Quita el registro
             elementoService.quitar(elementos, idViajeTramo);
             //Envia la nueva lista a los usuarios subscripto
-//            //stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //stemplate.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.quitado();
         } catch (DataIntegrityViolationException dive) {
@@ -231,7 +233,7 @@ public class ViajeRemitoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
         } catch (Exception e) {

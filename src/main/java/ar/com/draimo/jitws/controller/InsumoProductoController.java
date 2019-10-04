@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -6,7 +7,6 @@ import ar.com.draimo.jitws.model.InsumoProducto;
 import ar.com.draimo.jitws.service.InsumoProductoService;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +57,7 @@ public class InsumoProductoController {
     public Object listar() throws IOException {
         return elementoService.listar();
     }
-    
+
     //Obtiene una lista de Rubro y Marca
     @GetMapping(value = URL + "/listarPorRubroYMarca/{idRubro}/{idMarca}")
     @ResponseBody
@@ -65,7 +65,7 @@ public class InsumoProductoController {
         return elementoService.listarPorRubroYMarca(idRubro, idMarca);
     }
 
-    //Obtiene una lista por nombre
+    //Obtiene una lista por Alias
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public Object listarPorAlias(@PathVariable String alias) throws IOException {
@@ -78,14 +78,14 @@ public class InsumoProductoController {
     public Object listarCombustibles() throws IOException {
         return elementoService.listarCombustibles();
     }
-    
+
     //Obtiene una lista de insumos
     @GetMapping(value = URL + "/listarInsumos")
     @ResponseBody
     public Object listarInsumos() throws IOException {
         return elementoService.listarInsumos();
     }
-    
+
     //Obtiene precio unitario por insumo
     @GetMapping(value = URL + "/obtenerPrecioUnitario/{idInsumoProducto}")
     @ResponseBody
@@ -151,7 +151,7 @@ public class InsumoProductoController {
             elementoService.eliminar(id);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
-        }catch (DataIntegrityViolationException dive) {
+        } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
         } catch (Exception e) {

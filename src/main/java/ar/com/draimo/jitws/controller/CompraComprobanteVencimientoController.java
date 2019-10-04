@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase CompraComprobanteVencimiento Controller
+ *
  * @author blas
  */
 @RestController
@@ -57,15 +59,15 @@ public class CompraComprobanteVencimientoController {
     public List<CompraComprobanteVencimiento> listar() {
         return elementoService.listar();
     }
-    
-    //Obtiene la suma total de importes para la lista de cuotas
+
+    //Obtiene la diferencia de importes de una lista de cuotas
     @PutMapping(value = URL + "/obtenerDiferenciaImportes")
     @ResponseBody
     public BigDecimal obtenerDiferenciaImportes(@RequestBody List<ImportesDTO> listaCuotas) throws IOException {
         return elementoService.obtenerDiferenciaImportes(listaCuotas);
     }
 
-    //Obtiene la lista completa
+    //Obtiene una lista de cuotas con sus fechas de vencimiento por condicion compra
     @GetMapping(value = URL + "/generarTablaVencimientos/{cantidadCuotas}/{totalImporte}/{idCondicionCompra}")
     @ResponseBody
     public List<CompraComprobanteVencimiento> generarTablaVencimientos(@PathVariable int cantidadCuotas,

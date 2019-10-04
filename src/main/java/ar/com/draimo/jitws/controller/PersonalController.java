@@ -1,3 +1,4 @@
+//Paquete al que pertenece el controlador
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
@@ -67,17 +68,16 @@ public class PersonalController {
     //Obtiene la lista de choferes de corta distancia por alias
     @GetMapping(value = URL + "/listarChoferesPorDistanciaPorAlias/{alias}/{largaDistancia}")
     @ResponseBody
-    public Object listarChoferesPorDistanciaPorAliasOrdenados(@PathVariable 
-            String alias,@PathVariable boolean largaDistancia) throws IOException {
+    public Object listarChoferesPorDistanciaPorAliasOrdenados(@PathVariable String alias, @PathVariable boolean largaDistancia) throws IOException {
         return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                 alias, largaDistancia, 0);
     }
 
-    //Obtiene la lista de choferes de larga distancia por alias
+    //Obtiene la lista de choferespor empresa
     @GetMapping(value = URL + "/listarChoferesPorEmpresa/{idEmpresa}")
     @ResponseBody
     public Object listarChoferesPorEmpresa(@PathVariable int idEmpresa) throws IOException, Exception {
-        return elementoService.listarChoferesPorAliasOrdenadoPorNombre("***", 0);
+        return elementoService.listarChoferesPorAliasOrdenadoPorNombre("***", idEmpresa);
     }
 
     //Obtiene la lista completa
@@ -101,7 +101,7 @@ public class PersonalController {
         return elementoService.listarPorAlias(alias, false, 0, 0);
     }
 
-    //Obtiene una lista por alias
+    //Obtiene una lista de activos por alias
     @GetMapping(value = URL + "/listarActivosPorAlias/{alias}")
     @ResponseBody
     public Object listarActivosPorAlias(@PathVariable String alias) throws IOException, Exception {
@@ -115,18 +115,20 @@ public class PersonalController {
         return elementoService.listarPorAlias(alias, true, idEmpresa, 0);
     }
 
-    //Obtiene una lista por alias y empresa
+    //Obtiene una lista de activos por alias y empresa
     @GetMapping(value = URL + "/listarPorActivosAliasYEmpresa/{alias}/{idEmpresa}")
     @ResponseBody
-    public Object listarActivosPorAliasyEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException, Exception {
-        return elementoService.listarPorAlias(alias,true, idEmpresa, 0);
+    public Object listarActivosPorAliasyEmpresa(@PathVariable String alias,
+            @PathVariable int idEmpresa) throws IOException, Exception {
+        return elementoService.listarPorAlias(alias, true, idEmpresa, 0);
     }
 
     //Obtiene una lista por alias, sucursal y empresa
     @GetMapping(value = URL + "/listarActivosPorAliasEmpresaYSucursal/{alias}/{idEmpresa}/{idSucursal}")
     @ResponseBody
-    public Object listarActivosPorAliasEmpresaYSucursal(@PathVariable String alias, @PathVariable int idEmpresa, @PathVariable int idSucursal) throws IOException, Exception {
-        return elementoService.listarPorAlias(alias,true, idEmpresa, idSucursal);
+    public Object listarActivosPorAliasEmpresaYSucursal(@PathVariable String alias,
+            @PathVariable int idEmpresa, @PathVariable int idSucursal) throws IOException, Exception {
+        return elementoService.listarPorAlias(alias, true, idEmpresa, idSucursal);
     }
 
 //    //Obtiene una lista de choferes por alias
@@ -135,7 +137,6 @@ public class PersonalController {
 //    public Object listarChoferPorAlias(@PathVariable String alias) throws IOException, Exception {
 //        return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias, 0, 0);
 //    }
-
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("personal") String elementoString,
