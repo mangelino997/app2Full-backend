@@ -195,7 +195,8 @@ public class ClienteService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Cliente elemento) {
         elemento = formatearString(elemento);
-        elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
+        Date fechaAlta = new Date(new java.util.Date().getTime());
+        elemento.setFechaUltimaMod(fechaAlta);
         Cliente c;
         if (elemento.getCuentaGrupo() != null) {
             c = elementoDAO.findById(elemento.getCuentaGrupo().getId()).get();
