@@ -49,8 +49,6 @@ public class TalonarioReciboService {
         return elementoDAO.findByCobradorAndTalonarioReciboLote_empresa(cobradorDAO.findById(idCobrador).get(), empresaDAO.findById(idEmpresa).get());
     }
     
-    
-
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TalonarioRecibo agregar(TalonarioRecibo elemento) throws Exception {
