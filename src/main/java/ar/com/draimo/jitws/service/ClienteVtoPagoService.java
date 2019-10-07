@@ -58,8 +58,8 @@ public class ClienteVtoPagoService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ClienteVtoPago elemento) {
-        elementoDAO.save(elemento);
+    public ClienteVtoPago actualizar(ClienteVtoPago elemento) {
+        return elementoDAO.save(elemento);
     }
     
     //Elimina un registro

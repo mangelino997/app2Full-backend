@@ -132,6 +132,7 @@ public class ClienteService {
         //Construye la lista de rubros productos cuentas contables para cada empresa
         for (Cliente cliente : clientes) {
             cliente.setClienteCuentasBancarias(construirCuentasBancariasParaEmpresas(cliente));
+            cliente.setClienteVtosPagos(construirVtoPagoParaEmpresas(cliente));
         }
         return clientes;
     }
@@ -281,5 +282,52 @@ public class ClienteService {
         }
         return ccbLista;
     }
-
+    
+    //Arma la lista de cliente cuentas contables para todas las empresas
+    private List<ClienteVtoPago> construirVtoPagoParaEmpresas(Cliente cliente) {
+        List<Empresa> empresas = empresaDAO.findAll();
+        List<ClienteVtoPago> cvpLista = new ArrayList<>();
+        ClienteVtoPago cvp;
+        for (Empresa empresa : empresas) {
+            cvp = new ClienteVtoPago();
+            cvp.setEmpresa(empresa);
+            cvp.setCliente(null);
+            cvp.setDiasFechaFactura((short)0);
+            cvp.setEnero(null);
+            cvp.setFebrero(null);
+            cvp.setMarzo(null);
+            cvp.setAbril(null);
+            cvp.setMayo(null);
+            cvp.setJunio(null);
+            cvp.setJulio(null);
+            cvp.setAgosto(null);
+            cvp.setSeptiembre(null);
+            cvp.setOctubre(null);
+            cvp.setNoviembre(null);
+            cvp.setDiciembre(null);
+            cvpLista.add(cvp);
+        }
+        int indice;
+        for (ClienteVtoPago r : cliente.getClienteVtosPagos()) {
+            indice = r.getEmpresa().getId() - 1;
+            cvpLista.get(indice).setId(r.getId());
+            cvpLista.get(indice).setVersion(r.getVersion());
+            cvpLista.get(indice).setCliente(r.getCliente());
+            cvpLista.get(indice).setDiasFechaFactura(r.getDiasFechaFactura());
+            cvpLista.get(indice).setEnero(r.getEnero());
+            cvpLista.get(indice).setFebrero(r.getFebrero());
+            cvpLista.get(indice).setMarzo(r.getMarzo());
+            cvpLista.get(indice).setAbril(r.getAbril());
+            cvpLista.get(indice).setMayo(r.getMayo());
+            cvpLista.get(indice).setJunio(r.getJunio());
+            cvpLista.get(indice).setJulio(r.getJulio());
+            cvpLista.get(indice).setAgosto(r.getAgosto());
+            cvpLista.get(indice).setSeptiembre(r.getSeptiembre());
+            cvpLista.get(indice).setOctubre(r.getOctubre());
+            cvpLista.get(indice).setNoviembre(r.getNoviembre());
+            cvpLista.get(indice).setDiciembre(r.getDiciembre());
+        }
+        return cvpLista;
+    }
+    
 }
