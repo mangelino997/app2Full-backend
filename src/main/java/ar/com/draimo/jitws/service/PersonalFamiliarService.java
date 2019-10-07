@@ -92,7 +92,8 @@ public class PersonalFamiliarService {
     }
 
     public Object establecerAlias(Object object) throws IOException {
-        PersonalFamiliar elemento = PersonalFamiliar.class.cast(object);
+        PersonalFamiliar elemento = new ObjectMapper().convertValue(object, PersonalFamiliar.class);
+//        PersonalFamiliar elemento = PersonalFamiliar.class.cast(object);
         Personal p = personalDAO.findById(elemento.getPersonal().getId()).get();
         elemento.setAlias(String.valueOf(elemento.getId()) + " - "
                 + elemento.getApellido() + " " + elemento.getNombre() + " - "
@@ -120,7 +121,7 @@ public class PersonalFamiliarService {
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-    
+
     //Controla longitud de los atributos de tipo short
     public void controlarLongitud(PersonalFamiliar elemento) {
         //Obtiene longitud de anioAlta, si es mayor a 4 retorna error
