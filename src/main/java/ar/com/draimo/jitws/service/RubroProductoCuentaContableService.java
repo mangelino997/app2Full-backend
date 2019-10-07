@@ -112,15 +112,8 @@ public class RubroProductoCuentaContableService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(RubroProductoCuentaContable elemento) throws IOException {
-        elemento = elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elemento);
-        return new ObjectMapper().readValue(string, Object.class);
+    public void actualizar(RubroProductoCuentaContable elemento) throws IOException {
+        elementoDAO.save(elemento);
     }
     
     //Elimina un registro
