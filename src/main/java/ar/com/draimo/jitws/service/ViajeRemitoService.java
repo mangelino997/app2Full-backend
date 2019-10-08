@@ -221,11 +221,7 @@ public class ViajeRemitoService {
         elemento.setEstaPendiente(true);
         elemento.setEstaFacturado(false);
         elemento.setEstaEnReparto(false);
-        ViajeRemito viajeRemito = elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
-                elemento.getClienteRemitente().getId(), elemento.getClienteDestinatario().getId(),
-                elemento.getPuntoVenta(), elemento.getLetra(), elemento.getNumero(),
-                elemento.getTipoComprobante().getId());
-        elemento = controlarLongitudes(elemento, viajeRemito);
+        elemento = controlarLongitudes(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -243,19 +239,11 @@ public class ViajeRemitoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeRemito elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        ViajeRemito viajeRemito
-                = elementoDAO.obtenerComprobanteUnicoParaRemitenteDestinatario(
-                        elemento.getClienteRemitente().getId(), elemento.getClienteDestinatario().getId(),
-                        elemento.getPuntoVenta(), elemento.getLetra(), elemento.getNumero(),
-                        elemento.getTipoComprobante().getId());
-        elemento = controlarLongitudes(elemento, viajeRemito);
+        elemento = controlarLongitudes(elemento);
         establecerAlias(elemento);
     }
 
-    private ViajeRemito controlarLongitudes(ViajeRemito elemento, ViajeRemito viajeRemito) {
-        if (viajeRemito != null) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.COMPROBANTE_REGISTRADO);
-        }
+    private ViajeRemito controlarLongitudes(ViajeRemito elemento) {
         //Obtiene longitud de numrtoCamion, si supera 3 retorna error
         String numCamion = String.valueOf(elemento.getNumeroCamion());
         if (numCamion.length() > 3) {

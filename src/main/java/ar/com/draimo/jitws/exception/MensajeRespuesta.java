@@ -217,6 +217,11 @@ public class MensajeRespuesta {
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CODIGO_AFIP;
                         plusMensaje = " CODIGO AFIP";
                         break;
+                    case DuplicidadError.COMPROBANTE_UNICO:
+                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_COMPROBANTE;
+                        mensajeRespuesta = "";
+                        plusMensaje = " COMPROBANTE DE REMITENTE YA REGISTRADO PARA DESTINATARIO - VERIFIQUE";
+                        break;
                     case DuplicidadError.CORREOELECTRONICO_UNICO:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CORREOELECTRONICO;
                         plusMensaje = " CORREO ELECTRONICO";
