@@ -22,6 +22,7 @@ import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeEfectivoDAO;
+import ar.com.draimo.jitws.dto.RepartoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
@@ -168,9 +169,11 @@ public class RepartoService {
     }
 
     //Obtiene la lista por filtros
-    public Object listarPorFiltros(int idEmpresa, boolean tipoViaje,
-            Date fechaDesde, Date fechaHasta, int idChofer, boolean estaCerrada) throws IOException {
-        List<Reparto> elementos = elementoDAO.listarPorFiltros(tipoViaje, fechaDesde, fechaHasta, idChofer, estaCerrada, idEmpresa);
+    public Object listarPorFiltros(RepartoDTO repartoDto) throws IOException {
+        List<Reparto> elementos = elementoDAO.listarPorFiltros(
+                repartoDto.isEsRepartoPropio(), repartoDto.getFechaDesde(), 
+                repartoDto.getFechaHasta(), repartoDto.getIdChofer(), 
+                repartoDto.isEstaCerrada(), repartoDto.getIdEmpresa());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");

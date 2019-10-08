@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
@@ -59,8 +60,9 @@ public class PersonalService {
     //Obtiene la lista completa
     public Object listar() throws IOException, Exception {
         List<Personal> elementos = elementoDAO.findAll();
-        if (elementos.isEmpty()) {
-            throw new Exception(MensajeRespuesta.LISTA_SIN_CONTENIDO);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -84,8 +86,9 @@ public class PersonalService {
         La fecha de hoy es para ver que el personal no este dado de baja*/
         List<Personal> elementos = elementoDAO.listarPorAlias(alias, activos,
                 idEmpresa, idSucursal, fecha);
-        if (elementos.isEmpty()) {
-            throw new Exception(MensajeRespuesta.LISTA_SIN_CONTENIDO);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -141,6 +144,10 @@ public class PersonalService {
         List<Personal> elementos
                 = elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                         alias, distancia, idEmpresa, fecha);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -158,6 +165,10 @@ public class PersonalService {
         List<Personal> elementos
                 = elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                         alias, 2, idEmpresa, fecha);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -174,6 +185,10 @@ public class PersonalService {
         alias = (alias.equals("***") ? "" : alias);
         List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(
                 alias, fecha);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

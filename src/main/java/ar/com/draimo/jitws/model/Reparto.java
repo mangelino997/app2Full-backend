@@ -48,17 +48,17 @@ public class Reparto extends ObjetoGenerico {
     
     //Define fechaSalida
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
-    @Column(name = "fechaSalida", nullable = false)
+    @Column(name = "fechaSalida", nullable = true)
     private Date fechaSalida;
     
     //Define horaSalida
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
-    @Column(name = "horaSalida", nullable = false)
+    @Column(name = "horaSalida", nullable = true)
     private Time horaSalida;
     
     //Referencia a la clase vehiculo
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idVehiculo", nullable = false)
+    @JoinColumn(name = "idVehiculo", nullable = true)
     private Vehiculo vehiculo;
     
     //Referencia a la clase vehiculo (remolque)
@@ -68,7 +68,7 @@ public class Reparto extends ObjetoGenerico {
     
     //Referencia a la clase Personal
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idPersonal", nullable = false)
+    @JoinColumn(name = "idPersonal", nullable = true)
     private Personal personal;
     
     //Referencia a la clase Zona

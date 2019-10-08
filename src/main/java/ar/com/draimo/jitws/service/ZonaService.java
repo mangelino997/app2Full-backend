@@ -2,9 +2,11 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IZonaDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.model.Zona;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,25 +30,41 @@ public class ZonaService {
 
     //Obtiene la lista completa
     public List<Zona> listar() {
-        return elementoDAO.findAllByOrderByNombreAsc();
+        List<Zona> elementos = elementoDAO.findAllByOrderByNombreAsc();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene la lista completa ordenada
     public List<Zona> listarOrdenado(String elemento) {
+        List<Zona> elementos;
         switch (elemento) {
             case "nombre":
-                return elementoDAO.findAllByOrderByNombreAsc();
+                elementos = elementoDAO.findAllByOrderByNombreAsc();
             case "id":
-                return elementoDAO.findByOrderByIdAsc();
+                elementos = elementoDAO.findByOrderByIdAsc();
             default:
-                return elementoDAO.findAll();
+                elementos = elementoDAO.findAll();
         }
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene una lista por nombre
     public List<Zona> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAllByOrderByNombreAsc()
+        List<Zona> elementos = nombre.equals("***") ? elementoDAO.findAllByOrderByNombreAsc()
                 : elementoDAO.findByNombreContaining(nombre);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Agrega un registro

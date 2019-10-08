@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ConfiguracionVehiculo;
 import ar.com.draimo.jitws.model.Empresa;
@@ -116,6 +117,9 @@ public class VehiculoService {
     public Object listarPorAlias(String alias) throws IOException {
         List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContainingOrderByAlias(alias);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -144,7 +148,12 @@ public class VehiculoService {
     //Obtiene una lista por alias y empresa
     public Object listarPorAliasFiltroEmpresaYFiltroRemolque(String alias, boolean esRemolque, int idEmpresa) throws IOException {
         alias = alias.equals("***") ? "" : alias;
-        List<Vehiculo> elementos = elementoDAO.listarPorAliasFiltroEmpresaYFiltroRemolque(alias, esRemolque, idEmpresa);
+        List<Vehiculo> elementos = elementoDAO.listarPorAliasFiltroEmpresaYFiltroRemolque(
+                alias, esRemolque, idEmpresa);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

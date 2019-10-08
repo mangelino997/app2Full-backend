@@ -4,12 +4,13 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IChoferProveedorDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.model.ChoferProveedor;
 import ar.com.draimo.jitws.model.Proveedor;
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,8 +56,13 @@ public class ChoferProveedorService {
     
     //Obtiene una lista por alias activos
     public List<ChoferProveedor> listarActivosPorAlias(String alias) {
-        return alias.equals("***")?elementoDAO.findByUsuarioBajaIsNull():
+        List<ChoferProveedor> elementos = alias.equals("***")?elementoDAO.findByUsuarioBajaIsNull():
                 elementoDAO.findByAliasContainingAndUsuarioBajaIsNull(alias);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
     
     //Obtiene una lista por alias y proveedor

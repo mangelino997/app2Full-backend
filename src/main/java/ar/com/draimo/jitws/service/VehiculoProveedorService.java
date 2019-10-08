@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.IVehiculoProveedorDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.MarcaVehiculo;
 import ar.com.draimo.jitws.model.Proveedor;
@@ -53,13 +54,24 @@ public class VehiculoProveedorService {
 
     //Obtiene una lista por nombre
     public List<VehiculoProveedor> listarPorAlias(String alias) {
-        return alias.equals("***") ? elementoDAO.findAll()
+        List<VehiculoProveedor> elementos= alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContainingOrderByAlias(alias);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene una lista por alias filtro remolque
     public List<VehiculoProveedor> listarPorAliasFiltroRemolque(String alias) {
-        return elementoDAO.findByAliasContainingAndTipoVehiculo_EsRemolqueTrueOrderByAlias(alias);
+        List<VehiculoProveedor> elementos  = 
+            elementoDAO.findByAliasContainingAndTipoVehiculo_EsRemolqueTrueOrderByAlias(alias);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Agrega un registro

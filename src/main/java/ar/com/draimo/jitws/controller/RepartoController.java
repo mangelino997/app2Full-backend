@@ -2,11 +2,11 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.RepartoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.service.RepartoService;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -88,11 +88,9 @@ public class RepartoController {
     }
 
     //Obtiene la lista por filtros(empresa, viaje propio o tercero, periodo de fecha, chofer y si esta abierto o cerrado)
-    @GetMapping(value = URL + "/listarPorFiltros/{idEmpresa}/{tipoViaje}/{fechaDesde}/{fechaHasta}/{idChofer}/{estaCerrada}")
-    @ResponseBody
-    public Object listarPorFiltros(@PathVariable int idEmpresa, @PathVariable boolean tipoViaje,
-            @PathVariable Date fechaDesde, @PathVariable Date fechaHasta, @PathVariable int idChofer, @PathVariable boolean estaCerrada) throws IOException {
-        return elementoService.listarPorFiltros(idEmpresa, tipoViaje, fechaDesde, fechaHasta, idChofer, estaCerrada);
+    @PutMapping(value = URL + "/listarPorFiltros")
+    public Object listarPorFiltros(@RequestBody RepartoDTO repartoDTO) throws IOException {
+        return elementoService.listarPorFiltros(repartoDTO);
     }
 
     //Cierra un reparto

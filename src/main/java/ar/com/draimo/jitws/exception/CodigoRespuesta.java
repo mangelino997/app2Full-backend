@@ -18,7 +18,7 @@ package ar.com.draimo.jitws.exception;
 public class CodigoRespuesta {
 
     /*
-    ULTIMO CODIGO AGREGADO 5006
+    ULTIMO CODIGO AGREGADO 5007
     */
     //Define una respuesta OK
     public static final int OK = 200;
@@ -61,6 +61,9 @@ public class CodigoRespuesta {
 
     //Define una respuesta de rol asignado a usuario
     public static final int ROL_ASIGNADO = 5004;
+
+    //Define una respuesta de lista sin contenido
+    public static final int LISTA_SIN_CONTENIDO = 5007;
 
     /*
     Define una respuesta de datos duplicados
