@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.RepartoComprobante;
 import ar.com.draimo.jitws.model.RepartoPersonal;
@@ -22,6 +23,7 @@ import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeEfectivoDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
@@ -57,6 +59,10 @@ public class RepartoService {
     //define la referencia al dao de Personal
     @Autowired
     IPersonalDAO personalDAO;
+
+    //define la referencia al dao de proveedor
+    @Autowired
+    IProveedorDAO proveedorDAO;
 
     //define la referencia al dao de RepartoComprobante
     @Autowired
@@ -275,9 +281,10 @@ public class RepartoService {
         elemento.setFechaRegistracion(fecha);
         elemento.setEstaCerrada(false);
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(12).get());
-        if (elemento.getChoferProveedor() != null) {
-            elemento.setProveedor(elemento.getChoferProveedor().getProveedor());
-            elemento.setAfipCondicionIvaProveedor(elemento.getChoferProveedor().getProveedor().getAfipCondicionIva());
+        if (elemento.getVehiculoProveedor()!= null) {
+            Proveedor p = proveedorDAO.findById(elemento.getVehiculoProveedor().getProveedor().getId()).get();
+            elemento.setProveedor(p);
+            elemento.setAfipCondicionIvaProveedor(p.getAfipCondicionIva());
         }
         elementoDAO.saveAndFlush(elemento);
         if (!elemento.getAcompaniantes().isEmpty()) {
