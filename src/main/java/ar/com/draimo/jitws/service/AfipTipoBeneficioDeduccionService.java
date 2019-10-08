@@ -51,7 +51,7 @@ public class AfipTipoBeneficioDeduccionService {
 
     //Obtiene una lista por anio y beneficio. Si recibe un mes devuelve el 
     //monto acumado que corresponderia a ese mes
-    public List<AfipTipoBeneficioDeduccion> listarPorFiltros(short anio, 
+    public List<AfipTipoBeneficioDeduccion> listarPorFiltros(short anio,
             int idBeneficio, int idMes) throws Exception {
         if (idMes > 12) {
             throw new Exception(MensajeRespuesta.NO_EXISTENTE + " MES");
@@ -75,46 +75,42 @@ public class AfipTipoBeneficioDeduccionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public AfipTipoBeneficioDeduccion agregar(AfipTipoBeneficioDeduccion elemento) throws Exception {
-        String anio = String.valueOf(elemento.getAnio());
-        //Obtiene longitud de anio, si supera 4 retorna error
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
-        }
-        if (!elemento.isImporteAnualMensual()) {
-            if (elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
-                    elemento.getAnio(), elemento.getAfipTipoBeneficio(),
-                    elemento.getAfipDeduccionPersonal()).isEmpty()) {
-                elemento.setMes(null);
-                return elementoDAO.saveAndFlush(elemento);
-            } else {
-                throw new DataIntegrityViolationException(MensajeRespuesta.EXISTENTE_PARA_ANIO_FISCAL 
-                        + "DEDUCCIÓN PERSONAL Y TIPO BENEFICIO");
-            }
-        } else if (elemento.getMes() != null) {
-            return elementoDAO.saveAndFlush(elemento);
-        } else {
-            throw new DataIntegrityViolationException(MensajeRespuesta.ELEMENTO_NO_NULL + " MES");
-        }
+        elemento = controlarLongitud(elemento,1);
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(AfipTipoBeneficioDeduccion elemento) throws Exception {
+        elemento = controlarLongitud(elemento, 2);
+        elementoDAO.save(elemento);
+    }
+
+    //Controla la longitud de los shorts
+    private AfipTipoBeneficioDeduccion controlarLongitud(AfipTipoBeneficioDeduccion elemento, int opcion) {
         String anio = String.valueOf(elemento.getAnio());
         //Obtiene longitud de anio, si supera 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
             throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
         }
-        if(elemento.isImporteAnualMensual()){
-            if (elemento.getMes() != null) {
-            elementoDAO.save(elemento);
+        if (elemento.isImporteAnualMensual()) {
+            if (elemento.getMes() == null) {
+                throw new DataIntegrityViolationException(MensajeRespuesta.ELEMENTO_NO_NULL + " MES");
+            }
         } else {
-            throw new DataIntegrityViolationException(MensajeRespuesta.ELEMENTO_NO_NULL+" MES");
-        }
-        }else {
+            if (opcion == 1) {
+                if (elementoDAO.findByAnioAndAfipTipoBeneficioAndAfipDeduccionPersonalOrderByAfipDeduccionPersonal_Id(
+                        elemento.getAnio(), elemento.getAfipTipoBeneficio(),
+                        elemento.getAfipDeduccionPersonal()).isEmpty()) {
+                    elemento.setMes(null);
+                } else {
+                    throw new DataIntegrityViolationException(MensajeRespuesta.EXISTENTE_PARA_ANIO_FISCAL
+                            + "DEDUCCIÓN PERSONAL Y TIPO BENEFICIO");
+                }
+            }
             elemento.setMes(null);
-            elementoDAO.save(elemento);
         }
+        return elemento;
     }
 
     //Elimina un registro

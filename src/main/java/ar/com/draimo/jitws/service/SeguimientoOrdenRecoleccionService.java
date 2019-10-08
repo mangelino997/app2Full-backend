@@ -3,14 +3,16 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoEstadoDAO;
-import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
-import ar.com.draimo.jitws.model.SeguimientoEstado;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
+import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
+import ar.com.draimo.jitws.model.SeguimientoEstado;
+import ar.com.draimo.jitws.model.SeguimientoSituacion;
+import java.time.LocalDateTime;
 
 /**
  * Servicio de SeguimientoOrdenRecoleccion
@@ -24,9 +26,13 @@ public class SeguimientoOrdenRecoleccionService {
     @Autowired
     ISeguimientoOrdenRecoleccionDAO elementoDAO;
 
-    //Define la referencia al dao de seguimiento estado
+    //define la referencia al dao de seguimientoEstado
     @Autowired
     ISeguimientoEstadoDAO seguimientoEstadoDAO;
+
+    //define la referencia al dao de seguimientoSituacion
+    @Autowired
+    ISeguimientoSituacionDAO seguimientoSituacionDAO;
 
     //Define la referencia al dao de ordenRecoleccion
     @Autowired
@@ -56,6 +62,12 @@ public class SeguimientoOrdenRecoleccionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SeguimientoOrdenRecoleccion agregar(SeguimientoOrdenRecoleccion elemento) {
+        SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
+        SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
+        LocalDateTime fecha = LocalDateTime.now();
+        elemento.setSeguimientoEstado(se);
+        elemento.setSeguimientoSituacion(ss);
+        elemento.setFecha(fecha);
         return elementoDAO.saveAndFlush(elemento);
     }
 
