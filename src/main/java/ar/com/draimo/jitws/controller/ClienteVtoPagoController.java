@@ -8,6 +8,7 @@ import ar.com.draimo.jitws.service.ClienteVtoPagoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -91,11 +92,11 @@ public class ClienteVtoPagoController {
     public ResponseEntity<?> actualizar(@RequestBody ClienteVtoPago elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(elemento);
+            ClienteVtoPago cvp = elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
+            return new ResponseEntity(cvp, HttpStatus.OK);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

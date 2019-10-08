@@ -51,6 +51,10 @@ public class RubroProductoService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<RubroProducto> rubrosProductos = elementoDAO.findAllByOrderByNombreAsc();
+        //Construye la lista de rubros productos cuentas contables para cada empresa
+        for (RubroProducto rubroProducto : rubrosProductos) {
+            rubroProducto.setRubrosProductosCuentasContables(construirCuentasContablesParaEmpresas(rubroProducto));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -95,13 +99,7 @@ public class RubroProductoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(RubroProducto elemento) {
         elemento = formatearStrings(elemento);
-        RubroProducto rubroProducto = elementoDAO.save(elemento);
-        for (RubroProductoCuentaContable rpcc : elemento.getRubrosProductosCuentasContables()) {
-            if (rpcc.getPlanCuentaCompra() != null) {
-                rpcc.setRubroProducto(rubroProducto);
-                rubroProductoCuentaContableDAO.save(rpcc);
-            }
-        }
+        elementoDAO.save(elemento);
     }
 
     //Elimina un registro

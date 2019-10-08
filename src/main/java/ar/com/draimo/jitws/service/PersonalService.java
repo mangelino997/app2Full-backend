@@ -77,7 +77,7 @@ public class PersonalService {
             int idSucursal) throws IOException, Exception {
         Date fecha = new Date(new java.util.Date().getTime());
         //Establece el string vacio a alias en caso de que el usuario quiera listar todo
-        alias = (alias.equals("***") ? "" : alias);
+        alias = (alias.equals("***")||alias.endsWith("...") ? "" : alias);
         /* Obtiene un listado por alias, activos o todos.
         Si recibe '***' en el alias no filtra por el mismo.
         idEmpresa y idSucursal pueden ser 0. en este caso no filtra por los mismos

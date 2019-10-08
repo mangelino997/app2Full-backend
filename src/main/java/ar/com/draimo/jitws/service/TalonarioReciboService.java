@@ -45,12 +45,10 @@ public class TalonarioReciboService {
     }
     
     //Obtiene la lista completa
-    public List<TalonarioRecibo> listarPorEmpresaYCobrador(int idCobrador, int idEmpresa) {
+    public List<TalonarioRecibo> listarPorCobradorYEmpresa(int idCobrador, int idEmpresa) {
         return elementoDAO.findByCobradorAndTalonarioReciboLote_empresa(cobradorDAO.findById(idCobrador).get(), empresaDAO.findById(idEmpresa).get());
     }
     
-    
-
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TalonarioRecibo agregar(TalonarioRecibo elemento) throws Exception {
