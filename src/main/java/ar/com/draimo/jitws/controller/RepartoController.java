@@ -7,7 +7,6 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.service.RepartoService;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -83,7 +82,7 @@ public class RepartoController {
     //Obtiene la lista por estaCerrada y empresa
     @GetMapping(value = URL + "/listarPorEstaCerradaYEmpresa/{estaCerrada}/{idEmpresa}")
     @ResponseBody
-    public List<Reparto> listarPorEstaCerradaYEmpresa(@PathVariable boolean estaCerrada, @PathVariable int idEmpresa) {
+    public Object listarPorEstaCerradaYEmpresa(@PathVariable boolean estaCerrada, @PathVariable int idEmpresa) throws IOException {
         return elementoService.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
     }
 

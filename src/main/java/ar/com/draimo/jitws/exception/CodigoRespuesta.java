@@ -18,7 +18,7 @@ package ar.com.draimo.jitws.exception;
 public class CodigoRespuesta {
 
     /*
-    ULTIMO CODIGO AGREGADO 5007
+    ULTIMO CODIGO AGREGADO 5008
     */
     //Define una respuesta OK
     public static final int OK = 200;
@@ -34,6 +34,9 @@ public class CodigoRespuesta {
 
     //Define una respuesta de NO ENCONTRADO
     public static final int NO_ENCONTRADO = 404;
+
+    //Define una respuesta de SIN COMPROBANTES
+    public static final int SIN_COMPROBANTES = 5008;
 
     //Define una respuesta de CONFLICTO
     public static final int CONFLICTO = 409;
@@ -458,6 +461,7 @@ public class CodigoRespuesta {
     public static final int ZONA_INEXISTENTE = 13146;
     
     //Codigos para atributos que no pueden ser nulos
+    //Ultimo código utilizado: 16379
     public static final int AFIP_ACTIVIDAD_NULO = 16000;
     public static final int AFIP_ALICUOTA_GANANCIA_NULO = 16001;
     public static final int AFIP_ALICUOTA_IVA_NULO = 16002;
@@ -494,6 +498,7 @@ public class CodigoRespuesta {
     public static final int EMPRESA_EMISION_NULO = 16033;
     public static final int ESCALA_TARIFA_NULO = 16034;
     public static final int ESTADO_CIVIL_NULO = 16035;
+    public static final int INSUMO_PRODUCTO_NULO = 16381;
     public static final int LOCALIDAD_NULO = 16036;
     public static final int LOCALIDAD_NACIMIENTO_NULO = 16037;
     public static final int MARCA_PRODUCTO_NULO = 16038;
@@ -656,6 +661,7 @@ public class CodigoRespuesta {
     public static final int ESTA_ACTIVO_COMPRA_NULO = 16195;
     public static final int ESTA_ACTIVO_INGRESO_CARGA_NULO = 16196;
     public static final int ESTA_ACTIVO_VENTA_NULO = 16197;
+    public static final int ESTA_ANULADO_NULO = 16380;
     public static final int ESTA_EN_REPARTO_NULO = 16198;
     public static final int ESTA_FACTURADO_NULO = 16199;
     public static final int ESTA_HABILITADO_NULO = 16200;

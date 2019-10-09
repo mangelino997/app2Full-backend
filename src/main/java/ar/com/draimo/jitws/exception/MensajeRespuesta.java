@@ -1536,6 +1536,10 @@ public class MensajeRespuesta {
                             codigoRespuesta = CodigoRespuesta.ESTA_ACTIVO_VENTA_NULO;
                             plusMensaje = " ESTÁ ACTIVO VENTA";
                             break;
+                        case ElementoNuloError.ESTA_ANULADO_NULO:
+                            codigoRespuesta = CodigoRespuesta.ESTA_ANULADO_NULO;
+                            plusMensaje = " ESTÁ ANULADO";
+                            break;
                         case ElementoNuloError.ESTA_EN_REPARTO_NULO:
                             codigoRespuesta = CodigoRespuesta.ESTA_EN_REPARTO_NULO;
                             plusMensaje = " ESTÁ EN REPARTO";
@@ -1811,6 +1815,10 @@ public class MensajeRespuesta {
                         case ElementoNuloError.INICIO_ACTIVIDAD_NULO:
                             codigoRespuesta = CodigoRespuesta.INICIO_ACTIVIDAD_NULO;
                             plusMensaje = " INICIO ACTIVIDAD";
+                            break;
+                        case ElementoNuloError.INSUMO_PRODUCTO_NULO:
+                            codigoRespuesta = CodigoRespuesta.INSUMO_PRODUCTO_NULO;
+                            plusMensaje = " INSUMO PRODUCTO";
                             break;
                         case ElementoNuloError.ITC_NETO_NULO:
                             codigoRespuesta = CodigoRespuesta.ITC_NETO_NULO;

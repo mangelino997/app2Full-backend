@@ -24,4 +24,7 @@ public interface IViajeEfectivoDAO extends JpaRepository<ViajeEfectivo, Integer>
     //Obtiene una lista por reparto
     public List<ViajeEfectivo> findByReparto(Reparto reparto);
     
+    //Elimina una lista por reparto
+    public void deleteByReparto(Reparto reparto);
+    
 }

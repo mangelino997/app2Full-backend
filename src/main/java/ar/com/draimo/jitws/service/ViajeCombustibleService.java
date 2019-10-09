@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio ViajeCombustible
@@ -49,6 +51,10 @@ public class ViajeCombustibleService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<ViajeCombustible>  elementos= elementoDAO.findAll();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");
@@ -64,6 +70,10 @@ public class ViajeCombustibleService {
     //Obtiene una lista de tramos por viaje
     public Object listarCombustibles(int idViaje) throws IOException {
         List<ViajeCombustible>  elementos= elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");
@@ -79,6 +89,10 @@ public class ViajeCombustibleService {
     //Obtiene una lista de combustibles por reparto
     public Object listarCombustiblesReparto(int idReparto) throws IOException {
         List<ViajeCombustible>  elementos= elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");

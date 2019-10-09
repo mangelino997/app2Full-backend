@@ -42,16 +42,23 @@ public class ChoferProveedorService {
     
     //Obtiene la lista completa
     public List<ChoferProveedor> listar() {
-        return elementoDAO.findAll();
+        List<ChoferProveedor> elementos = elementoDAO.findAll();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
     
     //Obtiene una lista por nombre
     public List<ChoferProveedor> listarPorAlias(String alias) {
-        if(alias.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByAliasContaining(alias);
+        List<ChoferProveedor> elementos = alias.equals("***") ?
+            elementoDAO.findAll() : elementoDAO.findByAliasContaining(alias);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
         }
+        return elementos;
     }
     
     //Obtiene una lista por alias activos
@@ -68,8 +75,13 @@ public class ChoferProveedorService {
     //Obtiene una lista por alias y proveedor
     public List<ChoferProveedor> listarPorAliasYProveedor(String alias, int idProveedor) {
         Proveedor proveedor = proveedorDAO.findById(idProveedor).get();
-        return alias.equals("***")?elementoDAO.findByProveedor(proveedor):
+        List<ChoferProveedor> elementos = alias.equals("***") ?elementoDAO.findByProveedor(proveedor):
                 elementoDAO.findByAliasContainingAndProveedor(alias,proveedor);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
     
     //Agrega un registro

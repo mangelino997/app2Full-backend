@@ -32,11 +32,11 @@ public class SucursalCliente extends ObjetoGenerico {
     private Barrio barrio;
 
     //Define el telefono fijo
-    @Column(name = "telefonoFijo", length = 45, nullable = true, unique = true)
+    @Column(name = "telefonoFijo", length = 45, nullable = true)
     private String telefonoFijo;
 
     //Define el telefono movil
-    @Column(name = "telefonoMovil", length = 45, nullable = true, unique = true)
+    @Column(name = "telefonoMovil", length = 45, nullable = true)
     private String telefonoMovil;
 
     //Referencia a la clase Cliente
