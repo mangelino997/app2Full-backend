@@ -74,7 +74,7 @@ public class ViajeEfectivo extends ObjetoGenerico {
     private String observaciones;
     
     //Define si esta anulado
-    @Column(name = "estaAnulado", nullable = true)
+    @Column(name = "estaAnulado", nullable = false)
     private boolean estaAnulado;
     
     //Define las observaciones de anulacion

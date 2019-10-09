@@ -44,6 +44,7 @@ public class ElementoNuloError {
     public static final String EMPRESA_EMISION_NULO = "idEmpresaEmision";
     public static final String ESCALA_TARIFA_NULO = "idEscalaTarifa";
     public static final String ESTADO_CIVIL_NULO = "idEstadoCivil";
+    public static final String INSUMO_PRODUCTO_NULO = "idInsumoProducto";
     public static final String LOCALIDAD_NULO = "idLocalidad";
     public static final String LOCALIDAD_NACIMIENTO_NULO = "idLocalidadNacimiento";
     public static final String MARCA_PRODUCTO_NULO = "idMarcaProducto";
@@ -206,6 +207,7 @@ public class ElementoNuloError {
     public static final String ESTA_ACTIVO_COMPRA_NULO = "estaActivoCompra";
     public static final String ESTA_ACTIVO_INGRESO_CARGA_NULO = "estaActivoIngresoCarga";
     public static final String ESTA_ACTIVO_VENTA_NULO = "estaActivoVenta";
+    public static final String ESTA_ANULADO_NULO = "estaAnulado";
     public static final String ESTA_EN_REPARTO_NULO = "estaEnReparto";
     public static final String ESTA_FACTURADO_NULO = "estaFacturado";
     public static final String ESTA_HABILITADO_NULO = "estaHabilitado";

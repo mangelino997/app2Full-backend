@@ -24,4 +24,7 @@ public interface IViajeCombustibleDAO extends JpaRepository<ViajeCombustible, In
     //Obtiene una lista por Reparto 
     public List<ViajeCombustible> findByReparto(Reparto reparto);
     
+    //Elimina una lista por Reparto 
+    public void deleteByReparto(Reparto reparto);
+    
 }
