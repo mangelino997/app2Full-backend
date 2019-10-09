@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
@@ -48,13 +49,17 @@ public class OrdenRecoleccionService {
     
     //Obtiene un registro por id
     public Object obtenerPorId(int idOrdenRecoleccion) throws IOException {
-        OrdenRecoleccion orden= (elementoDAO.findById(idOrdenRecoleccion).get());
+        OrdenRecoleccion elemento= (elementoDAO.findById(idOrdenRecoleccion).get());
+        if(elemento==null) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.NO_ENCONTRADO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(orden);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
         return mapper.readValue(string, Object.class);
     } 
     

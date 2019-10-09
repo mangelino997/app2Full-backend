@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.service.TipoComprobanteService;
@@ -61,28 +62,48 @@ public class TipoComprobanteController {
     @GetMapping(value = URL)
     @ResponseBody
     public List<TipoComprobante> listar() {
-        return elementoService.listar();
+        List<TipoComprobante> elementos = elementoService.listar();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene una lista por esta activo ingreso carga igual true
     @GetMapping(value = URL + "/listarActivosIngresoCarga")
     @ResponseBody
     public List<TipoComprobante> listarActivosIngresoCarga() {
-        return elementoService.listarEstaActivoIngresoCarga();
+        List<TipoComprobante> elementos = elementoService.listarEstaActivoIngresoCarga();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene una lista por esta activo Reparto igual true
     @GetMapping(value = URL + "/listarActivosReparto")
     @ResponseBody
     public List<TipoComprobante> listarActivosReparto() {
-        return elementoService.listarEstaActivoReparto();
+        List<TipoComprobante> elementos = elementoService.listarEstaActivoReparto();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene una lista por numeracion punto venta igual true
     @GetMapping(value = URL + "/listarConNumeracionPuntoVenta")
     @ResponseBody
     public List<TipoComprobante> listarConNumeracionPuntoVenta() {
-        return elementoService.listarNumeracionPuntoVenta();
+        List<TipoComprobante> elementos = elementoService.listarNumeracionPuntoVenta();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Agrega un registro

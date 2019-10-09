@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoRemitoDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ViajeTramo;
@@ -60,68 +61,93 @@ public class ViajeRemitoService {
 
     //Obtiene el listado completo
     public Object listar() throws IOException {
-        List<ViajeRemito> remitos = elementoDAO.findAll();
+        List<ViajeRemito> elementos = elementoDAO.findAll();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remitos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
 
     //Obtiene el listado de remitos disponibles
     public Object listarRemitosDisponibles() throws IOException {
-        List<ViajeRemito> remitos = elementoDAO.listarRemitosDisponibles();
+        List<ViajeRemito> elementos = elementoDAO.listarRemitosDisponibles();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remitos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<ViajeRemito> remitos = alias.equals("***") ? elementoDAO.findAll()
+        List<ViajeRemito> elementos = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remitos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
 
     //Obtiene un listado por numero de comprobante
     public Object listarPorNumero(int numero) throws IOException {
-        List<ViajeRemito> remitos = elementoDAO.findByNumero(numero);
+        List<ViajeRemito> elementos = elementoDAO.findByNumero(numero);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remitos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
 
     //Obtiene un listado de no pendientes por viajeTramo
     public List<ViajeRemito> listarAsignadosPorViajeTramo(int idViajeTramo) {
-        return elementoDAO.listarAsignadosPorViajeTramo(idViajeTramo);
+        List<ViajeRemito> elementos = elementoDAO.listarAsignadosPorViajeTramo(idViajeTramo);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene un listado de pendientes por sucursal
     public Object listarPendientesPorSucursal(int idSucursal) throws IOException {
-        List<ViajeRemito> remitos = elementoDAO.findBySucursalIngresoAndEstaPendienteFalse(
+        List<ViajeRemito> elementos = elementoDAO.findBySucursalIngresoAndEstaPendienteFalse(
                 sucursalDAO.findById(idSucursal));
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remitos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
 
@@ -133,30 +159,42 @@ public class ViajeRemitoService {
         //Obtiene la sucursal destino por id
         Sucursal sucursalDestino = sucursalDAO.findById(idSucursalDestino).get();
         //Retorna los datos
-        return elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
+        List<ViajeRemito> elementos = elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
                 sucursal, sucursalDestino, numeroCamion);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene un listado por filtro
     public Object listarPorFiltros(ViajeRemitoDTO viajeRemito) throws IOException {
-        List<ViajeRemito> remitos;
-        //Retorna los datos
-        remitos = elementoDAO.listarPorFiltros(viajeRemito.getFechaDesde(),
+        List<ViajeRemito> elementos = elementoDAO.listarPorFiltros(viajeRemito.getFechaDesde(),
                 viajeRemito.getFechaHasta(), viajeRemito.getIdSucursalIngreso(),
                 viajeRemito.getIdSucursalDestino(), viajeRemito.getIdClienteRemitente(),
                 viajeRemito.getIdClienteDestinatario(), viajeRemito.getNumeroCamion());
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remitos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista de letras
     public List<String> listarLetras() {
-        return elementoDAO.listarLetras();
+        List<String> elementos = elementoDAO.listarLetras();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Obtiene un registro por puntoVenta, letra y numero

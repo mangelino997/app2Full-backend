@@ -10,6 +10,7 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
+import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
@@ -81,7 +82,11 @@ public class VentaComprobanteService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<VentaComprobante> ventasComprobantes = elementoDAO.findAll();
+        List<VentaComprobante> elementos = elementoDAO.findAll();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -92,14 +97,18 @@ public class VentaComprobanteService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene la lista de registros que no estan en reparto
     public Object listarComprobantesDisponibles() throws IOException {
-        List<VentaComprobante> ventasComprobantes = elementoDAO.listarComprobantesDisponibles();
+        List<VentaComprobante> elementos = elementoDAO.listarComprobantesDisponibles();
         ObjectMapper mapper = new ObjectMapper();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
         FilterProvider filters = new SimpleFilterProvider()
@@ -109,14 +118,18 @@ public class VentaComprobanteService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene la lista por tipo de comprobante
     public Object listarPorTipoComprobante(int idTipoComprobante) throws IOException {
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante).get();
-        List<VentaComprobante> ventasComprobantes = elementoDAO.findByTipoComprobante(tipoComprobante);
+        List<VentaComprobante> elementos = elementoDAO.findByTipoComprobante(tipoComprobante);
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -127,7 +140,7 @@ public class VentaComprobanteService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
@@ -155,8 +168,12 @@ public class VentaComprobanteService {
 
     //Obtiene una lista por cliente y empresa
     public Object listarPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
-        List<VentaComprobante> ventasComprobantes = elementoDAO.findByClienteAndEmpresa(
+        List<VentaComprobante> elementos = elementoDAO.findByClienteAndEmpresa(
                 clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -167,13 +184,18 @@ public class VentaComprobanteService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene una lista de letras
     public List<String> listarLetras() {
-        return elementoDAO.listarLetras();
+        List<String> elementos = elementoDAO.listarLetras();
+        if(elementos.isEmpty()) {
+            throw new DataIntegrityViolationException(String.valueOf(
+                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
+        }
+        return elementos;
     }
 
     //Agrega un registro
