@@ -1,9 +1,11 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
 import ar.com.draimo.jitws.model.TipoDocumento;
@@ -13,6 +15,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,10 @@ public class ProveedorService {
     //Define la referencia al dao tipoDocumento
     @Autowired
     ITipoDocumentoDAO tipoDocumentoDAO;
+    
+    //Define la referencia al dao empresa
+    @Autowired
+    IEmpresaDAO empresaDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -74,6 +81,10 @@ public class ProveedorService {
     public Object listarPorAlias(String alias) throws IOException {
         List<Proveedor> proveedores = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
+        //Construye la lista de rubros productos cuentas contables para cada empresa
+        for (Proveedor proveedor : proveedores) {
+            proveedor.setProveedorCuentasContables(construirCuentasContablesParaEmpresas(proveedor));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -91,8 +102,10 @@ public class ProveedorService {
         Proveedor proveedor = elementoDAO.saveAndFlush(elemento);
         if (elemento.getProveedorCuentasContables() != null) {
             for (ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
-                pcc.setProveedor(proveedor);
-                proveedorCuentaContableDAO.saveAndFlush(pcc);
+                if(pcc.getPlanCuentaCompra() != null) {
+                    pcc.setProveedor(proveedor);
+                    proveedorCuentaContableDAO.saveAndFlush(pcc);
+                }
             }
         }
         return proveedor;
@@ -111,13 +124,7 @@ public class ProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Proveedor elemento) {
         elemento = formatearStrings(elemento);
-        Proveedor proveedor = establecerAlias(elemento);
-        if (elemento.getProveedorCuentasContables() != null) {
-            for (ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
-                pcc.setProveedor(proveedor);
-                proveedorCuentaContableDAO.save(pcc);
-            }
-        }
+        establecerAlias(elemento);
     }
 
     //Elimina un registro
@@ -166,6 +173,29 @@ public class ProveedorService {
             elemento.setAliasCBU(elemento.getAliasCBU().trim());
         }
         return elemento;
+    }
+    
+    //Arma la lista de cliente cuentas contables para todas las empresas
+    private List<ProveedorCuentaContable> construirCuentasContablesParaEmpresas(Proveedor proveedor) {
+        List<Empresa> empresas = empresaDAO.findAll();
+        List<ProveedorCuentaContable> pccLista = new ArrayList<>();
+        ProveedorCuentaContable pcc;
+        for (Empresa empresa : empresas) {
+            pcc = new ProveedorCuentaContable();
+            pcc.setEmpresa(empresa);
+            pcc.setProveedor(null);
+            pcc.setPlanCuentaCompra(null);
+            pccLista.add(pcc);
+        }
+        int indice;
+        for (ProveedorCuentaContable r : proveedor.getProveedorCuentasContables()) {
+            indice = r.getEmpresa().getId() - 1;
+            pccLista.get(indice).setId(r.getId());
+            pccLista.get(indice).setVersion(r.getVersion());
+            pccLista.get(indice).setProveedor(r.getProveedor());
+            pccLista.get(indice).setPlanCuentaCompra(r.getPlanCuentaCompra());
+        }
+        return pccLista;
     }
 
 }
