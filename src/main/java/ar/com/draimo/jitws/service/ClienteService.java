@@ -124,7 +124,7 @@ public class ClienteService {
     //Obtiene una lista por alias
     public List<Cliente> listarPorAlias(String alias) throws IOException {
         List<Cliente> clientes;
-        if (alias.equals("***")) {
+        if (alias.equals("*")) {
             clientes = elementoDAO.findAll();
         } else {
             clientes = elementoDAO.findByAliasContaining(alias);
