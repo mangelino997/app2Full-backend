@@ -21,7 +21,7 @@ public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
     
     //Obtiene un listado por estaCerrada 
     @Query(value = "SELECT * FROM reparto WHERE estaCerrada=:estaCerrada AND "
-            + "(:idEmpresa=0 OR idEmpresa=:idEmpresa)", nativeQuery = true )
+            + "(:idEmpresa=0 OR idEmpresaEmision=:idEmpresa)", nativeQuery = true )
     public List<Reparto> listarPorEstaCerradaYEmpresa(@Param("estaCerrada") boolean estaCerrada,
     @Param("idEmpresa") int idEmpresa);
     
