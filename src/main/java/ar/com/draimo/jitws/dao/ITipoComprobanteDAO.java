@@ -4,7 +4,6 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO TipoComprobante
@@ -28,9 +27,5 @@ public interface ITipoComprobanteDAO extends JpaRepository<TipoComprobante, Inte
     
     //Obtiene una lista por punto de venta
     public List<TipoComprobante> findByNumeracionPuntoVentaTrue();
-    
-//    //Obtiene una lista por id 1 y 26
-//    @Query(value = "SELECT * FROM tipocomprobante WHERE ")
-//    public List<TipoComprobante> findByNumeracionPuntoVentaTrue();
     
 }

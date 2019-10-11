@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.TipoComprobante;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,10 @@ public class TipoComprobanteService {
 
     //Obtiene una lista para emision de factura
     public List<TipoComprobante> listarParaEmisionFactura() {
-        return elementoDAO.findByNumeracionPuntoVentaTrue();
+        List<TipoComprobante> elementos = new ArrayList<>();
+        elementos.add(elementoDAO.findById(1).get());
+        elementos.add(elementoDAO.findById(26).get());
+        return elementos;
     }
 
     //Agrega un registro

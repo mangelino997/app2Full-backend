@@ -80,6 +80,14 @@ public class PuntoVentaController {
         return elementoService.listarPorSucursalYEmpresaLetra(idSucursal, idEmpresa);
     }
 
+    //Obtiene una lista de hablitidos por sucursal, empresa y fe
+    @GetMapping(value = URL + "/listarHabilitadosPorSucursalEmpresaYFe/{idSucursal}/{idEmpresa}")
+    @ResponseBody
+    public List<PuntoVenta> listarHabilitadosPorSucursalEmpresaYFe(@PathVariable int idSucursal,
+            @PathVariable int idEmpresa) {
+        return elementoService.listarHabilitadosPorSucursalEmpresaYFe(idSucursal, idEmpresa);
+    }
+
     //Obtiene una lista por sucursal, empresa y tipo comprobante
     @GetMapping(value = URL + "/listarPorEmpresaYSucursalYTipoComprobante/{idEmpresa}/{idSucursal}/{idTipoComprobante}")
     @ResponseBody

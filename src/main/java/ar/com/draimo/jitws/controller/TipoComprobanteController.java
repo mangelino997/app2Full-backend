@@ -62,48 +62,35 @@ public class TipoComprobanteController {
     @GetMapping(value = URL)
     @ResponseBody
     public List<TipoComprobante> listar() {
-        List<TipoComprobante> elementos = elementoService.listar();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoService.listar();
     }
 
     //Obtiene una lista por esta activo ingreso carga igual true
     @GetMapping(value = URL + "/listarActivosIngresoCarga")
     @ResponseBody
     public List<TipoComprobante> listarActivosIngresoCarga() {
-        List<TipoComprobante> elementos = elementoService.listarEstaActivoIngresoCarga();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoService.listarEstaActivoIngresoCarga();
     }
 
     //Obtiene una lista por esta activo Reparto igual true
     @GetMapping(value = URL + "/listarActivosReparto")
     @ResponseBody
     public List<TipoComprobante> listarActivosReparto() {
-        List<TipoComprobante> elementos = elementoService.listarEstaActivoReparto();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoService.listarEstaActivoReparto();
     }
 
     //Obtiene una lista por numeracion punto venta igual true
     @GetMapping(value = URL + "/listarConNumeracionPuntoVenta")
     @ResponseBody
     public List<TipoComprobante> listarConNumeracionPuntoVenta() {
-        List<TipoComprobante> elementos = elementoService.listarNumeracionPuntoVenta();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoService.listarNumeracionPuntoVenta();
+    }
+
+    //Obtiene una lista para emision de factura
+    @GetMapping(value = URL + "/listarParaEmisionFactura")
+    @ResponseBody
+    public List<TipoComprobante> listarParaEmisionDeFactura() {
+        return elementoService.listarParaEmisionFactura();
     }
 
     //Agrega un registro

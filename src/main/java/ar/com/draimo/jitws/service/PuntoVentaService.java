@@ -71,6 +71,12 @@ public class PuntoVentaService {
         return elementoDAO.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
     }
 
+    //Obtiene una lista de hablilitados por sucursal, empresa y fe
+    public List<PuntoVenta> listarHabilitadosPorSucursalEmpresaYFe(int idSucursal, int idEmpresa) {
+        return elementoDAO.findByEmpresaAndSucursalAndFeTrueAndEstaHabilitadoTrue(
+                empresaDAO.findById(idEmpresa).get(),sucursalDAO.findById(idSucursal).get());
+    }
+
     //Obtiene una lista por sucursal y empresa y agrega letra a cada registro
     public List<PuntoVenta> listarPorSucursalYEmpresaLetra(int idSucursal, int idEmpresa) {
         return elementoDAO.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
@@ -79,7 +85,7 @@ public class PuntoVentaService {
     //Obtiene una lista por sucursal y empresa
     public List<PuntoVenta> listarPorEmpresaYSucursalYTipoComprobante(int idEmpresa, int idSucursal, int idTipoComprobante) {
         //Obtiene la lista de puntos de venta
-        List<Object> elementos = elementoDAO.listarPorEmpresaYSucursal(idSucursal, idEmpresa, idTipoComprobante);
+        List<Object> elementos = elementoDAO.listarPorEmpresaSucursalYTipoComprobante(idSucursal, idEmpresa, idTipoComprobante);
         //Arma la lista de puntos de venta
         List<PuntoVenta> puntosVentas = new ArrayList<>();
         PuntoVenta puntoVenta;
