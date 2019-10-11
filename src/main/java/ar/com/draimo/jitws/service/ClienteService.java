@@ -83,6 +83,11 @@ public class ClienteService {
     //Obtiene una lista completa
     public Object listar() throws IOException {
         List<Cliente> clientes = elementoDAO.findAll();
+        //Construye la lista de rubros productos cuentas contables para cada empresa
+        for (Cliente cliente : clientes) {
+            cliente.setClienteCuentasBancarias(construirCuentasBancariasParaEmpresas(cliente));
+            cliente.setClienteVtosPagos(construirVtoPagoParaEmpresas(cliente));
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
@@ -94,13 +99,16 @@ public class ClienteService {
 
     //Obtiene por id
     public Object obtenerPorId(int id) throws IOException {
-        Cliente clientes = elementoDAO.findById(id).get();
+        Cliente cliente = elementoDAO.findById(id).get();
+        //Construye la lista de rubros productos cuentas contables para cada empresa
+        cliente.setClienteCuentasBancarias(construirCuentasBancariasParaEmpresas(cliente));
+        cliente.setClienteVtosPagos(construirVtoPagoParaEmpresas(cliente));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(clientes);
+        String string = mapper.writer(filters).writeValueAsString(cliente);
         return mapper.readValue(string, Object.class);
     }
 
@@ -111,6 +119,11 @@ public class ClienteService {
             clientes = elementoDAO.findByIdNot(idCliente);
         } else {
             clientes = elementoDAO.findByAliasContainingAndIdNot(alias, idCliente);
+        }
+        //Construye la lista de rubros productos cuentas contables para cada empresa
+        for (Cliente cliente : clientes) {
+            cliente.setClienteCuentasBancarias(construirCuentasBancariasParaEmpresas(cliente));
+            cliente.setClienteVtosPagos(construirVtoPagoParaEmpresas(cliente));
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -124,7 +137,7 @@ public class ClienteService {
     //Obtiene una lista por alias
     public List<Cliente> listarPorAlias(String alias) throws IOException {
         List<Cliente> clientes;
-        if (alias.equals("***")) {
+        if (alias.equals("*")) {
             clientes = elementoDAO.findAll();
         } else {
             clientes = elementoDAO.findByAliasContaining(alias);
@@ -185,8 +198,10 @@ public class ClienteService {
         //Registra los vencimientos de pagos
         if (elemento.getClienteVtosPagos() != null) {
             for (ClienteVtoPago cvp : elemento.getClienteVtosPagos()) {
-                cvp.setCliente(cliente);
-                clienteVtoPagoDAO.saveAndFlush(cvp);
+                if(cvp != null) {
+                    cvp.setCliente(cliente);
+                    clienteVtoPagoDAO.saveAndFlush(cvp);
+                }
             }
         }
         return cliente;
