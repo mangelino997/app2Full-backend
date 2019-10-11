@@ -117,9 +117,6 @@ public class VehiculoService {
     public Object listarPorAlias(String alias) throws IOException {
         List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContainingOrderByAlias(alias);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -150,10 +147,6 @@ public class VehiculoService {
         alias = alias.equals("***") ? "" : alias;
         List<Vehiculo> elementos = elementoDAO.listarPorAliasFiltroEmpresaYFiltroRemolque(
                 alias, esRemolque, idEmpresa);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

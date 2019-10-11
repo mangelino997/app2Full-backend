@@ -60,10 +60,6 @@ public class PersonalService {
     //Obtiene la lista completa
     public Object listar() throws IOException, Exception {
         List<Personal> elementos = elementoDAO.findAll();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -79,17 +75,13 @@ public class PersonalService {
             int idSucursal) throws IOException, Exception {
         Date fecha = new Date(new java.util.Date().getTime());
         //Establece el string vacio a alias en caso de que el usuario quiera listar todo
-        alias = (alias.equals("***")||alias.endsWith("...") ? "" : alias);
+        alias = (alias.equals("***")? "" : alias);
         /* Obtiene un listado por alias, activos o todos.
         Si recibe '***' en el alias no filtra por el mismo.
         idEmpresa y idSucursal pueden ser 0. en este caso no filtra por los mismos
         La fecha de hoy es para ver que el personal no este dado de baja*/
         List<Personal> elementos = elementoDAO.listarPorAlias(alias, activos,
                 idEmpresa, idSucursal, fecha);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -144,10 +136,6 @@ public class PersonalService {
         List<Personal> elementos
                 = elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                         alias, distancia, idEmpresa, fecha);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -165,10 +153,6 @@ public class PersonalService {
         List<Personal> elementos
                 = elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                         alias, 2, idEmpresa, fecha);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");
@@ -185,10 +169,6 @@ public class PersonalService {
         alias = (alias.equals("***") ? "" : alias);
         List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(
                 alias, fecha);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

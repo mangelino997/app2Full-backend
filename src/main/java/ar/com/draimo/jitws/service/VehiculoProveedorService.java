@@ -54,24 +54,13 @@ public class VehiculoProveedorService {
 
     //Obtiene una lista por nombre
     public List<VehiculoProveedor> listarPorAlias(String alias) {
-        List<VehiculoProveedor> elementos= alias.equals("***") ? elementoDAO.findAll()
+        return alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContainingOrderByAlias(alias);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
     }
 
     //Obtiene una lista por alias filtro remolque
     public List<VehiculoProveedor> listarPorAliasFiltroRemolque(String alias) {
-        List<VehiculoProveedor> elementos  = 
-            elementoDAO.findByAliasContainingAndTipoVehiculo_EsRemolqueTrueOrderByAlias(alias);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoDAO.findByAliasContainingAndTipoVehiculo_EsRemolqueTrueOrderByAlias(alias);
     }
 
     //Agrega un registro

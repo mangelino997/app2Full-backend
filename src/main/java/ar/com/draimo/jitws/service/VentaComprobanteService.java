@@ -10,8 +10,6 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
-import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
@@ -26,7 +24,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,10 +80,6 @@ public class VentaComprobanteService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<VentaComprobante> elementos = elementoDAO.findAll();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -105,10 +98,6 @@ public class VentaComprobanteService {
     public Object listarComprobantesDisponibles() throws IOException {
         List<VentaComprobante> elementos = elementoDAO.listarComprobantesDisponibles();
         ObjectMapper mapper = new ObjectMapper();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
         FilterProvider filters = new SimpleFilterProvider()
@@ -126,10 +115,6 @@ public class VentaComprobanteService {
     public Object listarPorTipoComprobante(int idTipoComprobante) throws IOException {
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante).get();
         List<VentaComprobante> elementos = elementoDAO.findByTipoComprobante(tipoComprobante);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -149,9 +134,6 @@ public class VentaComprobanteService {
         TipoComprobante t = tipoComprobanteDAO.findById(idTipoComprobante).get();
         VentaComprobante ventasComprobantes
                 = elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
-        if (ventasComprobantes == null) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE);
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -170,10 +152,6 @@ public class VentaComprobanteService {
     public Object listarPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
         List<VentaComprobante> elementos = elementoDAO.findByClienteAndEmpresa(
                 clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -190,12 +168,7 @@ public class VentaComprobanteService {
 
     //Obtiene una lista de letras
     public List<String> listarLetras() {
-        List<String> elementos = elementoDAO.listarLetras();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoDAO.listarLetras();
     }
 
     //Agrega un registro

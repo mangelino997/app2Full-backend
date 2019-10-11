@@ -42,46 +42,26 @@ public class ChoferProveedorService {
     
     //Obtiene la lista completa
     public List<ChoferProveedor> listar() {
-        List<ChoferProveedor> elementos = elementoDAO.findAll();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoDAO.findAll();
     }
     
     //Obtiene una lista por nombre
     public List<ChoferProveedor> listarPorAlias(String alias) {
-        List<ChoferProveedor> elementos = alias.equals("***") ?
+        return alias.equals("***") ?
             elementoDAO.findAll() : elementoDAO.findByAliasContaining(alias);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
     }
     
     //Obtiene una lista por alias activos
     public List<ChoferProveedor> listarActivosPorAlias(String alias) {
-        List<ChoferProveedor> elementos = alias.equals("***")?elementoDAO.findByUsuarioBajaIsNull():
+        return alias.equals("***")?elementoDAO.findByUsuarioBajaIsNull():
                 elementoDAO.findByAliasContainingAndUsuarioBajaIsNull(alias);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
     }
     
     //Obtiene una lista por alias y proveedor
     public List<ChoferProveedor> listarPorAliasYProveedor(String alias, int idProveedor) {
         Proveedor proveedor = proveedorDAO.findById(idProveedor).get();
-        List<ChoferProveedor> elementos = alias.equals("***") ?elementoDAO.findByProveedor(proveedor):
+        return alias.equals("***") ?elementoDAO.findByProveedor(proveedor):
                 elementoDAO.findByAliasContainingAndProveedor(alias,proveedor);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
     }
     
     //Agrega un registro

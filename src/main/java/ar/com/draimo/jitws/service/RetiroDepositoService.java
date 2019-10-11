@@ -11,7 +11,7 @@ import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
-import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.dto.elementoDTO;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.RetiroDeposito;
 import ar.com.draimo.jitws.model.RetiroDepositoComprobante;
@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,9 +133,10 @@ public class RetiroDepositoService {
     }
 
     //Obtiene una lista por filtros(empresa y sucursal opcionales)
-    public List<RetiroDeposito> listarPorFiltros(int idEmpresa, int idSucursal,
-            Date fechaDesde, Date fechaHasta, boolean estaCerrada) {
-        return elementoDAO.listarPorFiltros(idEmpresa, idSucursal, fechaDesde, fechaHasta, estaCerrada);
+    public List<RetiroDeposito> listarPorFiltros(elementoDTO retiroDTO) {
+        return elementoDAO.listarPorFiltros(retiroDTO.getIdEmpresa(),
+                retiroDTO.getIdSucursal(), retiroDTO.getFechaDesde(), 
+                retiroDTO.getFechaHasta(), retiroDTO.isEstaCerrada());
     }
 
     //Obtiene una lista por empresa
@@ -155,14 +155,15 @@ public class RetiroDepositoService {
         RetiroDeposito elemento = new ObjectMapper().readValue(retiroString, RetiroDeposito.class);
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(25).get());
         elemento.setFechaRegistracion(LocalDateTime.now());
+        elemento.setEstaCerrada(false);
         elemento = formatearStrings(elemento);
         Pdf pdf;
         if (!archivo.getOriginalFilename().equals("")) {
             Pdf u = pdfService.agregar(archivo, false);
+            u.setTabla("retiroDeposito");
             pdf = pdfDAO.saveAndFlush(u);
         } else {
             pdf = null;
-
         }
         elemento.setPdfDni(pdf);
         return elementoDAO.saveAndFlush(elemento);
