@@ -30,41 +30,25 @@ public class ZonaService {
 
     //Obtiene la lista completa
     public List<Zona> listar() {
-        List<Zona> elementos = elementoDAO.findAllByOrderByNombreAsc();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoDAO.findAllByOrderByNombreAsc();
     }
 
     //Obtiene la lista completa ordenada
     public List<Zona> listarOrdenado(String elemento) {
-        List<Zona> elementos;
         switch (elemento) {
             case "nombre":
-                elementos = elementoDAO.findAllByOrderByNombreAsc();
+                return elementoDAO.findAllByOrderByNombreAsc();
             case "id":
-                elementos = elementoDAO.findByOrderByIdAsc();
+                return elementoDAO.findByOrderByIdAsc();
             default:
-                elementos = elementoDAO.findAll();
+                return elementoDAO.findAll();
         }
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
     }
 
     //Obtiene una lista por nombre
     public List<Zona> listarPorNombre(String nombre) {
-        List<Zona> elementos = nombre.equals("***") ? elementoDAO.findAllByOrderByNombreAsc()
+        return nombre.equals("***") ? elementoDAO.findAllByOrderByNombreAsc()
                 : elementoDAO.findByNombreContaining(nombre);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
     }
 
     //Agrega un registro

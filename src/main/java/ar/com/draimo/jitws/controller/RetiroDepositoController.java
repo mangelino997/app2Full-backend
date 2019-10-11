@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.elementoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RetiroDeposito;
 import ar.com.draimo.jitws.service.RetiroDepositoService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +65,13 @@ public class RetiroDepositoController {
     @ResponseBody
     public List<RetiroDeposito> listarPorEstaCerrada(@PathVariable boolean estaCerrada) {
         return elementoService.listarPorEstaCerrada(estaCerrada);
+    }
+
+    //Obtiene la lista de planillas por filtros
+    @PutMapping(value = URL + "/listarPorFiltros")
+    @ResponseBody
+    public List<RetiroDeposito> listarPorFiltros(@RequestBody elementoDTO retiroDTO) {
+        return elementoService.listarPorFiltros(retiroDTO);
     }
 
     //Cierra un reparto

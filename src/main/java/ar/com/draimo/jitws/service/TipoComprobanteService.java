@@ -57,6 +57,11 @@ public class TipoComprobanteService {
         return elementoDAO.findByNumeracionPuntoVentaTrue();
     }
 
+    //Obtiene una lista para emision de factura
+    public List<TipoComprobante> listarParaEmisionFactura() {
+        return elementoDAO.findByNumeracionPuntoVentaTrue();
+    }
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TipoComprobante agregar(TipoComprobante elemento) {

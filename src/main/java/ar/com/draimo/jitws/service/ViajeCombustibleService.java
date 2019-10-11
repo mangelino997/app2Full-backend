@@ -51,10 +51,6 @@ public class ViajeCombustibleService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<ViajeCombustible>  elementos= elementoDAO.findAll();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");
@@ -70,10 +66,6 @@ public class ViajeCombustibleService {
     //Obtiene una lista de tramos por viaje
     public Object listarCombustibles(int idViaje) throws IOException {
         List<ViajeCombustible>  elementos= elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");
@@ -89,10 +81,6 @@ public class ViajeCombustibleService {
     //Obtiene una lista de combustibles por reparto
     public Object listarCombustiblesReparto(int idReparto) throws IOException {
         List<ViajeCombustible>  elementos= elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente","viajeTramo","datos");

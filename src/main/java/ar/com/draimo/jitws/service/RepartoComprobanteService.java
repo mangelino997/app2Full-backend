@@ -140,38 +140,46 @@ public class RepartoComprobanteService {
     //Agrega un listado
     @Transactional(rollbackFor = Exception.class)
     public List<RepartoComprobante> conformarComprobantes(List<RepartoComprobante> ctes) {
+        //Recorre la lista de reparto comprobante
+        for (RepartoComprobante cte : ctes) {
+            conformarComprobante(cte);
+        }
+        return ctes;
+    }
+    
+    //Conforma un comprobante
+    @Transactional(rollbackFor = Exception.class)
+    public RepartoComprobante conformarComprobante(RepartoComprobante repartoCte) {
         SeguimientoEstado seguimientoEstado = seguimientoEstadoDAO.findById(6).get();
         SeguimientoSituacion seguimientoSituacion = seguimientoSituacionDAO.findById(1).get();
         SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
         SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
         SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
         //Recorre la lista de reparto comprobante
-        for (RepartoComprobante cte : ctes) {
             //Si no esta vacio, guarda el seguimiento para aquel comprobante que contenga el repartoComprobante
-            if (cte.getOrdenRecoleccion() != null) {
-                ordenSeguimiento.setOrdenRecoleccion(cte.getOrdenRecoleccion());
+            if (repartoCte.getOrdenRecoleccion() != null) {
+                ordenSeguimiento.setOrdenRecoleccion(repartoCte.getOrdenRecoleccion());
                 ordenSeguimiento.setFecha(LocalDateTime.now());
                 ordenSeguimiento.setSeguimientoEstado(seguimientoEstado);
                 ordenSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
-                ordenSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                ordenSeguimiento.setSucursal(repartoCte.getReparto().getSucursal());
                 seguimientoRecoleccionDAO.saveAndFlush(ordenSeguimiento);
-            } else if (cte.getViajeRemito() != null) {
-                viajeSeguimiento.setViajeRemito(cte.getViajeRemito());
+            } else if (repartoCte.getViajeRemito() != null) {
+                viajeSeguimiento.setViajeRemito(repartoCte.getViajeRemito());
                 viajeSeguimiento.setFecha(LocalDateTime.now());
                 ordenSeguimiento.setSeguimientoEstado(seguimientoEstado);
                 ordenSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
-                viajeSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                viajeSeguimiento.setSucursal(repartoCte.getReparto().getSucursal());
                 seguimientoRemitoDAO.saveAndFlush(viajeSeguimiento);
             } else {
-                ventaSeguimiento.setVentaComprobante(cte.getVentaComprobante());
+                ventaSeguimiento.setVentaComprobante(repartoCte.getVentaComprobante());
                 ventaSeguimiento.setFecha(LocalDateTime.now());
                 ordenSeguimiento.setSeguimientoEstado(seguimientoEstado);
                 ordenSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
-                ventaSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                ventaSeguimiento.setSucursal(repartoCte.getReparto().getSucursal());
                 seguimientoComprobanteDAO.saveAndFlush(ventaSeguimiento);
             }
-        }
-        return ctes;
+        return repartoCte;
     }
 
     //Agrega un listado

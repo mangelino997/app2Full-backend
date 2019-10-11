@@ -6,13 +6,16 @@ import java.sql.Date;
  * Define DTO para busquedas de reparto
  * @author blas
  */
-public class RepartoDTO {
+public class elementoDTO {
     
     //Define el id reparto
     private int idReparto;
     
     //Define el id empresa
     private int idEmpresa;
+    
+    //Define el idSucursal
+    private int idSucursal;
     
     //Define es reparto propio
     private boolean esRepartoPropio;
@@ -43,6 +46,14 @@ public class RepartoDTO {
 
     public void setIdEmpresa(int idEmpresa) {
         this.idEmpresa = idEmpresa;
+    }
+
+    public int getIdSucursal() {
+        return idSucursal;
+    }
+
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     public boolean isEsRepartoPropio() {

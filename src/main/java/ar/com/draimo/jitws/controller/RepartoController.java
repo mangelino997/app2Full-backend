@@ -2,7 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.dto.RepartoDTO;
+import ar.com.draimo.jitws.dto.elementoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.service.RepartoService;
@@ -88,7 +88,7 @@ public class RepartoController {
 
     //Obtiene la lista por filtros(empresa, viaje propio o tercero, periodo de fecha, chofer y si esta abierto o cerrado)
     @PutMapping(value = URL + "/listarPorFiltros")
-    public Object listarPorFiltros(@RequestBody RepartoDTO repartoDTO) throws IOException {
+    public Object listarPorFiltros(@RequestBody elementoDTO repartoDTO) throws IOException {
         return elementoService.listarPorFiltros(repartoDTO);
     }
 

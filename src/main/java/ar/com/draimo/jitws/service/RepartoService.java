@@ -22,7 +22,7 @@ import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeEfectivoDAO;
-import ar.com.draimo.jitws.dto.RepartoDTO;
+import ar.com.draimo.jitws.dto.elementoDTO;
 import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Proveedor;
@@ -110,10 +110,6 @@ public class RepartoService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<Reparto> elementos = elementoDAO.findAll();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");
@@ -128,10 +124,6 @@ public class RepartoService {
     //Obtiene la lista de registros propios abiertos
     public Object listarAbiertosPropios() throws IOException {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, true);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");
@@ -146,10 +138,6 @@ public class RepartoService {
     //Obtiene la lista de registros terceros abiertos
     public Object listarAbiertosTerceros() throws IOException {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, false);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");
@@ -164,10 +152,6 @@ public class RepartoService {
     //Obtiene la lista por EstaCerrada 
     public Object listarPorEstaCerrada(boolean estaCerrada) throws IOException {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, 0);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");
@@ -182,10 +166,6 @@ public class RepartoService {
     //Obtiene la lista por EstaCerrada y empresa
     public Object listarPorEstaCerradaYEmpresa(boolean estaCerrada, int idEmpresa) throws IOException {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");
@@ -198,15 +178,11 @@ public class RepartoService {
     }
 
     //Obtiene la lista por filtros
-    public Object listarPorFiltros(RepartoDTO repartoDto) throws IOException {
+    public Object listarPorFiltros(elementoDTO repartoDto) throws IOException {
         List<Reparto> elementos = elementoDAO.listarPorFiltros(
                 repartoDto.isEsRepartoPropio(), repartoDto.getFechaDesde(), 
                 repartoDto.getFechaHasta(), repartoDto.getIdChofer(), 
                 repartoDto.isEstaCerrada(), repartoDto.getIdEmpresa());
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos");

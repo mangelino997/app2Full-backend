@@ -62,10 +62,6 @@ public class ViajeRemitoService {
     //Obtiene el listado completo
     public Object listar() throws IOException {
         List<ViajeRemito> elementos = elementoDAO.findAll();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -78,10 +74,6 @@ public class ViajeRemitoService {
     //Obtiene el listado de remitos disponibles
     public Object listarRemitosDisponibles() throws IOException {
         List<ViajeRemito> elementos = elementoDAO.listarRemitosDisponibles();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -95,10 +87,6 @@ public class ViajeRemitoService {
     public Object listarPorAlias(String alias) throws IOException {
         List<ViajeRemito> elementos = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -111,10 +99,6 @@ public class ViajeRemitoService {
     //Obtiene un listado por numero de comprobante
     public Object listarPorNumero(int numero) throws IOException {
         List<ViajeRemito> elementos = elementoDAO.findByNumero(numero);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -127,10 +111,6 @@ public class ViajeRemitoService {
     //Obtiene un listado de no pendientes por viajeTramo
     public List<ViajeRemito> listarAsignadosPorViajeTramo(int idViajeTramo) {
         List<ViajeRemito> elementos = elementoDAO.listarAsignadosPorViajeTramo(idViajeTramo);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         return elementos;
     }
 
@@ -138,10 +118,6 @@ public class ViajeRemitoService {
     public Object listarPendientesPorSucursal(int idSucursal) throws IOException {
         List<ViajeRemito> elementos = elementoDAO.findBySucursalIngresoAndEstaPendienteFalse(
                 sucursalDAO.findById(idSucursal));
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -161,10 +137,6 @@ public class ViajeRemitoService {
         //Retorna los datos
         List<ViajeRemito> elementos = elementoDAO.findBySucursalIngresoAndSucursalDestinoAndNumeroCamionAndEstaPendienteTrue(
                 sucursal, sucursalDestino, numeroCamion);
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         return elementos;
     }
 
@@ -174,10 +146,6 @@ public class ViajeRemitoService {
                 viajeRemito.getFechaHasta(), viajeRemito.getIdSucursalIngreso(),
                 viajeRemito.getIdSucursalDestino(), viajeRemito.getIdClienteRemitente(),
                 viajeRemito.getIdClienteDestinatario(), viajeRemito.getNumeroCamion());
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
@@ -189,20 +157,12 @@ public class ViajeRemitoService {
 
     //Obtiene una lista de letras
     public List<String> listarLetras() {
-        List<String> elementos = elementoDAO.listarLetras();
-        if(elementos.isEmpty()) {
-            throw new DataIntegrityViolationException(String.valueOf(
-                    CodigoRespuesta.LISTA_SIN_CONTENIDO));
-        }
-        return elementos;
+        return elementoDAO.listarLetras();
     }
 
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
         ViajeRemito remitos = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
-        if (remitos == null) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.NO_EXISTENTE);
-        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");
