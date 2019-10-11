@@ -77,10 +77,10 @@ public class ViajeRemito extends ObjetoGenerico {
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
     
-    //Referencia a la clase Cliente (destinatario sucursal)
+    //Referencia a la clase Sucursal Cliente (destinatario)
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idClienteDestinatarioSuc", nullable = true)
-    private Cliente clienteDestinatarioSuc;
+    @JoinColumn(name = "idSucursalClienteDest", nullable = true)
+    private SucursalCliente sucursalClienteDest;
     
     //Define los bultos
     @Column(name = "bultos", nullable = false)
@@ -227,14 +227,14 @@ public class ViajeRemito extends ObjetoGenerico {
         this.clienteDestinatario = clienteDestinatario;
     }
 
-    public Cliente getClienteDestinatarioSuc() {
-        return clienteDestinatarioSuc;
+    public SucursalCliente getSucursalClienteDest() {
+        return sucursalClienteDest;
     }
 
-    public void setClienteDestinatarioSuc(Cliente clienteDestinatarioSuc) {
-        this.clienteDestinatarioSuc = clienteDestinatarioSuc;
+    public void setSucursalClienteDest(SucursalCliente sucursalClienteDest) {
+        this.sucursalClienteDest = sucursalClienteDest;
     }
-
+    
     public short getBultos() {
         return bultos;
     }
