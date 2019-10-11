@@ -146,10 +146,24 @@ public class PersonalAdelantoService {
             cuotasAdelantos.add(cuota);
             total = total.add(importe);
         }
-        cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(
-                total.compareTo(personalAdelanto.getImporte()) == 1 ? total.subtract(
-                personalAdelanto.getImporte()) : total.compareTo(personalAdelanto.getImporte()) == -1
-                ? personalAdelanto.getImporte().subtract(total) : importe.add(new BigDecimal(0)));
+        /*
+        * Verifica si existe algun resto al operar con numeros decimales 
+        * y se lo suma a la ultima cuota
+        */
+        BigDecimal imp;
+        switch (total.compareTo(personalAdelanto.getImporte())) {
+            case 1:
+                BigDecimal resto = total.subtract(personalAdelanto.getImporte());
+                imp = importe.add(resto);
+                break;
+            case -1:
+                imp = personalAdelanto.getImporte().subtract(total);
+                break;
+            default:
+                imp = importe;
+                break;
+        }
+        cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(imp);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos");

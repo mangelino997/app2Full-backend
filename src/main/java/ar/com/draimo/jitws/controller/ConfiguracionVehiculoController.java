@@ -67,10 +67,10 @@ public class ConfiguracionVehiculoController {
     }
 
     //Obtiene una lista por marca de vehiculo
-    @GetMapping(value = URL + "/listarPorMarcaVehiculo/{idMarcaVehiculo}")
+    @GetMapping(value = URL + "/listarPorFiltros/{idTipoVehiculo}/{idMarcaVehiculo}")
     @ResponseBody
-    public List<ConfiguracionVehiculo> listarPorMarcaVehiculo(@PathVariable int idMarcaVehiculo) {
-        return elementoService.listarPorMarcaVehiculo(idMarcaVehiculo);
+    public List<ConfiguracionVehiculo> listarPorFiltros(@PathVariable int idTipoVehiculo, @PathVariable int idMarcaVehiculo) {
+        return elementoService.listarPorFiltros(idTipoVehiculo, idMarcaVehiculo);
     }
 
     //Agrega un registro
