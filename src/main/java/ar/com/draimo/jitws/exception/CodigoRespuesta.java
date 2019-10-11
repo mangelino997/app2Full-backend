@@ -461,7 +461,7 @@ public class CodigoRespuesta {
     public static final int ZONA_INEXISTENTE = 13146;
     
     //Codigos para atributos que no pueden ser nulos
-    //Ultimo código utilizado: 16379
+    //Ultimo código utilizado: 16381
     public static final int AFIP_ACTIVIDAD_NULO = 16000;
     public static final int AFIP_ALICUOTA_GANANCIA_NULO = 16001;
     public static final int AFIP_ALICUOTA_IVA_NULO = 16002;
@@ -511,6 +511,7 @@ public class CodigoRespuesta {
     public static final int OPCION_NULO = 16045;
     public static final int ORDEN_VENTA_NULO = 16046;
     public static final int ORDEN_VENTA_TARIFA_NULO = 16047;
+    public static final int ORDEN_RECOLECCION_NULO = 16380;
     public static final int ORIGEN_NULO = 16048;
     public static final int PAIS_NULO = 16049;
     public static final int PERSONAL_NULO = 16050;
@@ -662,6 +663,7 @@ public class CodigoRespuesta {
     public static final int ESTA_ACTIVO_INGRESO_CARGA_NULO = 16196;
     public static final int ESTA_ACTIVO_VENTA_NULO = 16197;
     public static final int ESTA_ANULADO_NULO = 16380;
+    public static final int ESTA_CERRADA_NULO = 16381;
     public static final int ESTA_EN_REPARTO_NULO = 16198;
     public static final int ESTA_FACTURADO_NULO = 16199;
     public static final int ESTA_HABILITADO_NULO = 16200;

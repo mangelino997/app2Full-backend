@@ -57,6 +57,7 @@ public class ElementoNuloError {
     public static final String OPCION_NULO = "idOpcion";
     public static final String ORDEN_VENTA_NULO = "idOrdenVenta";
     public static final String ORDEN_VENTA_TARIFA_NULO = "idOrdenVentaTarifa";
+    public static final String ORDEN_RECOLECCION_NULO = "idOrdenRecoleccion";
     public static final String ORIGEN_NULO = "idOrigen";
     public static final String PAIS_NULO = "idPais";
     public static final String PERSONAL_NULO = "idPersonal";

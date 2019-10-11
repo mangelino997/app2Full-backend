@@ -2056,6 +2056,10 @@ public class MensajeRespuesta {
                             codigoRespuesta = CodigoRespuesta.ORDEN_VENTA_TARIFA_NULO;
                             plusMensaje = " ORDEN VENTA TARIFA";
                             break;
+                        case ElementoNuloError.ORDEN_RECOLECCION_NULO:
+                            codigoRespuesta = CodigoRespuesta.ORDEN_RECOLECCION_NULO;
+                            plusMensaje = " ORDEN RECOLECCIÓN";
+                            break;
                         case ElementoNuloError.ORIGEN_NULO:
                             codigoRespuesta = CodigoRespuesta.ORIGEN_NULO;
                             plusMensaje = " ORIGEN";
