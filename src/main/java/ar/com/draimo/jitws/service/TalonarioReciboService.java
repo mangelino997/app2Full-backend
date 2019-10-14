@@ -23,7 +23,7 @@ public class TalonarioReciboService {
     //Define la referencia al DAO
     @Autowired
     ITalonarioReciboDAO elementoDAO;
-    
+
     //Define la referencia al DAO de Cobrador 
     @Autowired
     ICobradorDAO cobradorDAO;
@@ -31,7 +31,6 @@ public class TalonarioReciboService {
     //Define la referencia al DAO de Empresa
     @Autowired
     IEmpresaDAO empresaDAO;
-
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -43,12 +42,12 @@ public class TalonarioReciboService {
     public List<TalonarioRecibo> listar() {
         return elementoDAO.findAll();
     }
-    
+
     //Obtiene la lista completa
     public List<TalonarioRecibo> listarPorCobradorYEmpresa(int idCobrador, int idEmpresa) {
         return elementoDAO.findByCobradorAndTalonarioReciboLote_empresa(cobradorDAO.findById(idCobrador).get(), empresaDAO.findById(idEmpresa).get());
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TalonarioRecibo agregar(TalonarioRecibo elemento) throws Exception {
@@ -76,15 +75,24 @@ public class TalonarioReciboService {
         if (elemento.getDesde() >= elemento.getHasta()) {
             throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
         }
-        List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(
-                elemento.getDesde());
-        List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(
-                elemento.getHasta());
-        if (!desdeList.isEmpty()) {
-            throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
+        TalonarioRecibo talonarioRecibo = elementoDAO.findById(elemento.getId()).get();
+        if(elemento.getDesde() < talonarioRecibo.getDesde()) {
+            List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(elemento.getDesde());
+            if (!desdeList.isEmpty()) {
+                throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
+            }
         }
-        if (!hastaList.isEmpty()) {
-            throw new Exception(MensajeRespuesta.HASTA_YA_ASIGNADO);
+        if(elemento.getHasta() > talonarioRecibo.getHasta()) {
+            List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(elemento.getHasta());
+            if (!hastaList.isEmpty()) {
+                throw new Exception(MensajeRespuesta.HASTA_YA_ASIGNADO);
+            }
+        }
+        if(elemento.getDesde() < talonarioRecibo.getTalonarioReciboLote().getDesde()) {
+            throw new Exception(MensajeRespuesta.DESDE_EXCEDIDO);
+        }
+        if(elemento.getHasta() > talonarioRecibo.getTalonarioReciboLote().getHasta()) {
+            throw new Exception(MensajeRespuesta.HASTA_EXCEDIDO);
         }
         elementoDAO.save(elemento);
     }

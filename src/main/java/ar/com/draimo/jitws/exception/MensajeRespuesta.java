@@ -53,6 +53,8 @@ public class MensajeRespuesta {
     public static final String DESDE_YA_ASIGNADO = "DESDE ya asignado a otro talonario.";
     public static final String HASTA_YA_ASIGNADO = "HASTA ya asignado a otro talonario.";
     public static final String DESDE_HASTA_INVALIDOS = "DESDE y/o HASTA rango invalido para Talonario Recibo Lote.";
+    public static final String DESDE_EXCEDIDO = "DESDE excede el limite del Talonario Recibo Lote";
+    public static final String HASTA_EXCEDIDO = "HASTA excede el limite del Talonario Recibo Lote";
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {
