@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.sql.Date;
 import java.sql.Time;
@@ -135,6 +136,7 @@ public class Reparto extends ObjetoGenerico {
     
     //Define referencia a personal (acompaniantes)
     @JsonManagedReference
+    @JsonIgnoreProperties("reparto")
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy="reparto")
     private List<RepartoPersonal> acompaniantes;
     

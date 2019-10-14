@@ -6,6 +6,12 @@ package ar.com.draimo.jitws.dto;
  */
 public class ViajeRemitoDTO {
     
+    //Define id del remito
+    private int idRemito;
+    
+    //Define id del viaje
+    private int idViaje;
+    
     //Define la fecha
     private String fechaDesde;
     
@@ -26,6 +32,26 @@ public class ViajeRemitoDTO {
     
     //Define el numero de camion
     private short numeroCamion;
+    
+    //Define si esta facturado
+    private boolean estaFacturado;
+
+    //Getters y setters del DTO
+    public int getIdRemito() {
+        return idRemito;
+    }
+
+    public void setIdRemito(int idRemito) {
+        this.idRemito = idRemito;
+    }
+
+    public int getIdViaje() {
+        return idViaje;
+    }
+
+    public void setIdViaje(int idViaje) {
+        this.idViaje = idViaje;
+    }
     
     public String getFechaDesde() {
         return fechaDesde;
@@ -81,6 +107,14 @@ public class ViajeRemitoDTO {
 
     public void setNumeroCamion(short numeroCamion) {
         this.numeroCamion = numeroCamion;
+    }
+
+    public boolean isEstaFacturado() {
+        return estaFacturado;
+    }
+
+    public void setEstaFacturado(boolean estaFacturado) {
+        this.estaFacturado = estaFacturado;
     }
     
 }

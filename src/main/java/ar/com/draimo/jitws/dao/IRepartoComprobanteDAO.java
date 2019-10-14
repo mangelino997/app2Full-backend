@@ -5,6 +5,8 @@ import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.RepartoComprobante;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO RepartoComprobante
@@ -19,5 +21,9 @@ public interface IRepartoComprobanteDAO extends JpaRepository<RepartoComprobante
     
     //Obtiene un listado de RepartoComprobante por idReparto
     public List<RepartoComprobante> findByReparto(Reparto reparto);
+    
+    //Obtiene un listado de RepartoComprobante por idReparto
+    @Query(value = "SELECT idViajeRemito, idVentaComprobante, idOrdenRecoleccion FROM repartocomprobante WHERE idReparto=:idReparto", nativeQuery = true)
+    public Object[] listarPorReparto(@Param("idReparto") int idReparto);
     
 }

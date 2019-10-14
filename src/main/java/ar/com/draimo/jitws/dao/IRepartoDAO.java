@@ -5,8 +5,10 @@ import ar.com.draimo.jitws.model.Reparto;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Interfaz DAO Reparto
@@ -42,5 +44,12 @@ public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
             @Param("fechaDesde") Date fechaDesde, @Param("fechaHasta") Date fechaHasta,
             @Param("idChofer") int idChofer, @Param("estaCerrada") boolean estaCerrada,
             @Param("idEmpresa") int idEmpresa);
+    
+    //Cierra un reparto por id
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE reparto SET estaCerrada=:estaCerrada WHERE id=:idReparto", nativeQuery = true)
+    public void cerrarReparto(@Param("estaCerrada") boolean estaCerrada,
+            @Param("idReparto") int idReparto);
 
 }

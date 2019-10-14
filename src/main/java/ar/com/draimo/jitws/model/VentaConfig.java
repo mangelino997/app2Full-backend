@@ -1,6 +1,7 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -27,6 +28,10 @@ public class VentaConfig extends ObjetoGenerico {
     @Column(name = "notaImpresionComprobanteGral2",length = 200, nullable = true)
     private String notaImpresionComprobanteGral2;
     
+    //Define Comision contrareembolso
+    @Column(name = "comisionCR", nullable = true)
+    private BigDecimal comisionCR;
+    
     //Getters y Setters de la clase
     public short getAforo() {
         return aforo;
@@ -50,6 +55,14 @@ public class VentaConfig extends ObjetoGenerico {
 
     public void setNotaImpresionComprobanteGral2(String notaImpresionComprobanteGral2) {
         this.notaImpresionComprobanteGral2 = notaImpresionComprobanteGral2;
+    }
+
+    public BigDecimal getComisionCR() {
+        return comisionCR;
+    }
+
+    public void setComisionCR(BigDecimal comisionCR) {
+        this.comisionCR = comisionCR;
     }
 
 }

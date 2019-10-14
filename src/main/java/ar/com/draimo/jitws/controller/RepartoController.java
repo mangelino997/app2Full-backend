@@ -93,9 +93,9 @@ public class RepartoController {
     }
 
     //Cierra un reparto
-    @PutMapping(value = URL + "/cerrarReparto/{idReparto}")
-    public ResponseEntity<?> cerrarReparto(@PathVariable int idReparto) throws IOException {
-        boolean r = elementoService.cerrarReparto(idReparto);
+    @PutMapping(value = URL + "/cerrarReparto")
+    public ResponseEntity<?> cerrarReparto(@RequestBody Reparto reparto) throws IOException {
+        boolean r = elementoService.cerrarReparto(reparto);
         if (r == true) {
             /*template.convertAndSend(TOPIC + "/lista", 
                     elementoService.listarPorEstaCerrada(false));*/

@@ -19,20 +19,19 @@ import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeEfectivoDAO;
 import ar.com.draimo.jitws.dto.elementoDTO;
 import ar.com.draimo.jitws.exception.CodigoRespuesta;
-import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoOrdenRecoleccion;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
 import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
 import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
-import ar.com.draimo.jitws.model.ViajeCombustible;
-import ar.com.draimo.jitws.model.ViajeEfectivo;
+import ar.com.draimo.jitws.model.Sucursal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -100,6 +99,10 @@ public class RepartoService {
     //define la referencia al dao de viajeEfectivo
     @Autowired
     IViajeEfectivoDAO viajeEfectivoDAO;
+
+    //define la referencia al dao de sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -195,46 +198,47 @@ public class RepartoService {
     }
 
     //Cierra un reparto
-    public boolean cerrarReparto(int idReparto) {
-        Reparto r = elementoDAO.findById(idReparto).get();
-        List<RepartoComprobante> c = repartoComprobanteDAO.findByReparto(r);
-        if (c.isEmpty()) {
+    public boolean cerrarReparto(Reparto reparto) {
+        //elementoDAO.cerrarReparto(true,idReparto);
+        Object[] c = repartoComprobanteDAO.listarPorReparto(reparto.getId());
+        Sucursal sucursal = sucursalDAO.obtenerPorReparto(reparto.getId());
+        if (c.length==0) {
             return false;
         } else {
             SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
-            r.setEstaCerrada(true);
             LocalDateTime fecha = LocalDateTime.now();
-            for (RepartoComprobante rtoCte : c) {
-                if (rtoCte.getOrdenRecoleccion() != null) {
+            Object[] elementos;
+            for (Object rtoCte : c) {
+                elementos = (Object[]) rtoCte;
+                if (elementos[2] != null) {
                     SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
-                    sor.getOrdenRecoleccion().setId(rtoCte.getOrdenRecoleccion().getId());
-                    sor.setSeguimientoEstado(se);
-                    sor.setSeguimientoSituacion(ss);
+                    sor.getOrdenRecoleccion().setId((int)elementos[2]);
+                    sor.getSeguimientoEstado().setId(4);
+                    sor.getSeguimientoSituacion().setId(1);
                     sor.setFecha(fecha);
-                    sor.setSucursal(r.getSucursal());
+                    sor.setSucursal(sucursal);
                     seguimientoOrdenRecDAO.saveAndFlush(sor);
-                } else if (rtoCte.getVentaComprobante() != null) {
+                } else if (elementos[1] != null) {
                     SeguimientoVentaComprobante svc = new SeguimientoVentaComprobante();
-                    svc.getVentaComprobante().setId(rtoCte.getVentaComprobante().getId());
+                    svc.getVentaComprobante().setId((int)elementos[1]);
                     svc.setSeguimientoEstado(se);
                     svc.setSeguimientoSituacion(ss);
                     svc.setFecha(fecha);
-                    svc.setSucursal(r.getSucursal());
+                    svc.setSucursal(sucursal);
                     seguimientoVtaCteDAO.saveAndFlush(svc);
-                } else if (rtoCte.getViajeRemito() != null) {
+                } else if (elementos[0] != null) {
                     SeguimientoViajeRemito svr = new SeguimientoViajeRemito();
-                    svr.getViajeRemito().setId(rtoCte.getViajeRemito().getId());
+                    svr.getViajeRemito().setId((int)elementos[0]);
                     svr.setSeguimientoEstado(se);
                     svr.setSeguimientoSituacion(ss);
                     svr.setFecha(fecha);
-                    svr.setSucursal(r.getSucursal());
+                    svr.setSucursal(sucursal);
                     seguimientoViajeRtoDAO.saveAndFlush(svr);
                 } else {
                     throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.SIN_COMPROBANTES));
                 }
             }
-            elementoDAO.save(r);
             return true;
         }
     }

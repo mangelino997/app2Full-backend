@@ -68,12 +68,13 @@ public class OrdenVenta extends ObjetoGenerico {
 //         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idCliente"})})  
 //    @JsonIgnoreProperties("ordenesVentas")
 //    private List<Cliente>  clientes = new ArrayList<>();
+    
     //Referencia a la clase empresa
 //    @ManyToMany(cascade = CascadeType.REFRESH)
 //    @JoinTable(name = "empresaordenventa",
 //        joinColumns = @JoinColumn(name = "idOrdenVenta"),
 //        inverseJoinColumns = @JoinColumn(name = "idEmpresa"),
-//         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idEmpresa"})})  
+//         uniqueConstraints={@UniqueConstraint(columnNames={"idOrdenVenta", "idEmpresa"})}) 
 //    @JsonIgnoreProperties("ordenesVentas")
 //    private List<Empresa> empresas = new ArrayList<>();
     //Referencia a la clase empresa
