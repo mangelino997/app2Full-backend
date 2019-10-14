@@ -36,6 +36,11 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @JoinColumn(name = "idViajeRemito", nullable = true)
     private ViajeRemito viajeRemito;
     
+    //Referencia a la clase ViajeTramoClienteRemito
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idViajeTramoClienteRemito", nullable = true)
+    private ViajeTramoClienteRemito viajeTramoClienteRemito;
+    
     //Define numero remito
     @Column(name = "numeroRemito",length = 14, nullable = true)
     private String numeroRemito;
@@ -131,10 +136,10 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @JoinColumn(name = "idProvincia", nullable = false)
     private Provincia provincia;
     
-    //Referencia a la clase OrdenVenta
+    //Referencia a la clase OrdenVentaTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idOrdenVenta", nullable = false)
-    private OrdenVenta ordenVenta;
+    @JoinColumn(name = "idOrdenVentaTarifa", nullable = false)
+    private OrdenVentaTarifa ordenVentaTarifa;
 
     //Getters y Setters de la clase
     public VentaComprobante getVentaComprobante() {
@@ -345,12 +350,20 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
         this.provincia = provincia;
     }
 
-    public OrdenVenta getOrdenVenta() {
-        return ordenVenta;
+    public ViajeTramoClienteRemito getViajeTramoClienteRemito() {
+        return viajeTramoClienteRemito;
     }
 
-    public void setOrdenVenta(OrdenVenta ordenVenta) {
-        this.ordenVenta = ordenVenta;
+    public void setViajeTramoClienteRemito(ViajeTramoClienteRemito viajeTramoClienteRemito) {
+        this.viajeTramoClienteRemito = viajeTramoClienteRemito;
+    }
+
+    public OrdenVentaTarifa getOrdenVentaTarifa() {
+        return ordenVentaTarifa;
+    }
+
+    public void setOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa) {
+        this.ordenVentaTarifa = ordenVentaTarifa;
     }
     
 }
