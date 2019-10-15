@@ -237,8 +237,10 @@ public class RepartoService {
                     throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.SIN_COMPROBANTES));
                 }
             }
-            reparto.setEstaCerrada(true);
-            elementoDAO.save(reparto);
+            Reparto r = new Reparto();
+            r = reparto;
+            r.setEstaCerrada(true);
+            elementoDAO.save(r);
             return true;
         }
     }
@@ -283,8 +285,10 @@ public class RepartoService {
                     throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.SIN_COMPROBANTES));
                 }
             }
-            reparto.setEstaCerrada(false);
-            elementoDAO.save(reparto);
+            Reparto r = new Reparto();
+            r = reparto;
+            r.setEstaCerrada(false);
+            elementoDAO.save(r);
             return true;
         }
     }
