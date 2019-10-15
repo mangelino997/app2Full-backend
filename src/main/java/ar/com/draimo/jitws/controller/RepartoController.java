@@ -95,25 +95,25 @@ public class RepartoController {
     //Cierra un reparto
     @PutMapping(value = URL + "/cerrarReparto")
     public ResponseEntity<?> cerrarReparto(@RequestBody Reparto reparto) throws IOException {
-        boolean r = elementoService.cerrarReparto(reparto);
-        if (r == true) {
+        try {
+            boolean r = elementoService.cerrarReparto(reparto);
             /*template.convertAndSend(TOPIC + "/lista", 
                     elementoService.listarPorEstaCerrada(false));*/
             return MensajeRespuesta.cerrado();
-        } else {
+        } catch (Exception e) {
             return MensajeRespuesta.error();
         }
     }
 
     //Abre un reparto
-    @PutMapping(value = URL + "/abrirReparto/{idReparto}")
+    @GetMapping(value = URL + "/abrirReparto/{idReparto}")
     public ResponseEntity<?> abrirReparto(@PathVariable int idReparto) throws IOException {
-        boolean r = elementoService.abrirReparto(idReparto);
-        if (r == true) {
+        try {
+            boolean r = elementoService.abrirReparto(idReparto);
             /*template.convertAndSend(TOPIC + "/lista", 
-                    elementoService.listarPorEstaCerrada(true));*/
+                    elementoService.listarPorEstaCerrada(false));*/
             return MensajeRespuesta.abierto();
-        } else {
+        } catch (Exception e) {
             return MensajeRespuesta.error();
         }
     }

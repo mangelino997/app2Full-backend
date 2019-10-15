@@ -23,7 +23,7 @@ public interface IRepartoComprobanteDAO extends JpaRepository<RepartoComprobante
     public List<RepartoComprobante> findByReparto(Reparto reparto);
     
     //Obtiene un listado de RepartoComprobante por idReparto
-    @Query(value = "SELECT idViajeRemito, idVentaComprobante, idOrdenRecoleccion FROM repartocomprobante WHERE idReparto=:idReparto", nativeQuery = true)
-    public Object[] listarPorReparto(@Param("idReparto") int idReparto);
+    @Query(value = "SELECT * FROM repartocomprobante WHERE idReparto=:idReparto", nativeQuery = true)
+    public List<RepartoComprobante> listarPorReparto(@Param("idReparto") int idReparto);
     
 }

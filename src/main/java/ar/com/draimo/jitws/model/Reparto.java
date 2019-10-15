@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -137,8 +138,14 @@ public class Reparto extends ObjetoGenerico {
     //Define referencia a personal (acompaniantes)
     @JsonManagedReference
     @JsonIgnoreProperties("reparto")
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy="reparto")
+    @OneToMany(fetch= FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy="reparto")
     private List<RepartoPersonal> acompaniantes;
+    
+    //Define referencia a repartoComprobante
+    @JsonManagedReference
+    @JsonIgnoreProperties("reparto")
+    @OneToMany(fetch= FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy="reparto")
+    private List<RepartoComprobante> repartoComprobantes;
     
     //Getters y Setters de la clase
     public Empresa getEmpresaEmision() {
@@ -323,6 +330,14 @@ public class Reparto extends ObjetoGenerico {
 
     public void setAcompaniantes(List<RepartoPersonal> acompaniantes) {
         this.acompaniantes = acompaniantes;
+    }
+
+    public List<RepartoComprobante> getRepartoComprobantes() {
+        return repartoComprobantes;
+    }
+
+    public void setRepartoComprobantes(List<RepartoComprobante> repartoComprobantes) {
+        this.repartoComprobantes = repartoComprobantes;
     }
     
 }

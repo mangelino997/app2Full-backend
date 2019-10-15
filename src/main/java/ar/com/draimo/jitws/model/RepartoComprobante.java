@@ -1,7 +1,9 @@
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,7 +20,8 @@ import javax.persistence.Table;
 public class RepartoComprobante extends ObjetoGenerico {
     
     //Referencia a la clase reparto
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idReparto", nullable = false)
     private Reparto reparto;
     
