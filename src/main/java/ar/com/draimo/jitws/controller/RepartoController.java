@@ -99,7 +99,7 @@ public class RepartoController {
             boolean r = elementoService.cerrarReparto(reparto);
             /*template.convertAndSend(TOPIC + "/lista", 
                     elementoService.listarPorEstaCerrada(false));*/
-            return MensajeRespuesta.cerrado();
+            return (r ? MensajeRespuesta.cerrado() : MensajeRespuesta.sinComprobantes());
         } catch (Exception e) {
             return MensajeRespuesta.error();
         }

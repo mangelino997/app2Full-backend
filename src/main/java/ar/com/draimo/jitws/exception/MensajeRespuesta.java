@@ -147,6 +147,11 @@ public class MensajeRespuesta {
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CERRADO_CON_EXITO,
                 MensajeRespuesta.CERRADO, 0), HttpStatus.OK);
     }
+    //Retorna mensaje con ReponseEntity de cerrado
+    public static ResponseEntity<?> sinComprobantes() {
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_COMPROBANTES,
+                MensajeRespuesta.SIN_COMPROBANTES, 0), HttpStatus.CONFLICT);
+    }
 
     //Retorna mensaje con ReponseEntity de abierto
     public static ResponseEntity<?> abierto() {
