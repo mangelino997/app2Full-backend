@@ -81,7 +81,7 @@ public class ViajeEfectivoService {
 
     //Obtiene una lista de efectivos por reparto
     public Object listarEfectivosReparto(int idReparto) throws IOException {
-        List<ViajeEfectivo> elementos = elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
+        List<ViajeEfectivo> elementos = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",

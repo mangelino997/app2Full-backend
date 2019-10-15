@@ -69,7 +69,7 @@ public class ViajeEfectivoController {
     @GetMapping(value = URL + "/listarEfectivosReparto/{idReparto}")
     @ResponseBody
     public Object listarEfectivosReparto(@PathVariable int idReparto) throws IOException {
-        return elementoService.listarEfectivos(idReparto);
+        return elementoService.listarEfectivosReparto(idReparto);
     }
 
     //anula un Efectivo

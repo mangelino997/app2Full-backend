@@ -69,7 +69,7 @@ public class ViajeCombustibleController {
     @GetMapping(value = URL + "/listarCombustiblesReparto/{idReparto}")
     @ResponseBody
     public Object listarCombustiblesReparto(@PathVariable int idReparto) throws IOException {
-        return elementoService.listarCombustibles(idReparto);
+        return elementoService.listarCombustiblesReparto(idReparto);
     }
 
     //Anula un registro
