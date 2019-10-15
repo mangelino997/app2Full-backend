@@ -198,38 +198,36 @@ public class RepartoService {
     }
 
     //Cierra un reparto
+    @Transactional(rollbackFor = Exception.class)
     public boolean cerrarReparto(Reparto reparto) {
-        //elementoDAO.cerrarReparto(true,idReparto);
-        Object[] c = repartoComprobanteDAO.listarPorReparto(reparto.getId());
-        Sucursal sucursal = sucursalDAO.obtenerPorReparto(reparto.getId());
-        if (c.length==0) {
+        List<RepartoComprobante> c = repartoComprobanteDAO.findByReparto(reparto);
+        if (c.isEmpty()) {
             return false;
         } else {
+            Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
             SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
             LocalDateTime fecha = LocalDateTime.now();
-            Object[] elementos;
-            for (Object rtoCte : c) {
-                elementos = (Object[]) rtoCte;
-                if (elementos[2] != null) {
+            for (RepartoComprobante rtoCte : c) {
+                if (rtoCte.getOrdenRecoleccion() != null) {
                     SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
-                    sor.getOrdenRecoleccion().setId((int)elementos[2]);
-                    sor.getSeguimientoEstado().setId(4);
-                    sor.getSeguimientoSituacion().setId(1);
+                    sor.setOrdenRecoleccion(c.get(0).getOrdenRecoleccion());
+                    sor.setSeguimientoEstado(se);
+                    sor.setSeguimientoSituacion(ss);
                     sor.setFecha(fecha);
                     sor.setSucursal(sucursal);
                     seguimientoOrdenRecDAO.saveAndFlush(sor);
-                } else if (elementos[1] != null) {
+                } else if (rtoCte.getVentaComprobante()!= null) {
                     SeguimientoVentaComprobante svc = new SeguimientoVentaComprobante();
-                    svc.getVentaComprobante().setId((int)elementos[1]);
+                    svc.setVentaComprobante(rtoCte.getVentaComprobante());
                     svc.setSeguimientoEstado(se);
                     svc.setSeguimientoSituacion(ss);
                     svc.setFecha(fecha);
                     svc.setSucursal(sucursal);
                     seguimientoVtaCteDAO.saveAndFlush(svc);
-                } else if (elementos[0] != null) {
+                } else if (rtoCte.getViajeRemito() != null) {
                     SeguimientoViajeRemito svr = new SeguimientoViajeRemito();
-                    svr.getViajeRemito().setId((int)elementos[0]);
+                    svr.setViajeRemito(rtoCte.getViajeRemito());
                     svr.setSeguimientoEstado(se);
                     svr.setSeguimientoSituacion(ss);
                     svr.setFecha(fecha);
@@ -239,49 +237,56 @@ public class RepartoService {
                     throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.SIN_COMPROBANTES));
                 }
             }
+            reparto.setEstaCerrada(true);
+            elementoDAO.save(reparto);
             return true;
         }
     }
 
     //Abre un reparto
+    @Transactional(rollbackFor = Exception.class)
     public boolean abrirReparto(int idReparto) {
-        Reparto r = elementoDAO.findById(idReparto).get();
-        List<RepartoComprobante> c = repartoComprobanteDAO.findByReparto(r);
-        r.setEstaCerrada(false);
+        Reparto reparto = elementoDAO.obtenerPorId(idReparto);
+        if (reparto.getRepartoComprobantes().isEmpty()) {
+            return false;
+        } else {
+        Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
         SeguimientoEstado se = seguimientoEstadoDAO.findById(3).get();
         SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
-        LocalDateTime fecha = LocalDateTime.now();
-        for (RepartoComprobante rtoCte : c) {
-            if (rtoCte.getOrdenRecoleccion() != null) {
-                SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
-                sor.getOrdenRecoleccion().setId(rtoCte.getOrdenRecoleccion().getId());
-                sor.setSeguimientoEstado(se);
-                sor.setSeguimientoSituacion(ss);
-                sor.setFecha(fecha);
-                sor.setSucursal(r.getSucursal());
-                seguimientoOrdenRecDAO.saveAndFlush(sor);
-            } else if (rtoCte.getVentaComprobante() != null) {
-                SeguimientoVentaComprobante svc = new SeguimientoVentaComprobante();
-                svc.getVentaComprobante().setId(rtoCte.getVentaComprobante().getId());
-                svc.setSeguimientoEstado(se);
-                svc.setSeguimientoSituacion(ss);
-                svc.setFecha(fecha);
-                svc.setSucursal(r.getSucursal());
-                seguimientoVtaCteDAO.saveAndFlush(svc);
-            } else if (rtoCte.getViajeRemito() != null) {
-                SeguimientoViajeRemito svr = new SeguimientoViajeRemito();
-                svr.getViajeRemito().setId(rtoCte.getViajeRemito().getId());
-                svr.setSeguimientoEstado(se);
-                svr.setSeguimientoSituacion(ss);
-                svr.setFecha(fecha);
-                svr.setSucursal(r.getSucursal());
-                seguimientoViajeRtoDAO.saveAndFlush(svr);
-            } else {
-                throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.SIN_COMPROBANTES));
+            LocalDateTime fecha = LocalDateTime.now();
+            for (RepartoComprobante rtoCte : reparto.getRepartoComprobantes()) {
+                if (rtoCte.getOrdenRecoleccion() != null) {
+                    SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
+                    sor.setOrdenRecoleccion(rtoCte.getOrdenRecoleccion());
+                    sor.setSeguimientoEstado(se);
+                    sor.setSeguimientoSituacion(ss);
+                    sor.setFecha(fecha);
+                    sor.setSucursal(sucursal);
+                    seguimientoOrdenRecDAO.saveAndFlush(sor);
+                } else if (rtoCte.getVentaComprobante()!= null) {
+                    SeguimientoVentaComprobante svc = new SeguimientoVentaComprobante();
+                    svc.setVentaComprobante(rtoCte.getVentaComprobante());
+                    svc.setSeguimientoEstado(se);
+                    svc.setSeguimientoSituacion(ss);
+                    svc.setFecha(fecha);
+                    svc.setSucursal(sucursal);
+                    seguimientoVtaCteDAO.saveAndFlush(svc);
+                } else if (rtoCte.getViajeRemito() != null) {
+                    SeguimientoViajeRemito svr = new SeguimientoViajeRemito();
+                    svr.setViajeRemito(rtoCte.getViajeRemito());
+                    svr.setSeguimientoEstado(se);
+                    svr.setSeguimientoSituacion(ss);
+                    svr.setFecha(fecha);
+                    svr.setSucursal(sucursal);
+                    seguimientoViajeRtoDAO.saveAndFlush(svr);
+                } else {
+                    throw new DataIntegrityViolationException(String.valueOf(CodigoRespuesta.SIN_COMPROBANTES));
+                }
             }
+            reparto.setEstaCerrada(false);
+            elementoDAO.save(reparto);
+            return true;
         }
-        elementoDAO.save(r);
-        return true;
     }
 
     //Recibe un reparto
@@ -323,15 +328,15 @@ public class RepartoService {
     @Transactional(rollbackFor = Exception.class)
     public boolean eliminar(int elemento) {
         Reparto r = elementoDAO.findById(elemento).get();
-        List<RepartoComprobante> rctes = repartoComprobanteDAO.findByReparto(r);
+     //   List<RepartoComprobante> rctes = repartoComprobanteDAO.findByReparto(r);
         viajeEfectivoDAO.deleteByReparto(r);
         viajeCombustibleDAO.deleteByReparto(r);
-        if (rctes.isEmpty()) {
-            elementoDAO.deleteById(elemento);
-            return true;
-        } else {
+//        if (rctes.isEmpty()) {
+//            elementoDAO.deleteById(elemento);
+//            return true;
+//        } else {
             return false;
-        }
+//        }
     }
 
 }
