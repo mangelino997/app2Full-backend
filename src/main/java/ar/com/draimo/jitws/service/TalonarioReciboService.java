@@ -54,9 +54,8 @@ public class TalonarioReciboService {
         if (elemento.getDesde() >= elemento.getHasta()) {
             throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
         }
-        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        List<TalonarioRecibo> desdeLista = elementoDAO.listarPorDesdeHasta(elemento.getDesde());
-        List<TalonarioRecibo> hastaLista = elementoDAO.listarPorDesdeHasta(elemento.getHasta());
+        List<TalonarioRecibo> desdeLista = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde());
+        List<TalonarioRecibo> hastaLista = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getHasta());
         if (!desdeLista.isEmpty()) {
             throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
         }
@@ -66,6 +65,17 @@ public class TalonarioReciboService {
         if (elemento.getHasta() > elemento.getTalonarioReciboLote().getHasta()) {
             throw new Exception(MensajeRespuesta.DESDE_HASTA_INVALIDOS);
         }
+        if(elemento.getDesde() < elemento.getTalonarioReciboLote().getDesde()) {
+            throw new Exception(MensajeRespuesta.DESDE_EXCEDIDO);
+        }
+        if(elemento.getHasta() > elemento.getTalonarioReciboLote().getHasta()) {
+            throw new Exception(MensajeRespuesta.HASTA_EXCEDIDO);
+        }
+        TalonarioRecibo tr = elementoDAO.verificarDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde(), elemento.getHasta());
+        if (tr != null) {
+            throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
+        }
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -77,22 +87,31 @@ public class TalonarioReciboService {
         }
         TalonarioRecibo talonarioRecibo = elementoDAO.findById(elemento.getId()).get();
         if(elemento.getDesde() < talonarioRecibo.getDesde()) {
-            List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(elemento.getDesde());
+            List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde());
             if (!desdeList.isEmpty()) {
                 throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
             }
         }
         if(elemento.getHasta() > talonarioRecibo.getHasta()) {
-            List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(elemento.getHasta());
+            List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getHasta());
             if (!hastaList.isEmpty()) {
                 throw new Exception(MensajeRespuesta.HASTA_YA_ASIGNADO);
             }
+        }
+        if (elemento.getHasta() > elemento.getTalonarioReciboLote().getHasta()) {
+            throw new Exception(MensajeRespuesta.DESDE_HASTA_INVALIDOS);
         }
         if(elemento.getDesde() < talonarioRecibo.getTalonarioReciboLote().getDesde()) {
             throw new Exception(MensajeRespuesta.DESDE_EXCEDIDO);
         }
         if(elemento.getHasta() > talonarioRecibo.getTalonarioReciboLote().getHasta()) {
             throw new Exception(MensajeRespuesta.HASTA_EXCEDIDO);
+        }
+        TalonarioRecibo tr = elementoDAO.verificarDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde(), elemento.getHasta());
+        if (tr != null) {
+            if(tr.getDesde() != elemento.getDesde() && tr.getHasta() != elemento.getHasta()) {
+                throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
+            }
         }
         elementoDAO.save(elemento);
     }

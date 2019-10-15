@@ -25,8 +25,14 @@ public interface ITalonarioReciboDAO extends JpaRepository<TalonarioRecibo, Inte
     //Obtiene una lista de 
     public List<TalonarioRecibo> findByCobradorAndTalonarioReciboLote_empresa(Cobrador cobrador,Empresa empresa);
     
-    @Query(value = "SELECT * FROM talonariorecibo c WHERE :desdeHasta BETWEEN "
-            + "c.desde AND c.hasta", nativeQuery = true)
-    public List<TalonarioRecibo> listarPorDesdeHasta(@Param("desdeHasta") int desdeHasta);
+    @Query(value = "SELECT * FROM talonariorecibo c WHERE c.idTalonarioReciboLote=:idTalonarioReciboLote "
+            + "AND :desdeHasta BETWEEN c.desde AND c.hasta", nativeQuery = true)
+    public List<TalonarioRecibo> listarPorDesdeHasta(@Param("idTalonarioReciboLote") int idTalonarioReciboLote, 
+            @Param("desdeHasta") int desdeHasta);
+    
+    @Query(value = "SELECT * FROM talonariorecibo c WHERE c.idTalonarioReciboLote=:idTalonarioReciboLote "
+            + "AND (c.desde BETWEEN :desde AND :hasta OR c.hasta BETWEEN :desde AND :hasta)", nativeQuery = true)
+    public TalonarioRecibo verificarDesdeHasta(@Param("idTalonarioReciboLote") int idTalonarioReciboLote, 
+            @Param("desde") int desde, @Param("hasta") int hasta);
     
 }

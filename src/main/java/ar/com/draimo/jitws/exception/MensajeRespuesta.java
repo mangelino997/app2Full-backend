@@ -49,10 +49,10 @@ public class MensajeRespuesta {
     public static final String COMPROBANTE_REGISTRADO = "Comprobante ya registrado.";
     public static final String ADELANTO_NO_OTORGADO = "No logró alcanzar el importe para recibir el adelanto";
     public static final String SIN_COMPROBANTES = "No contiene comprobante/s";
-    public static final String DESDE_HASTA_YA_ASIGNADO = "DESDE y/o HASTA ya asignado a otro talonario.";
-    public static final String DESDE_YA_ASIGNADO = "DESDE ya asignado a otro talonario.";
-    public static final String HASTA_YA_ASIGNADO = "HASTA ya asignado a otro talonario.";
-    public static final String DESDE_HASTA_INVALIDOS = "DESDE y/o HASTA rango invalido para Talonario Recibo Lote.";
+    public static final String DESDE_HASTA_YA_ASIGNADO = "DESDE y/o HASTA ya asignado a otro talonario";
+    public static final String DESDE_YA_ASIGNADO = "DESDE ya asignado a otro talonario";
+    public static final String HASTA_YA_ASIGNADO = "HASTA ya asignado a otro talonario";
+    public static final String DESDE_HASTA_INVALIDOS = "DESDE y/o HASTA rango invalido para Talonario Recibo Lote";
     public static final String DESDE_EXCEDIDO = "DESDE excede el limite del Talonario Recibo Lote";
     public static final String HASTA_EXCEDIDO = "HASTA excede el limite del Talonario Recibo Lote";
 
