@@ -175,7 +175,7 @@ public class VentaComprobante extends ObjetoGenerico {
     private String CAEEstado;
     
     //Define CAEVencimiento
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "UTC-3")
     @Column(name = "fechaRegistracion", nullable = true)
     private LocalDateTime fechaRegistracion;
     

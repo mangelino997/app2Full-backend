@@ -118,14 +118,16 @@ public class RepartoComprobanteService {
         List<RepartoComprobante> comprobantes = elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
                 .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
+                .addFilter("filtroOrdenVentaTramo", theFilter)
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
         String string = mapper.writer(filters).writeValueAsString(comprobantes);
         return new ObjectMapper().readValue(string, Object.class);
     }
