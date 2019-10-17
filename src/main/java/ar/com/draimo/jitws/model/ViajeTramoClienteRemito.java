@@ -83,11 +83,16 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
     //Define si esta facturado
     @Column(name = "estaFacturado", nullable = false)
     private boolean estaFacturado;
-
-    //Referencia a la clase usuario(alta)
+ 
+    //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioAlta", nullable = false)
     private Usuario usuarioAlta;
+    
+    //Referencia a la clase Usuario (mod)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioMod", nullable = false)
+    private Usuario usuarioMod;
     
     //Getters y Setters de la clase
 
@@ -217,6 +222,14 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
 
     public void setUsuarioAlta(Usuario usuarioAlta) {
         this.usuarioAlta = usuarioAlta;
+    }
+
+    public Usuario getUsuarioMod() {
+        return usuarioMod;
+    }
+
+    public void setUsuarioMod(Usuario usuarioMod) {
+        this.usuarioMod = usuarioMod;
     }
     
 }
