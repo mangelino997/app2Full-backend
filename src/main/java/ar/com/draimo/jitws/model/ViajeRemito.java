@@ -31,11 +31,6 @@ public class ViajeRemito extends ObjetoGenerico {
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
-    //Referencia a la clase Usuario
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuario", nullable = false)
-    private Usuario usuario;
-    
     //Define la fecha
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)
@@ -130,6 +125,16 @@ public class ViajeRemito extends ObjetoGenerico {
     @Column(name = "alias",length = 200, nullable = true)
     private String alias;
     
+    //Referencia a la clase Usuario (alta)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioAlta", nullable = false)
+    private Usuario usuarioAlta;
+    
+    //Referencia a la clase Usuario (mod)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioMod", nullable = false)
+    private Usuario usuarioMod;
+    
     //Getters y Setters de la clase
     public Sucursal getSucursalIngreso() {
         return sucursalIngreso;
@@ -146,15 +151,7 @@ public class ViajeRemito extends ObjetoGenerico {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
+    
     public Date getFecha() {
         return fecha;
     }
@@ -329,6 +326,22 @@ public class ViajeRemito extends ObjetoGenerico {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public Usuario getUsuarioAlta() {
+        return usuarioAlta;
+    }
+
+    public void setUsuarioAlta(Usuario usuarioAlta) {
+        this.usuarioAlta = usuarioAlta;
+    }
+
+    public Usuario getUsuarioMod() {
+        return usuarioMod;
+    }
+
+    public void setUsuarioMod(Usuario usuarioMod) {
+        this.usuarioMod = usuarioMod;
     }
     
 }
