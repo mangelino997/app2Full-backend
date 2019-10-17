@@ -331,16 +331,15 @@ public class RepartoService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public boolean eliminar(int elemento) {
-        Reparto r = elementoDAO.findById(elemento).get();
-     //   List<RepartoComprobante> rctes = repartoComprobanteDAO.findByReparto(r);
+        Reparto r = elementoDAO.obtenerPorId(elemento);
         viajeEfectivoDAO.deleteByReparto(r);
         viajeCombustibleDAO.deleteByReparto(r);
-//        if (rctes.isEmpty()) {
-//            elementoDAO.deleteById(elemento);
-//            return true;
-//        } else {
+        if (r.getRepartoComprobantes().isEmpty()) {
+            elementoDAO.deleteById(elemento);
+            return true;
+        } else {
             return false;
-//        }
+        }
     }
 
 }
