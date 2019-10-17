@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * @author blas
  */
 
-@Entity
+    @Entity
 @Table(name = "ventacomprobanteitemFA")
 @JsonFilter(value = "filtroVentaComprobanteItemFA")
 public class VentaComprobanteItemFA extends ObjetoGenerico {
@@ -42,8 +42,8 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private ViajeTramoClienteRemito viajeTramoClienteRemito;
     
     //Define numero remito
-    @Column(name = "numeroRemito",length = 14, nullable = true)
-    private String numeroRemito;
+    @Column(name = "numeroRemito",length = 8, nullable = true)
+    private int numeroRemito;
     
     //Define los bultos
     @Column(name = "bultos", nullable = true)
@@ -166,14 +166,14 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
         this.viajeRemito = viajeRemito;
     }
 
-    public String getNumeroRemito() {
+    public int getNumeroRemito() {
         return numeroRemito;
     }
 
-    public void setNumeroRemito(String numeroRemito) {
+    public void setNumeroRemito(int numeroRemito) {
         this.numeroRemito = numeroRemito;
     }
-    
+
     public short getBultos() {
         return bultos;
     }
