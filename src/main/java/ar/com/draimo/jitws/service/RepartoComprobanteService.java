@@ -115,7 +115,7 @@ public class RepartoComprobanteService {
 
     //Obtiene la lista por repartoPropio
     public Object listarComprobantes(int idReparto) throws IOException {
-        List<RepartoComprobante> comprobantes = elementoDAO.findByReparto(repartoDAO.findById(idReparto).get());
+        List<RepartoComprobante> comprobantes = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "datos");

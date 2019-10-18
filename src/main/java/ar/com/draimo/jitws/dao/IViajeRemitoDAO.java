@@ -26,6 +26,10 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     //Obtiene la lista por numero
     public List<ViajeRemito> findByNumero(int numero);
 
+    //Obtiene la lista por id
+    @Query(value = "SELECT * FROM viajeremito WHERE id=:id", nativeQuery = true)
+    public ViajeRemito obtenerPorId(@Param("id") int id);
+
     //Obtiene una lista de no pendientes por sucursal ingreso
     public List<ViajeRemito> findBySucursalIngresoAndEstaPendienteFalse(Optional<Sucursal> sucursal);
 
