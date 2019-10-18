@@ -26,7 +26,7 @@ public class SeguimientoOrdenRecoleccion extends ObjetoGenerico {
     private OrdenRecoleccion ordenRecoleccion;
     
     //Define fecha
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)  
     private LocalDateTime fecha;
     

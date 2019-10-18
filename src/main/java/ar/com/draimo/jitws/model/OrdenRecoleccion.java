@@ -63,7 +63,7 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     private Localidad localidad;
 
     //Define fechaEmision
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "UTC-3")
     @Column(name = "fechaEmision", nullable = false)
     private LocalDateTime fechaEmision;
 

@@ -123,6 +123,20 @@ public class RepartoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
+    
+    //Obtiene la lista completa
+    public Object obtenerPorId(int id) throws IOException {
+        Reparto elemento = elementoDAO.obtenerPorId(id);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos", "hijos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return mapper.readValue(string, Object.class);
+    }
 
     //Obtiene la lista de registros propios abiertos
     public Object listarAbiertosPropios() throws IOException {

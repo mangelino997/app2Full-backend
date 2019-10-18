@@ -58,6 +58,13 @@ public class RepartoController {
         return elementoService.listar();
     }
 
+    //Obtiene registro por id 
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
+        return elementoService.obtenerPorId(id);
+    }
+
     //Obtiene la lista de registros propios abiertos
     @GetMapping(value = URL + "/listarAbiertosPropios")
     @ResponseBody
