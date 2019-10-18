@@ -20,40 +20,40 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 /**
  * Servicio ViajeCombustible
+ *
  * @author blas
  */
-
 @Service
 public class ViajeCombustibleService {
 
     //Define la referencia al dao
     @Autowired
     IViajeCombustibleDAO elementoDAO;
-    
+
     //Define la referencia al dao viaje
     @Autowired
     IViajeDAO viajeDAO;
-    
+
     //Define la referencia al dao reparto
     @Autowired
     IRepartoDAO repartoDAO;
-    
+
     //Define la referencia al dao tipoComprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ViajeCombustible elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<ViajeCombustible>  elementos= elementoDAO.findAll();
+        List<ViajeCombustible> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -62,13 +62,13 @@ public class ViajeCombustibleService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista de tramos por viaje
     public Object listarCombustibles(int idViaje) throws IOException {
-        List<ViajeCombustible>  elementos= elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
+        List<ViajeCombustible> elementos = elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
@@ -77,29 +77,30 @@ public class ViajeCombustibleService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene una lista de combustibles por reparto
     public Object listarCombustiblesReparto(int idReparto) throws IOException {
-        List<ViajeCombustible>  elementos= elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
+        List<ViajeCombustible> elementos = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "hijos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Anula un registro
     @Transactional(rollbackFor = Exception.class)
     public void anularCombustible(ViajeCombustible elemento) throws IOException {
         elemento.setEstaAnulado(true);
         elementoDAO.save(elemento);
     }
-    
+
     //Normaliza un registro
     @Transactional(rollbackFor = Exception.class)
     public void normalizarCombustible(ViajeCombustible elemento) throws IOException {
@@ -107,7 +108,7 @@ public class ViajeCombustibleService {
         elemento.setObservacionesAnulado(null);
         elementoDAO.save(elemento);
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeCombustible elemento) throws IOException {
@@ -115,12 +116,13 @@ public class ViajeCombustibleService {
         elemento = elementoDAO.saveAndFlush(formatearStrings(elemento));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente","viajeTramo","datos");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "hijos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elemento);
         return mapper.readValue(string, Object.class);
     }
@@ -130,19 +132,19 @@ public class ViajeCombustibleService {
     public void actualizar(ViajeCombustible elemento) throws IOException {
         elementoDAO.save(formatearStrings(elemento));
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
         elementoDAO.deleteById(id);
     }
-    
+
     //Formatea los strings
     private ViajeCombustible formatearStrings(ViajeCombustible elemento) {
-        if(elemento.getObservaciones() != null) {
+        if (elemento.getObservaciones() != null) {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
-        if(elemento.getObservacionesAnulado() != null) {
+        if (elemento.getObservacionesAnulado() != null) {
             elemento.setObservacionesAnulado(elemento.getObservacionesAnulado().trim());
         }
         return elemento;
