@@ -67,4 +67,8 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     public List<Personal> listarAcompaniantesPorAliasOrdenadoPorNombre(@Param("alias") 
             String alias, @Param("fecha") Date fecha);
     
+    //Obtiene una lista de acompañantes activos  por alias ordenados por nombre
+    @Query(value = "SELECT * FROM personal WHERE id=:id", nativeQuery = true)
+    public Personal obtenerPorId(@Param("id") int largaDistancia);
+    
 }

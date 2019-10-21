@@ -252,7 +252,7 @@ public class RepartoComprobanteService {
                     cte.getVentaComprobante().getNumero(), tc);
             if (v != null) {
                 cte.setVentaComprobante(v);
-                ventaSeguimiento.setVentaComprobante(cte.getVentaComprobante());
+                ventaSeguimiento.setVentaComprobante(v);
                 ventaSeguimiento.setFecha(LocalDateTime.now());
                 ventaSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
                 ventaSeguimiento.setSucursal(cte.getReparto().getSucursal());
@@ -264,7 +264,7 @@ public class RepartoComprobanteService {
                     cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
                     cte.getViajeRemito().getNumero());
             if (r != null) {
-                viajeSeguimiento.setViajeRemito(cte.getViajeRemito());
+                viajeSeguimiento.setViajeRemito(r);
                 cte.setViajeRemito(r);
                 viajeSeguimiento.setFecha(LocalDateTime.now());
                 viajeSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());

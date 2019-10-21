@@ -115,11 +115,12 @@ public class RepartoService {
         List<Reparto> elementos = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "hijos");
+                .serializeAllExcept("datos", "hijos", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
-                .addFilter("filtroFoto", theFilter);
+                .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -129,11 +130,12 @@ public class RepartoService {
         Reparto elemento = elementoDAO.obtenerPorId(id);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "hijos");
+                .serializeAllExcept("datos", "hijos", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
-                .addFilter("filtroFoto", theFilter);
+                .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elemento);
         return mapper.readValue(string, Object.class);
     }
@@ -143,11 +145,12 @@ public class RepartoService {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, true);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "hijos");
+                .serializeAllExcept("datos", "hijos", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
-                .addFilter("filtroFoto", theFilter);
+                .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -157,11 +160,12 @@ public class RepartoService {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, false);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "hijos");
+                .serializeAllExcept("datos", "hijos", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
-                .addFilter("filtroFoto", theFilter);
+                .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -171,11 +175,12 @@ public class RepartoService {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, 0);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "hijos");
+                .serializeAllExcept("datos", "hijos", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
-                .addFilter("filtroFoto", theFilter);
+                .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -185,11 +190,12 @@ public class RepartoService {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, idEmpresa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "hijos");
+                .serializeAllExcept("datos", "hijos", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
-                .addFilter("filtroFoto", theFilter);
+                .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -202,11 +208,12 @@ public class RepartoService {
                 repartoDto.isEstaCerrada(), repartoDto.getIdEmpresa());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "hijos");
+                .serializeAllExcept("datos", "hijos", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
-                .addFilter("filtroFoto", theFilter);
+                .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
@@ -328,7 +335,7 @@ public class RepartoService {
         elementoDAO.saveAndFlush(elemento);
         if (!elemento.getAcompaniantes().isEmpty()) {
             for (RepartoPersonal acompaniante : elemento.getAcompaniantes()) {
-                acompaniante.setPersonal(personalDAO.findById(acompaniante.getId()).get());
+                acompaniante.setPersonal(personalDAO.obtenerPorId(acompaniante.getPersonal().getId()));
                 acompaniante.setReparto(elemento);
                 repartoPersonalDAO.saveAndFlush(acompaniante);
             }
