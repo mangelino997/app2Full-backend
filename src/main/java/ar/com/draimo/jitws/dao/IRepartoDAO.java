@@ -34,9 +34,9 @@ public interface IRepartoDAO extends JpaRepository<Reparto, Integer> {
     /*Obtiene un listado por tipo de reparto(propio/tercero), rango de fecha, chofer,
     Si esta cerrada y idEmpresa*/
     @Query(value = "SELECT * FROM reparto WHERE esRepartoPropio=:esRepartoPropio "
-            + "AND fechaRegistracion BETWEEN :fechaDesde AND :fechaHasta AND CASE "
-            + ":esRepartoPropio WHEN true THEN idPersonal=:idChofer WHEN false THEN "
-            + "idChoferProveedor=:idChofer END AND estaCerrada=:estaCerrada AND "
+            + "AND DATE(fechaRegistracion) BETWEEN :fechaDesde AND :fechaHasta AND CASE "
+            + ":esRepartoPropio WHEN true THEN :idChofer = 0 OR idPersonal=:idChofer WHEN false THEN "
+            + ":idChofer = 0 OR idChoferProveedor=:idChofer END AND estaCerrada=:estaCerrada AND "
             + "idEmpresaEmision=:idEmpresa", nativeQuery = true)
     public List<Reparto> listarPorFiltros(@Param("esRepartoPropio") boolean esRepartoPropio, 
             @Param("fechaDesde") Date fechaDesde, @Param("fechaHasta") Date fechaHasta,
