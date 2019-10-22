@@ -40,6 +40,11 @@ public class MonedaCotizacionService {
     public List<MonedaCotizacion> listarPorMoneda(int id) {
         return elementoDAO.listarPorMoneda(id);
     }
+    
+    //Obtiene una cotizacion por moneda (la ultima)
+    public MonedaCotizacion obtenerRecientePorMoneda(int idMoneda) {
+        return elementoDAO.obtenerRecientePorMoneda(idMoneda);
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

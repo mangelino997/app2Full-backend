@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.CuentaBancaria;
 import java.util.List;
@@ -31,6 +32,10 @@ public class ClienteCuentaBancariaService {
     @Autowired
     IClienteDAO clienteDAO;
 
+    //Define la referencia a empresaDAO
+    @Autowired
+    IEmpresaDAO empresaDAO;
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         ClienteCuentaBancaria elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -45,6 +50,12 @@ public class ClienteCuentaBancariaService {
     //Obtiene una lista por Cliente
     public List<ClienteCuentaBancaria> listarPorCliente(int idCliente) {
         return elementoDAO.findByCliente(clienteDAO.findById(idCliente).get());
+    }
+
+    //Obtiene una lista por Cliente y empresa
+    public List<ClienteCuentaBancaria> listarPorClienteYEmpresa(int idCliente, int idEmpresa) {
+        return elementoDAO.findByClienteAndEmpresa(clienteDAO.findById(idCliente).get(),
+                empresaDAO.findById(idEmpresa).get());
     }
 
     //Obtiene una lista por cuentaBancaria

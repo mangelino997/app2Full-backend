@@ -28,4 +28,9 @@ public interface IMonedaCotizacionDAO extends JpaRepository<MonedaCotizacion, In
             + "BY fecha DESC", nativeQuery = true)
     public List<MonedaCotizacion> listarPorMoneda(@Param("idMoneda") int idMoneda);
     
+    //Obtiene el ultimo registro por idMoneda
+    @Query(value = "SELECT * FROM monedacotizacion WHERE idMoneda=:idMoneda ORDER "
+            + "BY fecha DESC limit 1", nativeQuery = true)
+    public MonedaCotizacion obtenerRecientePorMoneda(@Param("idMoneda") int idMoneda);
+    
 }

@@ -107,6 +107,19 @@ public class ViajeRemitoService {
         return mapper.readValue(string, Object.class);
     }
 
+    //Obtiene un listado por viaje y estado
+    public Object listarPorViajeYEstado(ViajeRemitoDTO viajeRemitoDTO) throws IOException {
+        List<ViajeRemito> elementos = elementoDAO.listarPorViajeYEstaFacturado(
+        viajeRemitoDTO.getIdViaje(),viajeRemitoDTO.getIdRemito(),viajeRemitoDTO.isEstaFacturado());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenesVentas");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+
     //Obtiene un listado de no pendientes por viajeTramo
     public List<ViajeRemito> listarAsignadosPorViajeTramo(int idViajeTramo) {
         List<ViajeRemito> elementos = elementoDAO.listarAsignadosPorViajeTramo(idViajeTramo);

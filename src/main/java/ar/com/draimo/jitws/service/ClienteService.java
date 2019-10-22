@@ -135,10 +135,12 @@ public class ClienteService {
     }
 
     //Obtiene una lista por alias
-    public List<Cliente> listarPorAlias(String alias) throws IOException {
+    public List<Cliente> listarPorAlias(String alias, boolean activos) throws IOException {
         List<Cliente> clientes;
         if (alias.equals("*")) {
             clientes = elementoDAO.findAll();
+        } else if(activos == true) {
+            clientes = elementoDAO. findByAliasContainingAndFechaBajaIsNull(alias);
         } else {
             clientes = elementoDAO.findByAliasContaining(alias);
         }

@@ -61,10 +61,17 @@ public class MonedaCotizacionController {
     }
 
     //Obtiene una lista por moneda
-    @GetMapping(value = URL + "/listarPorMoneda/{id}")
+    @GetMapping(value = URL + "/listarPorMoneda/{idMoneda}")
     @ResponseBody
-    public List<MonedaCotizacion> listarPorMoneda(@PathVariable int id) {
-        return elementoService.listarPorMoneda(id);
+    public List<MonedaCotizacion> listarPorMoneda(@PathVariable int idMoneda) {
+        return elementoService.listarPorMoneda(idMoneda);
+    }
+
+    //Obtiene la ultima cotizacion por moneda
+    @GetMapping(value = URL + "/obtenerRecientePorMoneda/{idMoneda}")
+    @ResponseBody
+    public MonedaCotizacion obtenerRecientePorMoneda(@PathVariable int idMoneda) {
+        return elementoService.obtenerRecientePorMoneda(idMoneda);
     }
 
     //Agrega un registro

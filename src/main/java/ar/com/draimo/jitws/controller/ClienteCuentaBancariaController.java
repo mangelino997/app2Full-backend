@@ -65,6 +65,13 @@ public class ClienteCuentaBancariaController {
         return elementoService.listarPorCliente(idCliente);
     }
 
+    //Obtiene una lista por idCliente y empresa
+    @GetMapping(value = URL + "/listarPorClienteYEmpresa/{idCliente}/{idEmpresa}")
+    @ResponseBody
+    public List<ClienteCuentaBancaria> listarPorClienteYEmpresa(@PathVariable int idCliente, @PathVariable int  idEmpresa) {
+        return elementoService.listarPorClienteYEmpresa(idCliente, idEmpresa);
+    }
+
     //Obtiene una lista por idCuentaBancaria
     @GetMapping(value = URL + "/listarPorCuentaBancaria/{idCuentaBancaria}")
     @ResponseBody

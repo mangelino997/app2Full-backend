@@ -69,7 +69,14 @@ public class ClienteController {
     @GetMapping(value = URL + "/listarPorAlias/{alias}")
     @ResponseBody
     public List<Cliente> listarPorAlias(@PathVariable String alias) throws IOException {
-        return elementoService.listarPorAlias(alias);
+        return elementoService.listarPorAlias(alias, false);
+    }
+    
+    //Obtiene una lista de activos por alias
+    @GetMapping(value = URL + "/listarActivosPorAlias/{alias}")
+    @ResponseBody
+    public List<Cliente> listarActivosPorAlias(@PathVariable String alias) throws IOException {
+        return elementoService.listarPorAlias(alias, true);
     }
 
     //Obtiene una lista por alias para la lista de precios

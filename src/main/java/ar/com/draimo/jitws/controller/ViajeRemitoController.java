@@ -81,6 +81,12 @@ public class ViajeRemitoController {
         return elementoService.listarPorNumero(numero);
     }
 
+    //Obtiene una lista por viaje y estado
+    @PutMapping(value = URL + "/listarPorViajeYEstado")
+    public Object listarPorViajeYEstado(@RequestBody ViajeRemitoDTO viajeRemitoDTO) throws IOException {
+        return elementoService.listarPorViajeYEstado(viajeRemitoDTO);
+    }
+
     //Obtiene una lista de remitos no pendientes por viajeTramo
     @GetMapping(value = URL + "/listarAsignadosPorViajeTramo/{idViajeTramo}")
     @ResponseBody

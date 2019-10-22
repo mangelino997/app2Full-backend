@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.CuentaBancaria;
+import ar.com.draimo.jitws.model.Empresa;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -23,5 +24,8 @@ public interface IClienteCuentaBancariaDAO extends JpaRepository<ClienteCuentaBa
     
     //Obtiene una lista por cliente
     public List<ClienteCuentaBancaria> findByCliente(Cliente cliente);
+    
+    //Obtiene una lista por cliente y empresa
+    public List<ClienteCuentaBancaria> findByClienteAndEmpresa(Cliente cliente, Empresa empresa);
     
 }
