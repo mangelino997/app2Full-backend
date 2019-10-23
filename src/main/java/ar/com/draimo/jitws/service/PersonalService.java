@@ -5,7 +5,6 @@ import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;

@@ -6,8 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Afip Actividad 
- * Define el modelo (columnas) de la base de datos.
+ * Clase Afip Actividad Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */

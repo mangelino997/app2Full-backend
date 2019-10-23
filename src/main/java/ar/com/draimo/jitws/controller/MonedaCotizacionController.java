@@ -91,12 +91,7 @@ public class MonedaCotizacionController {
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
-            if (e.getMessage().equals("1")) {
-                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                        "Cotización existente", 0), HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                return MensajeRespuesta.error();
-            }
+            return MensajeRespuesta.error();
         }
     }
 
@@ -124,12 +119,7 @@ public class MonedaCotizacionController {
             return MensajeRespuesta.errorSincSocket();
         } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
-            if (e.getMessage().equals("1")) {
-                return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
-                        "La cotización a actualizar ya existe.", 0), HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                return MensajeRespuesta.error();
-            }
+            return MensajeRespuesta.error();
         }
     }
 

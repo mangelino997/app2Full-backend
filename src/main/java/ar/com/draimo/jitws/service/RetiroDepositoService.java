@@ -22,7 +22,6 @@ import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
 import ar.com.draimo.jitws.model.Sucursal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

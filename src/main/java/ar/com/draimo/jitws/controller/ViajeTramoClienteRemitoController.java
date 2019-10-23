@@ -2,9 +2,11 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeTramoClienteRemito;
 import ar.com.draimo.jitws.service.ViajeTramoClienteRemitoService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,14 +56,20 @@ public class ViajeTramoClienteRemitoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<ViajeTramoClienteRemito> listar() {
+    public Object listar() throws IOException {
         return elementoService.listar();
+    }
+
+    //Obtiene una lista por viaje, viajeTramoCliente y estado(facturado o no)
+    @PutMapping(value = URL + "/listarPorViajeYEstado")
+    public Object listarPorViajeYEstado(@RequestBody ViajeRemitoDTO viajeTramoClienteRemitoDTO) throws IOException {
+        return elementoService.listarPorViajeYEstado(viajeTramoClienteRemitoDTO);
     }
 
     //Obtiene una lista por ViajeTramoCliente
     @GetMapping(value = URL + "/listarPorViajeTramoCliente/{idViajeTramoCliente}")
     @ResponseBody
-    public List<ViajeTramoClienteRemito> listarPorViajeTramoCliente(@PathVariable int idViajeTramoCliente) {
+    public Object listarPorViajeTramoCliente(@PathVariable int idViajeTramoCliente) throws IOException {
         return elementoService.listarPorViajeTramoCliente(idViajeTramoCliente);
     }
 
@@ -69,11 +77,11 @@ public class ViajeTramoClienteRemitoController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeTramoClienteRemito elemento) {
         try {
-            ViajeTramoClienteRemito a = elementoService.agregar(elemento);
+            int a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return MensajeRespuesta.agregado(a);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

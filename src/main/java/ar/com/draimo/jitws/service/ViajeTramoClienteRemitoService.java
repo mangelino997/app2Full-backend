@@ -4,7 +4,13 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteRemitoDAO;
+import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.model.ViajeTramoClienteRemito;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,22 +43,60 @@ public class ViajeTramoClienteRemitoService {
     }
 
     //Obtiene la lista completa
-    public List<ViajeTramoClienteRemito> listar() {
-        return elementoDAO.findAll();
+    public Object listar() throws IOException {
+        List<ViajeTramoClienteRemito> v = elementoDAO.findAll();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente", "viajeTramo", "viaje");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(v);
+        return mapper.readValue(string, Object.class);
     }
 
     //Obtiene una lista por ViajeTramoCliente
-    public List<ViajeTramoClienteRemito> listarPorViajeTramoCliente(int idViajeTramoCliente) {
-        return elementoDAO.findByViajeTramoCliente(viajeTramoClienteDAO.findById(
-                idViajeTramoCliente).get());
+    public Object listarPorViajeTramoCliente(int idViajeTramoCliente) throws IOException {
+        List<ViajeTramoClienteRemito> v = elementoDAO.findByViajeTramoCliente(
+                viajeTramoClienteDAO.findById(idViajeTramoCliente).get());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente", "viajeTramo", "viaje");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(v);
+        return mapper.readValue(string, Object.class);
+    }
+
+    //Obtiene una lista por Viaje/viaje tramo/facturado
+    public Object listarPorViajeYEstado(ViajeRemitoDTO viajeTramoClienteDto) throws IOException {
+        List<ViajeTramoClienteRemito> v = elementoDAO.listarPorViajeYEstaFacturado(
+                viajeTramoClienteDto.getIdRemito(),viajeTramoClienteDto.getIdViaje(),
+                viajeTramoClienteDto.isEstaFacturado());
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente", "viajeTramo", "viaje");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(v);
+        return mapper.readValue(string, Object.class);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public ViajeTramoClienteRemito agregar(ViajeTramoClienteRemito elemento) {
+    public int agregar(ViajeTramoClienteRemito elemento) throws IOException {
         elemento.setLetra("R");
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(5).get());
-        return elementoDAO.saveAndFlush(elemento);
+        ViajeTramoClienteRemito v = elementoDAO.saveAndFlush(elemento);
+        return v.getId();
     }
 
     //Actualiza un registro

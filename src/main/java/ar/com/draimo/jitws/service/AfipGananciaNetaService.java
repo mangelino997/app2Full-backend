@@ -36,7 +36,6 @@ public class AfipGananciaNetaService {
     //Obtiene la lista completa
     public List<AfipGananciaNeta> listar() {
         List<AfipGananciaNeta> ganancias = elementoDAO.findAllByOrderByImporte();
-        controlarListas(ganancias);
         return ganancias;
     }
 
@@ -46,7 +45,6 @@ public class AfipGananciaNetaService {
             throw new Exception(MensajeRespuesta.NO_EXISTENTE + "MES");
         } else {
             List<AfipGananciaNeta> ganancias = elementoDAO.listarPorFiltros(anio, idMes);
-            controlarListas(ganancias);
             return ganancias;
         }
     }
@@ -56,7 +54,6 @@ public class AfipGananciaNetaService {
 
         List<AfipGananciaNeta> ganancias = elementoDAO.findByAfipAlicuotaGananciaOrderByImporte(
                 gananciaDAO.findById(idAlicuotaGanancia).get());
-        controlarListas(ganancias);
         return ganancias;
     }
 
@@ -64,7 +61,6 @@ public class AfipGananciaNetaService {
     public List<AfipGananciaNeta> listarPorAnioFiscal(short anioFiscal) {
         controlarLongitud(anioFiscal);
         List<AfipGananciaNeta> ganancias = elementoDAO.findByAnioOrderByImporte(anioFiscal);
-        controlarListas(ganancias);
         return ganancias;
     }
 
@@ -99,13 +95,6 @@ public class AfipGananciaNetaService {
         //Obtiene longitud de anio, si supera 4 retorna error
         if (anio.length() > 4 || anio.length() < 4) {
             throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " AÑO");
-        }
-    }
-
-    //Retorna mensaje de lista vacia
-    private void controlarListas(List<AfipGananciaNeta> ganancias) {
-        if (ganancias.isEmpty()) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         }
     }
 

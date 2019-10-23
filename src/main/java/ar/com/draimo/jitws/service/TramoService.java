@@ -4,7 +4,6 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IOrigenDestinoDAO;
 import ar.com.draimo.jitws.dao.ITramoDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.OrigenDestino;
 import ar.com.draimo.jitws.model.Tramo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

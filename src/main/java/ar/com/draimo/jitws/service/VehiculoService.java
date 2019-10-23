@@ -7,7 +7,6 @@ import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ConfiguracionVehiculo;
 import ar.com.draimo.jitws.model.Empresa;
@@ -143,7 +142,8 @@ public class VehiculoService {
     }
 
     //Obtiene una lista por alias y empresa
-    public Object listarPorAliasFiltroEmpresaYFiltroRemolque(String alias, boolean esRemolque, int idEmpresa) throws IOException {
+    public Object listarPorAliasFiltroEmpresaYFiltroRemolque(String alias, 
+            boolean esRemolque, int idEmpresa) throws IOException {
         alias = alias.equals("***") ? "" : alias;
         List<Vehiculo> elementos = elementoDAO.listarPorAliasFiltroEmpresaYFiltroRemolque(
                 alias, esRemolque, idEmpresa);
@@ -158,7 +158,8 @@ public class VehiculoService {
     }
 
     //Obtiene una lista por empresa, tipo de vehiculo y marca de vehiculo
-    public Object listarPorConfiguarionVehiculo(int idEmpresa, int idTipoVehiculo, int idMarcaVehiculo) throws IOException {
+    public Object listarPorConfiguarionVehiculo(int idEmpresa, int idTipoVehiculo, 
+            int idMarcaVehiculo) throws IOException {
         List<Vehiculo> elementos = elementoDAO.listarPorConfig(idEmpresa, idTipoVehiculo, idMarcaVehiculo);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

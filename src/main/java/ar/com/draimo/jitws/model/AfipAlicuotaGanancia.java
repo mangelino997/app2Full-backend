@@ -7,8 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Clase Afip Alicuota 
- * Ganancia Define el modelo (columnas) de la base de datos.
+ * Clase Afip Alicuota Ganancia Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */

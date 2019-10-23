@@ -12,8 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase AfipCaea 
- * Define el modelo (columnas) de la base de datos.
+ * Clase AfipCaea Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */
