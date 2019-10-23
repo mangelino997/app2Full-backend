@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +119,7 @@ public class OrdenRecoleccionService {
     @Transactional(rollbackFor = Exception.class)
     public OrdenRecoleccion agregar(OrdenRecoleccion elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        elemento.setFechaEmision(LocalDateTime.now());
+        elemento.setFechaEmision(Timestamp.valueOf(LocalDateTime.now()));
         elemento.setEstaEnReparto(false);
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(13).get();
         elemento.setTipoComprobante(tipoComprobante);

@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.RepartoComprobante;
 import ar.com.draimo.jitws.service.RepartoComprobanteService;
 import java.io.IOException;
@@ -84,7 +85,7 @@ public class RepartoComprobanteController {
 
     //Conforma que un listado de registros fueron entregados en forma
     @PutMapping(value = URL + "/conformarComprobantes")
-    public ResponseEntity<?> conformarComprobantes(@RequestBody List<RepartoComprobante> elementos) {
+    public ResponseEntity<?> conformarComprobantes(@RequestBody Reparto elementos) {
         try {
             List<RepartoComprobante> a = elementoService.conformarComprobantes(elementos);
             //Envia la nueva lista a los usuarios subscriptos
