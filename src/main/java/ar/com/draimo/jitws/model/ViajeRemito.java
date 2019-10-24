@@ -2,13 +2,17 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -134,6 +138,12 @@ public class ViajeRemito extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = false)
     private Usuario usuarioMod;
+    
+    //Referencia a la clase SeguimientoViajeRemito(lista)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "viajeRemito")
+    @JsonIgnoreProperties("viajeRemito")
+    private List<SeguimientoViajeRemito> seguimientoViajeRemitos;
+    
     
     //Getters y Setters de la clase
     public Sucursal getSucursalIngreso() {

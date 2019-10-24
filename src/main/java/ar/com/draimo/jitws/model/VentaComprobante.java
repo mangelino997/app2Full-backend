@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -209,6 +210,11 @@ public class VentaComprobante extends ObjetoGenerico {
     //Referencia a la clase ventaComprobanteItemNC (lista)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemND> ventaComprobanteItemND;
+
+    //Referencia a la clase SeguimientoVentaComprobante(lista)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @JsonIgnoreProperties("ventaComprobante")
+    private List<SeguimientoVentaComprobante> seguimientoVentaComprobantes;
 
     //Getters y Setters de la clase
     public Empresa getEmpresa() {
@@ -545,6 +551,14 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setVentaComprobanteItemND(List<VentaComprobanteItemND> ventaComprobanteItemND) {
         this.ventaComprobanteItemND = ventaComprobanteItemND;
+    }
+
+    public List<SeguimientoVentaComprobante> getSeguimientoVentaComprobantes() {
+        return seguimientoVentaComprobantes;
+    }
+
+    public void setSeguimientoVentaComprobantes(List<SeguimientoVentaComprobante> seguimientoVentaComprobantes) {
+        this.seguimientoVentaComprobantes = seguimientoVentaComprobantes;
     }
 
 }
