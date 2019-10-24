@@ -73,7 +73,7 @@ public class ViajeTramoClienteController {
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return new ResponseEntity(a, HttpStatus.CREATED);
+            return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
