@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.RepartoPersonal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,5 +15,8 @@ public interface IRepartoPersonalDAO extends JpaRepository<RepartoPersonal, Inte
     
     //Obtiene el ultimo registro
     public RepartoPersonal findTopByOrderByIdDesc();
+    
+    //Elimina los registros por reparto
+    public void deleteByReparto(Reparto reparto);
     
 }

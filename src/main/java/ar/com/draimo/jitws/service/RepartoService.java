@@ -37,7 +37,6 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
@@ -228,7 +227,7 @@ public class RepartoService {
             Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
             SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
-            LocalDateTime fecha = LocalDateTime.now();
+            Timestamp fecha = new Timestamp(new java.util.Date().getTime());
             for (RepartoComprobante rtoCte : c) {
                 if (rtoCte.getOrdenRecoleccion() != null) {
                     SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
@@ -276,7 +275,7 @@ public class RepartoService {
         Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
         SeguimientoEstado se = seguimientoEstadoDAO.findById(3).get();
         SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
-            LocalDateTime fecha = LocalDateTime.now();
+            Timestamp fecha = new Timestamp(new java.util.Date().getTime());
             for (RepartoComprobante rtoCte : reparto.getRepartoComprobantes()) {
                 if (rtoCte.getOrdenRecoleccion() != null) {
                     SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
@@ -355,6 +354,7 @@ public class RepartoService {
         Reparto r = elementoDAO.obtenerPorId(elemento);
         viajeEfectivoDAO.deleteByReparto(r);
         viajeCombustibleDAO.deleteByReparto(r);
+        repartoPersonalDAO.deleteByReparto(r);
         if (r.getRepartoComprobantes().isEmpty()) {
             elementoDAO.deleteById(elemento);
             return true;

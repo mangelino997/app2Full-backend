@@ -1,10 +1,11 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,14 +21,14 @@ import javax.persistence.Table;
 public class SeguimientoViajeRemito extends ObjetoGenerico {
     
     //Referencia a la clase ViajeRemito
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinColumn(name = "idViajeRemito", nullable = false)
     private ViajeRemito viajeRemito;
     
     //Define fecha
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fecha", nullable = false)  
-    private LocalDateTime fecha;
+    private Timestamp fecha;
     
     //Referencia a la clase Sucursal
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -53,11 +54,11 @@ public class SeguimientoViajeRemito extends ObjetoGenerico {
         this.viajeRemito = viajeRemito;
     }
 
-    public LocalDateTime getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 

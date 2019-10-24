@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,13 +140,13 @@ public class RetiroDepositoComprobanteService {
         if (c.getVentaComprobante() != null) {
             svCte.setSeguimientoEstado(se);
             svCte.setSeguimientoSituacion(ss);
-            svCte.setFecha(LocalDateTime.now());
+            svCte.setFecha(new Timestamp(new java.util.Date().getTime()));
             svCte.setSucursal(sucursal);
             seguimientoVentaComprobanteDAO.saveAndFlush(svCte);
         } else if (c.getViajeRemito() != null) {
             svRemito.setSeguimientoEstado(se);
             svRemito.setSeguimientoSituacion(ss);
-            svRemito.setFecha(LocalDateTime.now());
+            svRemito.setFecha(new Timestamp(new java.util.Date().getTime()));
             svRemito.setSucursal(sucursal);
             seguimientoViajeRemitoDAO.saveAndFlush(svRemito);
         } else {

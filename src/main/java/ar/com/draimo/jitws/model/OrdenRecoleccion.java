@@ -2,17 +2,19 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -136,6 +138,11 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
 
+    //Referencia a la clase SeguimientoOrdenRecoleccion(lista)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ordenRecoleccion")
+    @JsonIgnoreProperties("ordenRecoleccion")
+    private List<SeguimientoOrdenRecoleccion> seguimientoOrdenRecolecciones;
+    
     //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;

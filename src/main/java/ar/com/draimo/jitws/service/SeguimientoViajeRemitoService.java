@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -64,10 +65,9 @@ public class SeguimientoViajeRemitoService {
     public SeguimientoViajeRemito agregar(SeguimientoViajeRemito elemento) {
         SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
         SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
-        LocalDateTime fecha = LocalDateTime.now();
         elemento.setSeguimientoEstado(se);
         elemento.setSeguimientoSituacion(ss);
-        elemento.setFecha(fecha);
+        elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }
 
