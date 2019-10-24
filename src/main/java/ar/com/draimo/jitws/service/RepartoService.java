@@ -221,18 +221,17 @@ public class RepartoService {
     //Cierra un reparto
     @Transactional(rollbackFor = Exception.class)
     public boolean cerrarReparto(Reparto reparto) {
-        List<RepartoComprobante> c = repartoComprobanteDAO.findByReparto(reparto);
-        if (c.isEmpty()) {
+        if (reparto.getRepartoComprobantes().isEmpty()) {
             return false;
         } else {
             Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
             SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
             LocalDateTime fecha = LocalDateTime.now();
-            for (RepartoComprobante rtoCte : c) {
+            for (RepartoComprobante rtoCte : reparto.getRepartoComprobantes()) {
                 if (rtoCte.getOrdenRecoleccion() != null) {
                     SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
-                    sor.setOrdenRecoleccion(c.get(0).getOrdenRecoleccion());
+                    sor.setOrdenRecoleccion(rtoCte.getOrdenRecoleccion());
                     sor.setSeguimientoEstado(se);
                     sor.setSeguimientoSituacion(ss);
                     sor.setFecha(fecha);
