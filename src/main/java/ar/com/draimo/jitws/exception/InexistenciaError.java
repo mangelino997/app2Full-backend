@@ -157,6 +157,8 @@ public class InexistenciaError {
     public static final String VIAJE_TIPO_INEXISTENTE = "idViajeTipo";
     public static final String VIAJE_TIPO_CARGA_INEXISTENTE = "idViajeTipoCarga";
     public static final String VIAJE_TRAMO_INEXISTENTE = "idViajeTramo";
+    public static final String VIAJE_TRAMO_CLIENTE_INEXISTENTE = "idViajeTramoCliente";
+    public static final String VIAJE_TRAMO_CLIENTE_REMITO_INEXISTENTE = "idViajeTramoClienteRemito";
     public static final String VIAJE_UNIDAD_NEGOCIO_INEXISTENTE = "idViajeUnidadNegocio";
     public static final String ZONA_INEXISTENTE = "idZona";
     

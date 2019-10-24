@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,7 +177,7 @@ public class VentaComprobanteService {
     public VentaComprobante agregar(VentaComprobante elemento) {
         elemento.setMoneda(monedaDAO.findById(1).get());
         elemento.setMonedaCotizacion(new BigDecimal(0.0));
-        elemento.setFechaRegistracion(LocalDateTime.now());
+        elemento.setFechaRegistracion(Timestamp.valueOf(LocalDateTime.now()));
         VentaComprobante vc = elementoDAO.saveAndFlush(elemento);
         ViajeRemito viajeRemito;
         //Agrega los items FA

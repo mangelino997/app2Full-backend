@@ -9,8 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase AfipComprobante 
- * Define el modelo (columnas) de la base de datos.
+ * Clase AfipComprobante Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */

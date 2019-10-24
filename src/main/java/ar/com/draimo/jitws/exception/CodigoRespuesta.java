@@ -18,7 +18,7 @@ package ar.com.draimo.jitws.exception;
 public class CodigoRespuesta {
 
     /*
-    ULTIMO CODIGO AGREGADO 5008
+    ULTIMO CODIGO AGREGADO 5009
     */
     //Define una respuesta OK
     public static final int OK = 200;
@@ -61,6 +61,9 @@ public class CodigoRespuesta {
 
     //Define una respuesta de registro no existente
     public static final int NO_EXISTENTE = 5003;
+    
+    //Define una respuesta de registro existente
+    public static final int EXISTENTE = 5009;
 
     //Define una respuesta de rol asignado a usuario
     public static final int ROL_ASIGNADO = 5004;
@@ -307,7 +310,7 @@ public class CodigoRespuesta {
 
     //Define una respuesta de datos inexistentes
     //Los codigos estan ordenados alfabeticamente.
-    //Ultimo codigo datoDuplicado = 13147
+    //Ultimo codigo datoDuplicado = 13153
     public static final int AFIP_ACTIVIDAD_INEXISTENTE = 13001;
     public static final int AFIP_ALICUOTA_GANANCIA_INEXISTENTE = 13148;
     public static final int AFIP_ALICUOTA_IVA_INEXISTENTE = 13002;
@@ -457,6 +460,8 @@ public class CodigoRespuesta {
     public static final int VIAJE_TIPO_INEXISTENTE = 13142;
     public static final int VIAJE_TIPO_CARGA_INEXISTENTE = 13143;
     public static final int VIAJE_TRAMO_INEXISTENTE = 13144;
+    public static final int VIAJE_TRAMO_CLIENTE_INEXISTENTE = 13152;
+    public static final int VIAJE_TRAMO_CLIENTE_REMITO_INEXISTENTE = 13153;
     public static final int VIAJE_UNIDAD_NEGOCIO_INEXISTENTE = 13145;
     public static final int ZONA_INEXISTENTE = 13146;
     

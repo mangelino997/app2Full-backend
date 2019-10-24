@@ -68,7 +68,7 @@ public class OrdenVentaTarifaController {
     //Obtiene una lista por id de orden venta y escala
     @GetMapping(value = URL + "/listarPorOrdenVentaYEscala/{idOrdenVenta}/{escala}")
     @ResponseBody
-    public Object listarPorOrdenVenta(@PathVariable int idOrdenVenta, @PathVariable 
+    public Object listarPorOrdenVentaYEscala(@PathVariable int idOrdenVenta, @PathVariable 
             boolean escala) throws IOException {
         return elementoService.listarPorOrdenVentaYEscala(idOrdenVenta, escala);
     }

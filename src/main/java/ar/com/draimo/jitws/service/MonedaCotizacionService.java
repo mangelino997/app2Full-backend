@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.model.MonedaCotizacion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,23 +50,13 @@ public class MonedaCotizacionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public MonedaCotizacion agregar(MonedaCotizacion elemento) throws Exception {
-        MonedaCotizacion monedaCotizacion;
-        try {
-            monedaCotizacion = elementoDAO.findByMonedaAndFecha(elemento.getMoneda(), elemento.getFecha());
-            monedaCotizacion = elementoDAO.saveAndFlush(elemento);
-        } catch(Exception e) {
-            throw new Exception("1");
-        }
-        return monedaCotizacion;
+        elementoDAO.saveAndFlush(elemento);
+        return elemento;
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(MonedaCotizacion elemento) throws Exception {
-        MonedaCotizacion monedaCotizacion = elementoDAO.findByMonedaAndFecha(elemento.getMoneda(), elemento.getFecha());
-        if(elemento.getId() != monedaCotizacion.getId()) {
-            throw new Exception("1");
-        }
         elementoDAO.save(elemento);
     }
     

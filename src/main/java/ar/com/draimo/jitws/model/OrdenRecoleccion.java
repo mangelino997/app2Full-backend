@@ -2,20 +2,23 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Clase OrdenRecoleccion 
- * Define el modelo (columnas) de la base de datos.
+ * Clase OrdenRecoleccion Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */
@@ -65,7 +68,7 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     //Define fechaEmision
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaEmision", nullable = false)
-    private LocalDateTime fechaEmision;
+    private Timestamp fechaEmision;
 
     //Define fecha
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
@@ -75,12 +78,12 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     //Define horaDesde
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "horaDesde", nullable = false)
-    private LocalTime horaDesde;
+    private Time horaDesde;
 
     //Define horaHasta
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "horaHasta", nullable = false)
-    private LocalTime horaHasta;
+    private Time horaHasta;
 
     //Define solicitadoPor
     @Column(name = "solicitadoPor", length = 30, nullable = false)
@@ -135,6 +138,11 @@ public class OrdenRecoleccion extends ObjetoGenerico {
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
 
+    //Referencia a la clase SeguimientoOrdenRecoleccion(lista)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ordenRecoleccion")
+    @JsonIgnoreProperties("ordenRecoleccion")
+    private List<SeguimientoOrdenRecoleccion> seguimientoOrdenRecolecciones;
+    
     //Getters y Setters de la clase
     public Empresa getEmpresa() {
         return empresa;
@@ -200,11 +208,11 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.localidad = localidad;
     }
 
-    public LocalDateTime getFechaEmision() {
+    public Timestamp getFechaEmision() {
         return fechaEmision;
     }
 
-    public void setFechaEmision(LocalDateTime fechaEmision) {
+    public void setFechaEmision(Timestamp fechaEmision) {
         this.fechaEmision = fechaEmision;
     }
 
@@ -216,19 +224,19 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.fecha = fecha;
     }
 
-    public LocalTime getHoraDesde() {
+    public Time getHoraDesde() {
         return horaDesde;
     }
 
-    public void setHoraDesde(LocalTime horaDesde) {
+    public void setHoraDesde(Time horaDesde) {
         this.horaDesde = horaDesde;
     }
 
-    public LocalTime getHoraHasta() {
+    public Time getHoraHasta() {
         return horaHasta;
     }
 
-    public void setHoraHasta(LocalTime horaHasta) {
+    public void setHoraHasta(Time horaHasta) {
         this.horaHasta = horaHasta;
     }
 
@@ -334,6 +342,14 @@ public class OrdenRecoleccion extends ObjetoGenerico {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public List<SeguimientoOrdenRecoleccion> getSeguimientoOrdenRecolecciones() {
+        return seguimientoOrdenRecolecciones;
+    }
+
+    public void setSeguimientoOrdenRecolecciones(List<SeguimientoOrdenRecoleccion> seguimientoOrdenRecolecciones) {
+        this.seguimientoOrdenRecolecciones = seguimientoOrdenRecolecciones;
     }
 
 }

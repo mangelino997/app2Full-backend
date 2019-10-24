@@ -22,7 +22,7 @@ import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
 import ar.com.draimo.jitws.model.Sucursal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,7 +110,7 @@ public class RetiroDepositoService {
             SeguimientoEstado se = seguimientoEstadoDAO.findById(5).get();
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
             Sucursal sucursal = sucursalDAO.findById(r.getSucursal().getId()).get();
-            LocalDateTime fecha = LocalDateTime.now();
+            Timestamp fecha = new Timestamp(new java.util.Date().getTime());
             for (RetiroDepositoComprobante retiroDepositoComprobante : rdCtes) {
                 if (retiroDepositoComprobante.getVentaComprobante() != null) {
                     svCte.setSeguimientoEstado(se);
