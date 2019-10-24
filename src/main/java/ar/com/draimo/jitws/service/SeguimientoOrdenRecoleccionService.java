@@ -63,10 +63,6 @@ public class SeguimientoOrdenRecoleccionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public SeguimientoOrdenRecoleccion agregar(SeguimientoOrdenRecoleccion elemento) {
-        SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
-        SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
-        elemento.setSeguimientoEstado(se);
-        elemento.setSeguimientoSituacion(ss);
         elemento.setFecha(new Timestamp(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }

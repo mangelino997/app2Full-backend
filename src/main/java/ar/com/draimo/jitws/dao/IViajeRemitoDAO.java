@@ -76,8 +76,8 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     public List<ViajeRemito> listarRemitosDisponibles();
     
     
-    //Obtiene un listado de letras que corresponden a los comprobantes de ventas cargados
-    @Query(value = "SELECT letra FROM ventacomprobante group by letra", nativeQuery = true)
+    //Obtiene un listado de letras que corresponden a los comprobantes de viaje remitos cargados
+    @Query(value = "SELECT letra FROM viajeremito group by letra", nativeQuery = true)
     public List<String> listarLetras();
 
     //Obtiene un registro por remitente, destinatario , puntoVenta, letra, numero y tipoComprobante

@@ -123,7 +123,7 @@ public class RepartoService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
     //Obtiene la lista completa
     public Object obtenerPorId(int id) throws IOException {
         Reparto elemento = elementoDAO.obtenerPorId(id);
@@ -202,8 +202,8 @@ public class RepartoService {
     //Obtiene la lista por filtros
     public Object listarPorFiltros(elementoDTO repartoDto) throws IOException {
         List<Reparto> elementos = elementoDAO.listarPorFiltros(
-                repartoDto.isEsRepartoPropio(), repartoDto.getFechaDesde(), 
-                repartoDto.getFechaHasta(), repartoDto.getIdChofer(), 
+                repartoDto.isEsRepartoPropio(), repartoDto.getFechaDesde(),
+                repartoDto.getFechaHasta(), repartoDto.getIdChofer(),
                 repartoDto.isEstaCerrada(), repartoDto.getIdEmpresa());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -220,24 +220,23 @@ public class RepartoService {
     //Cierra un reparto
     @Transactional(rollbackFor = Exception.class)
     public boolean cerrarReparto(Reparto reparto) {
-        List<RepartoComprobante> c = repartoComprobanteDAO.findByReparto(reparto);
-        if (c.isEmpty()) {
+        if (reparto.getRepartoComprobantes().isEmpty()) {
             return false;
         } else {
             Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
             SeguimientoEstado se = seguimientoEstadoDAO.findById(4).get();
             SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
             Timestamp fecha = new Timestamp(new java.util.Date().getTime());
-            for (RepartoComprobante rtoCte : c) {
+            for (RepartoComprobante rtoCte : reparto.getRepartoComprobantes()) {
                 if (rtoCte.getOrdenRecoleccion() != null) {
                     SeguimientoOrdenRecoleccion sor = new SeguimientoOrdenRecoleccion();
-                    sor.setOrdenRecoleccion(c.get(0).getOrdenRecoleccion());
+                    sor.setOrdenRecoleccion(rtoCte.getOrdenRecoleccion());
                     sor.setSeguimientoEstado(se);
                     sor.setSeguimientoSituacion(ss);
                     sor.setFecha(fecha);
                     sor.setSucursal(sucursal);
                     seguimientoOrdenRecDAO.saveAndFlush(sor);
-                } else if (rtoCte.getVentaComprobante()!= null) {
+                } else if (rtoCte.getVentaComprobante() != null) {
                     SeguimientoVentaComprobante svc = new SeguimientoVentaComprobante();
                     svc.setVentaComprobante(rtoCte.getVentaComprobante());
                     svc.setSeguimientoEstado(se);
@@ -272,9 +271,9 @@ public class RepartoService {
         if (reparto.getRepartoComprobantes().isEmpty()) {
             return false;
         } else {
-        Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
-        SeguimientoEstado se = seguimientoEstadoDAO.findById(3).get();
-        SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
+            Sucursal sucursal = sucursalDAO.findById(reparto.getSucursal().getId()).get();
+            SeguimientoEstado se = seguimientoEstadoDAO.findById(3).get();
+            SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
             Timestamp fecha = new Timestamp(new java.util.Date().getTime());
             for (RepartoComprobante rtoCte : reparto.getRepartoComprobantes()) {
                 if (rtoCte.getOrdenRecoleccion() != null) {
@@ -285,7 +284,7 @@ public class RepartoService {
                     sor.setFecha(fecha);
                     sor.setSucursal(sucursal);
                     seguimientoOrdenRecDAO.saveAndFlush(sor);
-                } else if (rtoCte.getVentaComprobante()!= null) {
+                } else if (rtoCte.getVentaComprobante() != null) {
                     SeguimientoVentaComprobante svc = new SeguimientoVentaComprobante();
                     svc.setVentaComprobante(rtoCte.getVentaComprobante());
                     svc.setSeguimientoEstado(se);
@@ -326,7 +325,7 @@ public class RepartoService {
         elemento.setFechaRegistracion(fecha);
         elemento.setEstaCerrada(false);
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(12).get());
-        if (elemento.getVehiculoProveedor()!= null) {
+        if (elemento.getVehiculoProveedor() != null) {
             Proveedor p = proveedorDAO.findById(elemento.getVehiculoProveedor().getProveedor().getId()).get();
             elemento.setProveedor(p);
             elemento.setAfipCondicionIvaProveedor(p.getAfipCondicionIva());
