@@ -344,4 +344,12 @@ public class OrdenRecoleccion extends ObjetoGenerico {
         this.alias = alias;
     }
 
+    public List<SeguimientoOrdenRecoleccion> getSeguimientoOrdenRecolecciones() {
+        return seguimientoOrdenRecolecciones;
+    }
+
+    public void setSeguimientoOrdenRecolecciones(List<SeguimientoOrdenRecoleccion> seguimientoOrdenRecolecciones) {
+        this.seguimientoOrdenRecolecciones = seguimientoOrdenRecolecciones;
+    }
+
 }

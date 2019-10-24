@@ -353,5 +353,13 @@ public class ViajeRemito extends ObjetoGenerico {
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
     }
+
+    public List<SeguimientoViajeRemito> getSeguimientoViajeRemitos() {
+        return seguimientoViajeRemitos;
+    }
+
+    public void setSeguimientoViajeRemitos(List<SeguimientoViajeRemito> seguimientoViajeRemitos) {
+        this.seguimientoViajeRemitos = seguimientoViajeRemitos;
+    }
     
 }
