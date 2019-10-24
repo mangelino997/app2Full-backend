@@ -58,6 +58,9 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
             @Param("numeroCamion") short numeroCamion);
 
     //Obtiene un registro por puntoVenta, letra y nroComprobante
+    @Query(value = "SELECT * FROM viajeremito r, ventacomprobanteitemFA i  WHERE "
+            + "puntoVenta=:puntoVenta AND letra=:letra AND numero=:numero AND "
+            + "r.id!=i.idViajeRemito", nativeQuery = true)
     public ViajeRemito findByPuntoVentaAndLetraAndNumero(int puntoVenta, String letra, int numero);
     
     //Obtiene un listado por estaPendienteFalse y idViajeRemito de la tabla viajeTramoRemito

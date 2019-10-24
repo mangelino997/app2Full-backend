@@ -3,10 +3,10 @@ package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -196,19 +196,24 @@ public class VentaComprobante extends ObjetoGenerico {
     private BigDecimal monedaCotizacion;
 
     //Referencia a la clase ventaComprobanteItemFA (lista)
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @JsonIgnoreProperties("ventaComprobante")
     private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
 
     //Referencia a la clase ventaComprobanteItemCR (lista)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @JsonIgnoreProperties("ventaComprobante")
     private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
 
     //Referencia a la clase ventaComprobanteItemNC(lista)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @JsonIgnoreProperties("ventaComprobante")
     private List<VentaComprobanteItemNC> ventaComprobanteItemNC;
 
     //Referencia a la clase ventaComprobanteItemNC (lista)
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @JsonIgnoreProperties("ventaComprobante")
     private List<VentaComprobanteItemND> ventaComprobanteItemND;
 
     //Referencia a la clase SeguimientoVentaComprobante(lista)

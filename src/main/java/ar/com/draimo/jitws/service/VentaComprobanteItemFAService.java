@@ -38,13 +38,14 @@ public class VentaComprobanteItemFAService {
         List<VentaComprobanteItemFA> ventasComprobantes = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "ordenesVentas");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
                 .addFilter("filtroVentaComprobanteItemNC", theFilter)
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("cliente", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
         String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
         return new ObjectMapper().readValue(string, Object.class);
