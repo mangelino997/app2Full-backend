@@ -95,13 +95,16 @@ public class ViajeService {
         List<Viaje> viajes = elementoDAO.obtenerTodos();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "hijos", "viaje", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
                 .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
+                .addFilter("clientefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(viajes);
         return mapper.readValue(string, Object.class);
     }
@@ -131,13 +134,16 @@ public class ViajeService {
         //Retorna los datos
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("viajeTramo", "viaje", "ordenesVentas");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "hijos", "viaje", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
                 .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
+                .addFilter("clientefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(viaje);
         return mapper.readValue(string, Object.class);
     }
@@ -148,13 +154,16 @@ public class ViajeService {
                 dto.getFechaHasta(), dto.getIdPersonal(), dto.getIdProveedor());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "hijos", "viaje", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
                 .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
+                .addFilter("clientefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(viajes);
         return mapper.readValue(string, Object.class);
     }
@@ -183,13 +192,16 @@ public class ViajeService {
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "hijos", "viaje", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
                 .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
+                .addFilter("clientefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elemento);
         return mapper.readValue(string, Object.class);
     }
@@ -211,13 +223,16 @@ public class ViajeService {
         viaje = establecerAlias(formatearStrings(viaje));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "viaje", "datos", "ordenesVentas");
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "hijos", "viaje", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("viajetramofiltro", theFilter)
                 .addFilter("viajefiltro", theFilter)
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
                 .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
+                .addFilter("clientefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(viaje);
         return mapper.readValue(string, Object.class);
     }

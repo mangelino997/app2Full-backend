@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -194,19 +195,19 @@ public class VentaComprobante extends ObjetoGenerico {
     private BigDecimal monedaCotizacion;
 
     //Referencia a la clase ventaComprobanteItemFA (lista)
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
 
     //Referencia a la clase ventaComprobanteItemCR (lista)
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemCR> ventaComprobanteItemCR;
 
     //Referencia a la clase ventaComprobanteItemNC(lista)
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemNC> ventaComprobanteItemNC;
 
     //Referencia a la clase ventaComprobanteItemNC (lista)
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     private List<VentaComprobanteItemND> ventaComprobanteItemND;
 
     //Getters y Setters de la clase
