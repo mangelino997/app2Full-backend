@@ -191,7 +191,7 @@ public class RepartoController {
     public ResponseEntity<?> eliminar(@PathVariable int id) {
         try {
             boolean a = elementoService.eliminar(id);
-            if (a == true) {
+            if (a) {
                 /*template.convertAndSend(TOPIC + "/listaPorEstaCerrada", 
                         elementoService.listarPorEstaCerrada(a));*/
                 return MensajeRespuesta.eliminado();
