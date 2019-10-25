@@ -94,6 +94,23 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     
+    //Referencia a la clase ViajeTarifa
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idViajeTarifa", nullable = false)
+    private ViajeTarifa viajeTarifa;
+    
+    //Define la cantidad
+    @Column(name = "cantidad", nullable = true)
+    private short cantidad;
+    
+    //Define la precioUnitario
+    @Column(name = "precioUnitario", nullable = true)
+    private BigDecimal precioUnitario;
+    
+    //Define la importeCosto
+    @Column(name = "importeCosto", nullable = true)
+    private BigDecimal importeCosto;
+    
     //Getters y Setters de la clase
 
     public ViajeTramoCliente getViajeTramoCliente() {
@@ -230,6 +247,38 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
 
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
+    }
+
+    public ViajeTarifa getViajeTarifa() {
+        return viajeTarifa;
+    }
+
+    public void setViajeTarifa(ViajeTarifa viajeTarifa) {
+        this.viajeTarifa = viajeTarifa;
+    }
+
+    public short getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(short cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public BigDecimal getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(BigDecimal precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public BigDecimal getImporteCosto() {
+        return importeCosto;
+    }
+
+    public void setImporteCosto(BigDecimal importeCosto) {
+        this.importeCosto = importeCosto;
     }
     
 }

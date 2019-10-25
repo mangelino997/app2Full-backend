@@ -26,6 +26,10 @@ public class ViajeTarifa extends ObjetoGenerico {
     //Define si es por defecto
     @Column(name = "porDefecto", nullable = false)
     private boolean porDefecto;
+    
+    //Define si es costo por tramo
+    @Column(name = "esCostoPorTramo", nullable = false)
+    private boolean esCostoPorTramo;
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -44,12 +48,20 @@ public class ViajeTarifa extends ObjetoGenerico {
         this.estaActivo = estaActivo;
     }
 
-    public boolean isPorDefecto() {
+    public boolean getPorDefecto() {
         return porDefecto;
     }
 
     public void setPorDefecto(boolean porDefecto) {
         this.porDefecto = porDefecto;
+    }
+
+    public boolean getEsCostoPorTramo() {
+        return esCostoPorTramo;
+    }
+
+    public void setEsCostoPorTramo(boolean esCostoPorTramo) {
+        this.esCostoPorTramo = esCostoPorTramo;
     }
     
 }
