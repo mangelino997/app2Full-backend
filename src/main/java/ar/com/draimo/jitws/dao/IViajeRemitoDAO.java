@@ -95,5 +95,12 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
             + "estaFacturado=:estaFacturado", nativeQuery = true)
     public List<ViajeRemito> listarPorViajeYEstaFacturado(@Param("idViaje") int idViaje, 
             @Param("idViajeRemito") int idViajeRemito, @Param("estaFacturado") boolean estaFacturado);
+
+    //Obtiene un registro por letra, punto venta y numero que no este en una venta comprobante
+    @Query(value = "SELECT * FROM viajeremito r, ventacomprobanteitemFA v where r.id"
+            + " != v.idViajeRemito and letra=:letra and puntoVenta=:puntoVenta "
+            + "and numero =:numero", nativeQuery = true)
+    public ViajeRemito obtenerParaReparto(@Param("numero") int numero, 
+            @Param("puntoVenta") int puntoVenta, @Param("letra") String letra);
     
 }

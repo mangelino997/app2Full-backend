@@ -123,6 +123,14 @@ public class ViajeRemitoController {
         return elementoService.obtener(puntoVenta, letra, numero);
     }
 
+    //Obtiene un registro por puntoventa letra y numero
+    @GetMapping(value = URL + "/obtenerParaReparto/{puntoVenta}/{letra}/{numero}")
+    @ResponseBody
+    public Object obtenerParaReparto(@PathVariable int puntoVenta, @PathVariable String letra,
+            @PathVariable int numero) throws IOException {
+        return elementoService.obtenerParaReparto(puntoVenta, letra, numero);
+    }
+
     //Obtiene la lista de letras
     @GetMapping(value = URL + "/listarLetras")
     @ResponseBody
