@@ -158,11 +158,6 @@ public class ViajeTramoService {
         if (km.length() > 4) {
             throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
         }
-        //Obtiene longitud de cantidad, si supera 4 retorna error
-        String cantidad = String.valueOf(elemento.getCantidad());
-        if (cantidad.length() > 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD");
-        }
     }
 
 }

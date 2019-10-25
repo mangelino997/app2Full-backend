@@ -89,17 +89,13 @@ public class ViajeTramo extends ObjetoGenerico {
     @JoinColumn(name = "idViajeUnidadNegocio", nullable = false)
     private ViajeUnidadNegocio viajeUnidadNegocio;
     
-    //Define la cantidad
-    @Column(name = "cantidad", nullable = false)
-    private short cantidad;
+    //Define el costo km
+    @Column(name = "costoKm", nullable = true)
+    private BigDecimal costoKm;
     
-    //Define el precio unitario
-    @Column(name = "precioUnitario", nullable = false)
-    private BigDecimal precioUnitario;
-    
-    //Define el importe
-    @Column(name = "importe", nullable = false)
-    private BigDecimal importe;
+    //Define el importe cosot
+    @Column(name = "importeCosto", nullable = true)
+    private BigDecimal importeCosto;
     
     //Referencia a la clase viajeTramosCliente (lista)
     //@JsonIgnoreProperties("viajeTramo")
@@ -216,30 +212,22 @@ public class ViajeTramo extends ObjetoGenerico {
         this.viajeUnidadNegocio = viajeUnidadNegocio;
     }
 
-    public short getCantidad() {
-        return cantidad;
+    public BigDecimal getCostoKm() {
+        return costoKm;
     }
 
-    public void setCantidad(short cantidad) {
-        this.cantidad = cantidad;
+    public void setCostoKm(BigDecimal costoKm) {
+        this.costoKm = costoKm;
     }
 
-    public BigDecimal getPrecioUnitario() {
-        return precioUnitario;
+    public BigDecimal getImporteCosto() {
+        return importeCosto;
     }
 
-    public void setPrecioUnitario(BigDecimal precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setImporteCosto(BigDecimal importeCosto) {
+        this.importeCosto = importeCosto;
     }
-
-    public BigDecimal getImporte() {
-        return importe;
-    }
-
-    public void setImporte(BigDecimal importe) {
-        this.importe = importe;
-    }
-
+    
     public List<ViajeTramoCliente> getViajeTramoClientes() {
         return viajeTramoClientes;
     }

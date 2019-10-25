@@ -1,7 +1,6 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
@@ -13,132 +12,129 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase VentaComprobanteItemFA
- * Define el modelo (columnas) de la base de datos.
+ * Clase VentaComprobanteItemFA Define el modelo (columnas) de la base de datos.
  * @author blas
  */
-
-    @Entity
+@Entity
 @Table(name = "ventacomprobanteitemFA")
 @JsonFilter(value = "filtroVentaComprobanteItemFA")
 public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
-    
+
     //Referencia a la VentaTipoItem
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaTipoItem", nullable = false)
     private VentaTipoItem ventaTipoItem;
-    
+
     //Referencia a la clase ViajeRemito
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeRemito", nullable = true)
     private ViajeRemito viajeRemito;
-    
+
     //Referencia a la clase ViajeTramoClienteRemito
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTramoClienteRemito", nullable = true)
     private ViajeTramoClienteRemito viajeTramoClienteRemito;
-    
+
     //Define numero remito
-    @Column(name = "numeroRemito",length = 8, nullable = true)
+    @Column(name = "numeroRemito", length = 8, nullable = true)
     private int numeroRemito;
-    
+
     //Define los bultos
     @Column(name = "bultos", nullable = true)
     private short bultos;
-    
+
     //Define los kilos efectivos
     @Column(name = "kilosEfectivo", nullable = true)
     private BigDecimal kilosEfectivo;
-    
+
     //Define los kilos aforados
     @Column(name = "kilosAforado", nullable = true)
     private BigDecimal kilosAforado;
-    
+
     //Define los m3
     @Column(name = "m3", nullable = true)
     private BigDecimal m3;
-    
+
     //Define la descripcion carga
     @Column(name = "descripcionCarga", length = 200, nullable = true)
     private String descripcionCarga;
-    
+
     //Define el valor declarado
     @Column(name = "valorDeclarado", nullable = false)
     private BigDecimal valorDeclarado;
-    
+
     //Define el porcentaje seguro
     @Column(name = "pSeguro", nullable = true)
     private BigDecimal pSeguro;
-    
+
     //Define el importe seguro
     @Column(name = "importeSeguro", nullable = false)
     private BigDecimal importeSeguro;
-    
+
     //Define el flete
     @Column(name = "flete", nullable = false)
     private BigDecimal flete;
-    
+
     //Define el descuento flete
     @Column(name = "descuentoFlete", nullable = true)
     private BigDecimal descuentoFlete;
-    
+
     //Define el importe flete
     @Column(name = "importeFlete", nullable = false)
     private BigDecimal importeFlete;
-    
+
     //Define el importe retiro
     @Column(name = "importeRetiro", nullable = false)
     private BigDecimal importeRetiro;
-    
+
     //Define el importe entrega
     @Column(name = "importeEntrega", nullable = false)
     private BigDecimal importeEntrega;
-    
+
     //Referencia a la clase VentaItemConcepto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaItemConcepto", nullable = true)
     private VentaItemConcepto ventaItemConcepto;
-    
+
     //Define el importe venta item concepto
     @Column(name = "importeVentaItemConcepto", nullable = false)
     private BigDecimal importeVentaItemConcepto;
-    
+
     //Define el importe neto gravado
     @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
-    
+
     //Referencia a la clase AlicuotaIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
     private AfipAlicuotaIva afipAlicuotaIva;
-    
+
     //Define la alicuota iva
     @Column(name = "alicuotaIva", nullable = false)
     private BigDecimal alicuotaIva;
-    
+
     //Define el importe de iva
     @Column(name = "importeIva", nullable = false)
     private BigDecimal importeIva;
-    
+
     //Define el importe no gravado
     @Column(name = "importeNoGravado", nullable = false)
     private BigDecimal importeNoGravado;
-    
+
     //Define el importe excento
     @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
-    
+
     //Referencia a la clase Provincia
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProvincia", nullable = false)
     private Provincia provincia;
-    
+
     //Referencia a la clase OrdenVentaTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVentaTarifa", nullable = false)
@@ -320,7 +316,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     public void setAlicuotaIva(BigDecimal alicuotaIva) {
         this.alicuotaIva = alicuotaIva;
     }
-    
+
     public BigDecimal getImporteIva() {
         return importeIva;
     }
@@ -368,5 +364,5 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     public void setOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa) {
         this.ordenVentaTarifa = ordenVentaTarifa;
     }
-    
+
 }

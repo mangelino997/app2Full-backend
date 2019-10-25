@@ -140,8 +140,8 @@ public class ViajeRemito extends ObjetoGenerico {
     private Usuario usuarioMod;
     
     //Referencia a la clase SeguimientoViajeRemito(lista)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "viajeRemito")
     @JsonIgnoreProperties("viajeRemito")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "viajeRemito")
     private List<SeguimientoViajeRemito> seguimientoViajeRemitos;
     
     

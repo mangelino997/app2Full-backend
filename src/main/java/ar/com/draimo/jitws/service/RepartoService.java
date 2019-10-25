@@ -351,15 +351,14 @@ public class RepartoService {
     @Transactional(rollbackFor = Exception.class)
     public boolean eliminar(int elemento) {
         Reparto r = elementoDAO.obtenerPorId(elemento);
-        viajeEfectivoDAO.deleteByReparto(r);
-        viajeCombustibleDAO.deleteByReparto(r);
-        repartoPersonalDAO.deleteByReparto(r);
         if (r.getRepartoComprobantes().isEmpty()) {
+            viajeEfectivoDAO.deleteByReparto(r);
+            viajeCombustibleDAO.deleteByReparto(r);
+            repartoPersonalDAO.deleteByReparto(r);
             elementoDAO.deleteById(elemento);
             return true;
-        } else {
+        }else{
             return false;
         }
     }
-
 }
