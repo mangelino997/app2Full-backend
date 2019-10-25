@@ -35,18 +35,14 @@ public class CondicionCompraService {
     
     //Obtiene una lista por nombre
     public List<CondicionCompra> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***") ? elementoDAO.findAll(): 
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CondicionCompra agregar(CondicionCompra elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        String cuotas = String.valueOf(elemento.getCuotas());
         controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }

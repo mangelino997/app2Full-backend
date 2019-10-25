@@ -36,23 +36,24 @@ public class CompraComprobantePercepcionService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CompraComprobantePercepcion agregar(CompraComprobantePercepcion elemento) throws Exception {
-        //Obtiene longitud de anio, si supera 4 retorna error
-        String anio = String.valueOf(elemento.getAnio());
-        if (anio.length()>4 || anio.length()<4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO +" AÑO");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(CompraComprobantePercepcion elemento) throws Exception {
+        controlarLongitud(elemento);
+        elementoDAO.save(elemento);
+    }
+    
+    //Controla longitudes de atributos short
+    private void controlarLongitud(CompraComprobantePercepcion elemento) {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
         if (anio.length()>4 || anio.length()<4) {
             throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO");
         }
-        elementoDAO.save(elemento);
     }
     
     //Elimina un registro

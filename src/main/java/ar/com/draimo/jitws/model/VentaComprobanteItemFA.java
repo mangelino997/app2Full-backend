@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,7 +25,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
     

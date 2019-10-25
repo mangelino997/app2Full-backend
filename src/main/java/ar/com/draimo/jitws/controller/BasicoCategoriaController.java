@@ -70,11 +70,7 @@ public class BasicoCategoriaController {
     @ResponseBody
     public ResponseEntity<?> obtenerPorCategoria(@PathVariable int idCategoria) {
         BasicoCategoria bc = elementoService.obtenerPorCategoria(idCategoria);
-        if (bc == null) {
-            return new ResponseEntity(bc, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity(bc, HttpStatus.OK);
-        }
+        return new ResponseEntity(bc, (bc!=null ? HttpStatus.OK: HttpStatus.NO_CONTENT));
     }
 
     //Obtiene una lista por id categoria

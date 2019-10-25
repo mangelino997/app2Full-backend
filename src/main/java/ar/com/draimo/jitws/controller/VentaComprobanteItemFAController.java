@@ -51,11 +51,27 @@ public class VentaComprobanteItemFAController {
     }
 
     //Obtiene la lista completa
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
+        try {
+            return elementoService.obtenerPorId(id);
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+
+    //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
     public Object listar() throws IOException {
-        return elementoService.listar();
-
+        try {
+            return elementoService.listar();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
     }
 
     //Agrega un registro

@@ -114,12 +114,8 @@ public class ClienteService {
 
     //Obtiene una lista por alias
     public Object listarPorAliasListaPrecio(String alias, int idCliente) throws IOException {
-        List<Cliente> clientes;
-        if (alias.equals("***")) {
-            clientes = elementoDAO.findByIdNot(idCliente);
-        } else {
-            clientes = elementoDAO.findByAliasContainingAndIdNot(alias, idCliente);
-        }
+        List<Cliente> clientes = alias.equals("***") ? elementoDAO.findByIdNot(idCliente):
+            elementoDAO.findByAliasContainingAndIdNot(alias, idCliente);
         //Construye la lista de rubros productos cuentas contables para cada empresa
         for (Cliente cliente : clientes) {
             cliente.setClienteCuentasBancarias(construirCuentasBancariasParaEmpresas(cliente));
@@ -136,14 +132,9 @@ public class ClienteService {
 
     //Obtiene una lista por alias
     public List<Cliente> listarPorAlias(String alias, boolean activos) throws IOException {
-        List<Cliente> clientes;
-        if (alias.equals("*")) {
-            clientes = elementoDAO.findAll();
-        } else if(activos == true) {
-            clientes = elementoDAO. findByAliasContainingAndFechaBajaIsNull(alias);
-        } else {
-            clientes = elementoDAO.findByAliasContaining(alias);
-        }
+        List<Cliente> clientes=  alias.equals("*") ? elementoDAO.findAll() : activos==true ? 
+                elementoDAO. findByAliasContainingAndFechaBajaIsNull(alias):
+                elementoDAO.findByAliasContaining(alias);
         //Construye la lista de rubros productos cuentas contables para cada empresa
         for (Cliente cliente : clientes) {
             cliente.setClienteCuentasBancarias(construirCuentasBancariasParaEmpresas(cliente));

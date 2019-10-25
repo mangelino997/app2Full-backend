@@ -92,11 +92,7 @@ public class CompraComprobanteService {
     
     //Verifica que el comprobante no exista
     public boolean verificarUnicidadComprobante(int idProveedor, String codigoAfip, int puntoVenta, int numero) {
-        if(!elementoDAO.verificarUnicidad(idProveedor, codigoAfip, puntoVenta, numero).isEmpty()) {
-            return true;
-        }else {
-            return false;
-        }
+        return !elementoDAO.verificarUnicidad(idProveedor, codigoAfip, puntoVenta, numero).isEmpty();
     }
 
     //Agrega un registro

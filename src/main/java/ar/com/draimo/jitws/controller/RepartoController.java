@@ -129,11 +129,7 @@ public class RepartoController {
     @PutMapping(value = URL + "/recibirReparto")
     public ResponseEntity<?> recibirReparto(@RequestBody Reparto elemento) throws IOException {
         Reparto r = elementoService.recibirReparto(elemento);
-        if (r != null) {
-            return MensajeRespuesta.abierto();
-        } else {
-            return MensajeRespuesta.error();
-        }
+        return (r != null ? MensajeRespuesta.abierto(): MensajeRespuesta.error());
     }
 
     //Agrega un registro

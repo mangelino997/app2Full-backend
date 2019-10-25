@@ -32,10 +32,10 @@ public class VentaComprobanteItemFAService {
         VentaComprobanteItemFA elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId() + 1 : 1;
     }
-
-    //Obtiene la lista completa
-    public Object listar() throws IOException {
-        List<VentaComprobanteItemFA> ventasComprobantes = elementoDAO.findAll();
+    
+    //Obtiene el por id
+    public Object obtenerPorId(int id) throws IOException {
+        VentaComprobanteItemFA elemento = elementoDAO.obtenerPorId(id);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "ordenesVentas");
@@ -47,7 +47,25 @@ public class VentaComprobanteItemFAService {
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("cliente", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+
+    //Obtiene la lista completa
+    public Object listar() throws IOException {
+        List<VentaComprobanteItemFA> ventaItems = elementoDAO.listar();
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "ordenesVentas");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("cliente", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(ventaItems);
         return new ObjectMapper().readValue(string, Object.class);
     }
 

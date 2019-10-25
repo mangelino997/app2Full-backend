@@ -53,12 +53,8 @@ public class ContactoClienteService {
     
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<ContactoCliente> contactoClientes = new ArrayList<>();
-        if(nombre.equals("***")) {
-            contactoClientes = elementoDAO.findAll();
-        } else {
-            contactoClientes = elementoDAO.findByNombreContaining(nombre);
-        }
+        List<ContactoCliente> contactoClientes = nombre.equals("***") ?
+            elementoDAO.findAll() : elementoDAO.findByNombreContaining(nombre);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");

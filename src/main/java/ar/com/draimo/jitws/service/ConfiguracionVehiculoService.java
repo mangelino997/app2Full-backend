@@ -65,11 +65,7 @@ public class ConfiguracionVehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public ConfiguracionVehiculo agregar(ConfiguracionVehiculo elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de cant. ejes, si supera 2 retorna error
-        String ejes = String.valueOf(elemento.getCantidadEjes());
-        if (ejes.length()>2) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD EJES");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
     
@@ -77,11 +73,7 @@ public class ConfiguracionVehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ConfiguracionVehiculo elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de cant. ejes, si supera 2 retorna error
-        String ejes = String.valueOf(elemento.getCantidadEjes());
-        if (ejes.length()>2) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD EJES");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(elemento);
     }
     
@@ -89,6 +81,15 @@ public class ConfiguracionVehiculoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Controla longitudes de atributos short
+    private void controlarLongitud(ConfiguracionVehiculo elemento) {
+        //Obtiene longitud de cant. ejes, si supera 2 retorna error
+        String ejes = String.valueOf(elemento.getCantidadEjes());
+        if (ejes.length()>2) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD EJES");
+        }
     }
     
     //Formatea los strings

@@ -123,11 +123,7 @@ public class OrdenRecoleccionService {
         elemento.setEstaEnReparto(false);
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(13).get();
         elemento.setTipoComprobante(tipoComprobante);
-        //Obtiene longitud de bultos, si supera 6 retorna error
-        String bultos = String.valueOf(elemento.getBultos());
-        if (bultos.length()>6) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
     
@@ -144,11 +140,7 @@ public class OrdenRecoleccionService {
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(OrdenRecoleccion elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de bultos, si supera 6 retorna error
-        String bultos = String.valueOf(elemento.getBultos());
-        if (bultos.length()>6) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
-        }
+        controlarLongitud(elemento);
         establecerAlias(elemento);
     }
     
@@ -156,6 +148,15 @@ public class OrdenRecoleccionService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Controla longitud de atributos shortt
+    private void controlarLongitud(OrdenRecoleccion elemento) {
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length()>6) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
+        }
     }
     
     //Formatea los strings

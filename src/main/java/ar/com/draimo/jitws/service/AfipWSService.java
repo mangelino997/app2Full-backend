@@ -33,11 +33,8 @@ public class AfipWSService {
     
     //Obtiene una lista por nombre
     public List<AfipWS> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***") ? elementoDAO.findAll() :
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Solicita  FECAEA

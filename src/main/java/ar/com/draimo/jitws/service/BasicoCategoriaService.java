@@ -40,11 +40,8 @@ public class BasicoCategoriaService {
     
     //Obtiene una lista por nombre de categoria
     public List<BasicoCategoria> listarPorCategoriaNombre(String nombre) {
-        if(nombre.equals("***")){
-            return elementoDAO.findAll();
-        } else{
-        return elementoDAO.findByCategoria_NombreContaining(nombre);
-        }
+        return nombre.equals("***") ? elementoDAO.findAll():
+        elementoDAO.findByCategoria_NombreContaining(nombre);
     }
     
     //Obtiene el ultimo registro por categoria
@@ -65,23 +62,23 @@ public class BasicoCategoriaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public BasicoCategoria agregar(BasicoCategoria elemento) throws Exception {
-        //Obtiene longitud de anio, si supera 4 retorna error
-        String anio = String.valueOf(elemento.getAnio());
-        if (anio.length()>4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO +" AÑO");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.save(elemento);
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(BasicoCategoria elemento) throws Exception {
+        controlarLongitud(elemento);
+        elementoDAO.save(elemento);
+    }
+    
+    public void controlarLongitud(BasicoCategoria elemento) {
         //Obtiene longitud de anio, si supera 4 retorna error
         String anio = String.valueOf(elemento.getAnio());
         if (anio.length()>4) {
             throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO +" AÑO");
         }
-        elementoDAO.save(elemento);
     }
     
     //Elimina un registro

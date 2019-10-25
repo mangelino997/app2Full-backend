@@ -106,13 +106,7 @@ public class OpcionPestaniaService {
              * Si el idPestania no esta en la lista de opcionPestaniaDTO.idPestanias
              * establece "mostrar" en 0
              */
-            if(opcionPestaniaDTO.getIdPestanias().contains(idPestania)) {
-                //Establece "mostrar" en 1
-                opcionPestania.setMostrar(true);
-            } else {
-                //Establece "mostrar" en 0
-                opcionPestania.setMostrar(false);
-            }
+            opcionPestania.setMostrar(opcionPestaniaDTO.getIdPestanias().contains(idPestania));
             elementoDAO.save(opcionPestania);
         }
         
@@ -149,11 +143,7 @@ public class OpcionPestaniaService {
                         opcionPestania.setRol(rol);
                         opcionPestania.setOpcion(opcion);
                         opcionPestania.setPestania(pestania);
-                        if(rol.getId() != 1) {
-                            opcionPestania.setMostrar(false);
-                        } else {
-                            opcionPestania.setMostrar(true);
-                        }
+                        opcionPestania.setMostrar(rol.getId() == 1 );
                         //Agrega los datos
                         elementoDAO.save(opcionPestania);
                     }

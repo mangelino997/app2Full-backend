@@ -36,11 +36,8 @@ public class CobradorService {
 
     //Obtiene una lista por nombre
     public List<Cobrador> listarPorNombre(String nombre) {
-        if (nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***") ? elementoDAO.findAll():
+            elementoDAO.findByNombreContaining(nombre);
     }
 
     //Obtiene una lista por esta activo y ordenado por nombre

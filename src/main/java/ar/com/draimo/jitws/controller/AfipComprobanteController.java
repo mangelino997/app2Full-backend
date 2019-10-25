@@ -64,11 +64,7 @@ public class AfipComprobanteController {
     @ResponseBody
     public ResponseEntity<?> obtenerPorCodigoAfip(@PathVariable String codigoAfip) {
         AfipComprobante ac = elementoService.obtenerPorCodigoAfip(codigoAfip);
-        if (ac == null) {
-            return new ResponseEntity(ac, HttpStatus.NO_CONTENT);
-        }else{
-            return new ResponseEntity(ac, HttpStatus.OK);
-        }
+        return new ResponseEntity(ac, (ac!=null ? HttpStatus.OK: HttpStatus.NO_CONTENT));
     }
     
     //Obtiene el codigo afip

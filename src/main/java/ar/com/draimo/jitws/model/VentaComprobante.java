@@ -197,7 +197,7 @@ public class VentaComprobante extends ObjetoGenerico {
 
     //Referencia a la clase ventaComprobanteItemFA (lista)
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
     @JsonIgnoreProperties("ventaComprobante")
     private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
 

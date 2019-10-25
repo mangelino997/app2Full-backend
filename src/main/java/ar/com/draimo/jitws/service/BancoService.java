@@ -33,11 +33,8 @@ public class BancoService {
     
     //Obtiene una lista por nombre
     public List<Banco> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findAll();
-        } else {
-            return elementoDAO.findByNombreContaining(nombre);
-        }
+        return nombre.equals("***") ? elementoDAO.findAll(): 
+            elementoDAO.findByNombreContaining(nombre);
     }
     
     //Agrega un registro

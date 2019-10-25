@@ -130,14 +130,13 @@ public class CompaniaSeguroPolizaService {
     @Transactional(rollbackFor = Exception.class)
     public CompaniaSeguroPoliza agregar(String elementoString, MultipartFile archivo) throws IOException {
         CompaniaSeguroPoliza elemento = new ObjectMapper().readValue(elementoString, CompaniaSeguroPoliza.class);
-        if (!archivo.getOriginalFilename().equals("")) {
-            Pdf u = pdfService.agregar(archivo, false);
+        Pdf pdf = null;
+        Pdf u = !archivo.getOriginalFilename().equals("") ? pdfService.agregar(archivo, false): null;
+        if (u!=null) {
             u.setTabla("companiaseguropoliza");
-            Pdf pdf = pdfDAO.saveAndFlush(u);
-            elemento.setPdf(pdf);
-        } else {
-            elemento.setPdf(null);
+            pdf = pdfDAO.saveAndFlush(u);
         }
+        elemento.setPdf(pdf!=null? pdf : null);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -149,22 +148,14 @@ public class CompaniaSeguroPolizaService {
         if (archivo.getOriginalFilename().equals("")) {
             if(elemento.getPdf().getId() != 0) {
                 pdfDAO.deleteById(elemento.getPdf().getId());
-                elemento.setPdf(null);
-            } else {
-                elemento.setPdf(null);
-            }
+            } 
+            elemento.setPdf(null);
         } else {
-            if(elemento.getPdf().getId() != 0) {
-                Pdf f = pdfService.actualizar(elemento.getPdf().getId(), archivo, false);
-                f.setTabla("companiaseguropoliza");
-                Pdf bug = pdfDAO.save(f);
-                elemento.setPdf(bug);
-            } else {
-                Pdf u = pdfService.agregar(archivo, false);
-                u.setTabla("companiaseguropoliza");
-                Pdf pdf = pdfDAO.saveAndFlush(u);
-                elemento.setPdf(pdf);
-            }
+            Pdf f = elemento.getPdf().getId() != 0 ?pdfService.actualizar(elemento.getPdf().getId(),
+                    archivo, false) :pdfService.agregar(archivo, false);
+            f.setTabla("companiaseguropoliza");
+            Pdf bug = elemento.getPdf().getId() != 0 ? pdfDAO.save(f): pdfDAO.saveAndFlush(f);
+            elemento.setPdf(bug);
         }
         elementoDAO.save(elemento);
     }

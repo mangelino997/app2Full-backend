@@ -114,10 +114,7 @@ public class OrdenVentaTramoService {
     @Transactional(rollbackFor = Exception.class)
     public int agregar(OrdenVentaTramo elemento) throws IOException, Exception {
         String kmPactado = String.valueOf(elemento.getKmPactado());
-        //Obtiene longitud de kmPactado, si es mayor a 4retorna error
-        if (kmPactado.length()>4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD +" KM PACTADO");
-        }
+        controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
         return elemento.getId();
     }
@@ -125,13 +122,18 @@ public class OrdenVentaTramoService {
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public int actualizar(OrdenVentaTramo elemento) throws IOException, Exception {
+        controlarLongitud(elemento);
+        elemento = elementoDAO.save(elemento);
+        return elemento.getId();
+    }
+    
+    //COntrola longitudes de atributos short
+    private void controlarLongitud(OrdenVentaTramo elemento) {
         String kmPactado = String.valueOf(elemento.getKmPactado());
         //Obtiene longitud de kmPactado, si es mayor a 4retorna error
         if (kmPactado.length()>4) {
             throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM PACTADO");
         }
-        elemento = elementoDAO.save(elemento);
-        return elemento.getId();
     }
     
     //Elimina un registro

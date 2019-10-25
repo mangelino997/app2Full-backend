@@ -156,11 +156,7 @@ public class PersonalAdelantoController {
             Object o = elementoService.agregarLote(personalAdelanto);
             //controla la cantidad de adelantos fallidos
             boolean b = elementoService.controlAdelantosFallidos(o, personalAdelanto);
-            if (b) {
-                return new ResponseEntity(o, HttpStatus.CONFLICT);
-            } else {
-                return new ResponseEntity(o, HttpStatus.CREATED);
-            }
+            return new ResponseEntity(o, b ? HttpStatus.CONFLICT : HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

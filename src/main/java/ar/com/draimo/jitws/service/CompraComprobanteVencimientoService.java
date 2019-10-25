@@ -78,14 +78,9 @@ public class CompraComprobanteVencimientoService {
         }
         //Controla si hay diferencia entre el importe total y la suma de los importe
         //Si hay, se lo establece al ultimo registro
-        if(total.compareTo(totalImporte) == 1) {
-            dif = total.subtract(totalImporte);
-            vencimientos.get(cantidadCuotas-1).setImporte(importe.subtract(dif));
-        //Si no se lo resta
-        } else if(total.compareTo(totalImporte) == -1){
-            dif = totalImporte.subtract(total);
-            vencimientos.get(cantidadCuotas-1).setImporte(importe.add(dif));
-        }
+        dif = total.compareTo(totalImporte) == 1 ? total.subtract(totalImporte) :
+                totalImporte.subtract(total);
+        vencimientos.get(cantidadCuotas-1).setImporte(importe.add(dif));
         return vencimientos;
     }
 

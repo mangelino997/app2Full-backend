@@ -35,11 +35,8 @@ public class CategoriaService {
     
     //Obtiene una lista por nombre
     public List<Categoria> listarPorNombre(String nombre) {
-        if(nombre.equals("***")) {
-            return elementoDAO.findByOrderByNombreAsc();
-        } else {
-            return elementoDAO.findByNombreContainingOrderByNombreAsc(nombre);
-        }
+        return nombre.equals("***") ? elementoDAO.findByOrderByNombreAsc():
+        elementoDAO.findByNombreContainingOrderByNombreAsc(nombre);
     }
     
     //Agrega un registro
