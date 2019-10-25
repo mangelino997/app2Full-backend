@@ -69,18 +69,8 @@ public class ViajeTramoClienteService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(ViajeTramoCliente elemento) throws IOException {
-        ViajeTramoCliente v= elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "viaje");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(v);
-        return mapper.readValue(string, Object.class);
+    public void agregar(ViajeTramoCliente elemento) throws IOException {
+        elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
