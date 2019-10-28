@@ -25,12 +25,12 @@ import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
+import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
@@ -59,6 +59,10 @@ public class RepartoComprobanteService {
     //Define la referencia al dao de venta comprobante
     @Autowired
     IVentaComprobanteDAO ventaComprobanteDAO;
+
+    //Define la referencia al dao de venta comprobante
+    @Autowired
+    IVentaComprobanteItemFADAO ventaComprobanteItemFADAO;
 
     //Define la referencia al dao de tipo comprobante
     @Autowired
@@ -119,6 +123,12 @@ public class RepartoComprobanteService {
     public Object listarComprobantes(int idReparto) throws IOException {
         List<RepartoComprobante> comprobantes = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
         ObjectMapper mapper = new ObjectMapper();
+        for(RepartoComprobante comprobante : comprobantes) {
+            if(comprobante.getVentaComprobante()!=null) {
+                comprobante.getVentaComprobante().setVentaComprobanteItemFAs(
+                    ventaComprobanteItemFADAO.listarPorVentaComprobante(comprobante.getVentaComprobante().getId()));
+            }
+        }
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "datos");
         FilterProvider filters = new SimpleFilterProvider()

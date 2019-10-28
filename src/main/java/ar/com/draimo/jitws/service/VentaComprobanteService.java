@@ -133,8 +133,11 @@ public class VentaComprobanteService {
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero, int idTipoComprobante) throws IOException {
         TipoComprobante t = tipoComprobanteDAO.findById(idTipoComprobante).get();
-        VentaComprobante ventasComprobantes
-                = elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
+        VentaComprobante ventaComprobante
+                = elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(
+                        puntoVenta, letra, numero, t);
+        ventaComprobante.setVentaComprobanteItemFAs(
+                ventaComprobanteItemFADAO.listarPorVentaComprobante(ventaComprobante.getId()));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -145,7 +148,7 @@ public class VentaComprobanteService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(ventaComprobante);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
@@ -192,8 +195,8 @@ public class VentaComprobanteService {
         }
         //Agrega item ContraReembolso
         if (elemento.getVentaComprobanteItemCR() != null && elemento.getVentaComprobanteItemCR().size() > 0) {
-            elemento.getVentaComprobanteItemCRs().get(0).setVentaComprobante(vc);
-            ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCRs().get(0));
+            elemento.getVentaComprobanteItemCR().get(0).setVentaComprobante(vc);
+            ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCR().get(0));
         }
         if (elemento.getVentaComprobanteItemNC() != null) {
             //Agrega item NC

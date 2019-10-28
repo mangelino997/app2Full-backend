@@ -1,12 +1,12 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,7 +21,8 @@ import javax.persistence.Table;
 public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     //Referencia a la clase VentaComprobante
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
 
@@ -141,6 +142,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     private OrdenVentaTarifa ordenVentaTarifa;
 
     //Getters y Setters de la clase
+
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }
@@ -163,6 +165,14 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     public void setViajeRemito(ViajeRemito viajeRemito) {
         this.viajeRemito = viajeRemito;
+    }
+
+    public ViajeTramoClienteRemito getViajeTramoClienteRemito() {
+        return viajeTramoClienteRemito;
+    }
+
+    public void setViajeTramoClienteRemito(ViajeTramoClienteRemito viajeTramoClienteRemito) {
+        this.viajeTramoClienteRemito = viajeTramoClienteRemito;
     }
 
     public int getNumeroRemito() {
@@ -349,14 +359,6 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
         this.provincia = provincia;
     }
 
-    public ViajeTramoClienteRemito getViajeTramoClienteRemito() {
-        return viajeTramoClienteRemito;
-    }
-
-    public void setViajeTramoClienteRemito(ViajeTramoClienteRemito viajeTramoClienteRemito) {
-        this.viajeTramoClienteRemito = viajeTramoClienteRemito;
-    }
-
     public OrdenVentaTarifa getOrdenVentaTarifa() {
         return ordenVentaTarifa;
     }
@@ -364,5 +366,5 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     public void setOrdenVentaTarifa(OrdenVentaTarifa ordenVentaTarifa) {
         this.ordenVentaTarifa = ordenVentaTarifa;
     }
-
+    
 }

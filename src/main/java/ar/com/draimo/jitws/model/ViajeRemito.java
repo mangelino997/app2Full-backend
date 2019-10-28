@@ -136,7 +136,7 @@ public class ViajeRemito extends ObjetoGenerico {
     
     //Referencia a la clase Usuario (mod)
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioMod", nullable = false)
+    @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     
     //Referencia a la clase SeguimientoViajeRemito(lista)
