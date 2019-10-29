@@ -58,8 +58,8 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
             @Param("numeroCamion") short numeroCamion);
 
     //Obtiene un registro por puntoVenta, letra y nroComprobante
-    @Query(value = "SELECT * FROM viajeremito rpuntoVenta=:puntoVenta AND letra="
-            + ":letra AND numero=:numero", nativeQuery = true)
+    @Query(value = "SELECT * FROM viajeremito WHERE puntoVenta=:puntoVenta AND letra=:"
+            + "letra AND numero=:numero", nativeQuery = true)
     public ViajeRemito obtenerPorPuntoVentaLetraYNumero(@Param("numero") int numero, 
             @Param("puntoVenta") int puntoVenta, @Param("letra") String letra);
     
@@ -99,7 +99,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     //Obtiene un registro por letra, punto venta y numero que no este en una venta comprobante
     @Query(value = "SELECT r.* FROM viajeremito r WHERE r.id NOT IN (SELECT v.idViajeRemito "
             + "FROM  ventacomprobanteitemFA v ) and r.letra=:letra and r.puntoVenta=:puntoVenta"
-            + " and r.numero =:numero;", nativeQuery = true)
+            + " and r.numero =:numero", nativeQuery = true)
     public ViajeRemito obtenerParaReparto(@Param("numero") int numero, 
             @Param("puntoVenta") int puntoVenta, @Param("letra") String letra);
     
