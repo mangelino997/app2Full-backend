@@ -226,9 +226,8 @@ public class RepartoComprobanteService {
                 }
                 //Consulta si viajeRemito es nulo para establecer el seguimiento y guardarlo
             } else if (cte.getViajeRemito() != null) {
-                ViajeRemito r = viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
-                        cte.getViajeRemito().getNumero());
+                ViajeRemito r = viajeRemitoDAO.obtenerParaReparto(cte.getViajeRemito().getNumero(),
+                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra());
                 if (r != null) {
                     viajeSeguimiento.setViajeRemito(cte.getViajeRemito());
                     cte.setViajeRemito(r);
@@ -274,9 +273,8 @@ public class RepartoComprobanteService {
             }
             //Consulta si viajeRemito es nulo para establecer el seguimiento y guardarlo
         } else if (cte.getViajeRemito() != null) {
-            ViajeRemito r = viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-                    cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
-                    cte.getViajeRemito().getNumero());
+            ViajeRemito r = viajeRemitoDAO.obtenerPorPuntoVentaLetraYNumero(cte.getViajeRemito().getNumero(),
+                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra());
             if (r != null) {
                 viajeSeguimiento.setViajeRemito(r);
                 cte.setViajeRemito(r);
