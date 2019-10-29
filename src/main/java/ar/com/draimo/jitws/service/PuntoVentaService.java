@@ -120,22 +120,14 @@ public class PuntoVentaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public PuntoVenta agregar(PuntoVenta elemento) throws Exception {
-        //Obtiene longitud de anio, si es mayor a 1 retorna error
-        String copias = String.valueOf(elemento.getCopias());
-        if (copias.length() > 1) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " COPIAS");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(PuntoVenta elemento) throws Exception {
-        //Obtiene longitud de anio, si es mayor a 1 retorna error
-        String copias = String.valueOf(elemento.getCopias());
-        if (copias.length() > 1) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " COPIAS");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(elemento);
     }
 
@@ -143,6 +135,15 @@ public class PuntoVentaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Controla la longitud de los atributos de tipo short
+    private void controlarLongitud(PuntoVenta elemento) {
+        //Obtiene longitud de anio, si es mayor a 1 retorna error
+        String copias = String.valueOf(elemento.getCopias());
+        if (copias.length() > 1) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " COPIAS");
+        }
     }
 
 }

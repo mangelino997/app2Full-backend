@@ -241,15 +241,11 @@ public class PersonalAdelantoService {
             importeCategoria = (basico != null
                     ? basico.getBasico().multiply(basico.getCategoria().getTopeBasicoAdelantos().divide(new BigDecimal(100.00)))
                     : BigDecimal.ZERO);
+            adelanto = new PersonalAdelanto();
             if (importeCategoria.compareTo(adelantos.getImporte()) >= 0) {
-                adelanto = new PersonalAdelanto();
-                adelanto.setEmpresa(personal.getEmpresa());
-                adelanto.setPersonal(personal);
                 adelanto.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
                 adelanto.setEstaAnulado(false);
-                adelanto.setFechaEmision(emision);
                 adelanto.setFechaVto(emision);
-                adelanto.setImporte(adelantos.getImporte());
                 adelanto.setCuota((short) 1);
                 adelanto.setTotalCuotas((short) 1);
                 adelanto.setUsuarioAlta(usuarioDAO.findById(adelantos.getIdUsuarioAlta()).get());
@@ -258,14 +254,13 @@ public class PersonalAdelantoService {
                 adelanto.setSucursal(sucursalDAO.findById(adelantos.getIdSucursal()).get());
                 elementoDAO.saveAndFlush(adelanto);
             } else {
-                adelanto = new PersonalAdelanto();
-                adelanto.setEmpresa(personal.getEmpresa());
-                adelanto.setPersonal(personal);
-                adelanto.setFechaEmision(emision);
-                adelanto.setImporte(adelantos.getImporte());
                 adelanto.setObservaciones(MensajeRespuesta.ADELANTO_NO_OTORGADO);
                 adelantosFallados.add(adelanto);
             }
+            adelanto.setFechaEmision(emision);
+            adelanto.setImporte(adelantos.getImporte());
+            adelanto.setEmpresa(personal.getEmpresa());
+            adelanto.setPersonal(personal);
         }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

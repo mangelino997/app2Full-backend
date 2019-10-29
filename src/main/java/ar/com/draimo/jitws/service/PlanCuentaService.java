@@ -151,11 +151,7 @@ public class PlanCuentaService {
     @Transactional(rollbackFor = Exception.class)
     public PlanCuenta agregar(PlanCuenta elemento) throws Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de nivel, si es mayor a 1 retorna error
-        String nivel = String.valueOf(elemento.getNivel());
-        if (nivel.length() > 1) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " NIVEL");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -163,11 +159,7 @@ public class PlanCuentaService {
     @Transactional(rollbackFor = Exception.class)
     public Object actualizar(PlanCuenta elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
-        //Obtiene longitud de nivel, si es mayor a 1 retorna error
-        String nivel = String.valueOf(elemento.getNivel());
-        if (nivel.length() > 1) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " NIVEL");
-        }
+        controlarLongitud(elemento);
         PlanCuenta planCuenta = elementoDAO.save(elemento);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
@@ -183,6 +175,15 @@ public class PlanCuentaService {
     public void eliminar(int id) {
         PlanCuenta elemento = elementoDAO.findById(id).get();
         elementoDAO.delete(elemento);
+    }
+    
+    //Controla la longitud de los atributos de tipo short
+    private void controlarLongitud(PlanCuenta elemento) {
+        //Obtiene longitud de nivel, si es mayor a 1 retorna error
+        String nivel = String.valueOf(elemento.getNivel());
+        if (nivel.length() > 1) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " NIVEL");
+        }
     }
 
     //Formatea los strings

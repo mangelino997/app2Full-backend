@@ -67,11 +67,7 @@ public class VehiculoProveedorService {
     public VehiculoProveedor agregar(VehiculoProveedor elemento) throws Exception {
         elemento = formatearStrings(elemento);
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        //Obtiene longitud de anio, si es mayor a 4 retorna error
-        String anio = String.valueOf(elemento.getAnioFabricacion());
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO FABRICACIÓN");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
@@ -89,11 +85,7 @@ public class VehiculoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public VehiculoProveedor actualizar(VehiculoProveedor elemento) throws Exception {
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
-        //Obtiene longitud de anio, si es mayor a 4 retorna error
-        String anio = String.valueOf(elemento.getAnioFabricacion());
-        if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO + " AÑO FABRICACIÓN");
-        }
+        controlarLongitud(elemento);
         return establecerAlias(formatearStrings(elemento));
     }
 
@@ -103,6 +95,16 @@ public class VehiculoProveedorService {
         elementoDAO.deleteById(elemento);
     }
 
+    //Controla longitud de atributos short
+    private void controlarLongitud(VehiculoProveedor elemento) {
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String anio = String.valueOf(elemento.getAnioFabricacion());
+        if (anio.length() > 4 || anio.length() < 4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO 
+                    + " AÑO FABRICACIÓN");
+        }
+    }
+    
     //Formatea los strings
     private VehiculoProveedor formatearStrings(VehiculoProveedor elemento) {
         elemento.setDominio(elemento.getDominio().trim());

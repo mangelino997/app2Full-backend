@@ -45,17 +45,39 @@ public class TalonarioReciboService {
 
     //Obtiene la lista completa
     public List<TalonarioRecibo> listarPorCobradorYEmpresa(int idCobrador, int idEmpresa) {
-        return elementoDAO.findByCobradorAndTalonarioReciboLote_empresa(cobradorDAO.findById(idCobrador).get(), empresaDAO.findById(idEmpresa).get());
+        return elementoDAO.findByCobradorAndTalonarioReciboLote_empresa(
+                cobradorDAO.findById(idCobrador).get(), empresaDAO.findById(idEmpresa).get());
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TalonarioRecibo agregar(TalonarioRecibo elemento) throws Exception {
+        controlarLongitud(elemento);
+        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
+        return elementoDAO.saveAndFlush(elemento);
+    }
+
+    //Actualiza un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void actualizar(TalonarioRecibo elemento) throws Exception {
+        controlarLongitud(elemento);
+        TalonarioRecibo tr = elementoDAO.verificarDesdeHasta(elemento.getTalonarioReciboLote().getId(),
+                elemento.getDesde(), elemento.getHasta());
+            if(tr.getDesde() != elemento.getDesde() && tr.getHasta() != elemento.getHasta()) {
+                throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
+        }
+        elementoDAO.save(elemento);
+    }
+    
+    //Controla la longitud de los atributos short
+    private void controlarLongitud(TalonarioRecibo elemento) throws Exception {
         if (elemento.getDesde() >= elemento.getHasta()) {
             throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
         }
-        List<TalonarioRecibo> desdeLista = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde());
-        List<TalonarioRecibo> hastaLista = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getHasta());
+        List<TalonarioRecibo> desdeLista = elementoDAO.listarPorDesdeHasta(
+                elemento.getTalonarioReciboLote().getId(), elemento.getDesde());
+        List<TalonarioRecibo> hastaLista = elementoDAO.listarPorDesdeHasta(
+                elemento.getTalonarioReciboLote().getId(), elemento.getHasta());
         if (!desdeLista.isEmpty()) {
             throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
         }
@@ -71,49 +93,11 @@ public class TalonarioReciboService {
         if(elemento.getHasta() > elemento.getTalonarioReciboLote().getHasta()) {
             throw new Exception(MensajeRespuesta.HASTA_EXCEDIDO);
         }
-        TalonarioRecibo tr = elementoDAO.verificarDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde(), elemento.getHasta());
+        TalonarioRecibo tr = elementoDAO.verificarDesdeHasta(
+                elemento.getTalonarioReciboLote().getId(), elemento.getDesde(), elemento.getHasta());
         if (tr != null) {
             throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
         }
-        elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        return elementoDAO.saveAndFlush(elemento);
-    }
-
-    //Actualiza un registro
-    @Transactional(rollbackFor = Exception.class)
-    public void actualizar(TalonarioRecibo elemento) throws Exception {
-        if (elemento.getDesde() >= elemento.getHasta()) {
-            throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
-        }
-        TalonarioRecibo talonarioRecibo = elementoDAO.findById(elemento.getId()).get();
-        if(elemento.getDesde() < talonarioRecibo.getDesde()) {
-            List<TalonarioRecibo> desdeList = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde());
-            if (!desdeList.isEmpty()) {
-                throw new Exception(MensajeRespuesta.DESDE_YA_ASIGNADO);
-            }
-        }
-        if(elemento.getHasta() > talonarioRecibo.getHasta()) {
-            List<TalonarioRecibo> hastaList = elementoDAO.listarPorDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getHasta());
-            if (!hastaList.isEmpty()) {
-                throw new Exception(MensajeRespuesta.HASTA_YA_ASIGNADO);
-            }
-        }
-        if (elemento.getHasta() > elemento.getTalonarioReciboLote().getHasta()) {
-            throw new Exception(MensajeRespuesta.DESDE_HASTA_INVALIDOS);
-        }
-        if(elemento.getDesde() < talonarioRecibo.getTalonarioReciboLote().getDesde()) {
-            throw new Exception(MensajeRespuesta.DESDE_EXCEDIDO);
-        }
-        if(elemento.getHasta() > talonarioRecibo.getTalonarioReciboLote().getHasta()) {
-            throw new Exception(MensajeRespuesta.HASTA_EXCEDIDO);
-        }
-        TalonarioRecibo tr = elementoDAO.verificarDesdeHasta(elemento.getTalonarioReciboLote().getId(), elemento.getDesde(), elemento.getHasta());
-        if (tr != null) {
-            if(tr.getDesde() != elemento.getDesde() && tr.getHasta() != elemento.getHasta()) {
-                throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
-            }
-        }
-        elementoDAO.save(elemento);
     }
 
     //Elimina un registro
