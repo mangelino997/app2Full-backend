@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import ar.com.draimo.jitws.model.ViajeTramo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -38,8 +39,8 @@ public class ViajeTramoClienteService {
 
     //Obtiene el registro por viajeTramo
     public Object listarPorViajeTramo(int idViajeTramo) throws IOException {
-        List<ViajeTramoCliente> elementos = elementoDAO.findByViajeTramo(
-                viajeTramoDAO.findById(idViajeTramo));
+        ViajeTramo viajeTramo = viajeTramoDAO.findById(idViajeTramo).get();
+        List<ViajeTramoCliente> elementos = elementoDAO.findByViajeTramo(viajeTramo);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "viaje");

@@ -31,10 +31,6 @@ public class ViajeTramoCliente extends ObjetoGenerico {
     @JoinColumn(name = "idClienteDestinatario", nullable = false)
     private Cliente clienteDestinatario;
     
-    //Define si tiene remitos
-    @Column(name = "tieneRemitos", nullable = false)
-    private boolean tieneRemitos;
-    
     //Referencia a la clase Viaje Tramo
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JsonIgnoreProperties("viajeTramoClientes")
@@ -56,14 +52,6 @@ public class ViajeTramoCliente extends ObjetoGenerico {
 
     public void setClienteDestinatario(Cliente clienteDestinatario) {
         this.clienteDestinatario = clienteDestinatario;
-    }
-
-    public boolean getTieneRemitos() {
-        return tieneRemitos;
-    }
-
-    public void setTieneRemitos(boolean tieneRemitos) {
-        this.tieneRemitos = tieneRemitos;
     }
     
     public ViajeTramo getViajeTramo() {

@@ -181,12 +181,6 @@ public class ViajeService {
                     vTramo = viajeTramoService.formatearStrings(viajeTramo);
                     vTramo.setViaje(elemento);
                     vTramo = viajeTramoDAO.saveAndFlush(vTramo);
-                    for (ViajeTramoCliente viajeTramoCliente : viajeTramo.getViajeTramoClientes()) {
-                        viajeTramoCliente.setViajeTramo(viajeTramo);
-                        viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente);
-                    }
-                    //elemento.getViajeTramos().clear();
-                    //elemento.getViajeTramos().add(viaje);
                 }
             }
         }
