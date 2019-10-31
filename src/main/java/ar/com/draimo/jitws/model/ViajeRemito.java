@@ -55,15 +55,15 @@ public class ViajeRemito extends ObjetoGenerico {
     private TipoComprobante tipoComprobante;
     
     //Define el punto de venta
-    @Column(name = "puntoVenta",length = 5, nullable = false)
+    @Column(name = "puntoVenta", length = 5, nullable = false)
     private int puntoVenta;
     
     //Define la letra
-    @Column(name = "letra",length = 1, nullable = false)
+    @Column(name = "letra", length = 1, nullable = false)
     private String letra;
     
     //Define el numero
-    @Column(name = "numero",length = 8, nullable = false)
+    @Column(name = "numero", length = 8, nullable = false)
     private int numero;
     
     //Referencia a la clase Cliente (remitente)
@@ -126,7 +126,7 @@ public class ViajeRemito extends ObjetoGenerico {
     private boolean estaEnReparto;
     
     //Define el alias para las busquedas
-    @Column(name = "alias",length = 200, nullable = true)
+    @Column(name = "alias", length = 200, nullable = true)
     private String alias;
     
     //Referencia a la clase Usuario (alta)
@@ -136,7 +136,7 @@ public class ViajeRemito extends ObjetoGenerico {
     
     //Referencia a la clase Usuario (mod)
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioMod", nullable = false)
+    @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     
     //Referencia a la clase SeguimientoViajeRemito(lista)
@@ -144,8 +144,8 @@ public class ViajeRemito extends ObjetoGenerico {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "viajeRemito")
     private List<SeguimientoViajeRemito> seguimientoViajeRemitos;
     
-    
     //Getters y Setters de la clase
+
     public Sucursal getSucursalIngreso() {
         return sucursalIngreso;
     }
@@ -161,7 +161,7 @@ public class ViajeRemito extends ObjetoGenerico {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
-    
+
     public Date getFecha() {
         return fecha;
     }
@@ -169,7 +169,7 @@ public class ViajeRemito extends ObjetoGenerico {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
+
     public short getNumeroCamion() {
         return numeroCamion;
     }
@@ -241,7 +241,7 @@ public class ViajeRemito extends ObjetoGenerico {
     public void setSucursalClienteDest(SucursalCliente sucursalClienteDest) {
         this.sucursalClienteDest = sucursalClienteDest;
     }
-    
+
     public short getBultos() {
         return bultos;
     }

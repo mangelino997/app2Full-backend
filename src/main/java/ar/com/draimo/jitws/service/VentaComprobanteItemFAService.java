@@ -53,7 +53,7 @@ public class VentaComprobanteItemFAService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<VentaComprobanteItemFA> ventaItems = elementoDAO.listar();
+        List<VentaComprobanteItemFA> ventaItems = elementoDAO.findAll();
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "ordenesVentas");

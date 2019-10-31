@@ -184,7 +184,7 @@ public class VentaComprobanteService {
         for (VentaComprobanteItemFA ventaComprobanteItemFA : elemento.getVentaComprobanteItemFAs()) {
             ventaComprobanteItemFA.setVentaComprobante(vc);
             if (ventaComprobanteItemFA.getViajeRemito() != null) {
-                viajeRemito = viajeRemitoDAO.obtenerPorId(ventaComprobanteItemFA.getViajeRemito().getId());
+                viajeRemito = viajeRemitoDAO.findById(ventaComprobanteItemFA.getViajeRemito().getId()).get();
                 viajeRemito.setEstaFacturado(true);
                 viajeRemitoDAO.save(viajeRemito);
             }
