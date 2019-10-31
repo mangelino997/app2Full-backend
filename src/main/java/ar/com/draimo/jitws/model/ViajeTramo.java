@@ -2,16 +2,15 @@
 package ar.com.draimo.jitws.model;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,9 +25,9 @@ import javax.persistence.Table;
 public class ViajeTramo extends ObjetoGenerico {
 
     //Referencia a la clase Viaje
-//    @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
-//        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
+        "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViaje", nullable = false)
     private Viaje viaje;
     
@@ -60,13 +59,8 @@ public class ViajeTramo extends ObjetoGenerico {
     @Column(name = "km", nullable = false)
     private short km;
     
-    //Referencia a la clase Usuario (alta)
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioAlta", nullable = false)
-    private Usuario usuarioAlta;
-    
     //Define observaciones
-    @Column(name = "observaciones",length = 100, nullable = true)
+    @Column(name = "observaciones", length = 100, nullable = true)
     private String observaciones;
     
     //Referencia a la clase Viaje Tipo
@@ -81,7 +75,7 @@ public class ViajeTramo extends ObjetoGenerico {
     
     //Referencia a la clase Viaje Tarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idViajeTarifa", nullable = false)
+    @JoinColumn(name = "idViajeTarifa", nullable = true)
     private ViajeTarifa viajeTarifa;
     
     //Referencia a la clase Viaje Unidad Negocio
@@ -97,17 +91,18 @@ public class ViajeTramo extends ObjetoGenerico {
     @Column(name = "importeCosto", nullable = true)
     private BigDecimal importeCosto;
     
-    //Referencia a la clase viajeTramosCliente (lista)
-    //@JsonIgnoreProperties("viajeTramo")
-    @OneToMany(mappedBy = "viajeTramo", cascade = CascadeType.REMOVE)
-    private List<ViajeTramoCliente> viajeTramoClientes;
+    //Referencia a la clase Usuario (alta)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioAlta", nullable = false)
+    private Usuario usuarioAlta;
     
-    //Define la lista de remitos
-    //@JsonManagedReference
-    //@OneToMany(mappedBy = "viajePropioTramo")
-    //private List<ViajeRemitoTramo> viajeRemitoTramos;
+    //Referencia a la clase Usuario (mod)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idUsuarioMod", nullable = true)
+    private Usuario usuarioMod;
     
     //Getters y Setters de la clase
+
     public Viaje getViaje() {
         return viaje;
     }
@@ -162,14 +157,6 @@ public class ViajeTramo extends ObjetoGenerico {
 
     public void setKm(short km) {
         this.km = km;
-    }
-
-    public Usuario getUsuarioAlta() {
-        return usuarioAlta;
-    }
-
-    public void setUsuarioAlta(Usuario usuarioAlta) {
-        this.usuarioAlta = usuarioAlta;
     }
 
     public String getObservaciones() {
@@ -227,21 +214,21 @@ public class ViajeTramo extends ObjetoGenerico {
     public void setImporteCosto(BigDecimal importeCosto) {
         this.importeCosto = importeCosto;
     }
-    
-    public List<ViajeTramoCliente> getViajeTramoClientes() {
-        return viajeTramoClientes;
+
+    public Usuario getUsuarioAlta() {
+        return usuarioAlta;
     }
 
-    public void setViajeTramoClientes(List<ViajeTramoCliente> viajeTramoClientes) {
-        this.viajeTramoClientes = viajeTramoClientes;
+    public void setUsuarioAlta(Usuario usuarioAlta) {
+        this.usuarioAlta = usuarioAlta;
     }
 
-//    public List<ViajeRemitoTramo> getViajeRemitoTramos() {
-//        return viajeRemitoTramos;
-//    }
-//
-//    public void setViajeRemitoTramos(List<ViajeRemitoTramo> viajeRemitoTramos) {
-//        this.viajeRemitoTramos = viajeRemitoTramos;
-//    }
+    public Usuario getUsuarioMod() {
+        return usuarioMod;
+    }
+
+    public void setUsuarioMod(Usuario usuarioMod) {
+        this.usuarioMod = usuarioMod;
+    }
 
 }

@@ -25,15 +25,16 @@ import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.SeguimientoVentaComprobante;
 import ar.com.draimo.jitws.model.ViajeRemito;
 import ar.com.draimo.jitws.model.SeguimientoViajeRemito;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
+import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
+import ar.com.draimo.jitws.model.Sucursal;
 import java.sql.Timestamp;
 
 /**
@@ -59,6 +60,10 @@ public class RepartoComprobanteService {
     //Define la referencia al dao de venta comprobante
     @Autowired
     IVentaComprobanteDAO ventaComprobanteDAO;
+
+    //Define la referencia al dao de venta comprobante
+    @Autowired
+    IVentaComprobanteItemFADAO ventaComprobanteItemFADAO;
 
     //Define la referencia al dao de tipo comprobante
     @Autowired
@@ -119,6 +124,12 @@ public class RepartoComprobanteService {
     public Object listarComprobantes(int idReparto) throws IOException {
         List<RepartoComprobante> comprobantes = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
         ObjectMapper mapper = new ObjectMapper();
+        for(RepartoComprobante comprobante : comprobantes) {
+            if(comprobante.getVentaComprobante()!=null) {
+                comprobante.getVentaComprobante().setVentaComprobanteItemFAs(
+                    ventaComprobanteItemFADAO.listarPorVentaComprobante(comprobante.getVentaComprobante().getId()));
+            }
+        }
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "datos");
         FilterProvider filters = new SimpleFilterProvider()
@@ -144,13 +155,15 @@ public class RepartoComprobanteService {
     //Agrega un listado
     @Transactional(rollbackFor = Exception.class)
     public List<RepartoComprobante> conformarComprobantes(Reparto reparto) {
+        List<RepartoComprobante> repartoCtes = new ArrayList<>();
         //Recorre la lista de reparto comprobante
         for (RepartoComprobante cte : reparto.getRepartoComprobantes()) {
             if (cte.getId() != 0) {
-                conformarComprobante(cte);
+                cte = conformarComprobante(cte);
+                repartoCtes.add(cte);
             }
         }
-        return reparto.getRepartoComprobantes();
+        return repartoCtes;
     }
 
     //Conforma un comprobante
@@ -161,25 +174,26 @@ public class RepartoComprobanteService {
         SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
         SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
         SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
+        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
         //Recorre la lista de reparto comprobante
         //Si no esta vacio, guarda el seguimiento para aquel comprobante que contenga el repartoComprobante
         if (repartoCte.getOrdenRecoleccion() != null) {
             ordenSeguimiento.setOrdenRecoleccion(repartoCte.getOrdenRecoleccion());
-            ordenSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
+            ordenSeguimiento.setFecha(fecha);
             ordenSeguimiento.setSeguimientoEstado(seguimientoEstado);
             ordenSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
             ordenSeguimiento.setSucursal(repartoCte.getReparto().getSucursal());
             seguimientoRecoleccionDAO.saveAndFlush(ordenSeguimiento);
         } else if (repartoCte.getViajeRemito() != null) {
             viajeSeguimiento.setViajeRemito(repartoCte.getViajeRemito());
-            viajeSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
+            viajeSeguimiento.setFecha(fecha);
             viajeSeguimiento.setSeguimientoEstado(seguimientoEstado);
             viajeSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
             viajeSeguimiento.setSucursal(repartoCte.getReparto().getSucursal());
             seguimientoRemitoDAO.saveAndFlush(viajeSeguimiento);
         } else {
             ventaSeguimiento.setVentaComprobante(repartoCte.getVentaComprobante());
-            ventaSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
+            ventaSeguimiento.setFecha(fecha);
             ventaSeguimiento.setSeguimientoEstado(seguimientoEstado);
             ventaSeguimiento.setSeguimientoSituacion(seguimientoSituacion);
             ventaSeguimiento.setSucursal(repartoCte.getReparto().getSucursal());
@@ -195,6 +209,9 @@ public class RepartoComprobanteService {
         SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
         SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
         List<RepartoComprobante> repartoCtes = new ArrayList<>();
+        SeguimientoEstado segEstado = seguimientoEstadoDAO.findById(3).get();
+        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
+        Sucursal suc = ctes.get(0).getReparto().getSucursal();
         //Recorre la lista de reparto comprobante
         for (RepartoComprobante cte : ctes) {
             //Consulta si el repartocomprobante esta vacio, para no guardar un registro sin ninguno de los tres comprobantes
@@ -209,30 +226,29 @@ public class RepartoComprobanteService {
                 if (v != null) {
                     cte.setVentaComprobante(v);
                     ventaSeguimiento.setVentaComprobante(cte.getVentaComprobante());
-                    ventaSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
-                    ventaSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-                    ventaSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                    ventaSeguimiento.setFecha(fecha);
+                    ventaSeguimiento.setSeguimientoEstado(segEstado);
+                    ventaSeguimiento.setSucursal(suc);
                     seguimientoComprobanteDAO.saveAndFlush(ventaSeguimiento);
                 }
                 //Consulta si viajeRemito es nulo para establecer el seguimiento y guardarlo
             } else if (cte.getViajeRemito() != null) {
-                ViajeRemito r = viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
-                        cte.getViajeRemito().getNumero());
+                ViajeRemito r = viajeRemitoDAO.obtenerParaReparto(cte.getViajeRemito().getNumero(),
+                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra());
                 if (r != null) {
                     viajeSeguimiento.setViajeRemito(cte.getViajeRemito());
                     cte.setViajeRemito(r);
-                    viajeSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
-                    viajeSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-                    viajeSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                    viajeSeguimiento.setFecha(fecha);
+                    viajeSeguimiento.setSeguimientoEstado(segEstado);
+                    viajeSeguimiento.setSucursal(suc);
                     seguimientoRemitoDAO.saveAndFlush(viajeSeguimiento);
                 }
                 //Consulta si ordenRecoleccion es nulo para establecer el seguimiento y guardarlo
             } else if (cte.getOrdenRecoleccion() != null) {
                 ordenSeguimiento.setOrdenRecoleccion(cte.getOrdenRecoleccion());
-                ordenSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
-                ordenSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-                ordenSeguimiento.setSucursal(ctes.get(0).getReparto().getSucursal());
+                ordenSeguimiento.setFecha(fecha);
+                ordenSeguimiento.setSeguimientoEstado(segEstado);
+                ordenSeguimiento.setSucursal(suc);
                 seguimientoRecoleccionDAO.saveAndFlush(ordenSeguimiento);
             }
         }
@@ -264,9 +280,8 @@ public class RepartoComprobanteService {
             }
             //Consulta si viajeRemito es nulo para establecer el seguimiento y guardarlo
         } else if (cte.getViajeRemito() != null) {
-            ViajeRemito r = viajeRemitoDAO.findByPuntoVentaAndLetraAndNumero(
-                    cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra(),
-                    cte.getViajeRemito().getNumero());
+            ViajeRemito r = viajeRemitoDAO.obtenerPorPuntoVentaLetraYNumero(cte.getViajeRemito().getNumero(),
+                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra());
             if (r != null) {
                 viajeSeguimiento.setViajeRemito(r);
                 cte.setViajeRemito(r);
@@ -283,7 +298,7 @@ public class RepartoComprobanteService {
             ordenSeguimiento.setSucursal(cte.getReparto().getSucursal());
             seguimientoRecoleccionDAO.saveAndFlush(ordenSeguimiento);
         }
-        return (rc != null ? elementoDAO.saveAndFlush(cte).getId() : 1);
+        return (rc != null ? elementoDAO.saveAndFlush(cte).getId() : 0);
     }
 
     //Actualiza un registro

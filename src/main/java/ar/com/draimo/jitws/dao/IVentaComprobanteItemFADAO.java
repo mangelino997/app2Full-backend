@@ -25,4 +25,9 @@ public interface IVentaComprobanteItemFADAO extends JpaRepository<VentaComproban
     //Obtiene todos los registros
     @Query(value = "SELECT * FROM ventacomprobanteitemFA", nativeQuery = true)
     public List<VentaComprobanteItemFA> listar();
+    
+    //Obtiene todos los registros por venta comprobante
+    @Query(value = "SELECT * FROM ventacomprobanteitemFA WHERE idVentaComprobante="
+            + ":idVentaComprobante", nativeQuery = true)
+    public List<VentaComprobanteItemFA> listarPorVentaComprobante(@Param("idVentaComprobante") int idVentaComprobante);
 }

@@ -129,13 +129,10 @@ public class SoporteService {
             elemento.setBugImagen(null);
         } else {
             BugImagen bug, f;
-            if (elemento.getBugImagen().getId() != 0) {
-                f = bugImagenService.actualizar(elemento.getBugImagen().getId(), archivo, false);
-                bug = bugImagenDAO.save(f);
-            } else {
-                f = bugImagenService.agregar(archivo, false);
-                bug = bugImagenDAO.saveAndFlush(f);
-            }
+            f = elemento.getBugImagen().getId() != 0 ?bugImagenService.actualizar(
+                    elemento.getBugImagen().getId(), archivo, false):bugImagenService.agregar(archivo, false);
+            bug = elemento.getBugImagen().getId() != 0 ?bugImagenDAO.save(f):
+            bugImagenDAO.saveAndFlush(f);
             elemento.setBugImagen(bug);
         }
         establecerAlias(elemento);

@@ -19,4 +19,10 @@ public interface IViajeTarifaDAO extends JpaRepository<ViajeTarifa, Integer> {
     //Obtiene una lista por nombre
     public List<ViajeTarifa> findByNombreContaining(String nombre);
     
+    //Obtiene una lista por costo tramo true
+    public List<ViajeTarifa> findByEsCostoPorTramoTrue();
+    
+    //Obtiene una lista por costo tramo false
+    public List<ViajeTarifa> findByEsCostoPorTramoFalse();
+    
 }

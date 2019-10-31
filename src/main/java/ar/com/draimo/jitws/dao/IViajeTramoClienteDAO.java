@@ -4,7 +4,6 @@ package ar.com.draimo.jitws.dao;
 import ar.com.draimo.jitws.model.ViajeTramo;
 import ar.com.draimo.jitws.model.ViajeTramoCliente;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -19,6 +18,6 @@ public interface IViajeTramoClienteDAO extends JpaRepository<ViajeTramoCliente, 
     public ViajeTramoCliente findTopByOrderByIdDesc();
     
     //Obtiene una lista por viaje tramo
-    public List<ViajeTramoCliente> findByViajeTramo(Optional<ViajeTramo> viajeTramo);
+    public List<ViajeTramoCliente> findByViajeTramo(ViajeTramo viajeTramo);
     
 }

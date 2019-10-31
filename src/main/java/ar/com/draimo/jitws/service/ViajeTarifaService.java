@@ -36,6 +36,16 @@ public class ViajeTarifaService {
         return nombre.equals("***")?elementoDAO.findAll():
             elementoDAO.findByNombreContaining(nombre);
     }
+    
+    //Obtiene una lista por es costo tramo true
+    public List<ViajeTarifa> listarPorCostoTramoTrue() {
+        return elementoDAO.findByEsCostoPorTramoTrue();
+    }
+    
+    //Obtiene una lista por es costo tramo false
+    public List<ViajeTarifa> listarPorCostoTramoFalse() {
+        return elementoDAO.findByEsCostoPorTramoFalse();
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

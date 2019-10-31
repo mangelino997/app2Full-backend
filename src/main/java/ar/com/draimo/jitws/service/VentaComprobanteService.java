@@ -10,11 +10,13 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
+import ar.com.draimo.jitws.dao.IViajeTramoClienteRemitoDAO;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
 import ar.com.draimo.jitws.model.VentaComprobanteItemNC;
 import ar.com.draimo.jitws.model.ViajeRemito;
+import ar.com.draimo.jitws.model.ViajeTramoClienteRemito;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -55,6 +57,10 @@ public class VentaComprobanteService {
     //Define la referancia a ViajeRemitoDAO
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
+
+    //Define la referancia a ViajeTramoClienteRemitoDAO
+    @Autowired
+    IViajeTramoClienteRemitoDAO viajeTramoClienteRemitoDAO;
 
     //Define la referancia a tipoComprobanteDAO
     @Autowired
@@ -133,8 +139,11 @@ public class VentaComprobanteService {
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero, int idTipoComprobante) throws IOException {
         TipoComprobante t = tipoComprobanteDAO.findById(idTipoComprobante).get();
-        VentaComprobante ventasComprobantes
-                = elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(puntoVenta, letra, numero, t);
+        VentaComprobante ventaComprobante
+                = elementoDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(
+                        puntoVenta, letra, numero, t);
+        ventaComprobante.setVentaComprobanteItemFAs(
+                ventaComprobanteItemFADAO.listarPorVentaComprobante(ventaComprobante.getId()));
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
@@ -145,7 +154,7 @@ public class VentaComprobanteService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
+        String string = mapper.writer(filters).writeValueAsString(ventaComprobante);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
@@ -180,6 +189,7 @@ public class VentaComprobanteService {
         elemento.setFechaRegistracion(Timestamp.valueOf(LocalDateTime.now()));
         VentaComprobante vc = elementoDAO.saveAndFlush(elemento);
         ViajeRemito viajeRemito;
+        ViajeTramoClienteRemito viajeTramoClienteRemito;
         //Agrega los items FA
         for (VentaComprobanteItemFA ventaComprobanteItemFA : elemento.getVentaComprobanteItemFAs()) {
             ventaComprobanteItemFA.setVentaComprobante(vc);
@@ -188,12 +198,18 @@ public class VentaComprobanteService {
                 viajeRemito.setEstaFacturado(true);
                 viajeRemitoDAO.save(viajeRemito);
             }
+            if (ventaComprobanteItemFA.getViajeTramoClienteRemito()!= null) {
+                viajeTramoClienteRemito = viajeTramoClienteRemitoDAO.obtenerPorId(
+                        ventaComprobanteItemFA.getViajeTramoClienteRemito().getId());
+                viajeTramoClienteRemito.setEstaFacturado(true);
+                viajeTramoClienteRemitoDAO.save(viajeTramoClienteRemito);
+            }
             ventaComprobanteItemFADAO.saveAndFlush(ventaComprobanteItemFA);
         }
         //Agrega item ContraReembolso
         if (elemento.getVentaComprobanteItemCR() != null && elemento.getVentaComprobanteItemCR().size() > 0) {
-            elemento.getVentaComprobanteItemCRs().get(0).setVentaComprobante(vc);
-            ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCRs().get(0));
+            elemento.getVentaComprobanteItemCR().get(0).setVentaComprobante(vc);
+            ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCR().get(0));
         }
         if (elemento.getVentaComprobanteItemNC() != null) {
             //Agrega item NC

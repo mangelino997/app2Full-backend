@@ -61,22 +61,14 @@ public class TramoService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Tramo agregar(Tramo elemento) throws Exception {
-        //Obtiene longitud de anio, si es mayor a 4 retorna error
-        String km = String.valueOf(elemento.getKm());
-        if (km.length()>4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(Tramo elemento) throws Exception {
-        //Obtiene longitud de anio, si es mayor a 4 retorna error
-        String km = String.valueOf(elemento.getKm());
-        if (km.length()>4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(formatearStrings(elemento));
     }
     
@@ -84,6 +76,15 @@ public class TramoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Controla la longitud de atributos short
+    private void controlarLongitud( Tramo elemento) {
+        //Obtiene longitud de anio, si es mayor a 4 retorna error
+        String km = String.valueOf(elemento.getKm());
+        if (km.length()>4) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
+        }
     }
     
     //Formatea los strings

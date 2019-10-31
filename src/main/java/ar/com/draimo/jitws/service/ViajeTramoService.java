@@ -88,7 +88,7 @@ public class ViajeTramoService {
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeTramo elemento) throws IOException, Exception {
         elemento = formatearStrings(elemento);
-        Viaje viaje = new Viaje();
+        Viaje viaje;
         if (elemento.getViaje().getId() == 0) {
             viaje = viajeService.formatearStrings(elemento.getViaje());
             viaje = viajeDAO.saveAndFlush(viaje);
@@ -97,14 +97,6 @@ public class ViajeTramoService {
         }
         controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
-        List<ViajeTramoCliente> vtCliente = new ArrayList<>();
-        for (ViajeTramoCliente viajeTramoCliente : elemento.getViajeTramoClientes()) {
-            viajeTramoCliente.setViajeTramo(elemento);
-            viajeTramoCliente = viajeTramoCliente.getId() == 0
-                    ? viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente) : viajeTramoCliente;
-            vtCliente.add(viajeTramoCliente);
-        }
-        elemento.setViajeTramoClientes(vtCliente);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
@@ -121,15 +113,10 @@ public class ViajeTramoService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ViajeTramo elemento) throws IOException, Exception {
+    public void actualizar(ViajeTramo elemento) {
         elemento = formatearStrings(elemento);
         controlarLongitud(elemento);
         elementoDAO.save(elemento);
-        for (ViajeTramoCliente viajeTramoCliente : elemento.getViajeTramoClientes()) {
-            viajeTramoCliente.setViajeTramo(elemento);
-            viajeTramoCliente = viajeTramoCliente.getId() == 0
-                    ? viajeTramoClienteDAO.saveAndFlush(viajeTramoCliente) : viajeTramoCliente;
-        }
     }
 
     //Elimina un registro

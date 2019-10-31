@@ -186,7 +186,7 @@ public class ViajeRemitoService {
 
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
-        ViajeRemito remitos = elementoDAO.findByPuntoVentaAndLetraAndNumero(puntoVenta, letra, numero);
+        ViajeRemito remitos = elementoDAO.obtenerPorPuntoVentaLetraYNumero(numero,puntoVenta, letra);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("ordenesVentas");

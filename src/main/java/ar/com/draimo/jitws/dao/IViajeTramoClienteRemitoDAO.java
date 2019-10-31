@@ -30,4 +30,8 @@ public interface IViajeTramoClienteRemitoDAO extends JpaRepository<ViajeTramoCli
     public List<ViajeTramoClienteRemito> listarPorViajeYEstaFacturado(@Param("idViajeTramoCliente")
             int idViajeTramoCliente, @Param("idViaje") int idViaje, @Param("estaFacturado") boolean estaFacturado);
     
+    //Obtiene un registro por id
+    @Query(value = "SELECT * FROM viajetramoclienteremito WHERE id=:id", nativeQuery = true)
+    public ViajeTramoClienteRemito obtenerPorId(@Param("id") int id);
+    
 }

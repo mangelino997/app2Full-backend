@@ -196,7 +196,8 @@ public class VentaComprobante extends ObjetoGenerico {
     private BigDecimal monedaCotizacion;
 
     //Referencia a la clase ventaComprobanteItemFA (lista)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "ventaComprobante")
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ventaComprobante")
     @JsonIgnoreProperties("ventaComprobante")
     private List<VentaComprobanteItemFA> ventaComprobanteItemFAs;
 
@@ -221,6 +222,7 @@ public class VentaComprobante extends ObjetoGenerico {
     private List<SeguimientoVentaComprobante> seguimientoVentaComprobantes;
 
     //Getters y Setters de la clase
+
     public Empresa getEmpresa() {
         return empresa;
     }
@@ -371,14 +373,6 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setCondicionVenta(CondicionVenta condicionVenta) {
         this.condicionVenta = condicionVenta;
-    }
-
-    public List<VentaComprobanteItemCR> getVentaComprobanteItemCR() {
-        return ventaComprobanteItemCR;
-    }
-
-    public void setVentaComprobanteItemCR(List<VentaComprobanteItemCR> ventaComprobanteItemCR) {
-        this.ventaComprobanteItemCR = ventaComprobanteItemCR;
     }
 
     public BigDecimal getImporteNoGravado() {
@@ -533,12 +527,12 @@ public class VentaComprobante extends ObjetoGenerico {
         this.ventaComprobanteItemFAs = ventaComprobanteItemFAs;
     }
 
-    public List<VentaComprobanteItemCR> getVentaComprobanteItemCRs() {
+    public List<VentaComprobanteItemCR> getVentaComprobanteItemCR() {
         return ventaComprobanteItemCR;
     }
 
-    public void setVentaComprobanteItemCRs(List<VentaComprobanteItemCR> ventaComprobanteItemCRs) {
-        this.ventaComprobanteItemCR = ventaComprobanteItemCRs;
+    public void setVentaComprobanteItemCR(List<VentaComprobanteItemCR> ventaComprobanteItemCR) {
+        this.ventaComprobanteItemCR = ventaComprobanteItemCR;
     }
 
     public List<VentaComprobanteItemNC> getVentaComprobanteItemNC() {
@@ -564,5 +558,5 @@ public class VentaComprobante extends ObjetoGenerico {
     public void setSeguimientoVentaComprobantes(List<SeguimientoVentaComprobante> seguimientoVentaComprobantes) {
         this.seguimientoVentaComprobantes = seguimientoVentaComprobantes;
     }
-
+    
 }

@@ -185,54 +185,50 @@ public class PersonalService {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         elemento = formatearStrings(elemento);
         controlarLongitud(elemento);
+        Foto f = null;
+        Pdf pdf1 = null, pdf2 = null, pdf3 = null, pdf4 = null, pdf5 = null;
         if (!foto.getOriginalFilename().equals("")) {
             Foto p = fotoService.agregar(foto, false);
             p.setTabla("personal");
-            Foto f = fotoDAO.saveAndFlush(p);
+            f = fotoDAO.saveAndFlush(p);
             elemento.setFoto(f);
-        } else {
-            elemento.setFoto(fotoDAO.findById(1).get());
         }
+        elemento.setFoto(f!=null ? f : null);
         if (!licConducir.getOriginalFilename().equals("")) {
             Pdf p1 = pdfService.agregar(licConducir, false);
             p1.setTabla("personal");
-            Pdf pdf1 = pdfDAO.saveAndFlush(p1);
+            pdf1 = pdfDAO.saveAndFlush(p1);
             elemento.setPdfLicConducir(pdf1);
-        } else {
-            elemento.setPdfLicConducir(null);
         }
+        elemento.setPdfLicConducir(pdf1!=null ? pdf1 : null);
         if (!linti.getOriginalFilename().equals("")) {
             Pdf p2 = pdfService.agregar(linti, false);
             p2.setTabla("personal");
-            Pdf pdf2 = pdfDAO.saveAndFlush(p2);
+            pdf2 = pdfDAO.saveAndFlush(p2);
             elemento.setPdfLinti(pdf2);
-        } else {
-            elemento.setPdfLinti(null);
-        }
+        } 
+        elemento.setPdfLinti(pdf2!=null ? pdf2 : null);
         if (!libSanidad.getOriginalFilename().equals("")) {
             Pdf p3 = pdfService.agregar(libSanidad, false);
             p3.setTabla("personal");
-            Pdf pdf3 = pdfDAO.saveAndFlush(p3);
+            pdf3 = pdfDAO.saveAndFlush(p3);
             elemento.setPdfLibSanidad(pdf3);
-        } else {
-            elemento.setPdfLibSanidad(null);
-        }
+        } 
+        elemento.setPdfLibSanidad(pdf3!=null ? pdf3 : null);
         if (!dni.getOriginalFilename().equals("")) {
             Pdf p4 = pdfService.agregar(dni, false);
             p4.setTabla("personal");
-            Pdf pdf4 = pdfDAO.saveAndFlush(p4);
+            pdf4 = pdfDAO.saveAndFlush(p4);
             elemento.setPdfDni(pdf4);
-        } else {
-            elemento.setPdfDni(null);
         }
+        elemento.setPdfDni(pdf4!=null ? pdf4 : null);
         if (!altaTemprana.getOriginalFilename().equals("")) {
             Pdf p5 = pdfService.agregar(altaTemprana, false);
             p5.setTabla("personal");
-            Pdf pdf5 = pdfDAO.saveAndFlush(p5);
+            pdf5 = pdfDAO.saveAndFlush(p5);
             elemento.setPdfAltaTemprana(pdf5);
-        } else {
-            elemento.setPdfAltaTemprana(null);
         }
+        elemento.setPdfAltaTemprana(pdf5!=null ? pdf5 : null);
         return elementoDAO.saveAndFlush(elemento);
     }
 

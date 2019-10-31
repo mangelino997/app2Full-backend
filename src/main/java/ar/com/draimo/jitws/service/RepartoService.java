@@ -21,6 +21,7 @@ import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IViajeCombustibleDAO;
 import ar.com.draimo.jitws.dao.IViajeEfectivoDAO;
 import ar.com.draimo.jitws.dto.elementoDTO;
@@ -103,6 +104,10 @@ public class RepartoService {
     @Autowired
     ISucursalDAO sucursalDAO;
 
+    //Define la referencia al dao de venta comprobante
+    @Autowired
+    IVentaComprobanteItemFADAO ventaComprobanteItemFADAO;
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Reparto elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -127,6 +132,12 @@ public class RepartoService {
     //Obtiene la lista completa
     public Object obtenerPorId(int id) throws IOException {
         Reparto elemento = elementoDAO.obtenerPorId(id);
+        for(RepartoComprobante comprobante : elemento.getRepartoComprobantes()) {
+            if(comprobante.getVentaComprobante()!=null) {
+                comprobante.getVentaComprobante().setVentaComprobanteItemFAs(
+                    ventaComprobanteItemFADAO.listarPorVentaComprobante(comprobante.getVentaComprobante().getId()));
+            }
+        }
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("datos", "hijos", "ventaComprobante");
@@ -134,6 +145,7 @@ public class RepartoService {
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter)
                 .addFilter("filtroFoto", theFilter)
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elemento);
         return mapper.readValue(string, Object.class);

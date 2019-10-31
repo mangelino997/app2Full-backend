@@ -63,6 +63,20 @@ public class ViajeTarifaController {
     public List<ViajeTarifa> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
+    
+    //Obtiene una lista costo tramo true
+    @GetMapping(value = URL + "/listarPorCostoTramoTrue")
+    @ResponseBody
+    public List<ViajeTarifa> listarPorCostoTramoTrue() {
+        return elementoService.listarPorCostoTramoTrue();
+    }
+    
+    //Obtiene una lista costo tramo true
+    @GetMapping(value = URL + "/listarPorCostoTramoFalse")
+    @ResponseBody
+    public List<ViajeTarifa> listarPorCostoTramoFalse() {
+        return elementoService.listarPorCostoTramoFalse();
+    }
 
     //Agrega un registro
     @PostMapping(value = URL)

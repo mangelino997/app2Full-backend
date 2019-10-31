@@ -51,33 +51,21 @@ public class TalonarioReciboLoteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TalonarioReciboLote agregar(TalonarioReciboLote elemento) throws Exception {
-        if (elemento.getDesde() > elemento.getHasta()) {
-            throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
-        }
-        if (String.valueOf(elemento.getDesde()).length() > 8) {
-            throw new Exception(MensajeRespuesta.LONGITUD + " DESDE");
-        }
-        if (String.valueOf(elemento.getHasta()).length() > 8) {
-            throw new Exception(MensajeRespuesta.LONGITUD + " HASTA");
-        }
-        if (String.valueOf(elemento.getPuntoVenta()).length() > 8) {
-            throw new Exception(MensajeRespuesta.LONGITUD + " PUNTO DE VENTA");
-        }
+        controlarLongitud(elemento);
         Date fecha = new Date(new java.util.Date().getTime());
         elemento.setFechaAlta(fecha);
-        List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getDesde(), elemento.getPuntoVenta(), elemento.getLetra());
-        List<TalonarioReciboLote> hastaLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getHasta(), elemento.getPuntoVenta(), elemento.getLetra());
-        if (!desdeLista.isEmpty() || !hastaLista.isEmpty()) {
-            throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
-        }
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(TalonarioReciboLote elemento) throws Exception {
+        controlarLongitud(elemento);
+        elementoDAO.save(elemento);
+    }
+    
+    //Controla la longitud de los atributos short
+    private void controlarLongitud(TalonarioReciboLote elemento) throws Exception {
         if (elemento.getDesde() > elemento.getHasta()) {
             throw new Exception("HASTA " + MensajeRespuesta.ELEMENTO_MENOR + " DESDE");
         }
@@ -97,7 +85,6 @@ public class TalonarioReciboLoteService {
         if (!desdeLista.isEmpty() || !hastaLista.isEmpty()) {
             throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
         }
-        elementoDAO.save(elemento);
     }
 
     //Elimina un registro

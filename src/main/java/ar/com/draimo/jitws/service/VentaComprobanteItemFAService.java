@@ -72,22 +72,14 @@ public class VentaComprobanteItemFAService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public VentaComprobanteItemFA agregar(VentaComprobanteItemFA elemento) throws Exception {
-        //Obtiene longitud de bultos, si supera 6 retorna error
-        String bultos = String.valueOf(elemento.getBultos());
-        if (bultos.length() > 6) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(VentaComprobanteItemFA elemento) throws Exception {
-        //Obtiene longitud de bultos, si supera 6 retorna error
-        String bultos = String.valueOf(elemento.getBultos());
-        if (bultos.length() > 6) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(formatearStrings(elemento));
     }
 
@@ -95,6 +87,15 @@ public class VentaComprobanteItemFAService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Controla longitud de atributos short
+    private void controlarLongitud(VentaComprobanteItemFA elemento) {
+        //Obtiene longitud de bultos, si supera 6 retorna error
+        String bultos = String.valueOf(elemento.getBultos());
+        if (bultos.length() > 6) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " BULTOS");
+        }
     }
 
     //Formatea los strings
