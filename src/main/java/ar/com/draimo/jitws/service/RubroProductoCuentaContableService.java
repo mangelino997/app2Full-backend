@@ -112,7 +112,7 @@ public class RubroProductoCuentaContableService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(RubroProductoCuentaContable elemento) throws IOException {
+    public void actualizar(RubroProductoCuentaContable elemento) {
         elementoDAO.save(elemento);
     }
     

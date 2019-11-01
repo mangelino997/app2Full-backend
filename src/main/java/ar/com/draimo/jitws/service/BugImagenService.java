@@ -44,7 +44,7 @@ public class BugImagenService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public BugImagen agregar(MultipartFile archivo, boolean opcion) throws IOException {
+    public BugImagen agregar(MultipartFile archivo, boolean opcion) throws IOException  {
         BugImagen element = new BugImagen();
         element.setNombre(archivo.getOriginalFilename());
         element.setTipo(archivo.getContentType());

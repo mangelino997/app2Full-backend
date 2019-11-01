@@ -110,7 +110,7 @@ public class PlanCuentaService {
     }
 
     //Crea el plan de cuenta
-    public PlanCuenta crearPlanCuenta(PlanCuenta planCuenta) throws IOException {
+    public PlanCuenta crearPlanCuenta(PlanCuenta planCuenta) {
         List<PlanCuenta> hijos = elementoDAO.findByPadre(planCuenta);
         if (!hijos.isEmpty()) {
             planCuenta.setHijos(hijos);

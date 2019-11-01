@@ -116,7 +116,7 @@ public class InsumoProductoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public int agregar(InsumoProducto elemento) throws IOException {
+    public int agregar(InsumoProducto elemento) {
         elemento = formatearStrings(elemento);
         elemento.setPrecioUnitarioVenta(elemento.getPrecioUnitarioVenta()== null? 
                 new BigDecimal(0): elemento.getPrecioUnitarioVenta());

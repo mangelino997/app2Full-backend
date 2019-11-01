@@ -332,7 +332,7 @@ public class RepartoService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public int agregar(Reparto elemento) throws IOException {
+    public int agregar(Reparto elemento) {
         Timestamp fecha = new Timestamp(new java.util.Date().getTime());
         elemento.setFechaRegistracion(fecha);
         elemento.setEstaCerrada(false);

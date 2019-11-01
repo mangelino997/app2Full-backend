@@ -92,11 +92,11 @@ public class OrdenRecoleccionController {
         try {
             OrdenRecoleccion a = elementoService.agregar(elemento);
             //Actualiza inmediatamente el registro para establecer el alias
-            elementoService.establecerAlias(elemento);
+            int id = elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(a.getId());
+            return MensajeRespuesta.agregado(id);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);

@@ -112,8 +112,7 @@ public class OrdenVentaTramoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public int agregar(OrdenVentaTramo elemento) throws IOException, Exception {
-        String kmPactado = String.valueOf(elemento.getKmPactado());
+    public int agregar(OrdenVentaTramo elemento) {
         controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
         return elemento.getId();
@@ -121,7 +120,7 @@ public class OrdenVentaTramoService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public int actualizar(OrdenVentaTramo elemento) throws IOException, Exception {
+    public int actualizar(OrdenVentaTramo elemento) {
         controlarLongitud(elemento);
         elemento = elementoDAO.save(elemento);
         return elemento.getId();

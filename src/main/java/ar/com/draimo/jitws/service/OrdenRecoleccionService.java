@@ -117,7 +117,7 @@ public class OrdenRecoleccionService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public OrdenRecoleccion agregar(OrdenRecoleccion elemento) throws Exception {
+    public OrdenRecoleccion agregar(OrdenRecoleccion elemento) {
         elemento = formatearStrings(elemento);
         elemento.setFechaEmision(Timestamp.valueOf(LocalDateTime.now()));
         elemento.setEstaEnReparto(false);
@@ -129,11 +129,12 @@ public class OrdenRecoleccionService {
     
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public void establecerAlias(OrdenRecoleccion or) {
+    public int establecerAlias(OrdenRecoleccion or) {
         Cliente c = clienteDAO.findById(or.getCliente().getId()).get();
         or.setAlias(or.getId() + " | " + c.getId() + " - " + 
                 c.getRazonSocial() + " | " + or.getFecha());
         elementoDAO.save(or);
+        return or.getId();
     }
     
     //Actualiza un registro

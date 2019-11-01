@@ -102,7 +102,7 @@ public class OrdenVentaTarifaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public int agregar(OrdenVentaTarifa elemento) throws IOException {
+    public int agregar(OrdenVentaTarifa elemento) {
         return elementoDAO.saveAndFlush(elemento).getId();
     }
     

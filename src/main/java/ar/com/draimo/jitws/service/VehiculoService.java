@@ -327,7 +327,7 @@ public class VehiculoService {
 
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
-    public Vehiculo establecerAlias(Vehiculo elemento) throws IOException {
+    public Vehiculo establecerAlias(Vehiculo elemento) {
         Empresa e = empresaDAO.findById(elemento.getEmpresa().getId()).get();
         ConfiguracionVehiculo cv = configuracionVehiculoDAO.findById(
                 elemento.getConfiguracionVehiculo().getId()).get();

@@ -71,14 +71,14 @@ public class VentaComprobanteItemFAService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VentaComprobanteItemFA agregar(VentaComprobanteItemFA elemento) throws Exception {
+    public VentaComprobanteItemFA agregar(VentaComprobanteItemFA elemento) {
         controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VentaComprobanteItemFA elemento) throws Exception {
+    public void actualizar(VentaComprobanteItemFA elemento) {
         controlarLongitud(elemento);
         elementoDAO.save(formatearStrings(elemento));
     }

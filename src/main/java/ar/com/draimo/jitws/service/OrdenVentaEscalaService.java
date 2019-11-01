@@ -139,13 +139,13 @@ public class OrdenVentaEscalaService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public int agregar(OrdenVentaEscala elemento) throws IOException {
+    public int agregar(OrdenVentaEscala elemento) {
         return elementoDAO.saveAndFlush(elemento).getId();
     }
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public int actualizar(OrdenVentaEscala elemento) throws IOException {
+    public int actualizar(OrdenVentaEscala elemento) {
         return elementoDAO.save(elemento).getId();
     }
     

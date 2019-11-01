@@ -177,7 +177,7 @@ public class PersonalAdelantoService {
     }
 
     //Obtiene la lista por filtro
-    public Object listarPorFiltros(PersonalAdelantoLoteDTO personalAdelanto) throws IOException, Exception {
+    public Object listarPorFiltros(PersonalAdelantoLoteDTO personalAdelanto) throws IOException {
         List<PersonalAdelanto> adelantos = elementoDAO.listarPorFiltros(personalAdelanto.getIdEmpresa(),
                 personalAdelanto.getIdSucursal(), personalAdelanto.getFechaDesde(),
                 personalAdelanto.getFechaHasta(), personalAdelanto.getEstado(), personalAdelanto.getAlias(),
@@ -200,7 +200,7 @@ public class PersonalAdelantoService {
 
     //Agrega un lote
     @Transactional(rollbackFor = Exception.class)
-    public List<PersonalAdelantoLoteDTO> listarLotes(Date fechaDesde, Date fechaHasta, int idEmpresa) throws IOException {
+    public List<PersonalAdelantoLoteDTO> listarLotes(Date fechaDesde, Date fechaHasta, int idEmpresa) {
         //Obtiene un listado de personales por filtros
         PersonalAdelantoLoteDTO palDto;
         List<PersonalAdelantoLoteDTO> adelantosDto = new ArrayList<>();
