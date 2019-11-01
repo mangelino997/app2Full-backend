@@ -92,11 +92,8 @@ public class ViajeTramoClienteRemitoService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public int agregar(ViajeTramoClienteRemito elemento) throws IOException {
-        elemento.setLetra("R");
-        elemento.setTipoComprobante(tipoComprobanteDAO.findById(5).get());
-        ViajeTramoClienteRemito v = elementoDAO.saveAndFlush(elemento);
-        return v.getId();
+    public void agregar(ViajeTramoClienteRemito elemento) {
+        elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
