@@ -195,6 +195,10 @@ public class VentaComprobante extends ObjetoGenerico {
     @Column(name = "monedaCotizacion", nullable = false)
     private BigDecimal monedaCotizacion;
 
+    //Define observaciones
+    @Column(name = "observaciones",length = 150, nullable = false)
+    private String observaciones;
+
     //Referencia a la clase ventaComprobanteItemFA (lista)
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ventaComprobante")
@@ -557,6 +561,14 @@ public class VentaComprobante extends ObjetoGenerico {
 
     public void setSeguimientoVentaComprobantes(List<SeguimientoVentaComprobante> seguimientoVentaComprobantes) {
         this.seguimientoVentaComprobantes = seguimientoVentaComprobantes;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
     
 }

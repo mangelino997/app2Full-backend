@@ -65,10 +65,6 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     @Column(name = "idVentaComprobanteAplicado", nullable = true)
     private int ventaComprobanteAplicado;
     
-    //Define comprobanteAplicado
-    @Column(name = "comprobanteAplicado",length = 14, nullable = true)
-    private String comprobanteAplicado;
-    
     //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
@@ -148,14 +144,6 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
 
     public void setVentaComprobanteAplicado(int ventaComprobanteAplicado) {
         this.ventaComprobanteAplicado = ventaComprobanteAplicado;
-    }
-
-    public String getComprobanteAplicado() {
-        return comprobanteAplicado;
-    }
-
-    public void setComprobanteAplicado(String comprobanteAplicado) {
-        this.comprobanteAplicado = comprobanteAplicado;
     }
     
 }
