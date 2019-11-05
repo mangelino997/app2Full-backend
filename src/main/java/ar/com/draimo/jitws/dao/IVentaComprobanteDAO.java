@@ -8,6 +8,7 @@ import ar.com.draimo.jitws.model.VentaComprobante;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO VentaComprobante
@@ -39,5 +40,12 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
             + " WHERE s.idVentaComprobante =v.id and e.id=s.idSeguimientoEstado and "
             + "e.esEntregado=false)", nativeQuery = true)
     public List<VentaComprobante> listarComprobantesDisponibles();
+    
+    //Obtiene un listado de registros que no son notas de credito/debito
+    @Query(value = "select * from ventacomprobante where idTipoComprobante!=2 or"
+            + " idTipoComprobante!=3 or idTipoComprobante!=27 or idTipoComprobante!=28 "
+            + "and idCliente=:idCliente and idEmpresa=:idEmpresa ", nativeQuery = true)
+    public List<VentaComprobante> listarParaNotasDeCredito(@Param("idCliente") int idCliente,
+            @Param("idEmpresa") int idEmpresa);
     
 }

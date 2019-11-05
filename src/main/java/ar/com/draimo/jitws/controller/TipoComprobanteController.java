@@ -2,7 +2,6 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.service.TipoComprobanteService;
@@ -91,6 +90,13 @@ public class TipoComprobanteController {
     @ResponseBody
     public List<TipoComprobante> listarParaEmisionDeFactura() {
         return elementoService.listarParaEmisionFactura();
+    }
+
+    //Obtiene una lista para emision de nota de credito
+    @GetMapping(value = URL + "/listarParaNotaCredito")
+    @ResponseBody
+    public List<TipoComprobante> listarParaNotaCredito() {
+        return elementoService.listarParaEmisionNotaCredito();
     }
 
     //Agrega un registro
