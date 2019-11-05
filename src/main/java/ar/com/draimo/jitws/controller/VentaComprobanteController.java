@@ -79,12 +79,20 @@ public class VentaComprobanteController {
         return elementoService.listarLetras();
     }
 
-    //Obtiene la lista completa
+    //Obtiene la lista por cliente y empresa
     @GetMapping(value = URL + "/listarPorClienteYEmpresa/{idCliente}/{idEmpresa}")
     @ResponseBody
     public Object listarPorClienteYEmpresa(@PathVariable int idCliente, @PathVariable int idEmpresa)
             throws IOException {
         return elementoService.listarPorClienteYEmpresa(idCliente, idEmpresa);
+    }
+
+    //Obtiene la lista para creditos por cliente y empresa
+    @GetMapping(value = URL + "/listarParaCreditosPorClienteYEmpresa/{idCliente}/{idEmpresa}")
+    @ResponseBody
+    public Object listarParaCreditosPorClienteYEmpresa(@PathVariable int idCliente, @PathVariable int idEmpresa)
+            throws IOException {
+        return elementoService.listarParaCreditosPorClienteYEmpresa(idCliente, idEmpresa);
     }
 
     //Obtiene un registro por puntoventa letra, tipo de comprobante y numero

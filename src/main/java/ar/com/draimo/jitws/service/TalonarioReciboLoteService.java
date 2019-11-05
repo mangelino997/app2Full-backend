@@ -79,9 +79,11 @@ public class TalonarioReciboLoteService {
             throw new Exception(MensajeRespuesta.LONGITUD + " PUNTO DE VENTA");
         }
         List<TalonarioReciboLote> desdeLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getDesde(), elemento.getPuntoVenta(), elemento.getLetra());
+                elemento.getDesde(), elemento.getPuntoVenta(), elemento.getLetra(),
+                elemento.getEmpresa().getId());
         List<TalonarioReciboLote> hastaLista = elementoDAO.listarPorDesdeHasta(
-                elemento.getHasta(), elemento.getPuntoVenta(), elemento.getLetra());
+                elemento.getHasta(), elemento.getPuntoVenta(), elemento.getLetra(),
+                elemento.getEmpresa().getId());
         if (!desdeLista.isEmpty() || !hastaLista.isEmpty()) {
             throw new Exception(MensajeRespuesta.DESDE_HASTA_YA_ASIGNADO);
         }

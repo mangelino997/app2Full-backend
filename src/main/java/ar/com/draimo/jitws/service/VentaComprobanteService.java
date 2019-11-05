@@ -176,6 +176,23 @@ public class VentaComprobanteService {
         return new ObjectMapper().readValue(string, Object.class);
     }
 
+    //Obtiene una lista para notas de credito por cliente y empresa
+    public Object listarParaCreditosPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
+        List<VentaComprobante> elementos = elementoDAO.listarParaNotasDeCredito(idCliente, idEmpresa);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+
     //Obtiene una lista de letras
     public List<String> listarLetras() {
         return elementoDAO.listarLetras();

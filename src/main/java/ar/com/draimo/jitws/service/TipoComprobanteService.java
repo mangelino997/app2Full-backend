@@ -60,10 +60,12 @@ public class TipoComprobanteService {
 
     //Obtiene una lista para emision de factura
     public List<TipoComprobante> listarParaEmisionFactura() {
-        List<TipoComprobante> elementos = new ArrayList<>();
-        elementos.add(elementoDAO.findById(1).get());
-        elementos.add(elementoDAO.findById(26).get());
-        return elementos;
+        return elementoDAO.listarParaFactura();
+    }
+
+    //Obtiene una lista para emision de nota de credito
+    public List<TipoComprobante> listarParaEmisionNotaCredito() {
+        return elementoDAO.listarParaNotaCredito();
     }
 
     //Agrega un registro
