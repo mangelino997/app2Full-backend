@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
+import ar.com.draimo.jitws.dao.IViajeTramoClienteRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Viaje;
@@ -17,7 +18,6 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
-import java.util.ArrayList;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
@@ -35,6 +35,10 @@ public class ViajeTramoService {
     //Define la referencia al dao de viaje tramo cliente
     @Autowired
     IViajeTramoClienteDAO viajeTramoClienteDAO;
+    
+    //Define la referencia al dao de viaje tramo cliente remito
+    @Autowired
+    IViajeTramoClienteRemitoDAO viajeTramoClienteRemitoDAO;
 
     //Define la referencia al dao de viaje
     @Autowired
@@ -122,6 +126,12 @@ public class ViajeTramoService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
+        ViajeTramo viajeTramo = elementoDAO.findById(id).get();
+        List<ViajeTramoCliente> viajeTramoClientes = viajeTramoClienteDAO.findByViajeTramo(viajeTramo);
+        for(ViajeTramoCliente vtc : viajeTramoClientes) {
+            viajeTramoClienteRemitoDAO.deleteByViajeTramoCliente(vtc);
+            viajeTramoClienteDAO.deleteById(vtc.getId());
+        }
         elementoDAO.deleteById(id);
     }
 

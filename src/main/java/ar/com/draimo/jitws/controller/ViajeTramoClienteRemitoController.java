@@ -52,6 +52,13 @@ public class ViajeTramoClienteRemitoController {
     public int obtenerSiguienteId() {
         return elementoService.obtenerSiguienteId();
     }
+    
+    //Obtiene  por ViajeTramoCliente
+    @GetMapping(value = URL + "/obtenerPorViajeTramoCliente/{idViajeTramoCliente}")
+    @ResponseBody
+    public Object obtenerPorViajeTramoCliente(@PathVariable int idViajeTramoCliente) throws IOException {
+        return elementoService.obtenerPorViajeTramoCliente(idViajeTramoCliente);
+    }
 
     //Obtiene la lista completa
     @GetMapping(value = URL)
@@ -78,6 +85,27 @@ public class ViajeTramoClienteRemitoController {
     public ResponseEntity<?> agregar(@RequestBody ViajeTramoClienteRemito elemento) {
         try {
             elementoService.agregar(elemento);
+            //Envia la nueva lista a los usuarios subscriptos
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de agregado con exito
+            return MensajeRespuesta.agregado(0);
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
+    //Agrega un registro de vacio facturado
+    @PostMapping(value = URL + "/agregarVacioFacturado")
+    public ResponseEntity<?> agregarVacioFacturado(@RequestBody ViajeTramoClienteRemito elemento) {
+        try {
+            elementoService.agregarVacioFacturado(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito

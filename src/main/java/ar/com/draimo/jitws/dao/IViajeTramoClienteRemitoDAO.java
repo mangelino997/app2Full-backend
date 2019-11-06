@@ -34,4 +34,7 @@ public interface IViajeTramoClienteRemitoDAO extends JpaRepository<ViajeTramoCli
     @Query(value = "SELECT * FROM viajetramoclienteremito WHERE id=:id", nativeQuery = true)
     public ViajeTramoClienteRemito obtenerPorId(@Param("id") int id);
     
+    //Elimina un registro por viaje tramo cliente
+    public void deleteByViajeTramoCliente(ViajeTramoCliente viajeTramoCliente);
+    
 }

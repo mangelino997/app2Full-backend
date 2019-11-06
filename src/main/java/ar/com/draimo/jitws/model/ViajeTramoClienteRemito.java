@@ -76,6 +76,10 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
     @Column(name = "importeEntrega", nullable = true)
     private BigDecimal importeEntrega;
     
+    //Define el importe flete
+    @Column(name = "importeFlete", nullable = true)
+    private BigDecimal importeFlete;
+    
     //Define las observaciones
     @Column(name = "observaciones",length = 60, nullable = true)
     private String observaciones;
@@ -217,6 +221,14 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
         this.importeEntrega = importeEntrega;
     }
 
+    public BigDecimal getImporteFlete() {
+        return importeFlete;
+    }
+
+    public void setImporteFlete(BigDecimal importeFlete) {
+        this.importeFlete = importeFlete;
+    }
+    
     public String getObservaciones() {
         return observaciones;
     }

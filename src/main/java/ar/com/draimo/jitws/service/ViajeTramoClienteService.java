@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
+import ar.com.draimo.jitws.dao.IViajeTramoClienteRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.model.ViajeTramo;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +31,10 @@ public class ViajeTramoClienteService {
     //Define la referencia al dao de viaje tramo
     @Autowired
     IViajeTramoDAO viajeTramoDAO;
+    
+    //Define la referencia al dao viaje tramo cliente remito
+    @Autowired
+    IViajeTramoClienteRemitoDAO viajeTramoClienteRemitoDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -93,6 +98,9 @@ public class ViajeTramoClienteService {
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
+        //Elimina los viaje tramo cliente remito asociados al viaje tramo cliente
+        viajeTramoClienteRemitoDAO.deleteByViajeTramoCliente(elementoDAO.findById(id).get());
+        //Elimina el registro
         elementoDAO.deleteById(id);
     }
 
