@@ -28,8 +28,8 @@ public interface ITalonarioReciboLoteDAO extends JpaRepository<TalonarioReciboLo
     public List<TalonarioReciboLote> findByEmpresaOrderByPuntoVentaAsc(Empresa empresa); 
     
     //Obtiene un listado por desde-hasta, punto de venta y letra
-    @Query(value = "SELECT * FROM talonariorecibolote t WHERE  :desdeHasta BETWEEN "
-            + "(t.desde AND t.hasta) and puntoVenta=:puntoVenta and letra=:letra "
+    @Query(value = "SELECT * FROM talonariorecibolote  WHERE  (:desdeHasta BETWEEN "
+            + "desde AND hasta) and puntoVenta=:puntoVenta and letra=:letra "
             + "and idEmpresa=:idEmpresa", nativeQuery = true)
     public List<TalonarioReciboLote> listarPorDesdeHasta(@Param("desdeHasta") int 
             desdeHasta, @Param("puntoVenta") int puntoVenta, @Param("letra") String
