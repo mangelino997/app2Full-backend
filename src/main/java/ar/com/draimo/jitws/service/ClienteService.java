@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IClienteVtoPagoDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
+import ar.com.draimo.jitws.dao.IContactoClienteDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
@@ -73,6 +74,10 @@ public class ClienteService {
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Define la referencia al dao empresa
+    @Autowired
+    IContactoClienteDAO contactoClienteDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -229,8 +234,11 @@ public class ClienteService {
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(int elemento) {
-        elementoDAO.deleteById(elemento);
+    public void eliminar(int id) {
+        //Elimina los contactos del cliente
+        contactoClienteDAO.deleteByCliente(elementoDAO.findById(id).get());
+        //Elimina el cliente
+        elementoDAO.deleteById(id);
     }
 
     //Formatea los string

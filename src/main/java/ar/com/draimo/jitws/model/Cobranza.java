@@ -1,8 +1,10 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,8 +42,9 @@ public class Cobranza extends ObjetoGenerico {
     private Date fechaEmision;
 
     //Define fecha de registro
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC-3")
     @Column(name = "fechaRegistracion", nullable = false)
-    private Date fechaRegistracion;
+    private LocalDateTime fechaRegistracion;
 
     //Define referencia a la clase cliente
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -105,11 +108,11 @@ public class Cobranza extends ObjetoGenerico {
         this.fechaEmision = fechaEmision;
     }
 
-    public Date getFechaRegistracion() {
+    public LocalDateTime getFechaRegistracion() {
         return fechaRegistracion;
     }
 
-    public void setFechaRegistracion(Date fechaRegistracion) {
+    public void setFechaRegistracion(LocalDateTime fechaRegistracion) {
         this.fechaRegistracion = fechaRegistracion;
     }
 

@@ -24,4 +24,7 @@ public interface IContactoClienteDAO extends JpaRepository<ContactoCliente, Inte
     //Obtiene por cliente
     public List<ContactoCliente> findByCliente(Optional<Cliente> cliente);
     
+    //Elimina los contactos por cliente
+    public void deleteByCliente(Cliente cliente);
+    
 }
