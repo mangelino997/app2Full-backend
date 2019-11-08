@@ -199,7 +199,6 @@ public class ViajeService {
                 .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
                 .addFilter("viajetramoclientefiltro", theFilter)
                 .addFilter("clientefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
                 .addFilter("filtroVentaComprobanteItemCR", theFilter)
                 .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);

@@ -79,11 +79,17 @@ public class ViajeTramoRemitoService {
     private Object retornarObjeto(List<ViajeTramoRemito> elementos) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas","cliente");
+                .serializeAllExcept("ordenesVentas","cliente", "viajeTramo",
+                        "datos", "hijos", "viaje", "ventaComprobante");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter)
                 .addFilter("viajetramofiltro", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter);
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }

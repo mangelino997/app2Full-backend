@@ -61,63 +61,33 @@ public class ViajeRemitoService {
     //Obtiene el listado completo
     public Object listar() throws IOException {
         List<ViajeRemito> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene el listado de remitos disponibles
     public Object listarRemitosDisponibles() throws IOException {
         List<ViajeRemito> elementos = elementoDAO.listarRemitosDisponibles();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
         List<ViajeRemito> elementos = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado por numero de comprobante
     public Object listarPorNumero(int numero) throws IOException {
         List<ViajeRemito> elementos = elementoDAO.findByNumero(numero);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado por viaje y estado
     public Object listarPorViajeYEstado(ViajeRemitoDTO viajeRemitoDTO) throws IOException {
         List<ViajeRemito> elementos = elementoDAO.listarPorViajeYEstaFacturado(
         viajeRemitoDTO.getIdViaje(),viajeRemitoDTO.getIdRemito(),viajeRemitoDTO.isEstaFacturado());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado de no pendientes por viajeTramo
@@ -130,13 +100,7 @@ public class ViajeRemitoService {
     public Object listarPendientesPorSucursal(int idSucursal) throws IOException {
         List<ViajeRemito> elementos = elementoDAO.findBySucursalIngresoAndEstaPendienteFalse(
                 sucursalDAO.findById(idSucursal));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado de pendientes por filtro
@@ -158,13 +122,7 @@ public class ViajeRemitoService {
                 viajeRemito.getFechaHasta(), viajeRemito.getIdSucursalIngreso(),
                 viajeRemito.getIdSucursalDestino(), viajeRemito.getIdClienteRemitente(),
                 viajeRemito.getIdClienteDestinatario(), viajeRemito.getNumeroCamion());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista de letras
@@ -175,25 +133,13 @@ public class ViajeRemitoService {
     //Obtiene un registro por puntoVenta, letra y numero si no esta asignado a un comprobante
     public Object obtenerParaReparto(int puntoVenta, String letra, int numero) throws IOException {
         ViajeRemito remito = elementoDAO.obtenerParaReparto( numero,puntoVenta, letra);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remito);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(null, remito);
     }
 
     //Obtiene un registro por puntoVenta, letra y numero
     public Object obtener(int puntoVenta, String letra, int numero) throws IOException {
-        ViajeRemito remitos = elementoDAO.obtenerPorPuntoVentaLetraYNumero(numero,puntoVenta, letra);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(remitos);
-        return mapper.readValue(string, Object.class);
+        ViajeRemito remito = elementoDAO.obtenerPorPuntoVentaLetraYNumero(numero,puntoVenta, letra);
+        return retornarObjeto(null, remito);
     }
 
     //Asigna los remitos
@@ -294,4 +240,14 @@ public class ViajeRemitoService {
         return elemento;
     }
 
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<ViajeRemito> elementos, ViajeRemito elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ordenesVentas");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);
+        return mapper.readValue(string, Object.class);
+    }
 }
