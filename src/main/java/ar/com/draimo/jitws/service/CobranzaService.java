@@ -4,6 +4,8 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ICobranzaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.model.Cobranza;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,7 @@ public class CobranzaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Cobranza agregar(Cobranza elemento) {
+        elemento.setFechaRegistracion(new Timestamp(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(elemento);
     }
 

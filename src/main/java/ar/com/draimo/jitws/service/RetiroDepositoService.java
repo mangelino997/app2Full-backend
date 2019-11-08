@@ -102,9 +102,7 @@ public class RetiroDepositoService {
     public boolean cerrarRetiro(int idRetiroDeposito) {
         RetiroDeposito r = elementoDAO.findById(idRetiroDeposito).get();
         List<RetiroDepositoComprobante> rdCtes = elementoComprobanteDAO.findByRetiroDeposito(r);
-        if (rdCtes.isEmpty()) {
-            return false;
-        } else {
+        if(!rdCtes.isEmpty()) {
             SeguimientoVentaComprobante svCte = new SeguimientoVentaComprobante();
             SeguimientoViajeRemito svRemito = new SeguimientoViajeRemito();
             SeguimientoEstado se = seguimientoEstadoDAO.findById(5).get();
@@ -128,8 +126,8 @@ public class RetiroDepositoService {
             }
             r.setEstaCerrada(true);
             elementoDAO.save(r);
-            return true;
         }
+            return !rdCtes.isEmpty();
     }
 
     //Obtiene una lista por filtros(empresa y sucursal opcionales)
@@ -157,15 +155,13 @@ public class RetiroDepositoService {
         elemento.setFechaRegistracion(LocalDateTime.now());
         elemento.setEstaCerrada(false);
         elemento = formatearStrings(elemento);
-        Pdf pdf;
+        Pdf pdf, u = new Pdf();
         if (!archivo.getOriginalFilename().equals("")) {
-            Pdf u = pdfService.agregar(archivo, false);
+            u = pdfService.agregar(archivo, false);
             u.setTabla("retiroDeposito");
-            pdf = pdfDAO.saveAndFlush(u);
-        } else {
-            pdf = null;
         }
-        elemento.setPdfDni(pdf);
+        elemento.setPdfDni(archivo.getOriginalFilename().equals("") ? null : 
+                pdfDAO.saveAndFlush(u));
         return elementoDAO.saveAndFlush(elemento);
     }
 

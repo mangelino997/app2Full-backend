@@ -130,27 +130,29 @@ public class RetiroDepositoComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public RetiroDepositoComprobante agregar(RetiroDepositoComprobante c) {
+        if(c.getVentaComprobante()==null && c.getViajeRemito()==null ) {
+          throw new DataIntegrityViolationException(MensajeRespuesta.SIN_COMPROBANTES);
+        }
         RetiroDeposito retiroDeposito = new RetiroDeposito();
         SeguimientoVentaComprobante svCte = new SeguimientoVentaComprobante();
         SeguimientoViajeRemito svRemito = new SeguimientoViajeRemito();
         SeguimientoEstado se = seguimientoEstadoDAO.findById(11).get();
         SeguimientoSituacion ss = seguimientoSituacionDAO.findById(1).get();
         Sucursal sucursal = sucursalDAO.findById(retiroDeposito.getSucursal().getId()).get();
+        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
         if (c.getVentaComprobante() != null) {
             svCte.setSeguimientoEstado(se);
             svCte.setSeguimientoSituacion(ss);
-            svCte.setFecha(new Timestamp(new java.util.Date().getTime()));
+            svCte.setFecha(fecha);
             svCte.setSucursal(sucursal);
             seguimientoVentaComprobanteDAO.saveAndFlush(svCte);
-        } else if (c.getViajeRemito() != null) {
+        } else {
             svRemito.setSeguimientoEstado(se);
             svRemito.setSeguimientoSituacion(ss);
-            svRemito.setFecha(new Timestamp(new java.util.Date().getTime()));
+            svRemito.setFecha(fecha);
             svRemito.setSucursal(sucursal);
             seguimientoViajeRemitoDAO.saveAndFlush(svRemito);
-        } else {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SIN_COMPROBANTES);
-        }
+        } 
         return elementoDAO.saveAndFlush(c);
     }
 

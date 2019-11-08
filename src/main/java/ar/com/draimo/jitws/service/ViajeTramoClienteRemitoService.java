@@ -46,20 +46,17 @@ public class ViajeTramoClienteRemitoService {
     public Object obtenerPorViajeTramoCliente(int idViajeTramoCliente) throws IOException {
         List<ViajeTramoClienteRemito> v = elementoDAO.findByViajeTramoCliente(
                 viajeTramoClienteDAO.findById(idViajeTramoCliente).get());
-        if(v.size() > 0) {
-            ObjectMapper mapper = new ObjectMapper();
-            SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                    .serializeAllExcept("cliente", "viajeTramo", "viaje");
-            FilterProvider filters = new SimpleFilterProvider()
-                    .addFilter("viajetramofiltro", theFilter)
-                    .addFilter("viajefiltro", theFilter)
-                    .addFilter("viajetramoclientefiltro", theFilter)
-                    .addFilter("clientefiltro", theFilter);
-            String string = mapper.writer(filters).writeValueAsString(v.get(0));
-            return mapper.readValue(string, Object.class);
-        } else {
-            return new ViajeTramoClienteRemito();
-        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente", "viajeTramo", "viaje");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(v.get(0));
+        return v.size() > 0 ? mapper.readValue(string, Object.class):
+        new ViajeTramoClienteRemito();
     }
 
     //Obtiene la lista completa
