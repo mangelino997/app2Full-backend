@@ -41,63 +41,27 @@ public class ViajeGastoService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<ViajeGasto> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista de gastos por viaje 
     public Object listarGastos(int idViaje) throws IOException {
         List<ViajeGasto> elementos = elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ViajeGasto elemento) throws IOException, Exception {
-        //Obtiene longitud de cantidad, si supera 3 retorna error
-        String cant = String.valueOf(elemento.getCantidad());
-        if (cant.length() > 3) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD");
-        }
+        controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(formatearStrings(elemento));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
-                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(null, elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(ViajeGasto elemento) throws IOException, Exception {
-        //Obtiene longitud de cantidad, si supera 3 retorna error
-        String cant = String.valueOf(elemento.getCantidad());
-        if (cant.length() > 3) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(formatearStrings(elemento));
     }
 
@@ -132,5 +96,31 @@ public class ViajeGastoService {
         }
         return elemento;
     }
+    
+    //Controla la lonitud de los aatributos de tipo short
+    private void controlarLongitud(ViajeGasto elemento) {
+        //Obtiene longitud de cantidad, si supera 3 retorna error
+        String cant = String.valueOf(elemento.getCantidad());
+        if (cant.length() > 3) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " CANTIDAD");
+        }
+    } 
 
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<ViajeGasto> elementos, ViajeGasto elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = (elemento != null ? SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos",
+                        "viajeCombustibles","viajeEfectivos", "viajeInsumos", "viajeGastos",
+                        "viajePeajes") : SimpleBeanPropertyFilter.serializeAllExcept(
+                                "cliente", "viajeTramo", "datos"));
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento!=null ? elemento : elementos);
+        return mapper.readValue(string, Object.class);
+    }
+    
 }

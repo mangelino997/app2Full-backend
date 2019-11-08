@@ -41,22 +41,14 @@ public class VentaConfigService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public VentaConfig agregar(VentaConfig elemento) throws Exception {
-        //Obtiene longitud de aforo, si supera 3 retorna error
-        String aforo = String.valueOf(elemento.getAforo());
-        if (aforo.length() > 3) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " AFORO");
-        }
+        controlarLongitud(elemento);
         return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public void actualizar(VentaConfig elemento) throws Exception {
-        //Obtiene longitud de aforo, si supera 3 retorna error
-        String aforo = String.valueOf(elemento.getAforo());
-        if (aforo.length() > 3) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " AFORO");
-        }
+        controlarLongitud(elemento);
         elementoDAO.save(elemento);
     }
 
@@ -66,4 +58,13 @@ public class VentaConfigService {
         elementoDAO.deleteById(elemento);
     }
 
+    //Control de longitud de atributos short
+    private void controlarLongitud(VentaConfig elemento) {
+        //Obtiene longitud de aforo, si supera 3 retorna error
+        String aforo = String.valueOf(elemento.getAforo());
+        if (aforo.length() > 3) {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " AFORO");
+        }
+    }
+    
 }

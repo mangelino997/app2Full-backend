@@ -50,64 +50,19 @@ public class ViajeEfectivoService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<ViajeEfectivo> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", 
-                        "viajeCombustibles", "viajeEfectivos", "viajeInsumos", 
-                        "viajeGastos", "viajePeajes", "hijos", "viaje", "ventaComprobante");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista de efectivos por viaje propio
     public Object listarEfectivos(int idViaje) throws IOException {
         List<ViajeEfectivo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", 
-                        "viajeCombustibles", "viajeEfectivos", "viajeInsumos", 
-                        "viajeGastos", "viajePeajes", "hijos", "viaje", "ventaComprobante");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista de efectivos por reparto
     public Object listarEfectivosReparto(int idReparto) throws IOException {
         List<ViajeEfectivo> elementos = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", 
-                        "viajeCombustibles", "viajeEfectivos", "viajeInsumos", 
-                        "viajeGastos", "viajePeajes", "hijos", "viaje", "ventaComprobante");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Anula un registro
@@ -131,22 +86,7 @@ public class ViajeEfectivoService {
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(16).get());
         elemento.setFecha(new Date(new java.util.Date().getTime()));
         elemento = elementoDAO.saveAndFlush(formatearStrings(elemento));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", 
-                        "viajeCombustibles", "viajeEfectivos", "viajeInsumos", 
-                        "viajeGastos", "viajePeajes", "hijos", "viaje", "ventaComprobante");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(null, elemento);
     }
 
     //Actualiza un registro
@@ -172,4 +112,24 @@ public class ViajeEfectivoService {
         return elemento;
     }
 
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<ViajeEfectivo> elementos, ViajeEfectivo elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", 
+                        "viajeCombustibles", "viajeEfectivos", "viajeInsumos", 
+                        "viajeGastos", "viajePeajes", "hijos", "viaje", "ventaComprobante");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento!=null ? elemento : elementos);
+        return mapper.readValue(string, Object.class);
+    }
+    
 }

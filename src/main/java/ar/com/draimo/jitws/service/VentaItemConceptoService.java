@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IVentaItemConceptoDAO;
-import ar.com.draimo.jitws.model.TipoComprobante;
 
 /**
  * Servicio Venta Item Concepto

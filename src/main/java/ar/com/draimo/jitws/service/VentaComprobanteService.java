@@ -87,53 +87,20 @@ public class VentaComprobanteService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<VentaComprobante> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene la lista de registros que no estan en reparto
     public Object listarComprobantesDisponibles() throws IOException {
         List<VentaComprobante> elementos = elementoDAO.listarComprobantesDisponibles();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene la lista por tipo de comprobante
     public Object listarPorTipoComprobante(int idTipoComprobante) throws IOException {
         TipoComprobante tipoComprobante = tipoComprobanteDAO.findById(idTipoComprobante).get();
         List<VentaComprobante> elementos = elementoDAO.findByTipoComprobante(tipoComprobante);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un registro por puntoVenta, letra y numero
@@ -144,53 +111,20 @@ public class VentaComprobanteService {
                         puntoVenta, letra, numero, t);
         ventaComprobante.setVentaComprobanteItemFAs(
                 ventaComprobanteItemFADAO.listarPorVentaComprobante(ventaComprobante.getId()));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventaComprobante);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(null, ventaComprobante);
     }
 
     //Obtiene una lista por cliente y empresa
     public Object listarPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
         List<VentaComprobante> elementos = elementoDAO.findByClienteAndEmpresa(
                 clienteDAO.findById(idCliente).get(), empresaDAO.findById(idEmpresa).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista para notas de credito por cliente y empresa
     public Object listarParaCreditosPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
         List<VentaComprobante> elementos = elementoDAO.listarParaNotasDeCredito(idCliente, idEmpresa);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista de letras
@@ -255,6 +189,22 @@ public class VentaComprobanteService {
         elemento.setLetra(elemento.getLetra().trim());
         elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;
+    }
+    
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<VentaComprobante> elementos, VentaComprobante elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento!=null ? elemento : elementos);
+        return mapper.readValue(string, Object.class);
     }
 
 }
