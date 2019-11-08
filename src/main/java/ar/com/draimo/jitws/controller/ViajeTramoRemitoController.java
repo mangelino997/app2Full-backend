@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ViajeTramoRemito;
 import ar.com.draimo.jitws.service.ViajeTramoRemitoService;
@@ -64,6 +65,12 @@ public class ViajeTramoRemitoController {
         return elementoService.listarPorViajeRemito(idViajeRemito);
     }
 
+    //Obtiene una lista por viaje y estado
+    @PutMapping(value = URL + "/listarPorViajeYEstado")
+    public Object listarPorViajeYEstado(@RequestBody ViajeRemitoDTO viajeRemitoDTO) throws IOException {
+        return elementoService.listarPorViajeYEstado(viajeRemitoDTO);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ViajeTramoRemito elemento) {
