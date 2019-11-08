@@ -79,7 +79,7 @@ public class ViajeTramoRemitoService {
     private Object retornarObjeto(List<ViajeTramoRemito> elementos) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ordenesVentas","cliente", "viaje");
+                .serializeAllExcept("ordenesVentas","cliente");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("clientefiltro", theFilter)
                 .addFilter("viajetramofiltro", theFilter)
