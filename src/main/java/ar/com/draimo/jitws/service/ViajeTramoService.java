@@ -57,35 +57,13 @@ public class ViajeTramoService {
     //Obtiene una lista de tramos por viaje 
     public Object listarTramos(int idViaje) throws IOException {
         List<ViajeTramo> elementos = elementoDAO.findByViaje(viajeDAO.obtenerViaje(idViaje));
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
-                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes", "viaje");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<ViajeTramo> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
-                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes", "viaje");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null);
     }
 
     //Agrega un registro
@@ -101,18 +79,7 @@ public class ViajeTramoService {
         }
         controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
-                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajetramofiltro", theFilter)
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
-                .addFilter("viajetramoclientefiltro", theFilter)
-                .addFilter("clientefiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(null, elemento);
     }
 
     //Actualiza un registro
@@ -155,6 +122,22 @@ public class ViajeTramoService {
         if (km.length() > 4) {
             throw new DataIntegrityViolationException(MensajeRespuesta.LONGITUD + " KM");
         }
+    }
+    
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<ViajeTramo> elementos, ViajeTramo elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente", "viajeTramo", "datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes", "viaje");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajetramofiltro", theFilter)
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter)
+                .addFilter("viajetramoclientefiltro", theFilter)
+                .addFilter("clientefiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);
+        return mapper.readValue(string, Object.class);
     }
 
 }

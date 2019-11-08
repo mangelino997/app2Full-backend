@@ -2,11 +2,9 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IZonaDAO;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.model.Zona;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,14 +33,9 @@ public class ZonaService {
 
     //Obtiene la lista completa ordenada
     public List<Zona> listarOrdenado(String elemento) {
-        switch (elemento) {
-            case "nombre":
-                return elementoDAO.findAllByOrderByNombreAsc();
-            case "id":
-                return elementoDAO.findByOrderByIdAsc();
-            default:
-                return elementoDAO.findAll();
-        }
+        return elemento.equals("nombre") ? elementoDAO.findAllByOrderByNombreAsc()
+                : elemento.equals("id") ? elementoDAO.findByOrderByIdAsc()
+                : elementoDAO.findAll();
     }
 
     //Obtiene una lista por nombre
