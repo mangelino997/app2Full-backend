@@ -31,10 +31,12 @@ import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
+import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.Reparto;
 import ar.com.draimo.jitws.model.SeguimientoEstado;
 import ar.com.draimo.jitws.model.SeguimientoSituacion;
 import ar.com.draimo.jitws.model.Sucursal;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -105,44 +107,20 @@ public class RepartoComprobanteService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<RepartoComprobante> ventasComprobantes = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ventasComprobantes);
-        return new ObjectMapper().readValue(string, Object.class);
+        List<RepartoComprobante> elementos = elementoDAO.findAll();
+        return aplicarFiltros(elementos);
     }
 
     //Obtiene la lista por repartoPropio
     public Object listarComprobantes(int idReparto) throws IOException {
-        List<RepartoComprobante> comprobantes = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
-        ObjectMapper mapper = new ObjectMapper();
-        for(RepartoComprobante comprobante : comprobantes) {
+        List<RepartoComprobante> elementos = elementoDAO.findByReparto(repartoDAO.obtenerPorId(idReparto));
+        for(RepartoComprobante comprobante : elementos) {
             if(comprobante.getVentaComprobante()!=null) {
                 comprobante.getVentaComprobante().setVentaComprobanteItemFAs(
                     ventaComprobanteItemFADAO.listarPorVentaComprobante(comprobante.getVentaComprobante().getId()));
             }
         }
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroVentaComprobanteItemFA", theFilter)
-                .addFilter("filtroVentaComprobanteItemCR", theFilter)
-                .addFilter("filtroVentaComprobanteItemNC", theFilter)
-                .addFilter("filtroOrdenVentaEscala", theFilter)
-                .addFilter("clienteordenventafiltro", theFilter)
-                .addFilter("filtroOrdenVentaTramo", theFilter)
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(comprobantes);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(elementos);
     }
 
     //Quita un comprobante de la tabla y la planilla
@@ -258,47 +236,34 @@ public class RepartoComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public int agregar(RepartoComprobante cte) {
-        SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
-        SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
-        SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
+        VentaComprobante v = null;
+        ViajeRemito r = null;
+        OrdenRecoleccion o = null;
         //Consulta si el repartocomprobante esta vacio, para no guardar un registro sin ninguno de los tres comprobantes
         RepartoComprobante rc = (cte.getOrdenRecoleccion() == null && cte.getViajeRemito() == null
                 && cte.getVentaComprobante() == null ? null : cte);
+        if(rc!=null) {
         //Consulta si ventaComprobante es nulo para establecer el seguimiento y guardarlo
         if (cte.getVentaComprobante() != null) {
             TipoComprobante tc = tipoComprobanteDAO.findById(cte.getVentaComprobante().getTipoComprobante().getId()).get();
-            VentaComprobante v = ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(
+            v = ventaComprobanteDAO.findByPuntoVentaAndLetraAndNumeroAndTipoComprobante(
                     cte.getVentaComprobante().getPuntoVenta(), cte.getVentaComprobante().getLetra(),
                     cte.getVentaComprobante().getNumero(), tc);
-            if (v != null) {
                 cte.setVentaComprobante(v);
-                ventaSeguimiento.setVentaComprobante(v);
-                ventaSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
-                ventaSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-                ventaSeguimiento.setSucursal(cte.getReparto().getSucursal());
-                seguimientoComprobanteDAO.saveAndFlush(ventaSeguimiento);
-            }
             //Consulta si viajeRemito es nulo para establecer el seguimiento y guardarlo
         } else if (cte.getViajeRemito() != null) {
-            ViajeRemito r = viajeRemitoDAO.obtenerPorPuntoVentaLetraYNumero(cte.getViajeRemito().getNumero(),
+            r = viajeRemitoDAO.obtenerPorPuntoVentaLetraYNumero(cte.getViajeRemito().getNumero(),
                         cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra());
-            if (r != null) {
-                viajeSeguimiento.setViajeRemito(r);
                 cte.setViajeRemito(r);
-                viajeSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
-                viajeSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-                viajeSeguimiento.setSucursal(cte.getReparto().getSucursal());
-                seguimientoRemitoDAO.saveAndFlush(viajeSeguimiento);
-            }
             //Consulta si ordenRecoleccion es nulo para establecer el seguimiento y guardarlo
-        } else if (cte.getOrdenRecoleccion() != null) {
-            ordenSeguimiento.setOrdenRecoleccion(cte.getOrdenRecoleccion());
-            ordenSeguimiento.setFecha(new Timestamp(new java.util.Date().getTime()));
-            ordenSeguimiento.setSeguimientoEstado(seguimientoEstadoDAO.findById(3).get());
-            ordenSeguimiento.setSucursal(cte.getReparto().getSucursal());
-            seguimientoRecoleccionDAO.saveAndFlush(ordenSeguimiento);
+        } else {
+            cte.setOrdenRecoleccion(cte.getOrdenRecoleccion());
+            o = cte.getOrdenRecoleccion();
         }
-        return (rc != null ? elementoDAO.saveAndFlush(cte).getId() : 0);
+        establecerSeguimiento(3, cte.getReparto().getSucursal().getId(), o, v, r);
+        return elementoDAO.saveAndFlush(cte).getId();
+        }
+        return 0;
     }
 
     //Actualiza un registro
@@ -311,6 +276,56 @@ public class RepartoComprobanteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Establece el seguimiento
+    private void establecerSeguimiento(int idSegEstado, int idSucursal, OrdenRecoleccion o,
+            VentaComprobante v, ViajeRemito r) {
+        SeguimientoOrdenRecoleccion ordenSeguimiento = new SeguimientoOrdenRecoleccion();
+        SeguimientoViajeRemito viajeSeguimiento = new SeguimientoViajeRemito();
+        SeguimientoVentaComprobante ventaSeguimiento = new SeguimientoVentaComprobante();
+        SeguimientoEstado seguimiento = seguimientoEstadoDAO.findById(idSegEstado).get();
+        Sucursal sucursal = sucursalDAO.findById(idSucursal).get();
+        Timestamp fecha = new Timestamp(new java.util.Date().getTime());
+        if (v != null) {
+                ventaSeguimiento.setVentaComprobante(v);
+                ventaSeguimiento.setFecha(fecha);
+                ventaSeguimiento.setSeguimientoEstado(seguimiento);
+                ventaSeguimiento.setSucursal(sucursal);
+                seguimientoComprobanteDAO.saveAndFlush(ventaSeguimiento);
+            //Consulta si viajeRemito es nulo para establecer el seguimiento y guardarlo
+        } else if (r != null) {
+                viajeSeguimiento.setViajeRemito(r);
+                viajeSeguimiento.setFecha(fecha);
+                viajeSeguimiento.setSeguimientoEstado(seguimiento);
+                viajeSeguimiento.setSucursal(sucursal);
+                seguimientoRemitoDAO.saveAndFlush(viajeSeguimiento);
+            //Consulta si ordenRecoleccion es nulo para establecer el seguimiento y guardarlo
+        } else if (o != null) {
+            ordenSeguimiento.setOrdenRecoleccion(o);
+            ordenSeguimiento.setFecha(fecha);
+            ordenSeguimiento.setSeguimientoEstado(seguimiento);
+            ordenSeguimiento.setSucursal(sucursal);
+            seguimientoRecoleccionDAO.saveAndFlush(ordenSeguimiento);
+        }
+    }
+    
+    //Retorna un object aplicando los filtros
+    private Object aplicarFiltros(List<RepartoComprobante> elementos) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("ventaComprobante", "ordenVenta", "cliente", "datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroVentaComprobanteItemFA", theFilter)
+                .addFilter("filtroVentaComprobanteItemCR", theFilter)
+                .addFilter("filtroVentaComprobanteItemNC", theFilter)
+                .addFilter("filtroOrdenVentaEscala", theFilter)
+                .addFilter("clienteordenventafiltro", theFilter)
+                .addFilter("filtroOrdenVentaTramo", theFilter)
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
 }

@@ -3,10 +3,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IModuloDAO;
 import ar.com.draimo.jitws.dao.ISubmoduloDAO;
-import ar.com.draimo.jitws.model.Modulo;
 import ar.com.draimo.jitws.model.Submodulo;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

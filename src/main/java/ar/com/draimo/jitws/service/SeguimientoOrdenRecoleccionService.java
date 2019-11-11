@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.ISeguimientoOrdenRecoleccionDAO;
 import ar.com.draimo.jitws.dao.ISeguimientoSituacionDAO;
-import ar.com.draimo.jitws.model.SeguimientoEstado;
-import ar.com.draimo.jitws.model.SeguimientoSituacion;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * Servicio de SeguimientoOrdenRecoleccion

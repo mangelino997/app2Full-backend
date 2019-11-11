@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.ISeguimientoViajeRemitoDAO;
-import ar.com.draimo.jitws.model.SeguimientoEstado;
-import ar.com.draimo.jitws.model.SeguimientoSituacion;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * Servicio de SeguimientoViajeRemito

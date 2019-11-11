@@ -49,65 +49,35 @@ public class RubroProductoCuentaContableService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<RubroProductoCuentaContable> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null, false);
     }
     
     //Obtiene una lista por Empresa
     public Object listarPorEmpresa(int idEmpresa) throws IOException {
         List<RubroProductoCuentaContable> elementos = elementoDAO.findByEmpresa(
                 empresaDAO.findById(idEmpresa).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null, false);
     }
     
     //Obtiene una lista por PlanCuenta
     public Object listarPorPlanCuenta(int idPlanCuenta) throws IOException {
         List<RubroProductoCuentaContable> elementos = elementoDAO.findByPlanCuentaCompra(
                 planCuentaDAO.findById(idPlanCuenta).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null, false);
     }
     
     //Obtiene una lista por RubroProducto
     public Object listarPorRubroProducto(int idRubroProducto) throws IOException {
         List<RubroProductoCuentaContable> elementos = elementoDAO.findByRubroProducto(
                 rubroProductoDAO.findById(idRubroProducto).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos, null, false);
     }
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(RubroProductoCuentaContable elemento) throws IOException {
         elemento = elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elemento);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(null, elemento, true);
     }
     
     //Actualiza un registro
@@ -122,4 +92,15 @@ public class RubroProductoCuentaContableService {
         elementoDAO.deleteById(elemento);
     }
     
+    //Retorna un object con los filtros aplicados
+    private Object retornarObjeto(List<RubroProductoCuentaContable> elementos,
+            RubroProductoCuentaContable elemento, boolean b) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(b?elemento:elementos);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
 }

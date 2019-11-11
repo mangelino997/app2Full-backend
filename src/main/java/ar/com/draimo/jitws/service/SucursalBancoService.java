@@ -3,10 +3,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBancoDAO;
 import ar.com.draimo.jitws.dao.ISucursalBancoDAO;
-import ar.com.draimo.jitws.model.Banco;
 import ar.com.draimo.jitws.model.SucursalBanco;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

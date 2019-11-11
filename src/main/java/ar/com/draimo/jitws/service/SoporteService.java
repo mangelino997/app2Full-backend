@@ -58,13 +58,7 @@ public class SoporteService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<Soporte> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroImagen", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null, true);
     }
 
     //Obtiene la lista completa
@@ -73,13 +67,7 @@ public class SoporteService {
         if (elemento.getBugImagen() == null) {
             elemento.setBugImagen(new BugImagen());
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept();
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroImagen", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(null,elemento, false);
     }
 
     //Obtiene una lista por alias y usuario
@@ -87,24 +75,13 @@ public class SoporteService {
         Usuario usuario = usuarioDAO.findById(idUsuario).get();
         List<Soporte> elementos = alias.equals("***") ? elementoDAO.findByUsuario(usuario)
                 : elementoDAO.findByUsuarioAndAliasContaining(usuario, alias);
-        ObjectMapper mapper = new ObjectMapper();
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroImagen",
-                        SimpleBeanPropertyFilter.serializeAllExcept());
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos, null, true);
     }
 
     //Obtiene una lista por usuario
     public Object listarPorUsuario(int idUsuario) throws IOException {
         List<Soporte> elementos = elementoDAO.findByUsuario(usuarioDAO.findById(idUsuario).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroImagen", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return retornarObjeto(elementos,null, true);
     }
 
     //Agrega un registro
@@ -142,6 +119,18 @@ public class SoporteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Retorna un object aplicando filtros
+    private Object retornarObjeto(List<Soporte> elementos,Soporte elemento, boolean b) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = b?SimpleBeanPropertyFilter
+                .serializeAllExcept("datos"):SimpleBeanPropertyFilter
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroImagen", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(b?elementos:elemento);
+        return mapper.readValue(string, Object.class);
     }
 
     //Establece el alias de un registro

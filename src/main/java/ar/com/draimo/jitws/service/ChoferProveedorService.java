@@ -4,13 +4,11 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IChoferProveedorDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
-import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.model.ChoferProveedor;
 import ar.com.draimo.jitws.model.Proveedor;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

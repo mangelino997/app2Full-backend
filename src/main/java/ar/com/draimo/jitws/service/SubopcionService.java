@@ -10,7 +10,6 @@ import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
 import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.Rol;
 import ar.com.draimo.jitws.model.RolSubopcion;
-import ar.com.draimo.jitws.model.Submodulo;
 import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.model.SubopcionPestania;
 import java.util.List;

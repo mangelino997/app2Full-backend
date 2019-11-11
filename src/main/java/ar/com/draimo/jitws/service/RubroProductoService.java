@@ -50,35 +50,23 @@ public class RubroProductoService {
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
-        List<RubroProducto> rubrosProductos = elementoDAO.findAllByOrderByNombreAsc();
+        List<RubroProducto> elementos = elementoDAO.findAllByOrderByNombreAsc();
         //Construye la lista de rubros productos cuentas contables para cada empresa
-        for (RubroProducto rubroProducto : rubrosProductos) {
+        for (RubroProducto rubroProducto : elementos) {
             rubroProducto.setRubrosProductosCuentasContables(construirCuentasContablesParaEmpresas(rubroProducto));
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(rubrosProductos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos);
     }
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<RubroProducto> rubrosProductos = nombre.equals("***")?elementoDAO.findAll():
+        List<RubroProducto> elementos = nombre.equals("***")?elementoDAO.findAll():
              elementoDAO.findByNombreContaining(nombre);
         //Construye la lista de rubros productos cuentas contables para cada empresa
-        for (RubroProducto rubroProducto : rubrosProductos) {
+        for (RubroProducto rubroProducto : elementos) {
             rubroProducto.setRubrosProductosCuentasContables(construirCuentasContablesParaEmpresas(rubroProducto));
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(rubrosProductos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return retornarObjeto(elementos);
     }
 
     //Agrega un registro
@@ -137,5 +125,16 @@ public class RubroProductoService {
         }
         return rpccLista;
     }
-
+    
+    //Retorna un objeto con los filtros aplicados
+    private Object retornarObjeto(List<RubroProducto> elementos) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+ 
 }
