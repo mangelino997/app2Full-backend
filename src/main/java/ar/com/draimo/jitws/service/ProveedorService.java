@@ -54,13 +54,7 @@ public class ProveedorService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<Proveedor> proveedores = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(proveedores);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(proveedores);
     }
 
     //Obtiene la lista por filtros
@@ -68,13 +62,7 @@ public class ProveedorService {
             int idLocalidad) throws IOException {
         List<Proveedor> proveedores = elementoDAO.listarPorFiltros(
                 idTipoProveedor, idCondCompra, estadoCuenta, idLocalidad);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(proveedores);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(proveedores);
     }
 
     //Obtiene una lista por nombre
@@ -85,13 +73,7 @@ public class ProveedorService {
         for (Proveedor proveedor : proveedores) {
             proveedor.setProveedorCuentasContables(construirCuentasContablesParaEmpresas(proveedor));
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(proveedores);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(proveedores);
     }
 
     //Agrega un registro
@@ -198,4 +180,15 @@ public class ProveedorService {
         return pccLista;
     }
 
+    //Retorna un object aplicando los filtros
+    private Object aplicarFiltros(List<Proveedor> elementos) throws IOException {
+       ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
 }

@@ -92,16 +92,7 @@ public class PersonalAdelantoService {
                 personalAdelanto.setReparto(reparto);
             }
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("personaladelantofiltro", theFilter)
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(personalAdelantos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(null, personalAdelantos);
     }
 
     //Controla la diferencia entre el importe y los importes de la tabla generada por listarCuotas
@@ -164,16 +155,7 @@ public class PersonalAdelantoService {
                 break;
         }
         cuotasAdelantos.get(personalAdelanto.getTotalCuotas() - 1).setImporte(imp);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("personaladelantofiltro", theFilter)
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(cuotasAdelantos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(null, cuotasAdelantos);
     }
 
     //Obtiene la lista por filtro
@@ -185,17 +167,7 @@ public class PersonalAdelantoService {
         if (adelantos.isEmpty()) {
             throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos", "viajeTramos", "viajeCombustibles",
-                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("personaladelantofiltro", theFilter)
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(adelantos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(null, adelantos);
     }
 
     //Agrega un lote
@@ -262,16 +234,7 @@ public class PersonalAdelantoService {
             adelanto.setEmpresa(personal.getEmpresa());
             adelanto.setPersonal(personal);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("viajefiltro", theFilter)
-                .addFilter("personaladelantofiltro", theFilter)
-                .addFilter("filtroPdf", theFilter)
-                .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(adelantosFallados);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(null, adelantosFallados);
     }
 
     //Control para ver si todos los adelantos de un lote fracasaron
@@ -338,4 +301,18 @@ public class PersonalAdelantoService {
         elementoDAO.deleteById(id);
     }
 
+    //retorna un object despues de aplicar los filtros
+    private Object aplicarFiltros(PersonalAdelanto elemento, List<PersonalAdelanto> elementos) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos", "viajeTramos", "viajeCombustibles",
+                        "viajeEfectivos", "viajeInsumos", "viajeGastos", "viajePeajes");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("viajefiltro", theFilter)
+                .addFilter("personaladelantofiltro", theFilter)
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento!=null? elemento : elementos);
+        return mapper.readValue(string, Object.class);
+    }
 }

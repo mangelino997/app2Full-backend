@@ -47,26 +47,14 @@ public class OrdenVentaTramoService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
          List<OrdenVentaTramo> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementos);
     }
     
     //Obtiene una lista por orden de venta
     public Object listarPorOrdenVenta(int idOrdenVenta) throws IOException {
          List<OrdenVentaTramo> elementos = elementoDAO.findByOrdenVentaTarifa_OrdenVenta(
                  ordenVentaDAO.findById(idOrdenVenta).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementos);
     }
     
     //Obtiene una lista por orden de venta y precios desde
@@ -75,13 +63,7 @@ public class OrdenVentaTramoService {
         List<OrdenVentaTramo> elementos = 
             elementoDAO.findByOrdenVentaTarifa_OrdenVentaAndPreciosDesde(
                 ordenVentaDAO.findById(idOrdenVenta).get(), precios);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementos);
     }
     
     //Obtiene una lista por orden de venta tarifa
@@ -89,25 +71,13 @@ public class OrdenVentaTramoService {
         List<OrdenVentaTramo> elementos = 
             elementoDAO.findByOrdenVentaTarifa(
                 ordenVentaTarifaDAO.findById(idOrdenVentaTarifa).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementos);
     }
     
     //Obtiene la lista de fechas por orden de venta
     public Object listarFechasPorOrdenVenta(int idOrdenVenta) throws IOException {
         List<OrdenVentaTramo> ordenesTramo = elementoDAO.listarPreciosDesdePorOrdenVenta(idOrdenVenta);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(ordenesTramo);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(ordenesTramo);
     }
     
     //Agrega un registro
@@ -139,6 +109,17 @@ public class OrdenVentaTramoService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
         elementoDAO.deleteById(id);
+    }
+    
+    //retorna un object despues de aplicar los filtros
+    private Object aplicarFiltros(List<OrdenVentaTramo> elementos) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
     }
     
 }

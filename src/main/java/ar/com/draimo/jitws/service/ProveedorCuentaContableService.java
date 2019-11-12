@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPlanCuentaDAO;
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -49,76 +50,40 @@ public class ProveedorCuentaContableService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<ProveedorCuentaContable> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(elementos, null);
     }
 
     //Obtiene una lista por Empresa
     public Object listarPorEmpresa(int idEmpresa) throws IOException {
         List<ProveedorCuentaContable> elementos = elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(elementos, null);
     }
 
     //Obtiene una lista por PlanCuenta
     public Object listarPorPlanCuenta(int idPlanCuenta) throws IOException {
         List<ProveedorCuentaContable> elementos = elementoDAO.findByPlanCuentaCompra(
                 planCuentaDAO.findById(idPlanCuenta).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(elementos, null);
     }
 
     //Obtiene una lista por Proveedor
     public Object listarPorProveedor(int idProveedor) throws IOException {
         List<ProveedorCuentaContable> elementos = elementoDAO.findByProveedor(proveedorDAO.findById(idProveedor).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(elementos, null);
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Object agregar(ProveedorCuentaContable elemento) throws IOException {
         elemento = elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(null, elemento);
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
     public Object actualizar(ProveedorCuentaContable elemento) throws IOException {
         elemento = elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(null, elemento);
     }
 
     //Elimina un registro
@@ -126,5 +91,16 @@ public class ProveedorCuentaContableService {
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-
+    
+    //Retorna un object aplicando los filtros
+    private Object aplicarFiltros(List<ProveedorCuentaContable> elementos, ProveedorCuentaContable elemento) throws IOException {
+       ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos!= null ? elementos : elemento);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
+    
 }

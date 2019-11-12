@@ -42,38 +42,20 @@ public class PersonalFamiliarService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<PersonalFamiliar> elementos = elementoDAO.findAll();
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementos,null); 
     }
 
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
         List<PersonalFamiliar> elementos = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementos,null);
     }
 
     //Obtiene una lista por personal
     public Object listarPorPersonal(int idPersonal) throws IOException {
         List<PersonalFamiliar> elementos = elementoDAO.findByPersonal(personalDAO.findById(idPersonal).get());
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementos,null);
     }
 
     //Agrega un registro
@@ -82,13 +64,7 @@ public class PersonalFamiliarService {
         elemento = formatearStrings(elemento);
         controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(null, elemento);
     }
 
     public Object establecerAlias(Object object) throws IOException {
@@ -99,13 +75,7 @@ public class PersonalFamiliarService {
                 + elemento.getApellido() + " " + elemento.getNombre() + " - "
                 + p.getNombreCompleto());
         elemento = elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf", theFilter).addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(null, elemento);
     }
 
     //Actualiza un registro
@@ -143,4 +113,16 @@ public class PersonalFamiliarService {
         return elemento;
     }
 
+    //Retorna un object aplicando los filtros
+    private Object aplicarFiltros(List<PersonalFamiliar> elementos, PersonalFamiliar elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return mapper.readValue(string, Object.class);
+    }
+    
 }

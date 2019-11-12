@@ -35,24 +35,14 @@ public class PdfService {
     //Obtiene por id
     public Object obtenerPorId(int id) throws IOException {
         Pdf pdf = elementoDAO.findById(id).get();
-        ObjectMapper mapper = new ObjectMapper();
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf",
-                        SimpleBeanPropertyFilter.serializeAllExcept());
-        String string = mapper.writer(filters).writeValueAsString(pdf);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(pdf, null);
     }
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
         List<Pdf> pdf = nombre.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
-        ObjectMapper mapper = new ObjectMapper();
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPdf",
-                        SimpleBeanPropertyFilter.serializeAllExcept());
-        String string = mapper.writer(filters).writeValueAsString(pdf);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(null, pdf);
     }
 
     //Agrega un registro
@@ -91,4 +81,14 @@ public class PdfService {
         return elemento;
     }
 
+    //retorna un object despues de aplicar los filtros
+    private Object aplicarFiltros(Pdf elemento, List<Pdf> elementos) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf",
+                        SimpleBeanPropertyFilter.serializeAllExcept());
+        String string = mapper.writer(filters).writeValueAsString(elemento!=null? elemento : elementos);
+        return mapper.readValue(string, Object.class);
+    }
+    
 }
