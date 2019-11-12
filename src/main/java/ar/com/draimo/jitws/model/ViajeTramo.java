@@ -27,7 +27,7 @@ public class ViajeTramo extends ObjetoGenerico {
     //Referencia a la clase Viaje
     @JsonIgnoreProperties(value ={"viajeTramos","viajeCombustibles",
         "viajeEfectivos","viajeInsumos","viajeGastos","viajePeajes"})
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViaje", nullable = false)
     private Viaje viaje;
     
