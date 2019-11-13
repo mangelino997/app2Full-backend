@@ -115,10 +115,6 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
     private AfipAlicuotaIva afipAlicuotaIva;
 
-    //Define la alicuota iva
-    @Column(name = "alicuotaIva", nullable = false)
-    private BigDecimal alicuotaIva;
-
     //Define el importe de iva
     @Column(name = "importeIva", nullable = false)
     private BigDecimal importeIva;
@@ -317,14 +313,6 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     public void setAfipAlicuotaIva(AfipAlicuotaIva afipAlicuotaIva) {
         this.afipAlicuotaIva = afipAlicuotaIva;
-    }
-
-    public BigDecimal getAlicuotaIva() {
-        return alicuotaIva;
-    }
-
-    public void setAlicuotaIva(BigDecimal alicuotaIva) {
-        this.alicuotaIva = alicuotaIva;
     }
 
     public BigDecimal getImporteIva() {

@@ -141,6 +141,7 @@ public class VentaComprobanteService {
         VentaComprobante vc = elementoDAO.saveAndFlush(elemento);
         ViajeRemito viajeRemito;
         ViajeTramoClienteRemito viajeTramoClienteRemito;
+        BigDecimal importeTotal = new BigDecimal(0.00);
         //Agrega los items FA
         for (VentaComprobanteItemFA ventaComprobanteItemFA : elemento.getVentaComprobanteItemFAs()) {
             ventaComprobanteItemFA.setVentaComprobante(vc);
@@ -155,11 +156,13 @@ public class VentaComprobanteService {
                 viajeTramoClienteRemito.setEstaFacturado(true);
                 viajeTramoClienteRemitoDAO.save(viajeTramoClienteRemito);
             }
+            importeTotal.add(ventaComprobanteItemFA.getImporteNetoGravado());
             ventaComprobanteItemFADAO.saveAndFlush(ventaComprobanteItemFA);
         }
         //Agrega item ContraReembolso
         if (elemento.getVentaComprobanteItemCR() != null && elemento.getVentaComprobanteItemCR().size() > 0) {
             elemento.getVentaComprobanteItemCR().get(0).setVentaComprobante(vc);
+            importeTotal.add(elemento.getVentaComprobanteItemCR().get(0).getImporteNetoGravado());
             ventaComprobanteItemCRDAO.saveAndFlush(elemento.getVentaComprobanteItemCR().get(0));
         }
         if (elemento.getVentaComprobanteItemNC() != null) {

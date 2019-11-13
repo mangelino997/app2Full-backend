@@ -32,14 +32,22 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     @Column(name = "importeContraReembolso", nullable = false)
     private BigDecimal importeContraReembolso;
     
-    //Referencia a la clase OrdenVenta
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idOrdenVenta", nullable = false)
-    private OrdenVenta ordenVenta;
-    
     //Define pComision
     @Column(name = "pComision", nullable = false)
     private BigDecimal pComision;
+    
+    //Define importeNetoGravado
+    @Column(name = "importeNetoGravado", nullable = false)
+    private BigDecimal importeNetoGravado;
+    
+    //Referencia a la clase AfipAlicuotaIva
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
+    private AfipAlicuotaIva afipAlicuotaIva;
+    
+    //Define importeIva
+    @Column(name = "importeIva", nullable = false)
+    private BigDecimal importeIva;
     
     //Define fechaCobro
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
@@ -52,6 +60,7 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     private Date fechaPago;
     
     //Getters y Setters de la clase
+
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
     }
@@ -68,20 +77,36 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
         this.importeContraReembolso = importeContraReembolso;
     }
 
-    public OrdenVenta getOrdenVenta() {
-        return ordenVenta;
-    }
-
-    public void setOrdenVenta(OrdenVenta ordenVenta) {
-        this.ordenVenta = ordenVenta;
-    }
-
     public BigDecimal getpComision() {
         return pComision;
     }
 
     public void setpComision(BigDecimal pComision) {
         this.pComision = pComision;
+    }
+
+    public BigDecimal getImporteNetoGravado() {
+        return importeNetoGravado;
+    }
+
+    public void setImporteNetoGravado(BigDecimal importeNetoGravado) {
+        this.importeNetoGravado = importeNetoGravado;
+    }
+
+    public AfipAlicuotaIva getAfipAlicuotaIva() {
+        return afipAlicuotaIva;
+    }
+
+    public void setAfipAlicuotaIva(AfipAlicuotaIva afipAlicuotaIva) {
+        this.afipAlicuotaIva = afipAlicuotaIva;
+    }
+
+    public BigDecimal getImporteIva() {
+        return importeIva;
+    }
+
+    public void setImporteIva(BigDecimal importeIva) {
+        this.importeIva = importeIva;
     }
 
     public Date getFechaCobro() {
@@ -99,5 +124,5 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
     }
-
+    
 }
