@@ -40,10 +40,6 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
     private AfipAlicuotaIva viajeRemito;
     
-    //Define la alicuota iva
-    @Column(name = "alicuotaIva", nullable = false)
-    private BigDecimal alicuotaiva;
-    
     //Define el importe de iva
     @Column(name = "importeIva", nullable = false)
     private BigDecimal importeIva;
@@ -96,14 +92,6 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
 
     public void setViajeRemito(AfipAlicuotaIva viajeRemito) {
         this.viajeRemito = viajeRemito;
-    }
-
-    public BigDecimal getAlicuotaiva() {
-        return alicuotaiva;
-    }
-
-    public void setAlicuotaiva(BigDecimal alicuotaiva) {
-        this.alicuotaiva = alicuotaiva;
     }
 
     public BigDecimal getImporteIva() {

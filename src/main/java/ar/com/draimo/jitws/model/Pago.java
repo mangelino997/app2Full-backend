@@ -13,14 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Cobranza
+ * Clase pago
  * Define el modelo (columnas) de la base de datos.
  *
  * @author blas
  */
 @Entity
-@Table(name = "cobranza")
-public class Cobranza extends ObjetoGenerico {
+@Table(name = "pago")
+public class Pago extends ObjetoGenerico {
 
     //Define referencia a la clase empresa
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -46,10 +46,10 @@ public class Cobranza extends ObjetoGenerico {
     @Column(name = "fechaRegistracion", nullable = false)
     private Timestamp fechaRegistracion;
 
-    //Define referencia a la clase cliente
+    //Define referencia a la clase Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCliente", nullable = false)
-    private Cliente cliente;
+    @JoinColumn(name = "idProveedor", nullable = false)
+    private Proveedor proveedor;
 
     //Define el importe
     @Column(name = "importe", nullable = false)
@@ -115,15 +115,15 @@ public class Cobranza extends ObjetoGenerico {
     public void setFechaRegistracion(Timestamp fechaRegistracion) {
         this.fechaRegistracion = fechaRegistracion;
     }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
     
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public BigDecimal getImporte() {
         return importe;
     }

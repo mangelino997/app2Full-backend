@@ -1,0 +1,86 @@
+//Paquete al que pertenece la clase
+package ar.com.draimo.jitws.model;
+
+import java.math.BigDecimal;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+/**
+ * Clase MonedaCartera 
+ * Define el modelo (columnas) de la base de datos.
+ *
+ * @author blas
+ */
+@Entity
+@Table(name = "monedacartera")
+public class MonedaCartera extends ObjetoGenerico {
+
+    //Define referencia a la clase Empresa
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idEmpresa", nullable = false)
+    private Empresa empresa;
+
+    //Define referencia a la clase moneda
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idMoneda", nullable = false)
+    private Moneda moneda;
+
+    //Define cantidad
+    @Column(name = "cantidad", nullable = false)
+    private BigDecimal cantidad;
+
+    //Define el importe
+    @Column(name = "importe", nullable = true)
+    private BigDecimal importe;
+
+    //Define esIngreso
+    @Column(name = "esIngreso", nullable = false)
+    private boolean esIngreso;
+
+    //Getters y Setters de la clase
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public Moneda getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(Moneda moneda) {
+        this.moneda = moneda;
+    }
+
+    public BigDecimal getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(BigDecimal cantidad) {
+        this.cantidad = cantidad;
+    }
+    
+    public BigDecimal getImporte() {
+        return importe;
+    }
+
+    public void setImporte(BigDecimal importe) {
+        this.importe = importe;
+    }
+
+    public boolean isEsIngreso() {
+        return esIngreso;
+    }
+
+    public void setEsIngreso(boolean esIngreso) {
+        this.esIngreso = esIngreso;
+    }
+    
+}
