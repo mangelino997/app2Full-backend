@@ -258,26 +258,20 @@ public class PersonalService {
                     : pdfDAO.saveAndFlush(p3);
             elemento.setPdfLibSanidad(pdf3);
         }
-//        if (dni.getOriginalFilename().equals("")) {
-//            if (personal.getPdfDni() != null) {
-//                pdfDAO.deleteById(personal.getPdfDni().getId());
-//                elemento.setPdfDni(null);
-//            } else {
-//                elemento.setPdfDni(null);
-//            }
-//        } else {
-//            if (personal.getPdfDni() != null) {
-//                Pdf p4 = pdfService.actualizar(personal.getPdfDni().getId(), dni, false);
-//                p4.setTabla("personal");
-//                Pdf pdf4 = pdfDAO.save(p4);
-//                elemento.setPdfDni(pdf4);
-//            } else {
-//                Pdf p4 = pdfService.agregar(dni, false);
-//                p4.setTabla("personal");
-//                Pdf pdf4 = pdfDAO.saveAndFlush(p4);
-//                elemento.setPdfDni(pdf4);
-//            }
-//        }
+        if (dni.getOriginalFilename().equals("")) {
+            if (personal.getPdfDni() != null) {
+                pdfDAO.deleteById(personal.getPdfDni().getId());
+            }
+            elemento.setPdfDni(null);
+        } else {
+            Pdf p4 = personal.getPdfDni() != null ? pdfService.actualizar(
+                    personal.getPdfDni().getId(), dni, false)
+                    : pdfService.agregar(dni, false);
+            p4.setTabla("personal");
+            Pdf pdf4 = personal.getPdfDni() != null ? pdfDAO.save(p4)
+                    : pdfDAO.saveAndFlush(p4);
+            elemento.setPdfDni(pdf4);
+        }
         if (altaTemprana.getOriginalFilename().equals("")) {
             if (personal.getPdfAltaTemprana() != null) {
                 pdfDAO.deleteById(personal.getPdfAltaTemprana().getId());
@@ -287,7 +281,6 @@ public class PersonalService {
             Pdf p5 = personal.getPdfAltaTemprana() != null ? pdfService.actualizar(
                     personal.getPdfAltaTemprana().getId(), altaTemprana, false)
                     : pdfService.agregar(altaTemprana, false);
-            p5.setTabla("personal");
             p5.setTabla("personal");
             Pdf pdf5 = personal.getPdfAltaTemprana() != null ? pdfDAO.save(p5)
                     : pdfDAO.saveAndFlush(p5);

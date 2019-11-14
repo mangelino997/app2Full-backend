@@ -77,7 +77,7 @@ public class CobradorService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Cobrador elemento) {
+    public Cobrador actualizar(Cobrador elemento) {
         elemento = formatearStrings(elemento);
         Cobrador cobrador = elementoDAO.findByPorDefectoClienteEventualTrue();
         if (cobrador == null || cobrador.getId() == elemento.getId()) {
@@ -88,7 +88,7 @@ public class CobradorService {
                 elementoDAO.save(cobrador);
             }
         }
-        elementoDAO.save(elemento);
+        return elementoDAO.save(elemento);
     }
 
     //Elimina un registro
