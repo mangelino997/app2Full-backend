@@ -67,7 +67,7 @@ public class PersonalService {
             int idSucursal) throws IOException, Exception {
         Date fecha = new Date(new java.util.Date().getTime());
         //Establece el string vacio a alias en caso de que el usuario quiera listar todo
-        alias = (alias.equals("***")? "" : alias);
+        alias = (alias.equals("***") ? "" : alias);
         /* Obtiene un listado por alias, activos o todos.
         Si recibe '***' en el alias no filtra por el mismo.
         idEmpresa y idSucursal pueden ser 0. en este caso no filtra por los mismos
@@ -79,7 +79,7 @@ public class PersonalService {
 
     //Obtiene un registro por id
     public Object obtenerPorId(int id) throws IOException, Exception {
-        Personal elemento = elementoDAO.findById(id).get();
+        Personal elemento = elementoDAO.obtenerPorId(id);
         Pdf pdf = new Pdf();
         if (elemento.getPdfAltaTemprana() == null) {
             elemento.setPdfAltaTemprana(pdf);
@@ -103,7 +103,7 @@ public class PersonalService {
         if (elemento == null) {
             throw new Exception(MensajeRespuesta.NO_EXISTENTE);
         }
-        
+
         return aplicarFiltros(null, elemento);
     }
 
@@ -157,42 +157,42 @@ public class PersonalService {
             f = fotoDAO.saveAndFlush(p);
             elemento.setFoto(f);
         }
-        elemento.setFoto(f!=null ? f : null);
+        elemento.setFoto(f != null ? f : null);
         if (!licConducir.getOriginalFilename().equals("")) {
             Pdf p1 = pdfService.agregar(licConducir, false);
             p1.setTabla("personal");
             pdf1 = pdfDAO.saveAndFlush(p1);
             elemento.setPdfLicConducir(pdf1);
         }
-        elemento.setPdfLicConducir(pdf1!=null ? pdf1 : null);
+        elemento.setPdfLicConducir(pdf1 != null ? pdf1 : null);
         if (!linti.getOriginalFilename().equals("")) {
             Pdf p2 = pdfService.agregar(linti, false);
             p2.setTabla("personal");
             pdf2 = pdfDAO.saveAndFlush(p2);
             elemento.setPdfLinti(pdf2);
-        } 
-        elemento.setPdfLinti(pdf2!=null ? pdf2 : null);
+        }
+        elemento.setPdfLinti(pdf2 != null ? pdf2 : null);
         if (!libSanidad.getOriginalFilename().equals("")) {
             Pdf p3 = pdfService.agregar(libSanidad, false);
             p3.setTabla("personal");
             pdf3 = pdfDAO.saveAndFlush(p3);
             elemento.setPdfLibSanidad(pdf3);
-        } 
-        elemento.setPdfLibSanidad(pdf3!=null ? pdf3 : null);
+        }
+        elemento.setPdfLibSanidad(pdf3 != null ? pdf3 : null);
         if (!dni.getOriginalFilename().equals("")) {
             Pdf p4 = pdfService.agregar(dni, false);
             p4.setTabla("personal");
             pdf4 = pdfDAO.saveAndFlush(p4);
             elemento.setPdfDni(pdf4);
         }
-        elemento.setPdfDni(pdf4!=null ? pdf4 : null);
+        elemento.setPdfDni(pdf4 != null ? pdf4 : null);
         if (!altaTemprana.getOriginalFilename().equals("")) {
             Pdf p5 = pdfService.agregar(altaTemprana, false);
             p5.setTabla("personal");
             pdf5 = pdfDAO.saveAndFlush(p5);
             elemento.setPdfAltaTemprana(pdf5);
         }
-        elemento.setPdfAltaTemprana(pdf5!=null ? pdf5 : null);
+        elemento.setPdfAltaTemprana(pdf5 != null ? pdf5 : null);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -376,14 +376,14 @@ public class PersonalService {
     //Retorna un object aplicando los filtros
     private Object aplicarFiltros(List<Personal> elementos, Personal elemento) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = elemento!= null ?SimpleBeanPropertyFilter
-                .serializeAllExcept():SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
+        SimpleBeanPropertyFilter theFilter = elemento != null ? SimpleBeanPropertyFilter
+                .serializeAllExcept() : SimpleBeanPropertyFilter
+                        .serializeAllExcept("datos");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroFoto", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos);
+        String string = mapper.writer(filters).writeValueAsString(elementos != null ? elementos : elemento);
         return mapper.readValue(string, Object.class);
     }
-    
+
 }
