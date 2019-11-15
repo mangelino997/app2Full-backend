@@ -1,12 +1,16 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -31,6 +35,14 @@ public class Efectivo extends ObjetoGenerico {
     @Column(name = "esIngreso", nullable = false)
     private boolean esIngreso;
 
+    @ManyToOne
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idEfectivo"), 
+      inverseJoinColumns = @JoinColumn(name = "idCobranza"))
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo"})
+    private Cobranza cobranza;
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -55,6 +67,14 @@ public class Efectivo extends ObjetoGenerico {
 
     public void setEsIngreso(boolean esIngreso) {
         this.esIngreso = esIngreso;
+    }
+
+    public Cobranza getCobranza() {
+        return cobranza;
+    }
+
+    public void setCobranza(Cobranza cobranza) {
+        this.cobranza = cobranza;
     }
     
 }

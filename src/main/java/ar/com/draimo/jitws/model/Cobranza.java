@@ -2,14 +2,20 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -73,7 +79,61 @@ public class Cobranza extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
+    
+    //Define la referencia a cobranzaAnticipo
+    @OneToMany
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idCobranza"), 
+      inverseJoinColumns = @JoinColumn(name = "idCobranzaAnticipo"))
+    @JsonIgnoreProperties("cobranza")
+    private List<CobranzaAnticipo> cobranzaAnticipo;
 
+    //Define la referencia a efectivo
+    @OneToMany
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idCobranza"), 
+      inverseJoinColumns = @JoinColumn(name = "idEfectivo"))
+    @JsonIgnoreProperties("cobranza")
+    private List<Efectivo> efectivo;
+    
+    //Define la referencia a ChequeCartera
+    @OneToMany
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idCobranza"), 
+      inverseJoinColumns = @JoinColumn(name = "idChequeCartera"))
+    @JsonIgnoreProperties("cobranza")
+    private List<ChequeCartera> chequeCartera;
+    
+    //Define la referencia a DocumentoCartera
+    @OneToMany
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idCobranza"), 
+      inverseJoinColumns = @JoinColumn(name = "idDocumentoCartera"))
+    @JsonIgnoreProperties("cobranza")
+    private List<DocumentoCartera> documentoCartera;
+    
+    //Define la referencia a MonedaCartera
+    @OneToMany
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idCobranza"), 
+      inverseJoinColumns = @JoinColumn(name = "idMonedaCartera"))
+    @JsonIgnoreProperties("cobranza")
+    private List<MonedaCartera> monedaCartera;
+    
+    //Define la referencia a LibroBanco
+    @OneToMany
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idCobranza"), 
+      inverseJoinColumns = @JoinColumn(name = "idLibroBanco"))
+    @JsonIgnoreProperties("cobranza")
+    private List<LibroBanco> libroBanco;
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -162,6 +222,54 @@ public class Cobranza extends ObjetoGenerico {
 
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
+    }
+
+    public List<Efectivo> getEfectivo() {
+        return efectivo;
+    }
+
+    public void setEfectivo(List<Efectivo> efectivo) {
+        this.efectivo = efectivo;
+    }
+
+    public List<ChequeCartera> getChequeCartera() {
+        return chequeCartera;
+    }
+
+    public void setChequeCartera(List<ChequeCartera> chequeCartera) {
+        this.chequeCartera = chequeCartera;
+    }
+
+    public List<DocumentoCartera> getDocumentoCartera() {
+        return documentoCartera;
+    }
+
+    public void setDocumentoCartera(List<DocumentoCartera> documentoCartera) {
+        this.documentoCartera = documentoCartera;
+    }
+
+    public List<MonedaCartera> getMonedaCartera() {
+        return monedaCartera;
+    }
+
+    public void setMonedaCartera(List<MonedaCartera> monedaCartera) {
+        this.monedaCartera = monedaCartera;
+    }
+
+    public List<LibroBanco> getLibroBanco() {
+        return libroBanco;
+    }
+
+    public void setLibroBanco(List<LibroBanco> libroBanco) {
+        this.libroBanco = libroBanco;
+    }
+
+    public List<CobranzaAnticipo> getCobranzaAnticipo() {
+        return cobranzaAnticipo;
+    }
+
+    public void setCobranzaAnticipo(List<CobranzaAnticipo> cobranzaAnticipo) {
+        this.cobranzaAnticipo = cobranzaAnticipo;
     }
     
 }
