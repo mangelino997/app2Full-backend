@@ -1,11 +1,13 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -32,6 +34,14 @@ public class CobranzaAnticipo extends ObjetoGenerico {
     @Column(name = "saldo", nullable = false)
     private BigDecimal saldo;
 
+    @ManyToOne
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idCobranzaAnticipo"), 
+      inverseJoinColumns = @JoinColumn(name = "idCobranza"))
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo"})
+    private Cobranza cobranzaOrigen;
+    
     //Getters y Setters de la clase
 
     public Cobranza getCobranza() {
@@ -56,6 +66,14 @@ public class CobranzaAnticipo extends ObjetoGenerico {
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+
+    public Cobranza getCobranzaOrigen() {
+        return cobranzaOrigen;
+    }
+
+    public void setCobranzaOrigen(Cobranza cobranzaOrigen) {
+        this.cobranzaOrigen = cobranzaOrigen;
     }
     
 }
