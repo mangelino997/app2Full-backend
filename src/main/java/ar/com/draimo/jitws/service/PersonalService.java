@@ -109,14 +109,13 @@ public class PersonalService {
 
     //Obtiene un listado de choferes por alias, distancia y empresa ordenados por nombre
     public Object listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(String alias,
-            boolean largaDistancia, int idEmpresa) throws IOException {
+            int largaDistancia, int idEmpresa) throws IOException {
         Date fecha = new Date(new java.util.Date().getTime());
         //Establece el string vacio a alias en caso de que el usuario quiera listar todo
         alias = (alias.equals("***") ? "" : alias);
-        int distancia = largaDistancia ? 1 : 0;
         List<Personal> elementos
                 = elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
-                        alias, distancia, idEmpresa, fecha);
+                        alias, largaDistancia, idEmpresa, fecha);
         return aplicarFiltros(elementos, null);
     }
 
@@ -204,16 +203,16 @@ public class PersonalService {
         Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
         Personal personal = elementoDAO.findById(elemento.getId()).get();
         controlarLongitud(elemento);
-        if (foto.getOriginalFilename().equals("")) {
+        if (foto.getOriginalFilename().equals("") && personal.getFoto().getId() != 1) {
             if (personal.getFoto() != null) {
                 fotoDAO.deleteById(personal.getFoto().getId());
             }
             elemento.setFoto(fotoDAO.findById(1).get());
         } else {
-            Foto f = personal.getFoto() != null ? fotoService.actualizar(
+            Foto f = personal.getFoto() != null && personal.getFoto().getId() != 1? fotoService.actualizar(
                     personal.getFoto().getId(), foto, false) : fotoService.agregar(foto, false);
             f.setTabla("personal");
-            Foto f1 = personal.getFoto() != null ? fotoDAO.save(f) : fotoDAO.saveAndFlush(f);
+            Foto f1 = personal.getFoto() != null && personal.getFoto().getId() != 1? fotoDAO.save(f) : fotoDAO.saveAndFlush(f);
             elemento.setFoto(f1);
         }
         if (licConducir.getOriginalFilename().equals("")) {

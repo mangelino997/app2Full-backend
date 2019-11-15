@@ -244,7 +244,7 @@ public class VehiculoService {
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = elementos != null ? SimpleBeanPropertyFilter
                 .serializeAllExcept("datos") : SimpleBeanPropertyFilter
-                .serializeAllExcept("datos");
+                .serializeAllExcept();
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPdf", theFilter)
                 .addFilter("filtroFoto", theFilter);

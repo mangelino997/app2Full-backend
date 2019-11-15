@@ -45,8 +45,8 @@ public class LocalidadService {
     //Obtiene una lista por provincia
     public List<Localidad> listarPorProvincia(int idProvincia) {
         return idProvincia != 0 ? 
-                elementoDAO.findByProvincia(provinciaDAO.findById(idProvincia).get()) : 
-                elementoDAO.findAll();
+                elementoDAO.findByProvinciaOrderByNombreAsc(provinciaDAO.findById(idProvincia).get()) : 
+                elementoDAO.findAllByOrderByNombreAsc();
     }
 
     //Agrega un registro

@@ -107,8 +107,6 @@ public class VehiculoProveedorController {
         try {
             //Actualiza el registro
             VehiculoProveedor a = elementoService.actualizar(elemento);
-            //Establece el alias
-            elementoService.establecerAlias(elemento);
             //Envia la nueva lista a los usuarios subscripto
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito

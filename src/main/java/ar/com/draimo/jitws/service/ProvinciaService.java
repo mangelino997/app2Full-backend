@@ -6,7 +6,6 @@ import ar.com.draimo.jitws.dao.IPaisDAO;
 import ar.com.draimo.jitws.model.Provincia;
 import ar.com.draimo.jitws.model.Pais;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,8 +45,8 @@ public class ProvinciaService {
 
     //Obtiene una lista por pais
     public List<Provincia> listarPorPais(int id) {
-        Optional<Pais> elemento = paisDAO.findById(id);
-        return elementoDAO.findByPais(elemento);
+        Pais elemento = paisDAO.findById(id).get();
+        return elementoDAO.findByPaisOrderByNombreAsc(elemento);
     }
 
     //Agrega un registro
