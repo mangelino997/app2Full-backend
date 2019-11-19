@@ -1,12 +1,9 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
-import java.math.BigDecimal;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
@@ -60,12 +57,12 @@ public class CobranzaMedioPago extends ObjetoGenerico {
 //    @MapsId("idMonedaCartera")
 //    @JoinColumn(name = "idMonedaCartera", nullable = true)
 //    private MonedaCartera monedaCartera;
-//
-//    //Define la referencia a la clase LibroBanco
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-//    @MapsId("idLibroBancoTransferencia")
-//    @JoinColumn(name = "idLibroBancoTransferencia", nullable = true)
-//    private LibroBanco libroBancoTransferencia;
+
+    //Define la referencia a la clase LibroBanco
+    @ManyToOne(cascade = CascadeType.REFRESH)
+//    @MapsId("idLibroBanco")
+    @JoinColumn(name = "idLibroBanco", nullable = true)
+    private LibroBanco libroBanco;
 
     //Getters y Setters de la clase
 
@@ -124,13 +121,13 @@ public class CobranzaMedioPago extends ObjetoGenerico {
 //    public void setMonedaCartera(MonedaCartera monedaCartera) {
 //        this.monedaCartera = monedaCartera;
 //    }
-//
-//    public LibroBanco getLibroBancoTransferencia() {
-//        return libroBancoTransferencia;
-//    }
-//
-//    public void setLibroBancoTransferencia(LibroBanco libroBancoTransferencia) {
-//        this.libroBancoTransferencia = libroBancoTransferencia;
-//    }
+
+    public LibroBanco getLibroBanco() {
+        return libroBanco;
+    }
+
+    public void setLibroBanco(LibroBanco libroBanco) {
+        this.libroBanco = libroBanco;
+    }
 
 }
