@@ -69,8 +69,9 @@ public class PersonalController {
     @GetMapping(value = URL + "/listarChoferesPorDistanciaPorAlias/{alias}/{largaDistancia}")
     @ResponseBody
     public Object listarChoferesPorDistanciaPorAliasOrdenados(@PathVariable String alias, @PathVariable boolean largaDistancia) throws IOException {
+        int distancia = largaDistancia ? 1 : 0;
         return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
-                alias, largaDistancia, 0);
+                alias, distancia, 0);
     }
 
     //Obtiene la lista de choferespor empresa
@@ -131,12 +132,12 @@ public class PersonalController {
         return elementoService.listarPorAlias(alias, true, idEmpresa, idSucursal);
     }
 
-//    //Obtiene una lista de choferes por alias
-//    @GetMapping(value = URL + "/listarChoferActivoPorAlias/{alias}")
-//    @ResponseBody
-//    public Object listarChoferPorAlias(@PathVariable String alias) throws IOException, Exception {
-//        return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias, 0, 0);
-//    }
+    //Obtiene una lista de choferes por alias
+    @GetMapping(value = URL + "/listarChoferActivoPorAlias/{alias}")
+    @ResponseBody
+    public Object listarChoferPorAlias(@PathVariable String alias) throws IOException, Exception {
+        return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias, 2, 0);
+    }
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("personal") String elementoString,
