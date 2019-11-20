@@ -1,11 +1,13 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -41,6 +43,16 @@ public class MonedaCartera extends ObjetoGenerico {
     @Column(name = "esIngreso", nullable = false)
     private boolean esIngreso;
 
+    //Define la referencia a la clase cobranza
+    @ManyToOne
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idMonedaCartera"), 
+      inverseJoinColumns = @JoinColumn(name = "idCobranza"))
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+        "libroBanco","monedaCartera", "documentoCartera"})
+    private Cobranza cobranzaOrigen;
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -81,6 +93,14 @@ public class MonedaCartera extends ObjetoGenerico {
 
     public void setEsIngreso(boolean esIngreso) {
         this.esIngreso = esIngreso;
+    }
+
+    public Cobranza getCobranzaOrigen() {
+        return cobranzaOrigen;
+    }
+
+    public void setCobranzaOrigen(Cobranza cobranzaOrigen) {
+        this.cobranzaOrigen = cobranzaOrigen;
     }
     
 }

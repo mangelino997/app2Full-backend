@@ -34,12 +34,14 @@ public class CobranzaAnticipo extends ObjetoGenerico {
     @Column(name = "saldo", nullable = false)
     private BigDecimal saldo;
 
+    //Define la referencia a la clase cobranza
     @ManyToOne
     @JoinTable(
       name = "cobranzamediopago", 
       joinColumns = @JoinColumn(name = "idCobranzaAnticipo"), 
       inverseJoinColumns = @JoinColumn(name = "idCobranza"))
-    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo"})
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+        "libroBanco","monedaCartera", "documentoCartera"})
     private Cobranza cobranzaOrigen;
     
     //Getters y Setters de la clase

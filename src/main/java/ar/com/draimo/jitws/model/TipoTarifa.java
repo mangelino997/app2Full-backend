@@ -1,8 +1,12 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +30,15 @@ public class TipoTarifa extends ObjetoGenerico {
     //Define si es por porcentaje
     @Column(name = "porPorcentaje", nullable = false)
     private boolean porPorcentaje;
+    
+    //Define la referencia a la clase cobranza
+    @ManyToOne
+    @JoinTable(
+      name = "ordenventatarifa", 
+      joinColumns = @JoinColumn(name = "idTipoTarifa"), 
+      inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"))
+    @JsonIgnoreProperties(value = {"tipoTarifa","empresas","clientes"})
+    private OrdenVenta ordenVenta;
 
     //Getters y Setters de la clase
     public String getNombre() {

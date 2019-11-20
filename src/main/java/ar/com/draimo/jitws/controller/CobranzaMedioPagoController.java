@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CobranzaMedioPagoController {
 
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/cobranzamediopagos";
+    private final String URL = RutaConstant.URL_BASE + "/cobranzamediopago";
 
     //Define la url de subcripciones a sockets
     private final String TOPIC = RutaConstant.URL_TOPIC + "/cobranzamediopago";

@@ -103,11 +103,9 @@ public class Empresa extends ObjetoGenerico {
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "empresaordenventa",
             joinColumns = @JoinColumn(name = "idEmpresa"),
-            inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"),
-            uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"idEmpresa", "idOrdenVenta"})})
+            inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"))
     @JsonIgnoreProperties(value = {"clientes", "empresas"})
-    private List<OrdenVenta> ordenesVentas = new ArrayList<>();
+    private List<OrdenVenta> ordenesVentas;
 
     //Define token
     @Column(name = "token", length = 1000)

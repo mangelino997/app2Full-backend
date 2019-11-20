@@ -1,12 +1,14 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -36,6 +38,16 @@ public class LibroBanco extends ObjetoGenerico {
     @Column(name = "esDebito", nullable = false)
     private boolean esDebito;
 
+    //Define la referencia a la clase cobranza
+    @ManyToOne
+    @JoinTable(
+      name = "cobranzamediopago", 
+      joinColumns = @JoinColumn(name = "idLibroBanco"), 
+      inverseJoinColumns = @JoinColumn(name = "idCobranza"))
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+        "libroBanco","monedaCartera", "documentoCartera"})
+    private Cobranza cobranzaOrigen;
+    
     //Getters y Setters de la clase
 
     public CuentaBancaria getCuentaBancaria() {
@@ -68,6 +80,14 @@ public class LibroBanco extends ObjetoGenerico {
 
     public void setEsDebito(boolean esDebito) {
         this.esDebito = esDebito;
+    }
+
+    public Cobranza getCobranzaOrigen() {
+        return cobranzaOrigen;
+    }
+
+    public void setCobranzaOrigen(Cobranza cobranzaOrigen) {
+        this.cobranzaOrigen = cobranzaOrigen;
     }
 
 }

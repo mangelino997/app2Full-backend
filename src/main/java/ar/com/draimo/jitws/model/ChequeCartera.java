@@ -9,10 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -55,12 +52,18 @@ public class ChequeCartera extends ObjetoGenerico {
     @Column(name = "numeroDocumentoEmisor", length = 15, nullable = false)
     private String numeroDocumentoEmisor;
 
+    //Define si el cheque es electronico
+    @Column(name = "eCheq", nullable = false)
+    private boolean eCheq;
+
+    //Define la referencia a la clase cobranza
     @ManyToOne
     @JoinTable(
       name = "cobranzamediopago", 
       joinColumns = @JoinColumn(name = "idChequeCartera"), 
       inverseJoinColumns = @JoinColumn(name = "idCobranza"))
-    @JsonIgnoreProperties(value = {"chequeCartera", "efectivo","cobranzaAnticipo"})
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+        "libroBanco","monedaCartera", "documentoCartera"})
     private Cobranza cobranzaOrigen;
     
     //Getters y Setters de la clase
@@ -119,6 +122,14 @@ public class ChequeCartera extends ObjetoGenerico {
 
     public void setNumeroDocumentoEmisor(String numeroDocumentoEmisor) {
         this.numeroDocumentoEmisor = numeroDocumentoEmisor;
+    }
+
+    public boolean geteCheq() {
+        return eCheq;
+    }
+
+    public void seteCheq(boolean eCheq) {
+        this.eCheq = eCheq;
     }
 
     public Cobranza getCobranzaOrigen() {

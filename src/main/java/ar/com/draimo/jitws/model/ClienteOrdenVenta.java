@@ -21,16 +21,17 @@ import javax.persistence.Table;
 @Table(name = "clienteordenventa")
 public class ClienteOrdenVenta extends ObjetoGenerico {
 
-    //Referencia a la clase cliente
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCliente", nullable = false)
-    private Cliente cliente;
     
     //Referencia a la clase ordenVenta
     @JsonIgnoreProperties(value = {"clientes","empresas"})
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
+    
+    //Referencia a la clase cliente
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idCliente", nullable = false)
+    private Cliente cliente;
     
     //Referencia a la clase Usuario (alta)
     @ManyToOne(cascade = CascadeType.REFRESH)

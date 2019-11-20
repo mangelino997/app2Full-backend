@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -215,13 +217,12 @@ public class Cliente extends ObjetoGenerico {
     private boolean esReceptorFCE;
 
     //Referencia a la clase ordenVenta
-//    @ManyToMany(cascade = CascadeType.REFRESH)
-//    @JoinTable(name = "clienteordenventa",
-//        joinColumns = @JoinColumn(name = "idCliente"),
-//        inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"),
-//        uniqueConstraints={@UniqueConstraint(columnNames={"idCliente", "idOrdenVenta"})})  
-//    @JsonIgnoreProperties(value = {"clientes","empresas"})
-//    private List<OrdenVenta> ordenesVentas = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.REFRESH)
+    @JoinTable(name = "clienteordenventa",
+        joinColumns = @JoinColumn(name = "idCliente"),
+        inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"))  
+    @JsonIgnoreProperties({"clientes", "empresas"})
+    private List<OrdenVenta>  ordenesVentas;
     
     //Referencia una lista a la clase clienteordenVenta
     @JsonIgnoreProperties("cliente")
@@ -597,6 +598,14 @@ public class Cliente extends ObjetoGenerico {
 
     public void setClienteVtosPagos(List<ClienteVtoPago> clienteVtosPagos) {
         this.clienteVtosPagos = clienteVtosPagos;
+    }
+
+    public List<OrdenVenta> getOrdenesVentas() {
+        return ordenesVentas;
+    }
+
+    public void setOrdenesVentas(List<OrdenVenta> ordenesVentas) {
+        this.ordenesVentas = ordenesVentas;
     }
     
 }
