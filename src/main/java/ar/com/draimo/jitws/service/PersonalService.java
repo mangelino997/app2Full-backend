@@ -156,7 +156,8 @@ public class PersonalService {
             f = fotoDAO.saveAndFlush(p);
             elemento.setFoto(f);
         }
-        elemento.setFoto(f != null ? f : null);
+        f = f!= null ? f : fotoDAO.findById(1).get();
+        elemento.setFoto(f);
         if (!licConducir.getOriginalFilename().equals("")) {
             Pdf p1 = pdfService.agregar(licConducir, false);
             p1.setTabla("personal");

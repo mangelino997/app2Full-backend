@@ -49,7 +49,7 @@ public class ViajeTramoRemitoService {
     //Obtiene un listado por viaje y estado
     public Object listarPorViajeYEstado(ViajeRemitoDTO viajeRemitoDTO) throws IOException {
         List<ViajeTramoRemito> elementos = elementoDAO.listarPorViajeYEstaFacturado(
-                viajeRemitoDTO.getIdViaje(), viajeRemitoDTO.getIdRemito(), viajeRemitoDTO.isEstaFacturado());
+                viajeRemitoDTO.getIdViaje(), viajeRemitoDTO.getIdRemito(), viajeRemitoDTO.getEstaFacturado()==1);
         for (ViajeTramoRemito elemento : elementos) {
             int id = elemento.getViajeTramo().getViaje().getId();
             Personal p = elemento.getViajeTramo().getViaje().getPersonal();

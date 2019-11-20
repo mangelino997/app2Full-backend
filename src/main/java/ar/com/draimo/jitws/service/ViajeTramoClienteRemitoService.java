@@ -67,7 +67,7 @@ public class ViajeTramoClienteRemitoService {
     public Object listarPorViajeYEstado(ViajeRemitoDTO viajeTramoClienteDto) throws IOException {
         List<ViajeTramoClienteRemito> v = elementoDAO.listarPorViajeYEstaFacturado(
                 viajeTramoClienteDto.getIdRemito(),viajeTramoClienteDto.getIdViaje(),
-                viajeTramoClienteDto.isEstaFacturado());
+                viajeTramoClienteDto.getEstaFacturado()==1);
         return retornarObjeto(v, null);
     }
 

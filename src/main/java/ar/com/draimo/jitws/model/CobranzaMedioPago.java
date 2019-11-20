@@ -14,7 +14,6 @@ import javax.persistence.Table;
 /**
  * Clase CobranzaMedioPago
  * Define el modelo (columnas) de la base de datos.
- *
  * @author blas
  */
 @Entity
@@ -134,5 +133,5 @@ public class CobranzaMedioPago extends ObjetoGenerico {
     public void setLibroBanco(LibroBanco libroBanco) {
         this.libroBanco = libroBanco;
     }
-
+    
 }
