@@ -86,7 +86,7 @@ public class ViajeRemitoService {
     //Obtiene un listado por viaje y estado
     public Object listarPorViajeYEstado(ViajeRemitoDTO viajeRemitoDTO) throws IOException {
         List<ViajeRemito> elementos = elementoDAO.listarPorViajeYEstaFacturado(
-        viajeRemitoDTO.getIdViaje(),viajeRemitoDTO.getIdRemito(),viajeRemitoDTO.isEstaFacturado());
+        viajeRemitoDTO.getIdViaje(),viajeRemitoDTO.getIdRemito(), viajeRemitoDTO.getEstaFacturado()==1);
         return retornarObjeto(elementos, null);
     }
 
@@ -121,7 +121,8 @@ public class ViajeRemitoService {
         List<ViajeRemito> elementos = elementoDAO.listarPorFiltros(viajeRemito.getFechaDesde(),
                 viajeRemito.getFechaHasta(), viajeRemito.getIdSucursalIngreso(),
                 viajeRemito.getIdSucursalDestino(), viajeRemito.getIdClienteRemitente(),
-                viajeRemito.getIdClienteDestinatario(), viajeRemito.getNumeroCamion());
+                viajeRemito.getIdClienteDestinatario(), viajeRemito.getNumeroCamion(),
+                viajeRemito.getEstaFacturado(), viajeRemito.getEstaPendiente());
         return retornarObjeto(elementos, null);
     }
 

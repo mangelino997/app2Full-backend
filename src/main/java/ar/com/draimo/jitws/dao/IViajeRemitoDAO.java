@@ -50,12 +50,14 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
             + "idSucursalDestino=:idSucursalDestino) and (:idClienteRemitente =0 or "
             + "idClienteRemitente=:idClienteRemitente) and (:idClienteDestinatario=0 or "
             + "idClienteDestinatario=:idClienteDestinatario) and (:numeroCamion=0 or "
-            + "numeroCamion=:numeroCamion)", nativeQuery = true)
+            + "numeroCamion=:numeroCamion) and (:estaFacturado=2 or estaFacturado=:estaFacturado) "
+            + "and (:estaPendiente=2 or estaPendiente=:estaPendiente)", nativeQuery = true)
     public List<ViajeRemito> listarPorFiltros(@Param("fechaDesde") String fechaDesde,
             @Param("fechaHasta") String fechaHasta, @Param("idSucursalIngreso") int idSucursalIngreso,
             @Param("idSucursalDestino") int idSucursalDestino, @Param("idClienteRemitente") 
             int idClienteRemitente,@Param("idClienteDestinatario") int idClienteDestinatario, 
-            @Param("numeroCamion") short numeroCamion);
+            @Param("numeroCamion") short numeroCamion, @Param("estaFacturado") int estaFacturado,
+            @Param("estaPendiente") int estaPendiente);
 
     //Obtiene un registro por puntoVenta, letra y nroComprobante
     @Query(value = "SELECT * FROM viajeremito WHERE puntoVenta=:puntoVenta AND letra=:"

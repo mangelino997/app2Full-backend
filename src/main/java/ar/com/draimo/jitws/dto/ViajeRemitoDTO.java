@@ -34,7 +34,10 @@ public class ViajeRemitoDTO {
     private short numeroCamion;
     
     //Define si esta facturado
-    private boolean estaFacturado;
+    private int estaFacturado;
+    
+    //Define si esta pendiente
+    private int estaPendiente;
 
     //Getters y setters del DTO
     public int getIdRemito() {
@@ -109,12 +112,20 @@ public class ViajeRemitoDTO {
         this.numeroCamion = numeroCamion;
     }
 
-    public boolean isEstaFacturado() {
+    public int getEstaFacturado() {
         return estaFacturado;
     }
 
-    public void setEstaFacturado(boolean estaFacturado) {
+    public void setEstaFacturado(int estaFacturado) {
         this.estaFacturado = estaFacturado;
+    }
+
+    public int getEstaPendiente() {
+        return estaPendiente;
+    }
+
+    public void setEstaPendiente(int estaPendiente) {
+        this.estaPendiente = estaPendiente;
     }
     
 }
