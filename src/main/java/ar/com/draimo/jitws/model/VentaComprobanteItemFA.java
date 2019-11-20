@@ -134,7 +134,7 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVentaTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idOrdenVentaTarifa", nullable = false)
+    @JoinColumn(name = "idOrdenVentaTarifa", nullable = true)
     private OrdenVentaTarifa ordenVentaTarifa;
 
     //Getters y Setters de la clase
