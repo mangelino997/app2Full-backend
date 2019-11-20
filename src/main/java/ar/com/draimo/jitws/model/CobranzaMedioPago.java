@@ -13,7 +13,6 @@ import javax.persistence.Table;
 /**
  * Clase CobranzaMedioPago
  * Define el modelo (columnas) de la base de datos.
- *
  * @author blas
  */
 @Entity
@@ -26,7 +25,7 @@ public class CobranzaMedioPago extends ObjetoGenerico {
     @JoinColumn(name = "idCobranza", nullable = false)
     private Cobranza cobranza;
 
-//    Define la referencia a la clase CobranzaAnticipo
+    //Define la referencia a la clase CobranzaAnticipo
     @ManyToOne(cascade = CascadeType.REFRESH)
     @MapsId("idCobranza")
     @JoinColumn(name = "idCobranzaAnticipo", nullable = true)
@@ -62,7 +61,7 @@ public class CobranzaMedioPago extends ObjetoGenerico {
 
     //Define la referencia a la clase LibroBanco
     @ManyToOne(cascade = CascadeType.REFRESH)
-//    @MapsId("idLibroBancoTransferencia")
+    @MapsId("idLibroBanco")
     @JoinColumn(name = "idLibroBanco", nullable = true)
     private LibroBanco libroBanco;
 
