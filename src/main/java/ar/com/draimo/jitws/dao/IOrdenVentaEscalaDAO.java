@@ -41,7 +41,7 @@ public interface IOrdenVentaEscalaDAO extends JpaRepository<OrdenVentaEscala, In
             + " on t.id=e.idEscalaTarifa inner join ordenventatarifa v on e.idOrdenVentaTarifa ="
             + "v.id where v.idOrdenVenta=:idOrdenVenta and t.valor between"
             + "  :valor and :valorHasta order by t.valor desc limit 1", nativeQuery = true)
-    public OrdenVentaEscala obtenerPorOrdenVentaYValorProximo(
+    public OrdenVentaEscala  obtenerPorOrdenVentaYValorProximo(
             @Param("idOrdenVenta") int idOrdenVenta, @Param("valor") BigDecimal valor,
             @Param("valorHasta") BigDecimal valorHasta);
     
