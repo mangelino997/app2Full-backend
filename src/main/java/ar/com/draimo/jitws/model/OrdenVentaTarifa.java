@@ -5,7 +5,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 /**
@@ -21,13 +20,13 @@ public class OrdenVentaTarifa extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @MapsId("idOrdenVenta")
+//    @MapsId("idOrdenVenta")
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
     
     //Referencia a la clase TipoTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @MapsId("idTipoTarifa")
+//    @MapsId("idTipoTarifa")
     @JoinColumn(name = "idTipoTarifa", nullable = false)
     private TipoTarifa tipoTarifa;
     
