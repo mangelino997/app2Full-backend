@@ -130,8 +130,8 @@ public class OrdenVentaEscalaService {
         BigDecimal v = new BigDecimal(valor);
         List<EscalaTarifa> escalaTarifas = escalaTarifaDAO.obtenerDosEscalasporIdOrdenVenta(idOrdenVenta);
         BigDecimal valorHasta = escalaTarifas.get(0).getValor().subtract
-        (escalaTarifas.get(1).getValor()).subtract(new BigDecimal(1.00)).setScale(2, RoundingMode.UNNECESSARY);
-        OrdenVentaEscala ordenVentaEscala = elementoDAO.obtenerPorOrdenVentaYValorProximo
+        (escalaTarifas.get(1).getValor()).setScale(2, RoundingMode.UNNECESSARY);
+        OrdenVentaEscala  ordenVentaEscala = elementoDAO.obtenerPorOrdenVentaYValorProximo
         (idOrdenVenta, v, v.add(valorHasta));
             return ordenVentaEscala.getImporteFijo()!=null? ordenVentaEscala.getImporteFijo():
              (v.multiply(ordenVentaEscala.getPrecioUnitario()));

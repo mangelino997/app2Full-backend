@@ -21,13 +21,11 @@ public class OrdenVentaTarifa extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @MapsId("idOrdenVenta")
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
     
     //Referencia a la clase TipoTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @MapsId("idTipoTarifa")
     @JoinColumn(name = "idTipoTarifa", nullable = false)
     private TipoTarifa tipoTarifa;
     

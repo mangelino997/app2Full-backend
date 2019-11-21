@@ -25,14 +25,14 @@ public class EmpresaOrdenVenta extends ObjetoGenerico {
     //Referencia a la clase empresa
     @JsonIgnoreProperties(value = "ordenesVentas")
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @MapsId("idEmpresa")
+//    @MapsId("idEmpresa")
     @JoinColumn(name = "idEmpresa", nullable = false)
     private Empresa empresa;
     
     //Referencia a la clase ordenVenta
     @JsonIgnoreProperties(value = {"clientes","empresas"})
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @MapsId("idOrdenVenta")
+//    @MapsId("idOrdenVenta")
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
     
