@@ -21,7 +21,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "clienteordenventa")
 public class ClienteOrdenVenta extends ObjetoGenerico {
-
     
     //Referencia a la clase ordenVenta
     @JsonIgnoreProperties(value = {"clientes","empresas"})

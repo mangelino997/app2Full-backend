@@ -97,8 +97,8 @@ public class ViajeTramoClienteRemitoService {
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(int elemento) {
-        elementoDAO.deleteById(elemento);
+    public void eliminar(int id) {
+        elementoDAO.deleteById(id);
     }
     
     //Convierte una lista o un elemento a object para retornar con filtros aplicados
