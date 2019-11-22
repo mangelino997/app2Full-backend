@@ -65,6 +65,27 @@ public class CobranzaMedioPagoController {
         return elementoService.listarPorCobranza(idCobranza);
     }
 
+    //Agrega un lote de registros
+    @PostMapping(value = URL + "/agregarLote")
+    public ResponseEntity<?> agregarLote(@RequestBody List<CobranzaMedioPago> elementos) {
+        try {
+            CobranzaMedioPago a = elementoService.agregarLote(elementos);
+            //Envia la nueva lista a lois usuarios subscriptos
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de agregado con exito
+            return MensajeRespuesta.agregado(a.getId());
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody CobranzaMedioPago elemento) {

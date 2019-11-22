@@ -6,7 +6,6 @@ import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.model.MonedaCotizacion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

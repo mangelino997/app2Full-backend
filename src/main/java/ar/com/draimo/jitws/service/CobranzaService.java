@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICobranzaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.model.Cobranza;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -27,6 +28,10 @@ public class CobranzaService {
     @Autowired
     IEmpresaDAO empresaDAO;
 
+    //Define el dao de tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Cobranza elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -47,6 +52,7 @@ public class CobranzaService {
     @Transactional(rollbackFor = Exception.class)
     public Cobranza agregar(Cobranza elemento) {
         elemento.setFechaRegistracion(new Timestamp(new java.util.Date().getTime()));
+        elemento.setTipoComprobante(tipoComprobanteDAO.findById(4).get());
         return elementoDAO.saveAndFlush(elemento);
     }
 
