@@ -69,14 +69,28 @@ public class RepartoController {
     @GetMapping(value = URL + "/listarAbiertosPropios")
     @ResponseBody
     public Object listarAbiertosPropios() throws IOException {
-        return elementoService.listarAbiertosPropios();
+        return elementoService.listarPorPropiosYCerrados(true, false);
     }
 
     //Obtiene la lista de registros terceros abiertos
     @GetMapping(value = URL + "/listarAbiertosTerceros")
     @ResponseBody
     public Object listarAbiertosTerceros() throws IOException {
-        return elementoService.listarAbiertosTerceros();
+        return elementoService.listarPorPropiosYCerrados(false, false);
+    }
+
+    //Obtiene la lista de registros propios abiertos
+    @GetMapping(value = URL + "/listarCerradosPropios")
+    @ResponseBody
+    public Object listarCerradosPropios() throws IOException {
+        return elementoService.listarPorPropiosYCerrados(true, true);
+    }
+
+    //Obtiene la lista de registros terceros abiertos
+    @GetMapping(value = URL + "/listarCerradosTerceros")
+    @ResponseBody
+    public Object listarCerradosTerceros() throws IOException {
+        return elementoService.listarPorPropiosYCerrados(false, true);
     }
 
     //Obtiene la lista por estaCerrada

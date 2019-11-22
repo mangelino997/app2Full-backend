@@ -132,18 +132,12 @@ public class RepartoService {
         return aplicarFiltros(null, elemento, true);
     }
 
-    //Obtiene la lista de registros propios abiertos
-    public Object listarAbiertosPropios() throws IOException {
-        List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, true);
+    //Obtiene la lista de registros cerrados
+    public Object listarPorPropiosYCerrados(boolean propio, boolean cerrado) throws IOException {
+        List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(cerrado, propio);
         return aplicarFiltros(elementos, null, false);
     }
-
-    //Obtiene la lista de registros terceros abiertos
-    public Object listarAbiertosTerceros() throws IOException {
-        List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYReparto(false, false);
-        return aplicarFiltros(elementos, null, false);
-    }
-
+    
     //Obtiene la lista por EstaCerrada 
     public Object listarPorEstaCerrada(boolean estaCerrada) throws IOException {
         List<Reparto> elementos = elementoDAO.listarPorEstaCerradaYEmpresa(estaCerrada, 0);
