@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
+import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
@@ -12,6 +13,7 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteRemitoDAO;
+import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.model.VentaComprobanteItemFA;
@@ -70,6 +72,10 @@ public class VentaComprobanteService {
     //Define la referancia a MonedaDAO
     @Autowired
     IMonedaDAO monedaDAO;
+   
+    //Define la referancia a PuntoVentaDAO
+    @Autowired
+    IPuntoVentaDAO puntoVentaDAO;
 
     //Define la referancia a ClienteDAO
     @Autowired
@@ -147,6 +153,10 @@ public class VentaComprobanteService {
         ViajeRemito viajeRemito;
         ViajeTramoClienteRemito viajeTramoClienteRemito;
         BigDecimal importeTotal = new BigDecimal(0.00);
+        PuntoVenta pv = puntoVentaDAO.findByPuntoVentaAndSucursalAndEmpresaAndAfipComprobante_CodigoAfip(
+                elemento.getPuntoVenta(), elemento.getSucursal(), elemento.getEmpresa(), elemento.getCodigoAfip());
+        pv.setUltimoNumero(elemento.getNumero());
+        puntoVentaDAO.save(pv);
         //Agrega los items FA
         for (VentaComprobanteItemFA itemFA : elemento.getVentaComprobanteItemFAs()) {
             itemFA.setVentaComprobante(vc);
