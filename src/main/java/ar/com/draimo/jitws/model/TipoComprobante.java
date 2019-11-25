@@ -20,7 +20,7 @@ public class TipoComprobante extends ObjetoGenerico {
     private String nombre;
     
     //Define la abreviatura
-    @Column(name = "abreviatura",length = 8, nullable = false)
+    @Column(name = "abreviatura",length = 10, nullable = false)
     private String abreviatura;
     
     //Define si esta activo ingreso carga
