@@ -56,7 +56,7 @@ public class Pago extends ObjetoGenerico {
     private BigDecimal importe;
 
     //Define observaciones
-    @Column(name = "observaciones", length = 100, nullable = true)
+    @Column(name = "observaciones", length = 150, nullable = true)
     private String observaciones;
 
     //Define referencia a la clase usuario(alta)

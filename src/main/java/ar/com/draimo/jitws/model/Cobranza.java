@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -60,7 +61,7 @@ public class Cobranza extends ObjetoGenerico {
     private BigDecimal importe;
 
     //Define observaciones
-    @Column(name = "observaciones", length = 100, nullable = true)
+    @Column(name = "observaciones", length = 150, nullable = true)
     private String observaciones;
 
     //Define referencia a la clase usuario(alta)
@@ -131,6 +132,12 @@ public class Cobranza extends ObjetoGenerico {
       inverseJoinColumns = @JoinColumn(name = "idLibroBanco"))
     @JsonIgnoreProperties("cobranza")
     private List<LibroBanco> libroBanco;
+    
+    //Define la referencia a ventaComprobante
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "cobranza")
+    @JsonIgnoreProperties(value = {"ventaComprobanteItemCR", "ventaComprobanteItemFAs",
+            "ventaComprobanteItemNC", "ventaComprobanteItemND","seguimientoVentaComprobantes"})
+    private List<CobranzaItem> cobranzaItems;
     
     //Getters y Setters de la clase
 
@@ -268,6 +275,14 @@ public class Cobranza extends ObjetoGenerico {
 
     public void setCobranzaAnticipo(List<CobranzaAnticipo> cobranzaAnticipo) {
         this.cobranzaAnticipo = cobranzaAnticipo;
+    }
+
+    public List<CobranzaItem> getCobranzaItems() {
+        return cobranzaItems;
+    }
+
+    public void setCobranzaItems(List<CobranzaItem> cobranzaItems) {
+        this.cobranzaItems = cobranzaItems;
     }
     
 }

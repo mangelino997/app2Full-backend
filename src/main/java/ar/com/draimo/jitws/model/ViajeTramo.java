@@ -100,6 +100,18 @@ public class ViajeTramo extends ObjetoGenerico {
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
     
+    //Define un km100
+    @Column(name = "km100", nullable = true)
+    private short km100;
+    
+    //Define observaciones km 100
+    @Column(name = "observacionesKm100", length = 100, nullable = true)
+    private String observacionesKm100;
+    
+    //Define estadia
+    @Column(name = "estadia", nullable = true)
+    private short estadia;
+    
     //Getters y Setters de la clase
 
     public Viaje getViaje() {
@@ -228,6 +240,30 @@ public class ViajeTramo extends ObjetoGenerico {
 
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
+    }
+
+    public short getKm100() {
+        return km100;
+    }
+
+    public void setKm100(short km100) {
+        this.km100 = km100;
+    }
+
+    public String getObservacionesKm100() {
+        return observacionesKm100;
+    }
+
+    public void setObservacionesKm100(String observacionesKm100) {
+        this.observacionesKm100 = observacionesKm100;
+    }
+
+    public short getEstadia() {
+        return estadia;
+    }
+
+    public void setEstadia(short estadia) {
+        this.estadia = estadia;
     }
 
 }

@@ -17,6 +17,7 @@ import ar.com.draimo.jitws.model.DocumentoCartera;
 import ar.com.draimo.jitws.model.Efectivo;
 import ar.com.draimo.jitws.model.LibroBanco;
 import ar.com.draimo.jitws.model.MonedaCartera;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,32 +85,39 @@ public class CobranzaMedioPagoService {
     public CobranzaMedioPago agregarLote(List<CobranzaMedioPago> elementos) {
         Cobranza cobranza = cobranzaDAO.findById(elementos.get(0).getId()).get();
         CobranzaAnticipo anticipo = null;
+        BigDecimal montoTotal= new BigDecimal(0);
         for (CobranzaMedioPago elemento : elementos) {
             elemento.setCobranza(cobranza);
             if (elemento.getChequeCartera() != null) {
                 chequeCarteraDAO.saveAndFlush(elemento.getChequeCartera());
+                montoTotal.add(elemento.getChequeCartera().getImporte());
             }
             if (elemento.getMonedaCartera() != null) {
                 monedaCarteraDAO.saveAndFlush(elemento.getMonedaCartera());
+                montoTotal.add(elemento.getMonedaCartera().getImporte());
             }
             if (elemento.getDocumentoCartera() != null) {
                 documentoCarteraDAO.saveAndFlush(elemento.getDocumentoCartera());
+                montoTotal.add(elemento.getDocumentoCartera().getImporte());
             }
             if (elemento.getLibroBanco() != null) {
                 libroBancoDAO.saveAndFlush(elemento.getLibroBanco());
+                montoTotal.add(elemento.getLibroBanco().getImporte());
             }
             if (elemento.getEfectivo() != null) {
                 efectivoDAO.saveAndFlush(elemento.getEfectivo());
+                montoTotal.add(elemento.getEfectivo().getImporte());
             }
             if (elemento.getCobranzaAnticipo() != null) {
                 anticipo = cobranzaAnticipoDAO.findById(elemento.getCobranzaAnticipo().getId()).get();
                 anticipo.setSaldo(anticipo.getSaldo().subtract(
                         elemento.getImporteCobranzaAnticipo()).setScale(2, RoundingMode.HALF_UP));
                 cobranzaAnticipoDAO.save(anticipo);
-
+                montoTotal.add(elemento.getImporteCobranzaAnticipo());
             }
         }
-        return elementoDAO.saveAndFlush(elementos.get(0));
+        return cobranza.getImporte().compareTo(montoTotal)==(-1) ?
+        elementoDAO.saveAndFlush(elementos.get(0)) : null;
     }
 
     //Agrega un registro

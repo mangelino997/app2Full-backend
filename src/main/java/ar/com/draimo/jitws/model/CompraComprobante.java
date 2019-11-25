@@ -66,12 +66,14 @@ public class CompraComprobante extends ObjetoGenerico {
     private Date fechaContable;
 
     //Define fechaRegistracion
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "UTC-3")
     @Column(name = "fechaRegistracion", nullable = false)
     private Timestamp fechaRegistracion;
 
     //Define fechaVtoPago
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "fechaVtoPago", nullable = false)
-    private Timestamp fechaVtoPago;
+    private Date fechaVtoPago;
 
     //Referencia a la clase proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -240,14 +242,14 @@ public class CompraComprobante extends ObjetoGenerico {
         this.fechaContable = fechaContable;
     }
 
-    public Timestamp getFechaVtoPago() {
+    public Date getFechaVtoPago() {
         return fechaVtoPago;
     }
 
-    public void setFechaVtoPago(Timestamp fechaVtoPago) {
+    public void setFechaVtoPago(Date fechaVtoPago) {
         this.fechaVtoPago = fechaVtoPago;
     }
-
+    
     public Timestamp getFechaRegistracion() {
         return fechaRegistracion;
     }
