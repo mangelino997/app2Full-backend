@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Interfaz DAO OrdenVentaTarifa
@@ -22,5 +23,10 @@ public interface IOrdenVentaTarifaDAO extends JpaRepository<OrdenVentaTarifa, In
     
     //Obtiene un listado por ordenVenta y escala
     public List<OrdenVentaTarifa> findByOrdenVentaAndTipoTarifa_PorEscala(OrdenVenta ordenVenta, boolean porEscala);
+    
+    //Obtiene un listado por ordenVenta y escala
+    @Query(value = "select * from ordenventatarifa where idOrdenVenta =:idOrdenVenta"
+            + " and idTipoTarifa=:idTipoTarifa", nativeQuery = true)
+    public OrdenVentaTarifa obtenerPorOrdenVentaYTipoTarifa(int idOrdenVenta, int idTipoTarifa);
     
 }
