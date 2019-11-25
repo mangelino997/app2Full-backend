@@ -42,6 +42,11 @@ public class TipoComprobanteService {
                 : elementoDAO.findByNombreContaining(nombre);
     }
 
+    //Obtiene una lista por esta activo compra carga igual true
+    public List<TipoComprobante> listarEstaActivoCompraCarga() {
+        return elementoDAO.findByEstaActivoCompraCargaTrue();
+    }
+    
     //Obtiene una lista por esta activo ingreso carga igual true
     public List<TipoComprobante> listarEstaActivoIngresoCarga() {
         return elementoDAO.findByEstaActivoIngresoCargaTrue();

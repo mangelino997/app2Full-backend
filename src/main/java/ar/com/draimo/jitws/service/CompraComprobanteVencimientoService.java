@@ -68,9 +68,10 @@ public class CompraComprobanteVencimientoService {
         //Obtiene el importe por cuota
         BigDecimal importe = totalImporte.divide(cuotas, 2, RoundingMode.HALF_UP);
         //Establece los datos a vencimiento y lo agrega a la lista
-        for (int i = 0; i < cantidadCuotas; i++) {
+        for (short i = 0; i < cantidadCuotas; i++) {
             vencimiento = new CompraComprobanteVencimiento();
             vencimiento.setImporte(importe);
+            vencimiento.setCuota((short)(i + 1));
             fechaString = LocalDate.parse(fechaString).plusDays(cantDias).toString();
             vencimiento.setFecha(Date.valueOf(fechaString));
             vencimientos.add(vencimiento);

@@ -69,6 +69,10 @@ public class CompraComprobante extends ObjetoGenerico {
     @Column(name = "fechaRegistracion", nullable = false)
     private Timestamp fechaRegistracion;
 
+    //Define fechaVtoPago
+    @Column(name = "fechaVtoPago", nullable = false)
+    private Timestamp fechaVtoPago;
+
     //Referencia a la clase proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProveedor", nullable = false)
@@ -234,6 +238,14 @@ public class CompraComprobante extends ObjetoGenerico {
 
     public void setFechaContable(Date fechaContable) {
         this.fechaContable = fechaContable;
+    }
+
+    public Timestamp getFechaVtoPago() {
+        return fechaVtoPago;
+    }
+
+    public void setFechaVtoPago(Timestamp fechaVtoPago) {
+        this.fechaVtoPago = fechaVtoPago;
     }
 
     public Timestamp getFechaRegistracion() {

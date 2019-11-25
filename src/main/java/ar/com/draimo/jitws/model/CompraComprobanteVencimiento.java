@@ -35,7 +35,31 @@ public class CompraComprobanteVencimiento extends ObjetoGenerico {
     //Define el importe
     @Column(name = "importe", nullable = false)
     private BigDecimal importe;
+    
+    //Define el numero de cuotas
+    @Column(name = "cuota", nullable = false)
+    private short cuota;
 
+    //Define el numero de cuotas
+    @Column(name = "estaPagado", nullable = false)
+    private boolean estaPagado;
+    
+    public short getCuota() {
+        return cuota;
+    }
+
+    public void setCuota(short cuota) {
+        this.cuota = cuota;
+    }
+    
+    public boolean isEstaPagado() {
+        return estaPagado;
+    }
+
+    public void setEstaPagado(boolean estaPagado) {
+        this.estaPagado = estaPagado;
+    }
+    
     //Getters y Setters de la clase
     public CompraComprobante getCompraComprobante() {
         return compraComprobante;
