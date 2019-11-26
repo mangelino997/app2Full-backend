@@ -36,6 +36,11 @@ public class CobranzaAnticipoService {
         return elementoDAO.findAll();
     }
 
+    //Obtiene la lista por cliente (Solo anticipos con saldo)
+    public List<CobranzaAnticipo> listarPorCliente(int idCliente) {
+        return elementoDAO.listarPorCliente(idCliente);
+    }
+
     //Obtiene una lista por cobranza
     public List<CobranzaAnticipo> listarPorCobranza(int idCobranza) {
         return elementoDAO.findByCobranza(cobranzaDAO.findById(idCobranza).get());

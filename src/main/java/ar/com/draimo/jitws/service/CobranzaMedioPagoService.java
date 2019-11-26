@@ -9,6 +9,7 @@ import ar.com.draimo.jitws.dao.IDocumentoCarteraDAO;
 import ar.com.draimo.jitws.dao.IEfectivoDAO;
 import ar.com.draimo.jitws.dao.ILibroBancoDAO;
 import ar.com.draimo.jitws.dao.IMonedaCarteraDAO;
+import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.model.ChequeCartera;
 import ar.com.draimo.jitws.model.Cobranza;
 import ar.com.draimo.jitws.model.CobranzaAnticipo;
@@ -64,6 +65,10 @@ public class CobranzaMedioPagoService {
     @Autowired
     ICobranzaAnticipoDAO cobranzaAnticipoDAO;
 
+    //Define la referencia al DAO de tipoDocumento
+    @Autowired
+    ITipoDocumentoDAO tipoDocumentoDAO;
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CobranzaMedioPago elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -89,6 +94,7 @@ public class CobranzaMedioPagoService {
         for (CobranzaMedioPago elemento : elementos) {
             elemento.setCobranza(cobranza);
             if (elemento.getChequeCartera() != null) {
+                elemento.getChequeCartera().setTipoDocumentoEmisor(tipoDocumentoDAO.findById(1).get());
                 chequeCarteraDAO.saveAndFlush(elemento.getChequeCartera());
                 montoTotal.add(elemento.getChequeCartera().getImporte());
             }

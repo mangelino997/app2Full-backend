@@ -60,17 +60,17 @@ public class PersonalFamiliarService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object agregar(PersonalFamiliar elemento) throws Exception {
+    public int agregar(PersonalFamiliar elemento) throws Exception {
         elemento = formatearStrings(elemento);
         controlarLongitud(elemento);
         elemento = elementoDAO.saveAndFlush(elemento);
-        return aplicarFiltros(null, elemento);
+        return elemento.getId();
     }
 
-    public Object establecerAlias(Object object) throws IOException {
-        PersonalFamiliar elemento = new ObjectMapper().convertValue(object, PersonalFamiliar.class);
+    public Object establecerAlias(int id) throws IOException {
+        PersonalFamiliar elemento = elementoDAO.findById(id).get();
 //        PersonalFamiliar elemento = PersonalFamiliar.class.cast(object);
-        Personal p = personalDAO.findById(elemento.getPersonal().getId()).get();
+        Personal p = elemento.getPersonal();
         elemento.setAlias(String.valueOf(elemento.getId()) + " - "
                 + elemento.getApellido() + " " + elemento.getNombre() + " - "
                 + p.getNombreCompleto());
@@ -83,7 +83,7 @@ public class PersonalFamiliarService {
     public void actualizar(PersonalFamiliar elemento) throws Exception {
         elemento = formatearStrings(elemento);
         controlarLongitud(elemento);
-        establecerAlias(elemento);
+        establecerAlias(elemento.getId());
     }
 
     //Elimina un registro
