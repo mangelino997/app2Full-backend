@@ -3,9 +3,9 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.Foto;
-import ar.com.draimo.jitws.service.FotoService;
-import java.io.IOException;
+import ar.com.draimo.jitws.model.ViajeCierreDocumentacion;
+import ar.com.draimo.jitws.service.ViajeCierreDocumentacionService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +18,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Clase Foto Controller
- *
+ * Clase ViajeCierreDocumentacion Controller
  * @author blas
  */
 @RestController
-public class FotoController {
+public class ViajeCierreDocumentacionController {
 
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/foto";
+    private final String URL = RutaConstant.URL_BASE + "/viajecierredocumentacion";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/foto";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/viajecierredocumentacion";
 
     //Define el template para el envio de datos por socket
     @Autowired
@@ -42,7 +40,7 @@ public class FotoController {
 
     //Crea una instancia del servicio
     @Autowired
-    FotoService elementoService;
+    ViajeCierreDocumentacionService elementoService;
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -51,26 +49,20 @@ public class FotoController {
         return elementoService.obtenerSiguienteId();
     }
 
-    //Obtiene por el id
-    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    //Obtiene la lista completa
+    @GetMapping(value = URL)
     @ResponseBody
-    public Object obtenerPorId(@PathVariable int id) throws IOException {
-        return elementoService.obtenerPorId(id);
-    }
-
-    //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
-    @ResponseBody
-    public Object listarPorNombre(@PathVariable String nombre) throws IOException {
-        return elementoService.listarPorNombre(nombre);
+    public List<ViajeCierreDocumentacion> listar() {
+        return elementoService.listar();
     }
 
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestParam("archivo") MultipartFile archivo) {
+    public ResponseEntity<?> agregar(@RequestBody ViajeCierreDocumentacion elemento) {
         try {
-            Foto a = elementoService.agregar(archivo, archivo.getOriginalFilename(), true);
+            ViajeCierreDocumentacion a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
         } catch (DataIntegrityViolationException dive) {
@@ -87,19 +79,19 @@ public class FotoController {
 
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestParam("idFoto") int idImagen,
-            @RequestParam("archivo") MultipartFile archivo) {
+    public ResponseEntity<?> actualizar(@RequestBody ViajeCierreDocumentacion elemento) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(idImagen, archivo, archivo.getOriginalFilename(), true);
+            elementoService.actualizar(elemento);
             //Envia la nueva lista a los usuarios subscripto
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
         } catch (JpaObjectRetrievalFailureException jorfe) {
-            //Retorna mensaje de dato Inexistente
+            //Retorna mensaje de dato inexistente
             return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
         } catch (ObjectOptimisticLockingFailureException oolfe) {
             //Retorna mensaje de transaccion no actualizada

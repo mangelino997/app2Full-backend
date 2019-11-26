@@ -56,9 +56,9 @@ public class FotoService {
     
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Foto agregar(MultipartFile archivo, boolean opcion) throws IOException {
+    public Foto agregar(MultipartFile archivo, String nombre, boolean opcion) throws IOException {
         Foto foto = new Foto();
-        foto.setNombre(archivo.getOriginalFilename());
+        foto.setNombre(nombre);
         foto.setTipo(archivo.getContentType());
         foto.setTamanio(archivo.getSize());
         foto.setDatos(archivo.getBytes());
@@ -67,9 +67,9 @@ public class FotoService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Foto actualizar(int idFoto ,MultipartFile archivo, boolean opcion) throws IOException {
+    public Foto actualizar(int idFoto ,MultipartFile archivo, String nombre, boolean opcion) throws IOException {
         Foto elemento = elementoDAO.findById(idFoto).get();
-        elemento.setNombre(archivo.getOriginalFilename());
+        elemento.setNombre(nombre);
         elemento.setTipo(archivo.getContentType());
         elemento.setTamanio(archivo.getSize());
         elemento.setDatos(archivo.getBytes());

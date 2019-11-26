@@ -151,7 +151,7 @@ public class PersonalService {
         Foto f = null;
         Pdf pdf1 = null, pdf2 = null, pdf3 = null, pdf4 = null, pdf5 = null;
         if (!foto.getOriginalFilename().equals("")) {
-            Foto p = fotoService.agregar(foto, false);
+            Foto p = fotoService.agregar(foto, elemento.getNombreCompleto() + "-FOTO", false);
             p.setTabla("personal");
             f = fotoDAO.saveAndFlush(p);
             elemento.setFoto(f);
@@ -159,35 +159,35 @@ public class PersonalService {
         f = f!= null ? f : fotoDAO.findById(1).get();
         elemento.setFoto(f);
         if (!licConducir.getOriginalFilename().equals("")) {
-            Pdf p1 = pdfService.agregar(licConducir, false);
+            Pdf p1 = pdfService.agregar(licConducir, elemento.getNombreCompleto() + "-LICENCIA", false);
             p1.setTabla("personal");
             pdf1 = pdfDAO.saveAndFlush(p1);
             elemento.setPdfLicConducir(pdf1);
         }
         elemento.setPdfLicConducir(pdf1 != null ? pdf1 : null);
         if (!linti.getOriginalFilename().equals("")) {
-            Pdf p2 = pdfService.agregar(linti, false);
+            Pdf p2 = pdfService.agregar(linti, elemento.getNombreCompleto() + "-LINTI", false);
             p2.setTabla("personal");
             pdf2 = pdfDAO.saveAndFlush(p2);
             elemento.setPdfLinti(pdf2);
         }
         elemento.setPdfLinti(pdf2 != null ? pdf2 : null);
         if (!libSanidad.getOriginalFilename().equals("")) {
-            Pdf p3 = pdfService.agregar(libSanidad, false);
+            Pdf p3 = pdfService.agregar(libSanidad, elemento.getNombreCompleto() + "-LIBSANIDAD", false);
             p3.setTabla("personal");
             pdf3 = pdfDAO.saveAndFlush(p3);
             elemento.setPdfLibSanidad(pdf3);
         }
         elemento.setPdfLibSanidad(pdf3 != null ? pdf3 : null);
         if (!dni.getOriginalFilename().equals("")) {
-            Pdf p4 = pdfService.agregar(dni, false);
+            Pdf p4 = pdfService.agregar(dni, elemento.getNombreCompleto() + "-DNI", false);
             p4.setTabla("personal");
             pdf4 = pdfDAO.saveAndFlush(p4);
             elemento.setPdfDni(pdf4);
         }
         elemento.setPdfDni(pdf4 != null ? pdf4 : null);
         if (!altaTemprana.getOriginalFilename().equals("")) {
-            Pdf p5 = pdfService.agregar(altaTemprana, false);
+            Pdf p5 = pdfService.agregar(altaTemprana, elemento.getNombreCompleto() + "-ALTATEMPRANA", false);
             p5.setTabla("personal");
             pdf5 = pdfDAO.saveAndFlush(p5);
             elemento.setPdfAltaTemprana(pdf5);
@@ -211,7 +211,8 @@ public class PersonalService {
             elemento.setFoto(fotoDAO.findById(1).get());
         } else {
             Foto f = personal.getFoto() != null && personal.getFoto().getId() != 1? fotoService.actualizar(
-                    personal.getFoto().getId(), foto, false) : fotoService.agregar(foto, false);
+                    personal.getFoto().getId(), foto, elemento.getNombreCompleto() + "-FOTO", false) 
+                    : fotoService.agregar(foto, elemento.getNombreCompleto() + "-FOTO", false);
             f.setTabla("personal");
             Foto f1 = personal.getFoto() != null && personal.getFoto().getId() != 1? fotoDAO.save(f) : fotoDAO.saveAndFlush(f);
             elemento.setFoto(f1);
@@ -223,8 +224,8 @@ public class PersonalService {
             elemento.setPdfLicConducir(null);
         } else {
             Pdf p1 = personal.getPdfLicConducir() != null ? pdfService.actualizar(
-                    personal.getPdfLicConducir().getId(), licConducir, false)
-                    : pdfService.agregar(licConducir, false);
+                    personal.getPdfLicConducir().getId(), licConducir, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    : pdfService.agregar(licConducir, elemento.getNombreCompleto() + "-LICENCIA", false);
             p1.setTabla("personal");
             Pdf pdf1 = personal.getPdfLicConducir() != null ? pdfDAO.save(p1)
                     : pdfDAO.saveAndFlush(p1);
@@ -237,8 +238,8 @@ public class PersonalService {
             elemento.setPdfLinti(null);
         } else {
             Pdf p2 = personal.getPdfLinti() != null ? pdfService.actualizar(
-                    personal.getPdfLinti().getId(), linti, false)
-                    : pdfService.agregar(linti, false);
+                    personal.getPdfLinti().getId(), linti, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    : pdfService.agregar(linti, elemento.getNombreCompleto() + "-LINTI", false);
             p2.setTabla("personal");
             Pdf pdf2 = personal.getPdfLinti() != null ? pdfDAO.save(p2)
                     : pdfDAO.saveAndFlush(p2);
@@ -251,8 +252,8 @@ public class PersonalService {
             elemento.setPdfLibSanidad(null);
         } else {
             Pdf p3 = personal.getPdfLibSanidad() != null ? pdfService.actualizar(
-                    personal.getPdfLibSanidad().getId(), libSanidad, false)
-                    : pdfService.agregar(libSanidad, false);
+                    personal.getPdfLibSanidad().getId(), libSanidad, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    : pdfService.agregar(libSanidad, elemento.getNombreCompleto() + "-LIBSANIDAD", false);
             p3.setTabla("personal");
             Pdf pdf3 = personal.getPdfLibSanidad() != null ? pdfDAO.save(p3)
                     : pdfDAO.saveAndFlush(p3);
@@ -265,8 +266,8 @@ public class PersonalService {
             elemento.setPdfDni(null);
         } else {
             Pdf p4 = personal.getPdfDni() != null ? pdfService.actualizar(
-                    personal.getPdfDni().getId(), dni, false)
-                    : pdfService.agregar(dni, false);
+                    personal.getPdfDni().getId(), dni, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    : pdfService.agregar(dni, elemento.getNombreCompleto() + "-DNI", false);
             p4.setTabla("personal");
             Pdf pdf4 = personal.getPdfDni() != null ? pdfDAO.save(p4)
                     : pdfDAO.saveAndFlush(p4);
@@ -279,8 +280,8 @@ public class PersonalService {
             elemento.setPdfAltaTemprana(null);
         } else {
             Pdf p5 = personal.getPdfAltaTemprana() != null ? pdfService.actualizar(
-                    personal.getPdfAltaTemprana().getId(), altaTemprana, false)
-                    : pdfService.agregar(altaTemprana, false);
+                    personal.getPdfAltaTemprana().getId(), altaTemprana, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    : pdfService.agregar(altaTemprana, elemento.getNombreCompleto() + "-ALTATEMPRANA", false);
             p5.setTabla("personal");
             Pdf pdf5 = personal.getPdfAltaTemprana() != null ? pdfDAO.save(p5)
                     : pdfDAO.saveAndFlush(p5);
