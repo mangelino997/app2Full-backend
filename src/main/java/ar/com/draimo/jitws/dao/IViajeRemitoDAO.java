@@ -103,7 +103,7 @@ public interface IViajeRemitoDAO extends JpaRepository<ViajeRemito, Integer> {
     @Query(value = "SELECT r.* FROM viajeremito r WHERE r.id NOT IN (SELECT v.idViajeRemito "
             + "FROM  ventacomprobanteitemFA v ) and r.letra=:letra and r.puntoVenta=:puntoVenta"
             + " and r.numero =:numero", nativeQuery = true)
-    public ViajeRemito obtenerParaReparto(@Param("numero") int numero, 
+    public List<ViajeRemito> listarParaReparto(@Param("numero") int numero, 
             @Param("puntoVenta") int puntoVenta, @Param("letra") String letra);
     
 }

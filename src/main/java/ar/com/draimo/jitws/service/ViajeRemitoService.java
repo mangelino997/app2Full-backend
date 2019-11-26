@@ -133,8 +133,8 @@ public class ViajeRemitoService {
 
     //Obtiene un registro por puntoVenta, letra y numero si no esta asignado a un comprobante
     public Object obtenerParaReparto(int puntoVenta, String letra, int numero) throws IOException {
-        ViajeRemito remito = elementoDAO.obtenerParaReparto( numero,puntoVenta, letra);
-        return retornarObjeto(null, remito);
+        List<ViajeRemito> remitos = elementoDAO.listarParaReparto(numero,puntoVenta, letra);
+        return retornarObjeto(remitos, null);
     }
 
     //Obtiene un registro por puntoVenta, letra y numero

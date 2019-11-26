@@ -137,12 +137,12 @@ public class VehiculoService {
             MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         controlarLongitud(elemento);
-        elemento.setPdfTitulo(establecerPdf(titulo, null));
-        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, null));
-        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, null));
-        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, null));
-        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, null));
-        elemento.setPdfHabBromat(establecerPdf(habBromat, null));
+        elemento.setPdfTitulo(establecerPdf(titulo, null, null));
+        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, null, null));
+        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, null, null));
+        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, null, null));
+        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, null, null));
+        elemento.setPdfHabBromat(establecerPdf(habBromat, null, null));
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
         return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
@@ -157,17 +157,17 @@ public class VehiculoService {
         controlarLongitud(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento = formatearStrings(elemento);
-        elemento.setPdfTitulo(establecerPdf(titulo, vehiculo));
-        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, vehiculo));
-        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, vehiculo));
-        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, vehiculo));
-        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, vehiculo));
-        elemento.setPdfHabBromat(establecerPdf(habBromat, vehiculo));
+        elemento.setPdfTitulo(establecerPdf(titulo, vehiculo, vehiculo.getPdfTitulo()));
+        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, vehiculo, vehiculo.getPdfCedulaIdent()));
+        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, vehiculo, vehiculo.getPdfVtoRuta()));
+        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, vehiculo, vehiculo.getPdfVtoInspTecnica()));
+        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, vehiculo, vehiculo.getPdfVtoSenasa()));
+        elemento.setPdfHabBromat(establecerPdf(habBromat, vehiculo, vehiculo.getPdfHabBromat()));
         return establecerAlias(elemento);
     }
     
     //Establece el valor a cada pdf dependiendo su condicion
-    private Pdf establecerPdf(MultipartFile elemento, Vehiculo vehiculo) throws IOException {
+    private Pdf establecerPdf(MultipartFile elemento, Vehiculo vehiculo, Pdf pdfVehiculo) throws IOException {
         Pdf pdf;
         if(vehiculo == null) {
             if (!"null".equals(elemento.getOriginalFilename())) {
@@ -179,16 +179,16 @@ public class VehiculoService {
             }
         }else {
             if ("null".equals(elemento.getOriginalFilename())) {
-                if (vehiculo.getPdfTitulo() != null) {
-                    pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
+                if (pdfVehiculo != null) {
+                    pdfDAO.deleteById(pdfVehiculo.getId());
                 }
                 pdf = null;
             } else {
-                Pdf pTitulo = vehiculo.getPdfTitulo() != null ? pdfService.actualizar(
-                        vehiculo.getPdfTitulo().getId(), elemento, false)
+                Pdf pTitulo = pdfVehiculo != null ? pdfService.actualizar(
+                        pdfVehiculo.getId(), elemento, false)
                         : pdfService.agregar(elemento, false);
                 pTitulo.setTabla("vehiculo");
-                pdf = vehiculo.getPdfTitulo() != null ? pdfDAO.save(pTitulo)
+                pdf = pdfVehiculo != null ? pdfDAO.save(pTitulo)
                         : pdfDAO.saveAndFlush(pTitulo);
             }
         }

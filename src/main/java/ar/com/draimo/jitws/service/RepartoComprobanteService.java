@@ -202,8 +202,7 @@ public class RepartoComprobanteService {
                 cte.setVentaComprobante(v);
                 //Consulta si viajeRemito es nulo para establecer el seguimiento y guardarlo
             } else if (cte.getViajeRemito() != null) {
-                r = viajeRemitoDAO.obtenerPorPuntoVentaLetraYNumero(cte.getViajeRemito().getNumero(),
-                        cte.getViajeRemito().getPuntoVenta(), cte.getViajeRemito().getLetra());
+                r = cte.getViajeRemito();
                 cte.setViajeRemito(r);
                 //Consulta si ordenRecoleccion es nulo para establecer el seguimiento y guardarlo
             } else {
