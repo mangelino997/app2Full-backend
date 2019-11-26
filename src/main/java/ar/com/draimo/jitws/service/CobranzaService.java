@@ -1,14 +1,17 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.ICobranzaAnticipoDAO;
 import ar.com.draimo.jitws.dao.ICobranzaDAO;
 import ar.com.draimo.jitws.dao.ICobranzaItemDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.model.Cobranza;
+import ar.com.draimo.jitws.model.CobranzaAnticipo;
 import ar.com.draimo.jitws.model.CobranzaItem;
 import ar.com.draimo.jitws.model.VentaComprobante;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,10 @@ public class CobranzaService {
     @Autowired
     ICobranzaItemDAO cobranzaItemDAO;
 
+    //Define el dao de cobranzaAnticipo
+    @Autowired
+    ICobranzaAnticipoDAO cobranzaAnticipoDAO;
+
     //Define el dao de ventaComprobante
     @Autowired
     IVentaComprobanteDAO ventaComprobanteDAO;
@@ -65,19 +72,32 @@ public class CobranzaService {
         elemento.setFechaRegistracion(new Timestamp(new java.util.Date().getTime()));
         elemento.setTipoComprobante(tipoComprobanteDAO.findById(4).get());
         Cobranza c = elementoDAO.saveAndFlush(elemento);
+        BigDecimal montoTotal = new BigDecimal(0);
+        CobranzaAnticipo anticipo = new CobranzaAnticipo();
         if(!elemento.getCobranzaItems().isEmpty()) {
             for (CobranzaItem cobranzaItem : elemento.getCobranzaItems()) {
+                VentaComprobante vtaCpte = ventaComprobanteDAO.findById(
+                        cobranzaItem.getVentaComprobante().getId()).get();
                 if(cobranzaItem.getImporte()!=null) {
-                    VentaComprobante vtaCpte = ventaComprobanteDAO.findById(
-                            cobranzaItem.getVentaComprobante().getId()).get();
                     vtaCpte.setImporteSaldo(cobranzaItem.getVentaComprobante().getImporteSaldo().subtract(
                             cobranzaItem.getImporte()));
-                    ventaComprobanteDAO.save(vtaCpte);
+                } else {
+                    cobranzaItem.setImporte(vtaCpte.getImporteSaldo());
+                    vtaCpte.setImporteSaldo(new BigDecimal(0));
                 }
+                montoTotal.add(cobranzaItem.getImporte());
+                ventaComprobanteDAO.save(vtaCpte);
                 cobranzaItem.setCobranza(c);
                 cobranzaItemDAO.saveAndFlush(cobranzaItem);
             }
+            anticipo.setImporte(montoTotal.compareTo(c.getImporte())==(-1) ? 
+                    c.getImporte().subtract(montoTotal) : null);
+        } else {
+            anticipo.setImporte(c.getImporte());
         }
+        anticipo.setCobranza(c);
+        anticipo.setSaldo(anticipo.getImporte());
+        anticipo = anticipo.getImporte()== null ? null : cobranzaAnticipoDAO.saveAndFlush(anticipo);
         return c;
     }
 

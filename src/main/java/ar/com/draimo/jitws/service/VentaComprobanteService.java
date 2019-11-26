@@ -132,6 +132,12 @@ public class VentaComprobanteService {
         return retornarObjeto(elementos, null);
     }
 
+    //Obtiene una lista por cliente y empresa para cobranza
+    public Object listarParaCobranza(int idCliente, int idEmpresa) throws IOException {
+        List<VentaComprobante> elementos = elementoDAO.listarComprobantesPorClienteYEMpresa(idCliente, idEmpresa);
+        return retornarObjeto(elementos, null);
+    }
+
     //Obtiene una lista para notas de credito por cliente y empresa
     public Object listarParaCreditosPorClienteYEmpresa(int idCliente, int idEmpresa) throws IOException {
         List<VentaComprobante> elementos = elementoDAO.listarParaNotasDeCredito(idCliente, idEmpresa);
@@ -190,7 +196,10 @@ public class VentaComprobanteService {
                 ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
             }
         }
-        return elementoDAO.saveAndFlush(formatearStrings(elemento));
+        elemento.setClienteGrupo(elemento.getCliente().getCuentaGrupo()!=null ?
+                elemento.getCliente().getCuentaGrupo() : null);
+        elemento.setImporteSaldo(elemento.getImporteTotal());
+        return elementoDAO.save(formatearStrings(elemento));
     }
 
     //Actualiza un registro
