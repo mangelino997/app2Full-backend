@@ -159,7 +159,7 @@ public class RepartoComprobanteService {
         List<RepartoComprobante> repartoCtes = new ArrayList<>();
         //Recorre la lista de reparto comprobante
         for (RepartoComprobante cte : ctes) {
-                repartoCtes.add(establecerComprobante(cte));
+                establecerComprobante(cte);
         }
         return repartoCtes;
     }

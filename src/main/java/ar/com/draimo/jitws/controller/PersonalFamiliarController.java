@@ -76,13 +76,13 @@ public class PersonalFamiliarController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody PersonalFamiliar elemento) {
         try {
-            Object a = elementoService.agregar(elemento);
+            int a = elementoService.agregar(elemento);
             //Establece el alias
-            a = elementoService.establecerAlias(a);
+            Object o = elementoService.establecerAlias(a);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return new ResponseEntity(a, HttpStatus.CREATED);
+            return new ResponseEntity(o, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
