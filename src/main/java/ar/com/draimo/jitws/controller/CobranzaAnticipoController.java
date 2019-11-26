@@ -58,6 +58,13 @@ public class CobranzaAnticipoController {
         return elementoService.listar();
     }
 
+    //Obtiene la lista por cliente
+    @GetMapping(value = URL + "/listarPorCliente/{idCliente}")
+    @ResponseBody
+    public List<CobranzaAnticipo> listarPorCliente(@PathVariable int idCliente) {
+        return elementoService.listarPorCliente(idCliente);
+    }
+
     //Obtiene una lista por cobranza
     @GetMapping(value = URL + "/listarPorCobranza/{idCobranza}")
     @ResponseBody

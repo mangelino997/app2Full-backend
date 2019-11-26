@@ -87,6 +87,14 @@ public class VentaComprobanteController {
         return elementoService.listarPorClienteYEmpresa(idCliente, idEmpresa);
     }
 
+    //Obtiene la lista por cliente y empresa para cobranza
+    @GetMapping(value = URL + "/listarParaCobranza/{idCliente}/{idEmpresa}")
+    @ResponseBody
+    public Object listarParaCobranza(@PathVariable int idCliente, @PathVariable int idEmpresa)
+            throws IOException {
+        return elementoService.listarParaCobranza(idCliente, idEmpresa);
+    }
+
     //Obtiene la lista para creditos por cliente y empresa
     @GetMapping(value = URL + "/listarParaCreditosPorClienteYEmpresa/{idCliente}/{idEmpresa}")
     @ResponseBody
