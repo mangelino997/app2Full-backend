@@ -137,6 +137,7 @@ public class VehiculoService {
             MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         controlarLongitud(elemento);
+        elemento = formatearStrings(elemento);
         elemento.setPdfTitulo(establecerPdf(titulo, elemento.getDominio() + "-TITULO", null, null));
         elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, elemento.getDominio() + "-CEDULA", null, null));
         elemento.setPdfVtoRuta(establecerPdf(vtoRuta, elemento.getDominio() + "-VTORUTA", null, null));
@@ -144,7 +145,7 @@ public class VehiculoService {
         elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, elemento.getDominio() + "-VTOSENASA", null, null));
         elemento.setPdfHabBromat(establecerPdf(habBromat, elemento.getDominio() + "-VTOBROMATOLOGICA", null, null));
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        return elementoDAO.saveAndFlush(formatearStrings(elemento));
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
@@ -157,12 +158,12 @@ public class VehiculoService {
         controlarLongitud(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento = formatearStrings(elemento);
-        elemento.setPdfTitulo(establecerPdf(titulo, vehiculo.getDominio() + "-TITULO", vehiculo, vehiculo.getPdfTitulo()));
-        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, vehiculo.getDominio() + "-CEDULA", vehiculo, vehiculo.getPdfCedulaIdent()));
-        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, vehiculo.getDominio() + "-VTORUTA", vehiculo, vehiculo.getPdfVtoRuta()));
-        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, vehiculo.getDominio() + "-VTOTECNICA", vehiculo, vehiculo.getPdfVtoInspTecnica()));
-        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, vehiculo.getDominio() + "-VTOSENASA", vehiculo, vehiculo.getPdfVtoSenasa()));
-        elemento.setPdfHabBromat(establecerPdf(habBromat, vehiculo.getDominio() + "-VTOBROMATOLOGICA", vehiculo, vehiculo.getPdfHabBromat()));
+        elemento.setPdfTitulo(establecerPdf(titulo, elemento.getDominio() + "-TITULO", vehiculo, vehiculo.getPdfTitulo()));
+        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, elemento.getDominio() + "-CEDULA", vehiculo, vehiculo.getPdfCedulaIdent()));
+        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, elemento.getDominio() + "-VTORUTA", vehiculo, vehiculo.getPdfVtoRuta()));
+        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, elemento.getDominio() + "-VTOTECNICA", vehiculo, vehiculo.getPdfVtoInspTecnica()));
+        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, elemento.getDominio() + "-VTOSENASA", vehiculo, vehiculo.getPdfVtoSenasa()));
+        elemento.setPdfHabBromat(establecerPdf(habBromat, elemento.getDominio() + "-VTOBROMATOLOGICA", vehiculo, vehiculo.getPdfHabBromat()));
         return establecerAlias(elemento);
     }
     
