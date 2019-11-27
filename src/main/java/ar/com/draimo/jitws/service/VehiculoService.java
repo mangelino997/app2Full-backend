@@ -137,6 +137,7 @@ public class VehiculoService {
             MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         controlarLongitud(elemento);
+        elemento = formatearStrings(elemento);
         elemento.setPdfTitulo(establecerPdf(titulo, elemento.getDominio() + "-TITULO", null, null));
         elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, elemento.getDominio() + "-CEDULA", null, null));
         elemento.setPdfVtoRuta(establecerPdf(vtoRuta, elemento.getDominio() + "-VTORUTA", null, null));
@@ -203,7 +204,7 @@ public class VehiculoService {
                 elemento.getConfiguracionVehiculo().getId()).get();
         String nInterno = elemento.getNumeroInterno() != null ? elemento.getNumeroInterno() : "";
         elemento.setAlias(elemento.getDominio() + " - " + nInterno + " - "
-                + e.getRazonSocial() + " - " + cv.getTipoVehiculo().getNombre() + " - "
+                + " - " + cv.getTipoVehiculo().getNombre() + " - "
                 + cv.getMarcaVehiculo().getNombre());
         return elementoDAO.save(elemento);
     }
@@ -218,13 +219,13 @@ public class VehiculoService {
     private Vehiculo formatearStrings(Vehiculo elemento) {
         elemento.setDominio(elemento.getDominio().trim().toUpperCase());
         if (elemento.getNumeroInterno() != null) {
-            elemento.setNumeroInterno(elemento.getNumeroInterno().trim());
+            elemento.setNumeroInterno(elemento.getNumeroInterno().trim().toUpperCase());
         }
         if (elemento.getNumeroMotor() != null) {
-            elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
+            elemento.setNumeroMotor(elemento.getNumeroMotor().trim().toUpperCase());
         }
         if (elemento.getNumeroChasis() != null) {
-            elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+            elemento.setNumeroChasis(elemento.getNumeroChasis().trim().toUpperCase());
         }
         elemento.setNumeroRuta(elemento.getNumeroRuta().trim());
         return elemento;

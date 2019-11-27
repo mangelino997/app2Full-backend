@@ -85,6 +85,7 @@ public class VehiculoProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public VehiculoProveedor actualizar(VehiculoProveedor elemento) throws Exception {
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
+        elemento = formatearStrings(elemento);
         controlarLongitud(elemento);
         return establecerAlias(formatearStrings(elemento));
     }
@@ -100,17 +101,17 @@ public class VehiculoProveedorService {
         //Obtiene longitud de anio, si es mayor a 4 retorna error
         String anio = String.valueOf(elemento.getAnioFabricacion());
         if (anio.length() > 4 || anio.length() < 4) {
-            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO 
+            throw new DataIntegrityViolationException(MensajeRespuesta.SHORT_INCORRECTO
                     + " AÑO FABRICACIÓN");
         }
     }
-    
+
     //Formatea los strings
     private VehiculoProveedor formatearStrings(VehiculoProveedor elemento) {
-        elemento.setDominio(elemento.getDominio().trim());
-        elemento.setNumeroMotor(elemento.getNumeroMotor() != null ? elemento.getNumeroMotor().trim()
+        elemento.setDominio(elemento.getDominio().trim().toUpperCase());
+        elemento.setNumeroMotor(elemento.getNumeroMotor() != null ? elemento.getNumeroMotor().trim().toUpperCase()
                 : elemento.getNumeroMotor());
-        elemento.setNumeroChasis(elemento.getNumeroChasis() != null ? elemento.getNumeroChasis().trim()
+        elemento.setNumeroChasis(elemento.getNumeroChasis() != null ? elemento.getNumeroChasis().trim().toUpperCase()
                 : elemento.getNumeroChasis());
         elemento.setNumeroPoliza(elemento.getNumeroPoliza().trim());
         elemento.setNumeroRuta(elemento.getNumeroRuta().trim());

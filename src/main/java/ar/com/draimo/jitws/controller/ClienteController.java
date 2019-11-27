@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ClienteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.service.ClienteService;
@@ -87,6 +88,13 @@ public class ClienteController {
         return elementoService.listarPorAliasListaPrecio(alias, idCliente);
     }
 
+    
+    //Obtiene una lista de remitos por filtro
+    @PostMapping(value = URL + "/listarPorFiltros")
+    public Object listarPorFiltros(@RequestBody ClienteDTO clienteDTO) throws IOException {
+        return elementoService.listarPorFiltros(clienteDTO);
+    }
+    
     //Agrega un cliente eventual
     @PostMapping(value = URL + "/agregarClienteEventual")
     public ResponseEntity<?> agregarClienteEventual(@RequestBody Cliente elemento) {

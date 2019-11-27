@@ -11,6 +11,7 @@ import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
+import ar.com.draimo.jitws.dto.ClienteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
@@ -147,6 +148,24 @@ public class ClienteService {
         }
         return clientes;
     }
+    
+    //Obtiene un listado por filtro
+    public Object listarPorFiltros(ClienteDTO clienteDTO) throws IOException {
+        List<Cliente> elementos = elementoDAO.listarPorFiltros(clienteDTO.getIdLocalidad(), clienteDTO.getIdCobrador(),
+                clienteDTO.getIdCondicionVenta(), clienteDTO.getEsSeguroPropio());
+        return retornarObjeto(elementos, null);
+    }
+    
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<Cliente> elementos, Cliente elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);
+        return mapper.readValue(string, Object.class);
+    }
 
     //Agrega un cliente eventual
     @Transactional(rollbackFor = Exception.class)
@@ -227,7 +246,7 @@ public class ClienteService {
     @Transactional(rollbackFor = Exception.class)
     public Cliente establecerAlias(Cliente elemento) {
         TipoDocumento t = tipoDocumentoDAO.findById(elemento.getTipoDocumento().getId()).get();
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
+        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() + " - " + elemento.getNombreFantasia() 
                 + " - " + t.getAbreviatura() + " " + elemento.getNumeroDocumento());
         return elementoDAO.save(elemento);
     }
@@ -345,5 +364,6 @@ public class ClienteService {
         }
         return cvpLista;
     }
+    
     
 }
