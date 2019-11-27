@@ -88,11 +88,6 @@ public class Viaje extends ObjetoGenerico {
     @JoinColumn(name = "idVehiculoRemolqueProveedor", nullable = true)
     private VehiculoProveedor vehiculoRemolqueProveedor;
     
-    //Referencia a la clase Usuario (documentacion)
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioDocumentacion", nullable = true)
-    private Usuario usuarioDocumentacion;
-    
     //Define un numero de liquidacion
     @Column(name = "numeroLiquidacion",length = 10, nullable = true)
     private int numeroLiquidacion;
@@ -285,14 +280,6 @@ public class Viaje extends ObjetoGenerico {
 
     public void setVehiculoRemolqueProveedor(VehiculoProveedor vehiculoRemolqueProveedor) {
         this.vehiculoRemolqueProveedor = vehiculoRemolqueProveedor;
-    }
-
-    public Usuario getUsuarioDocumentacion() {
-        return usuarioDocumentacion;
-    }
-
-    public void setUsuarioDocumentacion(Usuario usuarioDocumentacion) {
-        this.usuarioDocumentacion = usuarioDocumentacion;
     }
 
     public int getNumeroLiquidacion() {
