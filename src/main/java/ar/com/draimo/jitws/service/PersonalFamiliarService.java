@@ -42,20 +42,20 @@ public class PersonalFamiliarService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<PersonalFamiliar> elementos = elementoDAO.findAll();
-        return aplicarFiltros(elementos,null); 
+        return aplicarFiltros(elementos, null);
     }
 
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
         List<PersonalFamiliar> elementos = alias.equals("***") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
-        return aplicarFiltros(elementos,null);
+        return aplicarFiltros(elementos, null);
     }
 
     //Obtiene una lista por personal
     public Object listarPorPersonal(int idPersonal) throws IOException {
         List<PersonalFamiliar> elementos = elementoDAO.findByPersonal(personalDAO.findById(idPersonal).get());
-        return aplicarFiltros(elementos,null);
+        return aplicarFiltros(elementos, null);
     }
 
     //Agrega un registro
@@ -67,15 +67,16 @@ public class PersonalFamiliarService {
         return elemento.getId();
     }
 
-    public Object establecerAlias(int id) throws IOException {
-        PersonalFamiliar elemento = elementoDAO.findById(id).get();
+    @Transactional(rollbackFor = Exception.class)
+    public Object establecerAlias(PersonalFamiliar elemento, int id) throws IOException {
+        PersonalFamiliar familiar = elemento != null ? elemento : elementoDAO.findById(id).get();
 //        PersonalFamiliar elemento = PersonalFamiliar.class.cast(object);
-        Personal p = elemento.getPersonal();
-        elemento.setAlias(String.valueOf(elemento.getId()) + " - "
-                + elemento.getApellido() + " " + elemento.getNombre() + " - "
+        Personal p = familiar.getPersonal();
+        familiar.setAlias(String.valueOf(familiar.getId()) + " - "
+                + familiar.getApellido() + " " + familiar.getNombre() + " - "
                 + p.getNombreCompleto());
-        elemento = elementoDAO.save(elemento);
-        return aplicarFiltros(null, elemento);
+        familiar = elementoDAO.save(familiar);
+        return aplicarFiltros(null, familiar);
     }
 
     //Actualiza un registro
@@ -83,7 +84,8 @@ public class PersonalFamiliarService {
     public void actualizar(PersonalFamiliar elemento) throws Exception {
         elemento = formatearStrings(elemento);
         controlarLongitud(elemento);
-        establecerAlias(elemento.getId());
+        establecerAlias(elemento, 0);
+        elementoDAO.save(elemento);
     }
 
     //Elimina un registro
@@ -124,5 +126,5 @@ public class PersonalFamiliarService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return mapper.readValue(string, Object.class);
     }
-    
+
 }

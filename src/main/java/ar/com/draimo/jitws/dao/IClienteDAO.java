@@ -30,12 +30,12 @@ public interface IClienteDAO extends JpaRepository<Cliente, Integer> {
     //Obtiene una lista por alias exceptuando el id que se pasa para parametro
     public List<Cliente> findByAliasContainingAndIdNot(String alias, int id);
     
-    //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino,
-    //numero camion y viajePropioTramo)
+    //Obtiene una lista de clientes por filtro (localidad, cobrador,
+    //condicion venta y tipo de seguro
     @Query(value = "SELECT * FROM cliente where (:idLocalidad "
             + "= 0 or idLocalidad=:idLocalidad) and (:idCobrador =0 or "
             + "idCobrador=:idCobrador) and (:idCondicionVenta=0 or "
-            + "idCondicionVenta=:idCondicionVenta) and (:esSeguroPropio=0 or "
+            + "idCondicionVenta=:idCondicionVenta) and (:esSeguroPropio=2 or "
             + "esSeguroPropio=:esSeguroPropio)", nativeQuery = true)
     public List<Cliente> listarPorFiltros(@Param("idLocalidad") String idLocalidad, @Param("idCobrador") String idCobrador,
             @Param("idCondicionVenta") String idCondicionVenta, @Param("esSeguroPropio") 

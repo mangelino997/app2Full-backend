@@ -87,9 +87,8 @@ public class ClienteController {
     public Object listarPorAliasListaPrecio(@PathVariable String alias, @PathVariable int idCliente) throws IOException {
         return elementoService.listarPorAliasListaPrecio(alias, idCliente);
     }
-
     
-    //Obtiene una lista de remitos por filtro
+    //Obtiene una lista de clientes por filtro
     @PostMapping(value = URL + "/listarPorFiltros")
     public Object listarPorFiltros(@RequestBody ClienteDTO clienteDTO) throws IOException {
         return elementoService.listarPorFiltros(clienteDTO);

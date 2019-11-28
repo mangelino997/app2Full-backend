@@ -78,7 +78,7 @@ public class PersonalFamiliarController {
         try {
             int a = elementoService.agregar(elemento);
             //Establece el alias
-            Object o = elementoService.establecerAlias(a);
+            Object o = elementoService.establecerAlias(null, a);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito

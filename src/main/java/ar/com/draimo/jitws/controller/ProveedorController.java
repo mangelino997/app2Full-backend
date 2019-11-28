@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ProveedorDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.service.ProveedorService;
@@ -63,12 +64,11 @@ public class ProveedorController {
     public Object listarPorAlias(@PathVariable String alias) throws IOException {
         return elementoService.listarPorAlias(alias);
     }
-
-    //Obtiene una lista por filtros
-    @GetMapping(value = URL + "/listarPorFiltros/{idTipoProveedor}/{idCondCompra}/{estadoCuenta}/{idLocalidad}")
-    @ResponseBody
-    public Object listarPorFiltros(@PathVariable int idTipoProveedor, @PathVariable int idCondCompra, @PathVariable int estadoCuenta, @PathVariable int idLocalidad) throws IOException {
-        return elementoService.listarPorFiltros(idTipoProveedor, idCondCompra, estadoCuenta, idLocalidad);
+    
+    //Obtiene una lista de proveedores por filtro
+    @PostMapping(value = URL + "/listarPorFiltros")
+    public Object listarPorFiltros(@RequestBody ProveedorDTO proveedorDTO) throws IOException {
+        return elementoService.listarPorFiltros(proveedorDTO);
     }
 
     //Agrega un registro

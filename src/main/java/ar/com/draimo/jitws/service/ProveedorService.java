@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
+import ar.com.draimo.jitws.dto.ProveedorDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
@@ -56,13 +57,12 @@ public class ProveedorService {
         List<Proveedor> proveedores = elementoDAO.findAll();
         return aplicarFiltros(proveedores);
     }
-
-    //Obtiene la lista por filtros
-    public Object listarPorFiltros(int idTipoProveedor, int idCondCompra, int estadoCuenta,
-            int idLocalidad) throws IOException {
-        List<Proveedor> proveedores = elementoDAO.listarPorFiltros(
-                idTipoProveedor, idCondCompra, estadoCuenta, idLocalidad);
-        return aplicarFiltros(proveedores);
+    
+    //Obtiene un listado por filtro
+    public Object listarPorFiltros(ProveedorDTO proveedorDTO) throws IOException {
+        List<Proveedor> elementos = elementoDAO.listarPorFiltros(proveedorDTO.getIdTipoProveedor(), proveedorDTO.getIdLocalidad(),
+                proveedorDTO.getIdCondicionCompra());
+        return aplicarFiltros(elementos);
     }
 
     //Obtiene una lista por nombre
@@ -97,7 +97,7 @@ public class ProveedorService {
     @Transactional(rollbackFor = Exception.class)
     public Proveedor establecerAlias(Proveedor elemento) {
         TipoDocumento t = tipoDocumentoDAO.findById(elemento.getTipoDocumento().getId()).get();
-        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial()
+        elemento.setAlias(elemento.getId() + " - " + elemento.getRazonSocial() + " - " + elemento.getNombreFantasia()
                 + " - " + t.getAbreviatura() + " " + elemento.getNumeroDocumento());
         return elementoDAO.save(elemento);
     }

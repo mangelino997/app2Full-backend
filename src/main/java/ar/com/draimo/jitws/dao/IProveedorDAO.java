@@ -29,4 +29,13 @@ public interface IProveedorDAO extends JpaRepository<Proveedor, Integer> {
     public List<Proveedor> listarPorFiltros(@Param("idTipoProveedor") int idTipoProveedor,
             @Param("idCondCompra") int idCondCompra,@Param("estadoCuenta") 
                     int estadoCuenta,@Param("idLocalidad") int idLocalidad);
+    
+     //Obtiene una lista de pendientes por filtro (sucursalIngreso, sucursalDestino,
+    //numero camion y viajePropioTramo)
+    @Query(value = "SELECT * FROM proveedor where (:idTipoProveedor "
+            + "= 0 or idTipoProveedor=:idTipoProveedor) and (:idLocalidad "
+            + "= 0 or idLocalidad=:idLocalidad) and (:idCondicionCompra=0 or "
+            + "idCondicionCompra=:idCondicionCompra)", nativeQuery = true)
+    public List<Proveedor> listarPorFiltros(@Param("idTipoProveedor") String idTipoProveedor, @Param("idLocalidad") String idLocalidad,
+            @Param("idCondicionCompra") String idCondicionCompra);
 }
