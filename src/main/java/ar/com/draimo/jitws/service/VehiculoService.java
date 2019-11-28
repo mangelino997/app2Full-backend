@@ -137,14 +137,15 @@ public class VehiculoService {
             MultipartFile habBromat) throws IOException, Exception {
         Vehiculo elemento = new ObjectMapper().readValue(elementoString, Vehiculo.class);
         controlarLongitud(elemento);
-        elemento.setPdfTitulo(establecerPdf(titulo, null, null));
-        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, null, null));
-        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, null, null));
-        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, null, null));
-        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, null, null));
-        elemento.setPdfHabBromat(establecerPdf(habBromat, null, null));
+        elemento = formatearStrings(elemento);
+        elemento.setPdfTitulo(establecerPdf(titulo, elemento.getDominio() + "-TITULO", null, null));
+        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, elemento.getDominio() + "-CEDULA", null, null));
+        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, elemento.getDominio() + "-VTORUTA", null, null));
+        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, elemento.getDominio() + "-VTOTECNICA", null, null));
+        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, elemento.getDominio() + "-VTOSENASA", null, null));
+        elemento.setPdfHabBromat(establecerPdf(habBromat, elemento.getDominio() + "-VTOBROMATOLOGICA", null, null));
         elemento.setFechaAlta(new Date(new java.util.Date().getTime()));
-        return elementoDAO.saveAndFlush(formatearStrings(elemento));
+        return elementoDAO.saveAndFlush(elemento);
     }
 
     //Actualiza un registro
@@ -157,21 +158,21 @@ public class VehiculoService {
         controlarLongitud(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento = formatearStrings(elemento);
-        elemento.setPdfTitulo(establecerPdf(titulo, vehiculo, vehiculo.getPdfTitulo()));
-        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, vehiculo, vehiculo.getPdfCedulaIdent()));
-        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, vehiculo, vehiculo.getPdfVtoRuta()));
-        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, vehiculo, vehiculo.getPdfVtoInspTecnica()));
-        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, vehiculo, vehiculo.getPdfVtoSenasa()));
-        elemento.setPdfHabBromat(establecerPdf(habBromat, vehiculo, vehiculo.getPdfHabBromat()));
+        elemento.setPdfTitulo(establecerPdf(titulo, elemento.getDominio() + "-TITULO", vehiculo, vehiculo.getPdfTitulo()));
+        elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, elemento.getDominio() + "-CEDULA", vehiculo, vehiculo.getPdfCedulaIdent()));
+        elemento.setPdfVtoRuta(establecerPdf(vtoRuta, elemento.getDominio() + "-VTORUTA", vehiculo, vehiculo.getPdfVtoRuta()));
+        elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, elemento.getDominio() + "-VTOTECNICA", vehiculo, vehiculo.getPdfVtoInspTecnica()));
+        elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, elemento.getDominio() + "-VTOSENASA", vehiculo, vehiculo.getPdfVtoSenasa()));
+        elemento.setPdfHabBromat(establecerPdf(habBromat, elemento.getDominio() + "-VTOBROMATOLOGICA", vehiculo, vehiculo.getPdfHabBromat()));
         return establecerAlias(elemento);
     }
     
     //Establece el valor a cada pdf dependiendo su condicion
-    private Pdf establecerPdf(MultipartFile elemento, Vehiculo vehiculo, Pdf pdfVehiculo) throws IOException {
+    private Pdf establecerPdf(MultipartFile elemento, String nombre, Vehiculo vehiculo, Pdf pdfVehiculo) throws IOException {
         Pdf pdf;
         if(vehiculo == null) {
             if (!"null".equals(elemento.getOriginalFilename())) {
-                Pdf pHabBromat = pdfService.agregar(elemento, false);
+                Pdf pHabBromat = pdfService.agregar(elemento, nombre, false);
                 pHabBromat.setTabla("vehiculo");
                 pdf = pdfDAO.saveAndFlush(pHabBromat);
             } else {
@@ -184,9 +185,9 @@ public class VehiculoService {
                 }
                 pdf = null;
             } else {
-                Pdf pTitulo = pdfVehiculo != null ? pdfService.actualizar(
-                        pdfVehiculo.getId(), elemento, false)
-                        : pdfService.agregar(elemento, false);
+                Pdf pTitulo = vehiculo.getPdfTitulo() != null ? pdfService.actualizar(
+                        vehiculo.getPdfTitulo().getId(), elemento, nombre, false)
+                        : pdfService.agregar(elemento, nombre, false);
                 pTitulo.setTabla("vehiculo");
                 pdf = pdfVehiculo != null ? pdfDAO.save(pTitulo)
                         : pdfDAO.saveAndFlush(pTitulo);
@@ -203,7 +204,7 @@ public class VehiculoService {
                 elemento.getConfiguracionVehiculo().getId()).get();
         String nInterno = elemento.getNumeroInterno() != null ? elemento.getNumeroInterno() : "";
         elemento.setAlias(elemento.getDominio() + " - " + nInterno + " - "
-                + e.getRazonSocial() + " - " + cv.getTipoVehiculo().getNombre() + " - "
+                + " - " + cv.getTipoVehiculo().getNombre() + " - "
                 + cv.getMarcaVehiculo().getNombre());
         return elementoDAO.save(elemento);
     }
@@ -218,13 +219,13 @@ public class VehiculoService {
     private Vehiculo formatearStrings(Vehiculo elemento) {
         elemento.setDominio(elemento.getDominio().trim().toUpperCase());
         if (elemento.getNumeroInterno() != null) {
-            elemento.setNumeroInterno(elemento.getNumeroInterno().trim());
+            elemento.setNumeroInterno(elemento.getNumeroInterno().trim().toUpperCase());
         }
         if (elemento.getNumeroMotor() != null) {
-            elemento.setNumeroMotor(elemento.getNumeroMotor().trim());
+            elemento.setNumeroMotor(elemento.getNumeroMotor().trim().toUpperCase());
         }
         if (elemento.getNumeroChasis() != null) {
-            elemento.setNumeroChasis(elemento.getNumeroChasis().trim());
+            elemento.setNumeroChasis(elemento.getNumeroChasis().trim().toUpperCase());
         }
         elemento.setNumeroRuta(elemento.getNumeroRuta().trim());
         return elemento;

@@ -20,8 +20,6 @@ import javax.persistence.Table;
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
-
-
 @Entity
 @Table(name = "viaje")
 @JsonFilter("viajefiltro")
@@ -90,20 +88,6 @@ public class Viaje extends ObjetoGenerico {
     @JoinColumn(name = "idVehiculoRemolqueProveedor", nullable = true)
     private VehiculoProveedor vehiculoRemolqueProveedor;
     
-    //Define un numero de documentacion
-    @Column(name = "numeroDocumentacion",length = 10, nullable = true)
-    private int numeroDocumentacion;
-    
-    //Defina una fecha de documentacion
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
-    @Column(name = "fechaDocumentacion", nullable = true)
-    private Timestamp fechaDocumentacion;
-    
-    //Referencia a la clase Usuario (documentacion)
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idUsuarioDocumentacion", nullable = true)
-    private Usuario usuarioDocumentacion;
-    
     //Define un numero de liquidacion
     @Column(name = "numeroLiquidacion",length = 10, nullable = true)
     private int numeroLiquidacion;
@@ -157,6 +141,11 @@ public class Viaje extends ObjetoGenerico {
     //Define el alias para las busquedas
     @Column(name = "alias", length = 100, nullable = true)
     private String alias;
+    
+    //Referencia a la clase ViajeCierreDocumentecion
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idViajeCierreDocumentacion", nullable = true)
+    private ViajeCierreDocumentacion viajeCierreDocumentacion;
     
     //Referencia a la clase viajeTramo (lista)
     @JsonIgnoreProperties("viaje")
@@ -293,30 +282,6 @@ public class Viaje extends ObjetoGenerico {
         this.vehiculoRemolqueProveedor = vehiculoRemolqueProveedor;
     }
 
-    public int getNumeroDocumentacion() {
-        return numeroDocumentacion;
-    }
-
-    public void setNumeroDocumentacion(int numeroDocumentacion) {
-        this.numeroDocumentacion = numeroDocumentacion;
-    }
-
-    public Timestamp getFechaDocumentacion() {
-        return fechaDocumentacion;
-    }
-
-    public void setFechaDocumentacion(Timestamp fechaDocumentacion) {
-        this.fechaDocumentacion = fechaDocumentacion;
-    }
-
-    public Usuario getUsuarioDocumentacion() {
-        return usuarioDocumentacion;
-    }
-
-    public void setUsuarioDocumentacion(Usuario usuarioDocumentacion) {
-        this.usuarioDocumentacion = usuarioDocumentacion;
-    }
-
     public int getNumeroLiquidacion() {
         return numeroLiquidacion;
     }
@@ -413,6 +378,14 @@ public class Viaje extends ObjetoGenerico {
         this.alias = alias;
     }
 
+    public ViajeCierreDocumentacion getViajeCierreDocumentacion() {
+        return viajeCierreDocumentacion;
+    }
+
+    public void setViajeCierreDocumentacion(ViajeCierreDocumentacion viajeCierreDocumentacion) {
+        this.viajeCierreDocumentacion = viajeCierreDocumentacion;
+    }
+    
     public List<ViajeTramo> getViajeTramos() {
         return viajeTramos;
     }

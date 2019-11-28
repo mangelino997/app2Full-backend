@@ -20,7 +20,7 @@ import javax.persistence.Table;
 public class Foto extends ObjetoGenerico {
     
     //Define el nombre
-    @Column(name = "nombre",length = 30, nullable = false)
+    @Column(name = "nombre",length = 60, nullable = false)
     private String nombre;
     
     //Define el tipo de imagen

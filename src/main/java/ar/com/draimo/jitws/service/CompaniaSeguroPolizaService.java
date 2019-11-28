@@ -131,12 +131,15 @@ public class CompaniaSeguroPolizaService {
     public CompaniaSeguroPoliza agregar(String elementoString, MultipartFile archivo) throws IOException {
         CompaniaSeguroPoliza elemento = new ObjectMapper().readValue(elementoString, CompaniaSeguroPoliza.class);
         Pdf pdf = null;
-        Pdf u = !archivo.getOriginalFilename().equals("") ? pdfService.agregar(archivo, false): null;
-        if (u!=null) {
-            u.setTabla("companiaseguropoliza");
-            pdf = pdfDAO.saveAndFlush(u);
+        if(!archivo.getOriginalFilename().equals("")) {
+            String nombre = elemento.getEmpresa().getAbreviatura() + "-" + elemento.getNumeroPoliza();
+            pdf = pdfService.agregar(archivo, nombre, false);
+            pdf.setTabla("companiaseguropoliza");
+            pdf = pdfDAO.saveAndFlush(pdf);
+            elemento.setPdf(pdf);
+        } else {
+            elemento.setPdf(null);
         }
-        elemento.setPdf(pdf!=null? pdf : null);
         return elementoDAO.saveAndFlush(elemento);
     }
 
@@ -152,7 +155,9 @@ public class CompaniaSeguroPolizaService {
             elemento.setPdf(null);
         } else {
             Pdf f = elemento.getPdf().getId() != 0 ?pdfService.actualizar(elemento.getPdf().getId(),
-                    archivo, false) :pdfService.agregar(archivo, false);
+                    archivo, elemento.getEmpresa().getAbreviatura() + "-" + elemento.getNumeroPoliza(), false) 
+                    : pdfService.agregar(archivo, elemento.getEmpresa().getAbreviatura() 
+                            + "-" + elemento.getNumeroPoliza(), false);
             f.setTabla("companiaseguropoliza");
             Pdf bug = elemento.getPdf().getId() != 0 ? pdfDAO.save(f): pdfDAO.saveAndFlush(f);
             elemento.setPdf(bug);

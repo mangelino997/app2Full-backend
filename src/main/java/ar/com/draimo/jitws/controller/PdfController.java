@@ -69,7 +69,7 @@ public class PdfController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("pdf") MultipartFile elemento) {
         try {
-            Pdf a = elementoService.agregar(elemento, true);
+            Pdf a = elementoService.agregar(elemento, elemento.getOriginalFilename(), true);
             //Envia la nueva lista a los usuarios subscriptos
             //Retorna mensaje de agregado con exito
             return MensajeRespuesta.agregado(a.getId());
@@ -91,7 +91,7 @@ public class PdfController {
             @RequestPart("pdf") MultipartFile pdf) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(idPdf, pdf, true);
+            elementoService.actualizar(idPdf, pdf, pdf.getOriginalFilename(), true);
             //Envia la nueva lista a los usuarios subscripto
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();

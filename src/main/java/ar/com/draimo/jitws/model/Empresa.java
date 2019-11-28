@@ -19,7 +19,6 @@ import javax.persistence.Table;
 /**
  * Clase Empresa 
  * Define el modelo (columnas) de la base de datos.
- *
  * @author blas
  */
 @Entity
@@ -58,7 +57,7 @@ public class Empresa extends ObjetoGenerico {
     private String numeroIIBB;
 
     //Define la abreviatura
-    @Column(name = "abreviatura", length = 15, nullable = false, unique = true)
+    @Column(name = "abreviatura", length = 10, nullable = false, unique = true)
     private String abreviatura;
 
     //Define el logo

@@ -155,9 +155,9 @@ public class RetiroDepositoService {
         elemento.setFechaRegistracion(LocalDateTime.now());
         elemento.setEstaCerrada(false);
         elemento = formatearStrings(elemento);
-        Pdf pdf, u = new Pdf();
+        Pdf u = new Pdf();
         if (!archivo.getOriginalFilename().equals("")) {
-            u = pdfService.agregar(archivo, false);
+            u = pdfService.agregar(archivo, elemento.getEmpresa().getAbreviatura() + "-RETIRODEPOSITO", false);
             u.setTabla("retiroDeposito");
         }
         elemento.setPdfDni(archivo.getOriginalFilename().equals("") ? null : 
