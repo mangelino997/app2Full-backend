@@ -81,13 +81,13 @@ public class CompraComprobanteService {
             int fechaTipo, Date fechaDesde, Date fechaHasta, int idTipoComprobante) throws IOException {
         List<CompraComprobante> comprobantes= elementoDAO.listarPorFiltros(idEmpresa, idProveedor, fechaDesde, fechaHasta,
                 idTipoComprobante, fechaTipo);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("padre");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(comprobantes);
-        return new ObjectMapper().readValue(string, Object.class);
+        return aplicarFiltros(comprobantes);
+    }
+    
+    //Obtiene la lista por proveedor y empresa
+    public Object listarParaOrdenPago(int idEmpresa, int idProveedor) throws IOException {
+        List<CompraComprobante> comprobantes= elementoDAO.listarParaOrdenPago(idEmpresa, idProveedor);
+        return aplicarFiltros(comprobantes);
     }
     
     //Verifica que el comprobante no exista
@@ -169,6 +169,17 @@ public class CompraComprobanteService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Retorna un object con los filtros aplicados
+    private Object aplicarFiltros(List<CompraComprobante> elementos) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
 }

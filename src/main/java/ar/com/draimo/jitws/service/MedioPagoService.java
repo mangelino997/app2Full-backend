@@ -38,6 +38,16 @@ public class MedioPagoService {
                 : elementoDAO.findByNombreContaining(nombre);
     }
 
+    //Obtiene una lista de halibitados para ingreso
+    public List<MedioPago> listarParaIngreso() {
+        return  elementoDAO.findByEstaAtivoIngresoTrue();
+    }
+
+    //Obtiene una lista de halibitados para egreso
+    public List<MedioPago> listarParaEgreso() {
+        return  elementoDAO.findByEstaAtivoEgresoTrue();
+    }
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public MedioPago agregar(MedioPago elemento) {

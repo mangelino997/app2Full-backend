@@ -2,14 +2,19 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -73,6 +78,71 @@ public class Pago extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idUsuarioMod", nullable = true)
     private Usuario usuarioMod;
+    
+    //Define la referencia a PagoAnticipo
+    @OneToMany
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idPago"), 
+      inverseJoinColumns = @JoinColumn(name = "idPagoAnticipo"))
+    @JsonIgnoreProperties("pago")
+    private List<PagoAnticipo> pagoAnticipo;
+
+    //Define la referencia a efectivo
+    @OneToMany
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idPago"), 
+      inverseJoinColumns = @JoinColumn(name = "idEfectivo"))
+    @JsonIgnoreProperties("pago")
+    private List<Efectivo> efectivo;
+    
+    //Define la referencia a ChequeCartera
+    @OneToMany
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idPago"), 
+      inverseJoinColumns = @JoinColumn(name = "idChequeCartera"))
+    @JsonIgnoreProperties("pago")
+    private List<ChequeCartera> chequeCartera;
+    
+    //Define la referencia a DocumentoCartera
+    @OneToMany
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idPago"), 
+      inverseJoinColumns = @JoinColumn(name = "idDocumentoCartera"))
+    @JsonIgnoreProperties("pago")
+    private List<DocumentoCartera> documentoCartera;
+    
+    //Define la referencia a MonedaCartera
+    @OneToMany
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idPago"), 
+      inverseJoinColumns = @JoinColumn(name = "idMonedaCartera"))
+    @JsonIgnoreProperties("pago")
+    private List<MonedaCartera> monedaCartera;
+    
+    //Define la referencia a LibroBanco
+    @OneToMany
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idPago"), 
+      inverseJoinColumns = @JoinColumn(name = "idLibroBanco"))
+    @JsonIgnoreProperties("pago")
+    private List<LibroBanco> libroBanco;
+    
+    //Define la referencia a compraComprobante
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "pago")
+    @JsonIgnoreProperties(value = {"compraComprobantePercepciones", "compraComprobanteItems",
+            "compraComprobanteVencimientos"})
+    private List<PagoItem> pagoItems;
+    
+    //Define la referencia a PagoRetencion
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "pago")
+    @JsonIgnoreProperties(value = "")
+    private List<PagoRetencion> pagoRetenciones;
 
     //Getters y Setters de la clase
 
@@ -162,6 +232,70 @@ public class Pago extends ObjetoGenerico {
 
     public void setUsuarioMod(Usuario usuarioMod) {
         this.usuarioMod = usuarioMod;
+    }
+
+    public List<PagoAnticipo> getPagoAnticipo() {
+        return pagoAnticipo;
+    }
+
+    public void setPagoAnticipo(List<PagoAnticipo> pagoAnticipo) {
+        this.pagoAnticipo = pagoAnticipo;
+    }
+
+    public List<Efectivo> getEfectivo() {
+        return efectivo;
+    }
+
+    public void setEfectivo(List<Efectivo> efectivo) {
+        this.efectivo = efectivo;
+    }
+
+    public List<ChequeCartera> getChequeCartera() {
+        return chequeCartera;
+    }
+
+    public void setChequeCartera(List<ChequeCartera> chequeCartera) {
+        this.chequeCartera = chequeCartera;
+    }
+
+    public List<DocumentoCartera> getDocumentoCartera() {
+        return documentoCartera;
+    }
+
+    public void setDocumentoCartera(List<DocumentoCartera> documentoCartera) {
+        this.documentoCartera = documentoCartera;
+    }
+
+    public List<MonedaCartera> getMonedaCartera() {
+        return monedaCartera;
+    }
+
+    public void setMonedaCartera(List<MonedaCartera> monedaCartera) {
+        this.monedaCartera = monedaCartera;
+    }
+
+    public List<LibroBanco> getLibroBanco() {
+        return libroBanco;
+    }
+
+    public void setLibroBanco(List<LibroBanco> libroBanco) {
+        this.libroBanco = libroBanco;
+    }
+
+    public List<PagoItem> getPagoItems() {
+        return pagoItems;
+    }
+
+    public void setPagoItems(List<PagoItem> pagoItems) {
+        this.pagoItems = pagoItems;
+    }
+
+    public List<PagoRetencion> getPagoRetenciones() {
+        return pagoRetenciones;
+    }
+
+    public void setPagoRetenciones(List<PagoRetencion> pagoRetenciones) {
+        this.pagoRetenciones = pagoRetenciones;
     }
     
 }

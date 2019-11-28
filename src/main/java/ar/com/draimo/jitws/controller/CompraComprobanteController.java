@@ -68,6 +68,13 @@ public class CompraComprobanteController {
         return elementoService.listarPorFiltros(idEmpresa, idProveedor, fechaTipo, fechaDesde, fechaHasta, idTipoComprobante);
     }
     
+    //Obtiene la lista por proveedor y empresa
+    @GetMapping(value = URL + "/listarParaOrdenPago/{idEmpresa}/{idProveedor}")
+    @ResponseBody
+    public Object listarParaOrdenPago(@PathVariable int idEmpresa, @PathVariable int idProveedor) throws IOException {
+        return elementoService.listarParaOrdenPago(idEmpresa, idProveedor);
+    }
+    
     //retorna si se cumple o no la unicidad
     @GetMapping(value = URL + "/verificarUnicidadComprobante/{idProveedor}/{codigoAfip}/{puntoVenta}/{numero}")
     @ResponseBody

@@ -139,6 +139,11 @@ public class Cobranza extends ObjetoGenerico {
             "ventaComprobanteItemNC", "ventaComprobanteItemND","seguimientoVentaComprobantes"})
     private List<CobranzaItem> cobranzaItems;
     
+    //Define la referencia a cobranzaRetencion
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "cobranza")
+    @JsonIgnoreProperties(value = "")
+    private List<CobranzaRetencion> cobranzaRetenciones;
+    
     //Getters y Setters de la clase
 
     public Empresa getEmpresa() {
@@ -283,6 +288,14 @@ public class Cobranza extends ObjetoGenerico {
 
     public void setCobranzaItems(List<CobranzaItem> cobranzaItems) {
         this.cobranzaItems = cobranzaItems;
+    }
+
+    public List<CobranzaRetencion> getCobranzaRetenciones() {
+        return cobranzaRetenciones;
+    }
+
+    public void setCobranzaRetenciones(List<CobranzaRetencion> cobranzaRetenciones) {
+        this.cobranzaRetenciones = cobranzaRetenciones;
     }
     
 }

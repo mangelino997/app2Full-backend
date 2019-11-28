@@ -4,12 +4,14 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ICobranzaAnticipoDAO;
 import ar.com.draimo.jitws.dao.ICobranzaDAO;
 import ar.com.draimo.jitws.dao.ICobranzaItemDAO;
+import ar.com.draimo.jitws.dao.ICobranzaRetencionDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.model.Cobranza;
 import ar.com.draimo.jitws.model.CobranzaAnticipo;
 import ar.com.draimo.jitws.model.CobranzaItem;
+import ar.com.draimo.jitws.model.CobranzaRetencion;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -45,6 +47,10 @@ public class CobranzaService {
     //Define el dao de cobranzaAnticipo
     @Autowired
     ICobranzaAnticipoDAO cobranzaAnticipoDAO;
+
+    //Define el dao de cobranzaRetencion
+    @Autowired
+    ICobranzaRetencionDAO cobranzaRetencionDAO;
 
     //Define el dao de ventaComprobante
     @Autowired
@@ -89,6 +95,10 @@ public class CobranzaService {
                 ventaComprobanteDAO.save(vtaCpte);
                 cobranzaItem.setCobranza(c);
                 cobranzaItemDAO.saveAndFlush(cobranzaItem);
+            }
+            for (CobranzaRetencion cobranzaRetencion : elemento.getCobranzaRetenciones()) {
+                cobranzaRetencion.setCobranza(c);
+                cobranzaRetencionDAO.saveAndFlush(cobranzaRetencion);
             }
             anticipo.setImporte(montoTotal.compareTo(c.getImporte())==(-1) ? 
                     c.getImporte().subtract(montoTotal) : null);

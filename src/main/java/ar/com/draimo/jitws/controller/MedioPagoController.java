@@ -65,6 +65,20 @@ public class MedioPagoController {
         return elementoService.listarPorNombre(nombre);
     }
 
+    //Obtiene una lista por habilitados para ingreso
+    @GetMapping(value = URL + "/listarParaIngreso")
+    @ResponseBody
+    public List<MedioPago> listarParaIngreso() {
+        return elementoService.listarParaIngreso();
+    }
+
+    //Obtiene una lista por habilitados para ingreso
+    @GetMapping(value = URL + "/listarParaEgreso")
+    @ResponseBody
+    public List<MedioPago> listarParaEgreso() {
+        return elementoService.listarParaEgreso();
+    }
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody MedioPago elemento) {
