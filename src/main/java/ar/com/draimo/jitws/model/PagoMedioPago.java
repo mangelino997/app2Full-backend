@@ -60,8 +60,8 @@ public class PagoMedioPago extends ObjetoGenerico {
 
     //Define la referencia a la clase LibroBanco
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idLibroBancoTransferencia", nullable = true)
-    private LibroBanco libroBancoTransferencia;
+    @JoinColumn(name = "idLibroBanco", nullable = true)
+    private LibroBanco libroBanco;
 
     //Getters y Setters de la clase
 
@@ -129,12 +129,12 @@ public class PagoMedioPago extends ObjetoGenerico {
         this.chequeraItem = chequeraItem;
     }
 
-    public LibroBanco getLibroBancoTransferencia() {
-        return libroBancoTransferencia;
+    public LibroBanco getLibroBanco() {
+        return libroBanco;
     }
 
-    public void setLibroBancoTransferencia(LibroBanco libroBancoTransferencia) {
-        this.libroBancoTransferencia = libroBancoTransferencia;
+    public void setLibroBanco(LibroBanco libroBanco) {
+        this.libroBanco = libroBanco;
     }
     
 }

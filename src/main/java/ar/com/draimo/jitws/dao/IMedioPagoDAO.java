@@ -20,9 +20,9 @@ public interface IMedioPagoDAO extends JpaRepository<MedioPago, Integer> {
     public List<MedioPago> findByNombreContaining(String nombre);
     
     //Obtiene una lista de activos para ingreso
-    public List<MedioPago> findByEstaAtivoIngresoTrue();
+    public List<MedioPago> findByEstaActivoIngresoTrue();
     
     //Obtiene una lista de activos para egreso
-    public List<MedioPago> findByEstaAtivoEgresoTrue();
+    public List<MedioPago> findByEstaActivoEgresoTrue();
     
 }
