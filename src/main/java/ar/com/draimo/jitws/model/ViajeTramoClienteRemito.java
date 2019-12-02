@@ -24,7 +24,7 @@ import javax.persistence.Table;
 public class ViajeTramoClienteRemito extends ObjetoGenerico {
 
     //Referencia a la clase viajeTramoCliente
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idViajeTramoCliente", nullable = false)
     private ViajeTramoCliente viajeTramoCliente;
     
