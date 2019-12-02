@@ -56,6 +56,16 @@ public class DocumentoCartera extends ObjetoGenerico {
     @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
         "libroBanco","monedaCartera", "documentoCartera"})
     private Cobranza cobranzaOrigen;
+
+    //Define la referencia a la clase pago
+    @ManyToOne
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idDocumentoCartera"), 
+      inverseJoinColumns = @JoinColumn(name = "idPago"))
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+        "libroBanco","monedaCartera", "documentoCartera"})
+    private Pago pagoDestino;
     
     //Getters y Setters de la clase
 
@@ -105,6 +115,22 @@ public class DocumentoCartera extends ObjetoGenerico {
 
     public void setEsIngreso(boolean esIngreso) {
         this.esIngreso = esIngreso;
+    }
+
+    public Cobranza getCobranzaOrigen() {
+        return cobranzaOrigen;
+    }
+
+    public void setCobranzaOrigen(Cobranza cobranzaOrigen) {
+        this.cobranzaOrigen = cobranzaOrigen;
+    }
+
+    public Pago getPagoDestino() {
+        return pagoDestino;
+    }
+
+    public void setPagoDestino(Pago pagoDestino) {
+        this.pagoDestino = pagoDestino;
     }
 
 }

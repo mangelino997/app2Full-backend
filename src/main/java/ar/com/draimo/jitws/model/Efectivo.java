@@ -42,6 +42,16 @@ public class Efectivo extends ObjetoGenerico {
     @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
         "libroBanco","monedaCartera", "documentoCartera"})
     private Cobranza cobranzaOrigen;
+
+    //Define la referencia a la clase pago
+    @ManyToOne
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idEfectivo"), 
+      inverseJoinColumns = @JoinColumn(name = "idPago"))
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+        "libroBanco","monedaCartera", "documentoCartera"})
+    private Pago pagoDestino;
     
     //Getters y Setters de la clase
 
@@ -75,6 +85,14 @@ public class Efectivo extends ObjetoGenerico {
 
     public void setCobranzaOrigen(Cobranza cobranzaOrigen) {
         this.cobranzaOrigen = cobranzaOrigen;
+    }
+
+    public Pago getPagoDestino() {
+        return pagoDestino;
+    }
+
+    public void setPagoDestino(Pago pagoDestino) {
+        this.pagoDestino = pagoDestino;
     }
     
 }

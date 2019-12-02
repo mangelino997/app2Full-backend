@@ -2,7 +2,6 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
@@ -55,12 +54,12 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
     private short bultos;
     
     //Define los kilos efectivo
-    @Column(name = "kgEfectivo", nullable = true)
-    private BigDecimal kgEfectivo;
+    @Column(name = "kilosEfectivo", nullable = true)
+    private BigDecimal kilosEfectivo;
     
     //Define los kilos aforados
-    @Column(name = "kgAforado", nullable = true)
-    private BigDecimal kgAforado;
+    @Column(name = "kilosAforado", nullable = true)
+    private BigDecimal kilosAforado;
     
     //Define los m3
     @Column(name = "m3", nullable = true)
@@ -175,20 +174,20 @@ public class ViajeTramoClienteRemito extends ObjetoGenerico {
         this.bultos = bultos;
     }
 
-    public BigDecimal getKgEfectivo() {
-        return kgEfectivo;
+    public BigDecimal getKilosEfectivo() {
+        return kilosEfectivo;
     }
 
-    public void setKgEfectivo(BigDecimal kgEfectivo) {
-        this.kgEfectivo = kgEfectivo;
+    public void setKilosEfectivo(BigDecimal kilosEfectivo) {
+        this.kilosEfectivo = kilosEfectivo;
     }
 
-    public BigDecimal getKgAforado() {
-        return kgAforado;
+    public BigDecimal getKilosAforado() {
+        return kilosAforado;
     }
 
-    public void setKgAforado(BigDecimal kgAforado) {
-        this.kgAforado = kgAforado;
+    public void setKilosAforado(BigDecimal kilosAforado) {
+        this.kilosAforado = kilosAforado;
     }
     
     public BigDecimal getM3() {

@@ -31,7 +31,7 @@ public class PagoMedioPago extends ObjetoGenerico {
 
     //Define el importe de Pago anticipo
     @Column(name = "importePagoAnticipo", nullable = true)
-    private BigDecimal importeCobranzaAnticipo;
+    private BigDecimal importePagoAnticipo;
 
     //Define la referencia a la clase Efectivo
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -81,14 +81,14 @@ public class PagoMedioPago extends ObjetoGenerico {
         this.pagoAnticipo = pagoAnticipo;
     }
 
-    public BigDecimal getImporteCobranzaAnticipo() {
-        return importeCobranzaAnticipo;
+    public BigDecimal getImportePagoAnticipo() {
+        return importePagoAnticipo;
     }
 
-    public void setImporteCobranzaAnticipo(BigDecimal importeCobranzaAnticipo) {
-        this.importeCobranzaAnticipo = importeCobranzaAnticipo;
+    public void setImportePagoAnticipo(BigDecimal importePagoAnticipo) {
+        this.importePagoAnticipo = importePagoAnticipo;
     }
-
+    
     public Efectivo getEfectivo() {
         return efectivo;
     }
