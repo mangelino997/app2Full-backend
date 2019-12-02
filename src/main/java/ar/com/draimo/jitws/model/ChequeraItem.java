@@ -1,12 +1,14 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -40,6 +42,16 @@ public class ChequeraItem extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idLibroBanco", nullable = true)
     private LibroBanco libroBanco;
+
+    //Define la referencia a la clase pago
+    @ManyToOne
+    @JoinTable(
+      name = "pagomediopago", 
+      joinColumns = @JoinColumn(name = "idChequeraItem"), 
+      inverseJoinColumns = @JoinColumn(name = "idPago"))
+    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+        "libroBanco","monedaCartera", "documentoCartera"})
+    private Pago pagoDestino;
 
     //Getters y Setters de la clase
     public Chequera getChequera() {
@@ -80,6 +92,14 @@ public class ChequeraItem extends ObjetoGenerico {
 
     public void setLibroBanco(LibroBanco libroBanco) {
         this.libroBanco = libroBanco;
+    }
+
+    public Pago getPagoDestino() {
+        return pagoDestino;
+    }
+
+    public void setPagoDestino(Pago pagoDestino) {
+        this.pagoDestino = pagoDestino;
     }
 
 }
