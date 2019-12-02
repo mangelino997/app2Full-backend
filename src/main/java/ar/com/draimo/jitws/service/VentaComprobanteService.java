@@ -72,7 +72,7 @@ public class VentaComprobanteService {
     //Define la referancia a MonedaDAO
     @Autowired
     IMonedaDAO monedaDAO;
-   
+
     //Define la referancia a PuntoVentaDAO
     @Autowired
     IPuntoVentaDAO puntoVentaDAO;
@@ -171,16 +171,18 @@ public class VentaComprobanteService {
                 viajeRemito.setEstaFacturado(true);
                 viajeRemitoDAO.save(viajeRemito);
             }
-            if (itemFA.getViajeTramoClienteRemito()!= null) {
+            if (itemFA.getViajeTramoClienteRemito() != null) {
                 viajeTramoClienteRemito = viajeTramoClienteRemitoDAO.obtenerPorId(
                         itemFA.getViajeTramoClienteRemito().getId());
                 viajeTramoClienteRemito.setEstaFacturado(true);
                 viajeTramoClienteRemitoDAO.save(viajeTramoClienteRemito);
             }
             importeTotal.add(itemFA.getImporteNetoGravado());
-            itemFA.setOrdenVentaTarifa(ordenVentaTarifaDAO.obtenerPorOrdenVentaYTipoTarifa(
-                    itemFA.getOrdenVentaTarifa().getOrdenVenta().getId(),
-                    itemFA.getOrdenVentaTarifa().getTipoTarifa().getId()));
+            if (itemFA.getOrdenVentaTarifa() != null) {
+                itemFA.setOrdenVentaTarifa(ordenVentaTarifaDAO.obtenerPorOrdenVentaYTipoTarifa(
+                        itemFA.getOrdenVentaTarifa().getOrdenVenta().getId(),
+                        itemFA.getOrdenVentaTarifa().getTipoTarifa().getId()));
+            }
             ventaComprobanteItemFADAO.saveAndFlush(itemFA);
         }
         //Agrega item ContraReembolso
@@ -196,8 +198,8 @@ public class VentaComprobanteService {
                 ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
             }
         }
-        elemento.setClienteGrupo(elemento.getCliente().getCuentaGrupo()!=null ?
-                elemento.getCliente().getCuentaGrupo() : null);
+        elemento.setClienteGrupo(elemento.getCliente().getCuentaGrupo() != null
+                ? elemento.getCliente().getCuentaGrupo() : null);
         elemento.setImporteSaldo(elemento.getImporteTotal());
         return elementoDAO.save(formatearStrings(elemento));
     }
@@ -220,7 +222,7 @@ public class VentaComprobanteService {
         elemento.setCodigoAfip(elemento.getCodigoAfip().trim());
         return elemento;
     }
-    
+
     //Convierte una lista o un elemento a object para retornar con filtros aplicados
     private Object retornarObjeto(List<VentaComprobante> elementos, VentaComprobante elemento) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -233,7 +235,7 @@ public class VentaComprobanteService {
                 .addFilter("filtroOrdenVentaEscala", theFilter)
                 .addFilter("clienteordenventafiltro", theFilter)
                 .addFilter("filtroOrdenVentaTramo", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento!=null ? elemento : elementos);
+        String string = mapper.writer(filters).writeValueAsString(elemento != null ? elemento : elementos);
         return mapper.readValue(string, Object.class);
     }
 
