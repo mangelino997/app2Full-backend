@@ -82,7 +82,7 @@ public class OrdenVenta extends ObjetoGenerico {
     private List<Empresa> empresas;
     
     //Define la referencia a tipoTarifa
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "ordenventatarifa", 
       joinColumns = @JoinColumn(name = "idOrdenVenta"), 
       inverseJoinColumns = @JoinColumn(name = "idTipoTarifa"))

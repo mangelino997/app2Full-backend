@@ -66,6 +66,13 @@ public class OrdenVentaController {
         return elementoService.listarPorNombre(nombre);
     }
 
+    //Obtiene por id
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public Object obtenerPorId(@PathVariable int id) throws IOException {
+        return elementoService.obtenerPorId(id);
+    }
+    
     //Obtiene una lista por idEmpresa
     @GetMapping(value = URL + "/listarPorEmpresa/{idEmpresa}")
     @ResponseBody

@@ -5,28 +5,30 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 /**
- * Clase OrdenVentaTarifa
- * Define el modelo (columnas) de la base de datos.
+ * Clase OrdenVentaTarifa Define el modelo (columnas) de la base de datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "ordenventatarifa")
 public class OrdenVentaTarifa extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
+    @MapsId("idOrdenVenta")
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
-    
+
     //Referencia a la clase TipoTarifa
     @ManyToOne(cascade = CascadeType.REFRESH)
+    @MapsId("idTipoTarifa")
     @JoinColumn(name = "idTipoTarifa", nullable = false)
     private TipoTarifa tipoTarifa;
-    
+
     //Getters y Setters de la clase
     public OrdenVenta getOrdenVenta() {
         return ordenVenta;
@@ -43,5 +45,5 @@ public class OrdenVentaTarifa extends ObjetoGenerico {
     public void setTipoTarifa(TipoTarifa tipoTarifa) {
         this.tipoTarifa = tipoTarifa;
     }
-    
+
 }
