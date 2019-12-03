@@ -64,7 +64,7 @@ public class MonedaCuentaContableService {
     //Obtiene una lista por nombre de moneda
     public Object listarPorNombreMoneda(String nombre, int idEmpresa) throws IOException {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        List<MonedaCuentaContable> monedasCuentasContables = nombre.equals("***")?
+        List<MonedaCuentaContable> monedasCuentasContables = nombre.equals("*")?
             elementoDAO.findByEmpresa(empresa):
             elementoDAO.findByMoneda_NombreContainingAndEmpresa(nombre, empresa);
         ObjectMapper mapper = new ObjectMapper();

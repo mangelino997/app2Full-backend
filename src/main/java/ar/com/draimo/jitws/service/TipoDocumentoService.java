@@ -33,7 +33,7 @@ public class TipoDocumentoService {
     
     //Obtiene una lista por nombre
     public List<TipoDocumento> listarPorNombre(String nombre) {
-        return nombre.equals("***")?elementoDAO.findAll():
+        return nombre.equals("*")?elementoDAO.findAll():
             elementoDAO.findByNombreContaining(nombre);
     }
 

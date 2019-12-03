@@ -33,7 +33,7 @@ public class CondicionVentaService {
     
     //Obtiene una lista por nombre
     public List<CondicionVenta> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll():
+        return nombre.equals("*") ? elementoDAO.findAll():
             elementoDAO.findByNombreContaining(nombre);
     }
     

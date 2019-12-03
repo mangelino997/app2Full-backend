@@ -73,7 +73,7 @@ public class InsumoProductoService {
     
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
-        List<InsumoProducto> elementos= alias.equals("***")? elementoDAO.findAll():
+        List<InsumoProducto> elementos= alias.equals("*")? elementoDAO.findAll():
             elementoDAO.findByAliasContaining(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

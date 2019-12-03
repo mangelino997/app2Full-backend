@@ -33,7 +33,7 @@ public class QuincenaService {
 
     //Obtiene una lista por nombre
     public List<Quincena> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

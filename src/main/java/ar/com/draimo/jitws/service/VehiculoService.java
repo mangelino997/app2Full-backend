@@ -101,7 +101,7 @@ public class VehiculoService {
 
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findAll()
+        List<Vehiculo> elementos = alias.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContainingOrderByAlias(alias);
         return retornarObjeto(elementos, null);
     }
@@ -109,7 +109,7 @@ public class VehiculoService {
     //Obtiene una lista por alias y empresa
     public Object listarPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findByEmpresaOrderByAlias(empresa)
+        List<Vehiculo> elementos = alias.equals("*") ? elementoDAO.findByEmpresaOrderByAlias(empresa)
                 : elementoDAO.findByAliasContainingAndEmpresaOrderByAlias(alias, empresa);
         return retornarObjeto(elementos, null);
     }
@@ -117,7 +117,7 @@ public class VehiculoService {
     //Obtiene una lista por alias y empresa
     public Object listarPorAliasFiltroEmpresaYFiltroRemolque(String alias,
             boolean esRemolque, int idEmpresa) throws IOException {
-        alias = alias.equals("***") ? "" : alias;
+        alias = alias.equals("*") ? "" : alias;
         List<Vehiculo> elementos = elementoDAO.listarPorAliasFiltroEmpresaYFiltroRemolque(
                 alias, esRemolque, idEmpresa);
         return retornarObjeto(elementos, null);

@@ -81,7 +81,7 @@ public class OrdenVentaService {
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<OrdenVenta> elementos = nombre.equals("***")
+        List<OrdenVenta> elementos = nombre.equals("*")
                 ? elementoDAO.findAll() : elementoDAO.findByNombreContaining(nombre);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

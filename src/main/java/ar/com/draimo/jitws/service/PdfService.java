@@ -40,7 +40,7 @@ public class PdfService {
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<Pdf> pdf = nombre.equals("***") ? elementoDAO.findAll()
+        List<Pdf> pdf = nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
         return aplicarFiltros(null, pdf);
     }

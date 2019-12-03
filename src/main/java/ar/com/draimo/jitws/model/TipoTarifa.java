@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,7 +32,7 @@ public class TipoTarifa extends ObjetoGenerico {
     private boolean porPorcentaje;
     
     //Define la referencia a la clase orden venta
-    @ManyToMany
+    @ManyToOne
     @JoinTable(
       name = "ordenventatarifa", 
       joinColumns = @JoinColumn(name = "idTipoTarifa"), 

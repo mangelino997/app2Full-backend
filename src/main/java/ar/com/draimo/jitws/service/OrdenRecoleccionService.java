@@ -90,7 +90,7 @@ public class OrdenRecoleccionService {
     
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<OrdenRecoleccion> ordenes = alias.equals("***")?
+        List<OrdenRecoleccion> ordenes = alias.equals("*")?
             elementoDAO.findAll(): elementoDAO.findByAliasContaining(alias);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

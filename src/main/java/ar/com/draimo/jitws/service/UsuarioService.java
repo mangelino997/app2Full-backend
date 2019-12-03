@@ -63,7 +63,7 @@ public class UsuarioService {
 
     //Obtiene un listado por nombre
     public List<Usuario> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAllByEsDesarrolladorFalse()
+        return nombre.equals("*") ? elementoDAO.findAllByEsDesarrolladorFalse()
                 : elementoDAO.findByNombreContainingAndEsDesarrolladorFalse(nombre);
     }
 

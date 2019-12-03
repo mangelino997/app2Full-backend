@@ -34,7 +34,7 @@ public class ResumenClienteService {
     
     //Obtiene una lista por nombre
     public List<ResumenCliente> listarPorNombre(String nombre) {
-        return nombre.equals("***")? elementoDAO.findAll():
+        return nombre.equals("*")? elementoDAO.findAll():
            elementoDAO.findByNombreContaining(nombre);
     }
 

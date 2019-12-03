@@ -75,7 +75,7 @@ public class ChoferProveedorController {
     @GetMapping(value = URL + "/listarPorProveedor/{idProveedor}")
     @ResponseBody
     public List<ChoferProveedor> listarPorProveedor(@PathVariable int idProveedor) {
-        return elementoService.listarPorAliasYProveedor("***", idProveedor);
+        return elementoService.listarPorAliasYProveedor("*", idProveedor);
     }
 
     //Obtiene una lista por alias y proveedor

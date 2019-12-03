@@ -33,7 +33,7 @@ public class SeguridadSocialService {
 
     //Obtiene una lista por nombre
     public List<SeguridadSocial> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findByOrderByNombreAsc()
+        return nombre.equals("*") ? elementoDAO.findByOrderByNombreAsc()
                 : elementoDAO.findByNombreContainingOrderByNombreAsc(nombre);
     }
 

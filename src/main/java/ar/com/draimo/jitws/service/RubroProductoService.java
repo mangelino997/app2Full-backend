@@ -60,7 +60,7 @@ public class RubroProductoService {
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<RubroProducto> elementos = nombre.equals("***")?elementoDAO.findAll():
+        List<RubroProducto> elementos = nombre.equals("*")?elementoDAO.findAll():
              elementoDAO.findByNombreContaining(nombre);
         //Construye la lista de rubros productos cuentas contables para cada empresa
         for (RubroProducto rubroProducto : elementos) {

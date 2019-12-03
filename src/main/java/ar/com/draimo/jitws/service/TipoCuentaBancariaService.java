@@ -33,7 +33,7 @@ public class TipoCuentaBancariaService {
 
     //Obtiene una lista por nombre
     public List<TipoCuentaBancaria> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

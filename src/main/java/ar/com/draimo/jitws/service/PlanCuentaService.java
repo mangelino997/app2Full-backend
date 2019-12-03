@@ -54,7 +54,7 @@ public class PlanCuentaService {
 
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<PlanCuenta> planesCuenta = nombre.equals("***")
+        List<PlanCuenta> planesCuenta = nombre.equals("*")
                 ? elementoDAO.findAll() : elementoDAO.findByNombreContaining(nombre);
         return aplicarFiltros(planesCuenta, null);
     }

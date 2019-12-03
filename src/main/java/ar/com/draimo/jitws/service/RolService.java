@@ -77,7 +77,7 @@ public class RolService {
 
     //Obtiene una lista por nombre
     public List<Rol> listarPorNombre(String nombre) {
-        return (nombre.equals("***")?elementoDAO.findAllByEsDesarrolladorFalse():
+        return (nombre.equals("*")?elementoDAO.findAllByEsDesarrolladorFalse():
             elementoDAO.findByNombreContainingAndEsDesarrolladorFalse(nombre));
     }
 

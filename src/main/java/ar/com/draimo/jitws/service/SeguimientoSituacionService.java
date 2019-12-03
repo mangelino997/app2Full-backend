@@ -33,7 +33,7 @@ public class SeguimientoSituacionService {
 
     //Obtiene una lista por nombre
     public List<SeguimientoSituacion> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

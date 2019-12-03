@@ -41,7 +41,7 @@ public class EjercicioService {
     //Obtiene una lista por nombre
     public List<Ejercicio> listarPorNombre(String nombre, int idEmpresa) {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        return nombre.equals("***") ? elementoDAO.findByEmpresa(empresa) :
+        return nombre.equals("*") ? elementoDAO.findByEmpresa(empresa) :
             elementoDAO.findByEmpresaAndNombreContaining(empresa, nombre);
     }
 

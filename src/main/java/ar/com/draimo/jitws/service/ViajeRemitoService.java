@@ -72,7 +72,7 @@ public class ViajeRemitoService {
 
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<ViajeRemito> elementos = alias.equals("***") ? elementoDAO.findAll()
+        List<ViajeRemito> elementos = alias.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
         return retornarObjeto(elementos, null);
     }

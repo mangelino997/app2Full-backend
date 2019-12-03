@@ -47,7 +47,7 @@ public class PersonalFamiliarService {
 
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
-        List<PersonalFamiliar> elementos = alias.equals("***") ? elementoDAO.findAll()
+        List<PersonalFamiliar> elementos = alias.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
         return aplicarFiltros(elementos, null);
     }
