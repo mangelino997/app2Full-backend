@@ -29,6 +29,11 @@ public class ViajeCierreDocumentacionService {
     public List<ViajeCierreDocumentacion> listar() {
         return elementoDAO.findAll();
     }
+    
+    //Obtiene el ultimo cierre de documentacion de un vehiculo
+    public ViajeCierreDocumentacion obtenerUltimoCierreDeVehiculo(int idVehiculo) {
+        return elementoDAO.obtenerUltimoCierreDeVehiculo(idVehiculo);
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

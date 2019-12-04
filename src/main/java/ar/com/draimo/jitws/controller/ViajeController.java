@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase Viaje Controller
- *
  * @author blas
  */
 @RestController

@@ -178,19 +178,19 @@ public class VehiculoService {
             } else {
                 pdf = null;
             }
-        }else {
+        } else {
             if ("null".equals(elemento.getOriginalFilename())) {
                 if (pdfVehiculo != null) {
                     pdfDAO.deleteById(pdfVehiculo.getId());
                 }
                 pdf = null;
             } else {
-                Pdf pTitulo = vehiculo.getPdfTitulo() != null ? pdfService.actualizar(
-                        vehiculo.getPdfTitulo().getId(), elemento, nombre, false)
+                pdf = pdfVehiculo != null ? 
+                        pdfService.actualizar(pdfVehiculo.getId(), elemento, nombre, false) 
                         : pdfService.agregar(elemento, nombre, false);
-                pTitulo.setTabla("vehiculo");
-                pdf = pdfVehiculo != null ? pdfDAO.save(pTitulo)
-                        : pdfDAO.saveAndFlush(pTitulo);
+                pdf.setTabla("vehiculo");
+                pdf = pdfVehiculo != null ? 
+                        pdfDAO.save(pdf) : pdfDAO.saveAndFlush(pdf);
             }
         }
         return pdf;
@@ -199,7 +199,6 @@ public class VehiculoService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public Vehiculo establecerAlias(Vehiculo elemento) {
-        Empresa e = empresaDAO.findById(elemento.getEmpresa().getId()).get();
         ConfiguracionVehiculo cv = configuracionVehiculoDAO.findById(
                 elemento.getConfiguracionVehiculo().getId()).get();
         String nInterno = elemento.getNumeroInterno() != null ? elemento.getNumeroInterno() : "";

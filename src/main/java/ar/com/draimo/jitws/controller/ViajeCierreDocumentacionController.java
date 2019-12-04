@@ -55,6 +55,13 @@ public class ViajeCierreDocumentacionController {
     public List<ViajeCierreDocumentacion> listar() {
         return elementoService.listar();
     }
+    
+    //Obtiene el ultimo cierre de documentacion de un vehiculo
+    @GetMapping(value = URL + "/obtenerUltimoCierreDeVehiculo/{idVehiculo}")
+    @ResponseBody
+    public ViajeCierreDocumentacion obtenerUltimoCierreDeVehiculo(@PathVariable int idVehiculo) {
+        return elementoService.obtenerUltimoCierreDeVehiculo(idVehiculo);
+    }
 
     //Agrega un registro
     @PostMapping(value = URL)
