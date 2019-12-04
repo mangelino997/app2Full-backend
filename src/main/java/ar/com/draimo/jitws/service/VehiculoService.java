@@ -164,7 +164,26 @@ public class VehiculoService {
         elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, elemento.getDominio() + "-VTOTECNICA", vehiculo, vehiculo.getPdfVtoInspTecnica()));
         elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, elemento.getDominio() + "-VTOSENASA", vehiculo, vehiculo.getPdfVtoSenasa()));
         elemento.setPdfHabBromat(establecerPdf(habBromat, elemento.getDominio() + "-VTOBROMATOLOGICA", vehiculo, vehiculo.getPdfHabBromat()));
-        return establecerAlias(elemento);
+        elemento = establecerAlias(elemento);
+        if(elemento.getPdfTitulo() == null && vehiculo.getPdfTitulo() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
+        }
+        if(elemento.getPdfCedulaIdent() == null && vehiculo.getPdfCedulaIdent()!= null) {
+            pdfDAO.deleteById(vehiculo.getPdfCedulaIdent().getId());
+        }
+        if(elemento.getPdfVtoRuta() == null && vehiculo.getPdfVtoRuta() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfVtoRuta().getId());
+        }
+        if(elemento.getPdfVtoInspTecnica() == null && vehiculo.getPdfVtoInspTecnica() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
+        }
+        if(elemento.getPdfVtoSenasa() == null && vehiculo.getPdfVtoSenasa() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfVtoSenasa().getId());
+        }
+        if(elemento.getPdfHabBromat()== null && vehiculo.getPdfHabBromat() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfHabBromat().getId());
+        }
+        return elemento;
     }
     
     //Establece el valor a cada pdf dependiendo su condicion
@@ -179,10 +198,7 @@ public class VehiculoService {
                 pdf = null;
             }
         } else {
-            if ("null".equals(elemento.getOriginalFilename())) {
-                if (pdfVehiculo != null) {
-                    pdfDAO.deleteById(pdfVehiculo.getId());
-                }
+            if ("".equals(elemento.getOriginalFilename()) || "null".equals(elemento.getOriginalFilename())) {
                 pdf = null;
             } else {
                 pdf = pdfVehiculo != null ? 
