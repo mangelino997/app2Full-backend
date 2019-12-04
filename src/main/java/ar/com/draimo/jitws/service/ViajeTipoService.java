@@ -33,7 +33,7 @@ public class ViajeTipoService {
 
     //Obtiene una lista por nombre
     public List<ViajeTipo> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

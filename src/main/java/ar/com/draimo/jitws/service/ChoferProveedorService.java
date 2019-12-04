@@ -45,20 +45,20 @@ public class ChoferProveedorService {
     
     //Obtiene una lista por nombre
     public List<ChoferProveedor> listarPorAlias(String alias) {
-        return alias.equals("***") ?
+        return alias.equals("*") ?
             elementoDAO.findAll() : elementoDAO.findByAliasContaining(alias);
     }
     
     //Obtiene una lista por alias activos
     public List<ChoferProveedor> listarActivosPorAlias(String alias) {
-        return alias.equals("***")?elementoDAO.findByUsuarioBajaIsNull():
+        return alias.equals("*")?elementoDAO.findByUsuarioBajaIsNull():
                 elementoDAO.findByAliasContainingAndUsuarioBajaIsNull(alias);
     }
     
     //Obtiene una lista por alias y proveedor
     public List<ChoferProveedor> listarPorAliasYProveedor(String alias, int idProveedor) {
         Proveedor proveedor = proveedorDAO.findById(idProveedor).get();
-        return alias.equals("***") ?elementoDAO.findByProveedor(proveedor):
+        return alias.equals("*") ?elementoDAO.findByProveedor(proveedor):
                 elementoDAO.findByAliasContainingAndProveedor(alias,proveedor);
     }
     

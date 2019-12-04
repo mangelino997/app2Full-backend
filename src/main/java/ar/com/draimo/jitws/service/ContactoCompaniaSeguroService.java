@@ -39,7 +39,7 @@ public class ContactoCompaniaSeguroService {
     
     //Obtiene una lista por nombre
     public List<ContactoCompaniaSeguro> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll() :
+        return nombre.equals("*") ? elementoDAO.findAll() :
             elementoDAO.findByNombreContaining(nombre);
     }
     

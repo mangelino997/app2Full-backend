@@ -67,7 +67,7 @@ public class ProveedorService {
 
     //Obtiene una lista por nombre
     public Object listarPorAlias(String alias) throws IOException {
-        List<Proveedor> proveedores = alias.equals("***") ? elementoDAO.findAll()
+        List<Proveedor> proveedores = alias.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContaining(alias);
         //Construye la lista de rubros productos cuentas contables para cada empresa
         for (Proveedor proveedor : proveedores) {

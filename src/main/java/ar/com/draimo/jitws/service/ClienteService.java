@@ -120,7 +120,7 @@ public class ClienteService {
 
     //Obtiene una lista por alias
     public Object listarPorAliasListaPrecio(String alias, int idCliente) throws IOException {
-        List<Cliente> clientes = alias.equals("***") ? elementoDAO.findByIdNot(idCliente):
+        List<Cliente> clientes = alias.equals("*") ? elementoDAO.findByIdNot(idCliente):
             elementoDAO.findByAliasContainingAndIdNot(alias, idCliente);
         //Construye la lista de rubros productos cuentas contables para cada empresa
         for (Cliente cliente : clientes) {

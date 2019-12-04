@@ -33,7 +33,7 @@ public class TipoPercepcionService {
 
     //Obtiene una lista por nombre
     public List<TipoPercepcion> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

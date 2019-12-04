@@ -34,7 +34,7 @@ public class AfipModContratacionService {
     
     //Obtiene una lista por alias
     public List<AfipModContratacion> listarPorAlias(String alias) {
-        return alias.equals("***") ? elementoDAO.findByOrderByCodigoAfipAsc()
+        return alias.equals("*") ? elementoDAO.findByOrderByCodigoAfipAsc()
                 : elementoDAO.findByAliasContaining(alias);
     }
     

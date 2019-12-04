@@ -40,7 +40,7 @@ public class OrigenDestinoService {
 
     //Obtiene una lista por nombre
     public List<OrigenDestino> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

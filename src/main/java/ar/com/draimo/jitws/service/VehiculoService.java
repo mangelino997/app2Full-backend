@@ -101,7 +101,7 @@ public class VehiculoService {
 
     //Obtiene una lista por alias
     public Object listarPorAlias(String alias) throws IOException {
-        List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findAll()
+        List<Vehiculo> elementos = alias.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContainingOrderByAlias(alias);
         return retornarObjeto(elementos, null);
     }
@@ -109,7 +109,7 @@ public class VehiculoService {
     //Obtiene una lista por alias y empresa
     public Object listarPorAliasYEmpresa(String alias, int idEmpresa) throws IOException {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        List<Vehiculo> elementos = alias.equals("***") ? elementoDAO.findByEmpresaOrderByAlias(empresa)
+        List<Vehiculo> elementos = alias.equals("*") ? elementoDAO.findByEmpresaOrderByAlias(empresa)
                 : elementoDAO.findByAliasContainingAndEmpresaOrderByAlias(alias, empresa);
         return retornarObjeto(elementos, null);
     }
@@ -117,7 +117,7 @@ public class VehiculoService {
     //Obtiene una lista por alias y empresa
     public Object listarPorAliasFiltroEmpresaYFiltroRemolque(String alias,
             boolean esRemolque, int idEmpresa) throws IOException {
-        alias = alias.equals("***") ? "" : alias;
+        alias = alias.equals("*") ? "" : alias;
         List<Vehiculo> elementos = elementoDAO.listarPorAliasFiltroEmpresaYFiltroRemolque(
                 alias, esRemolque, idEmpresa);
         return retornarObjeto(elementos, null);
@@ -178,19 +178,19 @@ public class VehiculoService {
             } else {
                 pdf = null;
             }
-        }else {
+        } else {
             if ("null".equals(elemento.getOriginalFilename())) {
                 if (pdfVehiculo != null) {
                     pdfDAO.deleteById(pdfVehiculo.getId());
                 }
                 pdf = null;
             } else {
-                Pdf pTitulo = vehiculo.getPdfTitulo() != null ? pdfService.actualizar(
-                        vehiculo.getPdfTitulo().getId(), elemento, nombre, false)
+                pdf = pdfVehiculo != null ? 
+                        pdfService.actualizar(pdfVehiculo.getId(), elemento, nombre, false) 
                         : pdfService.agregar(elemento, nombre, false);
-                pTitulo.setTabla("vehiculo");
-                pdf = pdfVehiculo != null ? pdfDAO.save(pTitulo)
-                        : pdfDAO.saveAndFlush(pTitulo);
+                pdf.setTabla("vehiculo");
+                pdf = pdfVehiculo != null ? 
+                        pdfDAO.save(pdf) : pdfDAO.saveAndFlush(pdf);
             }
         }
         return pdf;
@@ -199,7 +199,6 @@ public class VehiculoService {
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public Vehiculo establecerAlias(Vehiculo elemento) {
-        Empresa e = empresaDAO.findById(elemento.getEmpresa().getId()).get();
         ConfiguracionVehiculo cv = configuracionVehiculoDAO.findById(
                 elemento.getConfiguracionVehiculo().getId()).get();
         String nInterno = elemento.getNumeroInterno() != null ? elemento.getNumeroInterno() : "";

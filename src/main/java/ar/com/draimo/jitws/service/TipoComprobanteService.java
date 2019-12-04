@@ -38,7 +38,7 @@ public class TipoComprobanteService {
 
     //Obtiene un listado por nombre
     public List<TipoComprobante> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

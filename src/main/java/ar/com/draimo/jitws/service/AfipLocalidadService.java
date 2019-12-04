@@ -34,7 +34,7 @@ public class AfipLocalidadService {
     
     //Obtiene una lista por alias
     public List<AfipLocalidad> listarPorAlias(String alias) {
-        return alias.equals("***") ? elementoDAO.findByOrderByCodigoAfipAsc()
+        return alias.equals("*") ? elementoDAO.findByOrderByCodigoAfipAsc()
                 : elementoDAO.findByAliasContaining(alias);
     }
     

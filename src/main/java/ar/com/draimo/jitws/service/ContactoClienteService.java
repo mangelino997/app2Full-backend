@@ -52,7 +52,7 @@ public class ContactoClienteService {
     
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<ContactoCliente> contactoClientes = nombre.equals("***") ?
+        List<ContactoCliente> contactoClientes = nombre.equals("*") ?
             elementoDAO.findAll() : elementoDAO.findByNombreContaining(nombre);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter

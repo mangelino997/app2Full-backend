@@ -44,7 +44,7 @@ public class FotoService {
     
     //Obtiene una lista por nombre
     public Object listarPorNombre(String nombre) throws IOException {
-        List<Foto> elementos= nombre.equals("***")?elementoDAO.findAll(): 
+        List<Foto> elementos= nombre.equals("*")?elementoDAO.findAll(): 
                     elementoDAO.findByNombreContaining(nombre);
         ObjectMapper mapper = new ObjectMapper();
         FilterProvider filters = new SimpleFilterProvider()

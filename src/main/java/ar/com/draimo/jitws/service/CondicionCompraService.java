@@ -35,7 +35,7 @@ public class CondicionCompraService {
     
     //Obtiene una lista por nombre
     public List<CondicionCompra> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll(): 
+        return nombre.equals("*") ? elementoDAO.findAll(): 
             elementoDAO.findByNombreContaining(nombre);
     }
     

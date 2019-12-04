@@ -33,7 +33,7 @@ public class UnidadMedidaService {
 
     //Obtiene una lista por nombre
     public List<UnidadMedida> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

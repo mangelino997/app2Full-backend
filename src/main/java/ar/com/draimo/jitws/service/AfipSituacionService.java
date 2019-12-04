@@ -34,7 +34,7 @@ public class AfipSituacionService {
     
     //Obtiene una lista por alias
     public List<AfipSituacion> listarPorAlias(String alias) {
-        return alias.equals("***") ? elementoDAO.findByOrderByCodigoAfipAsc()
+        return alias.equals("*") ? elementoDAO.findByOrderByCodigoAfipAsc()
                 : elementoDAO.findByAliasContaining(alias);
     }
     

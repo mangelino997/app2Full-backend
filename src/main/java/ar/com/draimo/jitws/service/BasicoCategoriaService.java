@@ -40,7 +40,7 @@ public class BasicoCategoriaService {
     
     //Obtiene una lista por nombre de categoria
     public List<BasicoCategoria> listarPorCategoriaNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll():
+        return nombre.equals("*") ? elementoDAO.findAll():
         elementoDAO.findByCategoria_NombreContaining(nombre);
     }
     

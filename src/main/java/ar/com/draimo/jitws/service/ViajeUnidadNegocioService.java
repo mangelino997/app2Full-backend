@@ -33,7 +33,7 @@ public class ViajeUnidadNegocioService {
 
     //Obtiene una lista por nombre
     public List<ViajeUnidadNegocio> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAll()
+        return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

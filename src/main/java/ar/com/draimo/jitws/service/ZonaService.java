@@ -40,7 +40,7 @@ public class ZonaService {
 
     //Obtiene una lista por nombre
     public List<Zona> listarPorNombre(String nombre) {
-        return nombre.equals("***") ? elementoDAO.findAllByOrderByNombreAsc()
+        return nombre.equals("*") ? elementoDAO.findAllByOrderByNombreAsc()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 

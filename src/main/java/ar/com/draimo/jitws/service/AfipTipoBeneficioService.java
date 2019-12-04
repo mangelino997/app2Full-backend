@@ -33,7 +33,7 @@ public class AfipTipoBeneficioService {
     
     //Obtiene una lista por Descripcion
     public List<AfipTipoBeneficio> listarPorDescripcion(String descripcion) {
-        return descripcion.equals("***") ? elementoDAO.findAll()
+        return descripcion.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByDescripcionContaining(descripcion);
     }
     

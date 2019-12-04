@@ -34,7 +34,7 @@ public class AgendaTelefonicaService {
     
     //Obtiene la lista por nombre
     public List<AgendaTelefonica> listarPorNombre(String nombre) {
-        return (nombre.equals("***") ? elementoDAO.findAll() :
+        return (nombre.equals("*") ? elementoDAO.findAll() :
             elementoDAO.findByNombreContaining(nombre));
     }
     

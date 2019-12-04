@@ -34,7 +34,6 @@ public class TipoTarifa extends ObjetoGenerico {
     @Column(name = "porPorcentaje", nullable = false)
     private boolean porPorcentaje;
     
-    
     //Referencia al a clase ordenVenta
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {

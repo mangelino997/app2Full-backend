@@ -34,7 +34,7 @@ public class AfipSiniestradoService {
     
     //Obtiene una lista por alias
     public List<AfipSiniestrado> listarPorAlias(String alias) {
-        return alias.equals("***") ? elementoDAO.findByOrderByCodigoAfipAsc()
+        return alias.equals("*") ? elementoDAO.findByOrderByCodigoAfipAsc()
                 : elementoDAO.findByAliasContaining(alias);
     }
     

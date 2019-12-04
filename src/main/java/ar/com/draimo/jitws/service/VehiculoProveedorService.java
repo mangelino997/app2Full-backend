@@ -53,7 +53,7 @@ public class VehiculoProveedorService {
 
     //Obtiene una lista por nombre
     public List<VehiculoProveedor> listarPorAlias(String alias) {
-        return alias.equals("***") ? elementoDAO.findAll()
+        return alias.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByAliasContainingOrderByAlias(alias);
     }
 

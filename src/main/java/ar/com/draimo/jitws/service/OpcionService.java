@@ -64,7 +64,7 @@ public class OpcionService {
     
     //Obtiene una lista por nombre
     public List<Opcion> listarPorNombre(String nombre) {
-        return nombre.equals("***")? elementoDAO.findAll():
+        return nombre.equals("*")? elementoDAO.findAll():
             elementoDAO.findByNombreContaining(nombre);
     }
     

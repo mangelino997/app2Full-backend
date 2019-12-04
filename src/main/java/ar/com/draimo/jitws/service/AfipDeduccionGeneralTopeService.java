@@ -45,7 +45,7 @@ public class AfipDeduccionGeneralTopeService {
 
     //Obtiene una lista por Descripcion
     public List<AfipDeduccionGeneralTope> listarPorDescripcion(String descripcion) {
-        return descripcion.equals("***") ? elementoDAO.findAll()
+        return descripcion.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByDescripcionContaining(descripcion);
     }
 
