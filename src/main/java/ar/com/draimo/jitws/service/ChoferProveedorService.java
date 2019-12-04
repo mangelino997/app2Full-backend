@@ -6,6 +6,11 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.model.ChoferProveedor;
 import ar.com.draimo.jitws.model.Proveedor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +61,11 @@ public class ChoferProveedorService {
     }
     
     //Obtiene una lista por alias y proveedor
-    public List<ChoferProveedor> listarPorAliasYProveedor(String alias, int idProveedor) {
+    public Object listarPorAliasYProveedor(String alias, int idProveedor) throws IOException {
         Proveedor proveedor = proveedorDAO.findById(idProveedor).get();
-        return alias.equals("*") ?elementoDAO.findByProveedor(proveedor):
+        List<ChoferProveedor> elementos =  alias.equals("*") ?elementoDAO.findByProveedor(proveedor):
                 elementoDAO.findByAliasContainingAndProveedor(alias,proveedor);
+        return aplicarFiltros(elementos);
     }
     
     //Agrega un registro
@@ -106,4 +112,15 @@ public class ChoferProveedorService {
         return elemento;
     }
     
+    
+    //Retorna un object aplicando los filtros
+    private Object aplicarFiltros(List<ChoferProveedor> elementos) throws IOException {
+       ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
+        return new ObjectMapper().readValue(string, Object.class);
+    }
 }

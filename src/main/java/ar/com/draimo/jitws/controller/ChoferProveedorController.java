@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ChoferProveedor;
 import ar.com.draimo.jitws.service.ChoferProveedorService;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -74,14 +75,14 @@ public class ChoferProveedorController {
     //Obtiene una lista por proveedor
     @GetMapping(value = URL + "/listarPorProveedor/{idProveedor}")
     @ResponseBody
-    public List<ChoferProveedor> listarPorProveedor(@PathVariable int idProveedor) {
+    public Object listarPorProveedor(@PathVariable int idProveedor) throws IOException {
         return elementoService.listarPorAliasYProveedor("*", idProveedor);
     }
 
     //Obtiene una lista por alias y proveedor
     @GetMapping(value = URL + "/listarPorAliasYProveedor/{alias}/{idProveedor}")
     @ResponseBody
-    public List<ChoferProveedor> listarPorAliasYProveedor(@PathVariable String alias, @PathVariable int idProveedor) {
+    public Object listarPorAliasYProveedor(@PathVariable String alias, @PathVariable int idProveedor) throws IOException {
         return elementoService.listarPorAliasYProveedor(alias, idProveedor);
     }
 

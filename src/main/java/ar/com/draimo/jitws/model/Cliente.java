@@ -217,11 +217,11 @@ public class Cliente extends ObjetoGenerico {
     private boolean esReceptorFCE;
 
     //Referencia a la clase ordenVenta
-    @ManyToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(name = "clienteordenventa",
         joinColumns = @JoinColumn(name = "idCliente"),
         inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"))  
-    @JsonIgnoreProperties({"clientes", "empresas"})
+    @JsonIgnoreProperties({"clientes", "empresas", "tipoTarifas"})
     private List<OrdenVenta>  ordenesVentas;
     
     //Referencia una lista a la clase clienteordenVenta

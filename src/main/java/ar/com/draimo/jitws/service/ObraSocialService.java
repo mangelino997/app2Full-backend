@@ -33,7 +33,7 @@ public class ObraSocialService {
     
     //Obtiene una lista por nombre
     public List<ObraSocial> listarPorAlias(String alias) {
-        return alias.equals("***")? elementoDAO.findByOrderByCodigoAfipAsc():
+        return alias.equals("*")? elementoDAO.findByOrderByCodigoAfipAsc():
             elementoDAO.findByAliasContainingOrderByNombreAsc(alias);
     }
     
