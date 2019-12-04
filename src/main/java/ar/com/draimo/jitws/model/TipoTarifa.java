@@ -2,12 +2,14 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -32,14 +34,18 @@ public class TipoTarifa extends ObjetoGenerico {
     @Column(name = "porPorcentaje", nullable = false)
     private boolean porPorcentaje;
     
-    //Define la referencia a la clase orden venta
-    @ManyToMany
-    @JoinTable(
-      name = "ordenventatarifa", 
-      joinColumns = @JoinColumn(name = "idTipoTarifa"), 
-      inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"))
-    @JsonIgnoreProperties(value = {"tipoTarifa","empresas","clientes"})
-    private OrdenVenta ordenVenta;
+    
+    //Referencia al a clase ordenVenta
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
+    @JoinTable(name = "ordenventatarifa",
+            joinColumns = @JoinColumn(name = "idTipoTarifa"),
+            inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"))
+    @JsonIgnoreProperties(value = {"clientes", "empresas", "tiposTarifas"})
+    private List<OrdenVenta> ordenesVentas;
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -66,12 +72,12 @@ public class TipoTarifa extends ObjetoGenerico {
         this.porPorcentaje = porPorcentaje;
     }
 
-    public OrdenVenta getOrdenVenta() {
-        return ordenVenta;
+    public List<OrdenVenta> getOrdenesVentas() {
+        return ordenesVentas;
     }
 
-    public void setOrdenVenta(OrdenVenta ordenVenta) {
-        this.ordenVenta = ordenVenta;
+    public void setOrdenesVentas(List<OrdenVenta> ordenesVentas) {
+        this.ordenesVentas = ordenesVentas;
     }
     
 }

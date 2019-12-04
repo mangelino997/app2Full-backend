@@ -8,6 +8,7 @@ import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
@@ -19,7 +20,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -123,10 +123,11 @@ public class OrdenVentaService {
         //Establece ActivaDesde con fecha actual
         ordenVenta.setActivaDesde(new Date(new java.util.Date().getTime()));
         //reestablece tipoTarifa
-        ordenVenta.setTipoTarifas(new ArrayList<TipoTarifa>());
+        ordenVenta.setTipoTarifas(null);
         //Agrega la orden de venta
         ordenVenta = elementoDAO.saveAndFlush(ordenVenta);
-        ordenVentaTarifa.setOrdenVenta(ordenVenta);
+        ordenVentaTarifa.getOrdenVenta().setId(ordenVenta.getId());
+        ordenVentaTarifa.getTipoTarifa().setOrdenesVentas(null);
         ordenVentaTarifa = ordenVentaTarifaDAO.save(ordenVentaTarifa);
         if (!clienteString.equals("null")) {
             clienteOrdenVenta = mapper.readValue(clienteString, ClienteOrdenVenta.class);
@@ -143,6 +144,33 @@ public class OrdenVentaService {
             empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
         }
         return ordenVenta.getId();
+    }
+
+    //Agrega un registro (prueba)
+    @Transactional(rollbackFor = Exception.class)
+    public Object agregar(OrdenVenta elemento) throws IOException {
+        //Formatea los string de OrdenVenta
+        List<TipoTarifa> tarifas = elemento.getTipoTarifas();
+        elemento.setTipoTarifas(null);
+        List<Empresa> empresas = elemento.getEmpresas();
+        elemento.setEmpresas(null);
+        elemento = formatearStrings(elemento);
+        //Actualiza la orden de venta
+        elemento = elementoDAO.save(elemento);
+        for(TipoTarifa tarifa : tarifas) {
+            tarifa.setOrdenesVentas(null);
+            OrdenVentaTarifa ovt = new OrdenVentaTarifa();
+            ovt.setOrdenVenta(elemento);
+            ovt.setTipoTarifa(tarifa);
+            ordenVentaTarifaDAO.save(ovt);
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return mapper.readValue(string, Object.class);
     }
 
     //Actualiza un registro
