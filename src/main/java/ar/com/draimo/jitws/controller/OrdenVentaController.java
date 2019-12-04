@@ -112,6 +112,34 @@ public class OrdenVentaController {
     }
 
     //Actualiza un registro
+    @PostMapping(value = URL + "/prueba")
+    public ResponseEntity<?> agregar(@RequestBody OrdenVenta elemento) {
+        try {
+            //Actualiza el registro
+            elementoService.agregar(elemento);
+            //Envia la nueva lista a los usuarios subscripto
+            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de actualizado con exito
+            return MensajeRespuesta.actualizado();
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (JpaObjectRetrievalFailureException jorfe) {
+            //Retorna mensaje de dato Inexistente
+            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
+        } catch (ObjectOptimisticLockingFailureException oolfe) {
+            //Retorna mensaje de transaccion no actualizada
+            return MensajeRespuesta.transaccionNoActualizada();
+        } catch (MessagingException e) {
+            //Retorna codigo y mensaje de error de sicronizacion mediante socket
+            return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+
+    //Actualiza un registro
     @PutMapping(value = URL)
     public ResponseEntity<?> actualizar(@RequestBody OrdenVenta elemento) {
         try {

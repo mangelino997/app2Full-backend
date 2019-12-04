@@ -9,11 +9,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -82,11 +82,16 @@ public class OrdenVenta extends ObjetoGenerico {
     private List<Empresa> empresas;
     
     //Define la referencia a tipoTarifa
-    @ManyToMany
-    @JoinTable(name = "ordenventatarifa", 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
+    @JoinTable(
+      name = "ordenventatarifa", 
       joinColumns = @JoinColumn(name = "idOrdenVenta"), 
       inverseJoinColumns = @JoinColumn(name = "idTipoTarifa"))
-    @JsonIgnoreProperties("ordenVenta")
+    @JsonIgnoreProperties("ordenesVentas")
     private List<TipoTarifa> tipoTarifas;
     
     //Getters y Setters de la clase
