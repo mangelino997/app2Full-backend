@@ -213,12 +213,24 @@ public class VehiculoService {
     public void eliminar(int id) {
         Vehiculo vehiculo = elementoDAO.findById(id).get();
         elementoDAO.deleteById(id);
-        pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
-        pdfDAO.deleteById(vehiculo.getPdfCedulaIdent().getId());
-        pdfDAO.deleteById(vehiculo.getPdfVtoRuta().getId());
-        pdfDAO.deleteById(vehiculo.getPdfVtoInspTecnica().getId());
-        pdfDAO.deleteById(vehiculo.getPdfVtoSenasa().getId());
-        pdfDAO.deleteById(vehiculo.getPdfHabBromat().getId());
+        if(vehiculo.getPdfTitulo() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
+        }
+        if(vehiculo.getPdfCedulaIdent() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfCedulaIdent().getId());
+        }
+        if(vehiculo.getPdfVtoRuta() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfVtoRuta().getId());
+        }
+        if(vehiculo.getPdfVtoInspTecnica() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfVtoInspTecnica().getId());
+        }
+        if(vehiculo.getPdfVtoSenasa() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfVtoSenasa().getId());
+        }
+        if(vehiculo.getPdfHabBromat() != null) {
+            pdfDAO.deleteById(vehiculo.getPdfHabBromat().getId());
+        } 
     }
 
     //Formatea los strings
