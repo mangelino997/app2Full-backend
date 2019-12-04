@@ -210,8 +210,15 @@ public class VehiculoService {
 
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
-    public void eliminar(int elemento) {
-        elementoDAO.deleteById(elemento);
+    public void eliminar(int id) {
+        Vehiculo vehiculo = elementoDAO.findById(id).get();
+        elementoDAO.deleteById(id);
+        pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
+        pdfDAO.deleteById(vehiculo.getPdfCedulaIdent().getId());
+        pdfDAO.deleteById(vehiculo.getPdfVtoRuta().getId());
+        pdfDAO.deleteById(vehiculo.getPdfVtoInspTecnica().getId());
+        pdfDAO.deleteById(vehiculo.getPdfVtoSenasa().getId());
+        pdfDAO.deleteById(vehiculo.getPdfHabBromat().getId());
     }
 
     //Formatea los strings
