@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -93,43 +94,15 @@ public class OrdenVentaController {
             @RequestPart("clienteOrdenVenta") String clienteString, @RequestPart("empresaOrdenVenta") String empresaString,
             @RequestPart("ordenVentaTarifa") String ordenVentaTarifaString) {
         try {
-            int id = elementoService.agregar(elementoString, clienteString,
+            Object elemento = elementoService.agregar(elementoString, clienteString,
                     empresaString, ordenVentaTarifaString);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
-            return MensajeRespuesta.agregado(id - 1);
+            return new ResponseEntity(elemento, HttpStatus.CREATED);
         } catch (DataIntegrityViolationException dive) {
             //Retorna mensaje de dato duplicado
             return MensajeRespuesta.datoDuplicado(dive);
-        } catch (MessagingException e) {
-            //Retorna codigo y mensaje de error de sicronizacion mediante socket
-            return MensajeRespuesta.errorSincSocket();
-        } catch (Exception e) {
-            //Retorna mensaje de error interno en el servidor
-            return MensajeRespuesta.error();
-        }
-    }
-
-    //Actualiza un registro
-    @PostMapping(value = URL + "/prueba")
-    public ResponseEntity<?> agregar(@RequestBody OrdenVenta elemento) {
-        try {
-            //Actualiza el registro
-            elementoService.agregar(elemento);
-            //Envia la nueva lista a los usuarios subscripto
-            //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
-            //Retorna mensaje de actualizado con exito
-            return MensajeRespuesta.actualizado();
-        } catch (DataIntegrityViolationException dive) {
-            //Retorna mensaje de dato duplicado
-            return MensajeRespuesta.datoDuplicado(dive);
-        } catch (JpaObjectRetrievalFailureException jorfe) {
-            //Retorna mensaje de dato Inexistente
-            return MensajeRespuesta.datoInexistente("a", jorfe.getMessage());
-        } catch (ObjectOptimisticLockingFailureException oolfe) {
-            //Retorna mensaje de transaccion no actualizada
-            return MensajeRespuesta.transaccionNoActualizada();
         } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
