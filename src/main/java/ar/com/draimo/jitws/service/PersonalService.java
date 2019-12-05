@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
@@ -140,6 +141,14 @@ public class PersonalService {
         return aplicarFiltros(elementos, null);
     }
 
+    //Obtiene un listado por filtros
+    public Object listarPorFiltros(PersonalDTO elemento) throws IOException {
+        List<Personal> elementos = elementoDAO.listarPorFiltros(elemento.getIdSucursal(),
+                elemento.getIdArea(),elemento.getIdModContratacion(), elemento.getIdCategoria(),
+                elemento.getTipoEmpleado());
+        return aplicarFiltros(elementos, null);
+    }
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Personal agregar(String elementoString, MultipartFile foto, MultipartFile licConducir,
@@ -238,7 +247,7 @@ public class PersonalService {
             elemento.setPdfLinti(null);
         } else {
             Pdf p2 = personal.getPdfLinti() != null ? pdfService.actualizar(
-                    personal.getPdfLinti().getId(), linti, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    personal.getPdfLinti().getId(), linti, elemento.getNombreCompleto() + "-LINTI", false)
                     : pdfService.agregar(linti, elemento.getNombreCompleto() + "-LINTI", false);
             p2.setTabla("personal");
             Pdf pdf2 = personal.getPdfLinti() != null ? pdfDAO.save(p2)
@@ -252,7 +261,7 @@ public class PersonalService {
             elemento.setPdfLibSanidad(null);
         } else {
             Pdf p3 = personal.getPdfLibSanidad() != null ? pdfService.actualizar(
-                    personal.getPdfLibSanidad().getId(), libSanidad, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    personal.getPdfLibSanidad().getId(), libSanidad, elemento.getNombreCompleto() + "-LIBSANIDAD", false)
                     : pdfService.agregar(libSanidad, elemento.getNombreCompleto() + "-LIBSANIDAD", false);
             p3.setTabla("personal");
             Pdf pdf3 = personal.getPdfLibSanidad() != null ? pdfDAO.save(p3)
@@ -266,7 +275,7 @@ public class PersonalService {
             elemento.setPdfDni(null);
         } else {
             Pdf p4 = personal.getPdfDni() != null ? pdfService.actualizar(
-                    personal.getPdfDni().getId(), dni, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    personal.getPdfDni().getId(), dni, elemento.getNombreCompleto() + "-DNI", false)
                     : pdfService.agregar(dni, elemento.getNombreCompleto() + "-DNI", false);
             p4.setTabla("personal");
             Pdf pdf4 = personal.getPdfDni() != null ? pdfDAO.save(p4)
@@ -280,7 +289,7 @@ public class PersonalService {
             elemento.setPdfAltaTemprana(null);
         } else {
             Pdf p5 = personal.getPdfAltaTemprana() != null ? pdfService.actualizar(
-                    personal.getPdfAltaTemprana().getId(), altaTemprana, elemento.getNombreCompleto() + "-LICENCIA", false)
+                    personal.getPdfAltaTemprana().getId(), altaTemprana, elemento.getNombreCompleto() + "-ALTATEMPRANA", false)
                     : pdfService.agregar(altaTemprana, elemento.getNombreCompleto() + "-ALTATEMPRANA", false);
             p5.setTabla("personal");
             Pdf pdf5 = personal.getPdfAltaTemprana() != null ? pdfDAO.save(p5)
