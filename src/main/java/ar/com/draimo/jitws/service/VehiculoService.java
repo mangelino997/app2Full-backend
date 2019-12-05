@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -158,48 +159,61 @@ public class VehiculoService {
         controlarLongitud(elemento);
         elemento.setFechaUltimaMod(new Date(new java.util.Date().getTime()));
         elemento = formatearStrings(elemento);
+        List<Integer> lista = new ArrayList<>();
         elemento.setPdfTitulo(establecerPdf(titulo, elemento.getDominio() + "-TITULO", vehiculo, vehiculo.getPdfTitulo()));
+        if(elemento.getPdfTitulo() != null && elemento.getPdfTitulo().getId() < 0) {
+            lista.add(elemento.getPdfTitulo().getId()*-1);
+            elemento.setPdfTitulo(null);
+        }
         elemento.setPdfCedulaIdent(establecerPdf(cedulaIdent, elemento.getDominio() + "-CEDULA", vehiculo, vehiculo.getPdfCedulaIdent()));
+        if(elemento.getPdfCedulaIdent() != null && elemento.getPdfCedulaIdent().getId() < 0) {
+            lista.add(elemento.getPdfCedulaIdent().getId()*-1);
+            elemento.setPdfCedulaIdent(null);
+        }
         elemento.setPdfVtoRuta(establecerPdf(vtoRuta, elemento.getDominio() + "-VTORUTA", vehiculo, vehiculo.getPdfVtoRuta()));
+        if(elemento.getPdfVtoRuta() != null && elemento.getPdfVtoRuta().getId() < 0) {
+            lista.add(elemento.getPdfVtoRuta().getId()*-1);
+            elemento.setPdfVtoRuta(null);
+        }
         elemento.setPdfVtoInspTecnica(establecerPdf(vtoInspTecnica, elemento.getDominio() + "-VTOTECNICA", vehiculo, vehiculo.getPdfVtoInspTecnica()));
+        if(elemento.getPdfVtoInspTecnica() != null && elemento.getPdfVtoInspTecnica().getId() < 0) {
+            lista.add(elemento.getPdfVtoInspTecnica().getId()*-1);
+            elemento.setPdfVtoInspTecnica(null);
+        }
         elemento.setPdfVtoSenasa(establecerPdf(vtoSenasa, elemento.getDominio() + "-VTOSENASA", vehiculo, vehiculo.getPdfVtoSenasa()));
+        if(elemento.getPdfVtoSenasa() != null && elemento.getPdfVtoSenasa().getId() < 0) {
+            lista.add(elemento.getPdfVtoSenasa().getId()*-1);
+            elemento.setPdfVtoSenasa(null);
+        }
         elemento.setPdfHabBromat(establecerPdf(habBromat, elemento.getDominio() + "-VTOBROMATOLOGICA", vehiculo, vehiculo.getPdfHabBromat()));
+        if(elemento.getPdfHabBromat() != null && elemento.getPdfHabBromat().getId() < 0) {
+            lista.add(elemento.getPdfHabBromat().getId()*-1);
+            elemento.setPdfHabBromat(null);
+        }
         elemento = establecerAlias(elemento);
-        if(elemento.getPdfTitulo() == null && vehiculo.getPdfTitulo() != null) {
-            pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
-        }
-        if(elemento.getPdfCedulaIdent() == null && vehiculo.getPdfCedulaIdent()!= null) {
-            pdfDAO.deleteById(vehiculo.getPdfCedulaIdent().getId());
-        }
-        if(elemento.getPdfVtoRuta() == null && vehiculo.getPdfVtoRuta() != null) {
-            pdfDAO.deleteById(vehiculo.getPdfVtoRuta().getId());
-        }
-        if(elemento.getPdfVtoInspTecnica() == null && vehiculo.getPdfVtoInspTecnica() != null) {
-            pdfDAO.deleteById(vehiculo.getPdfTitulo().getId());
-        }
-        if(elemento.getPdfVtoSenasa() == null && vehiculo.getPdfVtoSenasa() != null) {
-            pdfDAO.deleteById(vehiculo.getPdfVtoSenasa().getId());
-        }
-        if(elemento.getPdfHabBromat()== null && vehiculo.getPdfHabBromat() != null) {
-            pdfDAO.deleteById(vehiculo.getPdfHabBromat().getId());
+        for(int i = 0 ; i < lista.size() ; i++) {
+            pdfDAO.deleteById(lista.get(i));
         }
         return elemento;
     }
     
     //Establece el valor a cada pdf dependiendo su condicion
     private Pdf establecerPdf(MultipartFile elemento, String nombre, Vehiculo vehiculo, Pdf pdfVehiculo) throws IOException {
-        Pdf pdf;
+        Pdf pdf = null;
         if(vehiculo == null) {
             if (!"null".equals(elemento.getOriginalFilename())) {
-                Pdf pHabBromat = pdfService.agregar(elemento, nombre, false);
-                pHabBromat.setTabla("vehiculo");
-                pdf = pdfDAO.saveAndFlush(pHabBromat);
+                pdf = pdfService.agregar(elemento, nombre, false);
+                pdf.setTabla("vehiculo");
+                pdf = pdfDAO.saveAndFlush(pdf);
             } else {
                 pdf = null;
             }
         } else {
             if ("".equals(elemento.getOriginalFilename()) || "null".equals(elemento.getOriginalFilename())) {
-                pdf = null;
+                if(pdfVehiculo != null) {
+                    pdf = new Pdf();
+                    pdf.setId(pdfVehiculo.getId()*-1);
+                }
             } else {
                 pdf = pdfVehiculo != null ? 
                         pdfService.actualizar(pdfVehiculo.getId(), elemento, nombre, false) 
