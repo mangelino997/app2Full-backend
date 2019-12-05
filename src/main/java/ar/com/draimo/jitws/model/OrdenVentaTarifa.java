@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class OrdenVentaTarifa extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
-    @JsonIgnoreProperties("tiposTarifa")
+    @JsonIgnoreProperties("tipoTarifas")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
