@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Personal;
 import ar.com.draimo.jitws.service.PersonalService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -138,6 +140,14 @@ public class PersonalController {
     public Object listarChoferPorAlias(@PathVariable String alias) throws IOException, Exception {
         return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias, 2, 0);
     }
+
+    //Obtiene una lista de choferes por alias
+    @GetMapping(value = URL + "/listarPorFiltros")
+    @ResponseBody
+    public Object listarPorFiltros(@RequestBody PersonalDTO personalDTO) throws IOException, Exception {
+        return elementoService.listarPorFiltros(personalDTO);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("personal") String elementoString,
