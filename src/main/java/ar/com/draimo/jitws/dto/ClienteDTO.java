@@ -5,10 +5,6 @@
  */
 package ar.com.draimo.jitws.dto;
 
-import ar.com.draimo.jitws.model.Cobrador;
-import ar.com.draimo.jitws.model.CondicionVenta;
-import ar.com.draimo.jitws.model.Localidad;
-
 /**
  *
  * @author marcio

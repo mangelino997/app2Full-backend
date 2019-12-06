@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.dto.ChoferDTO;
 import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
@@ -146,6 +147,15 @@ public class PersonalService {
         List<Personal> elementos = elementoDAO.listarPorFiltros(elemento.getIdSucursal(),
                 elemento.getIdArea(),elemento.getIdModContratacion(), elemento.getIdCategoria(),
                 elemento.getTipoEmpleado());
+        return aplicarFiltros(elementos, null);
+    }
+
+    //Obtiene un listado de choferes por filtros
+    public Object listarChoferesPorFiltros(ChoferDTO elemento) throws IOException {
+        List<Personal> elementos = elementoDAO.listarChoferesPorFiltros(elemento.getChofer(),
+                elemento.getVtoCurso(), elemento.getVtoCargaPeligrosa(),
+                elemento.getVtoLicConducir(), elemento.getVtoLinti(),
+                elemento.getVtoLibSanidad(), elemento.getVtoFisico());
         return aplicarFiltros(elementos, null);
     }
 

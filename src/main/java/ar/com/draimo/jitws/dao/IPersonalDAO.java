@@ -71,15 +71,30 @@ public interface IPersonalDAO extends JpaRepository<Personal, Integer> {
     @Query(value = "SELECT * FROM personal WHERE (:idSucursal = 0 OR idSucursal = :idSucursal) "
             + "AND (:idArea = 0 OR idArea = :idArea) AND (:idModContratacion = 0 OR "
             + "idAfipModContratacion = :idModContratacion) AND (:idCategoria = 0 OR "
-            + "idCategoria = :idCategoria) AND (:tipoEmpleado = 0 OR (:tipoEmpleado = 3 "
-            + "AND esChoferLargaDistancia=1) OR esChofer=:tipoEmpleado)"
-            + "ORDER BY nombreCompleto ASC ", nativeQuery = true)
+            + "idCategoria = :idCategoria) AND (:tipoEmpleado = 0 OR (:tipoEmpleado = 2 "
+            + "AND esChoferLargaDistancia=1) OR (:tipoEmpleado = 1 AND esChofer=1) OR "
+            + "(:tipoEmpleado=3 AND esChofer=0))ORDER BY nombreCompleto ASC ", nativeQuery = true)
     public List<Personal> listarPorFiltros(@Param("idSucursal") int idSucursal, 
             @Param("idArea") int idArea, @Param("idModContratacion") int idModContratacion,
             @Param("idCategoria") int idCategoria, @Param("tipoEmpleado") int tipoEmpleado);
     
-    //Obtiene una lista de acompañantes activos  por alias ordenados por nombre
+    //Obtiene un registro por id
     @Query(value = "SELECT * FROM personal WHERE id=:id", nativeQuery = true)
     public Personal obtenerPorId(@Param("id") int id);
+    
+    //Obtiene una lista de choferes
+    @Query(value = "SELECT * FROM personal WHERE esChofer=1 AND (:vtoFisico IS NULL OR "
+            + "vtoPsicoFisico=:vtoFisico) AND (:vtoCurso IS NULL OR vtoCurso=:vtoCurso) AND "
+            + "(:vtoCargaPeligrosa IS NULL OR vtoCursoCargaPeligrosa=:vtoCargaPeligrosa) AND "
+            + "(:vtoLicConducir IS NULL OR vtoLicenciaConducir=:vtoLicConducir) AND (:vtoLinti "
+            + "IS NULL OR vtoLINTI=:vtoLinti) AND (:vtoLibSanidad IS NULL OR "
+            + "vtoLibretaSanidad=:vtoLibSanidad) AND ((:tipoChofer = 2 AND esChoferLargaDistancia=1) "
+            + "OR (:tipoChofer =1 AND esChoferLargaDistancia=0) OR :tipoChofer=0) ", nativeQuery = true)
+    public List<Personal> listarChoferesPorFiltros(@Param("tipoChofer") int tipoChofer, 
+            @Param("vtoCurso") Date vtoCurso, @Param("vtoCargaPeligrosa") Date vtoCargaPeligrosa, 
+            @Param("vtoLicConducir") Date vtoLicConducir, @Param("vtoLinti") Date vtoLinti,
+            @Param("vtoLibSanidad") Date vtoLibSanidad, @Param("vtoFisico") Date vtoFisico);
+    
+    
     
 }

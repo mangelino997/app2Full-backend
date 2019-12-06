@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ChoferDTO;
 import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Personal;
@@ -141,11 +142,18 @@ public class PersonalController {
         return elementoService.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(alias, 2, 0);
     }
 
-    //Obtiene una lista de choferes por alias
-    @GetMapping(value = URL + "/listarPorFiltros")
+    //Obtiene una lista por filtros
+    @PostMapping(value = URL + "/listarPorFiltros")
     @ResponseBody
     public Object listarPorFiltros(@RequestBody PersonalDTO personalDTO) throws IOException, Exception {
         return elementoService.listarPorFiltros(personalDTO);
+    }
+
+    //Obtiene una lista de choferes por filtros
+    @PostMapping(value = URL + "/listarChoferesPorFiltros")
+    @ResponseBody
+    public Object listarPorFiltros(@RequestBody ChoferDTO elemento) throws IOException, Exception {
+        return elementoService.listarChoferesPorFiltros(elemento);
     }
     
     //Agrega un registro

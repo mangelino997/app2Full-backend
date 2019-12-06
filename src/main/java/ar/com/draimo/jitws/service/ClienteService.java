@@ -1,17 +1,26 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
 import ar.com.draimo.jitws.dao.IClienteCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IClienteVtoPagoDAO;
+import ar.com.draimo.jitws.dao.ICobradorDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.dao.IContactoClienteDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IResumenClienteDAO;
+import ar.com.draimo.jitws.dao.IRubroDAO;
+import ar.com.draimo.jitws.dao.ISituacionClienteDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
+import ar.com.draimo.jitws.dao.IVendedorDAO;
+import ar.com.draimo.jitws.dao.IZonaDAO;
 import ar.com.draimo.jitws.dto.ClienteDTO;
+import ar.com.draimo.jitws.dto.PruebaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
@@ -76,9 +85,41 @@ public class ClienteService {
     @Autowired
     IEmpresaDAO empresaDAO;
     
-    //Define la referencia al dao empresa
+    //Define la referencia al dao contactoCliente
     @Autowired
     IContactoClienteDAO contactoClienteDAO;
+    
+    //Define la referencia al dao condicionIva
+    @Autowired
+    IAfipCondicionIvaDAO afipCondicionIvaDAO;
+    
+    //Define la referencia al dao resumenCliente
+    @Autowired
+    IResumenClienteDAO resumenClienteDAO;
+    
+    //Define la referencia al dao situacionCliente
+    @Autowired
+    ISituacionClienteDAO situacionClienteDAO;
+    
+    //Define la referencia al dao sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
+    
+    //Define la referencia al dao cobrador
+    @Autowired
+    IVendedorDAO vendedorDAO;
+    
+    //Define la referencia al dao vendedor
+    @Autowired
+    ICobradorDAO cobradorDAO;
+    
+    //Define la referencia al dao zona
+    @Autowired
+    IZonaDAO zonaDAO;
+    
+    //Define la referencia al dao rubro
+    @Autowired
+    IRubroDAO rubroDAO;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -156,15 +197,20 @@ public class ClienteService {
         return retornarObjeto(elementos, null);
     }
     
-    //Convierte una lista o un elemento a object para retornar con filtros aplicados
-    private Object retornarObjeto(List<Cliente> elementos, Cliente elemento) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);
-        return mapper.readValue(string, Object.class);
+    //Agrega un cliente eventual
+    public PruebaDTO listarParaInicializar() {
+        PruebaDTO p = new PruebaDTO();
+        p.setAfipCondicionesIvas(afipCondicionIvaDAO.findAll());
+        p.setCobradores(cobradorDAO.findAll());
+        p.setCondicionVentas(condicionVentaDAO.findAll());
+        p.setResumenClientes(resumenClienteDAO.findAll());
+        p.setRubros(rubroDAO.findAll());
+        p.setSituacionClientes(situacionClienteDAO.findAll());
+        p.setSucursales(sucursalDAO.findAll());
+        p.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        p.setVendedores(vendedorDAO.findAll());
+        p.setZonas(zonaDAO.findAll());
+        return p;
     }
 
     //Agrega un cliente eventual
@@ -242,6 +288,15 @@ public class ClienteService {
         establecerAlias(elemento);
     }
 
+    //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void eliminar(int id) {
+        //Elimina los contactos del cliente
+        contactoClienteDAO.deleteByCliente(elementoDAO.findById(id).get());
+        //Elimina el cliente
+        elementoDAO.deleteById(id);
+    }
+
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public Cliente establecerAlias(Cliente elemento) {
@@ -251,13 +306,15 @@ public class ClienteService {
         return elementoDAO.save(elemento);
     }
 
-    //Elimina un registro
-    @Transactional(rollbackFor = Exception.class)
-    public void eliminar(int id) {
-        //Elimina los contactos del cliente
-        contactoClienteDAO.deleteByCliente(elementoDAO.findById(id).get());
-        //Elimina el cliente
-        elementoDAO.deleteById(id);
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<Cliente> elementos, Cliente elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);
+        return mapper.readValue(string, Object.class);
     }
 
     //Formatea los string

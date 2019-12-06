@@ -47,6 +47,11 @@ public class TipoTarifaService {
         return elementoDAO.findByPorEscalaFalse();
     }
 
+    //Obtiene una lista por ordenVenta
+    public List<TipoTarifa> listarPorOrdenVenta( int idOrdenVenta) {
+        return elementoDAO.listarPorOrdenVenta(idOrdenVenta);
+    }
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public TipoTarifa agregar(TipoTarifa elemento) {
