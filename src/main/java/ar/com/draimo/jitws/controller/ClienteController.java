@@ -96,9 +96,9 @@ public class ClienteController {
     }
     
     //Retorna las listas para el ngOninit(Front)
-    @GetMapping(value = URL + "/listarParaInicializar")
-    public PruebaDTO listarParaInicializar() throws IOException {
-        return elementoService.listarParaInicializar();
+    @GetMapping(value = URL + "/listarParaInicializar/{idUsuario}/{idRol}/{idSubopcion}")
+    public PruebaDTO listarParaInicializar(@PathVariable int idUsuario,int idRol,int idSubopcion) throws IOException {
+        return elementoService.listarParaInicializar(idUsuario, idRol, idSubopcion);
     }
     
     //Agrega un cliente eventual

@@ -3,9 +3,12 @@ package ar.com.draimo.jitws.dto;
 import ar.com.draimo.jitws.model.AfipCondicionIva;
 import ar.com.draimo.jitws.model.Cobrador;
 import ar.com.draimo.jitws.model.CondicionVenta;
+import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.ResumenCliente;
+import ar.com.draimo.jitws.model.RolOpcion;
 import ar.com.draimo.jitws.model.Rubro;
 import ar.com.draimo.jitws.model.SituacionCliente;
+import ar.com.draimo.jitws.model.SubopcionPestania;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import ar.com.draimo.jitws.model.Vendedor;
@@ -49,6 +52,15 @@ public class PruebaDTO {
     
     //Lista de rubros
     private List<Rubro> rubros; 
+    
+    //Lista de rubros
+    private List<RolOpcion> rolOpciones; 
+    
+    //Lista de rubros
+    private List<SubopcionPestania> subopcionPestanias; 
+    
+    //Lista de empresas
+    private List<Empresa> empresas;
 
     public List<AfipCondicionIva> getAfipCondicionesIvas() {
         return afipCondicionesIvas;
@@ -128,6 +140,30 @@ public class PruebaDTO {
 
     public void setRubros(List<Rubro> rubros) {
         this.rubros = rubros;
+    }
+
+    public List<RolOpcion> getRolOpciones() {
+        return rolOpciones;
+    }
+
+    public void setRolOpciones(List<RolOpcion> rolOpciones) {
+        this.rolOpciones = rolOpciones;
+    }
+
+    public List<SubopcionPestania> getSubopcionPestanias() {
+        return subopcionPestanias;
+    }
+
+    public void setSubopcionPestanias(List<SubopcionPestania> subopcionPestanias) {
+        this.subopcionPestanias = subopcionPestanias;
+    }
+
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
     }
 
 }

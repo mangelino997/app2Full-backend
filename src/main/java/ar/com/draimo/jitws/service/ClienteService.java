@@ -12,8 +12,12 @@ import ar.com.draimo.jitws.dao.IContactoClienteDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IResumenClienteDAO;
+import ar.com.draimo.jitws.dao.IRolDAO;
+import ar.com.draimo.jitws.dao.IRolOpcionDAO;
 import ar.com.draimo.jitws.dao.IRubroDAO;
 import ar.com.draimo.jitws.dao.ISituacionClienteDAO;
+import ar.com.draimo.jitws.dao.ISubopcionDAO;
+import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
@@ -27,6 +31,8 @@ import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.model.ClienteVtoPago;
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.Rol;
+import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -36,6 +42,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -120,6 +127,26 @@ public class ClienteService {
     //Define la referencia al dao rubro
     @Autowired
     IRubroDAO rubroDAO;
+    
+    //Define la referencia al dao subopcion
+    @Autowired
+    ISubopcionPestaniaDAO subopcionPestaniaDAO;
+    
+    //Define la referencia al dao rolOpcion
+    @Autowired
+    IRolOpcionDAO rolOpcionDAO;
+    
+    //Define la referencia al dao rol
+    @Autowired
+    IRolDAO rolDAO;
+    
+    //Define la referencia al dao rolOpcion
+    @Autowired
+    ISubopcionDAO subopcionDAO;
+    
+    //Define la referencia al service de empresa
+    @Autowired
+    UsuarioEmpresaService empresaService;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -198,8 +225,13 @@ public class ClienteService {
     }
     
     //Agrega un cliente eventual
-    public PruebaDTO listarParaInicializar() {
+    public PruebaDTO listarParaInicializar(int idUsuario, int idRol, int idSubopcion) {
         PruebaDTO p = new PruebaDTO();
+        Optional<Rol> rol = rolDAO.findById(idRol);
+        Optional<Subopcion> subopcion = subopcionDAO.findById(idSubopcion);
+        p.setEmpresas(empresaService.listarEmpresasActivasDeUsuario(idUsuario));
+        p.setRolOpciones(rolOpcionDAO.findByRolAndOpcion_Subopcion(rol, subopcion));
+        p.setSubopcionPestanias(subopcionPestaniaDAO.findByRolAndSubopcion(rol, subopcion));
         p.setAfipCondicionesIvas(afipCondicionIvaDAO.findAll());
         p.setCobradores(cobradorDAO.findAll());
         p.setCondicionVentas(condicionVentaDAO.findAll());
