@@ -78,6 +78,13 @@ public class TipoTarifaController {
         return elementoService.listarPorTramo();
     }
 
+    //Obtiene una lista por ordenVenta
+    @GetMapping(value = URL + "/listarPorOrdenVenta/{idOrdenVenta}")
+    @ResponseBody
+    public List<TipoTarifa> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
+        return elementoService.listarPorOrdenVenta(idOrdenVenta);
+    }
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody TipoTarifa elemento) {

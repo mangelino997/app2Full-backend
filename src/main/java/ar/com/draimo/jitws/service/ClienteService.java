@@ -1,23 +1,38 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
 import ar.com.draimo.jitws.dao.IClienteCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IClienteVtoPagoDAO;
+import ar.com.draimo.jitws.dao.ICobradorDAO;
 import ar.com.draimo.jitws.dao.ICondicionVentaDAO;
 import ar.com.draimo.jitws.dao.IContactoClienteDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IResumenClienteDAO;
+import ar.com.draimo.jitws.dao.IRolDAO;
+import ar.com.draimo.jitws.dao.IRolOpcionDAO;
+import ar.com.draimo.jitws.dao.IRubroDAO;
+import ar.com.draimo.jitws.dao.ISituacionClienteDAO;
+import ar.com.draimo.jitws.dao.ISubopcionDAO;
+import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
+import ar.com.draimo.jitws.dao.IVendedorDAO;
+import ar.com.draimo.jitws.dao.IZonaDAO;
 import ar.com.draimo.jitws.dto.ClienteDTO;
+import ar.com.draimo.jitws.dto.PruebaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
 import ar.com.draimo.jitws.model.ClienteVtoPago;
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.Rol;
+import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -27,6 +42,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -76,9 +92,61 @@ public class ClienteService {
     @Autowired
     IEmpresaDAO empresaDAO;
     
-    //Define la referencia al dao empresa
+    //Define la referencia al dao contactoCliente
     @Autowired
     IContactoClienteDAO contactoClienteDAO;
+    
+    //Define la referencia al dao condicionIva
+    @Autowired
+    IAfipCondicionIvaDAO afipCondicionIvaDAO;
+    
+    //Define la referencia al dao resumenCliente
+    @Autowired
+    IResumenClienteDAO resumenClienteDAO;
+    
+    //Define la referencia al dao situacionCliente
+    @Autowired
+    ISituacionClienteDAO situacionClienteDAO;
+    
+    //Define la referencia al dao sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
+    
+    //Define la referencia al dao cobrador
+    @Autowired
+    IVendedorDAO vendedorDAO;
+    
+    //Define la referencia al dao vendedor
+    @Autowired
+    ICobradorDAO cobradorDAO;
+    
+    //Define la referencia al dao zona
+    @Autowired
+    IZonaDAO zonaDAO;
+    
+    //Define la referencia al dao rubro
+    @Autowired
+    IRubroDAO rubroDAO;
+    
+    //Define la referencia al dao subopcion
+    @Autowired
+    ISubopcionPestaniaDAO subopcionPestaniaDAO;
+    
+    //Define la referencia al dao rolOpcion
+    @Autowired
+    IRolOpcionDAO rolOpcionDAO;
+    
+    //Define la referencia al dao rol
+    @Autowired
+    IRolDAO rolDAO;
+    
+    //Define la referencia al dao rolOpcion
+    @Autowired
+    ISubopcionDAO subopcionDAO;
+    
+    //Define la referencia al service de empresa
+    @Autowired
+    UsuarioEmpresaService empresaService;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -156,15 +224,25 @@ public class ClienteService {
         return retornarObjeto(elementos, null);
     }
     
-    //Convierte una lista o un elemento a object para retornar con filtros aplicados
-    private Object retornarObjeto(List<Cliente> elementos, Cliente elemento) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);
-        return mapper.readValue(string, Object.class);
+    //Agrega un cliente eventual
+    public PruebaDTO listarParaInicializar(int idUsuario, int idRol, int idSubopcion) {
+        PruebaDTO p = new PruebaDTO();
+        Optional<Rol> rol = rolDAO.findById(idRol);
+        Optional<Subopcion> subopcion = subopcionDAO.findById(idSubopcion);
+        p.setEmpresas(empresaService.listarEmpresasActivasDeUsuario(idUsuario));
+        p.setRolOpciones(rolOpcionDAO.findByRolAndOpcion_Subopcion(rol, subopcion));
+        p.setSubopcionPestanias(subopcionPestaniaDAO.findByRolAndSubopcion(rol, subopcion));
+        p.setAfipCondicionesIvas(afipCondicionIvaDAO.findAll());
+        p.setCobradores(cobradorDAO.findAll());
+        p.setCondicionVentas(condicionVentaDAO.findAll());
+        p.setResumenClientes(resumenClienteDAO.findAll());
+        p.setRubros(rubroDAO.findAll());
+        p.setSituacionClientes(situacionClienteDAO.findAll());
+        p.setSucursales(sucursalDAO.findAll());
+        p.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        p.setVendedores(vendedorDAO.findAll());
+        p.setZonas(zonaDAO.findAll());
+        return p;
     }
 
     //Agrega un cliente eventual
@@ -242,6 +320,15 @@ public class ClienteService {
         establecerAlias(elemento);
     }
 
+    //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void eliminar(int id) {
+        //Elimina los contactos del cliente
+        contactoClienteDAO.deleteByCliente(elementoDAO.findById(id).get());
+        //Elimina el cliente
+        elementoDAO.deleteById(id);
+    }
+
     //Establece el alias de un registro
     @Transactional(rollbackFor = Exception.class)
     public Cliente establecerAlias(Cliente elemento) {
@@ -251,13 +338,15 @@ public class ClienteService {
         return elementoDAO.save(elemento);
     }
 
-    //Elimina un registro
-    @Transactional(rollbackFor = Exception.class)
-    public void eliminar(int id) {
-        //Elimina los contactos del cliente
-        contactoClienteDAO.deleteByCliente(elementoDAO.findById(id).get());
-        //Elimina el cliente
-        elementoDAO.deleteById(id);
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<Cliente> elementos, Cliente elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos!=null ? elementos : elemento);
+        return mapper.readValue(string, Object.class);
     }
 
     //Formatea los string

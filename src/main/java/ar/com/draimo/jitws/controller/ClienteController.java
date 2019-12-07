@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.ClienteDTO;
+import ar.com.draimo.jitws.dto.PruebaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.service.ClienteService;
@@ -92,6 +93,12 @@ public class ClienteController {
     @PostMapping(value = URL + "/listarPorFiltros")
     public Object listarPorFiltros(@RequestBody ClienteDTO clienteDTO) throws IOException {
         return elementoService.listarPorFiltros(clienteDTO);
+    }
+    
+    //Retorna las listas para el ngOninit(Front)
+    @GetMapping(value = URL + "/listarParaInicializar/{idUsuario}/{idRol}/{idSubopcion}")
+    public PruebaDTO listarParaInicializar(@PathVariable int idUsuario,int idRol,int idSubopcion) throws IOException {
+        return elementoService.listarParaInicializar(idUsuario, idRol, idSubopcion);
     }
     
     //Agrega un cliente eventual

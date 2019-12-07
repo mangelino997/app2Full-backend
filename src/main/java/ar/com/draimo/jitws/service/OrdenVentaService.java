@@ -106,7 +106,7 @@ public class OrdenVentaService {
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public int agregar(String elementoString, String clienteString, String empresaString,
+    public Object agregar(String elementoString, String clienteString, String empresaString,
             String ordenVentaTarifaString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -126,6 +126,7 @@ public class OrdenVentaService {
         ordenVenta.setTipoTarifas(null);
         //Agrega la orden de venta
         ordenVenta = elementoDAO.saveAndFlush(ordenVenta);
+        ordenVentaTarifa.setOrdenVenta(new OrdenVenta());
         ordenVentaTarifa.getOrdenVenta().setId(ordenVenta.getId());
         ordenVentaTarifa.getTipoTarifa().setOrdenesVentas(null);
         ordenVentaTarifa = ordenVentaTarifaDAO.save(ordenVentaTarifa);
@@ -143,34 +144,7 @@ public class OrdenVentaService {
             empresaOrdenVenta.setOrdenVenta(ordenVenta);
             empresaOrdenVentaDAO.saveAndFlush(empresaOrdenVenta);
         }
-        return ordenVenta.getId();
-    }
-
-    //Agrega un registro (prueba)
-    @Transactional(rollbackFor = Exception.class)
-    public Object agregar(OrdenVenta elemento) throws IOException {
-        //Formatea los string de OrdenVenta
-        List<TipoTarifa> tarifas = elemento.getTipoTarifas();
-        elemento.setTipoTarifas(null);
-        List<Empresa> empresas = elemento.getEmpresas();
-        elemento.setEmpresas(null);
-        elemento = formatearStrings(elemento);
-        //Actualiza la orden de venta
-        elemento = elementoDAO.save(elemento);
-        for(TipoTarifa tarifa : tarifas) {
-            tarifa.setOrdenesVentas(null);
-            OrdenVentaTarifa ovt = new OrdenVentaTarifa();
-            ovt.setOrdenVenta(elemento);
-            ovt.setTipoTarifa(tarifa);
-            ordenVentaTarifaDAO.save(ovt);
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elementoDAO.findById(ordenVenta.getId()).get());
     }
 
     //Actualiza un registro
@@ -180,13 +154,7 @@ public class OrdenVentaService {
         elemento = formatearStrings(elemento);
         //Actualiza la orden de venta
         elementoDAO.save(elemento);
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
-                .serializeAllExcept("cliente");
-        FilterProvider filters = new SimpleFilterProvider()
-                .addFilter("clienteordenventafiltro", theFilter);
-        String string = mapper.writer(filters).writeValueAsString(elemento);
-        return mapper.readValue(string, Object.class);
+        return aplicarFiltros(elemento);
     }
 
     //Elimina un registro
@@ -224,6 +192,16 @@ public class OrdenVentaService {
             elemento.setObservaciones(elemento.getObservaciones().trim());
         }
         return elemento;
+    }
+
+    private Object aplicarFiltros(OrdenVenta elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("cliente");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("clienteordenventafiltro", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return mapper.readValue(string, Object.class);
     }
 
 }

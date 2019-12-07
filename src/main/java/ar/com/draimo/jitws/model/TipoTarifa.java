@@ -43,7 +43,7 @@ public class TipoTarifa extends ObjetoGenerico {
     @JoinTable(name = "ordenventatarifa",
             joinColumns = @JoinColumn(name = "idTipoTarifa"),
             inverseJoinColumns = @JoinColumn(name = "idOrdenVenta"))
-    @JsonIgnoreProperties(value = {"clientes", "empresas", "tiposTarifas"})
+    @JsonIgnoreProperties(value = { "empresas", "tipoTarifas"})
     private List<OrdenVenta> ordenesVentas;
 
     //Getters y Setters de la clase
