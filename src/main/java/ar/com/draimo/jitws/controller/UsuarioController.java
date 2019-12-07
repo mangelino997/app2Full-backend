@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.LoginDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Usuario;
 import ar.com.draimo.jitws.service.UsuarioService;
@@ -62,6 +63,16 @@ public class UsuarioController {
     @ResponseBody
     public Usuario obtenerPorUsername(@PathVariable String username) {
         return elementoService.obtenerPorUsername(username);
+    }
+    
+    /*
+    * Obtiene por username
+    * Retorna usuario, empresas de usuario y menu del usuario
+    */
+    @GetMapping(value = URL + "/obtenerUsuario/{username}")
+    @ResponseBody
+    public LoginDTO obtenerUsuario(@PathVariable String username) {
+        return elementoService.obtenerUsuario(username);
     }
 
     //Obtiene un listado por nombre

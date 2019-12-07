@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Zona;
 import ar.com.draimo.jitws.service.ZonaService;
@@ -42,6 +43,13 @@ public class ZonaController {
     //Crea una instancia del servicio
     @Autowired
     ZonaService elementoService;
+    
+    //Obtiene los datos de la zona
+    @GetMapping(value = URL + "/obtenerDatos/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public GenericoDTO obtenerDatos(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.obtenerDatos(idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

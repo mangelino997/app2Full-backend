@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.dao.IUsuarioEmpresaDAO;
+import ar.com.draimo.jitws.dto.LoginDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Usuario;
@@ -44,6 +45,14 @@ public class UsuarioService {
     //Define la referencia al dao usuarioempresa
     @Autowired
     IUsuarioEmpresaDAO usuarioEmpresaDAO;
+    
+    //Define usuarioEmpresaService
+    @Autowired
+    UsuarioEmpresaService usuarioEmpresaService;
+    
+    //Define menu service
+    @Autowired
+    MenuService menuService;
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -59,6 +68,26 @@ public class UsuarioService {
     //Obtiene por username
     public Usuario obtenerPorUsername(String username) {
         return elementoDAO.findOneByUsername(username);
+    }
+    
+    /*
+    * Obtiene un usuario, sus empresa activas y el menu de ese usuario por username
+    * Retorna un DTO para la seccion Login
+    */
+    public LoginDTO obtenerUsuario(String username) {
+        //Crea un login dto
+        LoginDTO loginDTO = new LoginDTO();
+        //Obtiene y establece el usuario
+        loginDTO.setUsuario(elementoDAO.findOneByUsername(username));
+        //Obtiene y establece las empresas del usuario
+        loginDTO.setEmpresas(usuarioEmpresaService.listarEmpresasActivasDeUsuario(loginDTO.getUsuario().getId()));
+        //Obtiene y establece el menu del usuario
+        loginDTO.setMenuPrincipalDTO(menuService.listar(loginDTO.getUsuario().getRol().getId()));
+        //Si el usuario tiene rol secundario, obtiene y establece el menu secundario
+        if(loginDTO.getUsuario().getRolSecundario() != null) {
+            loginDTO.setMenuSecundarioDTO(menuService.listar(loginDTO.getUsuario().getRolSecundario().getId()));
+        }
+        return loginDTO;
     }
 
     //Obtiene un listado por nombre

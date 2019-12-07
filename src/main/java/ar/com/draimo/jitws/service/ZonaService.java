@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IZonaDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.model.Zona;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ public class ZonaService {
     //Define la referencia al dao
     @Autowired
     IZonaDAO elementoDAO;
+    
+    //Crea una instancia del servicio
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene los datos
+    public GenericoDTO obtenerDatos(int idRol, int idSubopcion) {
+        GenericoDTO zonaDTO = new GenericoDTO();
+        zonaDTO.setUltimoId(obtenerSiguienteId());
+        zonaDTO.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        return zonaDTO;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
