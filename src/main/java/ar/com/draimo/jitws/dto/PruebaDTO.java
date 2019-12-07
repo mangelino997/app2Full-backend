@@ -4,17 +4,15 @@ import ar.com.draimo.jitws.model.AfipCondicionIva;
 import ar.com.draimo.jitws.model.Cobrador;
 import ar.com.draimo.jitws.model.CondicionVenta;
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.Opcion;
+import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.ResumenCliente;
-import ar.com.draimo.jitws.model.RolOpcion;
 import ar.com.draimo.jitws.model.Rubro;
 import ar.com.draimo.jitws.model.SituacionCliente;
-import ar.com.draimo.jitws.model.SubopcionPestania;
 import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import ar.com.draimo.jitws.model.Vendedor;
 import ar.com.draimo.jitws.model.Zona;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -22,6 +20,9 @@ import java.util.List;
  * @author blas
  */
 public class PruebaDTO {
+    
+    //Define el ultimo id
+    private int ultimoId;
     
     //Lista de condicion de iva
     private List<AfipCondicionIva> afipCondicionesIvas; 
@@ -51,17 +52,27 @@ public class PruebaDTO {
     private List<Zona> zonas; 
     
     //Lista de rubros
-    private List<Rubro> rubros; 
+    private List<Rubro> rubros;
     
     //Lista de rubros
-    private List<RolOpcion> rolOpciones; 
+    private List<Pestania> pestanias;
     
     //Lista de rubros
-    private List<SubopcionPestania> subopcionPestanias; 
+    private List<Opcion> opciones; 
     
     //Lista de empresas
     private List<Empresa> empresas;
 
+    //Define Getters y Setters
+
+    public int getUltimoId() {
+        return ultimoId;
+    }
+
+    public void setUltimoId(int ultimoId) {
+        this.ultimoId = ultimoId;
+    }
+    
     public List<AfipCondicionIva> getAfipCondicionesIvas() {
         return afipCondicionesIvas;
     }
@@ -142,22 +153,22 @@ public class PruebaDTO {
         this.rubros = rubros;
     }
 
-    public List<RolOpcion> getRolOpciones() {
-        return rolOpciones;
+    public List<Pestania> getPestanias() {
+        return pestanias;
     }
 
-    public void setRolOpciones(List<RolOpcion> rolOpciones) {
-        this.rolOpciones = rolOpciones;
+    public void setPestanias(List<Pestania> pestanias) {
+        this.pestanias = pestanias;
     }
 
-    public List<SubopcionPestania> getSubopcionPestanias() {
-        return subopcionPestanias;
+    public List<Opcion> getOpciones() {
+        return opciones;
     }
 
-    public void setSubopcionPestanias(List<SubopcionPestania> subopcionPestanias) {
-        this.subopcionPestanias = subopcionPestanias;
+    public void setOpciones(List<Opcion> opciones) {
+        this.opciones = opciones;
     }
-
+    
     public List<Empresa> getEmpresas() {
         return empresas;
     }

@@ -146,7 +146,35 @@ public class ClienteService {
     
     //Define la referencia al service de empresa
     @Autowired
-    UsuarioEmpresaService empresaService;
+    UsuarioEmpresaService usuarioEmpresaService;
+    
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Define el rol opcion service
+    @Autowired
+    RolOpcionService rolOpcionService;
+    
+    //Inicializa los datos
+    public PruebaDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
+        PruebaDTO p = new PruebaDTO();
+        p.setUltimoId(obtenerSiguienteId());
+        p.setEmpresas(usuarioEmpresaService.listarEmpresasActivasDeUsuario(idUsuario));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        p.setOpciones(rolOpcionService.listarPorRolYSubopcion(idRol, idSubopcion));
+        p.setAfipCondicionesIvas(afipCondicionIvaDAO.findAll());
+        p.setCobradores(cobradorDAO.findAll());
+        p.setCondicionVentas(condicionVentaDAO.findAll());
+        p.setResumenClientes(resumenClienteDAO.findAll());
+        p.setRubros(rubroDAO.findAll());
+        p.setSituacionClientes(situacionClienteDAO.findAll());
+        p.setSucursales(sucursalDAO.findAll());
+        p.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        p.setVendedores(vendedorDAO.findAll());
+        p.setZonas(zonaDAO.findAll());
+        return p;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -224,27 +252,6 @@ public class ClienteService {
         return retornarObjeto(elementos, null);
     }
     
-    //Agrega un cliente eventual
-    public PruebaDTO listarParaInicializar(int idUsuario, int idRol, int idSubopcion) {
-        PruebaDTO p = new PruebaDTO();
-        Optional<Rol> rol = rolDAO.findById(idRol);
-        Optional<Subopcion> subopcion = subopcionDAO.findById(idSubopcion);
-        p.setEmpresas(empresaService.listarEmpresasActivasDeUsuario(idUsuario));
-        p.setRolOpciones(rolOpcionDAO.findByRolAndOpcion_Subopcion(rol, subopcion));
-        p.setSubopcionPestanias(subopcionPestaniaDAO.findByRolAndSubopcion(rol, subopcion));
-        p.setAfipCondicionesIvas(afipCondicionIvaDAO.findAll());
-        p.setCobradores(cobradorDAO.findAll());
-        p.setCondicionVentas(condicionVentaDAO.findAll());
-        p.setResumenClientes(resumenClienteDAO.findAll());
-        p.setRubros(rubroDAO.findAll());
-        p.setSituacionClientes(situacionClienteDAO.findAll());
-        p.setSucursales(sucursalDAO.findAll());
-        p.setTipoDocumentos(tipoDocumentoDAO.findAll());
-        p.setVendedores(vendedorDAO.findAll());
-        p.setZonas(zonaDAO.findAll());
-        return p;
-    }
-
     //Agrega un cliente eventual
     @Transactional(rollbackFor = Exception.class)
     public Cliente agregarClienteEventual(Cliente elemento) {

@@ -46,6 +46,13 @@ public class ClienteController {
     //Crea una instancia del servicio
     @Autowired
     ClienteService elementoService;
+    
+    //Obtiene los datos de diferentes modulos para inicializar
+    @GetMapping(value = URL + "/inicializar/{idUsuario}/{idRol}/{idSubopcion}")
+    public PruebaDTO inicializar(@PathVariable int idUsuario, @PathVariable int idRol, 
+            @PathVariable int idSubopcion) throws IOException {
+        return elementoService.inicializar(idUsuario, idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
@@ -93,12 +100,6 @@ public class ClienteController {
     @PostMapping(value = URL + "/listarPorFiltros")
     public Object listarPorFiltros(@RequestBody ClienteDTO clienteDTO) throws IOException {
         return elementoService.listarPorFiltros(clienteDTO);
-    }
-    
-    //Retorna las listas para el ngOninit(Front)
-    @GetMapping(value = URL + "/listarParaInicializar/{idUsuario}/{idRol}/{idSubopcion}")
-    public PruebaDTO listarParaInicializar(@PathVariable int idUsuario,int idRol,int idSubopcion) throws IOException {
-        return elementoService.listarParaInicializar(idUsuario, idRol, idSubopcion);
     }
     
     //Agrega un cliente eventual
