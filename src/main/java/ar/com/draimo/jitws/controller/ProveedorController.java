@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.ProveedorDTO;
+import ar.com.draimo.jitws.dto.ProveedorInitDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.service.ProveedorService;
@@ -43,6 +44,13 @@ public class ProveedorController {
     //Crea una instancia del servicio
     @Autowired
     ProveedorService elementoService;
+
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/inicializar/{rol}/{opcion}/{usuario}")
+    @ResponseBody
+    public ProveedorInitDTO inicializar(@PathVariable int rol, @PathVariable int opcion, @PathVariable int usuario) {
+        return elementoService.inicializar(rol, opcion, usuario);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.VehiculoInitDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Vehiculo;
 import ar.com.draimo.jitws.service.VehiculoService;
@@ -47,7 +48,7 @@ public class VehiculoController {
     //Obtiene la lista completa
     @GetMapping(value = URL + "/inicializar/{rol}/{subopcion}")
     @ResponseBody
-    public Object inicializar(@PathVariable int rol, @PathVariable int subopcion) {
+    public VehiculoInitDTO inicializar(@PathVariable int rol, @PathVariable int subopcion) {
         return elementoService.inicializar(rol, subopcion);
     }
 
