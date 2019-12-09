@@ -44,6 +44,13 @@ public class VehiculoController {
     @Autowired
     VehiculoService elementoService;
 
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/inicializar/{rol}/{subopcion}")
+    @ResponseBody
+    public Object inicializar(@PathVariable int rol, @PathVariable int subopcion) {
+        return elementoService.inicializar(rol, subopcion);
+    }
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody

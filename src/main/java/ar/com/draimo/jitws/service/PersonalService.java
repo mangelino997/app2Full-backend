@@ -15,6 +15,7 @@ import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IObraSocialDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.dao.ISeguridadSocialDAO;
 import ar.com.draimo.jitws.dao.ISexoDAO;
 import ar.com.draimo.jitws.dao.ISindicatoDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
@@ -107,6 +108,10 @@ public class PersonalService {
     @Autowired
     ISexoDAO sexoDAO;
 
+    //Define la referencia seguridadDAO
+    @Autowired
+    ISeguridadSocialDAO seguridadSocialDAO;
+
     //Define la referencia sindicatoDAO
     @Autowired
     ISindicatoDAO sindicatoDAO;
@@ -148,6 +153,7 @@ public class PersonalService {
         p.setEstadoCiviles(estadoCivilDAO.findAll());
         p.setFecha(new Date(new java.util.Date().getTime()));
         p.setObraSociales(obraSocialDAO.findAll());
+        p.setSeguridadSociales(seguridadSocialDAO.findAll());
         p.setSexos(sexoDAO.findAll());
         p.setSindicatos(sindicatoDAO.findAll());
         p.setSucursales(sucursalDAO.findAll());
