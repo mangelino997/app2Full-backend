@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitProductoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.InsumoProducto;
 import ar.com.draimo.jitws.service.InsumoProductoService;
@@ -43,6 +44,13 @@ public class InsumoProductoController {
     //Crea una instancia del servicio
     @Autowired
     InsumoProductoService elementoService;
+
+    //Obtiene un listado de elementos necesarios para inicializar el componente
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
+    @ResponseBody
+    public InitProductoDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
+        return elementoService.inicializar(idRol, idOpcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

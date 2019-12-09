@@ -70,6 +70,10 @@ public class ProveedorService {
     //Define la subopcion pestania service
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Define el rol opcion service
+    @Autowired
+    RolOpcionService rolOpcionService;
 
     //Obtiene la lista para inicializar
     public InitProveedorDTO inicializar(int rol, int opcion, int usuario) {
@@ -79,6 +83,7 @@ public class ProveedorService {
         p.setEmpresas(empresaDAO.listarPorUsuarioYMostrarTrue(usuario));
         p.setFecha(new Date(new java.util.Date().getTime()));
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, opcion));
+        p.setOpciones(rolOpcionService.listarPorRolYSubopcion(rol, opcion));
         p.setTipoCuentaBancarias(tipoCuentaBancariaDAO.findAll());
         p.setTipoDocumentos(tipoDocumentoDAO.findAll());
         p.setTipoProveedores(tipoProveedorDAO.findAll());

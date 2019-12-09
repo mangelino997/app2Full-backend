@@ -1,12 +1,10 @@
 package ar.com.draimo.jitws.dto;
 
-import ar.com.draimo.jitws.model.AfipActividad;
 import ar.com.draimo.jitws.model.AfipCondicionIva;
 import ar.com.draimo.jitws.model.CondicionCompra;
 import ar.com.draimo.jitws.model.Empresa;
-import ar.com.draimo.jitws.model.ObraSocial;
+import ar.com.draimo.jitws.model.Opcion;
 import ar.com.draimo.jitws.model.Pestania;
-import ar.com.draimo.jitws.model.SeguridadSocial;
 import ar.com.draimo.jitws.model.TipoCuentaBancaria;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import ar.com.draimo.jitws.model.TipoProveedor;
@@ -42,6 +40,9 @@ public class InitProveedorDTO {
     
     //Lista de pestanias
     private List<Pestania> pestanias;
+    
+    //Lista de rubros
+    private List<Opcion> opciones; 
     
     //Lista de empresas
     private List<Empresa> empresas; 
@@ -110,6 +111,14 @@ public class InitProveedorDTO {
 
     public void setPestanias(List<Pestania> pestanias) {
         this.pestanias = pestanias;
+    }
+
+    public List<Opcion> getOpciones() {
+        return opciones;
+    }
+
+    public void setOpciones(List<Opcion> opciones) {
+        this.opciones = opciones;
     }
 
     public List<Empresa> getEmpresas() {

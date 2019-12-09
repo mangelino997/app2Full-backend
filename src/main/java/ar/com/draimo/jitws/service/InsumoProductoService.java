@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IInsumoProductoDAO;
 import ar.com.draimo.jitws.dao.IMarcaProductoDAO;
 import ar.com.draimo.jitws.dao.IRubroProductoDAO;
+import ar.com.draimo.jitws.dao.IUnidadMedidaDAO;
+import ar.com.draimo.jitws.dto.InitProductoDTO;
 import ar.com.draimo.jitws.model.MarcaProducto;
 import ar.com.draimo.jitws.model.RubroProducto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +40,25 @@ public class InsumoProductoService {
     //Define la referencia al dao de marca
     @Autowired
     IMarcaProductoDAO marcaProductoDAO;
+    
+    //Define la referencia al dao de unidadMedida
+    @Autowired
+    IUnidadMedidaDAO unidadMedidaDAO;
+    
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public InitProductoDTO inicializar(int idRol, int idOpcion) {
+        InitProductoDTO p = new InitProductoDTO();
+        p.setMarcaProductos(marcaProductoDAO.findAll());
+        p.setRubroProductos(rubroProductoDAO.findAll());
+        p.setUnidadMedidas(unidadMedidaDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        return p;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
