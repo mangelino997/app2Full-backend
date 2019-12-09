@@ -6,7 +6,7 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
-import ar.com.draimo.jitws.dto.PuntoVentaInitDTO;
+import ar.com.draimo.jitws.dto.InitPuntoVentaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.PuntoVenta;
@@ -53,12 +53,13 @@ public class PuntoVentaService {
     SubopcionPestaniaService subopcionPestaniaService;
 
     //Obtiene la lista completa
-    public PuntoVentaInitDTO inicializar(int rol, int opcion) {
-        PuntoVentaInitDTO p = new PuntoVentaInitDTO();
+    public InitPuntoVentaDTO inicializar(int rol, int opcion) {
+        InitPuntoVentaDTO p = new InitPuntoVentaDTO();
         p.setEmpresas(empresaDAO.findAll());
         p.setSucursales(sucursalDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, opcion));
+        p.setTipoComprobantes(tipoComprobanteDAO.findByNumeracionPuntoVentaTrue());
         return p;
     }
     

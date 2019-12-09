@@ -7,7 +7,7 @@ import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
-import ar.com.draimo.jitws.dto.VehiculoInitDTO;
+import ar.com.draimo.jitws.dto.InitVehiculoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ConfiguracionVehiculo;
 import ar.com.draimo.jitws.model.Empresa;
@@ -68,8 +68,8 @@ public class VehiculoService {
     PdfService pdfService;
 
     //Obtiene la lista completa
-    public VehiculoInitDTO inicializar(int rol, int subopcion) {
-        VehiculoInitDTO p = new VehiculoInitDTO();
+    public InitVehiculoDTO inicializar(int rol, int subopcion) {
+        InitVehiculoDTO p = new InitVehiculoDTO();
          p.setMarcaVehiculos(marcaVehiculoDAO.findAll());
         p.setTipoVehiculos(tipoVehiculoDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());

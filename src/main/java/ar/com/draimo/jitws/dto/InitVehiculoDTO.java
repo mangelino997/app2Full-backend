@@ -10,7 +10,7 @@ import java.util.List;
  * Data Transfer Object of personal
  * @author blas
  */
-public class VehiculoInitDTO {
+public class InitVehiculoDTO {
     
     //Define el ultimo id
     private int ultimoId;

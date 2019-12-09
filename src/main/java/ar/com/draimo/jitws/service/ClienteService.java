@@ -24,7 +24,7 @@ import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.dao.IVendedorDAO;
 import ar.com.draimo.jitws.dao.IZonaDAO;
 import ar.com.draimo.jitws.dto.ClienteDTO;
-import ar.com.draimo.jitws.dto.ClienteInitDTO;
+import ar.com.draimo.jitws.dto.InitClienteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
@@ -141,8 +141,8 @@ public class ClienteService {
     RolOpcionService rolOpcionService;
     
     //Inicializa los datos
-    public ClienteInitDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
-        ClienteInitDTO p = new ClienteInitDTO();
+    public InitClienteDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
+        InitClienteDTO p = new InitClienteDTO();
         p.setUltimoId(obtenerSiguienteId());
         p.setEmpresas(usuarioEmpresaService.listarEmpresasActivasDeUsuario(idUsuario));
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));

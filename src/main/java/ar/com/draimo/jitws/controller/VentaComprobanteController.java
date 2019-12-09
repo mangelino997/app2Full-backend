@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitFacturaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.VentaComprobante;
 import ar.com.draimo.jitws.service.VentaComprobanteService;
@@ -43,6 +44,13 @@ public class VentaComprobanteController {
     //Crea una instancia del servicio
     @Autowired
     VentaComprobanteService elementoService;
+
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/inicializar/{idEmpresa}/{idSucursal}")
+    @ResponseBody
+    public InitFacturaDTO inicializar(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
+        return elementoService.inicializar(idEmpresa, idSucursal);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

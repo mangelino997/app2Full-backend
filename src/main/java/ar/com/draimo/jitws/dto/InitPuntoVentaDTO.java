@@ -10,7 +10,7 @@ import java.util.List;
  * Data Transfer Object of personal
  * @author blas
  */
-public class PuntoVentaInitDTO {
+public class InitPuntoVentaDTO {
     
     //Define el ultimo id
     private int ultimoId;
@@ -35,6 +35,14 @@ public class PuntoVentaInitDTO {
 
     public void setUltimoId(int ultimoId) {
         this.ultimoId = ultimoId;
+    }
+
+    public List<TipoComprobante> getTipoComprobantes() {
+        return tipoComprobantes;
+    }
+
+    public void setTipoComprobantes(List<TipoComprobante> tipoComprobantes) {
+        this.tipoComprobantes = tipoComprobantes;
     }
 
     public List<Sucursal> getSucursales() {

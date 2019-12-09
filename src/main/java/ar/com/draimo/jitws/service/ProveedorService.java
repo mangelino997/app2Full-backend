@@ -10,7 +10,7 @@ import ar.com.draimo.jitws.dao.ITipoCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoProveedorDAO;
 import ar.com.draimo.jitws.dto.ProveedorDTO;
-import ar.com.draimo.jitws.dto.ProveedorInitDTO;
+import ar.com.draimo.jitws.dto.InitProveedorDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
@@ -72,8 +72,8 @@ public class ProveedorService {
     SubopcionPestaniaService subopcionPestaniaService;
 
     //Obtiene la lista para inicializar
-    public ProveedorInitDTO inicializar(int rol, int opcion, int usuario) {
-        ProveedorInitDTO p = new ProveedorInitDTO();
+    public InitProveedorDTO inicializar(int rol, int opcion, int usuario) {
+        InitProveedorDTO p = new InitProveedorDTO();
         p.setAfipCondicionesIva(afipCondicionIvaDAO.findAll());
         p.setCondicionCompras(condicionCompraDAO.findAll());
         p.setEmpresas(empresaDAO.listarPorUsuarioYMostrarTrue(usuario));

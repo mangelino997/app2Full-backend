@@ -22,7 +22,7 @@ import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dto.ChoferDTO;
 import ar.com.draimo.jitws.dto.PersonalDTO;
-import ar.com.draimo.jitws.dto.PersonalInitDTO;
+import ar.com.draimo.jitws.dto.InitPersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
@@ -137,8 +137,8 @@ public class PersonalService {
     RolOpcionService rolOpcionService;
     
     //Inicializa los datos
-    public PersonalInitDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
-        PersonalInitDTO p = new PersonalInitDTO();
+    public InitPersonalDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
+        InitPersonalDTO p = new InitPersonalDTO();
         p.setUltimoId(obtenerSiguienteId());
         p.setAfipActividades(afipActividadDAO.findAll());
         p.setAfipCondiciones(afipCondicionDAO.findAll());

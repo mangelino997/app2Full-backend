@@ -3,7 +3,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.ClienteDTO;
-import ar.com.draimo.jitws.dto.ClienteInitDTO;
+import ar.com.draimo.jitws.dto.InitClienteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.service.ClienteService;
@@ -49,7 +49,7 @@ public class ClienteController {
     
     //Obtiene los datos de diferentes modulos para inicializar
     @GetMapping(value = URL + "/inicializar/{idUsuario}/{idRol}/{idSubopcion}")
-    public ClienteInitDTO inicializar(@PathVariable int idUsuario, @PathVariable int idRol, 
+    public InitClienteDTO inicializar(@PathVariable int idUsuario, @PathVariable int idRol, 
             @PathVariable int idSubopcion) throws IOException {
         return elementoService.inicializar(idUsuario, idRol, idSubopcion);
     }

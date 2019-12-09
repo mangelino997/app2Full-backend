@@ -24,7 +24,7 @@ import java.util.List;
  * Data Transfer Object of personal
  * @author blas
  */
-public class PersonalInitDTO {
+public class InitPersonalDTO {
     
     //Define el ultimo id
     private int ultimoId;
