@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Barrio;
 import ar.com.draimo.jitws.service.BarrioService;
@@ -44,10 +45,10 @@ public class BarrioController {
     BarrioService elementoService;
 
     //Obtiene el siguiente id
-    @GetMapping(value = URL + "/obtenerSiguienteId")
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
     @ResponseBody
-    public int obtenerSiguienteId() {
-        return elementoService.obtenerSiguienteId();
+    public GenericoDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
+        return elementoService.inicializar(idRol, idOpcion);
     }
 
     //Obtiene la lista completa
