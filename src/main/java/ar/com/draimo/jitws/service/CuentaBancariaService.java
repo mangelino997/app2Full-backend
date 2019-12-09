@@ -3,6 +3,9 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IMonedaDAO;
+import ar.com.draimo.jitws.dao.ITipoCuentaBancariaDAO;
+import ar.com.draimo.jitws.dto.InitCuentaBancariaDTO;
 import ar.com.draimo.jitws.model.CuentaBancaria;
 import java.sql.Date;
 import java.util.List;
@@ -24,6 +27,28 @@ public class CuentaBancariaService {
     //Referencia al DAO de empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+
+    //Referencia al DAO de moneda
+    @Autowired
+    IMonedaDAO monedaDAO;
+
+    //Referencia al DAO de tipoCuentaBancariaDAO
+    @Autowired
+    ITipoCuentaBancariaDAO tipoCuentaBancariaDAO;
+
+    //Referencia al service de subpocionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+
+    //Obtiene los listados necesarios para inicializar el componente
+    public InitCuentaBancariaDTO inicializar(int idRol, int idOpcion) {
+        InitCuentaBancariaDTO p = new InitCuentaBancariaDTO();
+        p.setMonedas(monedaDAO.findAll());
+        p.setTipoCuentaBancarias(tipoCuentaBancariaDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        return p;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

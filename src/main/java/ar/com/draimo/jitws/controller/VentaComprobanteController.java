@@ -46,10 +46,17 @@ public class VentaComprobanteController {
     VentaComprobanteService elementoService;
 
     //Obtiene el siguiente id
-    @GetMapping(value = URL + "/inicializar/{idEmpresa}/{idSucursal}")
+    @GetMapping(value = URL + "/inicializarFactura/{idEmpresa}/{idSucursal}")
     @ResponseBody
-    public InitFacturaDTO inicializar(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
-        return elementoService.inicializar(idEmpresa, idSucursal);
+    public InitFacturaDTO inicializarFactura(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
+        return elementoService.inicializarFactura(idEmpresa, idSucursal);
+    }
+
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/inicializarNotaCredito/{idEmpresa}/{idSucursal}")
+    @ResponseBody
+    public InitFacturaDTO inicializarNotaCredito(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
+        return elementoService.inicializarNotaCredito(idEmpresa, idSucursal);
     }
 
     //Obtiene el siguiente id

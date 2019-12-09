@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
+import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
@@ -90,6 +91,10 @@ public class VentaComprobanteService {
     @Autowired
     IPuntoVentaDAO puntoVentaDAO;
 
+    //Define la referancia a provinciaDAO
+    @Autowired
+    IProvinciaDAO provinciaDAO;
+
     //Define la referancia a ClienteDAO
     @Autowired
     IClienteDAO clienteDAO;
@@ -111,15 +116,28 @@ public class VentaComprobanteService {
     IOrdenVentaTarifaDAO ordenVentaTarifaDAO;
 
     //Obtiene el listado de elementos necesarios para inicializar el componente
-    public InitFacturaDTO inicializar(int idEmpresa, int idSucursal) {
+    public InitFacturaDTO inicializarFactura(int idEmpresa, int idSucursal) {
         InitFacturaDTO p = new InitFacturaDTO();
         p.setAfipAlicuotaIvas(afipAlicuotaIvaDAO.findByEstaActivaTrue());
         p.setEmpresaOrdenVentas(empresaOrdenVentaDAO.findAll());
         p.setPuntoVentas(puntoVentaDAO.findByEmpresaAndSucursalAndFeTrueAndEstaHabilitadoTrue(
                 empresaDAO.findById(idEmpresa).get(), sucursalDAO.findById(idSucursal).get()));
         p.setTipoComprobantes(tipoComprobanteDAO.listarParaFactura());
-        p.setUltimoId(0);
+        p.setUltimoId(obtenerSiguienteId());
         p.setVentaTipoItems(ventaTipoItemDAO.findByTipoComprobante(tipoComprobanteDAO.findById(1)));
+        return p;
+    }
+
+    //Obtiene el listado de elementos necesarios para inicializar el componente
+    public InitFacturaDTO inicializarNotaCredito(int idEmpresa, int idSucursal) {
+        InitFacturaDTO p = new InitFacturaDTO();
+        p.setAfipAlicuotaIvas(afipAlicuotaIvaDAO.findByEstaActivaTrue());
+        p.setProvincias(provinciaDAO.findAll());
+        p.setPuntoVentas(puntoVentaDAO.findByEmpresaAndSucursalAndFeTrueAndEstaHabilitadoTrue(
+                empresaDAO.findById(idEmpresa).get(), sucursalDAO.findById(idSucursal).get()));
+        p.setTipoComprobantes(tipoComprobanteDAO.listarParaNotaCredito());
+        p.setUltimoId(obtenerSiguienteId());
+        p.setVentaTipoItems(ventaTipoItemDAO.findByTipoComprobante(tipoComprobanteDAO.findById(3)));
         return p;
     }
 

@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.dto;
 
 import ar.com.draimo.jitws.model.AfipAlicuotaIva;
 import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
+import ar.com.draimo.jitws.model.Provincia;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaTipoItem;
@@ -25,11 +26,14 @@ public class InitFacturaDTO {
     //Lista de rubros
     private List<VentaTipoItem> ventaTipoItems;
     
-    //Lista de empresas
+    //Lista de afipAlicuotaIvas
     private List<AfipAlicuotaIva> afipAlicuotaIvas;
     
     //Lista de empresas
     private List<EmpresaOrdenVenta> empresaOrdenVentas;
+    
+    //Lista de provincias
+    private List<Provincia> provincias;
 
     //Define Getters y Setters
 
@@ -79,6 +83,14 @@ public class InitFacturaDTO {
 
     public void setEmpresaOrdenVentas(List<EmpresaOrdenVenta> empresaOrdenVentas) {
         this.empresaOrdenVentas = empresaOrdenVentas;
+    }
+
+    public List<Provincia> getProvincias() {
+        return provincias;
+    }
+
+    public void setProvincias(List<Provincia> provincias) {
+        this.provincias = provincias;
     }
     
 }
