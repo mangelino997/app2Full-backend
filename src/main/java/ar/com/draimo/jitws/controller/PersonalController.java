@@ -47,6 +47,13 @@ public class PersonalController {
     @Autowired
     PersonalService elementoService;
 
+    //Obtiene las listas para inicializar
+    @GetMapping(value = URL + "/inicializar/{usuario}/{rol}/{opcion}")
+    @ResponseBody
+    public Object inicializar(@PathVariable int usuario, @PathVariable int rol, @PathVariable int opcion) {
+        return elementoService.inicializar(usuario, rol, opcion);
+    }
+    
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody

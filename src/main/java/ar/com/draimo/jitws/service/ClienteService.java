@@ -24,7 +24,7 @@ import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.dao.IVendedorDAO;
 import ar.com.draimo.jitws.dao.IZonaDAO;
 import ar.com.draimo.jitws.dto.ClienteDTO;
-import ar.com.draimo.jitws.dto.PruebaDTO;
+import ar.com.draimo.jitws.dto.ClienteInitDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
@@ -128,22 +128,6 @@ public class ClienteService {
     @Autowired
     IRubroDAO rubroDAO;
     
-    //Define la referencia al dao subopcion
-    @Autowired
-    ISubopcionPestaniaDAO subopcionPestaniaDAO;
-    
-    //Define la referencia al dao rolOpcion
-    @Autowired
-    IRolOpcionDAO rolOpcionDAO;
-    
-    //Define la referencia al dao rol
-    @Autowired
-    IRolDAO rolDAO;
-    
-    //Define la referencia al dao rolOpcion
-    @Autowired
-    ISubopcionDAO subopcionDAO;
-    
     //Define la referencia al service de empresa
     @Autowired
     UsuarioEmpresaService usuarioEmpresaService;
@@ -157,8 +141,8 @@ public class ClienteService {
     RolOpcionService rolOpcionService;
     
     //Inicializa los datos
-    public PruebaDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
-        PruebaDTO p = new PruebaDTO();
+    public ClienteInitDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
+        ClienteInitDTO p = new ClienteInitDTO();
         p.setUltimoId(obtenerSiguienteId());
         p.setEmpresas(usuarioEmpresaService.listarEmpresasActivasDeUsuario(idUsuario));
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
