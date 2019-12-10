@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -336,55 +337,54 @@ public class Personal extends ObjetoGenerico {
     private String talleCalzado;
 
     //Define el turno entrada mañana
-    //Define fechaRegistracion
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoMEntrada", nullable = true)
-    private Time turnoMEntrada;
+    private Timestamp turnoMEntrada;
 
     //Define el turno salida mañana
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoMSalida", nullable = true)
-    private Time turnoMSalida;
+    private Timestamp turnoMSalida;
 
     //Define el turno entrada tarde
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoTEntrada", nullable = true)
-    private Time turnoTEntrada;
+    private Timestamp turnoTEntrada;
 
     //Define el turno salida tarde
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoTSalida", nullable = true)
-    private Time turnoTSalida;
+    private Timestamp turnoTSalida;
 
     //Define el turno entrada noche
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoNEntrada", nullable = true)
-    private Time turnoNEntrada;
+    private Timestamp turnoNEntrada;
 
     //Define el turno salida noche
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoNSalida", nullable = true)
-    private Time turnoNSalida;
+    private Timestamp turnoNSalida;
 
     //Define el turno entrada sabado
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoSEntrada", nullable = true)
-    private Time turnoSEntrada;
+    private Timestamp turnoSEntrada;
 
     //Define el turno salida sabado
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoSSalida", nullable = true)
-    private Time turnoSSalida;
+    private Timestamp turnoSSalida;
 
     //Define el turno entrada domingo
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoDEntrada", nullable = true)
-    private Time turnoDEntrada;
+    private Timestamp turnoDEntrada;
 
     //Define el turno salida domingo
     @JsonFormat(pattern = "HH:mm:ss", timezone = "UTC-3")
     @Column(name = "turnoDSalida", nullable = true)
-    private Time turnoDSalida;
+    private Timestamp turnoDSalida;
 
     //Define si es turno rotativo
     @Column(name = "turnoRotativo", nullable = true)
@@ -1011,83 +1011,83 @@ public class Personal extends ObjetoGenerico {
         this.talleCalzado = talleCalzado;
     }
 
-    public Time getTurnoMEntrada() {
+    public Timestamp getTurnoMEntrada() {
         return turnoMEntrada;
     }
 
-    public void setTurnoMEntrada(Time turnoMEntrada) {
+    public void setTurnoMEntrada(Timestamp turnoMEntrada) {
         this.turnoMEntrada = turnoMEntrada;
     }
 
-    public Time getTurnoMSalida() {
+    public Timestamp getTurnoMSalida() {
         return turnoMSalida;
     }
 
-    public void setTurnoMSalida(Time turnoMSalida) {
+    public void setTurnoMSalida(Timestamp turnoMSalida) {
         this.turnoMSalida = turnoMSalida;
     }
 
-    public Time getTurnoTEntrada() {
+    public Timestamp getTurnoTEntrada() {
         return turnoTEntrada;
     }
 
-    public void setTurnoTEntrada(Time turnoTEntrada) {
+    public void setTurnoTEntrada(Timestamp turnoTEntrada) {
         this.turnoTEntrada = turnoTEntrada;
     }
 
-    public Time getTurnoTSalida() {
+    public Timestamp getTurnoTSalida() {
         return turnoTSalida;
     }
 
-    public void setTurnoTSalida(Time turnoTSalida) {
+    public void setTurnoTSalida(Timestamp turnoTSalida) {
         this.turnoTSalida = turnoTSalida;
     }
 
-    public Time getTurnoNEntrada() {
+    public Timestamp getTurnoNEntrada() {
         return turnoNEntrada;
     }
 
-    public void setTurnoNEntrada(Time turnoNEntrada) {
+    public void setTurnoNEntrada(Timestamp turnoNEntrada) {
         this.turnoNEntrada = turnoNEntrada;
     }
 
-    public Time getTurnoNSalida() {
+    public Timestamp getTurnoNSalida() {
         return turnoNSalida;
     }
 
-    public void setTurnoNSalida(Time turnoNSalida) {
+    public void setTurnoNSalida(Timestamp turnoNSalida) {
         this.turnoNSalida = turnoNSalida;
     }
 
-    public Time getTurnoSEntrada() {
+    public Timestamp getTurnoSEntrada() {
         return turnoSEntrada;
     }
 
-    public void setTurnoSEntrada(Time turnoSEntrada) {
+    public void setTurnoSEntrada(Timestamp turnoSEntrada) {
         this.turnoSEntrada = turnoSEntrada;
     }
 
-    public Time getTurnoSSalida() {
+    public Timestamp getTurnoSSalida() {
         return turnoSSalida;
     }
 
-    public void setTurnoSSalida(Time turnoSSalida) {
+    public void setTurnoSSalida(Timestamp turnoSSalida) {
         this.turnoSSalida = turnoSSalida;
     }
 
-    public Time getTurnoDEntrada() {
+    public Timestamp getTurnoDEntrada() {
         return turnoDEntrada;
     }
 
-    public void setTurnoDEntrada(Time turnoDEntrada) {
+    public void setTurnoDEntrada(Timestamp turnoDEntrada) {
         this.turnoDEntrada = turnoDEntrada;
     }
 
-    public Time getTurnoDSalida() {
+    public Timestamp getTurnoDSalida() {
         return turnoDSalida;
     }
 
-    public void setTurnoDSalida(Time turnoDSalida) {
+    public void setTurnoDSalida(Timestamp turnoDSalida) {
         this.turnoDSalida = turnoDSalida;
     }
 
