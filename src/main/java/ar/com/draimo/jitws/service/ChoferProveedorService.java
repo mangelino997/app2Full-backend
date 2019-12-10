@@ -4,6 +4,9 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IChoferProveedorDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitChoferProveedorDTO;
 import ar.com.draimo.jitws.model.ChoferProveedor;
 import ar.com.draimo.jitws.model.Proveedor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +39,23 @@ public class ChoferProveedorService {
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Define la referencia al dao tipodoc
+    @Autowired
+    ITipoDocumentoDAO tipoDocumentoDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public InitChoferProveedorDTO inicializar(int idRol, int idOpcion) {
+        InitChoferProveedorDTO elemento = new InitChoferProveedorDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

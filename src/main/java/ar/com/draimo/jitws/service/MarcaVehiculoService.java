@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.model.MarcaVehiculo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ public class MarcaVehiculoService {
     //Define la referencia al dao
     @Autowired
     IMarcaVehiculoDAO elementoDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public GenericoDTO inicializar(int idRol, int idOpcion) {
+        GenericoDTO elemento = new GenericoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

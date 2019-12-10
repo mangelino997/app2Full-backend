@@ -43,21 +43,9 @@ public class VehiculoService {
     @Autowired
     IEmpresaDAO empresaDAO;
 
-    //Define la referencia al dao tipo vehiculo
-    @Autowired
-    ITipoVehiculoDAO tipoVehiculoDAO;
-
-    //Define la referencia al dao marca vehiculo
-    @Autowired
-    IMarcaVehiculoDAO marcaVehiculoDAO;
-
     //Define la referencia al dao configuracion vehiculo
     @Autowired
     IConfiguracionVehiculoDAO configuracionVehiculoDAO;
-
-    //Define la subopcion pestania service
-    @Autowired
-    SubopcionPestaniaService subopcionPestaniaService;
 
     //Define DAO de pdf
     @Autowired
@@ -66,6 +54,18 @@ public class VehiculoService {
     //Define service de pdf
     @Autowired
     PdfService pdfService;
+
+    //Define la referencia al dao tipo vehiculo
+    @Autowired
+    ITipoVehiculoDAO tipoVehiculoDAO;
+
+    //Define la referencia al dao marca vehiculo
+    @Autowired
+    IMarcaVehiculoDAO marcaVehiculoDAO;
+
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
 
     //Obtiene la lista completa
     public InitVehiculoDTO inicializar(int rol, int subopcion) {

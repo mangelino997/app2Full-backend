@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitRubroProductoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RubroProducto;
 import ar.com.draimo.jitws.service.RubroProductoService;
@@ -42,6 +43,13 @@ public class RubroProductoController {
     //Crea una instancia del servicio
     @Autowired
     RubroProductoService elementoService;
+    
+    //Obtiene los datos de diferentes modulos para inicializar
+    @GetMapping(value = URL + "/inicializar/{idUsuario}/{idRol}/{idSubopcion}")
+    public InitRubroProductoDTO inicializar(@PathVariable int idUsuario, @PathVariable int idRol, 
+            @PathVariable int idSubopcion) throws IOException {
+        return elementoService.inicializar(idUsuario, idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

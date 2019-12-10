@@ -71,6 +71,15 @@ public class Fecha {
         return new Date(f.getTime());
     }
     
+    public static List<Short> listarAnios() {
+        List<Short> anios = new ArrayList<>();
+        short anio = Funcion.anioInicio;
+        for (short i = anio; i < anio + 15; i++) {
+            anios.add((short) i);
+        }
+        return anios;
+    }
+    
     //Convierte una fecha String en date
     public static Date convertirFecha(String fecha) {
      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

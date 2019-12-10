@@ -3,6 +3,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IContactoBancoDAO;
 import ar.com.draimo.jitws.dao.ISucursalBancoDAO;
+import ar.com.draimo.jitws.dao.ITipoContactoDAO;
+import ar.com.draimo.jitws.dto.InitContactoGenericoDTO;
 import ar.com.draimo.jitws.model.ContactoBanco;
 import ar.com.draimo.jitws.model.SucursalBanco;
 import java.util.List;
@@ -26,6 +28,23 @@ public class ContactoBancoService {
     //Define la referencia a sucursal banco dao
     @Autowired
     ISucursalBancoDAO sucursalBancoDAO;
+    
+    //Define la referencia al dao tipoContacto
+    @Autowired
+    ITipoContactoDAO tipoContactoDAO;
+
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitContactoGenericoDTO inicializar(int rol, int opcion) {
+        InitContactoGenericoDTO p = new InitContactoGenericoDTO();
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, opcion));
+        p.setTipoContactos(tipoContactoDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        return p;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

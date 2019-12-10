@@ -33,7 +33,7 @@ public class InitPersonalFamiliarDTO {
     private List<Mes> meses;
     
     //Lista de Anios
-    private List<Integer> anios;
+    private List<Short> anios;
     
     //Lista de Anios
     private List<TipoFamiliar> tipoFamiliares;
@@ -88,11 +88,11 @@ public class InitPersonalFamiliarDTO {
         this.meses = meses;
     }
 
-    public List<Integer> getAnios() {
+    public List<Short> getAnios() {
         return anios;
     }
 
-    public void setAnios(List<Integer> anios) {
+    public void setAnios(List<Short> anios) {
         this.anios = anios;
     }
 

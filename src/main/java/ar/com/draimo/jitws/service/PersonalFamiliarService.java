@@ -1,6 +1,7 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IMesDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.dao.IPersonalFamiliarDAO;
@@ -69,6 +70,7 @@ public class PersonalFamiliarService {
         p.setTipoDocumentos(tipoDocumentoDAO.findAll());
         p.setTipoFamiliares(tipoFamiliarDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
+        p.setAnios(Fecha.listarAnios());
         return p;
     }
 

@@ -2,6 +2,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.draimo.jitws.dao.IContactoCompaniaSeguroDAO;
+import ar.com.draimo.jitws.dao.ITipoContactoDAO;
+import ar.com.draimo.jitws.dto.InitContactoGenericoDTO;
 import ar.com.draimo.jitws.model.CompaniaSeguro;
 import ar.com.draimo.jitws.model.ContactoCompaniaSeguro;
 import java.util.List;
@@ -25,6 +27,23 @@ public class ContactoCompaniaSeguroService {
     //Define la referencia al dao de compania seguro
     @Autowired
     ICompaniaSeguroDAO companiaSeguroDAO;
+    
+    //Define la referencia al dao tipoContacto
+    @Autowired
+    ITipoContactoDAO tipoContactoDAO;
+
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitContactoGenericoDTO inicializar(int rol, int opcion) {
+        InitContactoGenericoDTO p = new InitContactoGenericoDTO();
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, opcion));
+        p.setTipoContactos(tipoContactoDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        return p;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

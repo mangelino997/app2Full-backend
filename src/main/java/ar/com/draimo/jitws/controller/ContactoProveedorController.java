@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitContactoGenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ContactoProveedor;
 import ar.com.draimo.jitws.service.ContactoProveedorService;
@@ -42,6 +43,13 @@ public class ContactoProveedorController {
     //Crea una instancia del servicio
     @Autowired
     ContactoProveedorService elementoService;
+    
+    //Obtiene los datos de diferentes modulos para inicializar
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    public InitContactoGenericoDTO inicializar(@PathVariable int idRol, 
+            @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
+    }
     
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

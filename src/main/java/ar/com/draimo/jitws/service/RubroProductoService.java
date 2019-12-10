@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IRubroProductoCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IRubroProductoDAO;
+import ar.com.draimo.jitws.dto.InitRubroProductoDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.RubroProducto;
 import ar.com.draimo.jitws.model.RubroProductoCuentaContable;
@@ -41,6 +42,19 @@ public class RubroProductoService {
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Inicializa los datos
+    public InitRubroProductoDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
+        InitRubroProductoDTO p = new InitRubroProductoDTO();
+        p.setUltimoId(obtenerSiguienteId());
+        p.setEmpresas(usuarioEmpresaService.listarEmpresasActivasDeUsuario(idUsuario));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        return p;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
