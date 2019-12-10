@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
 import ar.com.draimo.jitws.dao.IVehiculoDAO;
+import ar.com.draimo.jitws.dto.InitVehiculoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ConfiguracionVehiculo;
 import ar.com.draimo.jitws.model.Empresa;
@@ -54,6 +55,10 @@ public class VehiculoService {
     @Autowired
     IConfiguracionVehiculoDAO configuracionVehiculoDAO;
 
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+
     //Define DAO de pdf
     @Autowired
     IPdfDAO pdfDAO;
@@ -61,6 +66,17 @@ public class VehiculoService {
     //Define service de pdf
     @Autowired
     PdfService pdfService;
+
+    //Obtiene la lista completa
+    public InitVehiculoDTO inicializar(int rol, int subopcion) {
+        InitVehiculoDTO p = new InitVehiculoDTO();
+         p.setMarcaVehiculos(marcaVehiculoDAO.findAll());
+        p.setTipoVehiculos(tipoVehiculoDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
+        p.setEmpresas(empresaDAO.findAll());
+        return p;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

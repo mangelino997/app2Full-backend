@@ -1,8 +1,13 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IMesDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.dao.IPersonalFamiliarDAO;
+import ar.com.draimo.jitws.dao.ISexoDAO;
+import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
+import ar.com.draimo.jitws.dao.ITipoFamiliarDAO;
+import ar.com.draimo.jitws.dto.InitPersonalFamiliarDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Personal;
 import ar.com.draimo.jitws.model.PersonalFamiliar;
@@ -11,6 +16,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,6 +38,39 @@ public class PersonalFamiliarService {
     //Referencia al dao de personal
     @Autowired
     IPersonalDAO personalDAO;
+
+    //Referencia al dao de mes
+    @Autowired
+    IMesDAO mesDAO;
+
+    //Referencia al dao de sexo
+    @Autowired
+    ISexoDAO sexoDAO;
+
+    //Referencia al dao de tipo doc
+    @Autowired
+    ITipoDocumentoDAO tipoDocumentoDAO;
+
+    //Referencia al dao de tipo familiar
+    @Autowired
+    ITipoFamiliarDAO tipoFamiliarDAO;
+
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+
+    //Obtiene el siguiente id
+    public InitPersonalFamiliarDTO inicializar(int idRol, int idSubopcion) {
+        InitPersonalFamiliarDTO p = new InitPersonalFamiliarDTO();
+        p.setMeses(mesDAO.findAll());
+        p.setFecha(new Date(new java.util.Date().getTime()));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        p.setSexos(sexoDAO.findAll());
+        p.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        p.setTipoFamiliares(tipoFamiliarDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        return p;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

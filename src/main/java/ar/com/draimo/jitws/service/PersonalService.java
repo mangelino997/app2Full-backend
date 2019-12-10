@@ -2,11 +2,27 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Funcion;
+import ar.com.draimo.jitws.dao.IAfipActividadDAO;
+import ar.com.draimo.jitws.dao.IAfipCondicionDAO;
+import ar.com.draimo.jitws.dao.IAfipLocalidadDAO;
+import ar.com.draimo.jitws.dao.IAfipModContratacionDAO;
+import ar.com.draimo.jitws.dao.IAfipSiniestradoDAO;
+import ar.com.draimo.jitws.dao.IAfipSituacionDAO;
+import ar.com.draimo.jitws.dao.IAreaDAO;
+import ar.com.draimo.jitws.dao.ICategoriaDAO;
+import ar.com.draimo.jitws.dao.IEstadoCivilDAO;
 import ar.com.draimo.jitws.dao.IFotoDAO;
+import ar.com.draimo.jitws.dao.IObraSocialDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.dao.ISeguridadSocialDAO;
+import ar.com.draimo.jitws.dao.ISexoDAO;
+import ar.com.draimo.jitws.dao.ISindicatoDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
+import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dto.ChoferDTO;
 import ar.com.draimo.jitws.dto.PersonalDTO;
+import ar.com.draimo.jitws.dto.InitPersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
@@ -48,9 +64,102 @@ public class PersonalService {
     @Autowired
     IPdfDAO pdfDAO;
 
+    //Define la referencia afipActividadDAO
+    @Autowired
+    IAfipActividadDAO afipActividadDAO;
+
+    //Define la referencia afipCondicionDAO
+    @Autowired
+    IAfipCondicionDAO afipCondicionDAO;
+
+    //Define la referencia afipLocalidadDAO
+    @Autowired
+    IAfipLocalidadDAO afipLocalidadDAO;
+
+    //Define la referencia afipModContratacionDAO
+    @Autowired
+    IAfipModContratacionDAO afipModContratacionDAO;
+
+    //Define la referencia al dao de AfipSiniestrado
+    @Autowired
+    IAfipSiniestradoDAO afipSiniestradoDAO;
+
+    //Define la referencia al dao de AfipSituacion
+    @Autowired
+    IAfipSituacionDAO afipSituacionDAO;
+
+    //Define la referencia al dao de Area
+    @Autowired
+    IAreaDAO areaDAO;
+
+    //Define la referencia al dao de Categoria
+    @Autowired
+    ICategoriaDAO categoriaDAO;
+
+    //Define la referencia al dao de EstadoCivil
+    @Autowired
+    IEstadoCivilDAO estadoCivilDAO;
+
+    //Define la referencia obraSocialDAO
+    @Autowired
+    IObraSocialDAO obraSocialDAO;
+
+    //Define la referencia sexoDAO
+    @Autowired
+    ISexoDAO sexoDAO;
+
+    //Define la referencia seguridadDAO
+    @Autowired
+    ISeguridadSocialDAO seguridadSocialDAO;
+
+    //Define la referencia sindicatoDAO
+    @Autowired
+    ISindicatoDAO sindicatoDAO;
+
+    //Define la referencia al dao de sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
+
+    //Define la referencia tipoDocumentoDAO
+    @Autowired
+    ITipoDocumentoDAO tipoDocumentoDAO;
+
     //Define la referencia al service de pdf
     @Autowired
     PdfService pdfService;
+    
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Define el rol opcion service
+    @Autowired
+    RolOpcionService rolOpcionService;
+    
+    //Inicializa los datos
+    public InitPersonalDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
+        InitPersonalDTO p = new InitPersonalDTO();
+        p.setUltimoId(obtenerSiguienteId());
+        p.setAfipActividades(afipActividadDAO.findAll());
+        p.setAfipCondiciones(afipCondicionDAO.findAll());
+        p.setAfipLocalidades(afipLocalidadDAO.findAll());
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        p.setOpciones(rolOpcionService.listarPorRolYSubopcion(idRol, idSubopcion));
+        p.setAfipModContrataciones(afipModContratacionDAO.findAll());
+        p.setAfipSiniestrados(afipSiniestradoDAO.findAll());
+        p.setAfipSituacion(afipSituacionDAO.findAll());
+        p.setAreas(areaDAO.findAll());
+        p.setCategorias(categoriaDAO.findAll());
+        p.setEstadoCiviles(estadoCivilDAO.findAll());
+        p.setFecha(new Date(new java.util.Date().getTime()));
+        p.setObraSociales(obraSocialDAO.findAll());
+        p.setSeguridadSociales(seguridadSocialDAO.findAll());
+        p.setSexos(sexoDAO.findAll());
+        p.setSindicatos(sindicatoDAO.findAll());
+        p.setSucursales(sucursalDAO.findAll());
+        p.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        return p;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

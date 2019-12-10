@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitPuntoVentaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.service.PuntoVentaService;
@@ -42,6 +43,13 @@ public class PuntoVentaController {
     //Crea una instancia del servicio
     @Autowired
     PuntoVentaService elementoService;
+
+    //obtiene los listados para inicializar
+    @GetMapping(value = URL + "/inicializar/{rol}/{opcion}")
+    @ResponseBody
+    public InitPuntoVentaDTO inicializar(@PathVariable int rol, @PathVariable int opcion) {
+        return elementoService.inicializar(rol, opcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitCuentaBancariaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CuentaBancaria;
 import ar.com.draimo.jitws.service.CuentaBancariaService;
@@ -42,6 +43,13 @@ public class CuentaBancariaController {
     //Crea una instancia del servicio
     @Autowired
     CuentaBancariaService elementoService;
+
+    //Obtiene listado necesarios para inicializar componente(front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
+    @ResponseBody
+    public InitCuentaBancariaDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
+        return elementoService.inicializar(idRol, idOpcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

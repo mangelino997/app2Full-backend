@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitVehiculoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Vehiculo;
 import ar.com.draimo.jitws.service.VehiculoService;
@@ -43,6 +44,13 @@ public class VehiculoController {
     //Crea una instancia del servicio
     @Autowired
     VehiculoService elementoService;
+
+    //Obtiene la lista completa
+    @GetMapping(value = URL + "/inicializar/{rol}/{subopcion}")
+    @ResponseBody
+    public InitVehiculoDTO inicializar(@PathVariable int rol, @PathVariable int subopcion) {
+        return elementoService.inicializar(rol, subopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

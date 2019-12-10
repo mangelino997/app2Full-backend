@@ -1,18 +1,24 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipAlicuotaIvaDAO;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IEmpresaOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
+import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.dao.IPuntoVentaDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemCRDAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemFADAO;
 import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
+import ar.com.draimo.jitws.dao.IVentaTipoItemDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteRemitoDAO;
+import ar.com.draimo.jitws.dto.InitFacturaDTO;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
@@ -57,6 +63,10 @@ public class VentaComprobanteService {
     @Autowired
     IVentaComprobanteItemNCDAO ventaComprobanteItemNCDAO;
 
+    //Define la referencia a VentaTipoitem
+    @Autowired
+    IVentaTipoItemDAO ventaTipoItemDAO;
+
     //Define la referancia a ViajeRemitoDAO
     @Autowired
     IViajeRemitoDAO viajeRemitoDAO;
@@ -73,9 +83,17 @@ public class VentaComprobanteService {
     @Autowired
     IMonedaDAO monedaDAO;
 
+    //Define la referancia a alicuotaIva
+    @Autowired
+    IAfipAlicuotaIvaDAO afipAlicuotaIvaDAO;
+
     //Define la referancia a PuntoVentaDAO
     @Autowired
     IPuntoVentaDAO puntoVentaDAO;
+
+    //Define la referancia a provinciaDAO
+    @Autowired
+    IProvinciaDAO provinciaDAO;
 
     //Define la referancia a ClienteDAO
     @Autowired
@@ -85,9 +103,43 @@ public class VentaComprobanteService {
     @Autowired
     IEmpresaDAO empresaDAO;
 
+    //Define la referancia a sucursalDAO
+    @Autowired
+    ISucursalDAO sucursalDAO;
+
+    //Define la referancia a EmpresaOrdenVentaDAO
+    @Autowired
+    IEmpresaOrdenVentaDAO empresaOrdenVentaDAO;
+
     //Define la referancia a ordenVentaTarifaDAO
     @Autowired
     IOrdenVentaTarifaDAO ordenVentaTarifaDAO;
+
+    //Obtiene el listado de elementos necesarios para inicializar el componente
+    public InitFacturaDTO inicializarFactura(int idEmpresa, int idSucursal) {
+        InitFacturaDTO p = new InitFacturaDTO();
+        p.setAfipAlicuotaIvas(afipAlicuotaIvaDAO.findByEstaActivaTrue());
+        p.setEmpresaOrdenVentas(empresaOrdenVentaDAO.findAll());
+        p.setPuntoVentas(puntoVentaDAO.findByEmpresaAndSucursalAndFeTrueAndEstaHabilitadoTrue(
+                empresaDAO.findById(idEmpresa).get(), sucursalDAO.findById(idSucursal).get()));
+        p.setTipoComprobantes(tipoComprobanteDAO.listarParaFactura());
+        p.setUltimoId(obtenerSiguienteId());
+        p.setVentaTipoItems(ventaTipoItemDAO.findByTipoComprobante(tipoComprobanteDAO.findById(1)));
+        return p;
+    }
+
+    //Obtiene el listado de elementos necesarios para inicializar el componente
+    public InitFacturaDTO inicializarNotaCredito(int idEmpresa, int idSucursal) {
+        InitFacturaDTO p = new InitFacturaDTO();
+        p.setAfipAlicuotaIvas(afipAlicuotaIvaDAO.findByEstaActivaTrue());
+        p.setProvincias(provinciaDAO.findAll());
+        p.setPuntoVentas(puntoVentaDAO.findByEmpresaAndSucursalAndFeTrueAndEstaHabilitadoTrue(
+                empresaDAO.findById(idEmpresa).get(), sucursalDAO.findById(idSucursal).get()));
+        p.setTipoComprobantes(tipoComprobanteDAO.listarParaNotaCredito());
+        p.setUltimoId(obtenerSiguienteId());
+        p.setVentaTipoItems(ventaTipoItemDAO.findByTipoComprobante(tipoComprobanteDAO.findById(3)));
+        return p;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

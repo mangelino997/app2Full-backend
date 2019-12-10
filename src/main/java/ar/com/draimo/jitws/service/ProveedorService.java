@@ -1,11 +1,16 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
+import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.dao.ITipoCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
+import ar.com.draimo.jitws.dao.ITipoProveedorDAO;
 import ar.com.draimo.jitws.dto.ProveedorDTO;
+import ar.com.draimo.jitws.dto.InitProveedorDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
@@ -45,7 +50,47 @@ public class ProveedorService {
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Define la referencia al dao afipCondicionIvaDAO
+    @Autowired
+    IAfipCondicionIvaDAO afipCondicionIvaDAO;
+    
+    //Define la referencia al dao condicionCompraDAO
+    @Autowired
+    ICondicionCompraDAO condicionCompraDAO;
+    
+    //Define la referencia al dao tipoCuentaBancariaDAO
+    @Autowired
+    ITipoCuentaBancariaDAO tipoCuentaBancariaDAO;
+    
+    //Define la referencia al dao tipoProveedorDAO
+    @Autowired
+    ITipoProveedorDAO tipoProveedorDAO;
+    
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Define el rol opcion service
+    @Autowired
+    RolOpcionService rolOpcionService;
 
+    //Obtiene la lista para inicializar
+    public InitProveedorDTO inicializar(int rol, int opcion, int usuario) {
+        InitProveedorDTO p = new InitProveedorDTO();
+        p.setAfipCondicionesIva(afipCondicionIvaDAO.findAll());
+        p.setCondicionCompras(condicionCompraDAO.findAll());
+        p.setEmpresas(empresaDAO.listarPorUsuarioYMostrarTrue(usuario));
+        p.setFecha(new Date(new java.util.Date().getTime()));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, opcion));
+        p.setOpciones(rolOpcionService.listarPorRolYSubopcion(rol, opcion));
+        p.setTipoCuentaBancarias(tipoCuentaBancariaDAO.findAll());
+        p.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        p.setTipoProveedores(tipoProveedorDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        return p;
+    }
+    
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Proveedor elemento = elementoDAO.findTopByOrderByIdDesc();
