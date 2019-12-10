@@ -21,8 +21,8 @@ import ar.com.draimo.jitws.dao.ISindicatoDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dto.ChoferDTO;
-import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.dto.InitPersonalDTO;
+import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
@@ -42,7 +42,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Servicio Personal
- *
  * @author blas
  */
 @Service

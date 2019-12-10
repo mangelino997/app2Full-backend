@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.ChoferDTO;
+import ar.com.draimo.jitws.dto.InitPersonalDTO;
 import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Personal;
@@ -48,12 +49,12 @@ public class PersonalController {
     PersonalService elementoService;
 
     //Obtiene las listas para inicializar
-    @GetMapping(value = URL + "/inicializar/{usuario}/{rol}/{opcion}")
+    @GetMapping(value = URL + "/inicializar/{usuario}/{rol}/{subopcion}")
     @ResponseBody
-    public Object inicializar(@PathVariable int usuario, @PathVariable int rol, @PathVariable int opcion) {
-        return elementoService.inicializar(usuario, rol, opcion);
+    public InitPersonalDTO inicializar(@PathVariable int usuario, @PathVariable int rol, @PathVariable int subopcion) {
+        return elementoService.inicializar(usuario, rol, subopcion);
     }
-    
+
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
     @ResponseBody
@@ -162,7 +163,7 @@ public class PersonalController {
     public Object listarPorFiltros(@RequestBody ChoferDTO elemento) throws IOException, Exception {
         return elementoService.listarChoferesPorFiltros(elemento);
     }
-    
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestPart("personal") String elementoString,
