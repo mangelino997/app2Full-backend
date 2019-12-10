@@ -45,11 +45,11 @@ public class ProveedorController {
     @Autowired
     ProveedorService elementoService;
 
-    //Obtiene la lista completa
-    @GetMapping(value = URL + "/inicializar/{usuario}/{rol}/{opcion}")
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{usuario}/{rol}/{subopcion}")
     @ResponseBody
-    public InitProveedorDTO inicializar(@PathVariable int usuario, @PathVariable int rol, @PathVariable int opcion) {
-        return elementoService.inicializar(rol, opcion, usuario);
+    public InitProveedorDTO inicializar(@PathVariable int usuario, @PathVariable int rol, @PathVariable int subopcion) {
+        return elementoService.inicializar(rol, subopcion, usuario);
     }
 
     //Obtiene el siguiente id

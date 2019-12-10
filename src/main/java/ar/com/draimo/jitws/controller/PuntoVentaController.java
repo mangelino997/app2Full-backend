@@ -45,10 +45,10 @@ public class PuntoVentaController {
     PuntoVentaService elementoService;
 
     //obtiene los listados para inicializar
-    @GetMapping(value = URL + "/inicializar/{rol}/{opcion}")
+    @GetMapping(value = URL + "/inicializar/{rol}/{subopcion}")
     @ResponseBody
-    public InitPuntoVentaDTO inicializar(@PathVariable int rol, @PathVariable int opcion) {
-        return elementoService.inicializar(rol, opcion);
+    public InitPuntoVentaDTO inicializar(@PathVariable int rol, @PathVariable int subopcion) {
+        return elementoService.inicializar(rol, subopcion);
     }
 
     //Obtiene el siguiente id

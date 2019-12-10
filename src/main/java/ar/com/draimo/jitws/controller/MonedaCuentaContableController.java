@@ -45,11 +45,11 @@ public class MonedaCuentaContableController {
     @Autowired
     MonedaCuentaContableService elementoService;
 
-    //Obtiene el siguiente id
-    @GetMapping(value = URL + "/inicializar/{idEmpresa}/{idRol}/{idOpcion}")
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idEmpresa}/{idRol}/{idSubopcion}")
     @ResponseBody
-    public InitMonedaCuentaContableDTO inicializar(@PathVariable int idEmpresa, @PathVariable int idRol, @PathVariable int idOpcion) {
-        return elementoService.inicializar(idEmpresa, idRol, idOpcion);
+    public InitMonedaCuentaContableDTO inicializar(@PathVariable int idEmpresa, @PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idEmpresa, idRol, idSubopcion);
     }
 
     //Obtiene el siguiente id

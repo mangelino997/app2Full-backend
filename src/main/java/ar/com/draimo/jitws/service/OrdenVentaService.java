@@ -7,12 +7,12 @@ import ar.com.draimo.jitws.dao.IOrdenVentaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaEscalaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTarifaDAO;
 import ar.com.draimo.jitws.dao.IOrdenVentaTramoDAO;
+import ar.com.draimo.jitws.dao.IVendedorDAO;
+import ar.com.draimo.jitws.dto.InitOrdenVentaDTO;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
-import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVenta;
 import ar.com.draimo.jitws.model.OrdenVentaTarifa;
-import ar.com.draimo.jitws.model.TipoTarifa;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
@@ -56,6 +56,23 @@ public class OrdenVentaService {
     //Define la referencia al dao OrdenVentaTarifa
     @Autowired
     IOrdenVentaTarifaDAO ordenVentaTarifaDAO;
+
+    //Define la referencia al dao vendedor
+    @Autowired
+    IVendedorDAO vendedorDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitOrdenVentaDTO inicializar(int idRol, int idSubopcion) {
+        InitOrdenVentaDTO elemento = new InitOrdenVentaDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setVendedores(vendedorDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

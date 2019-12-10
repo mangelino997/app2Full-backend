@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.dto;
 
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Pestania;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -12,6 +13,9 @@ public class InitCompaniaSeguroPolizaDTO {
     
     //Define el ultimo id
     private int ultimoId;
+    
+    //Define la fecha
+    private Date fecha;
     
     //Lista de rubros
     private List<Pestania> pestanias;
@@ -27,6 +31,14 @@ public class InitCompaniaSeguroPolizaDTO {
 
     public void setUltimoId(int ultimoId) {
         this.ultimoId = ultimoId;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public List<Pestania> getPestanias() {

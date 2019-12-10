@@ -1,13 +1,19 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipAlicuotaIvaDAO;
+import ar.com.draimo.jitws.dao.IAfipComprobanteDAO;
 import ar.com.draimo.jitws.dao.ICompraComprobanteDAO;
 import ar.com.draimo.jitws.dao.ICompraComprobanteItemDAO;
 import ar.com.draimo.jitws.dao.ICompraComprobantePercepcionDAO;
 import ar.com.draimo.jitws.dao.ICompraComprobanteVencimientoDAO;
 import ar.com.draimo.jitws.dao.ICompraCptePercepcionJurisdDAO;
+import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
+import ar.com.draimo.jitws.dao.IDepositoInsumoProductoDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.dto.InitCompraComprobanteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobante;
 import ar.com.draimo.jitws.model.CompraComprobanteItem;
@@ -56,6 +62,26 @@ public class CompraComprobanteService {
     //Referencia al dao de CompraCtePercepcionJurisd
     @Autowired
     ICompraCptePercepcionJurisdDAO jurisdiccionDAO;
+
+    //Define la referancia a tipoComprobanteDAO
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
+
+    //Define la referancia a alicuotaIva
+    @Autowired
+    IAfipAlicuotaIvaDAO afipAlicuotaIvaDAO;
+
+    //Define la referancia a alicuotaIva
+    @Autowired
+    IAfipComprobanteDAO afipComprobanteDAO;
+
+    //Define la referancia a condicionCompra
+    @Autowired
+    ICondicionCompraDAO condicionCompraDAO;
+
+    //Define la referancia a depositoInsumoProducto
+    @Autowired
+    IDepositoInsumoProductoDAO depositoInsumoProductoDAO;
     
     //Referencia al DAO de moneda
     @Autowired
@@ -64,6 +90,24 @@ public class CompraComprobanteService {
     //Referencia al DAO de proveedor
     @Autowired
     IProveedorDAO proveedorDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitCompraComprobanteDTO inicializar(int idRol, int idSubopcion) {
+        InitCompraComprobanteDTO p = new InitCompraComprobanteDTO();
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        p.setAfipAlicuotaIvas(afipAlicuotaIvaDAO.findByEstaActivaTrue());
+        p.setTipoComprobantes(tipoComprobanteDAO.listarParaFactura());
+        p.setTipoComprobantes(tipoComprobanteDAO.listarParaFactura());
+        p.setCondicionCompras(condicionCompraDAO.findAll());
+        p.setDepositoInsumoProductos(depositoInsumoProductoDAO.findAll());
+        p.setLetras(afipComprobanteDAO.listarLetras(0));
+        p.setUltimoId(obtenerSiguienteId());
+        return p;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

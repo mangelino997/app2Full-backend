@@ -25,10 +25,10 @@ public class PaisService {
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
     
-    //Obtiene el siguiente id
-    public GenericoDTO inicializar(int idRol, int idOpcion) {
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public GenericoDTO inicializar(int idRol, int idSubopcion) {
         GenericoDTO elemento = new GenericoDTO();
-        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }

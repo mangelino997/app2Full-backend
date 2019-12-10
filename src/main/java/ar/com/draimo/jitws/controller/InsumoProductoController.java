@@ -46,10 +46,10 @@ public class InsumoProductoController {
     InsumoProductoService elementoService;
 
     //Obtiene un listado de elementos necesarios para inicializar el componente
-    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubpcion}")
     @ResponseBody
-    public InitProductoDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
-        return elementoService.inicializar(idRol, idOpcion);
+    public InitProductoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubpcion) {
+        return elementoService.inicializar(idRol, idSubpcion);
     }
 
     //Obtiene el siguiente id

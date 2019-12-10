@@ -46,10 +46,10 @@ public class PersonalFamiliarController {
     PersonalFamiliarService elementoService;
 
     //Obtiene listados necesarios para inicializar componente (front)
-    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
     @ResponseBody
-    public InitPersonalFamiliarDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
-        return elementoService.inicializar(idRol, idOpcion);
+    public InitPersonalFamiliarDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
     }
 
     //Obtiene el siguiente id

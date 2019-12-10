@@ -49,9 +49,9 @@ public class ChoferProveedorService {
     SubopcionPestaniaService subopcionPestaniaService;
     
     //Obtiene el siguiente id
-    public InitChoferProveedorDTO inicializar(int idRol, int idOpcion) {
+    public InitChoferProveedorDTO inicializar(int idRol, int idSubopcion) {
         InitChoferProveedorDTO elemento = new InitChoferProveedorDTO();
-        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setUltimoId(obtenerSiguienteId());
         elemento.setTipoDocumentos(tipoDocumentoDAO.findAll());
         return elemento;

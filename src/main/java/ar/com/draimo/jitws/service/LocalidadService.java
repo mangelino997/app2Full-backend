@@ -30,10 +30,10 @@ public class LocalidadService {
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
     
-    //Obtiene el siguiente id
-    public InitLocalidadDTO inicializar(int idRol, int idOpcion) {
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitLocalidadDTO inicializar(int idRol, int idSubopcion) {
         InitLocalidadDTO elemento = new InitLocalidadDTO();
-        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setProvincias(provinciaDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;

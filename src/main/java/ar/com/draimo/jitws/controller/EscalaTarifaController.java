@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitEscalaTarifaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.EscalaTarifa;
 import ar.com.draimo.jitws.service.EscalaTarifaService;
@@ -42,6 +43,13 @@ public class EscalaTarifaController {
     //Crea una instancia del servicio
     @Autowired
     EscalaTarifaService elementoService;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar")
+    @ResponseBody
+    public InitEscalaTarifaDTO inicializar() {
+        return elementoService.inicializar();
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

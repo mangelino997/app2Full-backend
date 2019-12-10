@@ -41,12 +41,12 @@ public class CuentaBancariaService {
     SubopcionPestaniaService subopcionPestaniaService;
 
     //Obtiene los listados necesarios para inicializar el componente
-    public InitCuentaBancariaDTO inicializar(int idRol, int idOpcion) {
+    public InitCuentaBancariaDTO inicializar(int idRol, int idSubopcion) {
         InitCuentaBancariaDTO p = new InitCuentaBancariaDTO();
         p.setMonedas(monedaDAO.findAll());
         p.setTipoCuentaBancarias(tipoCuentaBancariaDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
-        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         return p;
     }
 

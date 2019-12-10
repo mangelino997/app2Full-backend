@@ -4,6 +4,8 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.ICobradorDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITalonarioReciboDAO;
+import ar.com.draimo.jitws.dao.ITalonarioReciboLoteDAO;
+import ar.com.draimo.jitws.dto.InitTalonarioReciboDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TalonarioRecibo;
 import java.sql.Date;
@@ -24,6 +26,10 @@ public class TalonarioReciboService {
     @Autowired
     ITalonarioReciboDAO elementoDAO;
 
+    //Define la referencia al talonarioReciboLoteDAO 
+    @Autowired
+    ITalonarioReciboLoteDAO talonarioReciboLoteDAO;
+
     //Define la referencia al DAO de Cobrador 
     @Autowired
     ICobradorDAO cobradorDAO;
@@ -31,6 +37,21 @@ public class TalonarioReciboService {
     //Define la referencia al DAO de Empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitTalonarioReciboDTO inicializar(int idEmpresa, int idRol, int idSubopcion) {
+        InitTalonarioReciboDTO elemento = new InitTalonarioReciboDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setTalonarioReciboLotes(talonarioReciboLoteDAO.findByEmpresaAndLoteEntregadoFalse(
+                empresaDAO.findById(idEmpresa).get()));
+        elemento.setCobradores(cobradorDAO.findByEstaActivoTrueOrderByNombreAsc());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

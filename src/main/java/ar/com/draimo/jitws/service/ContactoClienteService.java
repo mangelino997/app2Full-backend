@@ -43,9 +43,9 @@ public class ContactoClienteService {
     SubopcionPestaniaService subopcionPestaniaService;
     
     //Obtiene listas necesarias para inicializar el componente (front)
-    public InitContactoGenericoDTO inicializar(int rol, int opcion) {
+    public InitContactoGenericoDTO inicializar(int rol, int subopcion) {
         InitContactoGenericoDTO p = new InitContactoGenericoDTO();
-        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, opcion));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
         p.setTipoContactos(tipoContactoDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
         return p;

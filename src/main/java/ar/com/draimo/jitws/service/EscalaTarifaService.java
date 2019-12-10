@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEscalaTarifaDAO;
+import ar.com.draimo.jitws.dto.InitEscalaTarifaDTO;
 import ar.com.draimo.jitws.model.EscalaTarifa;
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +21,14 @@ public class EscalaTarifaService {
     //Define la referencia al dao
     @Autowired
     IEscalaTarifaDAO elementoDAO;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitEscalaTarifaDTO inicializar() {
+        InitEscalaTarifaDTO elemento = new InitEscalaTarifaDTO();
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setEscalaTarifas(elementoDAO.findAll());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

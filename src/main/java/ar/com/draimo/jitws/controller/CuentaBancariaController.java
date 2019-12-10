@@ -45,10 +45,10 @@ public class CuentaBancariaController {
     CuentaBancariaService elementoService;
 
     //Obtiene listado necesarios para inicializar componente(front)
-    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
     @ResponseBody
-    public InitCuentaBancariaDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
-        return elementoService.inicializar(idRol, idOpcion);
+    public InitCuentaBancariaDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
     }
 
     //Obtiene el siguiente id

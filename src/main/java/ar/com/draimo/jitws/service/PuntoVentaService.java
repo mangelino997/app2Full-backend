@@ -53,12 +53,12 @@ public class PuntoVentaService {
     SubopcionPestaniaService subopcionPestaniaService;
 
     //Obtiene la lista completa
-    public InitPuntoVentaDTO inicializar(int rol, int opcion) {
+    public InitPuntoVentaDTO inicializar(int rol, int subopcion) {
         InitPuntoVentaDTO p = new InitPuntoVentaDTO();
         p.setEmpresas(empresaDAO.findAll());
         p.setSucursales(sucursalDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
-        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, opcion));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
         p.setTipoComprobantes(tipoComprobanteDAO.findByNumeracionPuntoVentaTrue());
         return p;
     }

@@ -45,11 +45,11 @@ public class CobradorController {
     @Autowired
     CobradorService elementoService;
 
-    //Obtiene el siguiente id
-    @GetMapping(value = URL + "/inicializar")
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
     @ResponseBody
-    public GenericoDTO inicializar() {
-        return elementoService.inicializar();
+    public GenericoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
     }
 
     //Obtiene el siguiente id

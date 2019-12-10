@@ -26,9 +26,9 @@ public class AfipCondicionIvaService {
     SubopcionPestaniaService subopcionPestaniaService;
     
     //Obtiene el siguiente id
-    public GenericoDTO inicializar(int idRol, int idOpcion) {
+    public GenericoDTO inicializar(int idRol, int idSubpcion) {
         GenericoDTO elemento = new GenericoDTO();
-        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubpcion));
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }

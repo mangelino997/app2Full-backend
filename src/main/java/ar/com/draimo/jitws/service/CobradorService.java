@@ -24,9 +24,14 @@ public class CobradorService {
     @Autowired
     ICobradorDAO elementoDAO;
     
-    //Obtiene el siguiente id
-    public GenericoDTO inicializar() {
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)s
+    public GenericoDTO inicializar(int idRol, int idSubopcion) {
         GenericoDTO elemento = new GenericoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }

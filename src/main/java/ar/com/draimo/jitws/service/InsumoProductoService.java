@@ -49,14 +49,14 @@ public class InsumoProductoService {
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
     
-    //Obtiene el siguiente id
-    public InitProductoDTO inicializar(int idRol, int idOpcion) {
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitProductoDTO inicializar(int idRol, int idSubopcion) {
         InitProductoDTO p = new InitProductoDTO();
         p.setMarcaProductos(marcaProductoDAO.findAll());
         p.setRubroProductos(rubroProductoDAO.findAll());
         p.setUnidadMedidas(unidadMedidaDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
-        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         return p;
     }
     

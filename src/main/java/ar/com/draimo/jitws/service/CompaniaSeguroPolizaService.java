@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,10 +53,11 @@ public class CompaniaSeguroPolizaService {
     SubopcionPestaniaService subopcionPestaniaService;
     
     //Obtiene el siguiente id
-    public InitCompaniaSeguroPolizaDTO inicializar(int idRol, int idOpcion) {
+    public InitCompaniaSeguroPolizaDTO inicializar(int idRol, int idSubpcion) {
         InitCompaniaSeguroPolizaDTO elemento = new InitCompaniaSeguroPolizaDTO();
-        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubpcion));
         elemento.setEmpresas(empresaDAO.findAll());
+        elemento.setFecha(new Date(new java.util.Date().getTime()));
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }

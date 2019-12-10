@@ -45,11 +45,11 @@ public class CompaniaSeguroPolizaController {
     @Autowired
     CompaniaSeguroPolizaService elementoService;
 
-    //Obtiene el siguiente id
-    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
     @ResponseBody
-    public InitCompaniaSeguroPolizaDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
-        return elementoService.inicializar(idRol, idOpcion);
+    public InitCompaniaSeguroPolizaDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
     }
 
     //Obtiene el siguiente id

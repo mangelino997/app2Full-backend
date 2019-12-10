@@ -42,10 +42,10 @@ public class MonedaCuentaContableService {
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
     
-    //Obtiene el siguiente id
-    public InitMonedaCuentaContableDTO inicializar(int idEmpresa, int idRol, int idOpcion) {
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitMonedaCuentaContableDTO inicializar(int idEmpresa, int idRol, int idSubopcion) {
         InitMonedaCuentaContableDTO elemento = new InitMonedaCuentaContableDTO();
-        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setMonedas(monedaDAO.findAll());
         elemento.setMonedaCuentaContables(elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get()));
         elemento.setUltimoId(obtenerSiguienteId());
