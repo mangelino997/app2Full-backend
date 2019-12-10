@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.dao.IPaisDAO;
+import ar.com.draimo.jitws.dto.InitProvinciaDTO;
 import ar.com.draimo.jitws.model.Provincia;
 import ar.com.draimo.jitws.model.Pais;
 import java.util.List;
@@ -25,6 +26,19 @@ public class ProvinciaService {
     //Define la referencia al dao pais
     @Autowired
     IPaisDAO paisDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public InitProvinciaDTO inicializar(int idRol, int idOpcion) {
+        InitProvinciaDTO elemento = new InitProvinciaDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setPaises(paisDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

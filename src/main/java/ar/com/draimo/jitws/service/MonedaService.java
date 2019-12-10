@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IMonedaDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Moneda;
 import java.util.List;
@@ -21,6 +22,18 @@ public class MonedaService {
     //Define la referencia al dao
     @Autowired
     IMonedaDAO elementoDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public GenericoDTO inicializar(int idRol, int idOpcion) {
+        GenericoDTO elemento = new GenericoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

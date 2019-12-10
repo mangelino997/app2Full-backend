@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitMonedaCotizacionDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.MonedaCotizacion;
 import ar.com.draimo.jitws.service.MonedaCotizacionService;
@@ -42,6 +43,13 @@ public class MonedaCotizacionController {
     //Crea una instancia del servicio
     @Autowired
     MonedaCotizacionService elementoService;
+
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/inicializar")
+    @ResponseBody
+    public InitMonedaCotizacionDTO inicializar() {
+        return elementoService.inicializar();
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

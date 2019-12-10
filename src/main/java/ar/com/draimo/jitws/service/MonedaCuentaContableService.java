@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMonedaCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
+import ar.com.draimo.jitws.dto.InitMonedaCuentaContableDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.MonedaCuentaContable;
@@ -36,6 +37,20 @@ public class MonedaCuentaContableService {
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public InitMonedaCuentaContableDTO inicializar(int idEmpresa, int idRol, int idOpcion) {
+        InitMonedaCuentaContableDTO elemento = new InitMonedaCuentaContableDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setMonedas(monedaDAO.findAll());
+        elemento.setMonedaCuentaContables(elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get()));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IConfiguracionVehiculoDAO;
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
 import ar.com.draimo.jitws.dao.ITipoVehiculoDAO;
+import ar.com.draimo.jitws.dto.InitConfiguracionVehiculoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ConfiguracionVehiculo;
 import ar.com.draimo.jitws.model.MarcaVehiculo;
@@ -34,6 +35,20 @@ public class ConfiguracionVehiculoService {
     //Define la referencia a marca vehiculo dao
     @Autowired
     IMarcaVehiculoDAO marcaVehiculoDAO;
+
+    //Define la subopcion pestania service
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+
+    //Obtiene la lista completa
+    public InitConfiguracionVehiculoDTO inicializar(int rol, int subopcion) {
+        InitConfiguracionVehiculoDTO p = new InitConfiguracionVehiculoDTO();
+         p.setMarcaVehiculos(marcaVehiculoDAO.findAll());
+        p.setTipoVehiculos(tipoVehiculoDAO.findAll());
+        p.setUltimoId(obtenerSiguienteId());
+        p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
+        return p;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

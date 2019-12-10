@@ -3,7 +3,9 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IMonedaCotizacionDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
+import ar.com.draimo.jitws.dto.InitMonedaCotizacionDTO;
 import ar.com.draimo.jitws.model.MonedaCotizacion;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,15 @@ public class MonedaCotizacionService {
     //Define la referencia al dao moneda
     @Autowired
     IMonedaDAO monedaDAO;
+    
+    //Obtiene el siguiente id
+    public InitMonedaCotizacionDTO inicializar() {
+        InitMonedaCotizacionDTO elemento = new InitMonedaCotizacionDTO();
+        elemento.setMonedas(monedaDAO.findAll());
+        elemento.setFecha(new Date(new java.util.Date().getTime()));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

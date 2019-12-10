@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ILocalidadDAO;
 import ar.com.draimo.jitws.dao.IProvinciaDAO;
+import ar.com.draimo.jitws.dto.InitLocalidadDTO;
 import ar.com.draimo.jitws.model.Localidad;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,19 @@ public class LocalidadService {
     //Define la referencia al dao provincia
     @Autowired
     IProvinciaDAO provinciaDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public InitLocalidadDTO inicializar(int idRol, int idOpcion) {
+        InitLocalidadDTO elemento = new InitLocalidadDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setProvincias(provinciaDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitLocalidadDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Localidad;
 import ar.com.draimo.jitws.service.LocalidadService;
@@ -42,6 +43,13 @@ public class LocalidadController {
     //Crea una instancia del servicio
     @Autowired
     LocalidadService elementoService;
+
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idOpcion}")
+    @ResponseBody
+    public InitLocalidadDTO inicializar(@PathVariable int idRol, @PathVariable int idOpcion) {
+        return elementoService.inicializar(idRol, idOpcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

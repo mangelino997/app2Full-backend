@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ICobradorDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cobrador;
 import java.sql.Date;
@@ -22,6 +23,13 @@ public class CobradorService {
     //Define la referencia al dao
     @Autowired
     ICobradorDAO elementoDAO;
+    
+    //Obtiene el siguiente id
+    public GenericoDTO inicializar() {
+        GenericoDTO elemento = new GenericoDTO();
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

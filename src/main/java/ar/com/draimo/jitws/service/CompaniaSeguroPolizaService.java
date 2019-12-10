@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.draimo.jitws.dao.ICompaniaSeguroPolizaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
+import ar.com.draimo.jitws.dto.InitCompaniaSeguroPolizaDTO;
 import ar.com.draimo.jitws.model.CompaniaSeguroPoliza;
 import ar.com.draimo.jitws.model.Pdf;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +46,19 @@ public class CompaniaSeguroPolizaService {
     //Define la referencia al service pdf
     @Autowired
     PdfService pdfService;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public InitCompaniaSeguroPolizaDTO inicializar(int idRol, int idOpcion) {
+        InitCompaniaSeguroPolizaDTO elemento = new InitCompaniaSeguroPolizaDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setEmpresas(empresaDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

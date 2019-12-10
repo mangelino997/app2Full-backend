@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 
 /**
  * Servicio Afip Condicion Iva
@@ -19,6 +20,18 @@ public class AfipCondicionIvaService {
     //Define la referencia al dao
     @Autowired
     IAfipCondicionIvaDAO elementoDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene el siguiente id
+    public GenericoDTO inicializar(int idRol, int idOpcion) {
+        GenericoDTO elemento = new GenericoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idOpcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

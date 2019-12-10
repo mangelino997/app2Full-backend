@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cobrador;
 import ar.com.draimo.jitws.service.CobradorService;
@@ -43,6 +44,13 @@ public class CobradorController {
     //Crea una instancia del servicio
     @Autowired
     CobradorService elementoService;
+
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/inicializar")
+    @ResponseBody
+    public GenericoDTO inicializar() {
+        return elementoService.inicializar();
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

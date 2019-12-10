@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitMonedaCuentaContableDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.MonedaCuentaContable;
 import ar.com.draimo.jitws.service.MonedaCuentaContableService;
@@ -43,6 +44,13 @@ public class MonedaCuentaContableController {
     //Crea una instancia del servicio
     @Autowired
     MonedaCuentaContableService elementoService;
+
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/inicializar/{idEmpresa}/{idRol}/{idOpcion}")
+    @ResponseBody
+    public InitMonedaCuentaContableDTO inicializar(@PathVariable int idEmpresa, @PathVariable int idRol, @PathVariable int idOpcion) {
+        return elementoService.inicializar(idEmpresa, idRol, idOpcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
