@@ -2,11 +2,13 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBasicoCategoriaDAO;
+import ar.com.draimo.jitws.dao.ICategoriaDAO;
 import ar.com.draimo.jitws.dao.IPersonalAdelantoDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
+import ar.com.draimo.jitws.dto.InitPersonalAdelantoDTO;
 import ar.com.draimo.jitws.dto.PersonalAdelantoLoteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.BasicoCategoria;
@@ -59,9 +61,27 @@ public class PersonalAdelantoService {
     @Autowired
     IBasicoCategoriaDAO basicoCategoriaDAO;
 
+    //Referencia al DAO de Categoria
+    @Autowired
+    ICategoriaDAO categoriaDAO;
+
     //Referencia al DAO de TipoComprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitPersonalAdelantoDTO inicializar(int idRol, int idSubopcion) {
+        InitPersonalAdelantoDTO elemento = new InitPersonalAdelantoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setCategorias(categoriaDAO.findAll());
+        elemento.setSucursales(sucursalDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

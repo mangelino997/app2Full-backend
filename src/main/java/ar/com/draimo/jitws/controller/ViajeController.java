@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitViajeDTO;
 import ar.com.draimo.jitws.dto.ViajeFiltroDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Viaje;
@@ -43,6 +44,13 @@ public class ViajeController {
     //Crea una instancia del servicio
     @Autowired
     ViajeService elementoService;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public InitViajeDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

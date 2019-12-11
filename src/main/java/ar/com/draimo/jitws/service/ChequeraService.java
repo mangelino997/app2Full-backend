@@ -4,6 +4,9 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IChequeraDAO;
 import ar.com.draimo.jitws.dao.ICuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.ITipoChequeraDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitChequeraDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Chequera;
 import java.sql.Date;
@@ -31,6 +34,26 @@ public class ChequeraService {
     //Define la referencia al DAO de empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+    
+    //Define la referencia al DAO de empresa
+    @Autowired
+    ITipoChequeraDAO tipoChequeraDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitChequeraDTO inicializar(int idEmpresa, int idRol, int idSubopcion) {
+        InitChequeraDTO elemento = new InitChequeraDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setTipoChequeras(tipoChequeraDAO.findAll());
+        elemento.setCuentaBancariaConCheques(cuentaBancariaDAO.listarConChequerasPorEmpresa(idEmpresa));
+        elemento.setCuentaBancariaConsultas(cuentaBancariaDAO.listarPorEmpresa(idEmpresa));
+        elemento.setChequeras(elementoDAO.listarPorEmpresa(idEmpresa));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

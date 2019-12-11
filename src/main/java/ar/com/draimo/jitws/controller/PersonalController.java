@@ -92,6 +92,13 @@ public class PersonalController {
         return elementoService.listarChoferesPorAliasOrdenadoPorNombre("*", idEmpresa);
     }
 
+    //Obtiene la lista de choferespor empresa
+    @GetMapping(value = URL + "/listarChoferesPorAliasYEmpresa/{alias}/{idEmpresa}")
+    @ResponseBody
+    public Object listarChoferesPorAliasYEmpresa(@PathVariable String alias, @PathVariable int idEmpresa) throws IOException, Exception {
+        return elementoService.listarChoferesPorAliasOrdenadoPorNombre(alias, idEmpresa);
+    }
+
     //Obtiene la lista completa
     @GetMapping(value = URL + "/listarAcompaniantesPorAlias/{alias}")
     @ResponseBody

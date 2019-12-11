@@ -1,7 +1,12 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IAfipDeduccionPersonalDAO;
+import ar.com.draimo.jitws.dao.IAfipTipoBeneficioDeduccionDAO;
+import ar.com.draimo.jitws.dao.IMesDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitDeduccionPersonalTablaDTO;
 import ar.com.draimo.jitws.model.AfipDeduccionPersonal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,38 @@ public class AfipDeduccionPersonalService {
     //Define la referencia al dao
     @Autowired
     IAfipDeduccionPersonalDAO elementoDAO;
+    
+    //Define la referencia al dao
+    @Autowired
+    IAfipTipoBeneficioDeduccionDAO tipoBeneficioDeduccionDAO;
+    
+    //Define la referencia al dao
+    @Autowired
+    IMesDAO mesDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public GenericoDTO inicializar(int idRol, int idSubopcion) {
+        GenericoDTO elemento = new GenericoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitDeduccionPersonalTablaDTO inicializarTabla(int idRol, int idSubopcion) {
+        InitDeduccionPersonalTablaDTO elemento = new InitDeduccionPersonalTablaDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setAfipDeduccionPersonales(elementoDAO.findAll());
+        elemento.setTipoBeneficioDeducciones(tipoBeneficioDeduccionDAO.findAll());
+        elemento.setAnios(Fecha.listarAnioFiscal());
+        elemento.setMeses(mesDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

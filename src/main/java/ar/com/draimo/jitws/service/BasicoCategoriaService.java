@@ -1,8 +1,11 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IBasicoCategoriaDAO;
 import ar.com.draimo.jitws.dao.ICategoriaDAO;
+import ar.com.draimo.jitws.dao.IMesDAO;
+import ar.com.draimo.jitws.dto.InitBasicoCategoriaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.BasicoCategoria;
 import java.util.List;
@@ -26,6 +29,25 @@ public class BasicoCategoriaService {
     //Define la referencia al dao de categoria
     @Autowired
     ICategoriaDAO categoriaDAO;
+    
+    //Define la referencia al dao de mes
+    @Autowired
+    IMesDAO mesDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitBasicoCategoriaDTO inicializar(int idRol, int idSubopcion) {
+        InitBasicoCategoriaDTO elemento = new InitBasicoCategoriaDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setCategorias(categoriaDAO.findAll());
+        elemento.setAnios(Fecha.listarAnios());
+        elemento.setMeses(mesDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

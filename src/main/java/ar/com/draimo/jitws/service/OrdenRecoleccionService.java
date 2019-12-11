@@ -3,7 +3,9 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IOrdenRecoleccionDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
+import ar.com.draimo.jitws.dto.InitOrdenRecoleccionDTO;
 import ar.com.draimo.jitws.exception.CodigoRespuesta;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
@@ -41,6 +43,24 @@ public class OrdenRecoleccionService {
     //Define la referencia al dao cliente
     @Autowired
     IClienteDAO clienteDAO;
+    
+    //Define la referencia al dao sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitOrdenRecoleccionDTO inicializar(int idRol, int idSubopcion) {
+        InitOrdenRecoleccionDTO elemento = new InitOrdenRecoleccionDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setSucursales(sucursalDAO.findAll());
+        elemento.setOrdenRecolecciones(elementoDAO.findAll());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

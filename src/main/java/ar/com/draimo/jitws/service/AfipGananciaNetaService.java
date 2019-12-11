@@ -1,8 +1,10 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IAfipAlicuotaGananciaDAO;
 import ar.com.draimo.jitws.dao.IAfipGananciaNetaDAO;
+import ar.com.draimo.jitws.dto.InitGananciaNetaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipGananciaNeta;
 import java.util.List;
@@ -26,6 +28,20 @@ public class AfipGananciaNetaService {
     //Define la referencia al dao de afipAlicuotaGanancia
     @Autowired
     IAfipAlicuotaGananciaDAO gananciaDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitGananciaNetaDTO inicializar(int idRol, int idSubopcion) {
+        InitGananciaNetaDTO elemento = new InitGananciaNetaDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setAnios(Fecha.listarAnioFiscal());
+        elemento.setAlicuotaGanancias(gananciaDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

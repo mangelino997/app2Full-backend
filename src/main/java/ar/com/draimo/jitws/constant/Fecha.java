@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
@@ -163,6 +164,14 @@ public class Fecha {
             meses.add(mes);
         }
         return meses;
+    }
+    
+    public static List<Short> listarAnioFiscal() {
+        List<Short> anios = new ArrayList<>();
+        int iAnio = LocalDate.now().getYear();
+        anios.add(Short.parseShort(String.valueOf(iAnio)));
+        anios.add(Short.parseShort(String.valueOf(iAnio + 1)));
+        return anios;
     }
     
 }

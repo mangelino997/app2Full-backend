@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
+import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dto.ViajeRemitoDTO;
 import ar.com.draimo.jitws.model.Sucursal;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoRemitoDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitViajeRemitoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ViajeTramo;
@@ -22,6 +25,8 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import org.springframework.dao.DataIntegrityViolationException;
 
 /**
@@ -48,9 +53,27 @@ public class ViajeRemitoService {
     @Autowired
     IViajeTramoDAO viajeTramoDAO;
 
+    //Define la referencia al dao tipoComprobante
+    @Autowired
+    ITipoComprobanteDAO tipoComprobanteDAO;
+
     //Define la referencia al dao viaje tramo remito
     @Autowired
     IViajeTramoRemitoDAO viajeTramoRemitoDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitViajeRemitoDTO inicializar(int idRol, int idSubopcion) {
+        InitViajeRemitoDTO elemento = new InitViajeRemitoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setSucursales(sucursalDAO.findAll());
+        elemento.setTipoComprobantes(tipoComprobanteDAO.findByEstaActivoIngresoCargaTrue());
+        elemento.setFecha(new Date(new java.util.Date().getTime()));
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

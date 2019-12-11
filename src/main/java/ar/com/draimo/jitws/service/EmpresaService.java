@@ -1,7 +1,9 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dto.InitEmpresaDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,23 @@ public class EmpresaService {
     //Define la referencia al dao
     @Autowired
     IEmpresaDAO elementoDAO;
+
+    //Define la referencia al dao de condicion de iva
+    @Autowired
+    IAfipCondicionIvaDAO afipCondicionIvaDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitEmpresaDTO inicializar(int idRol, int idSubopcion) {
+        InitEmpresaDTO elemento = new InitEmpresaDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setAfipCondicionIvas(afipCondicionIvaDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

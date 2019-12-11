@@ -2,6 +2,8 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitDeduccionPersonalTablaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipDeduccionPersonal;
 import ar.com.draimo.jitws.service.AfipDeduccionPersonalService;
@@ -42,6 +44,20 @@ public class AfipDeduccionPersonalController {
     //Crea una instancia del servicio
     @Autowired
     AfipDeduccionPersonalService elementoService;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public GenericoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
+    }
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializarTabla/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public InitDeduccionPersonalTablaDTO inicializarTabla(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializarTabla(idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

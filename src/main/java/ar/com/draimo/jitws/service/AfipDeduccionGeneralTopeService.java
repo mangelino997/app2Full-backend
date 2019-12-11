@@ -1,8 +1,10 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IAfipDeduccionGeneralDAO;
 import ar.com.draimo.jitws.dao.IAfipDeduccionGeneralTopeDAO;
+import ar.com.draimo.jitws.dto.InitDeduccionGralTopeDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipDeduccionGeneralTope;
 import java.util.List;
@@ -26,6 +28,20 @@ public class AfipDeduccionGeneralTopeService {
     //Define la referencia al dao de afipDeduccionGeneral
     @Autowired
     IAfipDeduccionGeneralDAO afipDeduccionGeneralDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitDeduccionGralTopeDTO inicializar(int idRol, int idSubopcion) {
+        InitDeduccionGralTopeDTO elemento = new InitDeduccionGralTopeDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setAnios(Fecha.listarAnioFiscal());
+        elemento.setAfipDeduccionGenerales(afipDeduccionGeneralDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

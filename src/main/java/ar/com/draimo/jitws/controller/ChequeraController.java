@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitChequeraDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Chequera;
 import ar.com.draimo.jitws.service.ChequeraService;
@@ -42,6 +43,13 @@ public class ChequeraController {
     //Crea una instancia del servicio
     @Autowired
     ChequeraService elementoService;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idEmpresa}/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public InitChequeraDTO inicializar(@PathVariable int idEmpresa, @PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idEmpresa, idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

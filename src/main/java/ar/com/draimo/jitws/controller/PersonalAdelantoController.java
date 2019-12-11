@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitPersonalAdelantoDTO;
 import ar.com.draimo.jitws.dto.PersonalAdelantoLoteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.PersonalAdelanto;
@@ -47,6 +48,14 @@ public class PersonalAdelantoController {
     //Crea una instancia del servicio
     @Autowired
     PersonalAdelantoService elementoService;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public InitPersonalAdelantoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
+    }
+
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

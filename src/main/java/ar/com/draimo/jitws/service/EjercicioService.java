@@ -1,8 +1,11 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IEjercicioDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IMesDAO;
+import ar.com.draimo.jitws.dto.InitEjercicioDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Ejercicio;
 import ar.com.draimo.jitws.model.Empresa;
@@ -26,6 +29,24 @@ public class EjercicioService {
     //Define la referencia al dao de empresa
     @Autowired
     IEmpresaDAO empresaDAO;
+
+    //Define la referencia al dao de mes
+    @Autowired
+    IMesDAO mesDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitEjercicioDTO inicializar(int idRol, int idSubopcion) {
+        InitEjercicioDTO elemento = new InitEjercicioDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setMeses(mesDAO.findAll());
+        elemento.setAnios(Fecha.listarAnios());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

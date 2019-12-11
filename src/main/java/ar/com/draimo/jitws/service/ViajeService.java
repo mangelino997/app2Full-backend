@@ -3,12 +3,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.model.Viaje;
-import ar.com.draimo.jitws.model.ViajeCombustible;
-import ar.com.draimo.jitws.model.ViajeEfectivo;
-import ar.com.draimo.jitws.model.ViajeGasto;
-import ar.com.draimo.jitws.model.ViajeInsumo;
-import ar.com.draimo.jitws.model.ViajePeaje;
 import ar.com.draimo.jitws.model.ViajeTramo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +18,7 @@ import ar.com.draimo.jitws.dao.IViajeInsumoDAO;
 import ar.com.draimo.jitws.dao.IViajePeajeDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoDAO;
+import ar.com.draimo.jitws.dto.InitViajeDTO;
 import ar.com.draimo.jitws.dto.ViajeFiltroDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Personal;
@@ -79,9 +76,26 @@ public class ViajeService {
     @Autowired
     IViajePeajeDAO viajePeajeDAO;
 
+    //Define la referencia al dao sucursal
+    @Autowired
+    ISucursalDAO sucursalDAO;
+
     //Define la referencia al service de ViajeTramo
     @Autowired
     ViajeTramoService viajeTramoService;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitViajeDTO inicializar(int idRol, int idSubopcion) {
+        InitViajeDTO elemento = new InitViajeDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setSucursales(sucursalDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
