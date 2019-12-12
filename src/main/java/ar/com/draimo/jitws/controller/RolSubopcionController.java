@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitRolSubopcionDTO;
 import ar.com.draimo.jitws.dto.RolSubopcionDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.RolSubopcion;
@@ -48,6 +49,13 @@ public class RolSubopcionController {
     //Crea una instancia del servicio menu
     @Autowired
     MenuService menuService;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar")
+    @ResponseBody
+    public InitRolSubopcionDTO inicializar() {
+        return elementoService.inicializar();
+    }
 
     //Obtiene la lista completa
     @GetMapping(value = URL)

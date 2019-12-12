@@ -7,6 +7,9 @@ import ar.com.draimo.jitws.dao.IRolSubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubmoduloDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitRolSubopcionDTO;
+import ar.com.draimo.jitws.dto.InitSubopcionDTO;
 import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.Rol;
 import ar.com.draimo.jitws.model.RolSubopcion;
@@ -53,6 +56,19 @@ public class SubopcionService {
     //Define la referencia al dao rol
     @Autowired
     IRolDAO rolDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitSubopcionDTO inicializar(int idRol, int idSubopcion) {
+        InitSubopcionDTO elemento = new InitSubopcionDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setSubmodulos(submoduloDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

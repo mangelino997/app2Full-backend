@@ -2,9 +2,12 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBugImagenDAO;
+import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IModuloDAO;
 import ar.com.draimo.jitws.dao.ISoporteDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
+import ar.com.draimo.jitws.dto.InitSoporteDTO;
 import ar.com.draimo.jitws.model.BugImagen;
 import ar.com.draimo.jitws.model.Soporte;
 import ar.com.draimo.jitws.model.Subopcion;
@@ -37,6 +40,14 @@ public class SoporteService {
     @Autowired
     IUsuarioDAO usuarioDAO;
 
+    //Define la referencia al dao de moduloDAO
+    @Autowired
+    IModuloDAO moduloDAO;
+
+    //Define la referencia al dao de empresaDAO
+    @Autowired
+    IEmpresaDAO empresaDAO;
+
     //Define la referencia al dao de subopcion
     @Autowired
     ISubopcionDAO subopcionDAO;
@@ -48,6 +59,20 @@ public class SoporteService {
     //Define la referencial al servicio de bugImagen
     @Autowired
     BugImagenService bugImagenService;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitSoporteDTO inicializar(int idRol, int idSubopcion) {
+        InitSoporteDTO elemento = new InitSoporteDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setEmpresas(empresaDAO.findAll());
+        elemento.setModulos(moduloDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

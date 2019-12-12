@@ -4,8 +4,10 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.constant.Funcion;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IRolDAO;
+import ar.com.draimo.jitws.dao.ISucursalDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
 import ar.com.draimo.jitws.dao.IUsuarioEmpresaDAO;
+import ar.com.draimo.jitws.dto.InitUsuarioDTO;
 import ar.com.draimo.jitws.dto.LoginDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Empresa;
@@ -38,6 +40,10 @@ public class UsuarioService {
     @Autowired
     IRolDAO rolDAO;
 
+    //Define la referencia al dao sucursalDAO
+    @Autowired
+    ISucursalDAO sucursalDAO;
+
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
@@ -53,6 +59,20 @@ public class UsuarioService {
     //Define menu service
     @Autowired
     MenuService menuService;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitUsuarioDTO inicializar(int idRol, int idSubopcion) {
+        InitUsuarioDTO elemento = new InitUsuarioDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setRoles(rolDAO.findAll());
+        elemento.setSucursales(sucursalDAO.findAll());
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

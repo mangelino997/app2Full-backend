@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IVentaItemConceptoDAO;
+import ar.com.draimo.jitws.dto.InitVentaConceptoDTO;
 
 /**
  * Servicio Venta Item Concepto
@@ -24,6 +25,19 @@ public class VentaItemConceptoService {
     //Define la referencia al dao TipoComprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitVentaConceptoDTO inicializar(int idRol, int idSubopcion) {
+        InitVentaConceptoDTO elemento = new InitVentaConceptoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setTipoComprobantes(tipoComprobanteDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

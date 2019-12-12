@@ -6,6 +6,7 @@ import ar.com.draimo.jitws.dao.IRolDAO;
 import ar.com.draimo.jitws.dao.IRolSubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubmoduloDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
+import ar.com.draimo.jitws.dto.InitRolSubopcionDTO;
 import ar.com.draimo.jitws.dto.RolSubopcionDTO;
 import ar.com.draimo.jitws.dto.SubopcionDTO;
 import ar.com.draimo.jitws.model.Modulo;
@@ -47,6 +48,14 @@ public class RolSubopcionService {
     //Define la referencia al dao subopcion
     @Autowired
     ISubopcionDAO subopcionDAO;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitRolSubopcionDTO inicializar() {
+        InitRolSubopcionDTO elemento = new InitRolSubopcionDTO();
+        elemento.setModulos(moduloDAO.findAll());
+        elemento.setRoles(rolDAO.findAll());
+        return elemento;
+    }
     
     //Obtiene la lista completa
     public List<RolSubopcion> listar() {
