@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IModuloDAO;
 import ar.com.draimo.jitws.dao.ISubmoduloDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.model.Submodulo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,18 @@ public class SubmoduloService {
     //Define la referencia al dao modulo
     @Autowired
     IModuloDAO moduloDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public GenericoDTO inicializar(int idRol, int idSubopcion) {
+        GenericoDTO elemento = new GenericoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        return elemento;
+    }
     
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

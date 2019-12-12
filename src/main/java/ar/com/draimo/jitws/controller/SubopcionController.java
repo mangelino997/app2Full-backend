@@ -2,6 +2,8 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitSubopcionDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Subopcion;
 import ar.com.draimo.jitws.service.SubopcionService;
@@ -42,6 +44,13 @@ public class SubopcionController {
     //Crea una instancia del servicio
     @Autowired
     SubopcionService elementoService;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public InitSubopcionDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

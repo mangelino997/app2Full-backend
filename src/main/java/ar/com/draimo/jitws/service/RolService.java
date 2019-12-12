@@ -10,6 +10,8 @@ import ar.com.draimo.jitws.dao.IRolSubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionDAO;
 import ar.com.draimo.jitws.dao.ISubopcionPestaniaDAO;
 import ar.com.draimo.jitws.dao.IUsuarioDAO;
+import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitRolDTO;
 import ar.com.draimo.jitws.dto.RolDTO;
 import ar.com.draimo.jitws.model.Opcion;
 import ar.com.draimo.jitws.model.Pestania;
@@ -63,6 +65,19 @@ public class RolService {
     //Define la referencia al dao usuario
     @Autowired
     IUsuarioDAO usuarioDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitRolDTO inicializar(int idRol, int idSubopcion) {
+        InitRolDTO elemento = new InitRolDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setRoles(elementoDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {

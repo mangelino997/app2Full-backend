@@ -38,9 +38,10 @@ public class AfipDeduccionPersonalService {
     SubopcionPestaniaService subopcionPestaniaService;
     
     //Obtiene listas necesarias para inicializar el componente (front)
-    public GenericoDTO inicializar(int idRol, int idSubopcion) {
-        GenericoDTO elemento = new GenericoDTO();
+    public InitDeduccionPersonalTablaDTO inicializar(int idRol, int idSubopcion) {
+        InitDeduccionPersonalTablaDTO elemento = new InitDeduccionPersonalTablaDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setTipoBeneficioDeducciones(tipoBeneficioDeduccionDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }
