@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IAfipAlicuotaGananciaDAO;
 import ar.com.draimo.jitws.dao.IAfipGananciaNetaDAO;
+import ar.com.draimo.jitws.dao.IMesDAO;
 import ar.com.draimo.jitws.dto.InitGananciaNetaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.AfipGananciaNeta;
@@ -28,6 +29,10 @@ public class AfipGananciaNetaService {
     //Define la referencia al dao de afipAlicuotaGanancia
     @Autowired
     IAfipAlicuotaGananciaDAO gananciaDAO;
+
+    //Define la referencia al dao de mes
+    @Autowired
+    IMesDAO mesDAO;
     
     //Referencia al service de subopcionpestania
     @Autowired
@@ -39,6 +44,7 @@ public class AfipGananciaNetaService {
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setUltimoId(obtenerSiguienteId());
         elemento.setAnios(Fecha.listarAnioFiscal());
+        elemento.setMeses(mesDAO.findAll());
         elemento.setAlicuotaGanancias(gananciaDAO.findAll());
         return elemento;
     }

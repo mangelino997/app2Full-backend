@@ -11,8 +11,8 @@ import javax.persistence.Table;
  * @author blas
  */
 @Entity
-@Table(name = "afipconcepto")
-public class AfipConcepto extends ObjetoGenerico {
+@Table(name = "afipconceptoventa")
+public class AfipConceptoVenta extends ObjetoGenerico {
 
     //Define el nombre
     @Column(name = "nombre", length = 45, nullable = false, unique = true)

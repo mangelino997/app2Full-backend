@@ -183,8 +183,8 @@ public class VentaComprobante extends ObjetoGenerico {
 
     //Referencia a la clase AfipConcepto
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipConcepto", nullable = false)
-    private AfipConcepto afipConcepto;
+    @JoinColumn(name = "idAfipConceptoVenta", nullable = false)
+    private AfipConceptoVenta afipConceptoVenta;
 
     //Referencia a la clase Moneda
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -499,12 +499,12 @@ public class VentaComprobante extends ObjetoGenerico {
         this.fechaRegistracion = fechaRegistracion;
     }
 
-    public AfipConcepto getAfipConcepto() {
-        return afipConcepto;
+    public AfipConceptoVenta getAfipConceptoVenta() {
+        return afipConceptoVenta;
     }
 
-    public void setAfipConcepto(AfipConcepto afipConcepto) {
-        this.afipConcepto = afipConcepto;
+    public void setAfipConceptoVenta(AfipConceptoVenta afipConceptoVenta) {
+        this.afipConceptoVenta = afipConceptoVenta;
     }
 
     public Moneda getMoneda() {

@@ -1,6 +1,7 @@
 package ar.com.draimo.jitws.dto;
 
 import ar.com.draimo.jitws.model.AfipAlicuotaGanancia;
+import ar.com.draimo.jitws.model.Mes;
 import ar.com.draimo.jitws.model.Pestania;
 import java.util.List;
 
@@ -15,6 +16,9 @@ public class InitGananciaNetaDTO {
     
     //Lista de alicuotaGanancias
     private List<AfipAlicuotaGanancia> alicuotaGanancias; 
+    
+    //Lista de mes
+    private List<Mes> meses; 
     
     //Lista de anios
     private List<Short> anios; 
@@ -37,6 +41,14 @@ public class InitGananciaNetaDTO {
 
     public void setAlicuotaGanancias(List<AfipAlicuotaGanancia> alicuotaGanancias) {
         this.alicuotaGanancias = alicuotaGanancias;
+    }
+
+    public List<Mes> getMeses() {
+        return meses;
+    }
+
+    public void setMeses(List<Mes> meses) {
+        this.meses = meses;
     }
 
     public List<Short> getAnios() {
