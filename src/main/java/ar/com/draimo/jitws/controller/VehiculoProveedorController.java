@@ -69,7 +69,11 @@ public class VehiculoProveedorController {
     @GetMapping(value = URL + "/listarPorProveedor/{idProveedor}")
     @ResponseBody
     public List<VehiculoProveedor> listarPorProveedor(@PathVariable int idProveedor) {
-        return elementoService.listarPorProveedor(idProveedor);
+        List<VehiculoProveedor> l = elementoService.listarPorProveedor(idProveedor);
+        for (VehiculoProveedor vehiculoProveedor : l) {
+            vehiculoProveedor.setProveedor(null);
+        }
+        return l;
     }
 
     //Obtiene una lista por alias

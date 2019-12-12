@@ -76,7 +76,11 @@ public class ContactoProveedorController {
     @GetMapping(value = URL + "/listarPorProveedor/{idProveedor}")
     @ResponseBody
     public List<ContactoProveedor> listarPorProveedor(@PathVariable int idProveedor) {
-        return elementoService.listarPorProveedor(idProveedor);
+        List<ContactoProveedor> l = elementoService.listarPorProveedor(idProveedor);
+        for (ContactoProveedor contactoProveedor : l) {
+            contactoProveedor.setProveedor(null);
+        }
+        return l;
     }
     
     //Agrega un registro
