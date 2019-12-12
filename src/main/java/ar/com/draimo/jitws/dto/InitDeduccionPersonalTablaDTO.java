@@ -2,6 +2,7 @@ package ar.com.draimo.jitws.dto;
 
 import ar.com.draimo.jitws.model.AfipDeduccionGeneral;
 import ar.com.draimo.jitws.model.AfipDeduccionPersonal;
+import ar.com.draimo.jitws.model.AfipTipoBeneficio;
 import ar.com.draimo.jitws.model.AfipTipoBeneficioDeduccion;
 import ar.com.draimo.jitws.model.Mes;
 import ar.com.draimo.jitws.model.Pestania;
@@ -17,7 +18,7 @@ public class InitDeduccionPersonalTablaDTO {
     private int ultimoId;
     
     //Lista de categoriatipoBeneficioDeduccioness
-    private List<AfipTipoBeneficioDeduccion> tipoBeneficioDeducciones; 
+    private List<AfipTipoBeneficio> tipoBeneficios; 
     
     //Lista de afipDeduccionPersonales
     private List<AfipDeduccionPersonal> afipDeduccionPersonales; 
@@ -40,12 +41,12 @@ public class InitDeduccionPersonalTablaDTO {
         this.ultimoId = ultimoId;
     }
 
-    public List<AfipTipoBeneficioDeduccion> getTipoBeneficioDeducciones() {
-        return tipoBeneficioDeducciones;
+    public List<AfipTipoBeneficio> getTipoBeneficios() {
+        return tipoBeneficios;
     }
 
-    public void setTipoBeneficioDeducciones(List<AfipTipoBeneficioDeduccion> tipoBeneficioDeducciones) {
-        this.tipoBeneficioDeducciones = tipoBeneficioDeducciones;
+    public void setTipoBeneficios(List<AfipTipoBeneficio> tipoBeneficios) {
+        this.tipoBeneficios = tipoBeneficios;
     }
 
     public List<AfipDeduccionPersonal> getAfipDeduccionPersonales() {

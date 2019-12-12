@@ -3,9 +3,8 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.IAfipDeduccionPersonalDAO;
-import ar.com.draimo.jitws.dao.IAfipTipoBeneficioDeduccionDAO;
+import ar.com.draimo.jitws.dao.IAfipTipoBeneficioDAO;
 import ar.com.draimo.jitws.dao.IMesDAO;
-import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.dto.InitDeduccionPersonalTablaDTO;
 import ar.com.draimo.jitws.model.AfipDeduccionPersonal;
 import java.util.List;
@@ -27,7 +26,7 @@ public class AfipDeduccionPersonalService {
     
     //Define la referencia al dao
     @Autowired
-    IAfipTipoBeneficioDeduccionDAO tipoBeneficioDeduccionDAO;
+    IAfipTipoBeneficioDAO tipoBeneficioDAO;
     
     //Define la referencia al dao
     @Autowired
@@ -41,7 +40,7 @@ public class AfipDeduccionPersonalService {
     public InitDeduccionPersonalTablaDTO inicializar(int idRol, int idSubopcion) {
         InitDeduccionPersonalTablaDTO elemento = new InitDeduccionPersonalTablaDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
-        elemento.setTipoBeneficioDeducciones(tipoBeneficioDeduccionDAO.findAll());
+        elemento.setTipoBeneficios(tipoBeneficioDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }
@@ -51,7 +50,7 @@ public class AfipDeduccionPersonalService {
         InitDeduccionPersonalTablaDTO elemento = new InitDeduccionPersonalTablaDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setAfipDeduccionPersonales(elementoDAO.findAll());
-        elemento.setTipoBeneficioDeducciones(tipoBeneficioDeduccionDAO.findAll());
+        elemento.setTipoBeneficios(tipoBeneficioDAO.findAll());
         elemento.setAnios(Fecha.listarAnioFiscal());
         elemento.setMeses(mesDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
