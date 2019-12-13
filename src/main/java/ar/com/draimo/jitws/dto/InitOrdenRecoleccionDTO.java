@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.dto;
 import ar.com.draimo.jitws.model.OrdenRecoleccion;
 import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.Sucursal;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -17,8 +18,8 @@ public class InitOrdenRecoleccionDTO {
     //Lista de sucursales
     private List<Sucursal> sucursales; 
     
-    //Lista de ordenRecolecciones
-    private List<OrdenRecoleccion> ordenRecolecciones; 
+    //Lista de fecha
+    private Date fecha; 
     
     //Define las pestanias
     private List<Pestania> pestanias;
@@ -40,12 +41,12 @@ public class InitOrdenRecoleccionDTO {
         this.sucursales = sucursales;
     }
 
-    public List<OrdenRecoleccion> getOrdenRecolecciones() {
-        return ordenRecolecciones;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setOrdenRecolecciones(List<OrdenRecoleccion> ordenRecolecciones) {
-        this.ordenRecolecciones = ordenRecolecciones;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public List<Pestania> getPestanias() {

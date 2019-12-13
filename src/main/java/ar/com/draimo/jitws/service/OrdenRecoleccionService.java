@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,7 +59,7 @@ public class OrdenRecoleccionService {
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setUltimoId(obtenerSiguienteId());
         elemento.setSucursales(sucursalDAO.findAll());
-        elemento.setOrdenRecolecciones(elementoDAO.findAll());
+        elemento.setFecha(new Date(new java.util.Date().getTime()));
         return elemento;
     }
     
