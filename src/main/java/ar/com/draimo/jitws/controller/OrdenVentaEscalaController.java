@@ -68,10 +68,10 @@ public class OrdenVentaEscalaController {
     }
 
     //Obtiene una lista por orden venta tarifas 
-    @GetMapping(value = URL + "/listarPorOrdenVentaTarifa/{id}")
+    @GetMapping(value = URL + "/listarPorOrdenVentaTarifa/{idOrdenVenta}/{idTipoTarifa}")
     @ResponseBody
-    public Object listarPorOrdenVentaTarifa(@PathVariable int id) throws IOException {
-        return elementoService.listarPorOrdenVentaTarifa(id);
+    public Object listarPorOrdenVentaTarifa(@PathVariable int idOrdenVenta,@PathVariable int idTipoTarifa) throws IOException {
+        return elementoService.listarPorOrdenVentaTarifa(idOrdenVenta, idTipoTarifa);
     }
 
     //Obtiene una lista por id de orden venta

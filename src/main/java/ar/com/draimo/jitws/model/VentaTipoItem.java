@@ -29,8 +29,8 @@ public class VentaTipoItem extends ObjetoGenerico {
 
     //Referencia a la clase AfipConcepto
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipConcepto", nullable = false)
-    private AfipConceptoVenta afipConcepto;
+    @JoinColumn(name = "idAfipConceptoVenta", nullable = false)
+    private AfipConceptoVenta afipConceptoVenta;
 
     //Define si esta habilitado
     @Column(name = "estaHabilitado", nullable = false)
@@ -57,12 +57,12 @@ public class VentaTipoItem extends ObjetoGenerico {
         this.tipoComprobante = tipoComprobante;
     }
 
-    public AfipConceptoVenta getAfipConcepto() {
-        return afipConcepto;
+    public AfipConceptoVenta getAfipConceptoVenta() {
+        return afipConceptoVenta;
     }
 
-    public void setAfipConcepto(AfipConceptoVenta afipConcepto) {
-        this.afipConcepto = afipConcepto;
+    public void setAfipConceptoVenta(AfipConceptoVenta afipConceptoVenta) {
+        this.afipConceptoVenta = afipConceptoVenta;
     }
 
     public boolean getEstaHabilitado() {

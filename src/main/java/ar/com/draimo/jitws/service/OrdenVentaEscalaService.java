@@ -100,10 +100,9 @@ public class OrdenVentaEscalaService {
     }
     
     //Obtiene un listado por ordenVentaTarifa
-    public Object listarPorOrdenVentaTarifa(int idOrdenVentaTarifa) throws IOException {
+    public Object listarPorOrdenVentaTarifa(int idOrdenVenta, int idTipoTarifa) throws IOException {
         List<OrdenVentaEscala> elementos = 
-            elementoDAO.findByOrdenVentaTarifaOrderByEscalaTarifa_ValorAsc(
-                 ordenVentaTarifaDAO.findById(idOrdenVentaTarifa).get());
+            elementoDAO.listarPorOrdenVentaTarifaOrdenadoPorValor(idOrdenVenta, idTipoTarifa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("cliente");

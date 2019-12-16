@@ -5,6 +5,8 @@ import ar.com.draimo.jitws.model.Soporte;
 import ar.com.draimo.jitws.model.Usuario;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,6 +25,9 @@ public interface ISoporteDAO extends JpaRepository<Soporte, Integer> {
     public List<Soporte> findByUsuarioAndAliasContaining(Usuario usuario ,String alias);
     
     //Obtiene un listado por usuario
-    public List<Soporte> findByUsuario(Usuario usuario);
+    @Query(value = "SELECT * FROM soporte s WHERE (:idRol=1 OR :idRol=2) OR "
+            + "(s.idUsuario=:idUsuario)", nativeQuery = true)
+    public List<Soporte> listarPorUsuario(@Param("idUsuario") int idUsuario,
+            @Param("idRol") int idRol);
     
 }
