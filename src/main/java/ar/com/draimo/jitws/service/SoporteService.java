@@ -60,14 +60,9 @@ public class SoporteService {
     @Autowired
     BugImagenService bugImagenService;
     
-    //Referencia al service de subopcionpestania
-    @Autowired
-    SubopcionPestaniaService subopcionPestaniaService;
-    
     //Obtiene listas necesarias para inicializar el componente (front)
-    public InitSoporteDTO inicializar(int idRol, int idSubopcion) {
+    public InitSoporteDTO inicializar() {
         InitSoporteDTO elemento = new InitSoporteDTO();
-        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setEmpresas(empresaDAO.findAll());
         elemento.setModulos(moduloDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
