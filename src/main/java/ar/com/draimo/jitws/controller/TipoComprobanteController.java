@@ -71,6 +71,13 @@ public class TipoComprobanteController {
     public List<TipoComprobante> listar() {
         return elementoService.listar();
     }
+    
+    //Obtiene una lista por nombre
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
+    @ResponseBody
+    public List<TipoComprobante> listarPorNombre(@PathVariable String nombre) {
+        return elementoService.listarPorNombre(nombre);
+    }
 
     //Obtiene una lista por esta activo ingreso carga igual true
     @GetMapping(value = URL + "/listarActivosCompraCarga")
