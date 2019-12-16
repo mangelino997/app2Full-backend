@@ -1,8 +1,11 @@
 //Paquete al que pertenece la clase
 package ar.com.draimo.jitws.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -20,7 +23,8 @@ public class AfipConceptoSueldoGrupo extends ObjetoGenerico {
     private String nombre;
 
     //Referencia a la clase AfipConceptoSueldoGrupo
-    @Column(name = "idTipoConceptoSueldo", nullable = true)
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idTipoConceptoSueldo", nullable = true)
     private TipoConceptoSueldo tipoConceptoSueldo;
 
     //Getters y Setters de la clase
