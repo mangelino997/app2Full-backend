@@ -26,6 +26,10 @@ public class AfipConceptoSueldo extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipConceptoSueldoGrupo", nullable = true)
     private AfipConceptoSueldoGrupo afipConceptoSueldoGrupo;
+    
+    //Define el codigoAfip
+    @Column(name = "codigoAfip", length = 6, nullable = false, unique = true)
+    private String codigoAfip;
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -42,6 +46,14 @@ public class AfipConceptoSueldo extends ObjetoGenerico {
 
     public void setAfipConceptoSueldoGrupo(AfipConceptoSueldoGrupo afipConceptoSueldoGrupo) {
         this.afipConceptoSueldoGrupo = afipConceptoSueldoGrupo;
+    }
+
+    public String getCodigoAfip() {
+        return codigoAfip;
+    }
+
+    public void setCodigoAfip(String codigoAfip) {
+        this.codigoAfip = codigoAfip;
     }
     
 }
