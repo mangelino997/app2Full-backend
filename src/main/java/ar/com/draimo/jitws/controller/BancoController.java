@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitBancoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Banco;
 import ar.com.draimo.jitws.service.BancoService;
@@ -47,7 +48,7 @@ public class BancoController {
     //Obtiene listas necesarias para inicializar el componente (front)
     @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
     @ResponseBody
-    public GenericoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+    public InitBancoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
         return elementoService.inicializar(idRol, idSubopcion);
     }
 

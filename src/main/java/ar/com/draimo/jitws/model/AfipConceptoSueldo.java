@@ -24,7 +24,7 @@ public class AfipConceptoSueldo extends ObjetoGenerico {
 
     //Referencia a la clase AfipConceptoSueldoGrupo
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idAfipConceptoSueldoGrupo", nullable = true)
+    @JoinColumn(name = "idAfipConceptoSueldoGrupo", nullable = false)
     private AfipConceptoSueldoGrupo afipConceptoSueldoGrupo;
     
     //Define el codigoAfip

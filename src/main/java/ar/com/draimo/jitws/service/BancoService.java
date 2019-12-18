@@ -2,7 +2,9 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBancoDAO;
+import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.InitBancoDTO;
 import ar.com.draimo.jitws.model.Banco;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,19 @@ public class BancoService {
     @Autowired
     IBancoDAO elementoDAO;
     
+    //Define la referencia al dao tipo doc
+    @Autowired
+    ITipoDocumentoDAO tipoDocumentoDAO;
+    
     //Referencia al service de subopcionpestania
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
     
     //Obtiene listas necesarias para inicializar el componente (front)
-    public GenericoDTO inicializar(int idRol, int idsubopcion) {
-        GenericoDTO elemento = new GenericoDTO();
+    public InitBancoDTO inicializar(int idRol, int idsubopcion) {
+        InitBancoDTO elemento = new InitBancoDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idsubopcion));
+        elemento.setTipoDocumentos(tipoDocumentoDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }
