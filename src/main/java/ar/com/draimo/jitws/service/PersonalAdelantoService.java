@@ -80,6 +80,7 @@ public class PersonalAdelantoService {
         elemento.setCategorias(categoriaDAO.findAll());
         elemento.setSucursales(sucursalDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setFecha(new Date(new java.util.Date().getTime()));
         return elemento;
     }
 

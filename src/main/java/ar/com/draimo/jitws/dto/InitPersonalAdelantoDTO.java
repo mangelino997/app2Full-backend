@@ -3,26 +3,31 @@ package ar.com.draimo.jitws.dto;
 import ar.com.draimo.jitws.model.Categoria;
 import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.Sucursal;
+import java.sql.Date;
 import java.util.List;
 
 /**
  * Data Transfer Object of personal
+ *
  * @author blas
  */
 public class InitPersonalAdelantoDTO {
-    
+
     //Define el ultimo id
     private int ultimoId;
-    
+
     //Lista de categorias
-    private List<Categoria> categorias; 
-    
+    private List<Categoria> categorias;
+
     //Lista de sucursales
-    private List<Sucursal> sucursales; 
-    
+    private List<Sucursal> sucursales;
+
     //Define las pestanias
     private List<Pestania> pestanias;
-    
+
+    //Lista de fecha
+    private Date fecha;
+
     //Define Getters y Setters
     public int getUltimoId() {
         return ultimoId;
@@ -55,5 +60,13 @@ public class InitPersonalAdelantoDTO {
     public void setPestanias(List<Pestania> pestanias) {
         this.pestanias = pestanias;
     }
-    
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
 }
