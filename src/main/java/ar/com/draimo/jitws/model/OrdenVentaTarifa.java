@@ -20,13 +20,13 @@ public class OrdenVentaTarifa extends ObjetoGenerico {
 
     //Referencia a la clase OrdenVenta
     @JsonIgnoreProperties("tipoTarifas")
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "idOrdenVenta", nullable = false)
     private OrdenVenta ordenVenta;
 
     //Referencia a la clase TipoTarifa
     @JsonIgnoreProperties("ordenesVentas")
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "idTipoTarifa", nullable = false)
     private TipoTarifa tipoTarifa;
 

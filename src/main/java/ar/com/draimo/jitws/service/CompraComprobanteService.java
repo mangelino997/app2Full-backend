@@ -152,7 +152,7 @@ public class CompraComprobanteService {
         //Establece condicion de compra, tipo y numero de documento por el proveedor
         elemento.setTipoDocumento(p.getTipoDocumento());
         elemento.setNumeroDocumento(p.getNumeroDocumento());
-        elemento.setCondicionCompra(p.getCondicionCompra());
+//        elemento.setCondicionCompra(p.getCondicionCompra());
         //Establece las listas del elemento en otras listas
         List<CompraComprobanteItem> items = elemento.getCompraComprobanteItems();
         List<CompraComprobantePercepcion> percepciones = elemento.getCompraComprobantePercepciones();
