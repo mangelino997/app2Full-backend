@@ -104,7 +104,7 @@ public class LongitudError {
     public static final String IMPORTE_SALDO_LONGITUD = "importeSaldo";
     public static final String IMPORTE_SEGURO_LONGITUD = "importeSeguro";
     public static final String IMPORTE_TOTAL_LONGITUD = "importeTotal";
-    public static final String IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD = "importeVentaItemConcepto";
+    public static final String IMPORTE_VENTA_ITEM_CONCEPTO_LONGITUD = "importeTipoConceptoVenta";
     public static final String INICIO_ACTIVIDAD_LONGITUD = "inicioActividad";
     public static final String ITC_NETO_LONGITUD = "itcNeto";
     public static final String ITC_POR_LITRO_LONGITUD = "itcPorLitro";

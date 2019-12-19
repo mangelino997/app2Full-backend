@@ -2,25 +2,25 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.TipoComprobante;
-import ar.com.draimo.jitws.model.VentaItemConcepto;
+import ar.com.draimo.jitws.model.TipoConceptoVenta;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Interfaz DAO Venta Item Concepto
+ * Interfaz DAO Tipo Concepto Venta
  * Define los metodos particulares contra la base de datos
  * @author blas
  */
 
-public interface IVentaItemConceptoDAO extends JpaRepository<VentaItemConcepto, Integer> {
+public interface ITipoConceptoVentaDAO extends JpaRepository<TipoConceptoVenta, Integer> {
     
     //Obtiene el ultimo registro
-    public VentaItemConcepto findTopByOrderByIdDesc();
+    public TipoConceptoVenta findTopByOrderByIdDesc();
     
     //Obtiene una lista por nombre
-    public List<VentaItemConcepto> findByNombreContaining(String nombre);
+    public List<TipoConceptoVenta> findByNombreContaining(String nombre);
     
     //Obtiene una lista por tipo de comprobante y registro habilitado
-    public List<VentaItemConcepto> findByTipoComprobanteAndEstaHabilitadoTrue(TipoComprobante tipoComprobante);
+    public List<TipoConceptoVenta> findByTipoComprobanteAndEstaHabilitadoTrue(TipoComprobante tipoComprobante);
     
 }

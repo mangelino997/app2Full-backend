@@ -2,25 +2,25 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
-import ar.com.draimo.jitws.model.VentaItemConcepto;
+import ar.com.draimo.jitws.model.TipoConceptoVenta;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ar.com.draimo.jitws.dao.IVentaItemConceptoDAO;
 import ar.com.draimo.jitws.dto.InitVentaConceptoDTO;
+import ar.com.draimo.jitws.dao.ITipoConceptoVentaDAO;
 
 /**
- * Servicio Venta Item Concepto
+ * Servicio Tipo Concepto Venta
  *
  * @author blas
  */
 @Service
-public class VentaItemConceptoService {
+public class TipoConceptoVentaService {
 
     //Define la referencia al dao
     @Autowired
-    IVentaItemConceptoDAO elementoDAO;
+    ITipoConceptoVentaDAO elementoDAO;
 
     //Define la referencia al dao TipoComprobante
     @Autowired
@@ -41,36 +41,36 @@ public class VentaItemConceptoService {
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
-        VentaItemConcepto elemento = elementoDAO.findTopByOrderByIdDesc();
+        TipoConceptoVenta elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId() + 1 : 1;
     }
 
     //Obtiene la lista completa
-    public List<VentaItemConcepto> listar() {
+    public List<TipoConceptoVenta> listar() {
         return elementoDAO.findAll();
     }
 
     //Obtiene una lista por nombre
-    public List<VentaItemConcepto> listarPorNombre(String nombre) {
+    public List<TipoConceptoVenta> listarPorNombre(String nombre) {
         return nombre.equals("*") ? elementoDAO.findAll()
                 : elementoDAO.findByNombreContaining(nombre);
     }
 
     //Obtiene la lista por tipo de comprobante
-    public List<VentaItemConcepto> listarPorTipoComprobante(int idTipoComprobante) {
+    public List<TipoConceptoVenta> listarPorTipoComprobante(int idTipoComprobante) {
         return elementoDAO.findByTipoComprobanteAndEstaHabilitadoTrue(
                 tipoComprobanteDAO.findById(idTipoComprobante).get());
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public VentaItemConcepto agregar(VentaItemConcepto elemento) {
+    public TipoConceptoVenta agregar(TipoConceptoVenta elemento) {
         return elementoDAO.saveAndFlush(formatearStrings(elemento));
     }
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(VentaItemConcepto elemento) {
+    public void actualizar(TipoConceptoVenta elemento) {
         elementoDAO.save(formatearStrings(elemento));
     }
 
@@ -81,7 +81,7 @@ public class VentaItemConceptoService {
     }
 
     //Formatea los strings
-    private VentaItemConcepto formatearStrings(VentaItemConcepto elemento) {
+    private TipoConceptoVenta formatearStrings(TipoConceptoVenta elemento) {
         elemento.setNombre(elemento.getNombre().trim());
         return elemento;
     }

@@ -4,8 +4,8 @@ package ar.com.draimo.jitws.controller;
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.InitVentaConceptoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.VentaItemConcepto;
-import ar.com.draimo.jitws.service.VentaItemConceptoService;
+import ar.com.draimo.jitws.model.TipoConceptoVenta;
+import ar.com.draimo.jitws.service.TipoConceptoVentaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,17 +24,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase VentaItemConcepto Controller
+ * Clase TipoConceptoVenta Controller
  *
  * @author blas
  */
 @RestController
-public class VentaItemConceptoController {
+public class TipoConceptoVentaController {
 
     //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/ventaitemconcepto";
+    private final String URL = RutaConstant.URL_BASE + "/tipoconceptoventa";
     //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/ventaitemconcepto";
+    private final String TOPIC = RutaConstant.URL_TOPIC + "/tipoconceptoventa";
 
     //Define el template para el envio de datos por socket
     @Autowired
@@ -42,7 +42,7 @@ public class VentaItemConceptoController {
 
     //Crea una instancia del servicio
     @Autowired
-    VentaItemConceptoService elementoService;
+    TipoConceptoVentaService elementoService;
 
     //Obtiene listas necesarias para inicializar el componente (front)
     @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
@@ -61,29 +61,29 @@ public class VentaItemConceptoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<VentaItemConcepto> listar() {
+    public List<TipoConceptoVenta> listar() {
         return elementoService.listar();
     }
 
     //Obtiene la lista por tipo de comprobante
     @GetMapping(value = URL + "/listarPorTipoComprobante/{idTipoComprobante}")
     @ResponseBody
-    public List<VentaItemConcepto> listarPorTipoComprobante(@PathVariable int idTipoComprobante) {
+    public List<TipoConceptoVenta> listarPorTipoComprobante(@PathVariable int idTipoComprobante) {
         return elementoService.listarPorTipoComprobante(idTipoComprobante);
     }
 
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<VentaItemConcepto> listarPorNombre(@PathVariable String nombre) {
+    public List<TipoConceptoVenta> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
 
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody VentaItemConcepto elemento) {
+    public ResponseEntity<?> agregar(@RequestBody TipoConceptoVenta elemento) {
         try {
-            VentaItemConcepto a = elementoService.agregar(elemento);
+            TipoConceptoVenta a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -102,7 +102,7 @@ public class VentaItemConceptoController {
 
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody VentaItemConcepto elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody TipoConceptoVenta elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

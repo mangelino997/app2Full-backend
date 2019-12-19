@@ -273,7 +273,7 @@ public class ElementoNuloError {
     public static final String IMPORTE_SALDO_NULO = "importeSaldo";
     public static final String IMPORTE_SEGURO_NULO = "importeSeguro";
     public static final String IMPORTE_TOTAL_NULO = "importeTotal";
-    public static final String IMPORTE_VENTA_ITEM_CONCEPTO_NULO = "importeVentaItemConcepto";
+    public static final String IMPORTE_VENTA_ITEM_CONCEPTO_NULO = "importeTipoConceptoVenta";
     public static final String IMPRIME_NULO = "imprime";
     public static final String IMPRIMIR_CONTROL_DEUDA_NULO = "imprimirControlDeuda";
     public static final String INICIO_ACTIVIDAD_NULO = "inicioActividad";

@@ -97,14 +97,14 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
     @Column(name = "importeEntrega", nullable = false)
     private BigDecimal importeEntrega;
 
-    //Referencia a la clase VentaItemConcepto
+    //Referencia a la clase tipoConceptoVenta
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idVentaItemConcepto", nullable = true)
-    private VentaItemConcepto ventaItemConcepto;
+    @JoinColumn(name = "idTipoConceptoVenta", nullable = true)
+    private TipoConceptoVenta tipoConceptoVenta;
 
-    //Define el importe venta item concepto
-    @Column(name = "importeVentaItemConcepto", nullable = false)
-    private BigDecimal importeVentaItemConcepto;
+    //Define el importe Tipo Concepto Venta
+    @Column(name = "importeTipoConceptoVenta", nullable = false)
+    private BigDecimal importeTipoConceptoVenta;
 
     //Define el importe neto gravado
     @Column(name = "importeNetoGravado", nullable = false)
@@ -283,20 +283,20 @@ public class VentaComprobanteItemFA extends ObjetoGenerico {
         this.importeEntrega = importeEntrega;
     }
 
-    public VentaItemConcepto getVentaItemConcepto() {
-        return ventaItemConcepto;
+    public TipoConceptoVenta getTipoConceptoVenta() {
+        return tipoConceptoVenta;
     }
 
-    public void setVentaItemConcepto(VentaItemConcepto ventaItemConcepto) {
-        this.ventaItemConcepto = ventaItemConcepto;
+    public void setTipoConceptoVenta(TipoConceptoVenta tipoConceptoVenta) {
+        this.tipoConceptoVenta = tipoConceptoVenta;
     }
 
-    public BigDecimal getImporteVentaItemConcepto() {
-        return importeVentaItemConcepto;
+    public BigDecimal getImporteTipoConceptoVenta() {
+        return importeTipoConceptoVenta;
     }
 
-    public void setImporteVentaItemConcepto(BigDecimal importeVentaItemConcepto) {
-        this.importeVentaItemConcepto = importeVentaItemConcepto;
+    public void setImporteTipoConceptoVenta(BigDecimal importeTipoConceptoVenta) {
+        this.importeTipoConceptoVenta = importeTipoConceptoVenta;
     }
 
     public BigDecimal getImporteNetoGravado() {
