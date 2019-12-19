@@ -149,7 +149,7 @@ public class InexistenciaError {
     public static final String VENDEDOR_INEXISTENTE = "idVendedor";
     public static final String VENTA_COMPROBANTE_INEXISTENTE = "idVentaComprobante";
     public static final String VENTA_COMPROBANTE_APLICADO_INEXISTENTE = "idVentaComprobanteAplicado";
-    public static final String VENTA_ITEM_CONCEPTO_INEXISTENTE = "idVentaItemConcepto";
+    public static final String VENTA_ITEM_CONCEPTO_INEXISTENTE = "idTipoConceptoVenta";
     public static final String VENTA_TIPO_ITEM_INEXISTENTE = "idVentaTipoItem";
     public static final String VIAJE_INEXISTENTE = "idViaje";
     public static final String VIAJE_REMITO_INEXISTENTE = "idViajeRemito";

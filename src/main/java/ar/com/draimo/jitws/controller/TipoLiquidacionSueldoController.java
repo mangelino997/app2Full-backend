@@ -5,7 +5,8 @@ import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TipoContacto;
-import ar.com.draimo.jitws.service.TipoContactoService;
+import ar.com.draimo.jitws.model.TipoLiquidacionSueldo;
+import ar.com.draimo.jitws.service.TipoLiquidacionSueldoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -42,7 +43,7 @@ public class TipoLiquidacionSueldoController {
 
     //Crea una instancia del servicio
     @Autowired
-    TipoContactoService elementoService;
+    TipoLiquidacionSueldoService elementoService;
 
     //Obtiene listas necesarias para inicializar el componente (front)
     @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
@@ -61,22 +62,22 @@ public class TipoLiquidacionSueldoController {
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
-    public List<TipoContacto> listar() {
+    public List<TipoLiquidacionSueldo> listar() {
         return elementoService.listar();
     }
 
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
     @ResponseBody
-    public List<TipoContacto> listarPorNombre(@PathVariable String nombre) {
+    public List<TipoLiquidacionSueldo> listarPorNombre(@PathVariable String nombre) {
         return elementoService.listarPorNombre(nombre);
     }
 
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody TipoContacto elemento) {
+    public ResponseEntity<?> agregar(@RequestBody TipoLiquidacionSueldo elemento) {
         try {
-            TipoContacto a = elementoService.agregar(elemento);
+            TipoLiquidacionSueldo a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -95,7 +96,7 @@ public class TipoLiquidacionSueldoController {
 
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody TipoContacto elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody TipoLiquidacionSueldo elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);

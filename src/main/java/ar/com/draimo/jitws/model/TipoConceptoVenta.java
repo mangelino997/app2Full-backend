@@ -9,14 +9,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase Venta Item Concepto
+ * Clase tipo concepto venta
  * Define el modelo (columnas) de la base de datos
  * @author blas
  */
 
 @Entity
-@Table(name = "ventaitemconcepto")
-public class VentaItemConcepto extends ObjetoGenerico {
+@Table(name = "tipoconceptoventa")
+public class TipoConceptoVenta extends ObjetoGenerico {
     
     //Define el nombre
     @Column(name = "nombre", length = 45, nullable = false)
