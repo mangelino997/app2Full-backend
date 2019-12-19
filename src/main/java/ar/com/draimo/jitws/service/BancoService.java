@@ -61,7 +61,8 @@ public class BancoService {
     @Transactional(rollbackFor = Exception.class)
     public Banco agregar(Banco elemento) {
         elemento = formatearStrings(elemento);
-        return elementoDAO.save(elemento);
+        elemento.setTipoDocumento(tipoDocumentoDAO.findById(8).get());
+        return elementoDAO.saveAndFlush(elemento);
     }
     
     //Actualiza un registro

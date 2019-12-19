@@ -139,6 +139,9 @@ public class OrdenVentaEscalaService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public int agregar(OrdenVentaEscala elemento) {
+        elemento.setOrdenVentaTarifa(ordenVentaTarifaDAO.obtenerPorOrdenVentaYTipoTarifa(
+                elemento.getOrdenVentaTarifa().getOrdenVenta().getId(), 
+                elemento.getOrdenVentaTarifa().getTipoTarifa().getId()));
         return elementoDAO.saveAndFlush(elemento).getId();
     }
     
