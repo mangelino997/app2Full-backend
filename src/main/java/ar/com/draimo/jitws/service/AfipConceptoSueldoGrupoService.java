@@ -83,7 +83,7 @@ public class AfipConceptoSueldoGrupoService {
 
     //Formatea los strings
     private AfipConceptoSueldoGrupo formatearStrings(AfipConceptoSueldoGrupo elemento) {
-        elemento.setNombre(elemento.getNombre().trim());
+        elemento.setNombre(elemento.getNombre().trim().toUpperCase());
         return elemento;
     }
 
