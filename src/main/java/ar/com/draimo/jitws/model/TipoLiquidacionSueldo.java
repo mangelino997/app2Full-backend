@@ -23,6 +23,10 @@ public class TipoLiquidacionSueldo extends ObjetoGenerico {
     @Column(name = "codigoAfip",length = 3, nullable = false)
     private String codigoAfip;
     
+    //Define el estaHabilitado
+    @Column(name = "estaHabilitado", nullable = false)
+    private boolean estaHabilitado;
+    
     //Getters y Setters de la clase
     public String getNombre() {
         return nombre;
@@ -38,6 +42,14 @@ public class TipoLiquidacionSueldo extends ObjetoGenerico {
 
     public void setCodigoAfip(String codigoAfip) {
         this.codigoAfip = codigoAfip;
+    }
+
+    public boolean isEstaHabilitado() {
+        return estaHabilitado;
+    }
+
+    public void setEstaHabilitado(boolean estaHabilitado) {
+        this.estaHabilitado = estaHabilitado;
     }
     
 }
