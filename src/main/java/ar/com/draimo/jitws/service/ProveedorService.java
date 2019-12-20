@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
 import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.ITipoCuentaBancariaDAO;
@@ -74,6 +75,10 @@ public class ProveedorService {
     //Define el rol subopcion service
     @Autowired
     RolOpcionService rolOpcionService;
+    
+    //Referencia al DAO de moneda
+    @Autowired
+    IMonedaDAO monedaDAO;
 
     //Obtiene la lista para inicializar
     public InitProveedorDTO inicializar(int rol, int subopcion, int usuario) {
@@ -88,6 +93,7 @@ public class ProveedorService {
         p.setTipoDocumentos(tipoDocumentoDAO.findAll());
         p.setTipoProveedores(tipoProveedorDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
+        p.setMonedas(monedaDAO.findAll());
         return p;
     }
     
