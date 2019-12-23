@@ -120,32 +120,6 @@ public class Proveedor extends ObjetoGenerico {
     @Column(name = "notaImpresionOrdenPago",length = 200, nullable = true)
     private String notaImpresionOrdenPago;
     
-    //Referencia a la clase Banco
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idBanco", nullable = true)
-    private Banco banco;
-    
-    //Referencia a la clase Tipo cuenta bancaria
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idTipoCuentaBancaria", nullable = true)
-    private TipoCuentaBancaria tipoCuentaBancaria;
-    
-    //Define el numero de cuenta
-    @Column(name = "numeroCuenta",length = 20, nullable = true)
-    private String numeroCuenta;
-    
-    //Define el titular de la cuenta
-    @Column(name = "titular",length = 45, nullable = true)
-    private String titular;
-    
-    //Define el numero de cbu de la cuenta
-    @Column(name = "numeroCBU",length = 22, nullable = true)
-    private String numeroCBU;
-    
-    //Define el alias de cbu de la cuenta
-    @Column(name = "aliasCBU",length = 45, nullable = true)
-    private String aliasCBU;
-    
     //Referencia a la clase Tipo Proveedor
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idTipoProveedor", nullable = false)
@@ -332,55 +306,7 @@ public class Proveedor extends ObjetoGenerico {
     public void setNotaImpresionOrdenPago(String notaImpresionOrdenPago) {
         this.notaImpresionOrdenPago = notaImpresionOrdenPago;
     }
-
-    public Banco getBanco() {
-        return banco;
-    }
-
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
-
-    public TipoCuentaBancaria getTipoCuentaBancaria() {
-        return tipoCuentaBancaria;
-    }
-
-    public void setTipoCuentaBancaria(TipoCuentaBancaria tipoCuentaBancaria) {
-        this.tipoCuentaBancaria = tipoCuentaBancaria;
-    }
-
-    public String getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
-
-    public String getTitular() {
-        return titular;
-    }
-
-    public void setTitular(String titular) {
-        this.titular = titular;
-    }
-
-    public String getNumeroCBU() {
-        return numeroCBU;
-    }
-
-    public void setNumeroCBU(String numeroCBU) {
-        this.numeroCBU = numeroCBU;
-    }
-
-    public String getAliasCBU() {
-        return aliasCBU;
-    }
-
-    public void setAliasCBU(String aliasCBU) {
-        this.aliasCBU = aliasCBU;
-    }
-
+    
     public TipoProveedor getTipoProveedor() {
         return tipoProveedor;
     }
