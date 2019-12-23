@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
 import ar.com.draimo.jitws.dao.ICondicionCompraDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMonedaDAO;
+import ar.com.draimo.jitws.dao.IProveedorCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IProveedorCuentaContableDAO;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.ITipoCuentaBancariaDAO;
@@ -14,6 +15,7 @@ import ar.com.draimo.jitws.dto.ProveedorDTO;
 import ar.com.draimo.jitws.dto.InitProveedorDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Proveedor;
+import ar.com.draimo.jitws.model.ProveedorCuentaBancaria;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,6 +45,10 @@ public class ProveedorService {
     //Define la referencia al dao ProveedorCuentaContable
     @Autowired
     IProveedorCuentaContableDAO proveedorCuentaContableDAO;
+
+    //Define la referencia al dao ProveedorCuentaContable
+    @Autowired
+    IProveedorCuentaBancariaDAO proveedorCuentaBancariaDAO;
 
     //Define la referencia al dao tipoDocumento
     @Autowired
@@ -139,6 +145,12 @@ public class ProveedorService {
                     pcc.setProveedor(proveedor);
                     proveedorCuentaContableDAO.saveAndFlush(pcc);
                 }
+            }
+        }
+        if (elemento.getProveedorCuentasBancarias()!= null) {
+            for (ProveedorCuentaBancaria pcb : elemento.getProveedorCuentasBancarias()) {
+                    pcb.setProveedor(proveedor);
+                    proveedorCuentaBancariaDAO.saveAndFlush(pcb);
             }
         }
         return proveedor;

@@ -138,6 +138,11 @@ public class Proveedor extends ObjetoGenerico {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
     private List<ProveedorCuentaContable> proveedorCuentasContables;
     
+    //Referencia a la clase proveedoriCuentaBancaria
+    @JsonIgnoreProperties("proveedor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "proveedor")
+    private List<ProveedorCuentaBancaria> proveedorCuentasBancarias;
+    
     //Getters y Setters de la clase
     public String getRazonSocial() {
         return razonSocial;
@@ -338,5 +343,16 @@ public class Proveedor extends ObjetoGenerico {
     public void setProveedorCuentasContables(List<ProveedorCuentaContable> proveedorCuentasContables) {
         this.proveedorCuentasContables = proveedorCuentasContables;
     }
+
+    public List<ProveedorCuentaBancaria> getProveedorCuentasBancarias() {
+        return proveedorCuentasBancarias;
+    }
+
+    public void setProveedorCuentasBancarias(List<ProveedorCuentaBancaria> proveedorCuentasBancarias) {
+        this.proveedorCuentasBancarias = proveedorCuentasBancarias;
+    }
+    
+    
+    
     
 }
