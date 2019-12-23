@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.dto;
 import ar.com.draimo.jitws.model.AfipCondicionIva;
 import ar.com.draimo.jitws.model.CondicionCompra;
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.Opcion;
 import ar.com.draimo.jitws.model.Pestania;
 import ar.com.draimo.jitws.model.TipoCuentaBancaria;
@@ -46,6 +47,9 @@ public class InitProveedorDTO {
     
     //Lista de empresas
     private List<Empresa> empresas; 
+    
+    //Lista de sucursales
+    private List<Moneda> monedas;  
 
     //Define Getters y Setters
 
@@ -128,5 +132,15 @@ public class InitProveedorDTO {
     public void setEmpresas(List<Empresa> empresas) {
         this.empresas = empresas;
     }
+
+    public List<Moneda> getMonedas() {
+        return monedas;
+    }
+
+    public void setMonedas(List<Moneda> monedas) {
+        this.monedas = monedas;
+    }
+    
+    
 
 }
