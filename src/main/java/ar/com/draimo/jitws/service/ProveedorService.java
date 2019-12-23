@@ -193,18 +193,6 @@ public class ProveedorService {
         if (elemento.getNotaImpresionOrdenPago() != null) {
             elemento.setNotaImpresionOrdenPago(elemento.getNotaImpresionOrdenPago().trim());
         }
-        if (elemento.getNumeroCuenta() != null) {
-            elemento.setNumeroCuenta(elemento.getNumeroCuenta().trim());
-        }
-        if (elemento.getTitular() != null) {
-            elemento.setTitular(elemento.getTitular().trim());
-        }
-        if (elemento.getNumeroCBU() != null) {
-            elemento.setNumeroCBU(elemento.getNumeroCBU().trim());
-        }
-        if (elemento.getAliasCBU() != null) {
-            elemento.setAliasCBU(elemento.getAliasCBU().trim());
-        }
         return elemento;
     }
     
