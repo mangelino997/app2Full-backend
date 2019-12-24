@@ -2,15 +2,19 @@
 package ar.com.draimo.jitws.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -465,6 +469,12 @@ public class Personal extends ObjetoGenerico {
     //Define si esta activa
     @Column(name = "estaActiva", nullable = false)
     private boolean estaActiva;
+    
+    //Referencia a la clase personalCuentaBancaria
+    @JsonIgnoreProperties("personal")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "personal")
+    private List<PersonalCuentaBancaria> personalCuentaBancarias;
+    
 
     //Getters y Setters de la clase
     public String getNombre() {
@@ -1233,6 +1243,14 @@ public class Personal extends ObjetoGenerico {
 
     public void setEstaActiva(boolean estaActiva) {
         this.estaActiva = estaActiva;
+    }
+
+    public List<PersonalCuentaBancaria> getPersonalCuentaBancarias() {
+        return personalCuentaBancarias;
+    }
+
+    public void setPersonalCuentaBancarias(List<PersonalCuentaBancaria> personalCuentaBancarias) {
+        this.personalCuentaBancarias = personalCuentaBancarias;
     }
     
 }
