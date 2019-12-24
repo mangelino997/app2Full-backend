@@ -41,6 +41,11 @@ public class ProveedorCuentaBancariaService {
         return elementoDAO.findByProveedor(proveedorDAO.findById(idProveedor).get());
     }
     
+    //Obtiene una lista por Cliente
+    public ProveedorCuentaBancaria obtenerPorNumeroYCBU(String numeroCuenta, String cbu) {
+        return elementoDAO.findByNumeroCuentaAndCbu(numeroCuenta, cbu);
+    }
+    
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public ProveedorCuentaBancaria agregar(ProveedorCuentaBancaria elemento) {

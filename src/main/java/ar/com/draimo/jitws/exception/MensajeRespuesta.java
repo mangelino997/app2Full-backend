@@ -300,6 +300,10 @@ public class MensajeRespuesta {
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_COMPRA_COMPROBANTE;
                         plusMensaje = " COMPRA COMPROBANTE PERCEPCION Y JURISDICCIÓN";
                         break;
+                    case DuplicidadError.CUENTA_BANCARIA_UNICO:
+                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CUENTA_BANCARIA;
+                        plusMensaje = " PROVEEDOR Y CUENTA BANCARIA";
+                        break;
                     case DuplicidadError.CUENTA_DESDE_HASTA_UNICO:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_CUENTA_DESDE_HASTA;
                         plusMensaje = " DESDE, HASTA Y CUENTA";

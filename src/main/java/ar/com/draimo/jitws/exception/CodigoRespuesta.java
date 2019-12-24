@@ -74,7 +74,7 @@ public class CodigoRespuesta {
     /*
     Define una respuesta de datos duplicados
     Los codigos estan ordenados alfabeticamente.
-    Ultimo codigo datoDuplicado = 11043
+    Ultimo codigo datoDuplicado = 11044
     */
     public static final int DATO_DUPLICADO = 11020;
     public static final int DATO_DUPLICADO_ABREVIATURA = 11004;
@@ -120,6 +120,7 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_USERNAME = 11005;
     public static final int DATO_DUPLICADO_VALOR = 11016;
     public static final int DATO_DUPLICADO_TRAMO = 11017;
+    public static final int DATO_DUPLICADO_CUENTA_BANCARIA = 11044;
 
     /*
     Define una respuesta de datos que superan su longitud

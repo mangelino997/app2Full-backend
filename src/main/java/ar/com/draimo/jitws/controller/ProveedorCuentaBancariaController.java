@@ -66,10 +66,18 @@ public class ProveedorCuentaBancariaController {
         return elementoService.listarPorProveedor(idProveedor);
     }
 
+    //Obtiene una lista por Proveedor
+    @GetMapping(value = URL + "/obtenerPorNumeroYCBU/{numeroCuenta}/{cbu}")
+    @ResponseBody
+    public ProveedorCuentaBancaria obtenerPorNumeroYCBU(@PathVariable String numeroCuenta, @PathVariable String cbu) throws IOException {
+        return elementoService.obtenerPorNumeroYCBU(numeroCuenta, cbu);
+    }
+
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ProveedorCuentaBancaria elemento) {
         try {
+            
             ProveedorCuentaBancaria a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());

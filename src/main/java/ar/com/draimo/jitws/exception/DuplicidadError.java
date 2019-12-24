@@ -28,6 +28,8 @@ public class DuplicidadError {
     public static final String COMPROBANTE_UNICO = "comprobante_UNIQUE";
     
     public static final String CORREOELECTRONICO_UNICO = "correoelectronico_UNIQUE";
+    
+    public static final String CUENTA_BANCARIA_UNICO = "cuentabancaria_UNIQUE";
 
     public static final String CUENTA_DESDE_HASTA_UNICO = "cuenta_desde_hasta_UNIQUE";
 

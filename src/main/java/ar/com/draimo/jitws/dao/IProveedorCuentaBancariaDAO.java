@@ -19,5 +19,6 @@ public interface IProveedorCuentaBancariaDAO extends JpaRepository<ProveedorCuen
     
     //Obtiene una lista por cuentaBancaria
     public List<ProveedorCuentaBancaria> findByProveedor(Proveedor proveedor);
+   
     
 }
