@@ -453,7 +453,7 @@ public class CodigoRespuesta {
     public static final int VENDEDOR_INEXISTENTE = 13134;
     public static final int VENTA_COMPROBANTE_INEXISTENTE = 13135;
     public static final int VENTA_COMPROBANTE_APLICADO_INEXISTENTE = 13136;
-    public static final int VENTA_ITEM_CONCEPTO_INEXISTENTE = 13137;
+    public static final int TIPO_CONCEPTO_VENTA_INEXISTENTE = 13137;
     public static final int VENTA_TIPO_ITEM_INEXISTENTE = 13138;
     public static final int VIAJE_INEXISTENTE = 13139;
     public static final int VIAJE_REMITO_INEXISTENTE = 13140;

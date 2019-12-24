@@ -1,11 +1,11 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaTipoItem;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Interfaz DAO VentaTipoItem
@@ -22,6 +22,7 @@ public interface IVentaTipoItemDAO extends JpaRepository<VentaTipoItem, Integer>
     public List<VentaTipoItem> findByNombreContaining(String nombre);
     
     //Obtiene un listado de ventaTipoItem por tipoComprobante
-    public List<VentaTipoItem> findByTipoComprobante(Optional<TipoComprobante> tipoComprobante);
+    @Query(value = "SELECT * FROM ventatipoitem where idTipoComprobante = :idTipoComprobante", nativeQuery = true)
+    public List<VentaTipoItem> listarTipoComprobante(@Param("idTipoComprobante") int idTipoComprobante);
     
 }

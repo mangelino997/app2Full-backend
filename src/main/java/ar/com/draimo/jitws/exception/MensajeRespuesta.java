@@ -3160,9 +3160,9 @@ public class MensajeRespuesta {
                 codigoRespuesta = CodigoRespuesta.VENTA_TIPO_ITEM_INEXISTENTE;
                 plusMensaje = ": VENTA TIPO ITEM";
                 break;
-            case InexistenciaError.VENTA_ITEM_CONCEPTO_INEXISTENTE:
-                codigoRespuesta = CodigoRespuesta.VENTA_ITEM_CONCEPTO_INEXISTENTE;
-                plusMensaje = ": VENTA ITEM CONCEPTO";
+            case InexistenciaError.TIPO_CONCEPTO_VENTA_INEXISTENTE:
+                codigoRespuesta = CodigoRespuesta.TIPO_CONCEPTO_VENTA_INEXISTENTE;
+                plusMensaje = ": TIPO CONCEPTO";
                 break;
             case InexistenciaError.VIAJE_INEXISTENTE:
                 codigoRespuesta = CodigoRespuesta.VIAJE_INEXISTENTE;

@@ -68,7 +68,17 @@ public class VentaTipoItemController {
     @GetMapping(value = URL + "/listarItems/{idTipoComprobante}")
     @ResponseBody
     public List<VentaTipoItem> listarItems(@PathVariable int idTipoComprobante) {
-        return elementoService.listarItems(idTipoComprobante);
+        ResponseEntity<?> r = null;
+        try {
+            return elementoService.listarItems(idTipoComprobante);
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            r = MensajeRespuesta.datoDuplicado(dive);
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            r = MensajeRespuesta.error();
+        }
+        return null;
     }
 
     //Agrega un registro

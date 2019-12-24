@@ -44,7 +44,8 @@ public class VentaTipoItemService {
 
     //Obtiene un listado por tipoComprobante
     public List<VentaTipoItem> listarItems(int idTipoComprobante) {
-        return elementoDAO.findByTipoComprobante(tipoComprobanteDAO.findById(idTipoComprobante));
+        List<VentaTipoItem> li = elementoDAO.listarTipoComprobante(idTipoComprobante);
+        return li;
     }
 
     //Agrega un registro
