@@ -14,6 +14,7 @@ import ar.com.draimo.jitws.dao.IEstadoCivilDAO;
 import ar.com.draimo.jitws.dao.IFotoDAO;
 import ar.com.draimo.jitws.dao.IObraSocialDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
+import ar.com.draimo.jitws.dao.IPersonalCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
 import ar.com.draimo.jitws.dao.ISeguridadSocialDAO;
 import ar.com.draimo.jitws.dao.ISexoDAO;
@@ -27,6 +28,7 @@ import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Personal;
+import ar.com.draimo.jitws.model.PersonalCuentaBancaria;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -50,6 +52,10 @@ public class PersonalService {
     //Define la referencia al dao
     @Autowired
     IPersonalDAO elementoDAO;
+
+    //Define la referencia al dao
+    @Autowired
+    IPersonalCuentaBancariaDAO personalCuentaBancariaDAO;
 
     //Define la referencia al dao de foto
     @Autowired
@@ -320,7 +326,15 @@ public class PersonalService {
             elemento.setPdfAltaTemprana(pdf5);
         }
         elemento.setPdfAltaTemprana(pdf5 != null ? pdf5 : null);
-        return elementoDAO.saveAndFlush(elemento);
+        Personal per = elementoDAO.saveAndFlush(elemento);
+        
+        if (elemento.getPersonalCuentaBancarias()!= null) {
+            for (PersonalCuentaBancaria pcb : elemento.getPersonalCuentaBancarias()) {
+                    pcb.setPersonal(per);
+                    personalCuentaBancariaDAO.saveAndFlush(pcb);
+            }
+        }
+        return per;
     }
 
     //Actualiza un registro
