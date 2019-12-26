@@ -124,7 +124,7 @@ public class VentaComprobanteService {
                 empresaDAO.findById(idEmpresa).get(), sucursalDAO.findById(idSucursal).get()));
         p.setTipoComprobantes(tipoComprobanteDAO.listarParaFactura());
         p.setUltimoId(obtenerSiguienteId());
-        p.setVentaTipoItems(ventaTipoItemDAO.findByTipoComprobante(tipoComprobanteDAO.findById(1)));
+        p.setVentaTipoItems(ventaTipoItemDAO.listarTipoComprobante(1));
         return p;
     }
 
@@ -137,7 +137,7 @@ public class VentaComprobanteService {
                 empresaDAO.findById(idEmpresa).get(), sucursalDAO.findById(idSucursal).get()));
         p.setTipoComprobantes(tipoComprobanteDAO.listarParaNotaCredito());
         p.setUltimoId(obtenerSiguienteId());
-        p.setVentaTipoItems(ventaTipoItemDAO.findByTipoComprobante(tipoComprobanteDAO.findById(3)));
+        p.setVentaTipoItems(ventaTipoItemDAO.listarTipoComprobante(3));
         return p;
     }
 
