@@ -9,6 +9,7 @@ import ar.com.draimo.jitws.model.AfipSituacion;
 import ar.com.draimo.jitws.model.Area;
 import ar.com.draimo.jitws.model.Categoria;
 import ar.com.draimo.jitws.model.EstadoCivil;
+import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.ObraSocial;
 import ar.com.draimo.jitws.model.Opcion;
 import ar.com.draimo.jitws.model.Pestania;
@@ -16,6 +17,7 @@ import ar.com.draimo.jitws.model.SeguridadSocial;
 import ar.com.draimo.jitws.model.Sexo;
 import ar.com.draimo.jitws.model.Sindicato;
 import ar.com.draimo.jitws.model.Sucursal;
+import ar.com.draimo.jitws.model.TipoCuentaBancaria;
 import ar.com.draimo.jitws.model.TipoDocumento;
 import java.sql.Date;
 import java.util.List;
@@ -43,6 +45,9 @@ public class InitPersonalDTO {
     
     //Lista de AfipCondicion
     private List<AfipCondicion> afipCondiciones;  
+    
+    //Lista de tipoCuentaBancarias
+    private List<TipoCuentaBancaria> tipoCuentaBancarias;  
     
     //Lista de AfipLocalidad
     private List<AfipLocalidad> afipLocalidades; 
@@ -82,6 +87,9 @@ public class InitPersonalDTO {
     
     //Lista de rubros
     private List<Opcion> opciones; 
+    
+    //Lista de sucursales
+    private List<Moneda> monedas;  
 
     //Define Getters y Setters
 
@@ -131,6 +139,14 @@ public class InitPersonalDTO {
 
     public void setAfipCondiciones(List<AfipCondicion> afipCondiciones) {
         this.afipCondiciones = afipCondiciones;
+    }
+    
+    public List<TipoCuentaBancaria> getTipoCuentaBancarias() {
+        return tipoCuentaBancarias;
+    }
+
+    public void setTipoCuentaBancarias(List<TipoCuentaBancaria> tipoCuentaBancarias) {
+        this.tipoCuentaBancarias = tipoCuentaBancarias;
     }
 
     public List<AfipLocalidad> getAfipLocalidades() {
@@ -236,5 +252,15 @@ public class InitPersonalDTO {
     public void setOpciones(List<Opcion> opciones) {
         this.opciones = opciones;
     }
+
+    public List<Moneda> getMonedas() {
+        return monedas;
+    }
+
+    public void setMonedas(List<Moneda> monedas) {
+        this.monedas = monedas;
+    }
+    
+    
     
 }

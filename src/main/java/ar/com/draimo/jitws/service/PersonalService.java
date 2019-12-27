@@ -12,6 +12,7 @@ import ar.com.draimo.jitws.dao.IAreaDAO;
 import ar.com.draimo.jitws.dao.ICategoriaDAO;
 import ar.com.draimo.jitws.dao.IEstadoCivilDAO;
 import ar.com.draimo.jitws.dao.IFotoDAO;
+import ar.com.draimo.jitws.dao.IMonedaDAO;
 import ar.com.draimo.jitws.dao.IObraSocialDAO;
 import ar.com.draimo.jitws.dao.IPdfDAO;
 import ar.com.draimo.jitws.dao.IPersonalCuentaBancariaDAO;
@@ -20,11 +21,13 @@ import ar.com.draimo.jitws.dao.ISeguridadSocialDAO;
 import ar.com.draimo.jitws.dao.ISexoDAO;
 import ar.com.draimo.jitws.dao.ISindicatoDAO;
 import ar.com.draimo.jitws.dao.ISucursalDAO;
+import ar.com.draimo.jitws.dao.ITipoCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dto.ChoferDTO;
 import ar.com.draimo.jitws.dto.InitPersonalDTO;
 import ar.com.draimo.jitws.dto.PersonalDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.CuentaBancaria;
 import ar.com.draimo.jitws.model.Foto;
 import ar.com.draimo.jitws.model.Pdf;
 import ar.com.draimo.jitws.model.Personal;
@@ -128,6 +131,10 @@ public class PersonalService {
     //Define la referencia tipoDocumentoDAO
     @Autowired
     ITipoDocumentoDAO tipoDocumentoDAO;
+    
+    //Define la referencia al dao tipoCuentaBancariaDAO
+    @Autowired
+    ITipoCuentaBancariaDAO tipoCuentaBancariaDAO;
 
     //Define la referencia al service de pdf
     @Autowired
@@ -141,6 +148,10 @@ public class PersonalService {
     @Autowired
     RolOpcionService rolOpcionService;
     
+    //Referencia al DAO de moneda
+    @Autowired
+    IMonedaDAO monedaDAO;
+    
     //Inicializa los datos
     public InitPersonalDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
         InitPersonalDTO p = new InitPersonalDTO();
@@ -151,6 +162,7 @@ public class PersonalService {
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         p.setOpciones(rolOpcionService.listarPorRolYSubopcion(idRol, idSubopcion));
         p.setAfipModContrataciones(afipModContratacionDAO.findAll());
+        p.setTipoCuentaBancarias(tipoCuentaBancariaDAO.findAll());
         p.setAfipSiniestrados(afipSiniestradoDAO.findAll());
         p.setAfipSituacion(afipSituacionDAO.findAll());
         p.setAreas(areaDAO.findAll());
@@ -163,6 +175,7 @@ public class PersonalService {
         p.setSindicatos(sindicatoDAO.findAll());
         p.setSucursales(sucursalDAO.findAll());
         p.setTipoDocumentos(tipoDocumentoDAO.findAll());
+        p.setMonedas(monedaDAO.findAll());
         return p;
     }
 
@@ -427,6 +440,15 @@ public class PersonalService {
             Pdf pdf5 = personal.getPdfAltaTemprana() != null ? pdfDAO.save(p5)
                     : pdfDAO.saveAndFlush(p5);
             elemento.setPdfAltaTemprana(pdf5);
+        }
+        //Añade las nuevas cuentas bancarias
+        if (elemento.getPersonalCuentaBancarias()!= null) {
+            for (PersonalCuentaBancaria pcb : elemento.getPersonalCuentaBancarias()) {
+                if(pcb.getId() == 0 ){
+                    pcb.setPersonal(personal);
+                    personalCuentaBancariaDAO.saveAndFlush(pcb);
+                }
+            }
         }
         establecerAlias(elemento);
     }

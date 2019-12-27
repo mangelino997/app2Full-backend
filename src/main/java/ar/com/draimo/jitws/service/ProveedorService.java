@@ -13,7 +13,9 @@ import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
 import ar.com.draimo.jitws.dao.ITipoProveedorDAO;
 import ar.com.draimo.jitws.dto.ProveedorDTO;
 import ar.com.draimo.jitws.dto.InitProveedorDTO;
+import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Empresa;
+import ar.com.draimo.jitws.model.PersonalCuentaBancaria;
 import ar.com.draimo.jitws.model.Proveedor;
 import ar.com.draimo.jitws.model.ProveedorCuentaBancaria;
 import ar.com.draimo.jitws.model.ProveedorCuentaContable;
@@ -53,35 +55,35 @@ public class ProveedorService {
     //Define la referencia al dao tipoDocumento
     @Autowired
     ITipoDocumentoDAO tipoDocumentoDAO;
-    
+
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
-    
+
     //Define la referencia al dao afipCondicionIvaDAO
     @Autowired
     IAfipCondicionIvaDAO afipCondicionIvaDAO;
-    
+
     //Define la referencia al dao condicionCompraDAO
     @Autowired
     ICondicionCompraDAO condicionCompraDAO;
-    
+
     //Define la referencia al dao tipoCuentaBancariaDAO
     @Autowired
     ITipoCuentaBancariaDAO tipoCuentaBancariaDAO;
-    
+
     //Define la referencia al dao tipoProveedorDAO
     @Autowired
     ITipoProveedorDAO tipoProveedorDAO;
-    
+
     //Define la subopcion pestania service
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
-    
+
     //Define el rol subopcion service
     @Autowired
     RolOpcionService rolOpcionService;
-    
+
     //Referencia al DAO de moneda
     @Autowired
     IMonedaDAO monedaDAO;
@@ -102,19 +104,25 @@ public class ProveedorService {
         p.setMonedas(monedaDAO.findAll());
         return p;
     }
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         Proveedor elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null ? elemento.getId() + 1 : 1;
     }
+    
+    //Obtiene un registro por id
+    public Object obtenerPorId(int id) throws IOException, Exception {
+        Proveedor elemento = elementoDAO.obtenerPorId(id);
+        return elemento;
+  }
 
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<Proveedor> proveedores = elementoDAO.findAll();
         return aplicarFiltros(proveedores);
     }
-    
+
     //Obtiene un listado por filtro
     public Object listarPorFiltros(ProveedorDTO proveedorDTO) throws IOException {
         List<Proveedor> elementos = elementoDAO.listarPorFiltros(proveedorDTO.getIdTipoProveedor(), proveedorDTO.getIdLocalidad(),
@@ -141,16 +149,16 @@ public class ProveedorService {
         Proveedor proveedor = elementoDAO.saveAndFlush(elemento);
         if (elemento.getProveedorCuentasContables() != null) {
             for (ProveedorCuentaContable pcc : elemento.getProveedorCuentasContables()) {
-                if(pcc.getPlanCuentaCompra() != null) {
+                if (pcc.getPlanCuentaCompra() != null) {
                     pcc.setProveedor(proveedor);
                     proveedorCuentaContableDAO.saveAndFlush(pcc);
                 }
             }
         }
-        if (elemento.getProveedorCuentasBancarias()!= null) {
+        if (elemento.getProveedorCuentasBancarias() != null) {
             for (ProveedorCuentaBancaria pcb : elemento.getProveedorCuentasBancarias()) {
-                    pcb.setProveedor(proveedor);
-                    proveedorCuentaBancariaDAO.saveAndFlush(pcb);
+                pcb.setProveedor(proveedor);
+                proveedorCuentaBancariaDAO.saveAndFlush(pcb);
             }
         }
         return proveedor;
@@ -167,8 +175,18 @@ public class ProveedorService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(Proveedor elemento) {
+    public void actualizar(Proveedor elemento) throws Exception {
+        Proveedor proveedor = (Proveedor) obtenerPorId(elemento.getId());
         elemento = formatearStrings(elemento);
+        //Añade las nuevas cuentas bancarias
+        if (elemento.getProveedorCuentasBancarias()!= null) {
+            for (ProveedorCuentaBancaria pcb : elemento.getProveedorCuentasBancarias()) {
+                if(pcb.getId() == 0 ){
+                    pcb.setProveedor(proveedor);
+                    proveedorCuentaBancariaDAO.saveAndFlush(pcb);
+                }
+            }
+        }
         establecerAlias(elemento);
     }
 
@@ -207,7 +225,7 @@ public class ProveedorService {
         }
         return elemento;
     }
-    
+
     //Arma la lista de cliente cuentas contables para todas las empresas
     private List<ProveedorCuentaContable> construirCuentasContablesParaEmpresas(Proveedor proveedor) {
         List<Empresa> empresas = empresaDAO.findAll();
@@ -233,7 +251,7 @@ public class ProveedorService {
 
     //Retorna un object aplicando los filtros
     private Object aplicarFiltros(List<Proveedor> elementos) throws IOException {
-       ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
         FilterProvider filters = new SimpleFilterProvider()
@@ -241,5 +259,5 @@ public class ProveedorService {
         String string = mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }
-    
+
 }

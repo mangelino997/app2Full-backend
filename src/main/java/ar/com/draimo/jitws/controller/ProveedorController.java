@@ -59,6 +59,13 @@ public class ProveedorController {
         return elementoService.obtenerSiguienteId();
     }
 
+    //Obtiene un registro por id
+    @GetMapping(value = URL + "/obtenerPorId/{id}")
+    @ResponseBody
+    public Object obtenerPorId(@PathVariable int id) throws IOException, Exception {
+        return elementoService.obtenerPorId(id);
+    }
+    
     //Obtiene la lista completa
     @GetMapping(value = URL)
     @ResponseBody
