@@ -25,9 +25,8 @@ public interface ISoporteDAO extends JpaRepository<Soporte, Integer> {
     public List<Soporte> findByUsuarioAndAliasContaining(Usuario usuario ,String alias);
     
     //Obtiene un listado por usuario
-    @Query(value = "SELECT * FROM soporte s WHERE (:idRol=1 OR :idRol=2) OR "
+    @Query(value = "SELECT * FROM soporte s WHERE (:idUsuario=1 OR :idUsuario=2) OR "
             + "(s.idUsuario=:idUsuario)", nativeQuery = true)
-    public List<Soporte> listarPorUsuario(@Param("idUsuario") int idUsuario,
-            @Param("idRol") int idRol);
+    public List<Soporte> listarPorUsuario(@Param("idUsuario") int idUsuario);
     
 }

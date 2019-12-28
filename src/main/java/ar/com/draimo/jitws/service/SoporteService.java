@@ -94,16 +94,16 @@ public class SoporteService {
     public Object listarPorAliasContainingYUsuario(int idUsuario, String alias) throws IOException {
         Usuario usuario = usuarioDAO.findById(idUsuario).get();
         List<Soporte> elementos = alias.equals("*") ? 
-                elementoDAO.listarPorUsuario(usuario.getId(), usuario.getRol().getId())
+                elementoDAO.listarPorUsuario(usuario.getId())
                 : elementoDAO.findByUsuarioAndAliasContaining(usuario, alias);
         return retornarObjeto(elementos, null, true);
     }
 
     //Obtiene una lista por usuario
     public Object listarPorUsuario(int idUsuario) throws IOException {
-        Usuario u = usuarioDAO.findById(idUsuario).get();
-        List<Soporte> elementos = elementoDAO.listarPorUsuario(u.getId(), u.getRol().getId());
-        return retornarObjeto(elementos,null, true);
+        Usuario usuario = usuarioDAO.findById(idUsuario).get();
+        List<Soporte> elementos = elementoDAO.listarPorUsuario(usuario.getId());
+        return retornarObjeto(elementos, null, true);
     }
 
     //Agrega un registro
