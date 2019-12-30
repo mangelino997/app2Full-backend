@@ -70,7 +70,6 @@ public class ProveedorCuentaBancariaController {
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ProveedorCuentaBancaria elemento) {
         try {
-            
             ProveedorCuentaBancaria a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
