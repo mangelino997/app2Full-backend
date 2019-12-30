@@ -4,7 +4,13 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IProveedorDAO;
 import ar.com.draimo.jitws.dao.IPersonalCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IPersonalDAO;
+import ar.com.draimo.jitws.model.Personal;
 import ar.com.draimo.jitws.model.PersonalCuentaBancaria;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,10 +44,11 @@ public class PersonalCuentaBancariaService {
     }
 
     //Obtiene una lista por Personal
-    public List<PersonalCuentaBancaria> listarPorPersonal(int idPersonal) {
-        return elementoDAO.findByPersonal(personalDAO.findById(idPersonal).get());
+    public Object listarPorPersonal(int idPersonal) throws IOException {
+        List<PersonalCuentaBancaria> elementos = elementoDAO.findByPersonal(personalDAO.findById(idPersonal).get());
+        return aplicarFiltros(elementos, null);
     }
-    
+
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public PersonalCuentaBancaria agregar(PersonalCuentaBancaria elemento) {
@@ -58,6 +65,19 @@ public class PersonalCuentaBancariaService {
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int id) {
         elementoDAO.deleteById(id);
+    }
+
+    //Retorna un object aplicando los filtros
+    private Object aplicarFiltros(List<PersonalCuentaBancaria> elementos, PersonalCuentaBancaria elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = elemento != null ? SimpleBeanPropertyFilter
+                .serializeAllExcept() : SimpleBeanPropertyFilter
+                        .serializeAllExcept("datos");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos != null ? elementos : elemento);
+        return mapper.readValue(string, Object.class);
     }
 
 }

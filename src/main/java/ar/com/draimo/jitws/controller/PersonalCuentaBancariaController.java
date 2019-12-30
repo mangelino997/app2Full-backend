@@ -62,7 +62,7 @@ public class PersonalCuentaBancariaController {
     //Obtiene una lista por idPersonal
     @GetMapping(value = URL + "/listarPorPersonal/{idPersonal}")
     @ResponseBody
-    public List<PersonalCuentaBancaria> listarPorPersonal(@PathVariable int idPersonal) throws IOException {
+    public Object listarPorPersonal(@PathVariable int idPersonal) throws IOException {
         return elementoService.listarPorPersonal(idPersonal);
     }
 
