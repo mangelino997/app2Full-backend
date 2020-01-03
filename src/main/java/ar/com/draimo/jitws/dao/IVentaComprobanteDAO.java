@@ -41,10 +41,12 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
             + "e.esEntregado=false)", nativeQuery = true)
     public List<VentaComprobante> listarComprobantesDisponibles();
 
-    //Obtiene un listado de registros que no son notas de credito/debito
-    @Query(value = "select * from ventacomprobante where idTipoComprobante!=2 or"
-            + " idTipoComprobante!=3 or idTipoComprobante!=27 or idTipoComprobante!=28 "
-            + "and idCliente=:idCliente and idEmpresa=:idEmpresa ", nativeQuery = true)
+    //Obtiene un listado de comprobantes pendientes (con saldo mayor a 0)
+//    @Query(value = "select * from ventacomprobante where idTipoComprobante!=2 or"
+//            + " idTipoComprobante!=3 or idTipoComprobante!=27 or idTipoComprobante!=28 "
+//            + "and idCliente=:idCliente and idEmpresa=:idEmpresa ", nativeQuery = true)
+    @Query(value = "select * from ventacomprobante where importeSaldo > 0"
+            + " and idCliente=:idCliente and idEmpresa=:idEmpresa ", nativeQuery = true)
     public List<VentaComprobante> listarParaNotasDeCredito(@Param("idCliente") int idCliente,
             @Param("idEmpresa") int idEmpresa);
 
