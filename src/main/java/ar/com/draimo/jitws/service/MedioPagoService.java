@@ -40,12 +40,12 @@ public class MedioPagoService {
 
     //Obtiene una lista de halibitados para ingreso
     public List<MedioPago> listarParaIngreso() {
-        return  elementoDAO.findByEstaActivoIngresoTrue();
+        return elementoDAO.findByEstaActivoIngresoTrue();
     }
 
     //Obtiene una lista de halibitados para egreso
     public List<MedioPago> listarParaEgreso() {
-        return  elementoDAO.findByEstaActivoEgresoTrue();
+        return elementoDAO.findByEstaActivoEgresoTrue();
     }
 
     //Agrega un registro
