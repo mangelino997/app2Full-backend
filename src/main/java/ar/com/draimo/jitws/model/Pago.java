@@ -20,7 +20,6 @@ import javax.persistence.Table;
 /**
  * Clase pago
  * Define el modelo (columnas) de la base de datos.
- *
  * @author blas
  */
 @Entity

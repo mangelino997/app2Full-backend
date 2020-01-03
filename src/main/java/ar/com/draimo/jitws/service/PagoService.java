@@ -8,6 +8,8 @@ import ar.com.draimo.jitws.dao.IPagoDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.ITipoComprobanteDAO;
 import ar.com.draimo.jitws.dao.ICompraComprobanteDAO;
+import ar.com.draimo.jitws.dao.IMedioPagoDAO;
+import ar.com.draimo.jitws.dto.InitOrdenPagoDTO;
 import ar.com.draimo.jitws.model.CompraComprobante;
 import ar.com.draimo.jitws.model.Pago;
 import ar.com.draimo.jitws.model.PagoAnticipo;
@@ -55,6 +57,22 @@ public class PagoService {
     //Define el dao de CompraComprobante
     @Autowired
     ICompraComprobanteDAO compraComprobanteDAO;
+    
+    //Define el dao
+    @Autowired
+    IMedioPagoDAO medioPagoDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitOrdenPagoDTO inicializar(int idRol, int idSubopcion) {
+        InitOrdenPagoDTO elemento = new InitOrdenPagoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
+        elemento.setMediosPagos(medioPagoDAO.findByEstaActivoEgresoTrue());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
