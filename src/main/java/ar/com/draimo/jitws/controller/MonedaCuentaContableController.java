@@ -48,7 +48,7 @@ public class MonedaCuentaContableController {
     //Obtiene listas necesarias para inicializar el componente (front)
     @GetMapping(value = URL + "/inicializar/{idEmpresa}/{idRol}/{idSubopcion}")
     @ResponseBody
-    public InitMonedaCuentaContableDTO inicializar(@PathVariable int idEmpresa, @PathVariable int idRol, @PathVariable int idSubopcion) {
+    public Object inicializar(@PathVariable int idEmpresa, @PathVariable int idRol, @PathVariable int idSubopcion) throws IOException {
         return elementoService.inicializar(idEmpresa, idRol, idSubopcion);
     }
 
