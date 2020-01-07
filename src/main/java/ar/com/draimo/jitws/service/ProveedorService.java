@@ -77,6 +77,10 @@ public class ProveedorService {
     //Define la subopcion pestania service
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Define la referencia al service de empresa
+    @Autowired
+    UsuarioEmpresaService usuarioEmpresaService;
 
     //Define el rol subopcion service
     @Autowired
@@ -91,7 +95,7 @@ public class ProveedorService {
         InitProveedorDTO p = new InitProveedorDTO();
         p.setAfipCondicionesIva(afipCondicionIvaDAO.findAll());
         p.setCondicionCompras(condicionCompraDAO.findAll());
-        p.setEmpresas(empresaDAO.listarPorUsuarioYMostrarTrue(usuario));
+        p.setEmpresas(usuarioEmpresaService.listarEmpresasActivasDeUsuario(usuario));
         p.setFecha(new Date(new java.util.Date().getTime()));
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
         p.setOpciones(rolOpcionService.listarPorRolYSubopcion(rol, subopcion));

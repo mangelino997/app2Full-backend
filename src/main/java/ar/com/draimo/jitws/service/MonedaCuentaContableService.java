@@ -7,6 +7,7 @@ import ar.com.draimo.jitws.dto.InitMonedaCuentaContableDTO;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.Moneda;
 import ar.com.draimo.jitws.model.MonedaCuentaContable;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -37,19 +38,25 @@ public class MonedaCuentaContableService {
     //Define la referencia al dao empresa
     @Autowired
     IEmpresaDAO empresaDAO;
-    
+
     //Referencia al service de subopcionpestania
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
-    
+
     //Obtiene listas necesarias para inicializar el componente (front)
-    public InitMonedaCuentaContableDTO inicializar(int idEmpresa, int idRol, int idSubopcion) {
+    public Object inicializar(int idEmpresa, int idRol, int idSubopcion) throws JsonProcessingException, IOException {
         InitMonedaCuentaContableDTO elemento = new InitMonedaCuentaContableDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setMonedas(monedaDAO.findAll());
         elemento.setMonedaCuentaContables(elementoDAO.findByEmpresa(empresaDAO.findById(idEmpresa).get()));
         elemento.setUltimoId(obtenerSiguienteId());
-        return elemento;
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
+                .serializeAllExcept("padre");
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPlanCuenta", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elemento);
+        return new ObjectMapper().readValue(string, Object.class);
     }
 
     //Obtiene el siguiente id
@@ -79,9 +86,9 @@ public class MonedaCuentaContableService {
     //Obtiene una lista por nombre de moneda
     public Object listarPorNombreMoneda(String nombre, int idEmpresa) throws IOException {
         Empresa empresa = empresaDAO.findById(idEmpresa).get();
-        List<MonedaCuentaContable> monedasCuentasContables = nombre.equals("*")?
-            elementoDAO.findByEmpresa(empresa):
-            elementoDAO.findByMoneda_NombreContainingAndEmpresa(nombre, empresa);
+        List<MonedaCuentaContable> monedasCuentasContables = nombre.equals("*")
+                ? elementoDAO.findByEmpresa(empresa)
+                : elementoDAO.findByMoneda_NombreContainingAndEmpresa(nombre, empresa);
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
@@ -94,7 +101,7 @@ public class MonedaCuentaContableService {
     //Obtiene una lista por moneda
     public Object listarPorEmpresa(int id) throws IOException {
         Optional<Empresa> elemento = empresaDAO.findById(id);
-        List<MonedaCuentaContable> monedas= elementoDAO.findByEmpresa(elemento.get());
+        List<MonedaCuentaContable> monedas = elementoDAO.findByEmpresa(elemento.get());
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = SimpleBeanPropertyFilter
                 .serializeAllExcept("padre");
