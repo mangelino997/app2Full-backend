@@ -140,7 +140,7 @@ public class OrdenVentaService {
         //Establece ActivaDesde con fecha actual
         ordenVenta.setActivaDesde(new Date(new java.util.Date().getTime()));
         //reestablece tipoTarifa
-        ordenVenta.setTipoTarifas(null);
+//        ordenVenta.setTipoTarifas(null);
         //Agrega la orden de venta
         ordenVenta = elementoDAO.saveAndFlush(ordenVenta);
         ordenVentaTarifa.setOrdenVenta(new OrdenVenta());
@@ -166,12 +166,11 @@ public class OrdenVentaService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Object actualizar(OrdenVenta elemento) throws IOException {
+    public void actualizar(OrdenVenta elemento) throws IOException {
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
         //Actualiza la orden de venta
         elementoDAO.save(elemento);
-        return aplicarFiltros(elemento);
     }
 
     //Elimina un registro

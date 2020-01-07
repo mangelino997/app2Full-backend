@@ -9,7 +9,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -71,7 +70,7 @@ public class OrdenVenta extends ObjetoGenerico {
 //        joinColumns = @JoinColumn(name = "idOrdenVenta"),
 //        inverseJoinColumns = @JoinColumn(name = "idCliente"))  
 //    @JsonIgnoreProperties("ordenesVentas")
-//    private List<Cliente>  clientes;
+//    private List<Cliente> clientes;
     
     //Referencia a la clase empresa
     @ManyToMany(cascade = CascadeType.REFRESH)
@@ -82,17 +81,17 @@ public class OrdenVenta extends ObjetoGenerico {
     private List<Empresa> empresas;
     
     //Define la referencia a tipoTarifa
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
-    @JoinTable(
-      name = "ordenventatarifa", 
-      joinColumns = @JoinColumn(name = "idOrdenVenta"), 
-      inverseJoinColumns = @JoinColumn(name = "idTipoTarifa"))
-    @JsonIgnoreProperties("ordenesVentas")
-    private List<TipoTarifa> tipoTarifas;
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                CascadeType.PERSIST,
+//                CascadeType.MERGE
+//            })
+//    @JoinTable(
+//      name = "ordenventatarifa", 
+//      joinColumns = @JoinColumn(name = "idOrdenVenta"), 
+//      inverseJoinColumns = @JoinColumn(name = "idTipoTarifa"))
+//    @JsonIgnoreProperties("ordenesVentas")
+//    private List<TipoTarifa> tipoTarifas;
     
     //Getters y Setters de la clase
     public String getNombre() {
@@ -183,12 +182,12 @@ public class OrdenVenta extends ObjetoGenerico {
         this.empresas = empresas;
     }
 
-    public List<TipoTarifa> getTipoTarifas() {
-        return tipoTarifas;
-    }
-
-    public void setTipoTarifas(List<TipoTarifa> tipoTarifas) {
-        this.tipoTarifas = tipoTarifas;
-    }
+//    public List<TipoTarifa> getTipoTarifas() {
+//        return tipoTarifas;
+//    }
+//
+//    public void setTipoTarifas(List<TipoTarifa> tipoTarifas) {
+//        this.tipoTarifas = tipoTarifas;
+//    }
 
 }
