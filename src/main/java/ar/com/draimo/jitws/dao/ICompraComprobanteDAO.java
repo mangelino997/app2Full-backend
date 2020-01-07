@@ -53,7 +53,7 @@ public interface ICompraComprobanteDAO extends JpaRepository<CompraComprobante, 
     //Obtiene un listadoPorProveedor y Empresa
     @Query(value = "SELECT * FROM compracomprobante where idEmpresa=:idEmpresa and "
             + "idProveedor=:idProveedor and importeSaldo>0", nativeQuery = true)
-    public List<CompraComprobante> listarParaOrdenPago(@Param("idEmpresa") int idEmpresa,
+    public List<CompraComprobante> listarPorEmpresaYProveedor(@Param("idEmpresa") int idEmpresa,
             @Param("idProveedor") int idProveedor);
 
 }

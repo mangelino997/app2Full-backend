@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio de Pago
- *
  * @author blas
  */
 @Service

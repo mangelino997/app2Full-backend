@@ -2,7 +2,6 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.dto.InitCompraComprobanteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.CompraComprobante;
@@ -78,10 +77,10 @@ public class CompraComprobanteController {
     }
     
     //Obtiene la lista por proveedor y empresa
-    @GetMapping(value = URL + "/listarParaOrdenPago/{idEmpresa}/{idProveedor}")
+    @GetMapping(value = URL + "/listarPorEmpresaYProveedor/{idEmpresa}/{idProveedor}")
     @ResponseBody
-    public Object listarParaOrdenPago(@PathVariable int idEmpresa, @PathVariable int idProveedor) throws IOException {
-        return elementoService.listarParaOrdenPago(idEmpresa, idProveedor);
+    public Object listarPorEmpresaYProveedor(@PathVariable int idEmpresa, @PathVariable int idProveedor) throws IOException {
+        return elementoService.listarPorEmpresaYProveedor(idEmpresa, idProveedor);
     }
     
     //retorna si se cumple o no la unicidad

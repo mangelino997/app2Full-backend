@@ -37,9 +37,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Servicio de CompraComprobante
+ *
  * @author blas
  */
-
 @Service
 public class CompraComprobanteService {
 
@@ -82,19 +82,19 @@ public class CompraComprobanteService {
     //Define la referancia a depositoInsumoProducto
     @Autowired
     IDepositoInsumoProductoDAO depositoInsumoProductoDAO;
-    
+
     //Referencia al DAO de moneda
     @Autowired
     IMonedaDAO monedaDAO;
-    
+
     //Referencia al DAO de proveedor
     @Autowired
     IProveedorDAO proveedorDAO;
-    
+
     //Referencia al service de subopcionpestania
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
-    
+
     //Obtiene listas necesarias para inicializar el componente (front)
     public InitCompraComprobanteDTO inicializar(int idRol, int idSubopcion) {
         InitCompraComprobanteDTO p = new InitCompraComprobanteDTO();
@@ -108,32 +108,32 @@ public class CompraComprobanteService {
         p.setUltimoId(obtenerSiguienteId());
         return p;
     }
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         CompraComprobante elemento = elementoDAO.findTopByOrderByIdDesc();
-        return elemento != null ? elemento.getId()+1 : 1;
+        return elemento != null ? elemento.getId() + 1 : 1;
     }
-    
+
     //Obtiene la lista completa
     public List<CompraComprobante> listar() {
         return elementoDAO.findAll();
     }
-    
+
     //Obtiene la lista por filtros
-    public Object listarPorFiltros(int idEmpresa, int idProveedor, 
+    public Object listarPorFiltros(int idEmpresa, int idProveedor,
             int fechaTipo, Date fechaDesde, Date fechaHasta, int idTipoComprobante) throws IOException {
-        List<CompraComprobante> comprobantes= elementoDAO.listarPorFiltros(idEmpresa, idProveedor, fechaDesde, fechaHasta,
+        List<CompraComprobante> comprobantes = elementoDAO.listarPorFiltros(idEmpresa, idProveedor, fechaDesde, fechaHasta,
                 idTipoComprobante, fechaTipo);
         return aplicarFiltros(comprobantes);
     }
-    
+
     //Obtiene la lista por proveedor y empresa
-    public Object listarParaOrdenPago(int idEmpresa, int idProveedor) throws IOException {
-        List<CompraComprobante> comprobantes= elementoDAO.listarParaOrdenPago(idEmpresa, idProveedor);
+    public Object listarPorEmpresaYProveedor(int idEmpresa, int idProveedor) throws IOException {
+        List<CompraComprobante> comprobantes = elementoDAO.listarPorEmpresaYProveedor(idEmpresa, idProveedor);
         return aplicarFiltros(comprobantes);
     }
-    
+
     //Verifica que el comprobante no exista
     public boolean verificarUnicidadComprobante(int idProveedor, String codigoAfip, int puntoVenta, int numero) {
         return !elementoDAO.verificarUnicidad(idProveedor, codigoAfip, puntoVenta, numero).isEmpty();
@@ -142,7 +142,7 @@ public class CompraComprobanteService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public CompraComprobante agregar(CompraComprobante elemento) {
-        Timestamp fechaRegistracion= new Timestamp(new java.util.Date().getTime());
+        Timestamp fechaRegistracion = new Timestamp(new java.util.Date().getTime());
         elemento.setFechaRegistracion(fechaRegistracion);
         Proveedor p = proveedorDAO.findById(elemento.getProveedor().getId()).get();
         elemento.setAfipCondicionIva(p.getAfipCondicionIva());
@@ -163,28 +163,28 @@ public class CompraComprobanteService {
         elemento.setCompraComprobanteVencimientos(null);
         elemento = elementoDAO.saveAndFlush(elemento);
         //Si items no esta vacio, recorre la lista, establece el comprobante y los guarda
-        if(!items.isEmpty()){
+        if (!items.isEmpty()) {
             for (CompraComprobanteItem item : items) {
                 item.setObservaciones("");
                 item.setCompraComprobante(elemento);
                 itemDAO.save(item);
             }
-        }else {
-            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO+" ITEMS");
+        } else {
+            throw new DataIntegrityViolationException(MensajeRespuesta.LISTA_SIN_CONTENIDO + " ITEMS");
         }
         //Si percepciones no esta vacio, recorre la lista estableciendo punto de venta, letra y numero
-        if(!percepciones.isEmpty()){
+        if (!percepciones.isEmpty()) {
             for (CompraComprobantePercepcion percepcion : percepciones) {
                 percepcion.setCompraComprobante(elemento);
                 percepcion.setLetra(elemento.getLetra());
                 percepcion.setPuntoVenta(elemento.getPuntoVenta());
                 percepcion.setNumero(elemento.getNumero());
                 //Si tiene jurisdicciones se guardan en una lista y se vacia el campo
-                List<CompraCptePercepcionJurisd> jurisdicciones =percepcion.getCompraCptePercepcionJurisdicciones();
+                List<CompraCptePercepcionJurisd> jurisdicciones = percepcion.getCompraCptePercepcionJurisdicciones();
                 percepcion.setCompraCptePercepcionJurisdicciones(null);
                 //Guarda la percepcion y se la establece a las jurisdicciones, luego las guarda
                 percepcionDAO.save(percepcion);
-                if(!jurisdicciones.isEmpty()){
+                if (!jurisdicciones.isEmpty()) {
                     for (CompraCptePercepcionJurisd cteJurisdicciones : jurisdicciones) {
                         cteJurisdicciones.setCompraComprobantePercepcion(percepcion);
                         jurisdiccionDAO.save(cteJurisdicciones);
@@ -193,7 +193,7 @@ public class CompraComprobanteService {
             }
         }
         //Si vencimientos no esta vacio, recorre la lista, establece el comprobante y los guarda
-        if(!vencimientos.isEmpty()){
+        if (!vencimientos.isEmpty()) {
             for (CompraComprobanteVencimiento vencimiento : vencimientos) {
                 vencimiento.setCompraComprobante(elemento);
                 vencimientoDAO.save(vencimiento);
@@ -208,13 +208,13 @@ public class CompraComprobanteService {
     public void actualizar(CompraComprobante elemento) {
         elementoDAO.save(elemento);
     }
-    
+
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-    
+
     //Retorna un object con los filtros aplicados
     private Object aplicarFiltros(List<CompraComprobante> elementos) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -222,7 +222,7 @@ public class CompraComprobanteService {
                 .serializeAllExcept("padre");
         FilterProvider filters = new SimpleFilterProvider()
                 .addFilter("filtroPlanCuenta", theFilter);
-        String string =  mapper.writer(filters).writeValueAsString(elementos);
+        String string = mapper.writer(filters).writeValueAsString(elementos);
         return new ObjectMapper().readValue(string, Object.class);
     }
 
