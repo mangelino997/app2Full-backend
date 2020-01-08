@@ -2,6 +2,8 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitCobranzaDTO;
+import ar.com.draimo.jitws.dto.InitOrdenPagoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cobranza;
 import ar.com.draimo.jitws.service.CobranzaService;
@@ -43,6 +45,13 @@ public class CobranzaController {
     //Crea una instancia del servicio
     @Autowired
     CobranzaService elementoService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public InitCobranzaDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
