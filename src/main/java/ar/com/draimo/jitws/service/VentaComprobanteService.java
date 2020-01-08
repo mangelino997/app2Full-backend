@@ -186,7 +186,7 @@ public class VentaComprobanteService {
 
     //Obtiene una lista por cliente y empresa para cobranza
     public Object listarParaCobranza(int idCliente, int idEmpresa) throws IOException {
-        List<VentaComprobante> elementos = elementoDAO.listarComprobantesPorClienteYEMpresa(idCliente, idEmpresa);
+        List<VentaComprobante> elementos = elementoDAO.listarComprobantesPorClienteYEmpresa(idCliente, idEmpresa);
         return retornarObjeto(elementos, null);
     }
 
