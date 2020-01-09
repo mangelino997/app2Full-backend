@@ -57,17 +57,10 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     @JoinColumn(name = "idProvincia", nullable = false)
     private Provincia provincia;
 
-    //Referencia a la clase VentaComprobanteAplicado
-<<<<<<< HEAD
-    @Column(name = "idVentaComprobanteAplicado", nullable = true)
-    private int ventaComprobanteAplicado;
-
-=======
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobanteAplicado", nullable = true)
     private VentaComprobante ventaComprobanteAplicado;
     
->>>>>>> e5c6c6f89cfc558182e549d08d58c620883391c8
     //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;

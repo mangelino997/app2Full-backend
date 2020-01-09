@@ -254,7 +254,8 @@ public class VentaComprobanteService {
             for (VentaComprobanteItemNC ventaComprobanteItemNC : elemento.getVentaComprobanteItemNC()) {
                 //Resta el saldo al comprobante afectado
                 ventaComprobanteItem = elementoDAO.findById(ventaComprobanteItemNC.getId()).get();
-                BigDecimal saldoRestante = ventaComprobanteItem.getImporteSaldo().subtract(ventaComprobanteItemNC.getImporteNetoGravado());
+                BigDecimal saldoRestar = ventaComprobanteItem.getImporteNetoGravado().add(ventaComprobanteItem.getImporteIva());
+                BigDecimal saldoRestante = ventaComprobanteItem.getImporteSaldo().subtract(saldoRestar);
                 ventaComprobanteItem.setImporteSaldo(saldoRestante);
                 elementoDAO.saveAndFlush(ventaComprobanteItem);
                 //Establece los datos para la ventaComprobanteItemNC
