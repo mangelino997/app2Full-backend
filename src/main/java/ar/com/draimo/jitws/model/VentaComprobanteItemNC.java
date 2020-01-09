@@ -15,7 +15,6 @@ import javax.persistence.Table;
  * Define el modelo (columnas) de la base de datos.
  * @author blas
  */
-
 @Entity
 @Table(name = "ventacomprobanteitemNC")
 @JsonFilter(value = "filtroVentaComprobanteItemNC")
@@ -58,8 +57,9 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     private Provincia provincia;
 
     //Referencia a la clase VentaComprobanteAplicado
-    @Column(name = "idVentaComprobanteAplicado", nullable = true)
-    private int ventaComprobanteAplicado;
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "idVentaComprobanteAplicado", nullable = true)
+    private VentaComprobante ventaComprobanteAplicado;
     
     //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
@@ -126,11 +126,11 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
         this.provincia = provincia;
     }
 
-    public int getVentaComprobanteAplicado() {
+    public VentaComprobante getVentaComprobanteAplicado() {
         return ventaComprobanteAplicado;
     }
 
-    public void setVentaComprobanteAplicado(int ventaComprobanteAplicado) {
+    public void setVentaComprobanteAplicado(VentaComprobante ventaComprobanteAplicado) {
         this.ventaComprobanteAplicado = ventaComprobanteAplicado;
     }
     
