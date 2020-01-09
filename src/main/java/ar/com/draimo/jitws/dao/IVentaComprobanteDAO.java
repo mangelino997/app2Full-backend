@@ -54,7 +54,7 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
     @Query(value = "SELECT v.* FROM cliente c inner join  ventacomprobante v on "
             + "c.id=v.idClienteGrupo or  (v.idClienteGrupo is null and c.id=v.idCliente) "
             + "where v.importeSaldo>0 and c.id=:idCliente and v.idEmpresa =:idEmpresa", nativeQuery = true)
-    public List<VentaComprobante> listarComprobantesPorClienteYEMpresa(@Param("idCliente") 
+    public List<VentaComprobante> listarComprobantesPorClienteYEmpresa(@Param("idCliente") 
             int idCliente, @Param("idEmpresa") int idEmpresa);
     
 }
