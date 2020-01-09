@@ -72,11 +72,6 @@ public class VentaComprobante extends ObjetoGenerico {
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
 
-    //Referencia a la clase Cliente (clienteGrupo)
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idClienteGrupo", nullable = true)
-    private Cliente clienteGrupo;
-
     //Referencia a la clase afipCondicionIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipCondicionIva", nullable = false)
@@ -139,11 +134,6 @@ public class VentaComprobante extends ObjetoGenerico {
     //Define el importe saldo
     @Column(name = "importeSaldo", nullable = false)
     private BigDecimal importeSaldo;
-
-    //Referencia a la clase Cobrador
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "idCobrador", nullable = false)
-    private Cobrador cobrador;
 
     //Define si el pago es en origen
     @Column(name = "pagoEnOrigen", nullable = false)
@@ -307,14 +297,6 @@ public class VentaComprobante extends ObjetoGenerico {
         this.cliente = cliente;
     }
 
-    public Cliente getClienteGrupo() {
-        return clienteGrupo;
-    }
-
-    public void setClienteGrupo(Cliente clienteGrupo) {
-        this.clienteGrupo = clienteGrupo;
-    }
-
     public AfipCondicionIva getAfipCondicionIva() {
         return afipCondicionIva;
     }
@@ -427,15 +409,7 @@ public class VentaComprobante extends ObjetoGenerico {
         this.importeSaldo = importeSaldo;
     }
 
-    public Cobrador getCobrador() {
-        return cobrador;
-    }
-
-    public void setCobrador(Cobrador cobrador) {
-        this.cobrador = cobrador;
-    }
-
-    public boolean isPagoEnOrigen() {
+    public boolean getPagoEnOrigen() {
         return pagoEnOrigen;
     }
 
@@ -459,7 +433,7 @@ public class VentaComprobante extends ObjetoGenerico {
         this.usuarioMod = usuarioMod;
     }
 
-    public boolean isEsCAEA() {
+    public boolean getEsCAEA() {
         return esCAEA;
     }
 
