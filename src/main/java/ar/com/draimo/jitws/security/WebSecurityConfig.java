@@ -27,15 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AppUserDetailsService appUserDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    
 
     public WebSecurityConfig(AppUserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.appUserDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    /* Configura los filtros de autenticacion (rutas autorizadas), los cors y 
-     + deshabilita el cross site scripting
+    /* 
+     * Configura los filtros de autenticacion (rutas autorizadas), los cors y 
+     * deshabilita el cross site scripting
      */ 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
