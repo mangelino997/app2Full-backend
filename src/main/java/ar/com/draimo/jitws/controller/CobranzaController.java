@@ -3,7 +3,6 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.InitCobranzaDTO;
-import ar.com.draimo.jitws.dto.InitOrdenPagoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Cobranza;
 import ar.com.draimo.jitws.service.CobranzaService;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase Cobranza Controller
- *
  * @author blas
  */
 @RestController
