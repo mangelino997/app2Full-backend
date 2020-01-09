@@ -11,11 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Clase VentaComprobanteItem NC
- * Define el modelo (columnas) de la base de datos.
+ * Clase VentaComprobanteItem NC Define el modelo (columnas) de la base de
+ * datos.
+ *
  * @author blas
  */
-
 @Entity
 @Table(name = "ventacomprobanteitemNC")
 @JsonFilter(value = "filtroVentaComprobanteItemNC")
@@ -25,33 +25,33 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaComprobante", nullable = false)
     private VentaComprobante ventaComprobante;
-    
+
     //Referencia a la clase Concepto
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idVentaTipoItem", nullable = false)
     private VentaTipoItem ventaTipoItem;
-    
+
     //Define el importe neto gravado
     @Column(name = "importeNetoGravado", nullable = false)
     private BigDecimal importeNetoGravado;
-    
+
     //Referencia a la clase afipAliCuotaIva
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idAfipAlicuotaIva", nullable = false)
-    private AfipAlicuotaIva viajeRemito;
-    
+    private AfipAlicuotaIva afipAlicuotaIva;
+
     //Define el importe de iva
     @Column(name = "importeIva", nullable = false)
     private BigDecimal importeIva;
-    
+
     //Define el importe no gravado
     @Column(name = "importeNoGravado", nullable = false)
     private BigDecimal importeNoGravado;
-    
+
     //Define el importe excento
     @Column(name = "importeExento", nullable = false)
     private BigDecimal importeExento;
-    
+
     //Referencia a la clase provincia
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idProvincia", nullable = false)
@@ -60,7 +60,7 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     //Referencia a la clase VentaComprobanteAplicado
     @Column(name = "idVentaComprobanteAplicado", nullable = true)
     private int ventaComprobanteAplicado;
-    
+
     //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
@@ -86,12 +86,19 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
         this.importeNetoGravado = importeNetoGravado;
     }
 
-    public AfipAlicuotaIva getViajeRemito() {
-        return viajeRemito;
+//    public AfipAlicuotaIva getViajeRemito() {
+//        return viajeRemito;
+//    }
+//
+//    public void setViajeRemito(AfipAlicuotaIva viajeRemito) {
+//        this.viajeRemito = viajeRemito;
+//    }
+    public AfipAlicuotaIva getAfipAlicuotaIva() {
+        return afipAlicuotaIva;
     }
 
-    public void setViajeRemito(AfipAlicuotaIva viajeRemito) {
-        this.viajeRemito = viajeRemito;
+    public void setAfipAlicuotaIva(AfipAlicuotaIva afipAlicuotaIva) {
+        this.afipAlicuotaIva = afipAlicuotaIva;
     }
 
     public BigDecimal getImporteIva() {
@@ -133,5 +140,5 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     public void setVentaComprobanteAplicado(int ventaComprobanteAplicado) {
         this.ventaComprobanteAplicado = ventaComprobanteAplicado;
     }
-    
+
 }

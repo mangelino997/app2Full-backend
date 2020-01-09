@@ -51,10 +51,6 @@ public class VentaComprobanteService {
     @Autowired
     IVentaComprobanteDAO elementoDAO;
 
-    //Define la referencia VentaComprobante
-    @Autowired
-    IVentaComprobanteDAO ventaComprobante;
-
     //Define la referencia VentaComprobanteItemCRDAO
     @Autowired
     IVentaComprobanteItemCRDAO ventaComprobanteItemCRDAO;
@@ -204,6 +200,7 @@ public class VentaComprobanteService {
     public List<String> listarLetras() {
         return elementoDAO.listarLetras();
     }
+    
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
@@ -220,26 +217,28 @@ public class VentaComprobanteService {
         pv.setUltimoNumero(elemento.getNumero());
         puntoVentaDAO.save(pv);
         //Agrega los items FA
-        for (VentaComprobanteItemFA itemFA : elemento.getVentaComprobanteItemFAs()) {
-            itemFA.setVentaComprobante(vc);
-            if (itemFA.getViajeRemito() != null) {
-                viajeRemito = viajeRemitoDAO.findById(itemFA.getViajeRemito().getId()).get();
-                viajeRemito.setEstaFacturado(true);
-                viajeRemitoDAO.save(viajeRemito);
+        if (elemento.getVentaComprobanteItemFAs() != null) {
+            for (VentaComprobanteItemFA itemFA : elemento.getVentaComprobanteItemFAs()) {
+                itemFA.setVentaComprobante(vc);
+                if (itemFA.getViajeRemito() != null) {
+                    viajeRemito = viajeRemitoDAO.findById(itemFA.getViajeRemito().getId()).get();
+                    viajeRemito.setEstaFacturado(true);
+                    viajeRemitoDAO.save(viajeRemito);
+                }
+                if (itemFA.getViajeTramoClienteRemito() != null) {
+                    viajeTramoClienteRemito = viajeTramoClienteRemitoDAO.obtenerPorId(
+                            itemFA.getViajeTramoClienteRemito().getId());
+                    viajeTramoClienteRemito.setEstaFacturado(true);
+                    viajeTramoClienteRemitoDAO.save(viajeTramoClienteRemito);
+                }
+                importeTotal.add(itemFA.getImporteNetoGravado());
+                if (itemFA.getOrdenVentaTarifa() != null) {
+                    itemFA.setOrdenVentaTarifa(ordenVentaTarifaDAO.obtenerPorOrdenVentaYTipoTarifa(
+                            itemFA.getOrdenVentaTarifa().getOrdenVenta().getId(),
+                            itemFA.getOrdenVentaTarifa().getTipoTarifa().getId()));
+                }
+                ventaComprobanteItemFADAO.saveAndFlush(itemFA);
             }
-            if (itemFA.getViajeTramoClienteRemito() != null) {
-                viajeTramoClienteRemito = viajeTramoClienteRemitoDAO.obtenerPorId(
-                        itemFA.getViajeTramoClienteRemito().getId());
-                viajeTramoClienteRemito.setEstaFacturado(true);
-                viajeTramoClienteRemitoDAO.save(viajeTramoClienteRemito);
-            }
-            importeTotal.add(itemFA.getImporteNetoGravado());
-            if (itemFA.getOrdenVentaTarifa() != null) {
-                itemFA.setOrdenVentaTarifa(ordenVentaTarifaDAO.obtenerPorOrdenVentaYTipoTarifa(
-                        itemFA.getOrdenVentaTarifa().getOrdenVenta().getId(),
-                        itemFA.getOrdenVentaTarifa().getTipoTarifa().getId()));
-            }
-            ventaComprobanteItemFADAO.saveAndFlush(itemFA);
         }
         //Agrega item ContraReembolso
         if (elemento.getVentaComprobanteItemCR() != null && elemento.getVentaComprobanteItemCR().size() > 0) {
@@ -251,19 +250,21 @@ public class VentaComprobanteService {
             //Agrega item NC
             for (VentaComprobanteItemNC ventaComprobanteItemNC : elemento.getVentaComprobanteItemNC()) {
                 //Resta el saldo al comprobante afectado
-                VentaComprobante ventaComprobanteItem = elementoDAO.findById(ventaComprobanteItemNC.getId()).get();
-                BigDecimal saldoRestante = ventaComprobanteItem.getImporteSaldo().subtract(ventaComprobanteItemNC.getImporteNetoGravado());
+                VentaComprobante ventaComprobanteItem = elementoDAO.findById(ventaComprobanteItemNC.getVentaComprobanteAplicado()).get();
+                BigDecimal importeSaldar = ventaComprobanteItem.getImporteNetoGravado().add(ventaComprobanteItem.getImporteIva());
+                BigDecimal saldoRestante = ventaComprobanteItem.getImporteSaldo().subtract(importeSaldar);
                 ventaComprobanteItem.setImporteSaldo(saldoRestante);
-                ventaComprobante.saveAndFlush(ventaComprobanteItem);
-
-                ventaComprobanteItemNC.setVentaComprobante(vc);
+                elementoDAO.save(ventaComprobanteItem);
+                ventaComprobanteItemNC.setId(0);
+                ventaComprobanteItemNC.setVentaComprobante(ventaComprobanteItem);
+                ventaComprobanteItemNC.setImporteExento(new BigDecimal(0));
                 ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
             }
         }
         elemento.setClienteGrupo(elemento.getCliente().getCuentaGrupo() != null
                 ? elemento.getCliente().getCuentaGrupo() : null);
         elemento.setImporteSaldo(elemento.getImporteTotal());
-        return elementoDAO.save(formatearStrings(elemento));
+        return formatearStrings(vc);
     }
 
     //Actualiza un registro
