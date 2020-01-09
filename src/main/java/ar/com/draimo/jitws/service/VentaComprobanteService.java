@@ -51,6 +51,10 @@ public class VentaComprobanteService {
     @Autowired
     IVentaComprobanteDAO elementoDAO;
 
+    //Define la referencia VentaComprobante
+    @Autowired
+    IVentaComprobanteDAO ventaComprobante;
+
     //Define la referencia VentaComprobanteItemCRDAO
     @Autowired
     IVentaComprobanteItemCRDAO ventaComprobanteItemCRDAO;
@@ -246,6 +250,12 @@ public class VentaComprobanteService {
         if (elemento.getVentaComprobanteItemNC() != null) {
             //Agrega item NC
             for (VentaComprobanteItemNC ventaComprobanteItemNC : elemento.getVentaComprobanteItemNC()) {
+                //Resta el saldo al comprobante afectado
+                VentaComprobante ventaComprobanteItem = elementoDAO.findById(ventaComprobanteItemNC.getId()).get();
+                BigDecimal saldoRestante = ventaComprobanteItem.getImporteSaldo().subtract(ventaComprobanteItemNC.getImporteNetoGravado());
+                ventaComprobanteItem.setImporteSaldo(saldoRestante);
+                ventaComprobante.saveAndFlush(ventaComprobanteItem);
+
                 ventaComprobanteItemNC.setVentaComprobante(vc);
                 ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
             }
