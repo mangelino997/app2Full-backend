@@ -250,8 +250,6 @@ public class VentaComprobanteService {
                 ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
             }
         }
-        elemento.setClienteGrupo(elemento.getCliente().getCuentaGrupo() != null
-                ? elemento.getCliente().getCuentaGrupo() : null);
         elemento.setImporteSaldo(elemento.getImporteTotal());
         return elementoDAO.save(formatearStrings(elemento));
     }
