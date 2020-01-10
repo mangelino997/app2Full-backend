@@ -70,7 +70,7 @@ public class CobranzaService {
     public InitCobranzaDTO inicializar(int idRol, int idSubopcion) {
         InitCobranzaDTO elemento = new InitCobranzaDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
-        elemento.setMediosPagos(medioPagoDAO.findByEstaActivoEgresoTrue());
+        elemento.setMediosPagos(medioPagoDAO.findByEstaActivoIngresoTrue());
         return elemento;
     }
 
