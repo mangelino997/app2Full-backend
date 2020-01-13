@@ -46,10 +46,11 @@ public class VehiculoController {
     VehiculoService elementoService;
 
     //Obtiene la lista completa
-    @GetMapping(value = URL + "/inicializar/{rol}/{subopcion}")
+    @GetMapping(value = URL + "/inicializar/{rol}/{subopcion}/{idEmpresa}")
     @ResponseBody
-    public InitVehiculoDTO inicializar(@PathVariable int rol, @PathVariable int subopcion) {
-        return elementoService.inicializar(rol, subopcion);
+    public InitVehiculoDTO inicializar(@PathVariable int rol, @PathVariable int subopcion, 
+            @PathVariable int idEmpresa) {
+        return elementoService.inicializar(rol, subopcion, idEmpresa);
     }
 
     //Obtiene el siguiente id

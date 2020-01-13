@@ -1,6 +1,7 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.dao.ICompaniaSeguroDAO;
 import ar.com.draimo.jitws.dao.IConfiguracionVehiculoDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
 import ar.com.draimo.jitws.dao.IMarcaVehiculoDAO;
@@ -66,15 +67,20 @@ public class VehiculoService {
     //Define la subopcion pestania service
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
+    
+    //Define la companiaSeguroDAO
+    @Autowired
+    ICompaniaSeguroDAO companiaSeguroDAO;
 
     //Obtiene la lista completa
-    public InitVehiculoDTO inicializar(int rol, int subopcion) {
+    public InitVehiculoDTO inicializar(int rol, int subopcion, int idEmpresa) {
         InitVehiculoDTO p = new InitVehiculoDTO();
          p.setMarcaVehiculos(marcaVehiculoDAO.findAll());
         p.setTipoVehiculos(tipoVehiculoDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
         p.setEmpresas(empresaDAO.findAll());
+        p.setCompaniasSeguros(companiaSeguroDAO.listarPorEmpresa(idEmpresa));
         return p;
     }
 
