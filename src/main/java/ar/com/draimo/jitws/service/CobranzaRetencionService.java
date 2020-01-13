@@ -1,9 +1,13 @@
 //Paquete al que pertenece el servicio
 package ar.com.draimo.jitws.service;
 
+import ar.com.draimo.jitws.constant.Fecha;
 import ar.com.draimo.jitws.dao.ICobranzaDAO;
 import ar.com.draimo.jitws.dao.ICobranzaRetencionDAO;
+import ar.com.draimo.jitws.dao.IMesDAO;
+import ar.com.draimo.jitws.dao.IProvinciaDAO;
 import ar.com.draimo.jitws.dao.ITipoRetencionDAO;
+import ar.com.draimo.jitws.dto.InitCobranzaRetencionDTO;
 import ar.com.draimo.jitws.model.CobranzaRetencion;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,24 @@ public class CobranzaRetencionService {
     //Define el dao de TipoRetencion
     @Autowired
     ITipoRetencionDAO tipoRetencionDAO;
+
+    //Define la referencia al dao de mes
+    @Autowired
+    IMesDAO mesDAO;
+
+    //Define la referencia al dao provincia
+    @Autowired
+    IProvinciaDAO provinciaDAO;
+
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitCobranzaRetencionDTO inicializar(int idRol, int idSubopcion) {
+        InitCobranzaRetencionDTO elemento = new InitCobranzaRetencionDTO();
+        elemento.setProvincias(provinciaDAO.findAll());
+        elemento.setAnios(Fecha.listarAnios());
+        elemento.setMeses(mesDAO.findAll());
+        elemento.setTiposRetencion(tipoRetencionDAO.findAll());
+        return elemento;
+    }
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
