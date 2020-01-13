@@ -1,5 +1,6 @@
 package ar.com.draimo.jitws.dto;
 
+import ar.com.draimo.jitws.model.CompaniaSeguro;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.MarcaVehiculo;
 import ar.com.draimo.jitws.model.Pestania;
@@ -26,6 +27,9 @@ public class InitVehiculoDTO {
     
     //Lista de pestanias
     private List<Pestania> pestanias;
+    
+    //Define companias de seguros
+    private List<CompaniaSeguro> companiasSeguros;
     
     //Define Getters y Setters
 
@@ -67,6 +71,14 @@ public class InitVehiculoDTO {
 
     public void setPestanias(List<Pestania> pestanias) {
         this.pestanias = pestanias;
+    }
+
+    public List<CompaniaSeguro> getCompaniasSeguros() {
+        return companiasSeguros;
+    }
+
+    public void setCompaniasSeguros(List<CompaniaSeguro> companiasSeguros) {
+        this.companiasSeguros = companiasSeguros;
     }
 
 }
