@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.com.draimo.jitws.dao.IAfipConceptoSueldoDAO;
 import ar.com.draimo.jitws.dao.IAfipConceptoSueldoGrupoDAO;
+import ar.com.draimo.jitws.dao.ITipoConceptoSueldoDAO;
 import ar.com.draimo.jitws.dto.InitAfipCptoSueldoDTO;
 
 /**
@@ -26,6 +27,10 @@ public class AfipConceptoSueldoService {
     @Autowired
     IAfipConceptoSueldoGrupoDAO sueldoGrupoDAO;
     
+    //Define el DAO
+    @Autowired
+    ITipoConceptoSueldoDAO tipoConceptoSueldoDAO;
+    
     //Referencia al service de subopcionpestania
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
@@ -35,6 +40,7 @@ public class AfipConceptoSueldoService {
         InitAfipCptoSueldoDTO elemento = new InitAfipCptoSueldoDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idSubopcion));
         elemento.setAfipConceptoSueldoGrupos(sueldoGrupoDAO.findAll());
+        elemento.setTipoConceptoSueldos(tipoConceptoSueldoDAO.findAll());
         elemento.setUltimoId(obtenerSiguienteId());
         return elemento;
     }
