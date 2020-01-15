@@ -40,6 +40,11 @@ public class PagoAnticipoService {
     public List<PagoAnticipo> listarPorPago(int idPago) {
         return elementoDAO.findByPago(pagoDAO.findById(idPago).get());
     }
+    
+    //Obtiene por proveedor y saldo mayor a cero
+    public List<PagoAnticipo> listarPorProveedorYSaldoMayorCero(int idProveedor) {
+        return elementoDAO.listarPorProveedorYSaldoMayorCero(idProveedor);
+    }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)

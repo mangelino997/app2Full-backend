@@ -65,6 +65,13 @@ public class PagoAnticipoController {
         return elementoService.listarPorPago(idPago);
     }
     
+    //Obtiene una lista por proveedor y saldo mayor a cero
+    @GetMapping(value = URL + "/listarPorProveedorYSaldoMayorCero/{idProveedor}")
+    @ResponseBody
+    public List<PagoAnticipo> listarPorProveedorYSaldoMayorCero(@PathVariable int idProveedor) {
+        return elementoService.listarPorProveedorYSaldoMayorCero(idProveedor);
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody PagoAnticipo elemento) {
