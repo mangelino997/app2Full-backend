@@ -75,7 +75,7 @@ public class AfipConceptoSueldoGrupoController {
     //Obtiene una lista por TipoConceptoSueldo
     @GetMapping(value = URL + "/listarPorTipoConceptoSueldo/{idTipoConceptoSueldo}")
     @ResponseBody
-    public List<AfipConceptoSueldoGrupo> listarPorNombre(@PathVariable int idTipoConceptoSueldo) {
+    public List<AfipConceptoSueldoGrupo> listarPorTipoConceptoSueldo(@PathVariable int idTipoConceptoSueldo) {
         return elementoService.listarPorTipoConceptoSueldo(idTipoConceptoSueldo);
     }
     
