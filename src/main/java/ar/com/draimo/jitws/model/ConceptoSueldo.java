@@ -122,5 +122,4 @@ public class ConceptoSueldo extends ObjetoGenerico {
         this.codigoEmpleador = codigoEmpleador;
     }
     
-    
 }
