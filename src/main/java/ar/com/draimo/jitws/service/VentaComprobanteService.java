@@ -254,16 +254,18 @@ public class VentaComprobanteService {
             for (VentaComprobanteItemNC ventaComprobanteItemNC : elemento.getVentaComprobanteItemNC()) {
                 //Resta el saldo al comprobante afectado
                 ventaComprobanteItem = elementoDAO.findById(ventaComprobanteItemNC.getId()).get();
-                BigDecimal saldoRestar = ventaComprobanteItem.getImporteNetoGravado().add(ventaComprobanteItem.getImporteIva());
+                BigDecimal saldoRestar = ventaComprobanteItemNC.getImporteNetoGravado().add(ventaComprobanteItemNC.getImporteIva());
                 BigDecimal saldoRestante = ventaComprobanteItem.getImporteSaldo().subtract(saldoRestar);
                 ventaComprobanteItem.setImporteSaldo(saldoRestante);
-                elementoDAO.saveAndFlush(ventaComprobanteItem);
+                elementoDAO.save(ventaComprobanteItem);
                 //Establece los datos para la ventaComprobanteItemNC
                 ventaComprobanteItemNC.setId(0);
                 ventaComprobanteItemNC.setVersion(0);
                 ventaComprobanteItemNC.setImporteExento(new BigDecimal(0));
-                ventaComprobanteItemNC.setVentaComprobante(ventaComprobanteItem);
-                ventaComprobanteItemNC.setVentaComprobanteAplicado(ventaComprobante);
+                ventaComprobanteItemNC.setVentaComprobante(ventaComprobante);
+
+//                ventaComprobanteItemNC.setVentaComprobante(ventaComprobanteItem);
+//                ventaComprobanteItemNC.setVentaComprobanteAplicado(ventaComprobante);
                 ventaComprobanteItemNCDAO.saveAndFlush(ventaComprobanteItemNC);
             }
         }
