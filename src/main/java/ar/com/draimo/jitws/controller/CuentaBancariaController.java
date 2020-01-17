@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Clase CuentaBancaria Controller
- *
  * @author blas
  */
 @RestController
