@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.ChequeCarteraFiltroDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ChequeCartera;
 import ar.com.draimo.jitws.service.ChequeCarteraService;
@@ -65,10 +66,17 @@ public class ChequeCarteraController {
     }
 
     //Obtiene una lista por idBanco
-    @GetMapping(value = URL + "/listarPorMoneda/{idBanco}")
+    @GetMapping(value = URL + "/listarPorBanco/{idBanco}")
     @ResponseBody
-    public List<ChequeCartera> listarPorMoneda(@PathVariable int idBanco) {
+    public List<ChequeCartera> listarPorBanco(@PathVariable int idBanco) {
         return elementoService.listarPorBanco(idBanco);
+    }
+    
+    //Obtiene una lista por filtros
+    @PostMapping(value = URL + "/listarPorFiltros")
+    @ResponseBody
+    public List<ChequeCartera> listarPorFiltros(@RequestBody ChequeCarteraFiltroDTO elementoDTO) {
+        return elementoService.listarPorFiltros(elementoDTO);
     }
 
     //Agrega un registro

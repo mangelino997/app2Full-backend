@@ -22,4 +22,7 @@ public interface IMonedaDAO extends JpaRepository<Moneda, Integer> {
     //Obtiene la moneda por defecto
     public Moneda findByPorDefectoTrue();
     
+    //Obtiene lista de monedas activas
+    public List<Moneda> findByEstaActivoTrue();
+    
 }

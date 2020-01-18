@@ -64,6 +64,13 @@ public class MonedaController {
     public List<Moneda> listar() {
         return elementoService.listar();
     }
+    
+    //Obtiene una lista de monedas activas
+    @GetMapping(value = URL + "/listarActivas")
+    @ResponseBody
+    public List<Moneda> listarActivas() {
+        return elementoService.listarActivas();
+    }
 
     //Obtiene una lista por nombre
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")
