@@ -86,6 +86,13 @@ public class TipoComprobanteController {
         return elementoService.listarEstaActivoCompraCarga();
     }
     
+    //Obtiene una lista por esta activo venta carga igual true
+    @GetMapping(value = URL + "/listarActivosVentaCarga")
+    @ResponseBody
+    public List<TipoComprobante> listarActivosVentaCarga() {
+        return elementoService.listarEstaActivoVentaCarga();
+    }
+    
     //Obtiene una lista por esta activo ingreso carga igual true
     @GetMapping(value = URL + "/listarActivosIngresoCarga")
     @ResponseBody

@@ -61,6 +61,10 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
     @JoinColumn(name = "idVentaComprobanteAplicado", nullable = true)
     private VentaComprobante ventaComprobanteAplicado;
     
+    //Define esta activa
+    @Column(name = "estaRechazadaFCE", nullable = false)
+    private boolean estaRechazadaFCE;
+    
     //Getters y setters de la clase
     public VentaComprobante getVentaComprobante() {
         return ventaComprobante;
@@ -141,4 +145,13 @@ public class VentaComprobanteItemNC extends ObjetoGenerico {
         this.ventaComprobanteAplicado = ventaComprobanteAplicado;
     }
 
+    public boolean isEstaRechazadaFCE() {
+        return estaRechazadaFCE;
+    }
+
+    public void setEstaRechazadaFCE(boolean estaRechazadaFCE) {
+        this.estaRechazadaFCE = estaRechazadaFCE;
+    }
+
+    
 }

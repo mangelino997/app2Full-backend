@@ -71,6 +71,7 @@ public class VentaComprobanteController {
     public Object listar() throws IOException {
         return elementoService.listar();
     }
+    
 
     //Obtiene la lista por comprobantes disponibles
     @GetMapping(value = URL + "/listarComprobantesDisponibles")

@@ -25,6 +25,9 @@ public interface ITipoComprobanteDAO extends JpaRepository<TipoComprobante, Inte
 
     //Obtiene una lista por estaActivoCompraCarga
     public List<TipoComprobante> findByEstaActivoCompraCargaTrue();
+    
+    //Obtiene una lista por estaActivoVentaCarga
+    public List<TipoComprobante> findByEstaActivoVentaCargaTrue();
 
     //Obtiene una lista por estaActivoIngresoCarga
     public List<TipoComprobante> findByEstaActivoIngresoCargaTrue();

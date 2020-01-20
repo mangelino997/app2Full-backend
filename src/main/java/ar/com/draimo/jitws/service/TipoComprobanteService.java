@@ -60,6 +60,11 @@ public class TipoComprobanteService {
         return elementoDAO.findByEstaActivoCompraCargaTrue();
     }
     
+    //Obtiene una lista por esta activo venta carga igual true
+    public List<TipoComprobante> listarEstaActivoVentaCarga() {
+        return elementoDAO.findByEstaActivoVentaCargaTrue();
+    }
+    
     //Obtiene una lista por esta activo ingreso carga igual true
     public List<TipoComprobante> listarEstaActivoIngresoCarga() {
         return elementoDAO.findByEstaActivoIngresoCargaTrue();
