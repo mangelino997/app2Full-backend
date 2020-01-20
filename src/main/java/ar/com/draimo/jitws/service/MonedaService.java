@@ -45,6 +45,11 @@ public class MonedaService {
     public List<Moneda> listar() {
         return elementoDAO.findAll();
     }
+    
+    //Obtiene una lista de monedas activas
+    public List<Moneda> listarActivas() {
+        return elementoDAO.findByEstaActivoTrue();
+    }
 
     //Obtiene una lista por nombre
     public List<Moneda> listarPorNombre(String nombre) {

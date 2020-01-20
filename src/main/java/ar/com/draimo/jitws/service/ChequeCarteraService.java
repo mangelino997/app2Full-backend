@@ -4,6 +4,7 @@ package ar.com.draimo.jitws.service;
 import ar.com.draimo.jitws.dao.IChequeCarteraDAO;
 import ar.com.draimo.jitws.dao.IBancoDAO;
 import ar.com.draimo.jitws.dao.IEmpresaDAO;
+import ar.com.draimo.jitws.dto.ChequeCarteraFiltroDTO;
 import ar.com.draimo.jitws.model.ChequeCartera;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,28 @@ public class ChequeCarteraService {
     //Obtiene una lista por Banco
     public List<ChequeCartera> listarPorBanco(int idBanco) {
             return elementoDAO.findByBanco(bancoDAO.findById(idBanco).get());
+    }
+    
+    //Obtiene una lista por filtros
+    public List<ChequeCartera> listarPorFiltros(ChequeCarteraFiltroDTO elementoDTO) {
+        List<ChequeCartera> chequesCartera;
+        if(elementoDTO.getImporteDesde() == null && elementoDTO.getImporteHasta() == null) {
+            chequesCartera = elementoDAO.listarPorFiltrosSinImportes(elementoDTO.getFechaPagoDesde(), 
+                elementoDTO.getFechaPagoHasta(), elementoDTO.getNumero(), elementoDTO.iseCheq());
+        } else if(elementoDTO.getImporteDesde() != null && elementoDTO.getImporteHasta() == null) {
+            chequesCartera = elementoDAO.listarPorFiltrosSinImporteHasta(elementoDTO.getFechaPagoDesde(), 
+                elementoDTO.getFechaPagoHasta(), elementoDTO.getImporteDesde(), elementoDTO.getNumero(), 
+                elementoDTO.iseCheq());
+        } else if(elementoDTO.getImporteDesde() == null && elementoDTO.getImporteHasta() != null) {
+            chequesCartera = elementoDAO.listarPorFiltrosSinImporteDesde(elementoDTO.getFechaPagoDesde(), 
+                elementoDTO.getFechaPagoHasta(), elementoDTO.getImporteHasta(), elementoDTO.getNumero(),
+                elementoDTO.iseCheq());
+        } else {
+            chequesCartera = elementoDAO.listarPorFiltros(elementoDTO.getFechaPagoDesde(), 
+                elementoDTO.getFechaPagoHasta(), elementoDTO.getImporteDesde(), elementoDTO.getImporteHasta(), 
+                elementoDTO.getNumero(), elementoDTO.iseCheq());
+        }
+        return chequesCartera;
     }
 
     //Agrega un registro

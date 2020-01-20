@@ -7,7 +7,6 @@ import javax.persistence.Table;
 /**
  * Clase Tipo Concepto Sueldo
  * Define el modelo (columnas) de la base de datos.
- *
  * @author blas
  */
 @Entity

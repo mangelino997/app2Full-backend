@@ -57,24 +57,24 @@ public class ChequeCartera extends ObjetoGenerico {
     private boolean eCheq;
 
     //Define la referencia a la clase cobranza
-    @ManyToOne
-    @JoinTable(
-      name = "cobranzamediopago", 
-      joinColumns = @JoinColumn(name = "idChequeCartera"), 
-      inverseJoinColumns = @JoinColumn(name = "idCobranza"))
-    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
-        "libroBanco","monedaCartera", "documentoCartera"})
-    private Cobranza cobranzaOrigen;
+//    @ManyToOne
+//    @JoinTable(
+//      name = "cobranzamediopago", 
+//      joinColumns = @JoinColumn(name = "idChequeCartera"), 
+//      inverseJoinColumns = @JoinColumn(name = "idCobranza"))
+//    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+//        "libroBanco","monedaCartera", "documentoCartera"})
+//    private Cobranza cobranzaOrigen;
     
     //Define la referencia a la clase pago
-    @ManyToOne
-    @JoinTable(
-      name = "pagomediopago", 
-      joinColumns = @JoinColumn(name = "idChequeCartera"), 
-      inverseJoinColumns = @JoinColumn(name = "idPago"))
-    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
-        "libroBanco","monedaCartera", "documentoCartera"})
-    private Pago pagoDestino;
+//    @ManyToOne
+//    @JoinTable(
+//      name = "pagomediopago", 
+//      joinColumns = @JoinColumn(name = "idChequeCartera"), 
+//      inverseJoinColumns = @JoinColumn(name = "idPago"))
+//    @JsonIgnoreProperties(value = {"efectivo","chequeCartera","cobranzaAnticipo",
+//        "libroBanco","monedaCartera", "documentoCartera"})
+//    private Pago pagoDestino;
     
     //Getters y Setters de la clase
 
@@ -142,20 +142,20 @@ public class ChequeCartera extends ObjetoGenerico {
         this.eCheq = eCheq;
     }
 
-    public Cobranza getCobranzaOrigen() {
-        return cobranzaOrigen;
-    }
-
-    public void setCobranzaOrigen(Cobranza cobranzaOrigen) {
-        this.cobranzaOrigen = cobranzaOrigen;
-    }
-
-    public Pago getPagoDestino() {
-        return pagoDestino;
-    }
-
-    public void setPagoDestino(Pago pagoDestino) {
-        this.pagoDestino = pagoDestino;
-    }
+//    public Cobranza getCobranzaOrigen() {
+//        return cobranzaOrigen;
+//    }
+//
+//    public void setCobranzaOrigen(Cobranza cobranzaOrigen) {
+//        this.cobranzaOrigen = cobranzaOrigen;
+//    }
+//
+//    public Pago getPagoDestino() {
+//        return pagoDestino;
+//    }
+//
+//    public void setPagoDestino(Pago pagoDestino) {
+//        this.pagoDestino = pagoDestino;
+//    }
     
 }
