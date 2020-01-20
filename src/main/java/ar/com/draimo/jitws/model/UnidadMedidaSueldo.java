@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "unidadmedidasueldo")
-class UnidadMedidaSueldo extends ObjetoGenerico {
+public class UnidadMedidaSueldo extends ObjetoGenerico {
     
     @Column(name = "nombre", length = 45, nullable = false, unique = true)
     private String nombre;

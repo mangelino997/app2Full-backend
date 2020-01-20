@@ -2,40 +2,40 @@
 
 package ar.com.draimo.jitws.service;
 
-import ar.com.draimo.jitws.dao.IConceptoSueldoDAO;
-import ar.com.draimo.jitws.model.ConceptoSueldo;
+import ar.com.draimo.jitws.dao.IUnidadMedidaSueldoDAO;
+import ar.com.draimo.jitws.model.UnidadMedidaSueldo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *Servicio de ConceptoSueldo
+ *Servicio de UnidadMedidaSueldo
  * @author marina
  */
 @Service
-public class ConceptoSueldoService {
+public class UnidadMedidaSueldoService {
     
     @Autowired
-    IConceptoSueldoDAO elementoDAO;
+    IUnidadMedidaSueldoDAO elementoDAO;
     
     public int obtenerSiguienteId() {
-        ConceptoSueldo elemento = elementoDAO.findTopByOrderByIdDesc();
+        UnidadMedidaSueldo elemento = elementoDAO.findTopByOrderByIdDesc();
         return elemento != null? elemento.getId()+1 : 1;
     }
     
      //Obtiene la lista completa
-    public List<ConceptoSueldo> listar() {
+    public List<UnidadMedidaSueldo> listar() {
         return elementoDAO.findAll();
     }
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public ConceptoSueldo agregar(ConceptoSueldo elemento) {
+    public UnidadMedidaSueldo agregar(UnidadMedidaSueldo elemento) {
         return elementoDAO.saveAndFlush(elemento);
     }
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(ConceptoSueldo elemento) {
+    public void actualizar(UnidadMedidaSueldo elemento) {
         elementoDAO.save(elemento);
     }
     //Elimina un registro
