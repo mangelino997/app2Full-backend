@@ -3,6 +3,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IConceptoSueldoDAO;
+import ar.com.draimo.jitws.dto.InitConceptoSueldoDTO;
 import ar.com.draimo.jitws.model.ConceptoSueldo;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ConceptoSueldoService {
     
+    //Define la referencia al dao
     @Autowired
     IConceptoSueldoDAO elementoDAO;
+    
+    //Referencia al service de subopcionpestania
+    @Autowired
+    SubopcionPestaniaService subopcionPestaniaService;
+    
+    //referencia al servicio TipoConceptoSueldoService
+    @Autowired
+    TipoConceptoSueldoService tipoConceptoSueldoService;
+    
+    //referencia al servicio UnidadMedidaSueldoService
+    @Autowired
+    UnidadMedidaSueldoService unidadMedidaSueldoService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    public InitConceptoSueldoDTO inicializar(int idRol, int idsubopcion) {
+        InitConceptoSueldoDTO elemento = new InitConceptoSueldoDTO();
+        elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idsubopcion));
+        elemento.setTiposConceptosSueldos(tipoConceptoSueldoService.listar());
+        elemento.setUnidadesMedidasSueldos(unidadMedidaSueldoService.listar());
+        return elemento;
+    }
     
     public int obtenerSiguienteId() {
         ConceptoSueldo elemento = elementoDAO.findTopByOrderByIdDesc();

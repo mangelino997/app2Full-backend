@@ -2,7 +2,6 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.dto.InitBancoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.Banco;
