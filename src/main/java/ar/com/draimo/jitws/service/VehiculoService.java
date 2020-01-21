@@ -80,7 +80,6 @@ public class VehiculoService {
         p.setUltimoId(obtenerSiguienteId());
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
         p.setEmpresas(empresaDAO.findAll());
-        p.setCompaniasSeguros(companiaSeguroDAO.listarPorEmpresa(idEmpresa));
         return p;
     }
 

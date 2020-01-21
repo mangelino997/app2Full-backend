@@ -23,7 +23,7 @@ public class InitBancoDTO {
         return ultimoId;
     }
 
-//Getters and setters de la clase
+    //Getters and setters de la clase
     public void setUltimoId(int ultimoId) {
         this.ultimoId = ultimoId;
     }

@@ -3,7 +3,6 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBancoDAO;
 import ar.com.draimo.jitws.dao.ITipoDocumentoDAO;
-import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.dto.InitBancoDTO;
 import ar.com.draimo.jitws.model.Banco;
 import java.util.List;
