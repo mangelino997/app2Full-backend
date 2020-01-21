@@ -8,22 +8,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * Interfaz DAO Sucursal
- * Define los metodos particulares contra la base de datos
+ * Interfaz DAO Sucursal Define los metodos particulares contra la base de datos
+ *
  * @author blas
  */
-
 public interface ISucursalDAO extends JpaRepository<Sucursal, Integer> {
-    
+
     //Obtiene el ultimo registro
     public Sucursal findTopByOrderByIdDesc();
-    
+
     //Obtiene una lista por nombre
     public List<Sucursal> findByNombreContaining(String nombre);
-    
+
     //Obtiene una sucursal por reparto
     @Query(value = "SELECT * FROM sucursal s INNER JOIN reparto r ON s.id=r.idSucursal"
             + " WHERE r.id=:idReparto", nativeQuery = true)
-    public Sucursal obtenerPorReparto(@Param("idReparto")int idReparto);
-    
+    public Sucursal obtenerPorReparto(@Param("idReparto") int idReparto);
+
 }

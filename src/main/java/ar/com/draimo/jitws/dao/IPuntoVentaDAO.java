@@ -24,6 +24,9 @@ public interface IPuntoVentaDAO extends JpaRepository<PuntoVenta, Integer> {
     //Obtiene una lista por sucursal
     public List<PuntoVenta> findBySucursal(Optional<Sucursal> sucursal);
     
+    //Obtiene una lista por empresa
+    public List<PuntoVenta> findByEmpresa(Optional<Empresa> empresa);
+    
     //Obtiene una lista por sucursal y empresa
     @Query(value = "SELECT * FROM puntoventa WHERE idSucursal=:idSucursal AND "
             + "idEmpresa=:idEmpresa", nativeQuery = true)

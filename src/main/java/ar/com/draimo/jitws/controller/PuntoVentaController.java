@@ -71,6 +71,13 @@ public class PuntoVentaController {
     public List<PuntoVenta> listarPorSucursal(@PathVariable int id) {
         return elementoService.listarPorSucursal(id);
     }
+    
+    //Obtiene una lista por empresa
+    @GetMapping(value = URL + "/listarPorEmpresa/{id}")
+    @ResponseBody
+    public List<PuntoVenta> listarPorEmpresa(@PathVariable int id) {
+        return elementoService.listarPorEmpresa(id);
+    }
 
     //Obtiene una lista por sucursal y empresa
     @GetMapping(value = URL + "/listarPorSucursalYEmpresa/{idSucursal}/{idEmpresa}")

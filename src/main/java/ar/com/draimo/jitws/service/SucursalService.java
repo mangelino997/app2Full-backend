@@ -19,11 +19,11 @@ public class SucursalService {
     //Define la referencia al dao
     @Autowired
     ISucursalDAO elementoDAO;
-    
+
     //Referencia al service de subopcionpestania
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
-    
+
     //Obtiene listas necesarias para inicializar el componente (front)
     public GenericoDTO inicializar(int idRol, int idSubopcion) {
         GenericoDTO elemento = new GenericoDTO();

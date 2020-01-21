@@ -47,7 +47,7 @@ public class PuntoVentaService {
     //Define la referencia al dao tipoComprobante
     @Autowired
     ITipoComprobanteDAO tipoComprobanteDAO;
-    
+
     //Define la subopcion pestania service
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
@@ -62,7 +62,7 @@ public class PuntoVentaService {
         p.setTipoComprobantes(tipoComprobanteDAO.findByNumeracionPuntoVentaTrue());
         return p;
     }
-    
+
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
         PuntoVenta elemento = elementoDAO.findTopByOrderByIdDesc();
@@ -82,6 +82,14 @@ public class PuntoVentaService {
         return elementoDAO.findBySucursal(sucursal);
     }
 
+    //Obtiene una lista por sucursal
+    public List<PuntoVenta> listarPorEmpresa(int idEmpresa) {
+        //Obtiene la sucursal por id
+        Optional<Empresa> empresa = empresaDAO.findById(idEmpresa);
+        //Retorna los datos
+        return elementoDAO.findByEmpresa(empresa);
+    }
+
     //Obtiene una lista por sucursal y empresa
     public List<PuntoVenta> listarPorSucursalYEmpresa(int idSucursal, int idEmpresa) {
         return elementoDAO.listarPorSucursalYEmpresa(idSucursal, idEmpresa);
@@ -90,7 +98,7 @@ public class PuntoVentaService {
     //Obtiene una lista de hablilitados por sucursal, empresa y fe
     public List<PuntoVenta> listarHabilitadosPorSucursalEmpresaYFe(int idSucursal, int idEmpresa) {
         return elementoDAO.findByEmpresaAndSucursalAndFeTrueAndEstaHabilitadoTrue(
-                empresaDAO.findById(idEmpresa).get(),sucursalDAO.findById(idSucursal).get());
+                empresaDAO.findById(idEmpresa).get(), sucursalDAO.findById(idSucursal).get());
     }
 
     //Obtiene una lista por sucursal y empresa y agrega letra a cada registro
@@ -152,7 +160,7 @@ public class PuntoVentaService {
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
-    
+
     //Controla la longitud de los atributos de tipo short
     private void controlarLongitud(PuntoVenta elemento) {
         //Obtiene longitud de anio, si es mayor a 1 retorna error

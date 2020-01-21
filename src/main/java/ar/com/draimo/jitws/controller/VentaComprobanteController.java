@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.FacturacionConsultaFiltroDTO;
 import ar.com.draimo.jitws.dto.InitFacturaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.VentaComprobante;
@@ -72,6 +73,11 @@ public class VentaComprobanteController {
         return elementoService.listar();
     }
     
+    //Obtiene una lista de clientes por filtro
+    @PostMapping(value = URL + "/listarPorFiltros")
+    public Object listarPorFiltros(@RequestBody FacturacionConsultaFiltroDTO consulta) throws IOException {
+        return elementoService.listarPorFiltros(consulta);
+    }
 
     //Obtiene la lista por comprobantes disponibles
     @GetMapping(value = URL + "/listarComprobantesDisponibles")

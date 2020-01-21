@@ -5,6 +5,7 @@ import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.Empresa;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaComprobante;
+import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -57,4 +58,25 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
     public List<VentaComprobante> listarComprobantesPorClienteYEmpresa(@Param("idCliente") 
             int idCliente, @Param("idEmpresa") int idEmpresa);
     
+    /*Obtiene un listado de registros por idEmpresa, idCliente, rango de fecha, tipo de comprobante
+    * y el tipo de fecha por la que se quiere listar
+    * Si fechaTipo es igual 0 se obtiene por fecha registracion, si es igual a 1 se obtiene 
+    * por fecha emision y si es igual a 2 se obtiene por fecha vencimiento pago
+    * Si idEmpresa es igual a 0 obtiene todas. Si idCliente es igual a cero obtiene todos.
+    * Si idTipoComprobante es igual a 0 obtiene todos.
+    */
+    @Query(value = "SELECT * FROM ventacomprobante where Case :fechaTipo when 1 then "
+            + "(:idSucursal=0 OR idSucursal=:idSucursal) and (:idCliente=0 OR idCliente=:idCliente)"
+            + " and fechaEmision between :fechaDesde and :fechaHasta and "
+            + "(:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) when 2 "
+            + "then (:idSucursal=0 OR idSucursal=:idSucursal) and (:idCliente=0 OR "
+            + "idCliente=:idCliente) and fechaVtoPago between :fechaDesde and "
+            + ":fechaHasta and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) "
+            + "when 0 then (:idSucursal=0 OR idSucursal =:idSucursal) and (:idCliente=0 "
+            + "OR idCliente=:idCliente) and fechaRegistracion between :fechaDesde "
+            + "and :fechaHasta and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) end", nativeQuery = true)
+    public List<VentaComprobante> listarPorFiltros(@Param("idSucursal") int idSucursal,
+            @Param("idCliente") int idCliente, @Param("fechaDesde") Date fechaDesde,
+            @Param("fechaHasta") Date fechaHasta, @Param("idTipoComprobante") int idTipoComprobante,
+            @Param("fechaTipo") int fechaTipo);
 }

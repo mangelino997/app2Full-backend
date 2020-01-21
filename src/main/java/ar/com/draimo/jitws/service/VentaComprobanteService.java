@@ -18,6 +18,7 @@ import ar.com.draimo.jitws.dao.IVentaComprobanteItemNCDAO;
 import ar.com.draimo.jitws.dao.IVentaTipoItemDAO;
 import ar.com.draimo.jitws.dao.IViajeRemitoDAO;
 import ar.com.draimo.jitws.dao.IViajeTramoClienteRemitoDAO;
+import ar.com.draimo.jitws.dto.FacturacionConsultaFiltroDTO;
 import ar.com.draimo.jitws.dto.InitFacturaDTO;
 import ar.com.draimo.jitws.model.PuntoVenta;
 import ar.com.draimo.jitws.model.TipoComprobante;
@@ -150,6 +151,13 @@ public class VentaComprobanteService {
     //Obtiene la lista completa
     public Object listar() throws IOException {
         List<VentaComprobante> elementos = elementoDAO.findAll();
+        return retornarObjeto(elementos, null);
+    }
+
+    //Obtiene un listado por filtro
+    public Object listarPorFiltros(FacturacionConsultaFiltroDTO consulta) throws IOException {
+        List<VentaComprobante> elementos = elementoDAO.listarPorFiltros(consulta.getIdSucursal(), consulta.getIdCliente(),
+                consulta.getFechaDesde(), consulta.getFechaHasta(), consulta.getIdTipoComprobante(), consulta.getIdTipoComprobante());
         return retornarObjeto(elementos, null);
     }
 
