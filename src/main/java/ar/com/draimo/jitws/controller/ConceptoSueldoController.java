@@ -3,6 +3,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.InitConceptoSueldoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.ConceptoSueldo;
 import ar.com.draimo.jitws.service.ConceptoSueldoService;
@@ -34,6 +35,13 @@ public class ConceptoSueldoController {
     //Crea una instancia del servicio
     @Autowired
     ConceptoSueldoService elementoService;
+    
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public InitConceptoSueldoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
+    }
     
     //Obtiene la lista completa
     @GetMapping(value = URL)
