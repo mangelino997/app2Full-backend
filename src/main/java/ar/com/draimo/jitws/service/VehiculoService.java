@@ -75,7 +75,7 @@ public class VehiculoService {
     //Obtiene la lista completa
     public InitVehiculoDTO inicializar(int rol, int subopcion, int idEmpresa) {
         InitVehiculoDTO p = new InitVehiculoDTO();
-         p.setMarcaVehiculos(marcaVehiculoDAO.findAll());
+        p.setMarcaVehiculos(marcaVehiculoDAO.findAll());
         p.setTipoVehiculos(tipoVehiculoDAO.findAll());
         p.setUltimoId(obtenerSiguienteId());
         p.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(rol, subopcion));
