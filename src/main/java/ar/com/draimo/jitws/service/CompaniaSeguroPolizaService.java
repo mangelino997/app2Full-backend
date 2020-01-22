@@ -170,7 +170,7 @@ public class CompaniaSeguroPolizaService {
             } 
             elemento.setPdf(null);
         } else {
-            Pdf f = elemento.getPdf().getId() != 0 ?pdfService.actualizar(elemento.getPdf().getId(),
+            Pdf f = elemento.getPdf().getId() != 0 ? pdfService.actualizar(elemento.getPdf().getId(), "companiaseguropoliza",
                     archivo, elemento.getEmpresa().getAbreviatura() + "-" + elemento.getNumeroPoliza(), false) 
                     : pdfService.agregar(archivo, elemento.getEmpresa().getAbreviatura() 
                             + "-" + elemento.getNumeroPoliza(), false);

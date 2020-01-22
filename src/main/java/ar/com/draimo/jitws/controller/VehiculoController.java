@@ -9,6 +9,7 @@ import ar.com.draimo.jitws.service.VehiculoService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -149,16 +152,10 @@ public class VehiculoController {
 
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestPart("vehiculo") String elementoString,
-            @RequestPart("titulo") MultipartFile titulo, @RequestPart("cedulaIdent") MultipartFile cedulaIdent, 
-            @RequestPart("vtoRuta") MultipartFile vtoRuta,
-            @RequestPart("vtoInspTecnica") MultipartFile vtoInspTecnica,
-            @RequestPart("vtoSenasa") MultipartFile vtoSenasa,
-            @RequestPart("habBromat") MultipartFile habBromat) {
+    public ResponseEntity<?> actualizar(@RequestBody Vehiculo elemento) {
         try {
             //Actualiza el registro
-            Vehiculo vehiculo = elementoService.actualizar(elementoString, titulo, cedulaIdent, vtoRuta,
-                    vtoInspTecnica, vtoSenasa, habBromat);
+            Vehiculo vehiculo = elementoService.actualizar(elemento);
             //Actualiza inmediatamente el registro para establecer el alias
             elementoService.establecerAlias(vehiculo);
             //Envia la nueva lista a los usuarios subscripto
@@ -177,6 +174,41 @@ public class VehiculoController {
         } catch (MessagingException e) {
             //Retorna codigo y mensaje de error de sicronizacion mediante socket
             return MensajeRespuesta.errorSincSocket();
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
+    //Actualiza un pdf
+    @PutMapping(value = URL + "/actualizarPdf")
+    public ResponseEntity<?> actualizarPDF(@RequestParam("idVehiculo") int idVehiculo, 
+            @RequestParam("idPdf") int idPdf, @RequestParam("tipoPdf") String tipoPdf, 
+            @RequestParam("archivo") MultipartFile archivo) {
+        try {
+            //Actualiza el registro
+            Vehiculo vehiculo = elementoService.actualizarPDF(idVehiculo, idPdf, tipoPdf, archivo);
+            //Envia la nueva lista a los usuarios subscripto
+            ////template.convertAndSend(TOPIC + "/lista", elementoService.listar());
+            //Retorna mensaje de actualizado con exito
+            return new ResponseEntity(vehiculo.getVersion(), HttpStatus.OK);
+        } catch (Exception e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
+    
+    //Elimina un registro
+    @DeleteMapping(value = URL + "/eliminarPdf/{idVehiculo}/{idPdf}/{tipoPdf}")
+    public ResponseEntity<?> eliminarPDF(@PathVariable int idVehiculo, @PathVariable int idPdf,
+            @PathVariable String tipoPdf) {
+        try {
+            Vehiculo vehiculo = elementoService.eliminarPDF(idVehiculo, idPdf, tipoPdf);
+            //Retorna mensaje de eliminado con exito
+            return new ResponseEntity(vehiculo.getVersion(), HttpStatus.OK);
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
         } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();

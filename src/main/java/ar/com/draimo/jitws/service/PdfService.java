@@ -48,23 +48,24 @@ public class PdfService {
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
     public Pdf agregar(MultipartFile archivo, String nombre, boolean opcion) throws IOException {
-        Pdf foto = new Pdf();
-        foto.setNombre(nombre);
-        foto.setTipo(archivo.getContentType());
-        foto.setTamanio(archivo.getSize());
-        foto.setDatos(archivo.getBytes());
-        formatearStrings(foto);
-        return opcion ? elementoDAO.saveAndFlush(foto) : foto;
+        Pdf pdf = new Pdf();
+        pdf.setNombre(nombre);
+        pdf.setTipo(archivo.getContentType());
+        pdf.setTamanio(archivo.getSize());
+        pdf.setDatos(archivo.getBytes());
+        formatearStrings(pdf);
+        return opcion ? elementoDAO.saveAndFlush(pdf) : pdf;
     }
 
     //Agrega un registro
     @Transactional(rollbackFor = Exception.class)
-    public Pdf actualizar(int idPdf, MultipartFile archivo, String nombre, boolean opcion) throws IOException {
-        Pdf elemento = elementoDAO.findById(idPdf).get();
+    public Pdf actualizar(int idPdf, String tabla, MultipartFile archivo, String nombre, boolean opcion) throws IOException {
+        Pdf elemento = idPdf == 0 ? new Pdf() : elementoDAO.findById(idPdf).get();
         elemento.setNombre(nombre);
         elemento.setTipo(archivo.getContentType());
         elemento.setTamanio(archivo.getSize());
         elemento.setDatos(archivo.getBytes());
+        elemento.setTabla(tabla);
         formatearStrings(elemento);
         return opcion ? elementoDAO.save(elemento) : elemento;
     }

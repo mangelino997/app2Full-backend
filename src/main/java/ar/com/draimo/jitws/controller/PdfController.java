@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,11 +88,11 @@ public class PdfController {
 
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestPart("idPdf") int idPdf,
-            @RequestPart("pdf") MultipartFile pdf) {
+    public ResponseEntity<?> actualizar(@RequestParam("idPdf") int idPdf,
+            @RequestParam("tabla") String tabla, @RequestParam("pdf") MultipartFile pdf) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(idPdf, pdf, pdf.getOriginalFilename(), true);
+            elementoService.actualizar(idPdf, tabla, pdf, pdf.getOriginalFilename(), true);
             //Envia la nueva lista a los usuarios subscripto
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();
