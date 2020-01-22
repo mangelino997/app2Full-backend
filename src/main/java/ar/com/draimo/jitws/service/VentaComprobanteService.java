@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -141,6 +142,16 @@ public class VentaComprobanteService {
         p.setVentaTipoItems(ventaTipoItemDAO.listarTipoComprobante(3));
         return p;
     }
+    //Obtiene el listado de elementos necesarios para inicializar el componente
+    public InitFacturaDTO inicializarFacturacionConsulta(int idEmpresa, int idSucursal) {
+        InitFacturaDTO p = new InitFacturaDTO();
+        p.setPuntoVentas(puntoVentaDAO.findByEmpresa(empresaDAO.findById(idEmpresa)));
+        p.setTipoComprobantes(tipoComprobanteDAO.findByEstaActivoVentaCargaTrue());
+        p.setSucursales(sucursalDAO.findAll());
+        p.setFechaActual(new Date(new java.util.Date().getTime()));
+        return p;
+    }
+    
 
     //Obtiene el siguiente id
     public int obtenerSiguienteId() {
@@ -156,8 +167,31 @@ public class VentaComprobanteService {
 
     //Obtiene un listado por filtro
     public Object listarPorFiltros(FacturacionConsultaFiltroDTO consulta) throws IOException {
-        List<VentaComprobante> elementos = elementoDAO.listarPorFiltros(consulta.getIdSucursal(), consulta.getIdCliente(),
+        List<VentaComprobante> elementos = null;
+        switch (consulta.getTipoFiltro()) {
+            //listar por filtros - formulario general
+            case 0:
+                elementos= elementoDAO.listarPorFiltros(consulta.getIdSucursal(), consulta.getIdCliente(),
                 consulta.getFechaDesde(), consulta.getFechaHasta(), consulta.getIdTipoComprobante(), consulta.getIdTipoComprobante());
+                break;
+            //listar por comprobante 
+            case 1:
+                elementos= elementoDAO.listarPorComprobante(consulta.getIdTipoComprobante(), consulta.getPuntoVenta().getPuntoVenta(),
+                consulta.getLetra().trim(), consulta.getNumero());
+                break;
+            //listar por rango de comprobantes
+            case 2:
+                elementos= elementoDAO.listarPorRangoComprobantes(consulta.getIdTipoComprobante(), consulta.getPuntoVenta().getPuntoVenta(),
+                consulta.getLetra().trim(), consulta.getNumeroDesde(), consulta.getNumeroHasta());
+                break;
+            //listar por importe
+            case 3:
+                elementos= elementoDAO.listarPorRangoImportes(consulta.getImporteDesde(), consulta.getImporteHasta(),
+                consulta.getFechaDesde(), consulta.getFechaHasta());
+                break;
+            default:
+                break;
+        }
         return retornarObjeto(elementos, null);
     }
 
