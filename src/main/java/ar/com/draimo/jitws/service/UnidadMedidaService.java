@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Servicio Pais
+ * Servicio de UnidadMedidaService
  *
  * @author blas
  */

@@ -50,6 +50,13 @@ public class ConceptoSueldoController {
         return elementoService.listar();
     }
     
+    //Obtiene el último Código Empleador
+    @GetMapping(value = URL + "/obtenerUltimoCodigoEmpleador")
+    @ResponseBody
+    public String obtenerUltimoCodigoEmpleador() {
+        return elementoService.obtenerUltimoCodigoEmpleador();
+    }
+    
     //Agrega un registro
     @PostMapping(value = URL)
     public ResponseEntity<?> agregar(@RequestBody ConceptoSueldo elemento) {

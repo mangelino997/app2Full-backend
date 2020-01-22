@@ -3,6 +3,7 @@
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
+import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.UnidadMedidaSueldo;
 import ar.com.draimo.jitws.service.UnidadMedidaSueldoService;
@@ -40,6 +41,18 @@ public class UnidadMedidaSueldoController {
     @ResponseBody
     public List<UnidadMedidaSueldo> listar() {
         return elementoService.listar();
+    }
+    //Obtiene una lista por nombre
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
+    @ResponseBody
+    public List<UnidadMedidaSueldo> listarPorNombre(@PathVariable String nombre) {
+        return elementoService.listarPorNombre(nombre);
+    }
+    //Obtiene listas necesarias para inicializar el componente (front)
+    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
+    @ResponseBody
+    public GenericoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
+        return elementoService.inicializar(idRol, idSubopcion);
     }
     
     //Agrega un registro

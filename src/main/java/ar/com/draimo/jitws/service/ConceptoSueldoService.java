@@ -66,4 +66,8 @@ public class ConceptoSueldoService {
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
     }
+    //Obtiene el último Código Empleador
+    public String obtenerUltimoCodigoEmpleador() {
+        return "OK";
+    }
 }
