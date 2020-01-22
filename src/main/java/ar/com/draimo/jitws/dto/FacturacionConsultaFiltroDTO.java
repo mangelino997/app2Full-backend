@@ -5,6 +5,7 @@
  */
 package ar.com.draimo.jitws.dto;
 
+import ar.com.draimo.jitws.model.PuntoVenta;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -31,6 +32,30 @@ public class FacturacionConsultaFiltroDTO {
 
     //Define fecha pago desde
     private int idTipoComprobante;
+
+    //Define punto de venta
+    private PuntoVenta puntoVenta;
+
+    //Define la letra
+    private String letra;
+
+    //Define el numero
+    private String numero;
+
+    //Define el numeroDesde
+    private String numeroDesde;
+
+    //Define el numeroHasta
+    private String numeroHasta;
+
+    //Define el importeDesde
+    private BigDecimal importeDesde;
+
+    //Define el importeHasta
+    private BigDecimal importeHasta;
+
+    //Define el tipo de filtro
+    private int tipoFiltro;
 
     public int getIdSucursal() {
         return idSucursal;
@@ -72,7 +97,6 @@ public class FacturacionConsultaFiltroDTO {
         this.fechaHasta = fechaHasta;
     }
 
-
     public int getIdTipoComprobante() {
         return idTipoComprobante;
     }
@@ -80,6 +104,69 @@ public class FacturacionConsultaFiltroDTO {
     public void setIdTipoComprobante(int idTipoComprobante) {
         this.idTipoComprobante = idTipoComprobante;
     }
-    
-    
+
+    public PuntoVenta getPuntoVenta() {
+        return puntoVenta;
+    }
+
+    public void setPuntoVenta(PuntoVenta puntoVenta) {
+        this.puntoVenta = puntoVenta;
+    }
+
+    public String getLetra() {
+        return letra;
+    }
+
+    public void setLetra(String letra) {
+        this.letra = letra;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getNumeroDesde() {
+        return numeroDesde;
+    }
+
+    public void setNumeroDesde(String numeroDesde) {
+        this.numeroDesde = numeroDesde;
+    }
+
+    public String getNumeroHasta() {
+        return numeroHasta;
+    }
+
+    public void setNumeroHasta(String numeroHasta) {
+        this.numeroHasta = numeroHasta;
+    }
+
+    public BigDecimal getImporteDesde() {
+        return importeDesde;
+    }
+
+    public void setImporteDesde(BigDecimal importeDesde) {
+        this.importeDesde = importeDesde;
+    }
+
+    public BigDecimal getImporteHasta() {
+        return importeHasta;
+    }
+
+    public void setImporteHasta(BigDecimal importeHasta) {
+        this.importeHasta = importeHasta;
+    }
+
+    public int getTipoFiltro() {
+        return tipoFiltro;
+    }
+
+    public void setTipoFiltro(int tipoFiltro) {
+        this.tipoFiltro = tipoFiltro;
+    }
+
 }

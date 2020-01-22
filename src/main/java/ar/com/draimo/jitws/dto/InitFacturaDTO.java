@@ -4,8 +4,10 @@ import ar.com.draimo.jitws.model.AfipAlicuotaIva;
 import ar.com.draimo.jitws.model.EmpresaOrdenVenta;
 import ar.com.draimo.jitws.model.Provincia;
 import ar.com.draimo.jitws.model.PuntoVenta;
+import ar.com.draimo.jitws.model.Sucursal;
 import ar.com.draimo.jitws.model.TipoComprobante;
 import ar.com.draimo.jitws.model.VentaTipoItem;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -35,7 +37,12 @@ public class InitFacturaDTO {
     //Lista de provincias
     private List<Provincia> provincias;
 
+    //Lista sucursales
+    private List<Sucursal> sucursales; 
     //Define Getters y Setters
+    
+    //Lista de tipos de docs
+    private Date fechaActual; 
 
     public int getUltimoId() {
         return ultimoId;
@@ -91,6 +98,22 @@ public class InitFacturaDTO {
 
     public void setProvincias(List<Provincia> provincias) {
         this.provincias = provincias;
+    }
+
+    public List<Sucursal> getSucursales() {
+        return sucursales;
+    }
+
+    public void setSucursales(List<Sucursal> sucursales) {
+        this.sucursales = sucursales;
+    }
+
+    public Date getFechaActual() {
+        return fechaActual;
+    }
+
+    public void setFechaActual(Date fechaActual) {
+        this.fechaActual = fechaActual;
     }
     
 }

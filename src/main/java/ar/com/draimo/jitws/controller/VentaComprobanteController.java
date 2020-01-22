@@ -58,6 +58,13 @@ public class VentaComprobanteController {
     public InitFacturaDTO inicializarNotaCredito(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
         return elementoService.inicializarNotaCredito(idEmpresa, idSucursal);
     }
+    
+    //Obtiene el siguiente id
+    @GetMapping(value = URL + "/inicializarFacturacionConsulta/{idEmpresa}/{idSucursal}")
+    @ResponseBody
+    public InitFacturaDTO inicializarFacturacionConsulta(@PathVariable int idEmpresa, @PathVariable int idSucursal) {
+        return elementoService.inicializarFacturacionConsulta(idEmpresa, idSucursal);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")
