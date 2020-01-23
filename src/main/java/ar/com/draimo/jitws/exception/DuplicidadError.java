@@ -86,5 +86,7 @@ public class DuplicidadError {
     public static final String VALOR_UNICO = "valor_UNIQUE";
 
     public static final String UNICIDAD_TABLA = "unicidad_tabla";
+    
+    public static final String NUMERO_POLIZA = "numeroPoliza_UNIQUE";
 
 }

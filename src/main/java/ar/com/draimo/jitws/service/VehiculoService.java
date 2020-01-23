@@ -187,7 +187,7 @@ public class VehiculoService {
     
     //Actualiza un pdf
     @Transactional(rollbackFor = Exception.class)
-    public Vehiculo actualizarPDF(int idVehiculo, int idPdf, String tipoPdf, MultipartFile archivo) throws IOException {
+    public Object actualizarPDF(int idVehiculo, int idPdf, String tipoPdf, MultipartFile archivo) throws IOException {
         Vehiculo vehiculo = elementoDAO.findById(idVehiculo).get();
         Pdf pdf;
         if(idPdf == 0) {
@@ -198,7 +198,11 @@ public class VehiculoService {
             pdf = pdfService.actualizar(idPdf, "vehiculo", archivo, archivo.getOriginalFilename(), false);
             pdf = pdfDAO.save(pdf);
         }
-        return elementoDAO.save(verificarTipoPdf(vehiculo, tipoPdf, pdf));
+        Vehiculo v = elementoDAO.saveAndFlush(verificarTipoPdf(vehiculo, tipoPdf, pdf));
+        Vehiculo elemento = new Vehiculo();
+        elemento.setVersion(v.getVersion());
+        elemento.setPdfTitulo(pdf);
+        return retornarObjeto(null, elemento);
     }
     
     //Elimina un pdf

@@ -120,6 +120,7 @@ public class CodigoRespuesta {
     public static final int DATO_DUPLICADO_USERNAME = 11005;
     public static final int DATO_DUPLICADO_VALOR = 11016;
     public static final int DATO_DUPLICADO_TRAMO = 11017;
+    public static final int DATO_DUPLICADO_POLIZA = 11018;
     public static final int DATO_DUPLICADO_CUENTA_BANCARIA = 11044;
 
     /*
