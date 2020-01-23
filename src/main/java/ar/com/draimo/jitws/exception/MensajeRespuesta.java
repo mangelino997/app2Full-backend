@@ -59,39 +59,39 @@ public class MensajeRespuesta {
 
     //Retorna mensaje con Response Entity de agrego con exito
     public static ResponseEntity<?> agregado(int id) {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.CREADO, MensajeRespuesta.AGREGADO, (id + 1)), HttpStatus.CREATED);
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.CREADO, MensajeRespuesta.AGREGADO, (id + 1)), HttpStatus.CREATED);
     }
 
     //Retorna mensaje con Response Entity de actualizado con exito
     public static ResponseEntity<?> actualizado() {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK,
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK,
                 MensajeRespuesta.ACTUALIZADO, 0), HttpStatus.OK);
     }
 
     //Retorna mensaje con Response Entity de eliminado con exito
     public static ResponseEntity<?> eliminado() {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.ELIMINADO, 0), HttpStatus.OK);
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.ELIMINADO, 0), HttpStatus.OK);
     }
 
     //Retorna mensaje con Response Entity de anulado con exito
     public static ResponseEntity<?> anulado() {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.ANULADO, 0), HttpStatus.OK);
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.ANULADO, 0), HttpStatus.OK);
     }
 
     //Retorna mensaje con Response Entity de normalizado con exito
     public static ResponseEntity<?> normalizado() {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.NORMALIZADO, 0), HttpStatus.OK);
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK, MensajeRespuesta.NORMALIZADO, 0), HttpStatus.OK);
     }
 
     //Retorna mensaje con ReponseEntity de error interno en el servidor
     public static ResponseEntity<?> error() {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                 MensajeRespuesta.ERROR_INTERNO_SERVIDOR, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     //Retorna mensaje con ReponseEntity de error interno en el servidor
     public static ResponseEntity<?> error(String mensaje) {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                 mensaje, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -100,7 +100,7 @@ public class MensajeRespuesta {
         List<String> mensajes = new ArrayList<>();
         mensajes.add("Para Cuenta bancaria-Tipo chequera: desde y hasta existentes");
         mensajes.add("Por favor, seleccione otros datos");
-        return new ResponseEntity<>(new EstadoRespuestaChequera(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
+        return new ResponseEntity(new EstadoRespuestaChequera(CodigoRespuesta.ERROR_INTERNO_SERVIDOR,
                 mensajes, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -127,7 +127,7 @@ public class MensajeRespuesta {
 
     //Retorna mensaje con ReponseEntity de tabla reestablecida
     public static ResponseEntity<?> tablaReestablecida() {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.OK,
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.OK,
                 MensajeRespuesta.TABLA_REESTABLECIDA, 0), HttpStatus.OK);
     }
 
@@ -168,7 +168,7 @@ public class MensajeRespuesta {
 
     //Retorna mensaje con ReponseEntity de sin contenido
     public static ResponseEntity sinContenido() {
-        return new ResponseEntity<>(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO,
+        return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.SIN_CONTENIDO,
                 MensajeRespuesta.SIN_CONTENIDO, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -351,6 +351,10 @@ public class MensajeRespuesta {
                     case DuplicidadError.UNICIDAD_TABLA:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_TRAMO;
                         plusMensaje = "";
+                        break;
+                    case DuplicidadError.NUMERO_POLIZA:
+                        codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO_POLIZA;
+                        plusMensaje = ": NÚMERO PÓLIZA";
                         break;
                     default:
                         codigoRespuesta = CodigoRespuesta.DATO_DUPLICADO;
@@ -2574,7 +2578,7 @@ public class MensajeRespuesta {
                 }
                 break;
         }
-        return new ResponseEntity<>(new EstadoRespuesta(codigoRespuesta,
+        return new ResponseEntity(new EstadoRespuesta(codigoRespuesta,
                 mensajeRespuesta + plusMensaje, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -3210,7 +3214,7 @@ public class MensajeRespuesta {
                 plusMensaje = " ";
 
         }
-        return new ResponseEntity<>(new EstadoRespuesta(codigoRespuesta,
+        return new ResponseEntity(new EstadoRespuesta(codigoRespuesta,
                 mensajeRespuesta + plusMensaje, 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
