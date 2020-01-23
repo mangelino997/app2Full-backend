@@ -187,11 +187,11 @@ public class VehiculoController {
             @RequestParam("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            Vehiculo vehiculo = elementoService.actualizarPDF(idVehiculo, idPdf, tipoPdf, archivo);
+            Object vehiculo = elementoService.actualizarPDF(idVehiculo, idPdf, tipoPdf, archivo);
             //Envia la nueva lista a los usuarios subscripto
             ////template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de actualizado con exito
-            return new ResponseEntity(vehiculo.getVersion(), HttpStatus.OK);
+            return new ResponseEntity(vehiculo, HttpStatus.OK);
         } catch (Exception e) {
             //Retorna mensaje de error interno en el servidor
             return MensajeRespuesta.error();
