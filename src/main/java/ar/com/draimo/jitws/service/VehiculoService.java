@@ -191,11 +191,11 @@ public class VehiculoService {
         Vehiculo vehiculo = elementoDAO.findById(idVehiculo).get();
         Pdf pdf;
         if(idPdf == 0) {
-            pdf = pdfService.agregar(archivo, archivo.getOriginalFilename(), false);
+            pdf = pdfService.agregar(archivo, vehiculo.getDominio() + establecerNombrePdf(tipoPdf), false);
             pdf.setTabla("vehiculo");
             pdf = pdfDAO.saveAndFlush(pdf);
         } else {
-            pdf = pdfService.actualizar(idPdf, "vehiculo", archivo, archivo.getOriginalFilename(), false);
+            pdf = pdfService.actualizar(idPdf, "vehiculo", archivo, vehiculo.getDominio() + establecerNombrePdf(tipoPdf), false);
             pdf = pdfDAO.save(pdf);
         }
         Vehiculo v = elementoDAO.saveAndFlush(verificarTipoPdf(vehiculo, tipoPdf, pdf));
@@ -263,6 +263,31 @@ public class VehiculoService {
                 break;
         }
         return elemento;
+    }
+    
+    private String establecerNombrePdf(String tipo) {
+        String nombre = null;
+        switch(tipo) {
+            case "pdfTitulo":
+                nombre = "-TITULO";
+                break;
+            case "pdfCedulaIdent":
+                nombre = "-CEDULA";
+                break;
+            case "pdfVtoRuta":
+                nombre = "-VTORUTA";
+                break;
+            case "pdfVtoInspTecnica":
+                nombre = "-VTOTECNICA";
+                break;
+            case "pdfVtoSenasa":
+                nombre = "-VTOSENASA";
+                break;
+            case "pdfHabBromat":
+                nombre = "-VTOBROMATOLOGICA";
+                break;
+        }
+        return nombre;
     }
     
     //Establece el valor a cada pdf dependiendo su condicion
