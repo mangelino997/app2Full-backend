@@ -50,6 +50,20 @@ public class ConceptoSueldoController {
         return elementoService.listar();
     }
     
+    //Obtiene la lista Filtrada por Tipo de Conceptos
+    @GetMapping(value = URL + "/listarPorTipoConcepto/{idTipoConceptoSueldo}")
+    @ResponseBody
+    public List<ConceptoSueldo> listarPorTipoConcepto(@PathVariable int idTipoConceptoSueldo){
+        return elementoService.listarPorTipoConcepto(idTipoConceptoSueldo);
+    }
+    
+    //Obtiene la lista por el Nombre (Descripción)
+    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
+    @ResponseBody
+    public List<ConceptoSueldo> listarPorNombre(@PathVariable String nombre){
+        return elementoService.listarPorNombre(nombre);
+    }
+    
     //Obtiene el último Código Empleador
     @GetMapping(value = URL + "/obtenerUltimoCodigoEmpleador")
     @ResponseBody
