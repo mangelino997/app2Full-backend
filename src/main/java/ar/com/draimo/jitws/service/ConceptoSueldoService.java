@@ -3,6 +3,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IConceptoSueldoDAO;
+import ar.com.draimo.jitws.dao.ITipoConceptoSueldoDAO;
 import ar.com.draimo.jitws.dto.InitConceptoSueldoDTO;
 import ar.com.draimo.jitws.model.ConceptoSueldo;
 import java.util.ArrayList;
@@ -26,7 +27,11 @@ public class ConceptoSueldoService {
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
     
-    //referencia al servicio TipoConceptoSueldoService
+    //referencia al DAO TipoConceptoSueldo
+    @Autowired
+    ITipoConceptoSueldoDAO tipoConceptoSueldoDAO;
+    
+    //Referencia al Service TipoConceptoSueldoService
     @Autowired
     TipoConceptoSueldoService tipoConceptoSueldoService;
     
@@ -54,10 +59,11 @@ public class ConceptoSueldoService {
     }
     
     //Obtiene una lista por Tipo Concepto
-    public List<ConceptoSueldo> listarPorTipoConcepto(int idTipoConceptoSueldo) {
-        return new ArrayList<>();
-//        return elementoDAO.listarPorTipoConcepto(idTipoConceptoSueldo);
-    }
+    //public List<ConceptoSueldo> listarPorTipoConcepto(int idTipoConceptoSueldo) {
+    //    return idTipoConceptoSueldo != 0 ?
+    //            elementoDAO.findByTipoConceptoSueldoOrderByNombreAsc(tipoConceptoSueldoDAO.findById(idTipoConceptoSueldo).get()) :
+    //            elementoDAO.findAllByOrderByNombreAsc();
+    //}
     
     //Obtiene la lista por el Nombre (Descripción)
     public List<ConceptoSueldo> listarPorNombre(String nombre){
