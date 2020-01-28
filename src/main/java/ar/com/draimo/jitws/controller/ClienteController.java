@@ -53,6 +53,12 @@ public class ClienteController {
             @PathVariable int idSubopcion) throws IOException {
         return elementoService.inicializar(idUsuario, idRol, idSubopcion);
     }
+    
+    //Obtiene los datos de diferentes modulos para inicializar
+    @GetMapping(value = URL + "/listarPorBarrio/{idBarrio}")
+    public List<Cliente> listarPorBarrio(@PathVariable int idBarrio) throws IOException {
+        return elementoService.listarPorBarrio(idBarrio);
+    }
 
     //Obtiene el siguiente id
     @GetMapping(value = URL + "/obtenerSiguienteId")

@@ -2,6 +2,7 @@
 package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IAfipCondicionIvaDAO;
+import ar.com.draimo.jitws.dao.IBarrioDAO;
 import ar.com.draimo.jitws.dao.IClienteCuentaBancariaDAO;
 import ar.com.draimo.jitws.dao.IClienteDAO;
 import ar.com.draimo.jitws.dao.IClienteOrdenVentaDAO;
@@ -26,6 +27,7 @@ import ar.com.draimo.jitws.dao.IZonaDAO;
 import ar.com.draimo.jitws.dto.ClienteDTO;
 import ar.com.draimo.jitws.dto.InitClienteDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
+import ar.com.draimo.jitws.model.Barrio;
 import ar.com.draimo.jitws.model.Cliente;
 import ar.com.draimo.jitws.model.ClienteCuentaBancaria;
 import ar.com.draimo.jitws.model.ClienteOrdenVenta;
@@ -140,6 +142,10 @@ public class ClienteService {
     @Autowired
     RolOpcionService rolOpcionService;
     
+    //Define la referencia al DAO de empresa
+    @Autowired
+    IBarrioDAO barrioDAO;
+    
     //Inicializa los datos
     public InitClienteDTO inicializar(int idUsuario, int idRol, int idSubopcion) {
         InitClienteDTO p = new InitClienteDTO();
@@ -158,6 +164,11 @@ public class ClienteService {
         p.setVendedores(vendedorDAO.findAll());
         p.setZonas(zonaDAO.findAll());
         return p;
+    }
+    
+    //Obtiene clientes por idBarrio
+    public List<Cliente> listarPorBarrio(int idBarrio) throws IOException {
+        return elementoDAO.findByBarrio(barrioDAO.findById(idBarrio).get());
     }
 
     //Obtiene el siguiente id

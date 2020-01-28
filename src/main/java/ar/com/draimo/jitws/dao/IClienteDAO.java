@@ -1,6 +1,7 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
+import ar.com.draimo.jitws.model.Barrio;
 import ar.com.draimo.jitws.model.Cliente;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,9 @@ public interface IClienteDAO extends JpaRepository<Cliente, Integer> {
     
     //Obtiene una lista por alias
     public List<Cliente> findByAliasContaining(String alias);
+    
+    //Obtiene una lista por barrio
+    public List<Cliente> findByBarrio(Barrio barrio);
     
     //Obtiene una lista de activos por alias
     public List<Cliente> findByAliasContainingAndFechaBajaIsNull(String alias);
