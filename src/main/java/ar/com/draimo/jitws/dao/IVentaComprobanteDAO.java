@@ -67,14 +67,14 @@ public interface IVentaComprobanteDAO extends JpaRepository<VentaComprobante, In
      */
     @Query(value = "SELECT * FROM ventacomprobante where Case :fechaTipo when 1 then "
             + "(:idSucursal=0 OR idSucursal=:idSucursal) and (:idCliente=0 OR idCliente=:idCliente)"
-            + " and fechaEmision between :fechaDesde and :fechaHasta and "
+            + " and (fechaEmision between :fechaDesde and :fechaHasta) and "
             + "(:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) when 2 "
             + "then (:idSucursal=0 OR idSucursal=:idSucursal) and (:idCliente=0 OR "
-            + "idCliente=:idCliente) and fechaVtoPago between :fechaDesde and "
-            + ":fechaHasta and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) "
+            + "idCliente=:idCliente) and (fechaVtoPago between :fechaDesde and "
+            + ":fechaHasta) and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) "
             + "when 0 then (:idSucursal=0 OR idSucursal =:idSucursal) and (:idCliente=0 "
-            + "OR idCliente=:idCliente) and fechaRegistracion between :fechaDesde "
-            + "and :fechaHasta and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) end", nativeQuery = true)
+            + "OR idCliente=:idCliente) and (fechaRegistracion between :fechaDesde "
+            + "and :fechaHasta) and (:idTipoComprobante=0 OR idTipoComprobante=:idTipoComprobante) end", nativeQuery = true)
     public List<VentaComprobante> listarPorFiltros(@Param("idSucursal") int idSucursal,
             @Param("idCliente") int idCliente, @Param("fechaDesde") Date fechaDesde,
             @Param("fechaHasta") Date fechaHasta, @Param("idTipoComprobante") int idTipoComprobante,

@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.IBarrioDAO;
 import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.initBarrioDTO;
 import ar.com.draimo.jitws.model.Barrio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,16 @@ public class BarrioService {
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
     
+    //Referencia al service de zonas
+    @Autowired
+    ZonaService zonaService;
+    
     //Obtiene listas necesarias para inicializar el componente (front)
-    public GenericoDTO inicializar(int idRol, int idsubpcion) {
-        GenericoDTO elemento = new GenericoDTO();
+    public initBarrioDTO inicializar(int idRol, int idsubpcion) {
+        initBarrioDTO elemento = new initBarrioDTO();
         elemento.setPestanias(subopcionPestaniaService.listarPestaniasPorRolYSubopcion(idRol, idsubpcion));
         elemento.setUltimoId(obtenerSiguienteId());
+        elemento.setZonas(zonaService.listar());
         return elemento;
     }
     
