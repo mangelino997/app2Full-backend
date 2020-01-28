@@ -22,14 +22,13 @@ public class Excepcion {
     public ResponseEntity<?> tamanioArchivoExcedido(MaxUploadSizeExceededException e) {
         String[] elementos = e.getCause().getCause().getMessage().split(" ");
         return new ResponseEntity(new EstadoRespuesta(CodigoRespuesta.ARCHIVO_LONGITUD, 
-                "Tamaño " + elementos[2] + " excedido", 0), HttpStatus.INTERNAL_SERVER_ERROR);
+                "Tamaño de archivo excedido (4MB máx)", 0), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
     //Define la excepcion de tamanio de short excedido
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
     public ResponseEntity<?> tamanioShortExcedido(HttpMessageNotReadableException e) {
-        System.out.println(e.getCause());
         String s;
         String[] elementos = e.getCause().getLocalizedMessage().split(" ");
         if(elementos[7].equals("Java")){
