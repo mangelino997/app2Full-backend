@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.service;
 
 import ar.com.draimo.jitws.dao.ITipoTarifaDAO;
 import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.TipoTarifaDTO;
 import ar.com.draimo.jitws.model.TipoTarifa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,11 @@ public class TipoTarifaService {
     //Define la referencia al dao
     @Autowired
     ITipoTarifaDAO elementoDAO;
-    
+
     //Referencia al service de subopcionpestania
     @Autowired
     SubopcionPestaniaService subopcionPestaniaService;
-    
+
     //Obtiene listas necesarias para inicializar el componente (front)
     public GenericoDTO inicializar(int idRol, int idSubopcion) {
         GenericoDTO elemento = new GenericoDTO();
@@ -61,8 +62,13 @@ public class TipoTarifaService {
     }
 
     //Obtiene una lista por ordenVenta
-    public List<TipoTarifa> listarPorOrdenVenta( int idOrdenVenta) {
+    public List<TipoTarifa> listarPorOrdenVenta(int idOrdenVenta) {
         return elementoDAO.listarPorOrdenVenta(idOrdenVenta);
+    }
+
+    //Obtiene una lista de tarifas por ordenVenta con el idOrdenVentaTarifa
+    public List<TipoTarifaDTO> listarTarifasPorOrdenVenta(int idOrdenVenta) {
+        return elementoDAO.listarTarifasPorOrdenVenta(idOrdenVenta);
     }
 
     //Agrega un registro

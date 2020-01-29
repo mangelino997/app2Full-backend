@@ -3,6 +3,7 @@ package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
 import ar.com.draimo.jitws.dto.GenericoDTO;
+import ar.com.draimo.jitws.dto.TipoTarifaDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
 import ar.com.draimo.jitws.model.TipoTarifa;
 import ar.com.draimo.jitws.service.TipoTarifaService;
@@ -91,6 +92,13 @@ public class TipoTarifaController {
     @ResponseBody
     public List<TipoTarifa> listarPorOrdenVenta(@PathVariable int idOrdenVenta) {
         return elementoService.listarPorOrdenVenta(idOrdenVenta);
+    }
+    
+    //Obtiene una lista de tarifas por ordenVenta con el idOrdenVentaTarifa
+    @GetMapping(value = URL + "/listarTarifasPorOrdenVenta/{idOrdenVenta}")
+    @ResponseBody
+    public List<TipoTarifaDTO> listarTarifasPorOrdenVenta(@PathVariable int idOrdenVenta) {
+        return elementoService.listarTarifasPorOrdenVenta(idOrdenVenta);
     }
 
     //Agrega un registro
