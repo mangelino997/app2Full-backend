@@ -131,4 +131,18 @@ public class OrdenVentaTarifaService {
         elementoDAO.deleteById(id);
     }
     
+    //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void eliminarPorOrdenVentaYTipoTarifa(int idOrdenVenta, int idTipoTarifa) {
+        OrdenVentaTarifa ordenVentaTarifa = elementoDAO.obtenerPorOrdenVentaYTipoTarifa(idOrdenVenta, idTipoTarifa);
+        try {
+            if(ordenVentaTarifa.getTipoTarifa().getPorEscala()){
+                ordenVentaEscalaDAO.deleteByOrdenVentaTarifa(ordenVentaTarifa);
+            } else {
+                ordenVentaTramoDAO.deleteByOrdenVentaTarifa(ordenVentaTarifa);
+            }
+        } catch(Exception e) {}
+        elementoDAO.deleteById(ordenVentaTarifa.getId());
+    }
+    
 }

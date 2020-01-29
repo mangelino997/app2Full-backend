@@ -149,5 +149,25 @@ public class OrdenVentaTarifaController {
             return MensajeRespuesta.error();
         }
     }
+    
+    //Elimina un registro por orden de venta y tipo de tarifa
+    @DeleteMapping(value = URL + "/eliminarPorOrdenVentaYTipoTarifa/{idOrdenVenta}/{idTipoTarifa}")
+    public ResponseEntity<?> eliminarPorOrdenVentaYTipoTarifa(@PathVariable int idOrdenVenta, @PathVariable int idTipoTarifa) {
+        try {
+            //Elimina el registro
+            elementoService.eliminarPorOrdenVentaYTipoTarifa(idOrdenVenta, idTipoTarifa);
+            //Envia la nueva lista a los usuarios subscripto
+            //template.convertAndSend(TOPIC + "/listaEscalas", 
+            //  elementoService.listarPorOrdenVenta(elemento.getOrdenVenta().getId()));
+            //Retorna mensaje de eliminado con exito
+            return MensajeRespuesta.eliminado();
+        } catch (DataIntegrityViolationException dive) {
+            //Retorna mensaje de dato duplicado
+            return MensajeRespuesta.datoDuplicado(dive);
+        } catch (MessagingException e) {
+            //Retorna mensaje de error interno en el servidor
+            return MensajeRespuesta.error();
+        }
+    }
 
 }

@@ -51,11 +51,11 @@ public class ConceptoSueldoController {
     }
     
     //Obtiene la lista Filtrada por Tipo de Conceptos
-    //@GetMapping(value = URL + "/listarPorTipoConcepto/{idTipoConceptoSueldo}")
-    //@ResponseBody
-    //public List<ConceptoSueldo> listarPorTipoConcepto(@PathVariable int idTipoConceptoSueldo){
-    //    return elementoService.listarPorTipoConcepto(idTipoConceptoSueldo);
-    //}
+    @GetMapping(value = URL + "/listarPorTipoConcepto/{idTipoConceptoSueldo}")
+    @ResponseBody
+    public List<ConceptoSueldo> listarPorTipoConcepto(@PathVariable int idTipoConceptoSueldo){
+        return elementoService.listarPorTipoConcepto(idTipoConceptoSueldo);
+    }
     
     //Obtiene la lista por el Nombre (Descripción)
     @GetMapping(value = URL + "/listarPorNombre/{nombre}")

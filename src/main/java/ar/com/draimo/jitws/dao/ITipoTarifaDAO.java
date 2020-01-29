@@ -1,7 +1,6 @@
 //Paquete al que pertenece la interfaz
 package ar.com.draimo.jitws.dao;
 
-import ar.com.draimo.jitws.dto.TipoTarifaDTO;
 import ar.com.draimo.jitws.model.TipoTarifa;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,14 +28,9 @@ public interface ITipoTarifaDAO extends JpaRepository<TipoTarifa, Integer> {
     public List<TipoTarifa> findByPorEscalaFalse();
 
     //Obtiene un listado de tipos tarifas pertenecientes a una ordenVenta
-    @Query(value = "SELECT t.*, ordenventatarifa.id FROM tipotarifa t, ordenventatarifa INNER JOIN ordenventatarifa v ON "
+    @Query(value = "SELECT t.* FROM tipotarifa t INNER JOIN ordenventatarifa v ON "
             + "t.id=v.idTipoTarifa INNER JOIN ordenventa o ON o.id=v.idOrdenVenta "
             + "WHERE o.id=:idOrdenVenta ORDER BY t.nombre ASC", nativeQuery = true)
     public List<TipoTarifa> listarPorOrdenVenta(@Param("idOrdenVenta") int idOrdenVenta);
-
-    //Obtiene un listado de tipos tarifas pertenecientes a una ordenVenta
-    @Query(value = "SELECT t.*, ov.id as idOrdenVentaTarifa FROM tipotarifa t, ordenventatarifa ov where ov.idOrdenVenta=:idOrdenVenta and "
-            + "ov.idTipoTarifa = t.id ORDER BY t.nombre ASC", nativeQuery = true)
-    public List<TipoTarifaDTO> listarTarifasPorOrdenVenta(@Param("idOrdenVenta") int idOrdenVenta);
 
 }

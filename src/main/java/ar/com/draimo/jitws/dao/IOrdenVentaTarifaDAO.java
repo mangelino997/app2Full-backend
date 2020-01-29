@@ -24,7 +24,7 @@ public interface IOrdenVentaTarifaDAO extends JpaRepository<OrdenVentaTarifa, In
     //Obtiene un listado por ordenVenta y escala
     public List<OrdenVentaTarifa> findByOrdenVentaAndTipoTarifa_PorEscala(OrdenVenta ordenVenta, boolean porEscala);
     
-    //Obtiene un listado por ordenVenta y escala
+    //Obtiene un registro por ordenVenta y tipo de tarifa
     @Query(value = "select * from ordenventatarifa where idOrdenVenta =:idOrdenVenta"
             + " and idTipoTarifa=:idTipoTarifa", nativeQuery = true)
     public OrdenVentaTarifa obtenerPorOrdenVentaYTipoTarifa(int idOrdenVenta, int idTipoTarifa);

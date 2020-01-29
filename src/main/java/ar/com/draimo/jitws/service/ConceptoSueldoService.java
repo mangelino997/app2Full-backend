@@ -6,7 +6,6 @@ import ar.com.draimo.jitws.dao.IConceptoSueldoDAO;
 import ar.com.draimo.jitws.dao.ITipoConceptoSueldoDAO;
 import ar.com.draimo.jitws.dto.InitConceptoSueldoDTO;
 import ar.com.draimo.jitws.model.ConceptoSueldo;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,11 +58,11 @@ public class ConceptoSueldoService {
     }
     
     //Obtiene una lista por Tipo Concepto
-    //public List<ConceptoSueldo> listarPorTipoConcepto(int idTipoConceptoSueldo) {
-    //    return idTipoConceptoSueldo != 0 ?
-    //            elementoDAO.findByTipoConceptoSueldoOrderByNombreAsc(tipoConceptoSueldoDAO.findById(idTipoConceptoSueldo).get()) :
-    //            elementoDAO.findAllByOrderByNombreAsc();
-    //}
+    public List<ConceptoSueldo> listarPorTipoConcepto(int idTipoConceptoSueldo) {
+        return idTipoConceptoSueldo != 0 ?
+                elementoDAO.listarPorTipoConceptoSueldo(idTipoConceptoSueldo) :
+                elementoDAO.findAllByOrderByNombreAsc();
+    }
     
     //Obtiene la lista por el Nombre (Descripción)
     public List<ConceptoSueldo> listarPorNombre(String nombre){

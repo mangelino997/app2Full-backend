@@ -3,9 +3,10 @@
 package ar.com.draimo.jitws.dao;
 
 import ar.com.draimo.jitws.model.ConceptoSueldo;
-import ar.com.draimo.jitws.model.TipoConceptoSueldo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,8 +24,13 @@ public interface IConceptoSueldoDAO extends JpaRepository<ConceptoSueldo, Intege
     public List<ConceptoSueldo> findByNombreContaining(String nombre);
     
     //Obtiene Lista por TipoConcepto
-    //public List<ConceptoSueldo> findByTipoConceptoSueldoOrderByNombreAsc (TipoConceptoSueldo elemento);
+    @Query(value = "SELECT * FROM jitdb.conceptosueldo cs "
+            + "INNER JOIN jitdb.afipconceptosueldo acs ON cs.idAfipConceptoSueldo=acs.id " 
+            + "INNER JOIN jitdb.afipconceptosueldogrupo acsg ON acs.idAfipConceptoSueldoGrupo=acsg.id "
+            + "WHERE acsg.idTipoConceptoSueldo=:idTipoConceptoSueldo ORDER BY cs.nombre ASC", 
+            nativeQuery = true)
+    public List<ConceptoSueldo> listarPorTipoConceptoSueldo(@Param("idTipoConceptoSueldo") int idTipoConceptoSueldo);
     
     //Obtiene una lista
-    //public List<ConceptoSueldo> findAllByOrderByNombreAsc();
+    public List<ConceptoSueldo> findAllByOrderByNombreAsc();
 }

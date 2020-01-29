@@ -169,8 +169,17 @@ public class OrdenVentaService {
     public void actualizar(OrdenVenta elemento) throws IOException {
         //Formatea los string de OrdenVenta
         elemento = formatearStrings(elemento);
+        //Obtiene la orden de venta por id
+        OrdenVenta ordenVenta = elementoDAO.findById(elemento.getId()).get();
+        ordenVenta.setEstaActiva(elemento.getEstaActiva());
+        ordenVenta.setNombre(elemento.getNombre());
+        ordenVenta.setVendedor(elemento.getVendedor());
+        ordenVenta.setSeguro(elemento.getSeguro());
+        ordenVenta.setEsContado(elemento.getEsContado());
+        ordenVenta.setObservaciones(elemento.getObservaciones());
+        ordenVenta.setActivaDesde(elemento.getActivaDesde());
         //Actualiza la orden de venta
-        elementoDAO.save(elemento);
+        elementoDAO.save(ordenVenta);
     }
 
     //Elimina un registro
