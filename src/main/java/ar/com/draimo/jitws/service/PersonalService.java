@@ -187,7 +187,7 @@ public class PersonalService {
     //Obtiene la lista completa
     public Object listar() throws IOException, Exception {
         List<Personal> elementos = elementoDAO.findAll();
-        return aplicarFiltros(elementos, null);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene una lista por alias y/o empresa y/o sucursal y/o activos
@@ -202,7 +202,7 @@ public class PersonalService {
         La fecha de hoy es para ver que el personal no este dado de baja*/
         List<Personal> elementos = elementoDAO.listarPorAlias(alias, activos,
                 idEmpresa, idSucursal, fecha);
-        return aplicarFiltros(elementos, null);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un registro por id
@@ -225,14 +225,13 @@ public class PersonalService {
             elemento.setPdfLinti(pdf);
         }
         if (elemento.getFoto() == null) {
-            Foto foto = fotoDAO.findById(1).get();
-            elemento.setFoto(foto);
+            elemento.setFoto(new Foto());
         }
         if (elemento == null) {
             throw new Exception(MensajeRespuesta.NO_EXISTENTE);
         }
 
-        return aplicarFiltros(null, elemento);
+        return retornarObjeto(null, elemento);
     }
 
     //Obtiene un listado de choferes por alias, distancia y empresa ordenados por nombre
@@ -244,7 +243,7 @@ public class PersonalService {
         List<Personal> elementos
                 = elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                         alias, largaDistancia, idEmpresa, fecha);
-        return aplicarFiltros(elementos, null);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado de choferes por alias, distancia y empresa ordenados por nombre
@@ -255,7 +254,7 @@ public class PersonalService {
         List<Personal> elementos
                 = elementoDAO.listarChoferesPorDistanciaPorAliasOrdenadoPorNombre(
                         alias, 2, idEmpresa, fecha);
-        return aplicarFiltros(elementos, null);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado de acompañantes ordenados por nombre
@@ -265,7 +264,7 @@ public class PersonalService {
         alias = (alias.equals("*") ? "" : alias);
         List<Personal> elementos = elementoDAO.listarAcompaniantesPorAliasOrdenadoPorNombre(
                 alias, fecha);
-        return aplicarFiltros(elementos, null);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado por filtros
@@ -273,7 +272,7 @@ public class PersonalService {
         List<Personal> elementos = elementoDAO.listarPorFiltros(elemento.getIdSucursal(),
                 elemento.getIdArea(),elemento.getIdModContratacion(), elemento.getIdCategoria(),
                 elemento.getTipoEmpleado());
-        return aplicarFiltros(elementos, null);
+        return retornarObjeto(elementos, null);
     }
 
     //Obtiene un listado de choferes por filtros
@@ -282,7 +281,7 @@ public class PersonalService {
                 elemento.getVtoCurso(), elemento.getVtoCargaPeligrosa(),
                 elemento.getVtoLicConducir(), elemento.getVtoLinti(),
                 elemento.getVtoLibSanidad(), elemento.getVtoFisico());
-        return aplicarFiltros(elementos, null);
+        return retornarObjeto(elementos, null);
     }
 
     //Agrega un registro
@@ -290,156 +289,43 @@ public class PersonalService {
     public Personal agregar(String elementoString, MultipartFile foto, MultipartFile licConducir,
             MultipartFile linti, MultipartFile libSanidad, MultipartFile dni,
             MultipartFile altaTemprana) throws IOException, Exception {
-        Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
-        elemento = formatearStrings(elemento);
-        controlarLongitud(elemento);
-        Foto f = null;
-        Pdf pdf1 = null, pdf2 = null, pdf3 = null, pdf4 = null, pdf5 = null;
-        if (!foto.getOriginalFilename().equals("")) {
-            Foto p = fotoService.agregar(foto, elemento.getNombreCompleto() + "-FOTO", false);
-            p.setTabla("personal");
-            f = fotoDAO.saveAndFlush(p);
-            elemento.setFoto(f);
-        }
-        f = f!= null ? f : fotoDAO.findById(1).get();
-        elemento.setFoto(f);
-        if (!licConducir.getOriginalFilename().equals("")) {
-            Pdf p1 = pdfService.agregar(licConducir, elemento.getNombreCompleto() + "-LICENCIA", false);
-            p1.setTabla("personal");
-            pdf1 = pdfDAO.saveAndFlush(p1);
-            elemento.setPdfLicConducir(pdf1);
-        }
-        elemento.setPdfLicConducir(pdf1 != null ? pdf1 : null);
-        if (!linti.getOriginalFilename().equals("")) {
-            Pdf p2 = pdfService.agregar(linti, elemento.getNombreCompleto() + "-LINTI", false);
-            p2.setTabla("personal");
-            pdf2 = pdfDAO.saveAndFlush(p2);
-            elemento.setPdfLinti(pdf2);
-        }
-        elemento.setPdfLinti(pdf2 != null ? pdf2 : null);
-        if (!libSanidad.getOriginalFilename().equals("")) {
-            Pdf p3 = pdfService.agregar(libSanidad, elemento.getNombreCompleto() + "-LIBSANIDAD", false);
-            p3.setTabla("personal");
-            pdf3 = pdfDAO.saveAndFlush(p3);
-            elemento.setPdfLibSanidad(pdf3);
-        }
-        elemento.setPdfLibSanidad(pdf3 != null ? pdf3 : null);
-        if (!dni.getOriginalFilename().equals("")) {
-            Pdf p4 = pdfService.agregar(dni, elemento.getNombreCompleto() + "-DNI", false);
-            p4.setTabla("personal");
-            pdf4 = pdfDAO.saveAndFlush(p4);
-            elemento.setPdfDni(pdf4);
-        }
-        elemento.setPdfDni(pdf4 != null ? pdf4 : null);
-        if (!altaTemprana.getOriginalFilename().equals("")) {
-            Pdf p5 = pdfService.agregar(altaTemprana, elemento.getNombreCompleto() + "-ALTATEMPRANA", false);
-            p5.setTabla("personal");
-            pdf5 = pdfDAO.saveAndFlush(p5);
-            elemento.setPdfAltaTemprana(pdf5);
-        }
-        elemento.setPdfAltaTemprana(pdf5 != null ? pdf5 : null);
-        Personal per = elementoDAO.saveAndFlush(elemento);
-        
-        if (elemento.getPersonalCuentaBancarias()!= null) {
-            for (PersonalCuentaBancaria pcb : elemento.getPersonalCuentaBancarias()) {
-                    pcb.setPersonal(per);
+        Personal personal = new ObjectMapper().readValue(elementoString, Personal.class);
+        personal = formatearStrings(personal);
+        controlarLongitud(personal);
+        //Establece la foto
+        personal.setFoto(establecerFoto(foto, personal));
+        //Establece el nombre
+        String nombre = personal.getApellido().toUpperCase() + "-" + personal.getNombre().toUpperCase();
+        //Establece los pdfs
+        personal.setPdfLicConducir(establecerPdf(licConducir, nombre + "-LICENCIA"));
+        personal.setPdfLinti(establecerPdf(linti, nombre + "-LINTI"));
+        personal.setPdfLibSanidad(establecerPdf(libSanidad, nombre + "-LIBSANIDAD"));
+        personal.setPdfDni(establecerPdf(dni, nombre + "-DNI"));
+        personal.setPdfAltaTemprana(establecerPdf(altaTemprana, nombre + "-ALTATEMPRANA"));
+        //Agrega el personal
+        Personal p = elementoDAO.saveAndFlush(personal);
+        //Agrega la cuentas bancarias, si hubiera
+        if (personal.getPersonalCuentaBancarias() != null) {
+            for (PersonalCuentaBancaria pcb : personal.getPersonalCuentaBancarias()) {
+                    pcb.setPersonal(p);
                     personalCuentaBancariaDAO.saveAndFlush(pcb);
             }
         }
-        return per;
+        return p;
     }
-
+    
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(String elementoString, MultipartFile foto, MultipartFile licConducir,
-            MultipartFile linti, MultipartFile libSanidad, MultipartFile dni,
-            MultipartFile altaTemprana) throws IOException {
-        Personal elemento = new ObjectMapper().readValue(elementoString, Personal.class);
+    public Personal actualizar(Personal elemento) {
         Personal personal = elementoDAO.findById(elemento.getId()).get();
         controlarLongitud(elemento);
-        if (foto.getOriginalFilename().equals("") && personal.getFoto().getId() != 1) {
-            if (personal.getFoto() != null) {
-                fotoDAO.deleteById(personal.getFoto().getId());
-            }
-            elemento.setFoto(fotoDAO.findById(1).get());
-        } else {
-            Foto f = personal.getFoto() != null && personal.getFoto().getId() != 1? fotoService.actualizar(
-                    personal.getFoto().getId(), foto, elemento.getNombreCompleto() + "-FOTO", false) 
-                    : fotoService.agregar(foto, elemento.getNombreCompleto() + "-FOTO", false);
-            f.setTabla("personal");
-            Foto f1 = personal.getFoto() != null && personal.getFoto().getId() != 1? fotoDAO.save(f) : fotoDAO.saveAndFlush(f);
-            elemento.setFoto(f1);
-        }
-        if (licConducir.getOriginalFilename().equals("")) {
-            if (personal.getPdfLicConducir() != null) {
-                pdfDAO.deleteById(personal.getPdfLicConducir().getId());
-            }
-            elemento.setPdfLicConducir(null);
-        } else {
-            Pdf p1 = personal.getPdfLicConducir() != null ? pdfService.actualizar(
-                    personal.getPdfLicConducir().getId(), "personal", licConducir, elemento.getNombreCompleto() + "-LICENCIA", false)
-                    : pdfService.agregar(licConducir, elemento.getNombreCompleto() + "-LICENCIA", false);
-            p1.setTabla("personal");
-            Pdf pdf1 = personal.getPdfLicConducir() != null ? pdfDAO.save(p1)
-                    : pdfDAO.saveAndFlush(p1);
-            elemento.setPdfLicConducir(pdf1);
-        }
-        if (linti.getOriginalFilename().equals("")) {
-            if (personal.getPdfLinti() != null) {
-                pdfDAO.deleteById(personal.getPdfLinti().getId());
-            }
-            elemento.setPdfLinti(null);
-        } else {
-            Pdf p2 = personal.getPdfLinti() != null ? pdfService.actualizar(
-                    personal.getPdfLinti().getId(), "personal", linti, elemento.getNombreCompleto() + "-LINTI", false)
-                    : pdfService.agregar(linti, elemento.getNombreCompleto() + "-LINTI", false);
-            p2.setTabla("personal");
-            Pdf pdf2 = personal.getPdfLinti() != null ? pdfDAO.save(p2)
-                    : pdfDAO.saveAndFlush(p2);
-            elemento.setPdfLinti(pdf2);
-        }
-        if (libSanidad.getOriginalFilename().equals("")) {
-            if (personal.getPdfLibSanidad() != null) {
-                pdfDAO.deleteById(personal.getPdfLibSanidad().getId());
-            }
-            elemento.setPdfLibSanidad(null);
-        } else {
-            Pdf p3 = personal.getPdfLibSanidad() != null ? pdfService.actualizar(
-                    personal.getPdfLibSanidad().getId(), "personal", libSanidad, elemento.getNombreCompleto() + "-LIBSANIDAD", false)
-                    : pdfService.agregar(libSanidad, elemento.getNombreCompleto() + "-LIBSANIDAD", false);
-            p3.setTabla("personal");
-            Pdf pdf3 = personal.getPdfLibSanidad() != null ? pdfDAO.save(p3)
-                    : pdfDAO.saveAndFlush(p3);
-            elemento.setPdfLibSanidad(pdf3);
-        }
-        if (dni.getOriginalFilename().equals("")) {
-            if (personal.getPdfDni() != null) {
-                pdfDAO.deleteById(personal.getPdfDni().getId());
-            }
-            elemento.setPdfDni(null);
-        } else {
-            Pdf p4 = personal.getPdfDni() != null ? pdfService.actualizar(
-                    personal.getPdfDni().getId(), "personal", dni, elemento.getNombreCompleto() + "-DNI", false)
-                    : pdfService.agregar(dni, elemento.getNombreCompleto() + "-DNI", false);
-            p4.setTabla("personal");
-            Pdf pdf4 = personal.getPdfDni() != null ? pdfDAO.save(p4)
-                    : pdfDAO.saveAndFlush(p4);
-            elemento.setPdfDni(pdf4);
-        }
-        if (altaTemprana.getOriginalFilename().equals("")) {
-            if (personal.getPdfAltaTemprana() != null) {
-                pdfDAO.deleteById(personal.getPdfAltaTemprana().getId());
-            }
-            elemento.setPdfAltaTemprana(null);
-        } else {
-            Pdf p5 = personal.getPdfAltaTemprana() != null ? pdfService.actualizar(
-                    personal.getPdfAltaTemprana().getId(), "personal", altaTemprana, elemento.getNombreCompleto() + "-ALTATEMPRANA", false)
-                    : pdfService.agregar(altaTemprana, elemento.getNombreCompleto() + "-ALTATEMPRANA", false);
-            p5.setTabla("personal");
-            Pdf pdf5 = personal.getPdfAltaTemprana() != null ? pdfDAO.save(p5)
-                    : pdfDAO.saveAndFlush(p5);
-            elemento.setPdfAltaTemprana(pdf5);
-        }
+        //Establece los pdfs
+        elemento.setFoto(personal.getFoto());
+        elemento.setPdfLicConducir(personal.getPdfLicConducir());
+        elemento.setPdfLinti(personal.getPdfLinti());
+        elemento.setPdfLibSanidad(personal.getPdfLibSanidad());
+        elemento.setPdfDni(personal.getPdfDni());
+        elemento.setPdfAltaTemprana(personal.getPdfAltaTemprana());
         //Añade las nuevas cuentas bancarias
         if (elemento.getPersonalCuentaBancarias()!= null) {
             for (PersonalCuentaBancaria pcb : elemento.getPersonalCuentaBancarias()) {
@@ -449,7 +335,142 @@ public class PersonalService {
                 }
             }
         }
-        establecerAlias(elemento);
+        return formatearStrings(elemento);
+    }
+    
+    //Actualiza un pdf
+    @Transactional(rollbackFor = Exception.class)
+    public Object actualizarPDF(int idPersonal, int idPdf, String tipoPdf, MultipartFile archivo) throws IOException {
+        Personal personal = elementoDAO.findById(idPersonal).get();
+        Personal p;
+        Foto foto = null;
+        Pdf pdf = null;
+        //Establece el nombre
+        String nombre = personal.getApellido().toUpperCase() + "-" + personal.getNombre().toUpperCase();
+        //Si es una foto
+        if(tipoPdf.equals("foto")) {
+            if(idPdf == 1) {
+                foto = fotoService.agregar(archivo, nombre + "-FOTO", false);
+                foto.setTabla("personal");
+                foto = fotoDAO.saveAndFlush(foto);
+            } else {
+                foto = fotoService.actualizar(idPdf, "personal", archivo, nombre + "-FOTO", false);
+                foto = fotoDAO.save(foto);
+            }
+            personal.setFoto(foto);
+            p = elementoDAO.saveAndFlush(personal);
+        } else {
+            //Si es un pdf
+            if(idPdf == 0) {
+                pdf = pdfService.agregar(archivo, nombre + establecerNombrePdf(tipoPdf), false);
+                pdf.setTabla("personal");
+                pdf = pdfDAO.saveAndFlush(pdf);
+            } else {
+                pdf = pdfService.actualizar(idPdf, "personal", archivo, nombre + establecerNombrePdf(tipoPdf), false);
+                pdf = pdfDAO.save(pdf);
+            }
+            p = elementoDAO.saveAndFlush(verificarTipoPdf(personal, tipoPdf, pdf));
+        }
+        Personal elemento = new Personal();
+        elemento.setVersion(p.getVersion());
+        elemento.setFoto(foto);
+        elemento.setPdfDni(pdf);
+        return retornarObjeto(null, elemento);
+    }
+    
+    //Elimina un pdf
+    @Transactional(rollbackFor = Exception.class)
+    public Personal eliminarPDF(int idPersonal, int idPdf, String tipoPdf) {
+        Personal personal = elementoDAO.findById(idPersonal).get();
+        Personal p;
+        //Si es una foto
+        if(tipoPdf.equals("foto")) {
+            personal.setFoto(null);
+            p = elementoDAO.save(personal);
+            fotoDAO.deleteById(idPdf);
+        } else {
+            p = elementoDAO.save(verificarTipoPdf(personal, tipoPdf, null));
+            pdfDAO.deleteById(idPdf);
+        }
+        return p;
+    }
+    
+    //Elimina un registro
+    @Transactional(rollbackFor = Exception.class)
+    public void eliminar(int elemento) {
+        elementoDAO.deleteById(elemento);
+    }
+    
+    //Verifica el tipo de pdf
+    private Personal verificarTipoPdf(Personal elemento, String tipoPdf, Pdf pdf) {
+        switch(tipoPdf) {
+            case "pdfDni":
+                elemento.setPdfDni(pdf);
+                break;
+            case "pdfAltaTemprana":
+                elemento.setPdfAltaTemprana(pdf);
+                break;
+            case "pdfLicConducir":
+                elemento.setPdfLicConducir(pdf);
+                break;
+            case "pdfLinti":
+                elemento.setPdfLinti(pdf);
+                break;
+            case "pdfLibSanidad":
+                elemento.setPdfLibSanidad(pdf);
+                break;
+        }
+        return elemento;
+    }
+    
+    private String establecerNombrePdf(String tipo) {
+        String nombre = null;
+        switch(tipo) {
+            case "pdfDni":
+                nombre = "-DNI";
+                break;
+            case "pdfAltaTemprana":
+                nombre = "-ALTATEMPRANA";
+                break;
+            case "pdfLicConducir":
+                nombre = "-LICENCIA";
+                break;
+            case "pdfLinti":
+                nombre = "-LINTI";
+                break;
+            case "pdfLibSanidad":
+                nombre = "-LIBSANIDAD";
+                break;
+        }
+        return nombre;
+    }
+    
+    //Establece la foto
+    private Foto establecerFoto(MultipartFile archivo, Personal elemento) throws IOException {
+        Foto foto;
+        String nombre = elemento.getApellido().toUpperCase() + "-" + elemento.getNombre().toUpperCase();
+        if (!archivo.getOriginalFilename().equals("")) {
+            Foto p = fotoService.agregar(archivo, nombre + "-FOTO", false);
+            p.setTabla("personal");
+            foto = fotoDAO.saveAndFlush(p);
+            elemento.setFoto(foto);
+        } else {
+            foto = null;
+        }
+        return foto;
+    }
+    
+    //Establece los pdfs
+    private Pdf establecerPdf(MultipartFile elemento, String nombre) throws IOException {
+        Pdf pdf;
+        if (!"".equals(elemento.getOriginalFilename())) {
+            pdf = pdfService.agregar(elemento, nombre, false);
+            pdf.setTabla("personal");
+            pdf = pdfDAO.saveAndFlush(pdf);
+        } else {
+            pdf = null;
+        }
+        return pdf;
     }
 
     //Controla la longitud de los atributos de tipo short
@@ -475,12 +496,6 @@ public class PersonalService {
                     + " CUOTAS PRESTAMO");
         }
         return true;
-    }
-
-    //Elimina un registro
-    @Transactional(rollbackFor = Exception.class)
-    public void eliminar(int elemento) {
-        elementoDAO.deleteById(elemento);
     }
 
     //Establece el alias de un registro
@@ -530,7 +545,7 @@ public class PersonalService {
     }
 
     //Retorna un object aplicando los filtros
-    private Object aplicarFiltros(List<Personal> elementos, Personal elemento) throws IOException {
+    private Object retornarObjeto(List<Personal> elementos, Personal elemento) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         SimpleBeanPropertyFilter theFilter = elemento != null ? SimpleBeanPropertyFilter
                 .serializeAllExcept() : SimpleBeanPropertyFilter

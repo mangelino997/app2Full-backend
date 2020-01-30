@@ -67,19 +67,27 @@ public class FotoService {
     
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public Foto actualizar(int idFoto ,MultipartFile archivo, String nombre, boolean opcion) throws IOException {
-        Foto elemento = elementoDAO.findById(idFoto).get();
+    public Foto actualizar(int idFoto, String tabla, MultipartFile archivo, String nombre, boolean opcion) throws IOException {
+        Foto elemento = idFoto == 0 ? new Foto() : elementoDAO.findById(idFoto).get();
         elemento.setNombre(nombre);
         elemento.setTipo(archivo.getContentType());
         elemento.setTamanio(archivo.getSize());
         elemento.setDatos(archivo.getBytes());
-        return opcion ? elementoDAO.saveAndFlush(elemento) : elemento;
+        elemento.setTabla(tabla);
+        formatearStrings(elemento);
+        return opcion ? elementoDAO.save(elemento) : elemento;
     }
     
     //Elimina un registro
     @Transactional(rollbackFor = Exception.class)
     public void eliminar(int elemento) {
         elementoDAO.deleteById(elemento);
+    }
+    
+    //Formatea los strings
+    private Foto formatearStrings(Foto elemento) {
+        elemento.setNombre(elemento.getNombre().trim());
+        return elemento;
     }
 
 }

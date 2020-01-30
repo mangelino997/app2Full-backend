@@ -87,11 +87,11 @@ public class FotoController {
 
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestParam("idFoto") int idImagen,
-            @RequestParam("archivo") MultipartFile archivo) {
+    public ResponseEntity<?> actualizar(@RequestParam("idFoto") int idFoto,
+            @RequestParam("tabla") String tabla, @RequestParam("archivo") MultipartFile archivo) {
         try {
             //Actualiza el registro
-            elementoService.actualizar(idImagen, archivo, archivo.getOriginalFilename(), true);
+            elementoService.actualizar(idFoto, tabla, archivo, archivo.getOriginalFilename(), true);
             //Envia la nueva lista a los usuarios subscripto
             //Retorna mensaje de actualizado con exito
             return MensajeRespuesta.actualizado();

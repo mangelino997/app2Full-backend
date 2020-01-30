@@ -161,24 +161,43 @@ public class CompaniaSeguroPolizaService {
 
     //Actualiza un registro
     @Transactional(rollbackFor = Exception.class)
-    public void actualizar(String elementoString, MultipartFile archivo) throws IOException {
-        CompaniaSeguroPoliza elemento = new ObjectMapper().readValue(elementoString, CompaniaSeguroPoliza.class);
+    public void actualizar(CompaniaSeguroPoliza elemento) {
+        CompaniaSeguroPoliza companiaSeguroPoliza = elementoDAO.findById(elemento.getId()).get();
         elemento = formatearStrings(elemento);
-        if (archivo.getOriginalFilename().equals("")) {
-            if(elemento.getPdf().getId() != 0) {
-                pdfDAO.deleteById(elemento.getPdf().getId());
-            } 
-            elemento.setPdf(null);
-        } else {
-            Pdf f = elemento.getPdf().getId() != 0 ? pdfService.actualizar(elemento.getPdf().getId(), "companiaseguropoliza",
-                    archivo, elemento.getEmpresa().getAbreviatura() + "-" + elemento.getNumeroPoliza(), false) 
-                    : pdfService.agregar(archivo, elemento.getEmpresa().getAbreviatura() 
-                            + "-" + elemento.getNumeroPoliza(), false);
-            f.setTabla("companiaseguropoliza");
-            Pdf bug = elemento.getPdf().getId() != 0 ? pdfDAO.save(f): pdfDAO.saveAndFlush(f);
-            elemento.setPdf(bug);
-        }
+        elemento.setPdf(companiaSeguroPoliza.getPdf());
         elementoDAO.save(elemento);
+    }
+    
+    //Actualiza un pdf
+    @Transactional(rollbackFor = Exception.class)
+    public Object actualizarPDF(int idCompaniaSeguroPoliza, int idPdf, MultipartFile archivo) throws IOException {
+        CompaniaSeguroPoliza companiaSeguroPoliza = elementoDAO.findById(idCompaniaSeguroPoliza).get();
+        String nombre = companiaSeguroPoliza.getEmpresa().getAbreviatura() + "-" + companiaSeguroPoliza.getNumeroPoliza();
+        Pdf pdf;
+        if(idPdf == 0) {
+            pdf = pdfService.agregar(archivo, nombre, false);
+            pdf.setTabla("companiaseguropoliza");
+            pdf = pdfDAO.saveAndFlush(pdf);
+        } else {
+            pdf = pdfService.actualizar(idPdf, "companiaseguropoliza", archivo, nombre, false);
+            pdf = pdfDAO.saveAndFlush(pdf);
+        }
+        companiaSeguroPoliza.setPdf(pdf);
+        CompaniaSeguroPoliza csp = elementoDAO.saveAndFlush(companiaSeguroPoliza);
+        CompaniaSeguroPoliza elemento = new CompaniaSeguroPoliza();
+        elemento.setVersion(csp.getVersion());
+        elemento.setPdf(pdf);
+        return retornarObjeto(null, elemento);
+    }
+    
+    //Elimina un pdf
+    @Transactional(rollbackFor = Exception.class)
+    public CompaniaSeguroPoliza eliminarPDF(int idCompaniaSeguroPoliza, int idPdf) {
+        CompaniaSeguroPoliza companiaSeguroPoliza = elementoDAO.findById(idCompaniaSeguroPoliza).get();
+        companiaSeguroPoliza.setPdf(null);
+        CompaniaSeguroPoliza csp = elementoDAO.save(companiaSeguroPoliza);
+        pdfDAO.deleteById(idPdf);
+        return csp;
     }
 
     //Elimina un registro
@@ -191,6 +210,19 @@ public class CompaniaSeguroPolizaService {
     private CompaniaSeguroPoliza formatearStrings(CompaniaSeguroPoliza elemento) {
         elemento.setNumeroPoliza(elemento.getNumeroPoliza().trim());
         return elemento;
+    }
+    
+    //Convierte una lista o un elemento a object para retornar con filtros aplicados
+    private Object retornarObjeto(List<CompaniaSeguroPoliza> elementos, CompaniaSeguroPoliza elemento) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleBeanPropertyFilter theFilter = elementos != null ? SimpleBeanPropertyFilter
+                .serializeAllExcept("datos") : SimpleBeanPropertyFilter
+                .serializeAllExcept();
+        FilterProvider filters = new SimpleFilterProvider()
+                .addFilter("filtroPdf", theFilter)
+                .addFilter("filtroFoto", theFilter);
+        String string = mapper.writer(filters).writeValueAsString(elementos != null ? elementos : elemento);
+        return mapper.readValue(string, Object.class);
     }
 
 }

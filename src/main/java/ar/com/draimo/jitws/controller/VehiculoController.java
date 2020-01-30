@@ -198,7 +198,7 @@ public class VehiculoController {
         }
     }
     
-    //Elimina un registro
+    //Elimina un pdf
     @DeleteMapping(value = URL + "/eliminarPdf/{idVehiculo}/{idPdf}/{tipoPdf}")
     public ResponseEntity<?> eliminarPDF(@PathVariable int idVehiculo, @PathVariable int idPdf,
             @PathVariable String tipoPdf) {
