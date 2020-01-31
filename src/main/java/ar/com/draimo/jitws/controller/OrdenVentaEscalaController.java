@@ -97,10 +97,10 @@ public class OrdenVentaEscalaController {
     }
 
     //Obtiene el precio flete
-    @GetMapping(value = URL + "/obtenerPrecioFlete/{idOrdenVenta}/{valor}")
+    @GetMapping(value = URL + "/obtenerPrecioFlete/{idOrdenVenta}/{idTipoTarifa}/{valor}")
     @ResponseBody
-    public BigDecimal obtenerPrecioFlete(@PathVariable int idOrdenVenta, @PathVariable String valor) {
-        return elementoService.obtenerPrecioFlete(idOrdenVenta, valor);
+    public BigDecimal obtenerPrecioFlete(@PathVariable int idOrdenVenta, @PathVariable int idTipoTarifa, @PathVariable String valor) {
+        return elementoService.obtenerPrecioFlete(idOrdenVenta, idTipoTarifa, valor);
     }
 
     //Agrega un registro
