@@ -43,10 +43,6 @@ public class OrdenVenta extends ObjetoGenerico {
     @Column(name = "seguro", nullable = false)
     private BigDecimal seguro;
 
-    //Define la comision contra reembolso
-    @Column(name = "comisionCR", nullable = true)
-    private BigDecimal comisionCR;
-
     //Define las observaciones
     @Column(name = "observaciones", length = 200, nullable = true)
     private String observaciones;
@@ -124,14 +120,6 @@ public class OrdenVenta extends ObjetoGenerico {
 
     public void setSeguro(BigDecimal seguro) {
         this.seguro = seguro;
-    }
-
-    public BigDecimal getComisionCR() {
-        return comisionCR;
-    }
-
-    public void setComisionCR(BigDecimal comisionCR) {
-        this.comisionCR = comisionCR;
     }
 
     public String getObservaciones() {
