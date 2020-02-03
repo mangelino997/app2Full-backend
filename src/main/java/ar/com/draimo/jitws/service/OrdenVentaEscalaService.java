@@ -140,12 +140,18 @@ public class OrdenVentaEscalaService {
         BigDecimal v = new BigDecimal(valor);
         BigDecimal valorHasta = new BigDecimal(0);
         List<EscalaTarifa> escalaTarifas = escalaTarifaDAO.obtenerEscalasporIdOrdenVentaYIdTipoTarifa(idOrdenVenta, idTipoTarifa);
-        for (int i = 0; i < escalaTarifas.size() - 1; i++) {
+        //cuando el valor es menor al valor del primer elemento obtenido de la lista, entonces la
+        //variable valorHasta corresponde al primer valor de la lista.
+        if(v.compareTo(escalaTarifas.get(0).getValor()) < 0){
+            valorHasta = escalaTarifas.get(0).getValor();
+        }else{
+            for (int i = 0; i < escalaTarifas.size() - 1; i++) {
             BigDecimal escalaInferior = escalaTarifas.get(i).getValor();
             BigDecimal escalaSuperior = escalaTarifas.get(i + 1).getValor();
             if (v.compareTo(escalaInferior) > 0 && v.compareTo(escalaSuperior) <= 0) {
                 valorHasta = escalaSuperior;
             }
+        }
         }
 //        BigDecimal valorHasta = escalaTarifas.get(0).getValor().subtract(escalaTarifas.get(1).getValor()).setScale(2, RoundingMode.UNNECESSARY);
         OrdenVentaEscala ove = elementoDAO.obtenerPorOrdenVentaYValorProximo(idOrdenVenta, v, v.add(valorHasta));
