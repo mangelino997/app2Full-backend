@@ -38,9 +38,10 @@ public interface IViajeTramoRemitoDAO extends JpaRepository<ViajeTramoRemito, In
     //Obtiene un registro por viaje y estado
     @Query(value = "SELECT r.* FROM viajeremito v INNER JOIN viajetramoremito r ON "
             + "r.idViajeRemito = v.id INNER JOIN viajetramo t ON t.id = r.idViajeTramo"
-            + " WHERE (:idViaje = 0 OR t.idViaje=:idViaje) AND (:idViajeRemito = 0 OR"
-            + " r.idViajeRemito=:idViajeRemito) AND v.estaFacturado=:estaFacturado", nativeQuery = true)
+            + " WHERE (:idViaje = 0 OR t.idViaje=:idViaje) AND "
+            + " v.numero LIKE %:idRemito% AND v.estaFacturado=:estaFacturado ORDER BY"
+            +" r.idViajeTramo, v.numero ASC", nativeQuery = true)
     public List<ViajeTramoRemito> listarPorViajeYEstaFacturado(@Param("idViaje") int idViaje, 
-            @Param("idViajeRemito") int idViajeRemito, @Param("estaFacturado") boolean estaFacturado);
+            @Param("idRemito") int idRemito, @Param("estaFacturado") boolean estaFacturado);
     
 }
