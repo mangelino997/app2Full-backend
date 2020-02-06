@@ -474,7 +474,6 @@ public class Personal extends ObjetoGenerico {
     @JsonIgnoreProperties("personal")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "personal")
     private List<PersonalCuentaBancaria> personalCuentaBancarias;
-    
 
     //Getters y Setters de la clase
     public String getNombre() {
