@@ -1,15 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ar.com.draimo.jitws.model;
 
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -50,6 +48,14 @@ public class ConceptoSueldo extends ObjetoGenerico {
     @Column(name = "codigoEmpleador", length = 10, nullable = false, unique = true)
     private String codigoEmpleador;
 
+    //Define la referencia a TipoLiquidacionSueldo
+    @OneToMany
+    @JoinTable(
+      name = "conceptosueldoliqasoc", 
+      joinColumns = @JoinColumn(name = "idConceptoSueldo"), 
+      inverseJoinColumns = @JoinColumn(name = "idTipoLiquidacionSueldo"))
+    private List<TipoLiquidacionSueldo> tiposLiquidacionesSueldos;
+    
     public String getNombre() {
         return nombre;
     }
@@ -120,6 +126,14 @@ public class ConceptoSueldo extends ObjetoGenerico {
 
     public void setCodigoEmpleador(String codigoEmpleador) {
         this.codigoEmpleador = codigoEmpleador;
+    }
+
+    public List<TipoLiquidacionSueldo> getTiposLiquidacionesSueldos() {
+        return tiposLiquidacionesSueldos;
+    }
+
+    public void setTiposLiquidacionesSueldos(List<TipoLiquidacionSueldo> tiposLiquidacionesSueldos) {
+        this.tiposLiquidacionesSueldos = tiposLiquidacionesSueldos;
     }
     
 }

@@ -1,82 +1,56 @@
-//Paquete al que pertenece el controlador
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ar.com.draimo.jitws.controller;
 
 import ar.com.draimo.jitws.constant.RutaConstant;
-import ar.com.draimo.jitws.dto.GenericoDTO;
 import ar.com.draimo.jitws.exception.MensajeRespuesta;
-import ar.com.draimo.jitws.model.TipoLiquidacionSueldo;
-import ar.com.draimo.jitws.service.TipoLiquidacionSueldoService;
+import ar.com.draimo.jitws.model.ConceptoSueldoLiqAsoc;
+import ar.com.draimo.jitws.service.ConceptoSueldoLiqAsocService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.MessagingException;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Clase TipoContacto Controller
- *
+ *ConceptoSueldoLiqAsoc controller 
  * @author blas
  */
 @RestController
-public class TipoLiquidacionSueldoController {
-
-    //Define la url
-    private final String URL = RutaConstant.URL_BASE + "/tipoliquidacionsueldo";
-    //Define la url de subcripciones a sockets
-    private final String TOPIC = RutaConstant.URL_TOPIC + "/tipoliquidacionsueldo";
-
-    //Define el template para el envio de datos por socket
-    @Autowired
-    private SimpMessagingTemplate template;
-
+public class ConceptoSueldoLiqAsocController {
+    
+    //Define la url 
+    private final String URL = RutaConstant.URL_BASE + "/conceptosueldoliqasoc";
+    
     //Crea una instancia del servicio
     @Autowired
-    TipoLiquidacionSueldoService elementoService;
-
-    //Obtiene listas necesarias para inicializar el componente (front)
-    @GetMapping(value = URL + "/inicializar/{idRol}/{idSubopcion}")
-    @ResponseBody
-    public GenericoDTO inicializar(@PathVariable int idRol, @PathVariable int idSubopcion) {
-        return elementoService.inicializar(idRol, idSubopcion);
-    }
-
-    //Obtiene el siguiente id
-    @GetMapping(value = URL + "/obtenerSiguienteId")
-    @ResponseBody
-    public int obtenerSiguienteId() {
-        return elementoService.obtenerSiguienteId();
-    }
-
-    //Obtiene la lista completa
+    ConceptoSueldoLiqAsocService elementoService;
+    
+    //Obtiene una lista completa 
     @GetMapping(value = URL)
     @ResponseBody
-    public List<TipoLiquidacionSueldo> listar() {
+    public List <ConceptoSueldoLiqAsoc> listar(){
         return elementoService.listar();
     }
-
-    //Obtiene una lista por nombre
-    @GetMapping(value = URL + "/listarPorNombre/{nombre}")
-    @ResponseBody
-    public List<TipoLiquidacionSueldo> listarPorNombre(@PathVariable String nombre) {
-        return elementoService.listarPorNombre(nombre);
-    }
-
+    
     //Agrega un registro
     @PostMapping(value = URL)
-    public ResponseEntity<?> agregar(@RequestBody TipoLiquidacionSueldo elemento) {
+    public ResponseEntity<?> agregar(@RequestBody ConceptoSueldoLiqAsoc elemento) {
         try {
-            TipoLiquidacionSueldo a = elementoService.agregar(elemento);
+            ConceptoSueldoLiqAsoc a = elementoService.agregar(elemento);
             //Envia la nueva lista a los usuarios subscriptos
             //template.convertAndSend(TOPIC + "/lista", elementoService.listar());
             //Retorna mensaje de agregado con exito
@@ -92,10 +66,10 @@ public class TipoLiquidacionSueldoController {
             return MensajeRespuesta.error();
         }
     }
-
+    
     //Actualiza un registro
     @PutMapping(value = URL)
-    public ResponseEntity<?> actualizar(@RequestBody TipoLiquidacionSueldo elemento) {
+    public ResponseEntity<?> actualizar(@RequestBody ConceptoSueldoLiqAsoc elemento) {
         try {
             //Actualiza el registro
             elementoService.actualizar(elemento);
@@ -120,12 +94,12 @@ public class TipoLiquidacionSueldoController {
             return MensajeRespuesta.error();
         }
     }
-
+    
     //Elimina un registro
-    @DeleteMapping(value = URL + "/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable int id) {
+    @DeleteMapping(value = URL + "/{elemento}")
+    public ResponseEntity<?> eliminar(@PathVariable int elemento) {
         try {
-            elementoService.eliminar(id);
+            elementoService.eliminar(elemento);
             //Retorna mensaje de eliminado con exito
             return MensajeRespuesta.eliminado();
         } catch (DataIntegrityViolationException dive) {
@@ -136,5 +110,5 @@ public class TipoLiquidacionSueldoController {
             return MensajeRespuesta.error();
         }
     }
-
+    
 }

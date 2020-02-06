@@ -22,7 +22,7 @@ public class PagoAnticipo extends ObjetoGenerico {
     //Define la referencia a la clase Pago
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "idPago", nullable = false)
-    private Pago  pago;
+    private Pago pago;
 
     //Define el importe
     @Column(name = "importe", nullable = false)
