@@ -96,7 +96,7 @@ public class Empresa extends ObjetoGenerico {
     @Column(name = "fe", nullable = false)
     private boolean fe;
 
-    //Referencia al a clase ordenVenta
+    //Referencia a la clase ordenVenta
     @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "empresaordenventa",
             joinColumns = @JoinColumn(name = "idEmpresa"),

@@ -325,7 +325,6 @@ public class VehiculoService {
         if (elemento.getNumeroChasis() != null) {
             elemento.setNumeroChasis(elemento.getNumeroChasis().trim().toUpperCase());
         }
-        elemento.setNumeroRuta(elemento.getNumeroRuta().trim());
         return elemento;
     }
 

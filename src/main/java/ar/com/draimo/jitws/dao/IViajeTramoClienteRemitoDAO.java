@@ -25,7 +25,7 @@ public interface IViajeTramoClienteRemitoDAO extends JpaRepository<ViajeTramoCli
     //Obtiene una lista por viajeTramoCliente
     @Query(value = "SELECT * FROM viajetramoclienteremito r INNER JOIN viajetramocliente c ON "
             + "r.idViajeTramoCliente=c.id INNER JOIN viajetramo t ON c.idViajeTramo=t.id  "
-            + "WHERE :idViajeTramoCliente= 0 OR c.id=:idViajeTramoCliente AND t.idViaje=:idViaje "
+            + "WHERE (:idViajeTramoCliente= 0 OR c.idViajeTramo=:idViajeTramoCliente) AND t.idViaje=:idViaje "
             + "AND r.estaFacturado=:estaFacturado", nativeQuery = true)
     public List<ViajeTramoClienteRemito> listarPorViajeYEstaFacturado(@Param("idViajeTramoCliente")
             int idViajeTramoCliente, @Param("idViaje") int idViaje, @Param("estaFacturado") boolean estaFacturado);

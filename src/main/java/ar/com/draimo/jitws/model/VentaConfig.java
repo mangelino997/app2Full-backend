@@ -20,19 +20,22 @@ public class VentaConfig extends ObjetoGenerico {
     @Column(name = "aforo", nullable = false)
     private short aforo;
     
-    //Define NotaImpresionComprobanteGral1
-    @Column(name = "notaImpresionComprobanteGral1", length = 200, nullable = true)
-    private String notaImpresionComprobanteGral1;
+    //Define notaImpresionGeneral1
+    @Column(name = "notaImpresionGeneral1", length = 200, nullable = true)
+    private String notaImpresionGeneral1;
     
-    //Define NotaImpresionComprobanteGral2
-    @Column(name = "notaImpresionComprobanteGral2",length = 200, nullable = true)
-    private String notaImpresionComprobanteGral2;
+    //Define notaImpresionGeneral2
+    @Column(name = "notaImpresionGeneral2",length = 200, nullable = true)
+    private String notaImpresionGeneral2;
     
     //Define Comision contrareembolso
     @Column(name = "comisionCR", nullable = true)
     private BigDecimal comisionCR;
     
-    //Getters y Setters de la clase
+    //Define Seguro
+    @Column(name = "seguro", nullable = true)
+    private BigDecimal seguro;
+
     public short getAforo() {
         return aforo;
     }
@@ -41,20 +44,20 @@ public class VentaConfig extends ObjetoGenerico {
         this.aforo = aforo;
     }
 
-    public String getNotaImpresionComprobanteGral1() {
-        return notaImpresionComprobanteGral1;
+    public String getNotaImpresionGeneral1() {
+        return notaImpresionGeneral1;
     }
 
-    public void setNotaImpresionComprobanteGral1(String notaImpresionComprobanteGral1) {
-        this.notaImpresionComprobanteGral1 = notaImpresionComprobanteGral1;
+    public void setNotaImpresionGeneral1(String notaImpresionGeneral1) {
+        this.notaImpresionGeneral1 = notaImpresionGeneral1;
     }
 
-    public String getNotaImpresionComprobanteGral2() {
-        return notaImpresionComprobanteGral2;
+    public String getNotaImpresionGeneral2() {
+        return notaImpresionGeneral2;
     }
 
-    public void setNotaImpresionComprobanteGral2(String notaImpresionComprobanteGral2) {
-        this.notaImpresionComprobanteGral2 = notaImpresionComprobanteGral2;
+    public void setNotaImpresionGeneral2(String notaImpresionGeneral2) {
+        this.notaImpresionGeneral2 = notaImpresionGeneral2;
     }
 
     public BigDecimal getComisionCR() {
@@ -65,4 +68,12 @@ public class VentaConfig extends ObjetoGenerico {
         this.comisionCR = comisionCR;
     }
 
+    public BigDecimal getSeguro() {
+        return seguro;
+    }
+
+    public void setSeguro(BigDecimal seguro) {
+        this.seguro = seguro;
+    }
+    
 }

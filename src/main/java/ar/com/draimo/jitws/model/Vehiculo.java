@@ -74,10 +74,6 @@ public class Vehiculo extends ObjetoGenerico {
     @Column(name = "vtoRTO", nullable = false) 
     private Date vtoRTO;
     
-    //Define el numero de ruta
-    @Column(name = "numeroRuta",length = 15, nullable = false)
-    private String numeroRuta;
-    
     //Define el vencimiento de ruta
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC-3")
     @Column(name = "vtoRuta", nullable = false)
@@ -252,14 +248,6 @@ public class Vehiculo extends ObjetoGenerico {
 
     public void setVtoRTO(Date vtoRTO) {
         this.vtoRTO = vtoRTO;
-    }
-
-    public String getNumeroRuta() {
-        return numeroRuta;
-    }
-
-    public void setNumeroRuta(String numeroRuta) {
-        this.numeroRuta = numeroRuta;
     }
 
     public Date getVtoRuta() {
