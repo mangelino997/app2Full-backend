@@ -29,7 +29,7 @@ public interface IPuntoVentaDAO extends JpaRepository<PuntoVenta, Integer> {
     
     //Obtiene una lista por sucursal y empresa
     @Query(value = "SELECT * FROM puntoventa WHERE idSucursal=:idSucursal AND "
-            + "idEmpresa=:idEmpresa", nativeQuery = true)
+            + "idEmpresa=:idEmpresa ORDER BY puntoVenta AND idAfipComprobante ASC", nativeQuery = true)
     public List<PuntoVenta> listarPorSucursalYEmpresa(@Param("idSucursal") int 
             idSucursal, @Param("idEmpresa") int idEmpresa);
     
