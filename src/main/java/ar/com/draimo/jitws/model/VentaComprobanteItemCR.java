@@ -59,6 +59,10 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     @Column(name = "fechaPago", nullable = true)
     private Date fechaPago;
     
+    //Define fechaPago
+    @Column(name = "idProvincia", nullable = true)
+    private int idProvincia;
+    
     //Getters y Setters de la clase
 
     public VentaComprobante getVentaComprobante() {
@@ -124,5 +128,14 @@ public class VentaComprobanteItemCR extends ObjetoGenerico {
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
     }
+
+    public int getIdProvincia() {
+        return idProvincia;
+    }
+
+    public void setIdProvincia(int idProvincia) {
+        this.idProvincia = idProvincia;
+    }
+    
     
 }
