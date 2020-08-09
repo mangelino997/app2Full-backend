@@ -19,7 +19,7 @@ public class ObjetoGenerico {
     
     //Define el id autoincremental, unico y not null
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //genera un autoID
     @Column(name = "id", nullable = false, unique = true)
     private int id;
     

@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author blas
  */
+ //esta anotacion le dice a sprong que este controlador va a ser para una API rest
 @RestController
 public class AfipActividadController {
 

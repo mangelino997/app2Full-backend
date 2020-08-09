@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AfipActividadService {
 
     //Define el dao
+
+    //inyectamos la dependencia a un Bean (repository) con Autowired
     @Autowired
     IAfipActividadDAO elementoDAO;
 

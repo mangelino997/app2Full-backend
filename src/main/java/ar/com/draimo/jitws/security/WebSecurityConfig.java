@@ -23,10 +23,15 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+/* la linea de arriba indica que tipo de seguridad implementaremos, puede ser centralizada o distribuida,
+  la recomendada es la distribuida y se define con "prePostEnabled = true "
+  este tipo de seguridad verifica el acceso a CADA RECURSO al que se quiere acceder mediante las
+  peticiones HTTP
+*/
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private AppUserDetailsService appUserDetailsService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder; /* encriptador de claves de spring. tmb se puede usar uno propio*/
 
     public WebSecurityConfig(AppUserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.appUserDetailsService = userDetailsService;
@@ -37,22 +42,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * Configura los filtros de autenticacion (rutas autorizadas), los cors y 
      * deshabilita el cross site scripting
      */ 
+     //Este metodo configura la SEGURIDAD
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //Configura los cors
         http.addFilterBefore(corsFilter(), ChannelProcessingFilter.class);
+
+        /* Le indicamos que path no va a usar la autenticacion del token
+            csrf().disable() se usa cuando usamos API's
+            cuando el navegador accede a una API necesita proteccion y esa la otorga csrf
+            mediante sesiones con HttpSession
+        */
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/jitws/socket/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
+                .antMatchers("/jitws/socket/**").permitAll() //en esta direcc accede cualquier persona
+                .anyRequest().authenticated() //cualquier otra direccion necesita la atenticacion
+                .and() //y que todas esas autenticaciones pasaran por los sig filtros
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .addFilter(new JWTAuthorizationFilter(authenticationManager())) //valida el token
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); 
+                /* la linea de arriba anula las sesiones, para que no guarde ninguna 
+                STATELESS significa sin sesiones
+                */
+
+        /* CSRF nos protege de ataques 'Cross Site Scripting', también conocido como XSS */
     }
 
     // Configura la gestion de autenticacion y la encriptacion de la contrasenia
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        /* le decimos que la seguridad (auth) mi PROPIO servicio de usuarios 'appUserDetailsService' 
+        y con que llave tiene que encriptar las claves 'bCryptPasswordEncoder' */
         auth.userDetailsService(appUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
